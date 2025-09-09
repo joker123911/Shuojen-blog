@@ -81,7 +81,7 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: 'Shuojen Blog',
+        title: 'Shuojen Haung',
         logo: {
           alt: 'My Site Logo',
           src: 'img/logo.png',
@@ -91,11 +91,13 @@ const config = {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'left',
-            label: 'Tutorial',
+            label: '興趣',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
+          {to: '/blog',
+          label: '貼文',
+          position: 'left'},
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/joker123911/Shuojen-blog',
             label: 'GitHub',
             position: 'right',
           },
