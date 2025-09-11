@@ -81,7 +81,7 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: 'Shuojen Haung',
+        title: 'Shuo-jen Huang',
         logo: {
           alt: 'My Site Logo',
           src: 'img/logo.png',
@@ -96,39 +96,34 @@ const config = {
           {to: '/blog',
           label: '貼文',
           position: 'left'},
-          {
-            href: 'https://github.com/joker123911/Shuojen-blog',
-            label: 'GitHub',
-            position: 'right',
-          },
         ],
       },
       footer: {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: '站內連結',
             items: [
               {
-                label: 'Tutorial',
+                label: '興趣',
                 to: '/docs/intro',
+              },
+              {
+                label: '貼文',
+                to: '/blog',
               },
             ],
           },
           {
-            title: 'Community',
+            title: '社群',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                label: 'Instagram',
+                href: 'https://www.instagram.com/shuojen.h/',
               },
               {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'X',
-                href: 'https://x.com/docusaurus',
+                label: 'YouTube',
+                href: 'https://www.youtube.com/@janiturtle',
               },
             ],
           },
@@ -136,17 +131,13 @@ const config = {
             title: 'More',
             items: [
               {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
                 label: 'GitHub',
                 href: 'https://github.com/facebook/docusaurus',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen,Huang`,
       },
       prism: {
         theme: prismThemes.github,
