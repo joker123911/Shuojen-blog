@@ -90,9 +90,9 @@ const config = {
       '@docusaurus/plugin-content-blog',
       {
         // --- 這是您新增的攝影作品集 ---
-        id: 'portfolio', // 給它一個獨一無二的 ID
-        routeBasePath: 'portfolio', // 網站上的路徑 /portfolio
-        path: './portfolio', // 讀取根目錄下的 portfolio 資料夾
+        id: 'photoblog', // 給它一個獨一無二的 ID
+        routeBasePath: 'photoblog', // 網站上的路徑 /portfolio
+        path: './photoblog', // 讀取根目錄下的 portfolio 資料夾
 
         // 您可以為作品集設定不同的選項
         showReadingTime: true, // 攝影作品通常不需要顯示閱讀時間
@@ -128,7 +128,7 @@ const config = {
           label: '貼文',
           position: 'left'},
           {
-          to: '/portfolio',
+          to: '/photoblog',
           label: '攝影',
           position: 'left'},
         ],
@@ -147,15 +147,15 @@ const config = {
                 label: '貼文',
                 to: '/blog',
               },
+              {
+                label: '攝影',
+                to: '/photoblog',
+              },
             ],
           },
           {
-            title: '社群',
+            title: '當雲端用',
             items: [
-              {
-                label: 'Instagram',
-                href: 'https://www.instagram.com/shuojen.h/',
-              },
               {
                 label: 'YouTube',
                 href: 'https://www.youtube.com/@janiturtle',
@@ -170,6 +170,7 @@ const config = {
                 href: 'https://github.com/facebook/docusaurus',
               },
             ],
+
           },
         ],
         copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen,Huang`,
