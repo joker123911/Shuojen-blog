@@ -1,0 +1,32 @@
+---
+title: '西洋棋盤顯示測試'
+---
+
+import { Chessboard } from "react-chessboard";
+import BrowserOnly from '@docusaurus/BrowserOnly';
+
+這是一個非常經典的西洋棋教學文章。
+
+## 什麼是王翼棄兵 (King's Gambit)？
+
+王翼棄兵是一個古老而富有攻擊性的開局，白方在第二步就犧牲掉 f 線的兵，以換取對中心的控制和快速出子。
+
+**起始局面 (FEN: `rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2`)**
+
+這是在 `1. e4 e5 2. Nf3` 之後的局面，黑方面臨選擇。如果白方走 `2. f4`，那就進入了王翼棄兵。
+
+<BrowserOnly>
+  {() => <Chessboard position={"rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2"} />}
+</BrowserOnly>
+
+如您所見，您可以透過設定 `position` 屬性，使用 **FEN 字串** 來顯示任何您想要的棋盤局面。
+
+### 棋盤互動
+
+這個棋盤是完全可以互動的！您可以試著拖動棋子。這對於展示戰術謎題非常有用。
+
+**一個簡單的將軍謎題 (FEN: `r1bqkbnr/p1pp1ppp/1pn5/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w KQkq - 2 4`)**
+
+<BrowserOnly>
+  {() => <Chessboard id="SimpleMate" position={"r1bqkbnr/p1pp1ppp/1pn5/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w KQkq - 2 4"} />}
+</BrowserOnly>
