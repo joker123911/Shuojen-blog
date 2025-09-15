@@ -49,8 +49,6 @@ const config = {
         docs: {
           sidebarPath: './sidebars.js',
           // 請記得將這裡換成您自己的 GitHub 倉庫連結
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
         // 重要的第一步：將 presets 中的 blog 設定設定為 false 或直接移除
         blog: false,
@@ -78,9 +76,6 @@ const config = {
           type: ['rss', 'atom'],
           xslt: true,
         },
-        // 請記得將這裡換成您自己的 GitHub 倉庫連結
-        editUrl:
-          'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         onInlineTags: 'warn',
         onInlineAuthors: 'warn',
         onUntruncatedBlogPosts: 'warn',
@@ -98,9 +93,6 @@ const config = {
         showReadingTime: true, // 攝影作品通常不需要顯示閱讀時間
         blogSidebarTitle: 'Recent posts',
         blogSidebarCount: 'ALL',
-        // 建議也為作品集設定 editUrl
-        editUrl:
-          'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
       },
     ],
   ],
