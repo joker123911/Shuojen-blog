@@ -99,7 +99,7 @@ const config = {
       navbar: {
         // highlight-start
         // --- 修改開始: 將 title 這一行刪除 ---
-        // title: 'Shuo-jen Huang', // <--- 刪除或註解掉這一行
+        title: 'Shuo-jen,Huang', // <--- 刪除或註解掉這一行
         // --- 修改結束 ---
         // highlight-end
         logo: {
