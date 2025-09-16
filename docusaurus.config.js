@@ -60,7 +60,7 @@ const config = {
         blogDescription: '這裡是我的貼文與想法，歡迎訂閱 RSS！',
         feedOptions: {
           type: 'all',
-          title: 'Shuo-jen Huang 的貼文',
+          title: 'Shuo-jen Blog',
           description: '訂閱追蹤最新的貼文！',
           copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen Huang`,
           language: 'zh-TW',
@@ -83,7 +83,7 @@ const config = {
         blogDescription: '光影紀錄。',
         feedOptions: {
           type: 'all',
-          title: 'Shuo-jen Huang 的攝影作品',
+          title: 'Shuo-jen Photography',
           description: '訂閱我的攝影紀錄。',
           copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen Huang`,
           language: 'zh-TW',
