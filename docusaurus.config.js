@@ -47,7 +47,7 @@ const config = {
           // highlight-start
           // --- 修改重點 2：更新 Edit URL ---
           // 讓「編輯此頁」連結指向您正確的倉庫
-          editUrl: 'https://github.com/joker123911/Shuojen-blog/tree/main/',
+          // editUrl: 'https://github.com/joker123911/Shuojen-blog/tree/main/',
           // highlight-end
         },
         blog: false, // 維持停用 presets 中的 blog
