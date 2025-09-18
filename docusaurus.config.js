@@ -106,7 +106,7 @@ const config = {
           copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen Huang`,
           language: 'zh-TW',
         },
-        editUrl: 'https://github.com/joker123911/Shuojen-blog/tree/main/', // <-- 同樣更新 Edit URL
+        //editUrl: 'https://github.com/joker123911/Shuojen-blog/tree/main/', // <-- 同樣更新 Edit URL
       },
     ],
   ],
@@ -144,12 +144,58 @@ const config = {
       footer: {
         style: 'dark',
         links: [
-          // ... (您的 footer 連結維持不變)
+          {
+            title: '站內連結',
+            items: [
+              {
+                label: '興趣',
+                to: '/docs/intro',
+              },
+              {
+                label: '貼文',
+                to: '/blog',
+              },
+              {
+                label: '攝影',
+                to: '/photoblog',
+              },
+            ],
+          },
+          {
+            title: '當雲端用',
+            items: [
+              {
+                label: 'YouTube',
+                href: 'https://www.youtube.com/@janiturtle',
+              },
+            ],
+          },
+          {
+            title: '更多',
+            items: [
+              {
+                label: 'GitHub',
+                // highlight-start
+                // --- 額外修正：將這裡更新為您自己的 GitHub 倉庫 ---
+                href: 'https://github.com/joker123911/Shuojen-blog',
+                // highlight-end
+              },
+              // highlight-start
+              // --- 在這裡新增您的兩個 RSS 連結 ---
+              {
+                label: '貼文 RSS',
+                href: 'https://shuojen.site/blog/rss.xml',
+              },
+              {
+                label: '攝影 RSS',
+                href: 'https://shuojen.site/photoblog/rss.xml',
+              },
+              // --- 新增結束 ---
+              // highlight-end
+            ],
+          },
         ],
-        // highlight-start
-        // --- 修改重點 5：修正版權文字 ---
-        copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen,Huang`, // 移除了逗號
-        // highlight-end
+        copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen,Huang`,
       },
       prism: {
         theme: prismThemes.github,
