@@ -4,6 +4,7 @@ sidebar_position: 2
 ---
 *最後更新：2025-09-21*
 
+![img](./img/019.webp)
 ## 積分(Rating)
 
 ### 最高積分(Highest Rating)
