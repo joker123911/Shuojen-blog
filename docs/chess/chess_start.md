@@ -9,20 +9,22 @@ sidebar_position: 1
 
 ## 后翼棄兵
 
-2020年，Netflix上架了[后翼棄兵](https://zh.wikipedia.org/zh-tw/%E5%90%8E%E7%BF%BC%E6%A3%84%E5%85%B5_(%E8%BF%B7%E4%BD%A0%E5%8A%87))迷你影集，講述架空的1950年代，天才西洋棋手Beth Harmon奪得西洋世界冠軍的故事。人物、劇本、畫面都是上乘之作，在我開始下西洋棋後，又再看了一遍，非常推薦大家去看。
+2020年，Netflix上架了[后翼棄兵](https://zh.wikipedia.org/zh-tw/%E5%90%8E%E7%BF%BC%E6%A3%84%E5%85%B5_(%E8%BF%B7%E4%BD%A0%E5%8A%87))迷你影集，講述架空的1950年代，天才西洋棋手Beth Harmon奪得西洋棋世界冠軍的故事。人物、劇本、畫面都是上乘之作，在我開始下西洋棋後，又再看了一遍，非常推薦大家去看。
 
 ## 研究所時期
 
 看完美劇後，我上網學習了西洋棋的規則，最有趣的規則就是["國王入堡(Castling)"](https://zh.wikipedia.org/zh-tw/%E7%8E%8B%E8%BB%8A%E6%98%93%E4%BD%8D)，只要用出來就會覺得自己很帥。
 
-研究所時期，我常常跟我的研究室同學兼室友一起下棋，兩個人都不會下就覺得特別有趣，這是我的第一盤對局，我覺得自己棄堡攻殺成功太帥了，下了四十分鐘，有完整的棋譜，現在擺出來應該會覺得這個對局很好笑。
+研究所時期，我常常跟我的研究室同學兼室友一起下棋，兩個人都不會下，就覺得特別有趣，這是我的第一盤真人對局，當時覺得自己棄堡攻殺成功太帥了，下了四十分鐘，有完整的棋譜，現在擺出來應該會覺得這個對局很好笑。
 ![img](./img/001.webp)
 
 比起跟電腦死板的下，我跟推薦初學者找個好朋友，或是情侶夫妻一起玩，搜尋[Chess.com](https://www.chess.com/home)[^1]或是[Lichess.org](https://lichess.org/)[^2]就可以馬上開始戰鬥了。
 
-## 認真研究西洋棋
+## 認真鑽研
 
-我主要都是在Youtube上利用免費的資源學習，認識各種不同的開局會覺得非常有趣，可以根據自己的喜好選擇喜歡的武器，就像新手冒險者選擇職業和武器一樣。
+我主要都是在Youtube上利用免費的資源學習，認識各種不同的開局會覺得非常有趣，可以根據自己的喜好和棋風選擇開局，就像新手冒險者選擇職業和武器一樣。
+
+**起始局面 (FEN: `rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2`)**
 
 ### 白方開局
 1. 王兵開局：全世界最主流的開局，在`1. e4 e5 2. Nf3 Nc6`後，白方可以選擇非常多開局與對手進行遊戲，每種開局都有各種變例可以抉擇，著名的舉凡義大利開局(Italian game)、西班牙開局(Ruy López)、蘇格蘭開局(Scotch game)、三馬開局(Three Knights Game)。
@@ -32,7 +34,7 @@ sidebar_position: 1
 由於全世界最主流的第一步棋是`e4`王兵開局，作為黑方的第一步棋，我們就可以選擇各種防禦手段來進行抗衡。如果面對后兵開局或其餘各式各樣的開局，就要另外學習更多的應對，不過也不用害怕自己理論知識不足，只要有正確的觀念，每一步棋都符合棋理，下什麼都是沒問題的。
 
 ### 激烈對戰
-1. 王兵防禦(e5 Open game)`1. e4 e5`：直接挺起王兵佔領中心，來場直球對決的遊戲吧，全世界下最對多的防禦，所以對手肯定也是準備滿滿。
+1. 王兵防禦(e5 Open game)`1. e4 e5`：直接挺起王兵佔領中心，來場直球對決吧，全世界下最對多的防禦，缺點是對手肯定也是有備而來。
 2. 西西里防禦(Sicilian defence)`1. e4 c5`：利用`c5`兵佔領中心，讓戰場不對稱且複雜化，這是王兵開局中理論知識最多又最進攻型的防禦，是后翼棄兵中Beth Harmon最驕傲的防禦[^3]。
 
 ### 穩健試探
@@ -43,7 +45,7 @@ sidebar_position: 1
 
 ## 學習資源
 
-我推薦現在這個年代可以直接看影片學習，並且直接使用電腦上的棋盤配合引擎擺譜[^4]，以學習來說比拿實體棋更有效率，但是實體棋會更有下棋的氛圍，推薦直接在[Lichess工具/分析對局](https://lichess.org/analysis#1)進行擺譜學習。
+我推薦現在這個年代可以直接看影片學習，並且直接使用電腦上的棋盤配合引擎[^4]，例如[Lichess工具/分析對局](https://lichess.org/analysis#1)進行擺譜學習，以效率來說會比拿實體棋更佳，但是實體棋會更有下棋的氛圍，看個人選擇。
 
 ### 台灣西洋棋頻道
 
@@ -56,9 +58,9 @@ sidebar_position: 1
 
 * [Daniel Naroditsky](https://www.youtube.com/@DanielNaroditskyGM)：我最推薦的英文頻道，美國頂尖GM特級大師，他的實戰Speedrun系列講解的非常透徹而且仔細，從基礎程度的對手一路到大師等級。
 * [ChesswithAkeem](https://www.youtube.com/@ChesswithAkeem)：CM候補大師，他的教學非常好，不論新手向或是進階棋手都可以學到東西，簡單實用的觀念非常推薦。
-* [Eric Rosen](https://www.youtube.com/@eric-rosen)：IM國際大師，他喜歡棄子(Gambit)類型的棋風，實戰系列講解的不錯，而且喜歡他冷靜沉穩的風格。
-* [GothamChess](https://www.youtube.com/@GothamChess/videos)：IM國際大師，最大的西洋棋頻道，可以找到比較久以前的教學內容很也不錯，但現在大多數都是娛樂內容，覺得有趣可以看。
-* [GMHikaru](https://www.youtube.com/@GMHikaru)：世界頂尖的GM特級大師，現在是西洋棋綜藝實況主，推薦娛樂看。
+* [Eric Rosen](https://www.youtube.com/@eric-rosen)：IM國際大師，他喜歡棄子(Gambit)類型的棋風，實戰系列講解的不錯，而且我喜歡他冷靜沉穩的風格。
+* [GothamChess](https://www.youtube.com/@GothamChess/videos)：IM國際大師，最大的西洋棋頻道，可以找到比較久以前有教學內容很也不錯，但現在大多數都是娛樂內容，覺得有趣可以看。
+* [GMHikaru](https://www.youtube.com/@GMHikaru)：世界超頂尖的GM特級大師，現在是西洋棋綜藝實況主，推薦娛樂看。
 * [Magnus Carlsen](https://www.youtube.com/@themagnuscarlsen/videos)：西洋棋界GOAT，我覺得頻道沒什麼適合新手的內容，但可以來瞧瞧歷史以來創下最高分的棋手。
 
 [^1]: Chess.com是全世界最大的西洋棋平台，用戶眾多，免費就可以玩了。
