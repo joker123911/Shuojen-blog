@@ -8,7 +8,7 @@ sidebar_position: 2
 *最後更新2025-09-22*
 
 這是我的[世界魔術方塊協會(WCA)](https://www.worldcubeassociation.org/persons/2021HAUN01)頁面
-![[螢幕擷取畫面 2025-09-22 234409.png]]
+![img](./img/螢幕擷取畫面 2025-09-22 234409.png)
 
 ### [2021台北回歸賽](https://www.worldcubeassociation.org/competitions/WelcomeBackTaipei2021)
 
@@ -73,4 +73,4 @@ sidebar_position: 2
 
 ## 新竹版聚
 
-在新竹讀研究所的時候，常常去參加清大畢業生舉辦的版聚，非常好玩。
+在新竹讀研究所的時候，常常去參加清大畢業生林彥州舉辦的版聚，非常好玩。
