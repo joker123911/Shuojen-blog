@@ -84,7 +84,7 @@ const config = {
         onInlineTags: 'warn',
         onInlineAuthors: 'warn',
         onUntruncatedBlogPosts: 'warn',
-        editUrl: 'https://github.com/joker123911/Shuojen-blog/tree/main/', // <-- 同樣更新 Edit URL
+        //editUrl: 'https://github.com/joker123911/Shuojen-blog/tree/main/', // <-- 同樣更新 Edit URL
       },
     ],
     [
