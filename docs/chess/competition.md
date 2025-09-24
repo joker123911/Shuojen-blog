@@ -76,7 +76,17 @@ sidebar_position: 2
 
 有興趣可以看劉業揚老師(台灣國手,CM頭銜)的解說：
 
-[中正盃覆盤2 后兵開局 vs 尼姆佐維奇防禦](https://www.youtube.com/watch?v=pdOKJP4bNJ8&list=PL0OXdBIpu2-zm71dlOKSP1V5ivbI289qR)
+<div className="video-container">
+  <iframe 
+    width="560" 
+    height="315" 
+    src="https://www.youtube.com/embed/pdOKJP4bNJ8?si=zZ609cXguOx5PxFa" 
+    title="YouTube video player" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen>
+  </iframe>
+</div>
 
 ## 內湖棋聚
 GO GO GEESAA COFFEE

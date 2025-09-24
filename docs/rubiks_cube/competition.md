@@ -8,7 +8,8 @@ sidebar_position: 2
 *最後更新2025-09-22*
 
 這是我的[世界魔術方塊協會(WCA)](https://www.worldcubeassociation.org/persons/2021HAUN01)頁面
-![img](./img/螢幕擷取畫面 2025-09-22 234409.png)
+
+![img](./img/001.png)
 
 ### [2021台北回歸賽](https://www.worldcubeassociation.org/competitions/WelcomeBackTaipei2021)
 
@@ -46,7 +47,7 @@ sidebar_position: 2
 * 刷新個人SQ-1平均記錄31.61
 ### [2022嘉義公開賽](https://www.worldcubeassociation.org/competitions/ChiayiOpen2022)
 
-還記得這場比賽跟交大魔術方塊社的駱書翊社長約了一起開車過去，可惜表現不太好。
+還記得這場比賽跟交大魔術方塊社的駱書翊社長約在新竹一起開車過去，可惜這場表現不太好。
 
 * 刷新個人四階平均記錄54.42
 
@@ -71,6 +72,10 @@ sidebar_position: 2
 * 刷新個人SQ-1單次記錄19.97
 * 刷新個人SQ-1平均記錄20.59
 
+*官方記錄三階單次8.81*
+
+![video]()
+
 ## 新竹版聚
 
-在新竹讀研究所的時候，常常去參加清大畢業生林彥州舉辦的版聚，非常好玩。
+在新竹讀研究所的時候，常常去參加方塊圈元老玩家林彥州舉辦的版聚，非常好玩，學習到很多，也認識很多好朋友。
