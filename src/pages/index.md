@@ -4,7 +4,7 @@
 
 ## 內容簡介
 
- * [興趣](https://shuojen.site/docs/intro)：常駐的興趣分享區塊，選片困難症發作看這裡：[電影清單](https://shuojen.site/docs/movie_list)。
+ * [興趣](https://shuojen.site/docs/intro)：常駐的興趣分享區塊，選片困難症發作看這裡：[電影推薦清單](https://shuojen.site/docs/movie_list)。
 
  * [貼文](https://shuojen.site/blog)：部落格式的不定時紀錄。
 
