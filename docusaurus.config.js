@@ -73,6 +73,7 @@ const config = {
         // --- 修改重點 3：為「貼文」也加上側邊欄設定 ---
         blogSidebarTitle: '全部貼文',
         blogSidebarCount: 'ALL',
+        archiveBasePath: 'archive',
         // highlight-end
         feedOptions: {
           type: 'all',
@@ -97,6 +98,7 @@ const config = {
         showReadingTime: false, // 攝影作品不需要閱讀時間
         blogSidebarTitle: '全部作品', // 標題改為「近期作品」
         blogSidebarCount: 'ALL',
+        archiveBasePath: 'photo-archive',
         blogTitle: '攝影作品集',
         blogDescription: '光影紀錄。',
         feedOptions: {
@@ -139,6 +141,16 @@ const config = {
           to: '/photoblog', // <-- 路徑對應上面 plugins 的設定
           label: '攝影',
           position: 'left'},
+          {
+            to: '/blog/archive',
+            position: 'left',
+            label: '貼文日期列表',
+          },
+          {
+            to: 'photoblog/photo-archive',
+            position: 'left',
+            label: '攝影日期列表',
+          },
         ],
       },
       footer: {
