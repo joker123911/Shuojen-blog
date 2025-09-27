@@ -147,7 +147,7 @@ const config = {
           label: '攝影',
           position: 'left'},
           {
-            to: '/blog/archive',
+            to: '/photoblog/photo-archive',
             position: 'left',
             label: '攝影列表',
           },
