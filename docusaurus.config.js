@@ -138,13 +138,18 @@ const config = {
           label: '貼文',
           position: 'left'},
           {
+            to: '/blog/archive',
+            position: 'left',
+            label: '貼文列表',
+          },
+          {
           to: '/photoblog', // <-- 路徑對應上面 plugins 的設定
           label: '攝影',
           position: 'left'},
           {
-            to: '/all-archive',
+            to: '/blog/archive',
             position: 'left',
-            label: '日期列表',
+            label: '攝影列表',
           },
         ],
       },
