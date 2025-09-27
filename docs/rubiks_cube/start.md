@@ -1,5 +1,5 @@
 ---
-title: '魔術方塊簡介'
+title: '魔術方塊與我'
 sidebar_position: 1
 ---
 ## 啟蒙

@@ -1,5 +1,5 @@
 ---
-title: '西洋棋簡介'
+title: '西洋棋與我'
 sidebar_position: 1
 ---
 ## Chess Titans
@@ -20,9 +20,9 @@ sidebar_position: 1
 
 比起跟電腦死板的下，我跟推薦初學者找個好朋友，或是情侶夫妻一起玩，搜尋[Chess.com](https://www.chess.com/home)[^1]或是[Lichess.org](https://lichess.org/)[^2]就可以馬上開始戰鬥了。
 
-## 認真鑽研
+## 開局基本介紹
 
-我主要都是在Youtube上利用免費的資源學習，認識各種不同的開局會覺得非常有趣，可以根據自己的喜好和棋風選擇開局，就像新手冒險者選擇職業和武器一樣。
+後來因為好勝心，就不斷的研究西洋棋的觀念，我主要都是在Youtube上利用免費的資源學習，認識各種不同的開局會覺得非常有趣，可以根據自己的喜好和棋風選擇開局，就像新手冒險者選擇職業和武器一樣。
 
 **起始局面 (FEN: `rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2`)**
 
@@ -41,6 +41,7 @@ sidebar_position: 1
 1. 法蘭西防禦(French defence)`1. e4 e6`：先不佔領中心，等對方搶占後，再尋求反擊，例如法蘭西推進變例`1. e4 e6 2. d4 d5 3. e5 c5`，利用`c5`兵迅速挑戰白方是個很經典的開局。
 2. 卡羅康防禦(Caro-Kann defence)`1. e4 c6`：與法蘭西防禦類似，但是先不走起e6兵，試圖將白格主教復活後再尋求反擊中心，但是反擊的速度會比法蘭西防禦更慢。
 3. 現代防禦(Modern defence)`1. e4 g6`：未來準備將黑格主教配置在`g6`，變成一個堡壘象(fianchetto)的結構。
+
 其餘常見的還有舉凡斯堪地那維亞防禦(Scandinavian defence)、阿廖欣防禦(Alekhine's Defence)、歐文防禦(Owen's Defense)，或是叫不出名字的怪異野路子，都可以嘗試玩玩看呦！
 
 ## 學習資源

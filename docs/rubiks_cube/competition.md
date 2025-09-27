@@ -2,11 +2,8 @@
 title: '魔術方塊紀錄'
 sidebar_position: 2
 ---
-
-## 比賽紀錄&成績
-
 *最後更新2025-09-22*
-
+## 比賽紀錄&成績
 這是我的[世界魔術方塊協會(WCA)](https://www.worldcubeassociation.org/persons/2021HAUN01)頁面
 
 ![img](./img/001.png)
@@ -73,6 +70,12 @@ sidebar_position: 2
 * 刷新個人SQ-1平均記錄20.59
 
 *官方記錄三階單次8.81*
+
+<video controls width="300">
+    <source src="/video/881.mp4" type="video/mp4" />
+
+    抱歉，您的瀏覽器不支援內嵌影片。
+</video>
 
 ## 新竹版聚
 

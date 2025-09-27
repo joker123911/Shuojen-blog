@@ -72,7 +72,7 @@ sidebar_position: 2
 ![img](./img/014.webp)
 ![img](./img/015.webp)
 
-這盤棋有幸對到清華大學西洋棋社的翁玉芯(台灣國手,WCM頭銜)，持黑最後雙方都快沒時間，僥倖以時間獲勝。
+這盤棋有幸對到清華大學西洋棋社的翁玉芯(台灣國手，WCM頭銜)，持黑最後雙方都快沒時間，僥倖以時間獲勝。
 
 有興趣可以看劉業揚老師(台灣國手,CM頭銜)的解說：
 
@@ -89,21 +89,23 @@ sidebar_position: 2
 </div>
 
 ## 內湖棋聚
-GO GO GEESAA COFFEE
+棋友蕭大主辦
+
+地點：GO GO GEESAA COFFEE
 
 ![img](./img/010.webp)
 
 ## 景美棋聚
-i99 COFFEE
+棋友張老師主辦
+
+地點：i99 COFFEE
 
 ![img](./img/011.webp)
 
-景行區民活動中心
+地點：景行區民活動中心
 
 ![img](./img/013.webp)
 
-與目前台灣FIDE排名11[^1]的Tapani下了一場精彩的斯堪地那維亞開局，持白獲勝
+與目前台灣[FIDE台灣排名](https://ratings.fide.com/rankings.phtml?continent=0&country=TPE&rating=standard&gender=&age1=0&age2=0&period=2025-09-01&period2=1)第11的Tapani前輩下了一場精彩的斯堪地那維亞開局，持白獲勝，可惜沒有記錄棋譜。
 
 ![img](./img/012.webp)
-
-[^1]: [FIDE台灣排名](https://ratings.fide.com/rankings.phtml?continent=0&country=TPE&rating=standard&gender=&age1=0&age2=0&period=2025-09-01&period2=1)
