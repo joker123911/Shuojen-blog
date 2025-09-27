@@ -142,14 +142,9 @@ const config = {
           label: '攝影',
           position: 'left'},
           {
-            to: '/blog/archive',
+            to: '/all-archive',
             position: 'left',
-            label: '貼文日期列表',
-          },
-          {
-            to: 'photoblog/photo-archive',
-            position: 'left',
-            label: '攝影日期列表',
+            label: '日期列表',
           },
         ],
       },
