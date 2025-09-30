@@ -24,7 +24,7 @@ sidebar_position: 1
 </video>
 
 
-## [殘酷天使的行動綱領指彈](https://www.youtube.com/watch?v=n-CGdxN-qMs)
+## [殘酷天使的行動綱領指彈](https://www.youtube.com/watch?v=6s7bS0f-x5w)
 
 *2019-08-27*
 
@@ -48,8 +48,8 @@ sidebar_position: 1
 
 <div className="video-container">
   <iframe 
-    width="480" 
-    height="270" 
+    width="320" 
+    height="180" 
     src="https://www.youtube.com/embed/n-CGdxN-qMs?si=H4LsG5K8DwAIWzvN" 
     title="YouTube video player" 
     frameborder="0" 
@@ -66,8 +66,8 @@ sidebar_position: 1
 
 <div className="video-container">
   <iframe 
-    width="960" 
-    height="540" 
+    width="320" 
+    height="180"
     src="https://www.youtube.com/embed/W58l8R4_l78?si=g7YhDyFJItzLVJVd" 
     title="YouTube video player" 
     frameborder="0" 
@@ -84,8 +84,8 @@ sidebar_position: 1
 
 <div className="video-container">
   <iframe 
-    width="960" 
-    height="540" 
+    width="320" 
+    height="180"
     src="https://www.youtube.com/embed/Dn8XpdjW7KQ?si=NLlyfTt2RcqGC4CT" 
     title="YouTube video player" 
     frameborder="0" 
@@ -104,8 +104,8 @@ sidebar_position: 1
 
 <div className="video-container">
   <iframe 
-    width="960" 
-    height="540" 
+    width="320" 
+    height="180"
     src="https://www.youtube.com/embed/fKK2WNVNJh0?si=FO35MRVKxbVVI8cG" 
     title="YouTube video player" 
     frameborder="0" 
@@ -122,8 +122,8 @@ sidebar_position: 1
 
 <div className="video-container">
   <iframe 
-    width="960" 
-    height="540" 
+    width="320" 
+    height="180"
     src="https://www.youtube.com/embed/cNekHS9r4IY?si=qCMeaws_EmL1b0Pl"  
     title="YouTube video player" 
     frameborder="0" 
@@ -140,8 +140,8 @@ sidebar_position: 1
 
 <div className="video-container">
   <iframe 
-    width="960" 
-    height="540" 
+    width="320" 
+    height="180"
     src="https://www.youtube.com/embed/tCqPiHQq02c?si=UU_vQ1Ng1_D9me7o" 
     title="YouTube video player" 
     frameborder="0" 
@@ -164,8 +164,8 @@ sidebar_position: 1
 
 <div className="video-container">
   <iframe 
-    width="960" 
-    height="540" 
+    width="320" 
+    height="180" 
     src="https://www.youtube.com/embed/SGEJhruTwWs?si=JsBpix_90sOm5Lq4"  
     title="YouTube video player" 
     frameborder="0" 
@@ -182,8 +182,8 @@ MV很讚。
 
 <div className="video-container">
   <iframe 
-    width="960" 
-    height="540" 
+    width="320" 
+    height="180"
     src="https://www.youtube.com/embed/lpkekYrl1Qo?si=UVXihzydgqfYg3XH" 
     title="YouTube video player" 
     frameborder="0" 
