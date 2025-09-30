@@ -7,7 +7,7 @@ sidebar_position: 1
 
 *2017-01-10*
 
-<video controls width="960">
+<video controls width="320">
     <source src="/video/004.mp4" type="video/mp4" />
 
     抱歉，您的瀏覽器不支援內嵌影片。
@@ -17,7 +17,7 @@ sidebar_position: 1
 
 *2019-01-07*
 
-<video controls width="960">
+<video controls width="320">
     <source src="/video/007.mp4" type="video/mp4" />
 
     抱歉，您的瀏覽器不支援內嵌影片。
@@ -30,8 +30,8 @@ sidebar_position: 1
 
 <div className="video-container">
   <iframe 
-    width="960" 
-    height="540" 
+    width="320" 
+    height="180" 
     src="https://www.youtube.com/embed/6s7bS0f-x5w?si=aiLSSXAp54A2cSKQ"
     title="YouTube video player" 
     frameborder="0" 
@@ -48,8 +48,8 @@ sidebar_position: 1
 
 <div className="video-container">
   <iframe 
-    width="960" 
-    height="540" 
+    width="480" 
+    height="270" 
     src="https://www.youtube.com/embed/n-CGdxN-qMs?si=H4LsG5K8DwAIWzvN" 
     title="YouTube video player" 
     frameborder="0" 
