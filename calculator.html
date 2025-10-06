@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>投資報酬試算表</title>
+<title>高精度互動式投資報酬試算表</title>
 <style>
-    /* 整體樣式 */
+    /* 樣式與前一版相同 */
     body {
         font-family: 'Helvetica Neue', Arial, 'Heiti TC', 'Microsoft JhengHei', sans-serif;
         background-color: #f4f7f9;
@@ -14,7 +14,6 @@
         justify-content: center;
         padding: 20px;
     }
-    /* 計算機容器 */
     .calculator-container {
         width: 100%;
         max-width: 600px;
@@ -28,7 +27,6 @@
         color: #0056b3;
         margin-bottom: 20px;
     }
-    /* 輸入區塊 */
     .input-group {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -54,14 +52,12 @@
         outline: none;
         border-color: #0056b3;
     }
-    /* 說明文字 */
     .unit-info {
         font-size: 13px;
         color: #666;
         text-align: right;
         margin-bottom: 20px;
     }
-    /* 按鈕 */
     .calculate-btn {
         display: block;
         width: 100%;
@@ -77,7 +73,6 @@
     .calculate-btn:hover {
         background-color: #0056b3;
     }
-    /* 結果表格 */
     .results-table {
         margin-top: 25px;
         width: 100%;
@@ -85,31 +80,45 @@
     }
     .results-table th, .results-table td {
         border: 1px solid #ddd;
-        padding: 10px;
+        padding: 5px;
         text-align: center;
+        vertical-align: middle;
     }
     .results-table th {
         background-color: #007bff;
         color: white;
         font-weight: bold;
+        padding: 10px;
     }
-    /* 表格奇偶行變色 */
+    .results-table input {
+        width: 90%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        text-align: center;
+        font-size: 14px;
+        -moz-appearance: textfield;
+    }
+    .results-table input::-webkit-outer-spin-button,
+    .results-table input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
     .results-table tbody tr:nth-child(even) {
         background-color: #f2f2f2;
     }
-    /* 錯誤訊息 */
     #error-message {
         color: red;
         text-align: center;
         margin-top: 15px;
-        display: none; /* 預設隱藏 */
+        display: none;
     }
 </style>
 </head>
 <body>
 
 <div class="calculator-container">
-    <h2>複利成長試算表</h2>
+    <h2>複利試算表</h2>
 
     <div class="input-group">
         <div class="input-field">
@@ -122,7 +131,7 @@
         </div>
         <div class="input-field">
             <label for="annualSavings">每年存入金額</label>
-            <input type="number" id="annualSavings" value="6">
+            <input type="number" id="annualSavings" value="12">
         </div>
         <div class="input-field">
             <label for="rateOfReturn">年報酬率 (%)</label>
@@ -131,7 +140,7 @@
     </div>
     <div class="unit-info">金額單位：萬元</div>
 
-    <button class="calculate-btn" onclick="calculate()">開始計算</button>
+    <button class="calculate-btn" onclick="generateInitialTable()">產生/重設表格</button>
     <p id="error-message"></p>
 
     <table class="results-table">
@@ -144,61 +153,80 @@
             </tr>
         </thead>
         <tbody id="results-body">
-            </tbody>
+        </tbody>
     </table>
 </div>
 
 <script>
-    // 網頁載入後先執行一次計算
-    document.addEventListener('DOMContentLoaded', calculate);
+    document.addEventListener('DOMContentLoaded', generateInitialTable);
 
-    function calculate() {
-        // 1. 取得使用者輸入的數值
+    function generateInitialTable() {
         const startAge = parseInt(document.getElementById('startAge').value);
         const endAge = parseInt(document.getElementById('endAge').value);
         const annualSavings = parseFloat(document.getElementById('annualSavings').value);
-        const rateOfReturn = parseFloat(document.getElementById('rateOfReturn').value) / 100; // 將百分比轉換為小數
-
         const resultsBody = document.getElementById('results-body');
         const errorMessage = document.getElementById('error-message');
-
-        // 2. 清空舊的結果和錯誤訊息
         resultsBody.innerHTML = '';
         errorMessage.style.display = 'none';
 
-        // 3. 檢查輸入是否有效
-        if (isNaN(startAge) || isNaN(endAge) || isNaN(annualSavings) || isNaN(rateOfReturn) || startAge >= endAge) {
+        if (isNaN(startAge) || isNaN(endAge) || isNaN(annualSavings) || startAge >= endAge) {
             errorMessage.textContent = '請輸入有效的數字，且起始年齡必須小於結束年齡。';
             errorMessage.style.display = 'block';
             return;
         }
 
-        // 4. 開始計算
-        let totalAmount = 0; // 初始總金額為 0
-
         for (let age = startAge; age <= endAge; age++) {
-            let currentYearReturn = 0;
-
-            // 從第二年開始，報酬是基於上一年的總金額計算
-            if (age > startAge) {
-                currentYearReturn = totalAmount * rateOfReturn;
-            }
-
-            // 更新總金額：上一年的總額 + 今年存入的錢 + 今年的報酬
-            totalAmount += annualSavings + currentYearReturn;
-
-            // 5. 建立新的表格行 (row) 並填入資料
             const row = document.createElement('tr');
-
+            // 我們在累計總金額的 input 中新增了一個 'data-full-value' 屬性
             row.innerHTML = `
                 <td>${age}</td>
-                <td>${annualSavings.toFixed(1)}</td>
-                <td>${currentYearReturn.toFixed(1)}</td>
-                <td>${totalAmount.toFixed(1)}</td>
+                <td><input type="number" id="savings-${age}" value="${annualSavings.toFixed(1)}" step="0.1" onchange="handleSavingsChange(${age})"></td>
+                <td id="return-${age}">0.0</td>
+                <td><input type="number" id="total-${age}" value="0.0" data-full-value="0.0" step="0.1" onchange="handleTotalChange(${age})"></td>
             `;
-
-            // 6. 將新的一行加入到表格中
             resultsBody.appendChild(row);
+        }
+        updateFromRow(startAge);
+    }
+
+    function handleSavingsChange(age) {
+        updateFromRow(age);
+    }
+
+    function handleTotalChange(age) {
+        const endAge = parseInt(document.getElementById('endAge').value);
+
+        // **ADDED**: 當手動修改總額時，同步更新背後儲存的精確值
+        const changedTotalInput = document.getElementById(`total-${age}`);
+        changedTotalInput.dataset.fullValue = parseFloat(changedTotalInput.value);
+
+        if (age < endAge) {
+            updateFromRow(age + 1);
+        }
+    }
+
+    function updateFromRow(startUpdateAge) {
+        const startAge = parseInt(document.getElementById('startAge').value);
+        const endAge = parseInt(document.getElementById('endAge').value);
+        const rateOfReturn = parseFloat(document.getElementById('rateOfReturn').value) / 100;
+
+        for (let age = startUpdateAge; age <= endAge; age++) {
+            // **CHANGED**: 優先讀取 'data-full-value' 的精確值來計算
+            const prevTotalElement = document.getElementById(`total-${age - 1}`);
+            const previousTotal = (age === startAge) ? 0 : parseFloat(prevTotalElement.dataset.fullValue || prevTotalElement.value);
+
+            const currentSavings = parseFloat(document.getElementById(`savings-${age}`).value);
+
+            // 計算過程完全使用浮點數，不進行四捨五入
+            const currentReturn = previousTotal * rateOfReturn;
+            const newTotal = previousTotal + currentReturn + currentSavings;
+
+            // **CHANGED**: 分別更新「顯示值」和「精確值」
+            const totalInput = document.getElementById(`total-${age}`);
+            document.getElementById(`return-${age}`).textContent = currentReturn.toFixed(1); // 報酬只用於顯示，所以直接四捨五入
+
+            totalInput.value = newTotal.toFixed(1); // 更新顯示用的值 (小數點後一位)
+            totalInput.dataset.fullValue = newTotal.toFixed(5); // 更新計算用的值 (小數點後五位)
         }
     }
 </script>
