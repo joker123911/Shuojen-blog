@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>投資報酬試算表</title>
+<style>
+    /* 整體樣式 */
+    body {
+        font-family: 'Helvetica Neue', Arial, 'Heiti TC', 'Microsoft JhengHei', sans-serif;
+        background-color: #f4f7f9;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
+    /* 計算機容器 */
+    .calculator-container {
+        width: 100%;
+        max-width: 600px;
+        background-color: #fff;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    h2 {
+        text-align: center;
+        color: #0056b3;
+        margin-bottom: 20px;
+    }
+    /* 輸入區塊 */
+    .input-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    .input-field {
+        display: flex;
+        flex-direction: column;
+    }
+    .input-field label {
+        margin-bottom: 5px;
+        color: #555;
+        font-size: 14px;
+    }
+    .input-field input {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    .input-field input:focus {
+        outline: none;
+        border-color: #0056b3;
+    }
+    /* 說明文字 */
+    .unit-info {
+        font-size: 13px;
+        color: #666;
+        text-align: right;
+        margin-bottom: 20px;
+    }
+    /* 按鈕 */
+    .calculate-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .calculate-btn:hover {
+        background-color: #0056b3;
+    }
+    /* 結果表格 */
+    .results-table {
+        margin-top: 25px;
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .results-table th, .results-table td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+    }
+    .results-table th {
+        background-color: #007bff;
+        color: white;
+        font-weight: bold;
+    }
+    /* 表格奇偶行變色 */
+    .results-table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    /* 錯誤訊息 */
+    #error-message {
+        color: red;
+        text-align: center;
+        margin-top: 15px;
+        display: none; /* 預設隱藏 */
+    }
+</style>
+</head>
+<body>
+
+<div class="calculator-container">
+    <h2>複利成長試算表</h2>
+
+    <div class="input-group">
+        <div class="input-field">
+            <label for="startAge">起始年齡</label>
+            <input type="number" id="startAge" value="27">
+        </div>
+        <div class="input-field">
+            <label for="endAge">結束年齡</label>
+            <input type="number" id="endAge" value="67">
+        </div>
+        <div class="input-field">
+            <label for="annualSavings">每年存入金額</label>
+            <input type="number" id="annualSavings" value="6">
+        </div>
+        <div class="input-field">
+            <label for="rateOfReturn">年報酬率 (%)</label>
+            <input type="number" id="rateOfReturn" value="5">
+        </div>
+    </div>
+    <div class="unit-info">金額單位：萬元</div>
+
+    <button class="calculate-btn" onclick="calculate()">開始計算</button>
+    <p id="error-message"></p>
+
+    <table class="results-table">
+        <thead>
+            <tr>
+                <th>年齡</th>
+                <th>年存金額</th>
+                <th>當年度報酬</th>
+                <th>累計總金額</th>
+            </tr>
+        </thead>
+        <tbody id="results-body">
+            </tbody>
+    </table>
+</div>
+
+<script>
+    // 網頁載入後先執行一次計算
+    document.addEventListener('DOMContentLoaded', calculate);
+
+    function calculate() {
+        // 1. 取得使用者輸入的數值
+        const startAge = parseInt(document.getElementById('startAge').value);
+        const endAge = parseInt(document.getElementById('endAge').value);
+        const annualSavings = parseFloat(document.getElementById('annualSavings').value);
+        const rateOfReturn = parseFloat(document.getElementById('rateOfReturn').value) / 100; // 將百分比轉換為小數
+
+        const resultsBody = document.getElementById('results-body');
+        const errorMessage = document.getElementById('error-message');
+
+        // 2. 清空舊的結果和錯誤訊息
+        resultsBody.innerHTML = '';
+        errorMessage.style.display = 'none';
+
+        // 3. 檢查輸入是否有效
+        if (isNaN(startAge) || isNaN(endAge) || isNaN(annualSavings) || isNaN(rateOfReturn) || startAge >= endAge) {
+            errorMessage.textContent = '請輸入有效的數字，且起始年齡必須小於結束年齡。';
+            errorMessage.style.display = 'block';
+            return;
+        }
+
+        // 4. 開始計算
+        let totalAmount = 0; // 初始總金額為 0
+
+        for (let age = startAge; age <= endAge; age++) {
+            let currentYearReturn = 0;
+
+            // 從第二年開始，報酬是基於上一年的總金額計算
+            if (age > startAge) {
+                currentYearReturn = totalAmount * rateOfReturn;
+            }
+
+            // 更新總金額：上一年的總額 + 今年存入的錢 + 今年的報酬
+            totalAmount += annualSavings + currentYearReturn;
+
+            // 5. 建立新的表格行 (row) 並填入資料
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>${age}</td>
+                <td>${annualSavings.toFixed(1)}</td>
+                <td>${currentYearReturn.toFixed(1)}</td>
+                <td>${totalAmount.toFixed(1)}</td>
+            `;
+
+            // 6. 將新的一行加入到表格中
+            resultsBody.appendChild(row);
+        }
+    }
+</script>
+
+</body>
+</html>
