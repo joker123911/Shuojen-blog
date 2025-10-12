@@ -111,6 +111,12 @@ const config = {
         //editUrl: 'https://github.com/joker123911/Shuojen-blog/tree/main/', // <-- 同樣更新 Edit URL
       },
     ],
+    [
+    require.resolve("@easyops-cn/docusaurus-search-local"),
+          {
+            hashed: true,
+          },
+    ],
   ],
 
   themeConfig:
