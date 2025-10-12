@@ -5,8 +5,8 @@ tags: ['fun','tool','type']
 
 ## 打字測試
 
-今天看了JN寫的這篇[文章](https://blog.giveanornot.com/trying-boshiamy/)，
-非常好奇於是測試了自己的中打速度，我使用的測試網站是[Typing.tw](https://typing.tw/app/?action=setting)，使用隨機文章測驗10分鐘，比照實際中打測驗[^1]的規則，長時間的結果也會更為準確。
+今天看了 JN 寫的這篇[文章](https://blog.giveanornot.com/trying-boshiamy/)，
+非常好奇於是測試了自己的中打速度，我使用的測試網站是 [Typing.tw](https://typing.tw/app/?action=setting)，使用隨機文章測驗 10 分鐘，比照實際中打測驗[^1]的規則，長時間的結果也會更為準確。
 
 ![img](./img_20251002/resized.jpg)
 
@@ -27,4 +27,4 @@ tags: ['fun','tool','type']
 這篇文章的標題跟第一行是用嘸蝦米打字的，但是我怕我打到早上還寫不完只好暫且作罷。
 :::
 
-[^1]: 網路上有只打單詞的中打測試，通常注音輸入法都會自動辨識，灌水程度太高，孱弱如我都可以打到130wpm。
+[^1]: 網路上有只打單詞的中打測試，通常注音輸入法都會自動辨識，灌水程度太高，孱弱如我都可以打到 130 wpm。
