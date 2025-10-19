@@ -2,7 +2,7 @@
 title: '魔術方塊紀錄'
 sidebar_position: 2
 ---
-*最後更新2025-09-22*
+*最後更新2025-10-19*
 ## 比賽紀錄&成績
 這是我的[世界魔術方塊協會(WCA)](https://www.worldcubeassociation.org/persons/2021HAUN01)頁面
 
@@ -77,9 +77,12 @@ sidebar_position: 2
     抱歉，您的瀏覽器不支援內嵌影片。
 </video>
 
-## 新竹版聚
+## 新竹魔術方塊版聚
 
 在新竹讀研究所的時候，常常去參加方塊圈元老玩家林彥州舉辦的版聚，非常好玩，學習到很多，也認識很多好朋友。
+
+[版聚](https://shuojen.site/blog/2025/10/17/rubiks)要在 2025 年底進入尾聲了，非常感謝彥州這些年的付出，以此紀念。
+
 ![img](./img/003.jpg)
 
 ![img](./img/004.jpg)

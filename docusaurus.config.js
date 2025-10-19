@@ -157,16 +157,16 @@ const config = {
             position: 'left',
             label: '攝影列表',
           },
-          {
-            to: '/blog/tags',
-            position: 'right',
-            label: '貼文標籤',
-          },
-          {
-            to: '/photoblog/tags',
-            position: 'right',
-            label: '攝影標籤',
-          },
+          //{
+          //  to: '/blog/tags',
+          //  position: 'right',
+          //  label: '貼文標籤',
+          //},
+          //{
+          //  to: '/photoblog/tags',
+          //  position: 'right',
+          //  label: '攝影標籤',
+          //},
         ],
       },
       footer: {
