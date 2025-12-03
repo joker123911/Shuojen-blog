@@ -115,6 +115,7 @@ const config = {
     require.resolve("@easyops-cn/docusaurus-search-local"),
           {
             hashed: true,
+            language:["en", "zh"],
           },
     ],
   ],

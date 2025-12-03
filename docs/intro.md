@@ -27,6 +27,6 @@ sidebar_position: 1
 
 ## [魔術方塊](https://shuojen.site/docs/rubiks_cube/start)
 
-記錄玩魔術方塊的故事還有WCA比賽，之後把我所有買過的方塊補充上來。
+記錄玩魔術方塊的故事還有 WCA 比賽，之後把我所有買過的方塊補充上來。
 
 
