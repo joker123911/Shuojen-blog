@@ -29,4 +29,6 @@ sidebar_position: 1
 
 記錄玩魔術方塊的故事還有 WCA 比賽，之後把我所有買過的方塊補充上來。
 
+## [機械鍵盤](https://shuojen.site/docs/keyboard)
 
+記錄一些機械鍵盤指南，還有跟大隊長、王胖一起玩鍵盤的過程。
