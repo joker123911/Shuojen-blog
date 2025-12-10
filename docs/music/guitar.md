@@ -76,7 +76,7 @@ sidebar_position: 1
   </iframe>
 </div>
 
-## [Beyond-海闊天空SOLO](https://www.youtube.com/watch?v=Dn8XpdjW7KQ)
+## [Beyond-海闊天空 SOLO](https://www.youtube.com/watch?v=Dn8XpdjW7KQ)
 
 *2023-08-07*
 
@@ -94,11 +94,11 @@ sidebar_position: 1
   </iframe>
 </div>
 
-## [小安-憂愁SOLO](https://youtu.be/fKK2WNVNJh0)
+## [小安-憂愁 SOLO](https://youtu.be/fKK2WNVNJh0)
 
 *2023-08-10*
 
-去年這個時候，hank還在博愛六舍，每天放著小安的憂愁，如今的hank已經...
+去年這個時候，hank 還在博愛六舍，每天放著小安的憂愁，如今的 hank 已經...
 
 已經畢業了，我也是，耶。
 
@@ -114,11 +114,11 @@ sidebar_position: 1
   </iframe>
 </div>
 
-## [陳奕迅-讓我留在你身邊SOLO](https://youtu.be/cNekHS9r4IY)
+## [陳奕迅-讓我留在你身邊 SOLO](https://youtu.be/cNekHS9r4IY)
 
 *2023-08-11*
 
-2016年，是大二的時候吧。陳奕迅剛發行這首歌，忘記是系學會還是哪裡要辦活動，原本班上同學要組團表演這首歌，之後不知道什麼原因就無疾而終了。後來想想，整個大學的時候都沒組團，真的太可惜了。畢業後的大家都各奔東西，只會被忙碌的生活不停地追趕，如果想要留下一些什麼，有時候就是不能猶豫阿。步入社會後，希望大家都能活成許多年前，自己想成為的那個樣子。
+2016 年，是大二的時候吧。陳奕迅剛發行這首歌，忘記是系學會還是哪裡要辦活動，原本班上同學要組團表演這首歌，之後不知道什麼原因就無疾而終了。後來想想，整個大學的時候都沒組團，真的太可惜了。畢業後的大家都各奔東西，只會被忙碌的生活不停地追趕，如果想要留下一些什麼，有時候就是不能猶豫阿。步入社會後，希望大家都能活成許多年前，自己想成為的那個樣子。
 
 <div className="video-container">
   <iframe 
@@ -132,11 +132,11 @@ sidebar_position: 1
   </iframe>
 </div>
 
-## [伍佰-被動SOLO](https://youtu.be/tCqPiHQq02c)
+## [伍佰-被動 SOLO](https://youtu.be/tCqPiHQq02c)
 
 *2023-08-17*
 
-十年前第一次拿吉他，第一首學的曲子是伍佰的痛哭的人，1997年被動間奏solo的一聲李韋，也是從小聽到大的經典，很喜歡被動、鋼鐵男子、挪威的森林，這些很有伍佰風格的浪漫搖滾，陪伴著許多人長大，成為我們記憶不可或缺的一部份。
+十年前第一次拿吉他，第一首學的曲子是伍佰的痛哭的人，1997 年被動間奏 solo 的一聲李韋，也是從小聽到大的經典，很喜歡被動、鋼鐵男子、挪威的森林，這些很有伍佰風格的浪漫搖滾，陪伴著許多人長大，成為我們記憶不可或缺的一部份。
 
 <div className="video-container">
   <iframe 
@@ -174,11 +174,11 @@ sidebar_position: 1
   </iframe>
 </div>
 
-## [楊乃文-說不出口SOLO](https://youtu.be/lpkekYrl1Qo)
+## [楊乃文-說不出口 SOLO](https://youtu.be/lpkekYrl1Qo)
 
 *2023-09-05*
 
-MV很讚。
+MV 很讚。
 
 <div className="video-container">
   <iframe 
