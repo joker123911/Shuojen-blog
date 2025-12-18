@@ -1,6 +1,6 @@
 ---
 title: '西洋棋紀錄'
-sidebar_position: 2
+sidebar_position: 3
 ---
 *最後更新：2025-09-21*
 
