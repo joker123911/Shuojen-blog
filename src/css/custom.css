@@ -4,7 +4,10 @@
  * work well for content-centric websites.
  */
 
-/* 1. 載入粉圓體 (請確保檔案放在 static/fonts/jf-openhuninn-2.1.ttf) */
+/* 1. 匯入 Rock Salt 手寫英文字體 */
+@import url('https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap');
+
+/* 2. 載入粉圓體 (請確保檔案放在 static/fonts/jf-openhuninn-2.1.ttf) */
 @font-face {
   font-family: 'jf-openhuninn';
   src: url('/fonts/jf-openhuninn-2.1.ttf') format('truetype');
@@ -15,13 +18,13 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  /* 2. 設定基礎字體大小為 18px */
+  /* 設定基礎字體大小為 18px */
   --ifm-font-size-base: 18px;
 
-  /* 3. 套用粉圓體至全站 */
+  /* 套用粉圓體至全站 */
   --ifm-font-family-base: 'jf-openhuninn', system-ui, -apple-system, sans-serif;
 
-  /* 稍微增加行高，讓圓潤的字體閱讀起來更舒服 */
+  /* 稍微增加行高 */
   --ifm-line-height-base: 1.6;
 
   --ifm-color-primary: #888888;
@@ -40,6 +43,30 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'jf-openhuninn', sans-serif;
 }
 
+/* --- 單獨設定左上角名字的 Rock Salt 手寫體 --- */
+.navbar__brand {
+  overflow: visible !important;
+  margin-right: 1rem;
+}
+
+.navbar__title {
+  font-family: 'Rock Salt', cursive !important;
+  /* Rock Salt 字體預設較小且發散，建議稍微調大並縮小間距 */
+  font-size: 1.0rem;
+  font-weight: 400;
+  letter-spacing: 0.5px; /* 稍微緊縮讓字體更有手寫感 */
+
+  /* 關鍵修復：解決 Rock Salt 容易被切邊的問題 */
+  line-height: 2.0 !important;
+  display: flex;
+  align-items: center;
+  overflow: visible !important;
+  padding: 8px 0; /* 給予更多的上下緩衝 */
+
+  /* 修正 Rock Salt 偏下的視覺問題 */
+  transform: translateY(-2px);
+}
+
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
   --ifm-color-primary: #888888;
@@ -50,4 +77,18 @@ h1, h2, h3, h4, h5, h6 {
   --ifm-color-primary-lighter: #9c9c9c;
   --ifm-color-primary-lightest: #b1b1b1;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* --- 手機版字體優化 --- */
+@media screen and (max-width: 996px) {
+  :root {
+    --ifm-font-size-base: 17px;
+  }
+
+  .navbar__title {
+    font-size: 0.9rem; /* 手機版名字稍微縮小防止破版 */
+  }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.4rem; }
 }

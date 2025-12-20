@@ -128,7 +128,7 @@ const config = {
         // highlight-start
         // --- 修改重點 4：修正導覽列標題 ---
         // 移除了之前建議刪除的註解，並設定一個簡潔的標題
-        title: 'Shuo-jen Huang',
+        title: 'Shuo-Jen Huang',
         // highlight-end
         logo: {
           alt: 'My Site Logo',
