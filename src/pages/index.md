@@ -1,11 +1,30 @@
-# 🏠首頁
-這裡是我記錄生活想法和筆記的地方，支持每個人都架設自己的網站，讓社群媒體不再受格式、軟體的限制，享受沒有***商業廣告***、沒有***演算法***、沒有***登入限制***的自由。
+import White from '@site/src/components/White';
+import Black from '@site/src/components/Black';
 
-你可以在這裡獲取 [RSS](https://shuojen.site/blog/2025/09/16/rss#%E8%AA%8D%E8%AD%98-rss) 連結，希望這個地方讓你感到有趣，很高興認識你。
+# 🏠首頁
+這裡是我記錄生活想法和筆記的地方，支持每個人都架設自己的網站，讓社群媒體不再受格式、軟體的限制，享受沒有**商業廣告**、沒有**演算法**、沒有**登入限制**的自由，希望這個地方讓你感到有趣，很高興認識你。
+
+>我直接在家門口放一個我最愛的四馬蘇格蘭開局，沒有為什麼，因為個人網頁很***自由***。
+
+<White pgn="1. e4 e5 2. Nf3 Nc6 3. Nc3 Nf6 3. d4" />
+
+你可以在這裡獲取 RSS 連結（ [那是什麼？](https://shuojen.site/blog/2025/09/16/rss#%E8%AA%8D%E8%AD%98-rss)）。
+Blog 貼文 RSS：
+
+```
+https://shuojen.site/blog/rss.xml`
+```
+
+攝影作品 RSS：
+
+```
+https://shuojen.site/photoblog/rss.xml
+```
+
 
 ## 內容簡介
 
- * [興趣](https://shuojen.site/docs/intro)：常駐的興趣分享區塊，選片困難症發作看這裡：[電影推薦清單](https://shuojen.site/docs/movie_list)。
+ * [興趣](https://shuojen.site/docs/intro)：常駐的興趣分享區塊，有西洋棋、魔術方塊等等 ，如果選片有困難的話看這裡：[電影推薦清單](https://shuojen.site/docs/movie_list)。
 
  * [貼文](https://shuojen.site/blog)：部落格式的不定時紀錄， 2025 以前的內容是從社群媒體搬運過來的。
 
