@@ -10,10 +10,9 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Shuo-jen Blog', // <-- 建議將這裡改成您的主要網站標題
+  title: 'Shuo-jen Blog',
   tagline: 'Hello',
   favicon: 'img/favicon.ico',
-
   future: {
     v4: true,
   },
@@ -21,13 +20,8 @@ const config = {
   url: 'https://shuojen.site/',
   baseUrl: '/',
 
-  // highlight-start
-  // --- 修改重點 1：修正 GitHub 專案資訊 ---
-  // 這裡需要填寫您自己的 GitHub 使用者名稱和倉庫名稱
-  // 這對於後續的部署和 "Edit this page" 連結至關重要
-  organizationName: 'joker123911', // 您的 GitHub 使用者名稱
-  projectName: 'Shuojen-blog', // 您的 GitHub 倉庫名稱
-  // highlight-end
+  organizationName: 'joker123911',
+  projectName: 'Shuojen-blog',
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -44,13 +38,8 @@ const config = {
       ({
         docs: {
           sidebarPath: './sidebars.js',
-          // highlight-start
-          // --- 修改重點 2：更新 Edit URL ---
-          // 讓「編輯此頁」連結指向您正確的倉庫
-          // editUrl: 'https://github.com/joker123911/Shuojen-blog/tree/main/',
-          // highlight-end
         },
-        blog: false, // 維持停用 presets 中的 blog
+        blog: false,
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -62,41 +51,35 @@ const config = {
     [
       '@docusaurus/plugin-content-blog',
       {
-        // === 這是您原本的「貼文」部落格 ===
         id: 'default',
         routeBasePath: 'blog',
         path: './blog',
         showReadingTime: true,
         blogTitle: '貼文與想法',
         blogDescription: '這裡是我的貼文與想法，歡迎訂閱 RSS！',
-        // highlight-start
-        // --- 修改重點 3：為「貼文」也加上側邊欄設定 ---
         blogSidebarTitle: '全部貼文',
         blogSidebarCount: 'ALL',
         archiveBasePath: 'archive',
-        // highlight-end
         feedOptions: {
           type: 'all',
           title: 'Shuo-jen Blog',
           description: '訂閱追蹤最新的貼文！',
-          copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen ,Huang`,
+          copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen Huang`,
           language: 'zh-TW',
         },
         onInlineTags: 'warn',
         onInlineAuthors: 'warn',
         onUntruncatedBlogPosts: 'warn',
-        //editUrl: 'https://github.com/joker123911/Shuojen-blog/tree/main/', // <-- 同樣更新 Edit URL
       },
     ],
     [
       '@docusaurus/plugin-content-blog',
       {
-        // === 這是您新增的「攝影」作品集 ===
-        id: 'photoblog', // ID 從 portfolio 改成 photoblog，與路徑統一
-        routeBasePath: 'photoblog', // 路徑從 portfolio 改成 photoblog
-        path: './photoblog', // 資料夾從 portfolio 改成 photoblog
-        showReadingTime: false, // 攝影作品不需要閱讀時間
-        blogSidebarTitle: '全部作品', // 標題改為「近期作品」
+        id: 'photoblog',
+        routeBasePath: 'photoblog',
+        path: './photoblog',
+        showReadingTime: false,
+        blogSidebarTitle: '全部作品',
         blogSidebarCount: 'ALL',
         archiveBasePath: 'photo-archive',
         blogTitle: '攝影作品集',
@@ -108,7 +91,6 @@ const config = {
           copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen Huang`,
           language: 'zh-TW',
         },
-        //editUrl: 'https://github.com/joker123911/Shuojen-blog/tree/main/', // <-- 同樣更新 Edit URL
       },
     ],
     [
@@ -125,11 +107,7 @@ const config = {
     ({
       image: 'img/me.webp',
       navbar: {
-        // highlight-start
-        // --- 修改重點 4：修正導覽列標題 ---
-        // 移除了之前建議刪除的註解，並設定一個簡潔的標題
         title: 'Shuo-Jen Huang',
-        // highlight-end
         logo: {
           alt: 'My Site Logo',
           src: 'img/logo.png',
@@ -150,7 +128,7 @@ const config = {
             label: '貼文列表',
           },
           {
-          to: '/photoblog', // <-- 路徑對應上面 plugins 的設定
+          to: '/photoblog',
           label: '攝影',
           position: 'left'},
           {
@@ -158,16 +136,6 @@ const config = {
             position: 'left',
             label: '攝影列表',
           },
-          //{
-          //  to: '/blog/tags',
-          //  position: 'right',
-          //  label: '貼文標籤',
-          //},
-          //{
-          //  to: '/photoblog/tags',
-          //  position: 'right',
-          //  label: '攝影標籤',
-          //},
         ],
       },
       footer: {
@@ -204,13 +172,8 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                // highlight-start
-                // --- 額外修正：將這裡更新為您自己的 GitHub 倉庫 ---
                 href: 'https://github.com/joker123911/Shuojen-blog',
-                // highlight-end
               },
-              // highlight-start
-              // --- 在這裡新增您的兩個 RSS 連結 ---
               {
                 label: '貼文 RSS',
                 href: 'https://shuojen.site/blog/rss.xml',
@@ -219,12 +182,19 @@ const config = {
                 label: '攝影 RSS',
                 href: 'https://shuojen.site/photoblog/rss.xml',
               },
-              // --- 新增結束 ---
-              // highlight-end
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen,Huang`,
+        // highlight-start
+        // --- 修改重點：在此處加入了不蒜子的顯示 HTML ---
+        copyright: `
+        <div style="display: flex; justify-content: center; align-items: center;">
+          <span>Copyright © ${new Date().getFullYear()} Shuo-jen Huang.</span>
+          <a href="https://shuojen.site" style="margin-left: 10px; display: flex;">
+            <img src="https://visitor-badge.laobi.icu/badge?page_id=shuojen.site&left_text=Visitors&left_color=black&right_color=gray" alt="visitor badge"/>
+          </a>
+        </div>
+        `,
       },
       prism: {
         theme: prismThemes.github,

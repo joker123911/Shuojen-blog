@@ -22,7 +22,8 @@ import Marquee from "react-fast-marquee";
 
  * [攝影](https://shuojen.site/photoblog/)：偶爾出遊時心血來潮拍攝的作品紀錄。
 
-你可以在這裡獲取 RSS 連結（ [那是什麼？](https://shuojen.site/blog/2025/09/16/rss#%E8%AA%8D%E8%AD%98-rss)）。
+你可以在下方獲取 RSS 連結（ [那是什麼？](https://shuojen.site/blog/2025/09/16/rss#%E8%AA%8D%E8%AD%98-rss)）
+
 Blog 貼文 RSS：
 
 ```
