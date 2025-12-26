@@ -13,7 +13,7 @@ function ChessGameLogic({ pgn, orientation = "w" }) {
   const [moveIndex, setMoveIndex] = useState(0);
   const [history, setHistory] = useState([]);
   const [moves, setMoves] = useState([]);
-  const [isBoardReady, setIsBoardReady] = useState(false); // 新增狀態：確保棋盤已準備好
+  const [isBoardReady, setIsBoardReady] = useState(false);
 
   // 1. 解析 PGN
   useEffect(() => {
@@ -40,7 +40,7 @@ function ChessGameLogic({ pgn, orientation = "w" }) {
     }
   }, [pgn]);
 
-  // 2. 初始化棋盤 (修正非同步競爭問題)
+  // 2. 初始化棋盤 (修正熱更新導致的 invokeExtensionPoints 錯誤)
   useEffect(() => {
     let isMounted = true;
     let board = null;
@@ -51,9 +51,16 @@ function ChessGameLogic({ pgn, orientation = "w" }) {
 
         if (!isMounted || !boardRef.current) return;
 
-        // 如果已有實例，先清理
+        // 【關鍵修正】初始化前先清空容器，防止 Docusaurus HMR 導致重複掛載
+        if (boardRef.current) {
+          boardRef.current.innerHTML = '';
+        }
+
+        // 如果已有舊實例，嘗試銷毀它
         if (chessboardInstance.current) {
-          await chessboardInstance.current.destroy();
+          try {
+            await chessboardInstance.current.destroy();
+          } catch (e) { /* 忽略銷毀時的錯誤 */ }
         }
 
         board = new Chessboard(boardRef.current, {
@@ -68,35 +75,46 @@ function ChessGameLogic({ pgn, orientation = "w" }) {
           chessboardInstance.current = board;
           setIsBoardReady(true);
         } else {
-          board.destroy(); // 如果初始化完成時組件已卸載，立即銷毀
+          board.destroy();
         }
       } catch (err) {
-        console.error("Chessboard init error:", err);
+        console.error("Chessboard 初始化失敗:", err);
       }
     };
 
     initBoard();
 
+    // 清理函式
     return () => {
       isMounted = false;
       setIsBoardReady(false);
       if (chessboardInstance.current) {
-        // 使用一個變數暫存，避免與非同步過程衝突
         const instance = chessboardInstance.current;
         chessboardInstance.current = null;
-        instance.destroy();
+        // 使用延遲或 try-catch 確保 destroy 不會噴錯影響 React 渲染
+        setTimeout(() => {
+          try {
+            instance.destroy();
+          } catch (e) {
+            console.warn("清理棋盤實例時發生的警告:", e);
+          }
+        }, 0);
       }
     };
-  }, [orientation]); // 當 orientation 改變時重新初始化，這比 setOrientation 更穩定
+  }, [orientation]); // 僅在方向改變時重啟實例
 
-  // 3. 同步棋盤步數 (加上 isBoardReady 判斷)
+  // 3. 同步棋盤位置 (加入安全防護)
   useEffect(() => {
+    // 確保實例存在且已準備好
     if (isBoardReady && chessboardInstance.current && history[moveIndex]) {
-      // 使用 try-catch 防止 cm-chessboard 內部繪製錯誤崩潰
       try {
-        chessboardInstance.current.setPosition(history[moveIndex], true);
+        // 檢查實例是否還有 view 屬性，防止對已銷毀的對象操作
+        if (chessboardInstance.current.view) {
+          chessboardInstance.current.setPosition(history[moveIndex], true);
+        }
       } catch (e) {
-        console.warn("SetPosition failed:", e);
+        // 靜默處理，避免紅畫面
+        console.warn("setPosition 失敗，可能正處於組件切換中");
       }
     }
 
@@ -133,13 +151,13 @@ function ChessGameLogic({ pgn, orientation = "w" }) {
           width: "100%",
           aspectRatio: "1/1",
           marginBottom: "10px",
-          overflow: "hidden" // 確保不會有溢出的繪製問題
+          overflow: "hidden"
         }}
       />
 
       <div style={{ margin: "10px 0", display: "flex", justifyContent: "center", gap: "15px", alignItems: "center" }}>
         <button onClick={handlePrev} disabled={moveIndex === 0} style={{ padding: "5px 15px", cursor: "pointer" }}>&lt;</button>
-        <span style={{ fontWeight: "bold", minWidth: "60px", textAlign: "center" }}>
+        <span style={{ fontWeight: "bold", minWidth: "60px", textAlign: "center", color: "var(--ifm-color-emphasis-900)" }}>
            {moveIndex} / {Math.max(0, history.length - 1)}
         </span>
         <button onClick={handleNext} disabled={moveIndex === history.length - 1} style={{ padding: "5px 15px", cursor: "pointer" }}>&gt;</button>
@@ -151,8 +169,8 @@ function ChessGameLogic({ pgn, orientation = "w" }) {
           display: "flex",
           overflowX: "auto",
           whiteSpace: "nowrap",
-          backgroundColor: "rgba(150, 150, 150, 0.1)",
-          border: "1px solid rgba(150, 150, 150, 0.3)",
+          backgroundColor: "var(--ifm-color-emphasis-100)",
+          border: "1px solid var(--ifm-color-emphasis-300)",
           borderRadius: "4px",
           padding: "10px",
           gap: "12px",
@@ -161,7 +179,7 @@ function ChessGameLogic({ pgn, orientation = "w" }) {
       >
         {movePairs.map((pair) => (
           <div key={pair.turnNumber} style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
-            <span style={{ fontSize: "0.9rem", fontWeight: "bold", opacity: 0.6 }}>{pair.turnNumber}.</span>
+            <span style={{ color: "var(--ifm-color-emphasis-600)", fontSize: "0.9rem", fontWeight: "bold" }}>{pair.turnNumber}.</span>
             <span
               className={moveIndex === pair.white.index ? "active-move" : ""}
               onClick={() => setMoveIndex(pair.white.index)}
@@ -170,7 +188,7 @@ function ChessGameLogic({ pgn, orientation = "w" }) {
                 padding: "2px 6px",
                 borderRadius: "3px",
                 backgroundColor: moveIndex === pair.white.index ? "#ffcc00" : "transparent",
-                color: moveIndex === pair.white.index ? "#000" : "inherit",
+                color: moveIndex === pair.white.index ? "#000" : "var(--ifm-color-emphasis-900)",
                 fontWeight: moveIndex === pair.white.index ? "bold" : "normal",
               }}
             >
@@ -185,7 +203,7 @@ function ChessGameLogic({ pgn, orientation = "w" }) {
                   padding: "2px 6px",
                   borderRadius: "3px",
                   backgroundColor: moveIndex === pair.black.index ? "#ffcc00" : "transparent",
-                  color: moveIndex === pair.black.index ? "#000" : "inherit",
+                  color: moveIndex === pair.black.index ? "#000" : "var(--ifm-color-emphasis-900)",
                   fontWeight: moveIndex === pair.black.index ? "bold" : "normal",
                 }}
               >
