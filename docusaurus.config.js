@@ -119,6 +119,10 @@ const config = {
             position: 'left',
             label: '興趣',
           },
+          // --- 新增連結 ---
+          {to: '/use', label: '愛用', position: 'left'},
+          {to: '/now', label: '近況', position: 'left'},
+          // ----------------
           {to: '/blog',
           label: '貼文',
           position: 'left'},
@@ -148,6 +152,16 @@ const config = {
                 label: '興趣',
                 to: '/docs/intro',
               },
+              // --- 新增頁尾連結 ---
+              {
+                label: '愛用',
+                to: '/use',
+              },
+              {
+                label: '近況',
+                to: '/now',
+              },
+              // ------------------
               {
                 label: '貼文',
                 to: '/blog',
