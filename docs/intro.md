@@ -13,7 +13,7 @@ sidebar_position: 1
 
 以前玩的一些水草造景，之後會再補充一些個人的水族筆記。
 
-## [西洋棋](https://shuojen.site/docs/chess/chess_start)
+## [西洋棋](https://shuojen.site/docs/chess/introduce)
 
 記錄玩西洋棋的啟蒙還有一些記錄，之後想要詳細記錄我使用的開局系統。
 
