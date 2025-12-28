@@ -8,5 +8,5 @@ description: 近況更新
 *最後更新：2025-12-27*
 
 :::note
-待更新
+靈感參考自[Derek Sivers](https://sive.rs/now)。
 :::
