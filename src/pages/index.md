@@ -176,12 +176,12 @@ import Marquee from "react-fast-marquee";
 
 <Marquee gradient={false} speed={60}>
   <div style={{padding: '10px 0', fontSize: '1.1rem'}}>
-    我直接在家門口放一個我最愛的西洋棋開局：四♞蘇格蘭（Four knights Scotch），沒有為什麼，因為個人網頁很***自由***！
+    我直接在家門口放一個我最愛的西洋棋開局：四♞蘇格蘭，沒有為什麼，因為個人網頁很***自由***！
   </div>
 </Marquee>
 <White pgn="1. e4 e5 2. Nf3 Nc6 3. Nc3 Nf6 3. d4" />
 
-# 內容簡介
+# 主要內容
 
 <div className="content-grid">
   <a href="https://shuojen.site/docs/intro" className="custom-card">
@@ -216,6 +216,12 @@ https://shuojen.site/blog/rss.xml`
 ```
 https://shuojen.site/photoblog/rss.xml
 ```
+
+# 其他頁面
+* [我現在用什麼東西`/use`](https://shuojen.site/use)
+* [我最近在幹嘛`/now`](https://shuojen.site/now)
+* [貼文列表`/blog/archive`](https://shuojen.site/blog/archive)
+* [攝影列表`/photoblog/photo-archive`](https://shuojen.site/photoblog/photo-archive)
 
 # 關於我
 黃碩人，出生於西元 1998 年，現居臺北，土木工程師，女朋友綽號是蝦波。

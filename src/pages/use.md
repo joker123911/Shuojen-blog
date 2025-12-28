@@ -56,12 +56,11 @@ description: 記錄我愛用的工具
 
 富士
 * FujiFilm XT-20 - 主力相機，二手購入，用五年了還是覺得不需要升級。
-* XF18-55mmF2.8-4 R LM OIS - 好用的標準焦段套頭。
+* XF18-55mm F2.8-4 R LM OIS - 好用的標準焦段套頭。
 
 松下
 * Panasonic GM-1 - 街拍相機，二手購入。
 * Panasonic GF-3 - 家裡的街拍相機。
-* Lumix 20mm F1.7ii - 大光圈畫質好，不過對焦稍差，二手購入。
 * LUMIX 14mm F2.5 - 極輕便小餅乾鏡。
 * LUMIX 20mm F1.7ii - 大光圈畫質好，不過對焦稍差，二手購入。
 * LUMIX G VARIO 35-100mm F4.0-5.6 - 長焦掌心砲，二手購入。
@@ -89,7 +88,6 @@ description: 記錄我愛用的工具
 * 永駿智龍迷你四階 - 四階主力。
 * 永駿 MGC 四階。
 
-
 三階
 * 大雁 騰雲 M 一代 x2 - 我的最愛，三階盲解和速解主力。
 * 奇藝 Valk 3M - 被我改成練底十字專用。
@@ -102,7 +100,7 @@ description: 記錄我愛用的工具
 * 魔域 RS3M 再另一個某版本。
 * 大雁 孤鴻 v2m - 少數黑底的。 
 * 魔域 魅龍三階 - 第一次轉被嚇到，無磁三十元的方塊手感竟然這麼棒。
-* 小丸號 漩渦三階 VX3M - 支持本土，也不錯，臺灣的塑膠手感偏硬。
+* 小丸號 漩渦三階 VX3M - 支持本土，手感也不錯，臺灣的塑膠手感偏硬。
 * 奇藝 Valk 3m Elite - 兩進兩出的方塊，手感特異，綠色是所有方塊最好看的。
 
 二階
@@ -134,7 +132,7 @@ description: 記錄我愛用的工具
 
 作業系統
 * Windows - 主力用，很吃資源，想找時機換掉。
-* Linux Mint- 輕量速度快，但需要時間習慣，現在[客廳老電腦](https://shuojen.site/blog/2025/10/05/mint)偶爾用。
+* Linux Mint- 輕量速度快，但需要時間習慣，現在在[客廳老電腦](https://shuojen.site/blog/2025/10/05/mint)偶爾用。
 * macOS - 筆電較少用。
 
 電腦
@@ -147,7 +145,7 @@ description: 記錄我愛用的工具
 * Ableton Live Lite - 音樂編輯軟體。
 * Audacity - 另一個簡易的音樂編輯軟體。
 * Docusaurus - 架設靜態網頁工具。
-* Asunder - Linux 轉檔 CD 的工具，我寫過轉檔 CD 的[文章](https://shuojen.site/blog/2025/10/24/CD)。
+* Asunder - Linux 轉檔 CD 的工具，我寫過一篇轉檔 CD 的[文章](https://shuojen.site/blog/2025/10/24/CD)。
 * mp3tag - 整理所有 Aiff 資訊的工具。
 * LocalSent - 好用的共享檔案工具。
 * Lightroom CLassic - 現在都不修圖了，懶人直出。
@@ -158,10 +156,10 @@ Apps
 * Pitt - 習慣用的 Ptt 閱讀器。
 * Inoreader - 習慣用的 RSS 閱讀器。
 * ReVanced - 無廣告 Youtube 好用。
-* KKBOX - 無損串流音樂軟體。
+* KKBOX - 無損串流音樂平台。
 * USB Audio Player PRO - 本地無損音樂播放器，可 Bit Perfect。
 * AntennaPod - 習慣用的 Podcast 播放器。
 * Twisty Timer - 最好的魔術方塊計時器。
 * CalcES - 隨身 Casio 991。
 * KWGT - 自訂桌面工具。
-* 臺北市立圖書館 - 預約借書。
+* 臺北市立圖書館 - 預約借書用。
