@@ -8,7 +8,7 @@ description: 記錄我愛用的工具
 *最後更新：2025-12-28*
 
 :::note
-靈感參考自[Derek Sivers](https://sive.rs/uses)。
+靈感參考來自[Derek Sivers/What I use](https://sive.rs/uses)。
 :::
 
 ## 硬體
@@ -18,10 +18,10 @@ description: 記錄我愛用的工具
 * SAMSUNG Galaxy S25 - iPhone 6s 後就沒用過蘋果了，Android 比較好玩。
 
 ### 電腦相關
-
 * Intel i5-12400 - 大二組的電腦用 i5-8400，但器官移植多次到記不得什麼時候換 CPU 了。
 * NVIDIA GeForce RTX 3060 Ti - 朋友送的，感謝大恩大德。
 * Seasonic SYNCRO-Q7 - 另一個朋友送的機殼，感謝大恩大德。
+* MacBook Air（M1，2020 年）- 平時用筆電，讀研究所時購入，還是頭好壯壯。
 * MSI Optix MAG274QRF-QD - 好用的螢幕。
 * LG 22MP58VQ-P - 大二買的螢幕，現在充當副螢幕。
 * Universal Audio UA Volt 2 - 錄音介面兼耳機 DAC 使用。
@@ -29,7 +29,8 @@ description: 記錄我愛用的工具
 * Sennheiser HD 599 SE - 電鋼琴用耳機。
 * Sennheiser HD 600 - 音樂用耳機。
 * Edifier M1380 - 大二用到現在的桌上用喇叭。
-* MacBook Air（M1，2020 年）- 平時用筆電，讀研究所時購入，頭好壯壯。
+* Leobog Hi75 - 搭漢白玉軸，CP 值超高的鍵盤，手感一級棒。
+* Logitech G102 - 簡單好用的滑鼠，微動自己換又是一尾活龍。
 * Crucial X6 - 1TB SSD 行動硬碟。
 
 ### 音樂相關
@@ -68,6 +69,9 @@ description: 記錄我愛用的工具
 底片
 * Konica-Auto s1.6 - 小叔阿公留下來的底片相機。
 
+相機儲存
+* 收藏家 PC-69N - 57 公升防潮箱。
+
 ### [魔術方塊相關](https://shuojen.site/docs/rubiks_cube/start)
 
 七階
@@ -102,13 +106,13 @@ description: 記錄我愛用的工具
 * 奇藝 Valk 3m Elite - 兩進兩出的方塊，手感特異，綠色是所有方塊最好看的。
 
 二階
-* 奇藝 磁力二階 M - 二階主力。。
+* 奇藝 磁力二階 M - 二階主力。
 * 永駿 MGC 2m。
 * 魔域 魅龍 2m。
 
 異形
 * 永駿 御虎 v2m - 五魔主力。
-* XMD 鈴金字塔 v2 鈴塔 - Pyraminx 主力。
+* XMD 鈴金字塔 v2 - Pyraminx 主力。
 * 裕鑫 小魔法金字塔 M
 * 魔域 魅龍金字塔
 * XMD Volt 電 v2 全磁版 Square1 - Square1 主力。
@@ -116,26 +120,37 @@ description: 記錄我愛用的工具
 * 裕鑫 小魔法M Square-1
 * 淦源 磁力斜轉 芯定位版 Skewb - Skewb 主力。
 
-
 ### 交通相關
 
 * Honda MSX（2017）- 二手購入，上班通勤小檔車。
 * SYM GT125 - 方便騎的速可達。
 
+### 運動相關
+
+* 李寧 Lightning 疾速2000 - 羽球拍。
+* Tibhar MK Carbon 松平健太 - 桌球拍，正手金弓九丶反手 NITTAKU Fastarc C-1。
+
 ## 軟體
+
+作業系統
+* Windows - 主力用，很吃資源，想找時機換掉。
+* Linux Mint- 輕量速度快，但需要時間習慣，現在[客廳老電腦](https://shuojen.site/blog/2025/10/05/mint)偶爾用。
+* macOS - 筆電較少用。
 
 電腦
 * Brave - 最好用的瀏覽器。
 * Syncthing - 同步照片丶音樂很方便。
-* PyCharm Community Edition - 編輯部落格與程式碼。
+* PyCharm Community Edition - 編寫部落格文章與程式碼。
 * MusicBee - 本地無損音樂播放器。
 * foobar2000 - 另一個本地無損音樂播放器。
 * KeePassXC - 同步各裝置密碼。
 * Ableton Live Lite - 音樂編輯軟體。
+* Audacity - 另一個簡易的音樂編輯軟體。
 * Docusaurus - 架設靜態網頁工具。
 * Asunder - Linux 轉檔 CD 的工具，我寫過轉檔 CD 的[文章](https://shuojen.site/blog/2025/10/24/CD)。
 * mp3tag - 整理所有 Aiff 資訊的工具。
 * LocalSent - 好用的共享檔案工具。
+* Lightroom CLassic - 現在都不修圖了，懶人直出。
 
 Apps
 * 天天記帳 - 直覺的記帳軟體。
@@ -149,4 +164,4 @@ Apps
 * Twisty Timer - 最好的魔術方塊計時器。
 * CalcES - 隨身 Casio 991。
 * KWGT - 自訂桌面工具。
-* 臺北市立圖書館 - 預約借書好用。
+* 臺北市立圖書館 - 預約借書。
