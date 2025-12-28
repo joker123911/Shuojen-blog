@@ -3,9 +3,9 @@ title: 愛用清單
 description: 記錄我愛用的工具
 ---
 
-# What I USE `/use`
+# 我在用什麼 `/use`
 
-*最後更新：2025-12-27*
+*最後更新：2025-12-28*
 
 :::note
 靈感參考自[Derek Sivers](https://sive.rs/uses)。
@@ -15,7 +15,7 @@ description: 記錄我愛用的工具
 
 ### 手機
 
-* SAMSUNG Galaxy S25 - iphone 6s 後就沒用過蘋果了。
+* SAMSUNG Galaxy S25 - iPhone 6s 後就沒用過蘋果了，Android 比較好玩。
 
 ### 電腦相關
 
