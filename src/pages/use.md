@@ -1,5 +1,5 @@
 ---
-title: 愛用清單
+title: 愛用
 description: 記錄我愛用的工具
 ---
 

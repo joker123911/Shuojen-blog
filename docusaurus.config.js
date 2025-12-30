@@ -55,7 +55,7 @@ const config = {
         routeBasePath: 'blog',
         path: './blog',
         showReadingTime: true,
-        blogTitle: '貼文與想法',
+        blogTitle: '貼文',
         blogDescription: '這裡是我的貼文與想法，歡迎訂閱 RSS！',
         blogSidebarTitle: '全部貼文',
         blogSidebarCount: 'ALL',

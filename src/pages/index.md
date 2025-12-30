@@ -218,15 +218,15 @@ https://shuojen.site/photoblog/rss.xml
 ```
 
 # 其他頁面
-* [我現在用什麼東西`/use`](https://shuojen.site/use)
-* [我最近在幹嘛`/now`](https://shuojen.site/now)
+* [我在用什麼`/use`](https://shuojen.site/use)
+* [我在做什麼`/now`](https://shuojen.site/now)
 * [貼文列表`/blog/archive`](https://shuojen.site/blog/archive)
 * [攝影列表`/photoblog/photo-archive`](https://shuojen.site/photoblog/photo-archive)
 
 # 關於我
 黃碩人，出生於西元 1998 年，現居臺北，土木工程師，女朋友綽號是蝦波。
 
-![me](./img/resized.jpg)
+![me](./img/me.webp)
 
 # 聯絡我
 目前還沒有留言功能，有任何想法，歡迎聯絡我的信箱。
