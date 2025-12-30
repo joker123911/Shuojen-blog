@@ -3,122 +3,189 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>高精度互動式投資報酬試算表</title>
+<title>投資報酬試算表</title>
 <style>
-    /* 樣式與前一版相同 */
+    /* 完全對齊 Food App 的紫色系現代風格 */
+    :root {
+        --primary-purple: #6366f1; /* 擷取自圖片的紫色按鈕 */
+        --bg-color: #f8fafc;
+        --card-bg: #ffffff;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --border-color: #f1f5f9;
+        --radius-lg: 24px; /* 更大的圓角 */
+        --radius-md: 12px;
+        --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+    }
+
     body {
-        font-family: 'Helvetica Neue', Arial, 'Heiti TC', 'Microsoft JhengHei', sans-serif;
-        background-color: #f4f7f9;
-        color: #333;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
         display: flex;
         justify-content: center;
-        padding: 20px;
+        padding: 40px 20px;
+        margin: 0;
     }
+
     .calculator-container {
         width: 100%;
         max-width: 600px;
-        background-color: #fff;
-        padding: 25px;
-        border-radius: 10px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        background-color: var(--card-bg);
+        padding: 40px;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow);
     }
+
     h2 {
         text-align: center;
-        color: #0056b3;
-        margin-bottom: 20px;
+        color: var(--text-main);
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 8px;
     }
+
+    .subtitle {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 14px;
+        margin-bottom: 30px;
+    }
+
     .input-group {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 15px;
-        margin-bottom: 20px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        margin-bottom: 24px;
     }
+
     .input-field {
         display: flex;
         flex-direction: column;
     }
+
     .input-field label {
-        margin-bottom: 5px;
-        color: #555;
+        margin-bottom: 6px;
+        color: var(--text-main);
         font-size: 14px;
+        font-weight: 600;
     }
+
     .input-field input {
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
+        padding: 12px 16px;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
         font-size: 16px;
+        background-color: #fcfcfc;
+        transition: all 0.2s;
     }
+
     .input-field input:focus {
         outline: none;
-        border-color: #0056b3;
+        border-color: var(--primary-purple);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
     }
+
     .unit-info {
-        font-size: 13px;
-        color: #666;
+        font-size: 12px;
+        color: var(--text-muted);
         text-align: right;
-        margin-bottom: 20px;
+        margin-bottom: 12px;
     }
+
+    /* 擲骰子決定風格的按鈕 */
     .calculate-btn {
         display: block;
         width: 100%;
-        padding: 12px;
-        background-color: #007bff;
+        padding: 16px;
+        background-color: var(--primary-purple);
         color: white;
         border: none;
-        border-radius: 5px;
+        border-radius: var(--radius-md);
         font-size: 18px;
+        font-weight: 700;
         cursor: pointer;
-        transition: background-color 0.3s;
+        transition: transform 0.1s, background-color 0.2s;
+        margin-bottom: 20px;
     }
+
     .calculate-btn:hover {
-        background-color: #0056b3;
+        background-color: #4f46e5;
     }
+
+    .calculate-btn:active {
+        transform: scale(0.98);
+    }
+
+    /* 表格設計 */
+    .table-wrapper {
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+    }
+
     .results-table {
-        margin-top: 25px;
         width: 100%;
         border-collapse: collapse;
     }
-    .results-table th, .results-table td {
-        border: 1px solid #ddd;
-        padding: 5px;
-        text-align: center;
-        vertical-align: middle;
-    }
+
     .results-table th {
-        background-color: #007bff;
-        color: white;
-        font-weight: bold;
-        padding: 10px;
+        background-color: #f8fafc;
+        color: var(--text-muted);
+        font-size: 13px;
+        font-weight: 600;
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid var(--border-color);
     }
-    .results-table input {
-        width: 90%;
+
+    .results-table td {
         padding: 8px;
-        border: 1px solid #ccc;
+        border-bottom: 1px solid var(--border-color);
+        text-align: center;
+    }
+
+    .results-table input {
+        width: 80%;
+        padding: 6px;
+        border: 1px solid transparent;
         border-radius: 4px;
         text-align: center;
         font-size: 14px;
-        -moz-appearance: textfield;
+        background-color: transparent;
     }
-    .results-table input::-webkit-outer-spin-button,
-    .results-table input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
+
+    .results-table input:hover {
+        background-color: #f1f5f9;
     }
-    .results-table tbody tr:nth-child(even) {
-        background-color: #f2f2f2;
+
+    .results-table input:focus {
+        outline: none;
+        background-color: #fff;
+        border-color: var(--border-color);
     }
+
     #error-message {
-        color: red;
+        color: #ef4444;
         text-align: center;
-        margin-top: 15px;
+        font-size: 14px;
+        margin-top: 10px;
         display: none;
+    }
+
+    .footer-note {
+        text-align: center;
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 20px;
     }
 </style>
 </head>
 <body>
 
 <div class="calculator-container">
-    <h2>複利試算表</h2>
+    <h2>📈 複利試算表</h2>
+    <div class="subtitle">Shuojen.site 投資工具</div>
 
     <div class="input-group">
         <div class="input-field">
@@ -140,24 +207,29 @@
     </div>
     <div class="unit-info">金額單位：萬元</div>
 
-    <button class="calculate-btn" onclick="generateInitialTable()">產生/重設表格</button>
+    <button class="calculate-btn" onclick="generateInitialTable()">產生 / 重設表格</button>
     <p id="error-message"></p>
 
-    <table class="results-table">
-        <thead>
-            <tr>
-                <th>年齡</th>
-                <th>年存金額</th>
-                <th>當年度報酬</th>
-                <th>累計總金額</th>
-            </tr>
-        </thead>
-        <tbody id="results-body">
-        </tbody>
-    </table>
+    <div class="table-wrapper">
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>年齡</th>
+                    <th>年存</th>
+                    <th>報酬</th>
+                    <th>總金額</th>
+                </tr>
+            </thead>
+            <tbody id="results-body">
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer-note">© Shuojen-blog Financial Tool</div>
 </div>
 
 <script>
+    /* 核心邏輯完全保留不變 */
     document.addEventListener('DOMContentLoaded', generateInitialTable);
 
     function generateInitialTable() {
@@ -170,19 +242,18 @@
         errorMessage.style.display = 'none';
 
         if (isNaN(startAge) || isNaN(endAge) || isNaN(annualSavings) || startAge >= endAge) {
-            errorMessage.textContent = '請輸入有效的數字，且起始年齡必須小於結束年齡。';
+            errorMessage.textContent = '請輸入有效數字，起始年齡須小於結束年齡。';
             errorMessage.style.display = 'block';
             return;
         }
 
         for (let age = startAge; age <= endAge; age++) {
             const row = document.createElement('tr');
-            // 我們在累計總金額的 input 中新增了一個 'data-full-value' 屬性
             row.innerHTML = `
                 <td>${age}</td>
                 <td><input type="number" id="savings-${age}" value="${annualSavings.toFixed(1)}" step="0.1" onchange="handleSavingsChange(${age})"></td>
-                <td id="return-${age}">0.0</td>
-                <td><input type="number" id="total-${age}" value="0.0" data-full-value="0.0" step="0.1" onchange="handleTotalChange(${age})"></td>
+                <td id="return-${age}" style="color: #10b981; font-weight: 600;">0.0</td>
+                <td><input type="number" id="total-${age}" value="0.0" data-full-value="0.0" step="0.1" onchange="handleTotalChange(${age})" style="font-weight: 600;"></td>
             `;
             resultsBody.appendChild(row);
         }
@@ -195,8 +266,6 @@
 
     function handleTotalChange(age) {
         const endAge = parseInt(document.getElementById('endAge').value);
-
-        // **ADDED**: 當手動修改總額時，同步更新背後儲存的精確值
         const changedTotalInput = document.getElementById(`total-${age}`);
         changedTotalInput.dataset.fullValue = parseFloat(changedTotalInput.value);
 
@@ -211,22 +280,18 @@
         const rateOfReturn = parseFloat(document.getElementById('rateOfReturn').value) / 100;
 
         for (let age = startUpdateAge; age <= endAge; age++) {
-            // **CHANGED**: 優先讀取 'data-full-value' 的精確值來計算
             const prevTotalElement = document.getElementById(`total-${age - 1}`);
             const previousTotal = (age === startAge) ? 0 : parseFloat(prevTotalElement.dataset.fullValue || prevTotalElement.value);
 
             const currentSavings = parseFloat(document.getElementById(`savings-${age}`).value);
-
-            // 計算過程完全使用浮點數，不進行四捨五入
             const currentReturn = previousTotal * rateOfReturn;
             const newTotal = previousTotal + currentReturn + currentSavings;
 
-            // **CHANGED**: 分別更新「顯示值」和「精確值」
             const totalInput = document.getElementById(`total-${age}`);
-            document.getElementById(`return-${age}`).textContent = currentReturn.toFixed(1); // 報酬只用於顯示，所以直接四捨五入
+            document.getElementById(`return-${age}`).textContent = currentReturn.toFixed(1);
 
-            totalInput.value = newTotal.toFixed(1); // 更新顯示用的值 (小數點後一位)
-            totalInput.dataset.fullValue = newTotal.toFixed(5); // 更新計算用的值 (小數點後五位)
+            totalInput.value = newTotal.toFixed(1);
+            totalInput.dataset.fullValue = newTotal.toFixed(5);
         }
     }
 </script>

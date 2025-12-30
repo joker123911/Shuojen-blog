@@ -15,7 +15,7 @@ description: 近況更新
 * 寫部落格：從 2025 九月初開始經營，不定時更新，很喜歡這種整理人生軌跡的感覺。
 * [學嘸蝦米](https://shuojen.site/blog/2025/10/03/noshrimprice)：從 2025 十月初開始學，雖然還不快但是勉強可以用，現在部落格的內容都是用嘸蝦米打的，大概 35 wpm 左右。
 * 讀書：完全佛系的準備土木技師考試，我應該想辦法挖掘更多興趣與動力，例如把讀的東西寫成筆記整理在部落格之類的。
-* 健身：現在中午不定時會跟同事哲哲一起去健身房，我寫了一篇[文章](http://localhost:3001/blog/2025/10/14/workout)，可是這篇被蝦波發現了，被她反整。
+* 健身：現在中午不定時會跟同事哲哲一起去健身房，我寫了一篇[文章](https://shuojen.site/blog/2025/10/14/workout)，可是這篇被蝦波發現了，被她反整。
 * 桌球：每個禮拜三下班，跟同事峻寶寶去打桌球，現在正在學拉下旋。
 
 ## 最近在練習
@@ -31,4 +31,4 @@ description: 近況更新
 * [我的英雄學院](https://zh.wikipedia.org/zh-tw/%E6%88%91%E7%9A%84%E8%8B%B1%E9%9B%84%E5%AD%B8%E9%99%A2)：蝦波推薦，最終季在 IMDB 上拿下 9.9 分讓我太好奇了，希望從第一季開始的我看的到那裡。
 
 ## 最近喜歡的店
-* [BT BURGER](https://maps.app.goo.gl/bqRo8F547KVxC47v5)：跟蝦波[約會](http://localhost:3001/photoblog/2025/12/21/date)發現的寶藏店，義式培根蛋奶麵必點。
+* [BT BURGER](https://maps.app.goo.gl/bqRo8F547KVxC47v5)：跟蝦波[約會](https://shuojen.site/photoblog/2025/12/21/date)發現的寶藏店，義式培根蛋奶麵必點。
