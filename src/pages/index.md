@@ -226,10 +226,10 @@ https://shuojen.site/photoblog/rss.xml
 # 關於我
 黃碩人，出生於西元 1998 年，現居臺北，土木工程師，女朋友綽號是蝦波。
 
-![me](./img/me.webp)
+![me](./img/resized.jpg)
 
 # 聯絡我
-目前還沒有留言功能，有任何想法，歡迎聯絡我的信箱，測試中。
+目前還沒有留言功能，有任何想法，歡迎聯絡我的信箱。
 >me@shuojen.site
 
 

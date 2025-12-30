@@ -7,110 +7,111 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
         body { font-family: 'Noto Sans TC', sans-serif; }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        .fade-enter { opacity: 0; transform: translateY(10px); }
+        .fade-enter-active { opacity: 1; transform: translateY(0); transition: opacity 300ms, transform 300ms; }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen p-4 md:p-8 text-slate-700">
+<body class="bg-slate-50 min-h-screen p-3 sm:p-4 md:p-8 text-slate-700 flex flex-col items-center">
 
-    <div class="max-w-2xl mx-auto">
-        <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-10 border border-slate-100">
+    <div class="w-full max-w-2xl mx-auto">
+        <div class="bg-white rounded-[2rem] shadow-2xl p-4 sm:p-6 md:p-10 border border-slate-100">
 
-            <div class="flex flex-col sm:flex-row items-center justify-between mb-10 gap-4">
-                <div class="flex items-center gap-4">
-                    <div class="bg-indigo-600 w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200">
-                        <i class="fa-solid fa-utensils text-white text-xl"></i>
+            <div class="flex flex-col sm:flex-row items-center justify-between mb-8 md:mb-10 gap-4 text-center sm:text-left">
+                <div class="flex items-center gap-3 md:gap-4">
+                    <div class="bg-indigo-600 w-10 h-10 md:w-12 md:h-12 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200">
+                        <i class="fa-solid fa-utensils text-white text-lg md:text-xl"></i>
                     </div>
                     <div>
-                        <h1 class="text-2xl font-bold text-slate-800 tracking-tight">吃什麼都可以終結者</h1>
-                        <p class="text-xs text-slate-400">Shuojen.site </p>
+                        <h1 class="text-xl md:text-2xl font-bold text-slate-800 tracking-tight">吃什麼都可以終結者</h1>
+                        <p class="text-[10px] md:text-xs text-slate-400">Shuojen.site</p>
                     </div>
                 </div>
-                <div class="flex gap-2">
-                    <button onclick="toggleBatchArea()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 px-4 py-2 rounded-xl transition text-sm flex items-center gap-2">
+                <div class="flex gap-2 w-full sm:w-auto">
+                    <button onclick="toggleBatchArea()" class="flex-1 sm:flex-none bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-2 rounded-xl transition text-xs md:text-sm flex items-center justify-center gap-2">
                         <i class="fa-solid fa-file-import"></i> 批次處理
                     </button>
-                    <button onclick="toggleAddForm()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl transition text-sm flex items-center gap-2 shadow-md">
+                    <button onclick="toggleAddForm()" class="flex-1 sm:flex-none bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-xl transition text-xs md:text-sm flex items-center justify-center gap-2 shadow-md">
                         <i class="fa-solid fa-plus"></i> 新增
                     </button>
                 </div>
             </div>
 
-            <div id="batchArea" class="hidden mb-8 bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
-                <h3 class="font-bold text-slate-800 flex items-center gap-2">
+            <div id="batchArea" class="hidden mb-8 bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4">
+                <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm md:text-base">
                     <i class="fa-solid fa-database text-indigo-500"></i> 批次匯入/匯出
                 </h3>
-                <p class="text-xs text-slate-500">格式：名稱 | 距離 | 類型 | 標籤 (每行一家)</p>
-                <textarea id="batchInput" rows="6" class="w-full p-4 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none custom-scrollbar" placeholder="麥當勞 | 近 | 速食 | 便宜,快速"></textarea>
+                <p class="text-[10px] text-slate-500">格式：名稱 | 距離 | 類型 | 標籤 (每行一家)</p>
+                <textarea id="batchInput" rows="5" class="w-full p-3 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-indigo-500 outline-none custom-scrollbar font-mono" placeholder="麥當勞 | 近 | 速食 | 便宜,快速"></textarea>
                 <div class="flex gap-2">
-                    <button onclick="importBatch()" class="flex-1 bg-indigo-600 text-white py-2 rounded-xl text-sm font-bold hover:bg-indigo-700 transition">匯入並取代</button>
-                    <button onclick="exportBatch()" class="flex-1 bg-white border border-slate-200 text-slate-600 py-2 rounded-xl text-sm font-bold hover:bg-slate-50 transition">產生匯出字串</button>
+                    <button onclick="importBatch()" class="flex-1 bg-indigo-600 text-white py-2 rounded-xl text-xs font-bold">匯入取代</button>
+                    <button onclick="exportBatch()" class="flex-1 bg-white border border-slate-200 text-slate-600 py-2 rounded-xl text-xs font-bold">產生文字</button>
                 </div>
             </div>
 
-            <div id="gameMode" class="hidden space-y-8 animate-in fade-in duration-500">
-                <div class="bg-indigo-50 p-10 rounded-3xl text-center border border-indigo-100 relative overflow-hidden">
-                    <div class="absolute top-[-20px] right-[-20px] opacity-10 rotate-12">
-                        <i class="fa-solid fa-dice text-9xl text-indigo-900"></i>
+            <div id="gameMode" class="hidden space-y-6 md:space-y-8 animate-in fade-in duration-500">
+                <div class="bg-indigo-50 p-6 sm:p-10 rounded-3xl text-center border border-indigo-100 relative overflow-hidden">
+                    <div class="absolute top-[-20px] right-[-20px] opacity-10 rotate-12 pointer-events-none">
+                        <i class="fa-solid fa-dice text-7xl md:text-9xl text-indigo-900"></i>
                     </div>
 
-                    <h2 class="text-sm font-bold text-indigo-400 uppercase tracking-widest mb-4">今天推薦</h2>
-                    <div id="suggestionCard" class="bg-white p-8 rounded-2xl shadow-xl mb-8 inline-block min-w-[280px] border border-white">
-                        <h3 id="targetName" class="text-4xl font-black text-slate-800 mb-2">載入中...</h3>
-                        <div id="targetTags" class="flex flex-wrap gap-2 justify-center mt-4"></div>
+                    <h2 class="text-[10px] md:text-sm font-bold text-indigo-400 uppercase tracking-widest mb-3 md:mb-4">今天推薦</h2>
+                    <div id="suggestionCard" class="bg-white p-6 md:p-8 rounded-2xl shadow-xl mb-6 md:mb-8 inline-block w-full max-w-xs border border-white">
+                        <h3 id="targetName" class="text-2xl md:text-4xl font-black text-slate-800 mb-2 break-words">載入中...</h3>
+                        <div id="targetTags" class="flex flex-wrap gap-1.5 md:gap-2 justify-center mt-3 md:mt-4"></div>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
-                        <button onclick="acceptChoice()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-emerald-100 transition transform hover:scale-105 active:scale-95">就吃這個！</button>
-                        <button onclick="reroll()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-indigo-100 transition transform hover:scale-105 active:scale-95"><i class="fa-solid fa-shuffle mr-2"></i> 換一個</button>
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center relative z-10">
+                        <button onclick="acceptChoice()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-2xl font-bold shadow-lg text-sm md:text-base transition transform active:scale-95">就吃這個！</button>
+                        <button onclick="reroll()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 md:px-8 py-3 md:py-4 rounded-2xl font-bold shadow-lg text-sm md:text-base transition transform active:scale-95"><i class="fa-solid fa-shuffle mr-1 md:mr-2"></i> 換一個</button>
                     </div>
 
-                    <div class="mt-10 pt-8 border-t border-indigo-200/50">
-                        <p class="text-xs font-bold text-slate-400 mb-4 tracking-widest uppercase">排除不想吃的條件</p>
+                    <div class="mt-8 pt-6 border-t border-indigo-200/50">
+                        <p class="text-[10px] md:text-xs font-bold text-slate-400 mb-3 md:mb-4 tracking-widest uppercase">排除不想吃的條件</p>
                         <div id="rejectTags" class="flex flex-wrap gap-2 justify-center"></div>
                     </div>
                 </div>
-                <button onclick="stopGame()" class="w-full text-slate-400 hover:text-indigo-500 transition text-sm font-medium"><i class="fa-solid fa-arrow-left mr-1"></i> 返回名單管理</button>
+                <button onclick="stopGame()" class="w-full text-slate-400 hover:text-indigo-500 transition text-[10px] md:text-sm font-medium">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> 返回名單管理
+                </button>
             </div>
 
             <div id="listMode" class="space-y-6">
-                <div id="addForm" class="hidden bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
-                    <input type="text" id="newName" placeholder="店家名稱" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+                <div id="addForm" class="hidden bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4">
+                    <input type="text" id="newName" placeholder="店家名稱" class="w-full p-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-indigo-400">
                     <div class="grid grid-cols-2 gap-3">
-                        <input type="text" id="newDist" placeholder="距離 (如: 近)" class="p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
-                        <input type="text" id="newType" placeholder="類型 (如: 日式)" class="p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <input type="text" id="newDist" placeholder="距離" class="p-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-indigo-400">
+                        <input type="text" id="newType" placeholder="類型" class="p-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-indigo-400">
                     </div>
-                    <input type="text" id="newTags" placeholder="標籤 (用逗號分隔)" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <input type="text" id="newTags" placeholder="標籤 (用逗號分隔)" class="w-full p-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-indigo-400">
                     <div class="flex gap-2 pt-2">
-                        <button onclick="saveRestaurant()" class="flex-1 bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700 transition">新增店家</button>
-                        <button onclick="toggleAddForm()" class="px-6 py-3 bg-slate-200 text-slate-600 rounded-xl font-bold hover:bg-slate-300 transition">取消</button>
+                        <button onclick="saveRestaurant()" class="flex-1 bg-indigo-600 text-white py-2.5 rounded-xl font-bold text-sm">新增</button>
+                        <button onclick="toggleAddForm()" class="px-5 py-2.5 bg-slate-200 text-slate-600 rounded-xl text-sm">取消</button>
                     </div>
                 </div>
 
-                <div id="restaurantList" class="grid gap-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
-                    </div>
+                <div id="restaurantList" class="grid gap-3 max-h-[400px] md:max-h-[500px] overflow-y-auto pr-1 custom-scrollbar"></div>
 
-                <div class="pt-4">
-                    <button onclick="startGame()" id="startBtn" class="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white py-5 rounded-2xl font-bold text-xl shadow-xl shadow-indigo-100 transition transform hover:-translate-y-1 active:translate-y-0">
+                <div class="pt-2">
+                    <button onclick="startGame()" id="startBtn" class="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white py-4 md:py-5 rounded-2xl font-bold text-lg md:text-xl shadow-xl transition transform active:translate-y-0.5">
                         🎲 擲骰子決定！
                     </button>
                 </div>
 
-                <div class="flex justify-between items-center text-[10px] text-slate-300 px-2">
+                <div class="flex justify-between items-center text-[10px] text-slate-300 px-1 mt-2">
                     <span id="statsCount">目前有 0 家店</span>
-                    <button onclick="clearAll()" class="hover:text-red-400 transition underline">清空所有資料</button>
+                    <button onclick="clearAll()" class="hover:text-red-400 transition underline font-medium">清空所有資料</button>
                 </div>
             </div>
         </div>
-        <p class="text-center mt-8 text-slate-300 text-xs">© Shuojen-blog Decision Tool</p>
+        <p class="text-center mt-6 text-slate-300 text-[10px]">© Shuojen-blog Decision Tool</p>
     </div>
 
     <script>
-        // --- 預設資料 (依照你提供的列表) ---
-        const DEFAULT_RAW = `
-BT BURGER | 近 | 美式 | 適合聚餐,精緻
+        const DEFAULT_RAW = `BT BURGER | 近 | 美式 | 適合聚餐,精緻
 鵝肉川-光復店 | 近 | 台式 | 適合聚餐
 小龍飲食 | 近 | 中式 | 平價,消夜
 彰化肉圓 | 近 | 小吃 | 平價,排隊,快速
@@ -454,14 +455,12 @@ WILL IT BURGER | 近 | 美式 | 精緻
 雞二拉麵 | 遠 | 日式 | 大份量,排隊
 築間幸福鍋物 | 近 | 火鍋 | 適合聚餐
 約翰紅茶公司 | 近 | 飲料 | 快速,飲料
-芝香雞肉飯 | 近 | 小吃 | 平價,快速
-`;
+芝香雞肉飯 | 近 | 小吃 | 平價,快速`;
 
         let restaurants = [];
         let excludedTags = [];
         let currentPool = [];
 
-        // 初始化：先檢查 LocalStorage，沒有的話就匯入預設資料
         window.onload = () => {
             const saved = localStorage.getItem('food_decider_v2');
             if (saved && JSON.parse(saved).length > 0) {
@@ -472,18 +471,15 @@ WILL IT BURGER | 近 | 美式 | 精緻
             renderList();
         };
 
-        // --- 核心邏輯 ---
-
         function renderList() {
             const listDiv = document.getElementById('restaurantList');
             const startBtn = document.getElementById('startBtn');
             const stats = document.getElementById('statsCount');
             listDiv.innerHTML = '';
-
             stats.innerText = `目前名單共有 ${restaurants.length} 家店家`;
 
             if (restaurants.length === 0) {
-                listDiv.innerHTML = '<div class="text-center py-20 text-slate-300"><i class="fa-solid fa-box-open text-4xl mb-4 block"></i>目前沒有名單</div>';
+                listDiv.innerHTML = '<div class="text-center py-10 text-slate-200 text-sm italic">目前沒有名單</div>';
                 startBtn.style.display = 'none';
                 return;
             }
@@ -491,111 +487,62 @@ WILL IT BURGER | 近 | 美式 | 精緻
 
             restaurants.forEach(r => {
                 const card = document.createElement('div');
-                card.className = "bg-white border border-slate-100 p-5 rounded-2xl flex justify-between items-center group hover:border-indigo-200 hover:shadow-md transition duration-300";
+                card.className = "bg-white border border-slate-100 p-4 rounded-xl flex justify-between items-center group transition-all";
                 card.innerHTML = `
-                    <div class="flex-1">
+                    <div class="flex-1 min-w-0 pr-2">
                         <div class="flex items-center gap-2 mb-1">
-                            <h3 class="font-bold text-slate-800">${r.name}</h3>
-                            <span class="text-[10px] text-indigo-400 font-bold bg-indigo-50 px-2 py-0.5 rounded uppercase">${r.foodType || '一般'}</span>
+                            <h3 class="font-bold text-slate-800 text-sm truncate">${r.name}</h3>
+                            <span class="text-[8px] font-bold text-indigo-400 bg-indigo-50 px-1.5 py-0.5 rounded uppercase">${r.foodType || '一般'}</span>
                         </div>
-                        <div class="flex flex-wrap gap-2 mt-2">
-                            ${r.distance ? `<span class="text-[10px] text-slate-400 border border-slate-100 px-2 py-0.5 rounded"><i class="fa-solid fa-location-dot mr-1"></i>${r.distance}</span>` : ''}
-                            ${r.tags ? r.tags.split(',').slice(0, 3).map(t => `<span class="text-[10px] text-slate-400 border border-slate-100 px-2 py-0.5 rounded">#${t.trim()}</span>`).join('') : ''}
+                        <div class="flex flex-wrap gap-1 mt-1">
+                            ${r.distance ? `<span class="text-[9px] text-slate-400 border border-slate-100 px-1.5 py-0.5 rounded flex items-center gap-1"><i class="fa-solid fa-location-dot text-[8px]"></i>${r.distance}</span>` : ''}
+                            ${r.tags ? r.tags.split(',').slice(0, 3).map(t => `<span class="text-[9px] text-slate-300 border border-slate-100 px-1.5 py-0.5 rounded">#${t.trim()}</span>`).join('') : ''}
                         </div>
                     </div>
-                    <button onclick="deleteRest(${r.id})" class="text-slate-200 hover:text-red-400 p-3 opacity-0 group-hover:opacity-100 transition-all"><i class="fa-solid fa-trash-can"></i></button>
+                    <button onclick="deleteRest(${r.id})" class="text-slate-200 hover:text-red-400 p-2 transition-colors"><i class="fa-solid fa-trash-can text-xs"></i></button>
                 `;
                 listDiv.appendChild(card);
             });
         }
 
-        // --- 批次功能 ---
-
-        function toggleBatchArea() {
-            document.getElementById('batchArea').classList.toggle('hidden');
-        }
+        function toggleBatchArea() { document.getElementById('batchArea').classList.toggle('hidden'); }
+        function toggleAddForm() { document.getElementById('addForm').classList.toggle('hidden'); }
 
         function parseAndSetData(text) {
             const lines = text.trim().split('\n');
-            const newRests = lines.map((line, index) => {
+            restaurants = lines.map((line, index) => {
                 const parts = line.split('|').map(p => p.trim());
-                return {
-                    id: Date.now() + index,
-                    name: parts[0] || '未命名',
-                    distance: parts[1] || '',
-                    foodType: parts[2] || '',
-                    tags: parts[3] || ''
-                };
-            }).filter(r => r.name !== '未命名');
-
-            restaurants = newRests;
+                return parts[0] ? { id: Date.now() + index, name: parts[0], distance: parts[1]||'', foodType: parts[2]||'', tags: parts[3]||'' } : null;
+            }).filter(r => r);
             updateStorage();
         }
 
         function importBatch() {
             const text = document.getElementById('batchInput').value;
-            if (!text.trim()) return alert('請輸入內容');
-            if (confirm('這將會取代目前所有的名單，確定嗎？')) {
-                parseAndSetData(text);
-                renderList();
-                toggleBatchArea();
-                document.getElementById('batchInput').value = '';
-            }
+            if (confirm('確定取代名單？')) { parseAndSetData(text); renderList(); toggleBatchArea(); }
         }
 
         function exportBatch() {
             const str = restaurants.map(r => `${r.name} | ${r.distance} | ${r.foodType} | ${r.tags}`).join('\n');
             document.getElementById('batchInput').value = str;
-            alert('已產生匯出字串於下方框中，你可以複製保存。');
-        }
-
-        // --- 基礎增刪 ---
-
-        function toggleAddForm() {
-            document.getElementById('addForm').classList.toggle('hidden');
         }
 
         function saveRestaurant() {
             const name = document.getElementById('newName').value;
             if (!name) return;
-            restaurants.push({
-                id: Date.now(),
-                name: name,
-                distance: document.getElementById('newDist').value,
-                foodType: document.getElementById('newType').value,
-                tags: document.getElementById('newTags').value
-            });
-            updateStorage();
-            renderList();
-            toggleAddForm();
+            restaurants.push({ id: Date.now(), name, distance: document.getElementById('newDist').value, foodType: document.getElementById('newType').value, tags: document.getElementById('newTags').value });
+            updateStorage(); renderList(); toggleAddForm();
             ['newName', 'newDist', 'newType', 'newTags'].forEach(id => document.getElementById(id).value = '');
         }
 
-        function deleteRest(id) {
-            restaurants = restaurants.filter(r => r.id !== id);
-            updateStorage();
-            renderList();
-        }
-
-        function clearAll() {
-            if(confirm('確定要清空所有資料嗎？')) {
-                restaurants = [];
-                updateStorage();
-                renderList();
-            }
-        }
-
-        function updateStorage() {
-            localStorage.setItem('food_decider_v2', JSON.stringify(restaurants));
-        }
-
-        // --- 擲骰子/決策邏輯 ---
+        function deleteRest(id) { restaurants = restaurants.filter(r => r.id !== id); updateStorage(); renderList(); }
+        function clearAll() { if(confirm('清空？')) { restaurants = []; updateStorage(); renderList(); } }
+        function updateStorage() { localStorage.setItem('food_decider_v2', JSON.stringify(restaurants)); }
 
         function startGame() {
             document.getElementById('listMode').classList.add('hidden');
             document.getElementById('gameMode').classList.remove('hidden');
-            excludedTags = [];
-            currentPool = [...restaurants];
+            excludedTags = []; currentPool = [...restaurants];
             pickOne();
         }
 
@@ -609,50 +556,37 @@ WILL IT BURGER | 近 | 美式 | 精緻
                 const allTags = `${r.distance},${r.foodType},${r.tags}`.split(',').map(t => t.trim()).filter(t => t);
                 return !allTags.some(t => excludedTags.includes(t));
             });
-
             const nameEl = document.getElementById('targetName');
             const tagsEl = document.getElementById('targetTags');
             const rejectEl = document.getElementById('rejectTags');
 
             if (validPool.length === 0) {
-                nameEl.innerText = "沒選項了 😭";
-                nameEl.classList.replace('text-slate-800', 'text-slate-400');
-                tagsEl.innerHTML = "";
-                rejectEl.innerHTML = '<p class="text-xs text-slate-300 italic">排除條件太多囉</p>';
+                nameEl.innerHTML = '<span class="text-lg">沒選項了 😭</span>';
+                tagsEl.innerHTML = ""; rejectEl.innerHTML = '<p class="text-[10px] text-slate-300 italic">排除太多囉</p>';
                 return;
             }
 
             const picked = validPool[Math.floor(Math.random() * validPool.length)];
             nameEl.innerText = picked.name;
-            nameEl.classList.replace('text-slate-400', 'text-slate-800');
-
-            tagsEl.innerHTML = '';
-            rejectEl.innerHTML = '';
-
+            tagsEl.innerHTML = ''; rejectEl.innerHTML = '';
             const tags = `${picked.distance},${picked.foodType},${picked.tags}`.split(',').map(t => t.trim()).filter(t => t);
             tags.forEach(t => {
-                tagsEl.innerHTML += `<span class="bg-indigo-50 text-indigo-500 font-bold px-3 py-1 rounded-full text-xs">#${t}</span>`;
-                rejectEl.innerHTML += `<button onclick="excludeTag('${t}')" class="bg-white text-slate-400 border border-slate-100 px-3 py-2 rounded-xl text-xs hover:border-red-200 hover:text-red-400 transition shadow-sm">不吃 ${t} ✕</button>`;
+                tagsEl.innerHTML += `<span class="bg-indigo-50 text-indigo-500 font-bold px-2 py-1 rounded-full text-[10px]">#${t}</span>`;
+                rejectEl.innerHTML += `<button onclick="excludeTag('${t}')" class="bg-white text-slate-400 border border-slate-100 px-3 py-1.5 rounded-xl text-[10px] hover:text-red-400 transition shadow-sm">不吃 ${t}</button>`;
             });
         }
 
         function reroll() {
-            document.getElementById('suggestionCard').classList.add('animate-pulse');
-            setTimeout(() => {
-                pickOne();
-                document.getElementById('suggestionCard').classList.remove('animate-pulse');
-            }, 200);
+            const card = document.getElementById('suggestionCard');
+            card.style.opacity = '0.5';
+            setTimeout(() => { pickOne(); card.style.opacity = '1'; }, 200);
         }
 
-        function excludeTag(tag) {
-            excludedTags.push(tag);
-            pickOne();
-        }
+        function excludeTag(tag) { excludedTags.push(tag); pickOne(); }
 
         function acceptChoice() {
             const name = document.getElementById('targetName').innerText;
-            if (name.includes('沒選項')) return;
-            alert(`🎉 祝你用餐愉快！\n我們今天就去吃「${name}」！`);
+            if (!name.includes('沒選項')) alert(`🎉 決定去吃：${name}`);
             stopGame();
         }
     </script>
