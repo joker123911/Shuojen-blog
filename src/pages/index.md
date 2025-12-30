@@ -229,5 +229,7 @@ https://shuojen.site/photoblog/rss.xml
 ![me](./img/me.webp)
 
 # 聯絡我
-目前還沒有留言功能，有任何想法，歡迎聯絡我的信箱。
+目前還沒有留言功能，有任何想法，歡迎聯絡我的信箱，測試中。
 >me@shuojen.site
+
+
