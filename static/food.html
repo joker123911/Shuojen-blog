@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>吃什麼都可以終結者 - Shuojen Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen p-4 md:p-8 text-slate-700">
+
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-10 border border-slate-100">
+
+            <div class="flex flex-col sm:flex-row items-center justify-between mb-10 gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="bg-indigo-600 w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200">
+                        <i class="fa-solid fa-utensils text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-slate-800 tracking-tight">吃什麼都可以終結者</h1>
+                        <p class="text-xs text-slate-400">Shuojen.site </p>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="toggleBatchArea()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 px-4 py-2 rounded-xl transition text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-file-import"></i> 批次處理
+                    </button>
+                    <button onclick="toggleAddForm()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl transition text-sm flex items-center gap-2 shadow-md">
+                        <i class="fa-solid fa-plus"></i> 新增
+                    </button>
+                </div>
+            </div>
+
+            <div id="batchArea" class="hidden mb-8 bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
+                <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-database text-indigo-500"></i> 批次匯入/匯出
+                </h3>
+                <p class="text-xs text-slate-500">格式：名稱 | 距離 | 類型 | 標籤 (每行一家)</p>
+                <textarea id="batchInput" rows="6" class="w-full p-4 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none custom-scrollbar" placeholder="麥當勞 | 近 | 速食 | 便宜,快速"></textarea>
+                <div class="flex gap-2">
+                    <button onclick="importBatch()" class="flex-1 bg-indigo-600 text-white py-2 rounded-xl text-sm font-bold hover:bg-indigo-700 transition">匯入並取代</button>
+                    <button onclick="exportBatch()" class="flex-1 bg-white border border-slate-200 text-slate-600 py-2 rounded-xl text-sm font-bold hover:bg-slate-50 transition">產生匯出字串</button>
+                </div>
+            </div>
+
+            <div id="gameMode" class="hidden space-y-8 animate-in fade-in duration-500">
+                <div class="bg-indigo-50 p-10 rounded-3xl text-center border border-indigo-100 relative overflow-hidden">
+                    <div class="absolute top-[-20px] right-[-20px] opacity-10 rotate-12">
+                        <i class="fa-solid fa-dice text-9xl text-indigo-900"></i>
+                    </div>
+
+                    <h2 class="text-sm font-bold text-indigo-400 uppercase tracking-widest mb-4">今天推薦</h2>
+                    <div id="suggestionCard" class="bg-white p-8 rounded-2xl shadow-xl mb-8 inline-block min-w-[280px] border border-white">
+                        <h3 id="targetName" class="text-4xl font-black text-slate-800 mb-2">載入中...</h3>
+                        <div id="targetTags" class="flex flex-wrap gap-2 justify-center mt-4"></div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
+                        <button onclick="acceptChoice()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-emerald-100 transition transform hover:scale-105 active:scale-95">就吃這個！</button>
+                        <button onclick="reroll()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-indigo-100 transition transform hover:scale-105 active:scale-95"><i class="fa-solid fa-shuffle mr-2"></i> 換一個</button>
+                    </div>
+
+                    <div class="mt-10 pt-8 border-t border-indigo-200/50">
+                        <p class="text-xs font-bold text-slate-400 mb-4 tracking-widest uppercase">排除不想吃的條件</p>
+                        <div id="rejectTags" class="flex flex-wrap gap-2 justify-center"></div>
+                    </div>
+                </div>
+                <button onclick="stopGame()" class="w-full text-slate-400 hover:text-indigo-500 transition text-sm font-medium"><i class="fa-solid fa-arrow-left mr-1"></i> 返回名單管理</button>
+            </div>
+
+            <div id="listMode" class="space-y-6">
+                <div id="addForm" class="hidden bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
+                    <input type="text" id="newName" placeholder="店家名稱" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="text" id="newDist" placeholder="距離 (如: 近)" class="p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <input type="text" id="newType" placeholder="類型 (如: 日式)" class="p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                    <input type="text" id="newTags" placeholder="標籤 (用逗號分隔)" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <div class="flex gap-2 pt-2">
+                        <button onclick="saveRestaurant()" class="flex-1 bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700 transition">新增店家</button>
+                        <button onclick="toggleAddForm()" class="px-6 py-3 bg-slate-200 text-slate-600 rounded-xl font-bold hover:bg-slate-300 transition">取消</button>
+                    </div>
+                </div>
+
+                <div id="restaurantList" class="grid gap-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+                    </div>
+
+                <div class="pt-4">
+                    <button onclick="startGame()" id="startBtn" class="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white py-5 rounded-2xl font-bold text-xl shadow-xl shadow-indigo-100 transition transform hover:-translate-y-1 active:translate-y-0">
+                        🎲 擲骰子決定！
+                    </button>
+                </div>
+
+                <div class="flex justify-between items-center text-[10px] text-slate-300 px-2">
+                    <span id="statsCount">目前有 0 家店</span>
+                    <button onclick="clearAll()" class="hover:text-red-400 transition underline">清空所有資料</button>
+                </div>
+            </div>
+        </div>
+        <p class="text-center mt-8 text-slate-300 text-xs">© Shuojen-blog Decision Tool</p>
+    </div>
+
+    <script>
+        // --- 預設資料 (依照你提供的列表) ---
+        const DEFAULT_RAW = `
+BT BURGER | 近 | 美式 | 適合聚餐,精緻
+鵝肉川-光復店 | 近 | 台式 | 適合聚餐
+小龍飲食 | 近 | 中式 | 平價,消夜
+彰化肉圓 | 近 | 小吃 | 平價,排隊,快速
+土斯 TOAS | 近 | 早餐 | 快速,平價
+金洹苑 KIN KAN EN | 近 | 燒肉 | 大份量,精緻
+Zero Sense 無味定律 | 近 | 甜點 | 甜點
+岡心食堂 | 近 | 日式 | 精緻
+波記茶餐廳 | 近 | 港式 | 排隊
+品都串燒攤 忠孝 | 近 | 燒烤 | 平價,消夜,排隊
+地一牛肉麵 | 近 | 中式 | 快速,平價
+享奇鷄-江南店 | 遠 | 炸雞 | 平價,快速
+芋艿川豆花店 本店 | 遠 | 甜點 | 甜點,平價
+阿男麻油雞 | 遠 | 小吃 | 排隊,平價
+暖男炸雞永吉店 | 中 | 炸雞 | 平價,消夜
+吉米樂狗 Jimmy's Hotdog Club | 中 | 美式 | 快速,平價
+Ozkebabs澳洲卡巴捲 | 中 | 西式 | 快速,平價
+識食餐室 ZEST DINER | 近 | 美式 | 精緻
+蔣老爹愛吃鍋 | 中 | 火鍋 | 平價,快速
+Lazy Pasta 慵懶義式廚房大安國館店 | 近 | 義式 | 平價,適合聚餐
+紅螞蟻海鮮碳烤 | 中 | 台式 | 消夜,適合聚餐
+許肥牛肉麵 | 遠 | 中式 | 平價,快速
+蕭家牛雜湯 | 中 | 小吃 | 排隊
+老牛牛肉燥飯 | 遠 | 小吃 | 平價,快速
+阿財彰化肉圓 | 遠 | 小吃 | 排隊
+忠孝｜燒肉政宗 | 近 | 燒肉 | 平價,精緻
+墨竹亭 燃麵本家 台北六張犁店 | 中 | 中式 | 快速
+番紅花城土耳其餐廳 | 遠 | 西式 | 適合聚餐
+財神台南擔仔麵 | 中 | 小吃 | 平價,快速
+高雄肉圓 -許 | 中 | 小吃 | 平價,快速
+阿嬤的米粉湯 | 中 | 小吃 | 平價,消夜
+珍好鍋貼 | 中 | 小吃 | 平價,快速
+阿來甜不辣 | 中 | 小吃 | 平價,快速
+永吉涼麵 | 中 | 小吃 | 平價,快速
+路易奇電力公司 復興電廠 | 中 | 燒肉 | 精緻
+天東86牛肉麵-永吉店 | 中 | 中式 | 平價
+双妹嘜養生甜品 | 遠 | 甜點 | 甜點
+十巷咖哩 | 遠 | 咖哩 | 平價,大份量
+小旺仔宜蘭蛋餅 | 中 | 小吃 | 平價,快速
+勁呷 精緻韓式嫩豆腐煲 | 遠 | 韓式 | 適合聚餐
+新馬辣經典麻辣鍋-信義遠百店Plus+ | 中 | 火鍋 | 大份量,精緻
+青島餃子館 | 遠 | 小吃 | 平價,快速
+十鷄食堂 | 遠 | 中式 | 平價,快速
+山本漢堡排 | 近 | 日式 | 適合聚餐
+新娘子麵店小吃 | 中 | 小吃 | 平價,消夜
+王李氏炸醬麵 | 遠 | 中式 | 平價,快速
+PIZZA BEAR 披薩熊 延吉店 | 近 | 西式 | 適合聚餐
+金豬食堂 | 遠 | 韓式 | 適合聚餐
+新美香咖哩 | 中 | 咖哩 | 平價,快速
+玉兔壽喜燒 | 中 | 燒肉 | 適合聚餐
+虎笑麵屋 | 中 | 中式 | 快速
+L.C Française 法租界 | 遠 | 法式 | 精緻
+源芳刈包 | 遠 | 小吃 | 快速,平價
+小王煮瓜 | 遠 | 小吃 | 排隊,平價
+三六食粑 | 遠 | 甜點 | 甜點,平價
+博多味処いろは | 中 | 日式 | 精緻,適合聚餐
+Jimmy on the road | 遠 | 美式 | 快速
+梅滿美食 | 遠 | 小吃 | 平價,快速
+阿準越南料理 | 遠 | 越式 | 平價,快速
+花蓮光復高麗菜煎餅 | 遠 | 小吃 | 平價,快速,排隊
+純發魯肉飯 | 中 | 小吃 | 平價
+Popeyes Chicken 光復店 | 近 | 炸雞 | 快速
+玉林佶饗宴雞腿大王 | 遠 | 小吃 | 平價
+拾漁 仁愛店 | 近 | 日式 | 精緻,排隊
+貝克宅 忠孝店 | 中 | 咖啡 | 甜點
+KEEP FIT健康料理 | 近 | 健康 | 快速,健康
+玩美大師炸點 | 中 | 小吃 | 甜點,平價
+葉家肉粥 | 遠 | 小吃 | 平價
+赤肉胡椒餅蔥花燒餅 | 近 | 小吃 | 快速,平價
+上海邵師傅湯包 | 中 | 中式 | 平價,快速
+火紅手桿麵 | 遠 | 小吃 | 平價,快速
+無招牌麵攤 | 近 | 小吃 | 平價,消夜
+黑點雞肉 | 遠 | 小吃 | 平價,快速
+永和豆漿大王 | 近 | 早餐 | 快速,消夜,平價
+茨木屋 咖哩.丼飯 | 遠 | 日式 | 平價,快速
+食徒頂即鍋(永吉店) | 中 | 火鍋 | 精緻
+北投巧涼古早味 | 遠 | 甜點 | 甜點,平價
+高記茶莊 | 遠 | 飲料 | 快速,飲料
+海鮮拉麵清燉豬腳 | 遠 | 小吃 | 平價,快速
+營養蚵仔 | 遠 | 小吃 | 平價
+爸爸Kevin美食BBQ | 遠 | 美式 | 適合聚餐
+湘鼎坊 | 中 | 中式 | 平價,適合聚餐
+良晨吉司 碳烤吐司 | 遠 | 早餐 | 快速,平價
+牧匠牛原味牛排-淡水店 | 遠 | 燒烤 | 大份量
+龐家肉羹 | 遠 | 小吃 | 平價,快速
+bb.q CHICKEN北投店 | 遠 | 炸雞 | 適合聚餐
+佳味排骨麵 | 中 | 小吃 | 平價,快速
+原果 Juice do it | 遠 | 飲料 | 快速,飲料
+方人也鮮奶麻糬 | 遠 | 小吃 | 甜點,排隊
+真芳碳烤吐司-信義創始店 | 中 | 早餐 | 快速
+BURGER OUT | 近 | 美式 | 快速
+南方漁場 | 中 | 日式 | 精緻
+餃子樂 信義店 | 中 | 小吃 | 平價
+Joe’s Cafe 喬叔咖啡 | 近 | 咖啡 | 甜點
+180度C蜜酥雞排 | 遠 | 炸雞 | 平價,排隊
+椿tsubaki salon | 中 | 甜點 | 甜點,精緻
+點八粵 忠孝店 | 近 | 港式 | 適合聚餐
+庭湘牛排館 | 遠 | 燒烤 | 平價
+長生塩人 民生 | 中 | 日式 | 消夜,排隊
+台灣手作水果冰淇淋 | 中 | 甜點 | 甜點
+皇泰泰 泰式船麵 | 近 | 泰式 | 平價,快速
+江牛樓 | 遠 | 日式 | 快速
+麵屋德家 | 遠 | 日式 | 排隊
+柳町家拉麵 | 遠 | 日式 | 大份量
+鴨肉謝（30巷） | 中 | 小吃 | 平價,快速
+塩琉 | 中 | 日式 | 排隊
+伊禾白湯 | 中 | 日式 | 精緻
+拉麵魚堺-大安店 | 近 | 日式 | 快速
+甕中甕炭火煨湯 | 遠 | 小吃 | 平價
+夯牛排 | 遠 | 燒烤 | 平價,大份量
+阿益魯肉飯 | 遠 | 小吃 | 平價,快速
+山上走走 日式燒肉 | 近 | 燒肉 | 精緻
+樂天羊肉 | 遠 | 小吃 | 平價,快速
+MY 幾圈 甜甜圈 | 遠 | 甜點 | 甜點,平價
+蕭家下港脆皮臭豆腐 | 遠 | 小吃 | 平價,排隊
+萬林牛肉湯 | 遠 | 小吃 | 平價
+洋石岩燒牛排 忠孝店 | 中 | 燒烤 | 大份量,平價
+Pasta à Pepe 佩佩奶奶 | 遠 | 義式 | 大份量,平價
+良粟商號 | 遠 | 早餐 | 快速
+Fa Burger | 近 | 美式 | 精緻
+果然匯 新北板橋店 | 遠 | 蔬食 | 大份量,適合聚餐
+P.Ming泰式廚坊 | 遠 | 泰式 | 適合聚餐
+曼谷泰式料理 | 遠 | 泰式 | 平價,快速
+晚點 | 近 | 宵夜 | 消夜,平價
+東加炸雞 | 中 | 炸雞 | 平價,快速
+龍潭豆花 | 中 | 甜點 | 甜點,平價
+玖酒井食事町 | 中 | 日式 | 適合聚餐,消夜
+梅子鰻蒲燒專賣店 | 遠 | 日式 | 精緻
+搖滾披薩 台北八德店 | 中 | 西式 | 適合聚餐,平價
+大肥媽現做潤餅 | 中 | 小吃 | 平價,快速
+擂銗餐廳 | 遠 | 西式 | 適合聚餐
+周家鮮肉餛飩 | 中 | 小吃 | 平價,快速
+浮誇海鮮丼飯專門店 | 遠 | 日式 | 大份量
+肚肚餐室 | 遠 | 中式 | 平價,快速
+知本李紅豆餅 | 遠 | 甜點 | 甜點,平價
+小喬新疆羊肉串 | 遠 | 燒烤 | 適合聚餐,排隊
+石頭肉圓 | 遠 | 小吃 | 平價,快速
+赤鮨日本料理 | 遠 | 日式 | 精緻
+黃家香腸 | 遠 | 小吃 | 排隊,快速
+王記府城肉粽 | 遠 | 小吃 | 平價,快速
+高-雙管四神湯 | 遠 | 小吃 | 排隊
+鵝媽媽鵝肉切仔麵 | 遠 | 台式 | 平價
+現炸協力香雞排 | 近 | 炸雞 | 平價,快速
+13_Burger | 遠 | 美式 | 快速
+晴光紅豆餅 | 近 | 甜點 | 甜點,快速
+金晶雞 | 遠 | 中式 | 平價,快速
+老上海包子 | 中 | 小吃 | 平價,快速
+珍品九如湖州粽 | 近 | 小吃 | 平價,快速
+Le Boulanger de monge | 中 | 麵包 | 甜點,精緻
+城翔早午餐 | 中 | 早餐 | 平價,排隊
+黔園川菜餐廳 | 遠 | 中式 | 適合聚餐
+碰麵麵食館 | 中 | 中式 | 平價,快速
+長壽三好庵 | 中 | 日式 | 適合聚餐
+木新路大腸蚵仔麵線 | 遠 | 小吃 | 平價,快速
+興隆小吃 | 遠 | 小吃 | 平價,快速
+魚心日本料理 | 遠 | 日式 | 精緻
+龍都冰菓專業家 | 遠 | 甜點 | 甜點
+晴光豬腳飯 | 遠 | 小吃 | 平價,快速
+初味鱸魚湯 | 遠 | 小吃 | 平價
+博多幸龍總本店 | 遠 | 日式 | 快速
+SAPORI 義品味小餐屋 | 中 | 義式 | 精緻
+揪蛋餅 | 中 | 早餐 | 平價,快速
+小後苑 信義 | 中 | 餐酒 | 精緻,消夜
+佳佳福甘梅薯條 | 中 | 小吃 | 平價,快速
+好食肌•健康新飲食 | 中 | 健康 | 快速,健康
+肌肉海灘健康餐盒 | 中 | 健康 | 快速,健康
+面對面 | 中 | 中式 | 排隊
+芝生食堂 民生社區店 | 中 | 日式 | 適合聚餐
+Peeta x TakeTake 永吉店 | 中 | 健康 | 快速,健康
+熊越岳 | 遠 | 日式 | 排隊
+Kevin主廚乳酪塔 | 中 | 甜點 | 甜點
+泰好吃泰國船麵 | 遠 | 泰式 | 平價,快速
+龍記炒燴 | 中 | 中式 | 平價,快速
+鍋雞 | 遠 | 小吃 | 平價,快速
+鷄麵 CHILLMEN | 遠 | 日式 | 快速
+胖張水煎包 | 遠 | 小吃 | 平價,快速
+子曰深夜食堂 | 遠 | 日式 | 消夜
+黑露咖啡館 | 遠 | 咖啡 | 甜點
+茶薰館 | 中 | 港式 | 精緻
+小主廚鐡板料理 | 遠 | 燒烤 | 平價,快速
+Mixigan 美墨創意蔬食 | 近 | 蔬食 | 適合聚餐
+老胖東北燒烤撸串 | 近 | 燒烤 | 消夜,適合聚餐
+象山韮菜盒子 | 中 | 小吃 | 平價,快速
+半島牛肉麵 | 中 | 中式 | 平價
+查記麵館 | 中 | 中式 | 平價
+北醫謝記小籠包 | 中 | 小吃 | 平價,快速
+巢飯麵食館 | 近 | 中式 | 平價,快速
+東京。酒食製作所 | 遠 | 日式 | 適合聚餐
+EL Panino | 遠 | 西式 | 快速,平價
+小黑碳鐵板漢堡Burger | 遠 | 美式 | 快速,平價
+阿川蚵仔麵線 | 遠 | 小吃 | 排隊
+鮮滿樓海鮮料理 | 遠 | 海鮮 | 適合聚餐
+喝一杯 | 遠 | 台式 | 消夜,適合聚餐
+沾美西餐廳 | 中 | 燒烤 | 精緻
+実正拉麵 | 遠 | 日式 | 快速
+Comfort Burger Company | 中 | 美式 | 精緻
+穆記牛肉麵 | 中 | 中式 | 排隊
+芝玫蛋糕店 | 遠 | 甜點 | 甜點
+水蛙師私廚料理 | 遠 | 中式 | 精緻
+PINK SVLT | 近 | 美式 | 精緻
+旁邊納涼 日式刨冰 | 中 | 甜點 | 甜點,平價
+Goflex Taipei Burgers | 中 | 美式 | 適合聚餐
+阿幸鮮打果汁 | 遠 | 飲料 | 快速,飲料
+義大利米蘭手工窯烤披薩 | 遠 | 西式 | 精緻
+涼粉伯 | 遠 | 小吃 | 平價,快速
+元味串燒-台北店 | 遠 | 燒烤 | 消夜
+李家黑豬肉香腸 | 遠 | 小吃 | 平價,快速
+頂級甜不辣 | 遠 | 小吃 | 平價,快速
+NAGOYA 日式蛋包飯 | 遠 | 日式 | 平價,快速
+陸角蛋包飯 | 中 | 日式 | 快速
+昊醇咖啡 | 遠 | 咖啡 | 甜點
+圓山老崔蒸包 | 遠 | 小吃 | 排隊
+misu misu | 中 | 甜點 | 甜點
+蔚稻食堂 | 中 | 中式 | 排隊
+不萊梅Bremen忠孝店 | 近 | 義式 | 平價,快速
+郭家炒牛肉 | 遠 | 小吃 | 平價,快速
+一甲子餐飲 | 遠 | 小吃 | 排隊,平價
+彥町揚屋 | 遠 | 日式 | 平價,快速
+猓玀苑 | 遠 | 中式 | 精緻
+野毛食所 | 遠 | 日式 | 快速
+壹號出口早午餐 | 遠 | 早餐 | 適合聚餐
+陳鐵心 拌拌麵 | 遠 | 小吃 | 平價,快速
+蒸的不一樣 | 中 | 小吃 | 平價,快速
+雞三和松江南京店 | 遠 | 日式 | 快速
+養珍堂健康工坊 | 遠 | 甜點 | 甜點,平價
+週末炸雞俱樂部 信義店 | 中 | 炸雞 | 消夜,適合聚餐
+Butcher by LanPengYou | 中 | 美式 | 精緻
+就是義大利麵屋 ITS PASTA | 遠 | 義式 | 平價,快速
+宏記豆漿 | 遠 | 早餐 | 平價,快速
+Pho Ha Noi | 中 | 越式 | 快速
+Agusto奧古斯托 | 中 | 西式 | 精緻
+蕭家小館 | 中 | 小吃 | 平價,快速
+麒麟創作拉麵坊 | 遠 | 日式 | 排隊
+巷弄內 波霸珍珠奶茶 | 遠 | 飲料 | 排隊,飲料
+有顆泡芙 | 遠 | 甜點 | 甜點,快速
+有吉豐盛丼 | 遠 | 日式 | 平價,快速
+Maple Maple Café | 中 | 咖啡 | 甜點
+GYUU NIKU | 中 | 日式 | 排隊
+大和日本料理 | 近 | 日式 | 適合聚餐
+台富便當 | 近 | 中式 | 平價,快速
+ABCD Doughnut | 遠 | 甜點 | 甜點
+Haritts 甜甜圈 | 遠 | 甜點 | 甜點,排隊
+施家麻油腰花 | 中 | 小吃 | 排隊
+アツアツ 章魚燒 | 遠 | 日式 | 甜點,快速
+諾緯手工鮮奶泡芙 | 遠 | 甜點 | 甜點,快速
+貪吃狗甜點 | 遠 | 甜點 | 甜點
+磐石坊 | 中 | 西式 | 適合聚餐
+爆汁老上海生煎 | 遠 | 小吃 | 平價,快速
+小倉庫食研所 | 遠 | 早餐 | 適合聚餐
+燒鳩 | 遠 | 日式 | 消夜,適合聚餐
+石牌無名手工蛋餅 | 遠 | 早餐 | 排隊,快速,平價
+文化魷魚羹 | 遠 | 小吃 | 平價,快速
+Kanokwan 老麵攤 | 遠 | 泰式 | 平價
+築地良味食事處 | 遠 | 日式 | 精緻
+曾家豆漿 | 遠 | 早餐 | 排隊,快速,平價
+金香豬腳•涼麵 | 遠 | 小吃 | 平價,快速
+不賴皮窯烤披薩 | 遠 | 西式 | 平價,適合聚餐
+巧之味手工水餃 永吉店 | 中 | 小吃 | 排隊
+生活在他方-夜貓店 | 遠 | 咖啡 | 甜點,消夜
+賣麵炎仔 | 遠 | 小吃 | 排隊,平價
+Pastaio 內湖 | 遠 | 義式 | 精緻
+恩恩滷肉飯 | 中 | 小吃 | 平價,快速
+川島早午餐 | 遠 | 早餐 | 平價
+Takeout Burger 延吉店 | 近 | 美式 | 適合聚餐
+雞湯桑 Torisan | 遠 | 日式 | 精緻
+板橋小籠包 | 遠 | 小吃 | 平價,消夜
+Big Al's Burgers | 中 | 美式 | 消夜
+糊塗麵 | 中 | 中式 | 快速
+米食 미식 | 遠 | 韓式 | 快速
+KGB Burgers | 中 | 美式 | 適合聚餐
+雅苑粵菜港式飲茶 | 遠 | 港式 | 適合聚餐
+初炸小食店 | 近 | 小吃 | 平價,快速
+窩。台味牛排 | 中 | 燒烤 | 平價,快速
+定置漁場三代目 | 遠 | 日式 | 排隊
+uMeal Bistro | 中 | 健康 | 健康
+古城古早麵 | 遠 | 小吃 | 平價,快速
+GO GO GEESAA | 遠 | 咖啡 | 甜點,快速
+Takeout burger 內湖店 | 遠 | 美式 | 適合聚餐
+阿嬤的豬腳 | 中 | 小吃 | 平價,快速
+富霸王豬腳 | 遠 | 小吃 | 排隊
+Kitchen Island 中島 | 中 | 中式 | 快速
+Hotties 美式辣炸雞 | 近 | 炸雞 | 快速
+吉那圈咖啡 | 近 | 甜點 | 甜點,快速
+店小二魯肉飯 | 遠 | 小吃 | 平價,快速
+Draft Land | 中 | 飲料 | 消夜,飲料
+梁鑫雞肉飯 | 中 | 小吃 | 平價,快速
+豬大郎豬血糕 | 遠 | 小吃 | 平價,快速
+老家餡餅 | 遠 | 小吃 | 平價,快速
+寧府麻辣鴨血 | 遠 | 火鍋 | 平價,消夜
+Burger & Co | 中 | 美式 | 快速
+小胖東北燒烤 | 近 | 燒烤 | 消夜,適合聚餐
+醇一拉麵 | 遠 | 日式 | 排隊
+林東芳牛肉麵 | 遠 | 中式 | 消夜
+金山客家小館 | 中 | 台式 | 適合聚餐
+老船長平價海鮮 | 遠 | 海鮮 | 適合聚餐
+El Sabroso | 遠 | 西式 | 快速
+榮生魚片 | 遠 | 海鮮 | 排隊
+Curry Lab. Tokyo | 中 | 咖哩 | 快速
+一条通 永春門市 | 中 | 日式 | 平價,快速
+Black Bottle | 中 | 餐酒 | 消夜
+御炒牛 | 遠 | 中式 | 平價,快速
+加分100%浜中昆布鍋 | 中 | 火鍋 | 適合聚餐
+Petit France 小法國 | 中 | 西式 | 精緻
+亓家蒸餃 | 中 | 小吃 | 平價,快速
+富士豬排 | 中 | 日式 | 快速
+村秀家 | 遠 | 甜點 | 甜點
+PASTAIO 光復店 | 近 | 義式 | 精緻
+水剌韓式料理 | 近 | 韓式 | 適合聚餐
+永宝餐廳 | 遠 | 台式 | 適合聚餐
+ZAC ZAG 一樂炸雞 | 中 | 炸雞 | 快速
+Goûter 雅培米堤 | 中 | 甜點 | 甜點
+台北犁記 | 遠 | 甜點 | 甜點
+劉山東小吃店 | 遠 | 中式 | 排隊
+阿桐阿寶四神湯 | 遠 | 小吃 | 平價,消夜
+空軍涼麵 | 中 | 小吃 | 平價,快速
+福德涼麵延吉店 | 近 | 小吃 | 平價,消夜
+覺旅咖啡 陽光店 | 遠 | 咖啡 | 適合聚餐
+Calcutta Indian | 遠 | 西式 | 適合聚餐
+真川味2店 | 遠 | 中式 | 適合聚餐
+今大魯肉飯 | 遠 | 小吃 | 平價
+墨洋拉麵 | 中 | 日式 | 排隊
+Mr. 雪腐 公館店 | 中 | 甜點 | 甜點,平價
+真劍拉麵 | 遠 | 日式 | 排隊
+印渡風情 師大店 | 遠 | 西式 | 適合聚餐
+五草車 南昌店 | 遠 | 中式 | 快速
+森本家拉麵 | 遠 | 日式 | 快速
+Hala Chicken | 近 | 美式 | 快速,平價
+柒息地串燒 延吉店 | 近 | 燒烤 | 平價,消夜
+柑橘Shinn | 近 | 日式 | 排隊
+東區粉圓 | 近 | 甜點 | 甜點,快速
+台南阿明炒鱔魚 | 中 | 小吃 | 平價,快速
+哦耶！旁遮普 | 近 | 西式 | 適合聚餐
+麵屋壹の穴 ICHI | 近 | 日式 | 排隊
+清真中國牛肉麵 | 近 | 中式 | 精緻
+蘇阿姨比薩屋 | 近 | 西式 | 排隊
+君悅排骨 | 近 | 中式 | 快速
+北門鳳李冰 | 近 | 甜點 | 甜點,平價
+童家越南料理 | 近 | 越式 | 平價,快速
+WILL IT BURGER | 近 | 美式 | 精緻
+潮肉壽喜燒 | 近 | 燒肉 | 大份量,適合聚餐
+你回來啦拉麵 | 近 | 日式 | 排隊
+雞二拉麵 | 遠 | 日式 | 大份量,排隊
+築間幸福鍋物 | 近 | 火鍋 | 適合聚餐
+約翰紅茶公司 | 近 | 飲料 | 快速,飲料
+芝香雞肉飯 | 近 | 小吃 | 平價,快速
+`;
+
+        let restaurants = [];
+        let excludedTags = [];
+        let currentPool = [];
+
+        // 初始化：先檢查 LocalStorage，沒有的話就匯入預設資料
+        window.onload = () => {
+            const saved = localStorage.getItem('food_decider_v2');
+            if (saved && JSON.parse(saved).length > 0) {
+                restaurants = JSON.parse(saved);
+            } else {
+                parseAndSetData(DEFAULT_RAW);
+            }
+            renderList();
+        };
+
+        // --- 核心邏輯 ---
+
+        function renderList() {
+            const listDiv = document.getElementById('restaurantList');
+            const startBtn = document.getElementById('startBtn');
+            const stats = document.getElementById('statsCount');
+            listDiv.innerHTML = '';
+
+            stats.innerText = `目前名單共有 ${restaurants.length} 家店家`;
+
+            if (restaurants.length === 0) {
+                listDiv.innerHTML = '<div class="text-center py-20 text-slate-300"><i class="fa-solid fa-box-open text-4xl mb-4 block"></i>目前沒有名單</div>';
+                startBtn.style.display = 'none';
+                return;
+            }
+            startBtn.style.display = 'block';
+
+            restaurants.forEach(r => {
+                const card = document.createElement('div');
+                card.className = "bg-white border border-slate-100 p-5 rounded-2xl flex justify-between items-center group hover:border-indigo-200 hover:shadow-md transition duration-300";
+                card.innerHTML = `
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-1">
+                            <h3 class="font-bold text-slate-800">${r.name}</h3>
+                            <span class="text-[10px] text-indigo-400 font-bold bg-indigo-50 px-2 py-0.5 rounded uppercase">${r.foodType || '一般'}</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            ${r.distance ? `<span class="text-[10px] text-slate-400 border border-slate-100 px-2 py-0.5 rounded"><i class="fa-solid fa-location-dot mr-1"></i>${r.distance}</span>` : ''}
+                            ${r.tags ? r.tags.split(',').slice(0, 3).map(t => `<span class="text-[10px] text-slate-400 border border-slate-100 px-2 py-0.5 rounded">#${t.trim()}</span>`).join('') : ''}
+                        </div>
+                    </div>
+                    <button onclick="deleteRest(${r.id})" class="text-slate-200 hover:text-red-400 p-3 opacity-0 group-hover:opacity-100 transition-all"><i class="fa-solid fa-trash-can"></i></button>
+                `;
+                listDiv.appendChild(card);
+            });
+        }
+
+        // --- 批次功能 ---
+
+        function toggleBatchArea() {
+            document.getElementById('batchArea').classList.toggle('hidden');
+        }
+
+        function parseAndSetData(text) {
+            const lines = text.trim().split('\n');
+            const newRests = lines.map((line, index) => {
+                const parts = line.split('|').map(p => p.trim());
+                return {
+                    id: Date.now() + index,
+                    name: parts[0] || '未命名',
+                    distance: parts[1] || '',
+                    foodType: parts[2] || '',
+                    tags: parts[3] || ''
+                };
+            }).filter(r => r.name !== '未命名');
+
+            restaurants = newRests;
+            updateStorage();
+        }
+
+        function importBatch() {
+            const text = document.getElementById('batchInput').value;
+            if (!text.trim()) return alert('請輸入內容');
+            if (confirm('這將會取代目前所有的名單，確定嗎？')) {
+                parseAndSetData(text);
+                renderList();
+                toggleBatchArea();
+                document.getElementById('batchInput').value = '';
+            }
+        }
+
+        function exportBatch() {
+            const str = restaurants.map(r => `${r.name} | ${r.distance} | ${r.foodType} | ${r.tags}`).join('\n');
+            document.getElementById('batchInput').value = str;
+            alert('已產生匯出字串於下方框中，你可以複製保存。');
+        }
+
+        // --- 基礎增刪 ---
+
+        function toggleAddForm() {
+            document.getElementById('addForm').classList.toggle('hidden');
+        }
+
+        function saveRestaurant() {
+            const name = document.getElementById('newName').value;
+            if (!name) return;
+            restaurants.push({
+                id: Date.now(),
+                name: name,
+                distance: document.getElementById('newDist').value,
+                foodType: document.getElementById('newType').value,
+                tags: document.getElementById('newTags').value
+            });
+            updateStorage();
+            renderList();
+            toggleAddForm();
+            ['newName', 'newDist', 'newType', 'newTags'].forEach(id => document.getElementById(id).value = '');
+        }
+
+        function deleteRest(id) {
+            restaurants = restaurants.filter(r => r.id !== id);
+            updateStorage();
+            renderList();
+        }
+
+        function clearAll() {
+            if(confirm('確定要清空所有資料嗎？')) {
+                restaurants = [];
+                updateStorage();
+                renderList();
+            }
+        }
+
+        function updateStorage() {
+            localStorage.setItem('food_decider_v2', JSON.stringify(restaurants));
+        }
+
+        // --- 擲骰子/決策邏輯 ---
+
+        function startGame() {
+            document.getElementById('listMode').classList.add('hidden');
+            document.getElementById('gameMode').classList.remove('hidden');
+            excludedTags = [];
+            currentPool = [...restaurants];
+            pickOne();
+        }
+
+        function stopGame() {
+            document.getElementById('gameMode').classList.add('hidden');
+            document.getElementById('listMode').classList.remove('hidden');
+        }
+
+        function pickOne() {
+            const validPool = currentPool.filter(r => {
+                const allTags = `${r.distance},${r.foodType},${r.tags}`.split(',').map(t => t.trim()).filter(t => t);
+                return !allTags.some(t => excludedTags.includes(t));
+            });
+
+            const nameEl = document.getElementById('targetName');
+            const tagsEl = document.getElementById('targetTags');
+            const rejectEl = document.getElementById('rejectTags');
+
+            if (validPool.length === 0) {
+                nameEl.innerText = "沒選項了 😭";
+                nameEl.classList.replace('text-slate-800', 'text-slate-400');
+                tagsEl.innerHTML = "";
+                rejectEl.innerHTML = '<p class="text-xs text-slate-300 italic">排除條件太多囉</p>';
+                return;
+            }
+
+            const picked = validPool[Math.floor(Math.random() * validPool.length)];
+            nameEl.innerText = picked.name;
+            nameEl.classList.replace('text-slate-400', 'text-slate-800');
+
+            tagsEl.innerHTML = '';
+            rejectEl.innerHTML = '';
+
+            const tags = `${picked.distance},${picked.foodType},${picked.tags}`.split(',').map(t => t.trim()).filter(t => t);
+            tags.forEach(t => {
+                tagsEl.innerHTML += `<span class="bg-indigo-50 text-indigo-500 font-bold px-3 py-1 rounded-full text-xs">#${t}</span>`;
+                rejectEl.innerHTML += `<button onclick="excludeTag('${t}')" class="bg-white text-slate-400 border border-slate-100 px-3 py-2 rounded-xl text-xs hover:border-red-200 hover:text-red-400 transition shadow-sm">不吃 ${t} ✕</button>`;
+            });
+        }
+
+        function reroll() {
+            document.getElementById('suggestionCard').classList.add('animate-pulse');
+            setTimeout(() => {
+                pickOne();
+                document.getElementById('suggestionCard').classList.remove('animate-pulse');
+            }, 200);
+        }
+
+        function excludeTag(tag) {
+            excludedTags.push(tag);
+            pickOne();
+        }
+
+        function acceptChoice() {
+            const name = document.getElementById('targetName').innerText;
+            if (name.includes('沒選項')) return;
+            alert(`🎉 祝你用餐愉快！\n我們今天就去吃「${name}」！`);
+            stopGame();
+        }
+    </script>
+</body>
+</html>
