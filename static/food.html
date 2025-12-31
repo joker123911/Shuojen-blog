@@ -61,6 +61,11 @@
                     <h2 class="text-[10px] md:text-sm font-bold text-indigo-400 uppercase tracking-widest mb-3 md:mb-4">今天推薦</h2>
                     <div id="suggestionCard" class="bg-white p-6 md:p-8 rounded-2xl shadow-xl mb-6 md:mb-8 inline-block w-full max-w-xs border border-white">
                         <h3 id="targetName" class="text-2xl md:text-4xl font-black text-slate-800 mb-2 break-words">載入中...</h3>
+
+                        <a id="mapLink" href="#" target="_blank" class="inline-flex items-center gap-1.5 text-indigo-500 hover:text-indigo-700 text-xs font-bold transition-colors mb-2">
+                            <i class="fa-solid fa-map-location-dot"></i> Google Maps 查看
+                        </a>
+
                         <div id="targetTags" class="flex flex-wrap gap-1.5 md:gap-2 justify-center mt-3 md:mt-4"></div>
                     </div>
 
@@ -558,15 +563,22 @@ Hala Chicken | 近 | 美式 | 快速,平價
             const nameEl = document.getElementById('targetName');
             const tagsEl = document.getElementById('targetTags');
             const rejectEl = document.getElementById('rejectTags');
+            const mapLink = document.getElementById('mapLink');
 
             if (validPool.length === 0) {
                 nameEl.innerHTML = '<span class="text-lg">沒選項了 😭</span>';
                 tagsEl.innerHTML = ""; rejectEl.innerHTML = '<p class="text-[10px] text-slate-300 italic">排除太多囉</p>';
+                mapLink.classList.add('hidden');
                 return;
             }
 
             const picked = validPool[Math.floor(Math.random() * validPool.length)];
             nameEl.innerText = picked.name;
+
+            // 更新 Google Maps 搜尋連結
+            mapLink.classList.remove('hidden');
+            mapLink.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(picked.name)}`;
+
             tagsEl.innerHTML = ''; rejectEl.innerHTML = '';
             const tags = `${picked.distance},${picked.foodType},${picked.tags}`.split(',').map(t => t.trim()).filter(t => t);
             tags.forEach(t => {
