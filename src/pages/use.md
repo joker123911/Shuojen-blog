@@ -49,7 +49,7 @@ description: 記錄我愛用的工具
 
 * JMGO N1S Ultra - 投影機，在房間看電影很讚。
 * 100 吋 16:9 白玻纖布幕 - 便宜投影幕。
-* Google chromecast 4k - Google TV 軟體。
+* Google chromecast 4k - Google TV 電影棒。
 * Klipsch R-51PM - CP 值高的書架音響。
 
 ### [攝影相關](https://shuojen.site/photoblog/photo-archive)
@@ -163,3 +163,8 @@ Apps
 * CalcES - 隨身 Casio 991。
 * KWGT - 自訂桌面工具。
 * 臺北市立圖書館 - 預約借書用。
+
+Shuojen.site 小工具
+* [投資報酬試算表](https://shuojen.site/calculator.html) - 投資報酬試算用。
+* [吃什麼都可以終結者](https://shuojen.site/food.html) - 決定吃什麼用。
+* [嘸蝦米兩碼字練習器](https://shuojen.site/boshiamy.html) - 練習嘸蝦米用。

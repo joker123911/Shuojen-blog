@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>嘸蝦米兩碼字練習 - Shuojen.site</title>
+<style>
+    :root {
+        --primary-purple: #6366f1;
+        --bg-color: #f8fafc;
+        --card-bg: #ffffff;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --correct-green: #10b981;
+        --radius-lg: 24px;
+        --radius-md: 12px;
+        --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    h1 {
+        font-size: 28px;
+        font-weight: 800;
+        margin: 0 0 8px 0;
+    }
+
+    .subtitle {
+        color: var(--text-muted);
+        font-size: 14px;
+    }
+
+    /* 進度條 */
+    .progress-container {
+        width: 100%;
+        height: 8px;
+        background-color: #e2e8f0;
+        border-radius: 4px;
+        margin-bottom: 30px;
+        overflow: hidden;
+    }
+
+    #progress-bar {
+        width: 0%;
+        height: 100%;
+        background-color: var(--primary-purple);
+        transition: width 0.3s ease;
+    }
+
+    /* 閃卡 3D 效果 */
+    .flashcard-wrapper {
+        perspective: 1000px;
+        width: 100%;
+        height: 300px;
+        margin-bottom: 30px;
+    }
+
+    .flashcard {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+    }
+
+    .flashcard.flipped {
+        transform: rotateY(180deg);
+    }
+
+    .card-face {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--card-bg);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow);
+    }
+
+    .card-front {
+        /* 正面：漢字 */
+    }
+
+    .card-back {
+        /* 反面：答案 */
+        transform: rotateY(180deg);
+        background-color: #f1f5f9;
+    }
+
+    .char-display {
+        font-size: 100px;
+        font-weight: 800;
+        color: var(--primary-purple);
+    }
+
+    .code-display {
+        font-size: 80px;
+        font-weight: 900;
+        color: var(--text-main);
+        letter-spacing: 5px;
+    }
+
+    .hint-text {
+        font-size: 14px;
+        color: var(--text-muted);
+        margin-top: 10px;
+    }
+
+    /* 輸入區 */
+    .input-area {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    #user-input {
+        width: 100%;
+        padding: 16px;
+        border: 2px solid var(--border-color);
+        border-radius: var(--radius-md);
+        font-size: 24px;
+        text-align: center;
+        text-transform: uppercase;
+        box-sizing: border-box;
+        transition: all 0.2s;
+        border: 2px solid #e2e8f0;
+    }
+
+    #user-input:focus {
+        outline: none;
+        border-color: var(--primary-purple);
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    }
+
+    #user-input.success {
+        border-color: var(--correct-green);
+        background-color: #ecfdf5;
+    }
+
+    .btn-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    button {
+        padding: 12px;
+        border: none;
+        border-radius: var(--radius-md);
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .btn-secondary {
+        background-color: #e2e8f0;
+        color: var(--text-main);
+    }
+
+    .btn-primary {
+        background-color: var(--primary-purple);
+        color: white;
+    }
+
+    button:active {
+        transform: scale(0.95);
+    }
+
+    .footer-note {
+        text-align: center;
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 40px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>⌨️ 蝦米兩碼練習</h1>
+        <div class="subtitle">根據嘸蝦米字根表整理</div>
+    </header>
+
+    <div class="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <div class="flashcard-wrapper">
+        <div class="flashcard" id="card" onclick="toggleFlip()">
+            <div class="card-face card-front">
+                <div class="char-display" id="char-target">的</div>
+                <div class="hint-text">請輸入兩碼代碼</div>
+            </div>
+            <div class="card-face card-back">
+                <div class="code-display" id="code-answer">D</div>
+                <div class="hint-text">正確答案</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="input-area">
+        <input type="text" id="user-input" placeholder="在此輸入..." autocomplete="off">
+        <div class="btn-group">
+            <button class="btn-secondary" onclick="toggleFlip()">翻看答案</button>
+            <button class="btn-primary" onclick="nextCard()">下一題</button>
+        </div>
+    </div>
+
+    <div class="footer-note">© Shuojen.site Boshiamy Training Tool</div>
+</div>
+
+<script>
+    /**
+     */
+    const correctedBank = [
+    { char: '寸', code: 'AA' },
+    { char: '鎮', code: 'AB' },
+    { char: '鏡', code: 'AC' },
+    { char: '會', code: 'AD' },
+    { char: '金', code: 'AE' },
+    { char: '鑑', code: 'AF' },
+    { char: '威', code: 'AG' },
+    { char: '感', code: 'AH' },
+    { char: '俞', code: 'AI' },
+    { char: '華', code: 'AJ' },
+    { char: '駐', code: 'AK' },
+    { char: '也', code: 'AL' },
+    { char: '貪', code: 'AM' },
+    { char: '良', code: 'AN' },
+    { char: '點', code: 'AO' },
+    { char: '救', code: 'AP' },
+    { char: '錢', code: 'AQ' },
+    { char: '創', code: 'AR' },
+    { char: '戚', code: 'AS' },
+    { char: '術', code: 'AT' },
+    { char: '澳', code: 'AU' },
+    { char: '族', code: 'AV' },
+    { char: '錄', code: 'AW' },
+    { char: '貸', code: 'AX' },
+    { char: '成', code: 'AY' },
+    { char: '之', code: 'AZ' },
+    { char: '不', code: 'BA' },
+    { char: '資', code: 'BB' },
+    { char: '凍', code: 'BC' },
+    { char: '階', code: 'BD' },
+    { char: '並', code: 'BE' },
+    { char: '為', code: 'BF' },
+    { char: '障', code: 'BG' },
+    { char: '隱', code: 'BH' },
+    { char: '前', code: 'BI' },
+    { char: '半', code: 'BJ' },
+    { char: '全', code: 'BK' },
+    { char: '比', code: 'BL' },
+    { char: '陽', code: 'BM' },
+    { char: '人', code: 'BN' },
+    { char: '曾', code: 'BO' },
+    { char: '入', code: 'BP' },
+    { char: '隊', code: 'BQ' },
+    { char: '院', code: 'BR' },
+    { char: '隆', code: 'BS' },
+    { char: '隔', code: 'BT' },
+    { char: '舒', code: 'BU' },
+    { char: '善', code: 'BV' },
+    { char: '遵', code: 'BW' },
+    { char: '義', code: 'BX' },
+    { char: '墜', code: 'BY' },
+    { char: '凝', code: 'BZ' },
+    { char: '夕', code: 'CA' },
+    { char: '與', code: 'CB' },
+    { char: '屬', code: 'CC' },
+    { char: '屠', code: 'CD' },
+    { char: '溪', code: 'CE' },
+    { char: '宣', code: 'CF' },
+    { char: '履', code: 'CG' },
+    { char: '擊', code: 'CH' },
+    { char: '中', code: 'CI' },
+    { char: '車', code: 'CJ' },
+    { char: '夠', code: 'CK' },
+    { char: '巴', code: 'CL' },
+    { char: '慰', code: 'CM' },
+    { char: '央', code: 'CN' },
+    { char: '西', code: 'CO' },
+    { char: '尸', code: 'CP' },
+    { char: '輻', code: 'CQ' },
+    { char: '剝', code: 'CR' },
+    { char: '繫', code: 'CS' },
+    { char: '禍', code: 'CT' },
+    { char: '殿', code: 'CU' },
+    { char: '覆', code: 'CV' },
+    { char: '遲', code: 'CW' },
+    { char: '史', code: 'CX' },
+    { char: '壁', code: 'CY' },
+    { char: '捷', code: 'CZ' },
+    { char: '歹', code: 'DA' },
+    { char: '顯', code: 'DB' },
+    { char: '待', code: 'DC' },
+    { char: '得', code: 'DD' },
+    { char: '豆', code: 'DE' },
+    { char: '照', code: 'DF' },
+    { char: '貿', code: 'DG' },
+    { char: '導', code: 'DH' },
+    { char: '鬥', code: 'DI' },
+    { char: '斗', code: 'DJ' },
+    { char: '裂', code: 'DK' },
+    { char: '既', code: 'DL' },
+    { char: '影', code: 'DM' },
+    { char: '大', code: 'DN' },
+    { char: '日', code: 'DO' },
+    { char: '刀', code: 'DP' },
+    { char: '殘', code: 'DQ' },
+    { char: '晚', code: 'DR' },
+    { char: '景', code: 'DS' },
+    { char: '題', code: 'DT' },
+    { char: '渡', code: 'DU' },
+    { char: '召', code: 'DV' },
+    { char: '暴', code: 'DW' },
+    { char: '力', code: 'DX' },
+    { char: '力', code: 'DY' },
+    { char: '債', code: 'DZ' },
+    { char: '與', code: 'EA' },
+    { char: '兩', code: 'EB' },
+    { char: '融', code: 'EC' },
+    { char: '習', code: 'ED' },
+    { char: '丑', code: 'EE' },
+    { char: '靈', code: 'EF' },
+    { char: '妥', code: 'EG' },
+    { char: '群', code: 'EH' },
+    { char: '山', code: 'EI' },
+    { char: '辭', code: 'EJ' },
+    { char: '釀', code: 'EK' },
+    { char: '屯', code: 'EL' },
+    { char: '彩', code: 'EM' },
+    { char: '夷', code: 'EN' },
+    { char: '司', code: 'EO' },
+    { char: '易', code: 'EP' },
+    { char: '舉', code: 'EQ' },
+    { char: '劃', code: 'ER' },
+    { char: '崇', code: 'ES' },
+    { char: '頸', code: 'ET' },
+    { char: '段', code: 'EU' },
+    { char: '峻', code: 'EV' },
+    { char: '逼', code: 'EW' },
+    { char: '尹', code: 'EX' },
+    { char: '再', code: 'EY' },
+    { char: '正', code: 'EZ' },
+    { char: '下', code: 'FA' },
+    { char: '顧', code: 'FB' },
+    { char: '螢', code: 'FC' },
+    { char: '豐', code: 'FD' },
+    { char: '上', code: 'FE' },
+    { char: '營', code: 'FF' },
+    { char: '旗', code: 'FG' },
+    { char: '慧', code: 'FH' },
+    { char: '歐', code: 'FI' },
+    { char: '飛', code: 'FJ' },
+    { char: '斷', code: 'FK' },
+    { char: '亡', code: 'FL' },
+    { char: '督', code: 'FM' },
+    { char: '火', code: 'FN' },
+    { char: '曲', code: 'FO' },
+    { char: '戶', code: 'FP' },
+    { char: '富', code: 'FQ' },
+    { char: '業', code: 'FR' },
+    { char: '匪', code: 'FS' },
+    { char: '榮', code: 'FT' },
+    { char: '胡', code: 'FU' },
+    { char: '區', code: 'FV' },
+    { char: '爆', code: 'FW' },
+    { char: '發', code: 'FX' },
+    { char: '方', code: 'FY' },
+    { char: '疑', code: 'FZ' },
+    { char: '瓜', code: 'GA' },
+    { char: '幾', code: 'GB' },
+    { char: '獎', code: 'GC' },
+    { char: '動', code: 'GD' },
+    { char: '垂', code: 'GE' },
+    { char: '艦', code: 'GF' },
+    { char: '己', code: 'GG' },
+    { char: '怒', code: 'GH' },
+    { char: '即', code: 'GI' },
+    { char: '千', code: 'GJ' },
+    { char: '裝', code: 'GK' },
+    { char: '就', code: 'GL' },
+    { char: '媽', code: 'GM' },
+    { char: '夾', code: 'GN' },
+    { char: '甘', code: 'GO' },
+    { char: '教', code: 'GP' },
+    { char: '重', code: 'GQ' },
+    { char: '剩', code: 'GR' },
+    { char: '乘', code: 'GS' },
+    { char: '娛', code: 'GT' },
+    { char: '毀', code: 'GU' },
+    { char: '干', code: 'GV' },
+    { char: '遷', code: 'GW' },
+    { char: '女', code: 'GX' },
+    { char: '旁', code: 'GY' },
+    { char: '好', code: 'GZ' },
+    { char: '心', code: 'HA' },
+    { char: '積', code: 'HB' },
+    { char: '程', code: 'HC' },
+    { char: '懊', code: 'HD' },
+    { char: '或', code: 'HE' },
+    { char: '悅', code: 'HF' },
+    { char: '麵', code: 'HG' },
+    { char: '穩', code: 'HH' },
+    { char: '幫', code: 'HI' },
+    { char: '手', code: 'HJ' },
+    { char: '懷', code: 'HK' },
+    { char: '巷', code: 'HL' },
+    { char: '悔', code: 'HM' },
+    { char: '很', code: 'HN' },
+    { char: '首', code: 'HO' },
+    { char: '必', code: 'HP' },
+    { char: '懂', code: 'HQ' },
+    { char: '稅', code: 'HR' },
+    { char: '慌', code: 'HS' },
+    { char: '類', code: 'HT' },
+    { char: '悄', code: 'HU' },
+    { char: '惟', code: 'HV' },
+    { char: '黎', code: 'HW' },
+    { char: '愛', code: 'HX' },
+    { char: '稱', code: 'HY' },
+    { char: '靜', code: 'HZ' },
+    { char: '應', code: 'IA' },
+    { char: '讀', code: 'IB' },
+    { char: '鞏', code: 'IC' },
+    { char: '誤', code: 'ID' },
+    { char: '工', code: 'IE' },
+    { char: '跡', code: 'IF' },
+    { char: '譯', code: 'IG' },
+    { char: '恐', code: 'IH' },
+    { char: '申', code: 'II' },
+    { char: '甫', code: 'IJ' },
+    { char: '讓', code: 'IK' },
+    { char: '該', code: 'IL' },
+    { char: '詢', code: 'IM' },
+    { char: '欠', code: 'IN' },
+    { char: '言', code: 'IO' },
+    { char: '評', code: 'IP' },
+    { char: '讚', code: 'IQ' },
+    { char: '說', code: 'IR' },
+    { char: '謊', code: 'IS' },
+    { char: '譴', code: 'IT' },
+    { char: '護', code: 'IU' },
+    { char: '試', code: 'IV' },
+    { char: '誕', code: 'IW' },
+    { char: '我', code: 'IX' },
+    { char: '講', code: 'IY' },
+    { char: '掀', code: 'IZ' },
+    { char: '祭', code: 'JA' },
+    { char: '戴', code: 'JB' },
+    { char: '載', code: 'JC' },
+    { char: '換', code: 'JD' },
+    { char: '直', code: 'JE' },
+    { char: '撫', code: 'JF' },
+    { char: '幹', code: 'JG' },
+    { char: '惠', code: 'JH' },
+    { char: '控', code: 'JI' },
+    { char: '井', code: 'JJ' },
+    { char: '裁', code: 'JK' },
+    { char: '擒', code: 'JL' },
+    { char: '損', code: 'JM' },
+    { char: '是', code: 'JN' },
+    { char: '搶', code: 'JO' },
+    { char: '撤', code: 'JP' },
+    { char: '協', code: 'JQ' },
+    { char: '刺', code: 'JR' },
+    { char: '排', code: 'JS' },
+    { char: '裁', code: 'JT' },
+    { char: '搬', code: 'JU' },
+    { char: '擁', code: 'JV' },
+    { char: '挺', code: 'JW' },
+    { char: '故', code: 'JX' },
+    { char: '挫', code: 'JY' },
+    { char: '擬', code: 'JZ' },
+    { char: '黃', code: 'KA' },
+    { char: '質', code: 'KB' },
+    { char: '冠', code: 'KC' },
+    { char: '潛', code: 'KD' },
+    { char: '王', code: 'KE' },
+    { char: '薦', code: 'KF' },
+    { char: '授', code: 'KG' },
+    { char: '懲', code: 'KH' },
+    { char: '斤', code: 'KI' },
+    { char: '開', code: 'KJ' },
+    { char: '環', code: 'KK' },
+    { char: '甚', code: 'KL' },
+    { char: '氣', code: 'KM' },
+    { char: '長', code: 'KN' },
+    { char: '咸', code: 'KO' },
+    { char: '徵', code: 'KP' },
+    { char: '理', code: 'KQ' },
+    { char: '弄', code: 'KR' },
+    { char: '靠', code: 'KS' },
+    { char: '賞', code: 'KT' },
+    { char: '趣', code: 'KU' },
+    { char: '兵', code: 'KV' },
+    { char: '廷', code: 'KW' },
+    { char: '養', code: 'KX' },
+    { char: '基', code: 'KY' },
+    { char: '贊', code: 'KZ' },
+    { char: '麗', code: 'LA' },
+    { char: '病', code: 'LB' },
+    { char: '磁', code: 'LC' },
+    { char: '勵', code: 'LD' },
+    { char: '立', code: 'LE' },
+    { char: '熟', code: 'LF' },
+    { char: '疾', code: 'LG' },
+    { char: '廳', code: 'LH' },
+    { char: '新', code: 'LI' },
+    { char: '辛', code: 'LJ' },
+    { char: '哀', code: 'LK' },
+    { char: '親', code: 'LL' },
+    { char: '彰', code: 'LM' },
+    { char: '來', code: 'LN' },
+    { char: '路', code: 'LO' },
+    { char: '廠', code: 'LP' },
+    { char: '痛', code: 'LQ' },
+    { char: '競', code: 'LR' },
+    { char: '牽', code: 'LS' },
+    { char: '碟', code: 'LT' },
+    { char: '厲', code: 'LU' },
+    { char: '確', code: 'LV' },
+    { char: '麼', code: 'LW' },
+    { char: '夜', code: 'LX' },
+    { char: '壓', code: 'LY' },
+    { char: '礎', code: 'LZ' },
+    { char: '買', code: 'MA' },
+    { char: '類', code: 'MB' },
+    { char: '矚', code: 'MC' },
+    { char: '盼', code: 'MD' },
+    { char: '且', code: 'ME' },
+    { char: '關', code: 'MF' },
+    { char: '釋', code: 'MG' },
+    { char: '德', code: 'MH' },
+    { char: '門', code: 'MI' },
+    { char: '冊', code: 'MJ' },
+    { char: '往', code: 'MK' },
+    { char: '毛', code: 'ML' },
+    { char: '循', code: 'MM' },
+    { char: '米', code: 'MN' },
+    { char: '目', code: 'MO' },
+    { char: '矛', code: 'MP' },
+    { char: '顯', code: 'MQ' },
+    { char: '閱', code: 'MR' },
+    { char: '縣', code: 'MS' },
+    { char: '衝', code: 'MT' },
+    { char: '晴', code: 'MU' },
+    { char: '行', code: 'MV' },
+    { char: '邊', code: 'MW' },
+    { char: '曼', code: 'MX' },
+    { char: '門', code: 'MY' },
+    { char: '從', code: 'MZ' },
+    { char: '求', code: 'NA' },
+    { char: '賽', code: 'NB' },
+    { char: '觸', code: 'NC' },
+    { char: '突', code: 'ND' },
+    { char: '角', code: 'NE' },
+    { char: '寫', code: 'NF' },
+    { char: '安', code: 'NG' },
+    { char: '憲', code: 'NH' },
+    { char: '市', code: 'NI' },
+    { char: '巾', code: 'NJ' },
+    { char: '究', code: 'NK' },
+    { char: '包', code: 'NL' },
+    { char: '勿', code: 'NM' },
+    { char: '象', code: 'NN' },
+    { char: '周', code: 'NO' },
+    { char: '危', code: 'NP' },
+    { char: '幅', code: 'NQ' },
+    { char: '剛', code: 'NR' },
+    { char: '宗', code: 'NS' },
+    { char: '額', code: 'NT' },
+    { char: '竊', code: 'NU' },
+    { char: '久', code: 'NV' },
+    { char: '逸', code: 'NW' },
+    { char: '敬', code: 'NX' },
+    { char: '塞', code: 'NY' },
+    { char: '定', code: 'NZ' },
+    { char: '貫', code: 'OA' },
+    { char: '圓', code: 'OB' },
+    { char: '囑', code: 'OC' },
+    { char: '因', code: 'OD' },
+    { char: '亞', code: 'OE' },
+    { char: '距', code: 'OF' },
+    { char: '蹈', code: 'OG' },
+    { char: '啊', code: 'OH' },
+    { char: '誓', code: 'OI' },
+    { char: '單', code: 'OJ' },
+    { char: '園', code: 'OK' },
+    { char: '號', code: 'OL' },
+    { char: '器', code: 'OM' },
+    { char: '跑', code: 'ON' },
+    { char: '口', code: 'OO' },
+    { char: '圈', code: 'OP' },
+    { char: '戰', code: 'OQ' },
+    { char: '唬', code: 'OR' },
+    { char: '圍', code: 'OS' },
+    { char: '圖', code: 'OT' },
+    { char: '嘲', code: 'OU' },
+    { char: '品', code: 'OV' },
+    { char: '選', code: 'OW' },
+    { char: '嚴', code: 'OX' },
+    { char: '嚇', code: 'OY' },
+    { char: '跌', code: 'OZ' },
+    { char: '卜', code: 'PA' },
+    { char: '貨', code: 'PB' },
+    { char: '使', code: 'PC' },
+    { char: '候', code: 'PD' },
+    { char: '至', code: 'PE' },
+    { char: '儘', code: 'PF' },
+    { char: '牌', code: 'PG' },
+    { char: '億', code: 'PH' },
+    { char: '譬', code: 'PI' },
+    { char: '平', code: 'PJ' },
+    { char: '依', code: 'PK' },
+    { char: '卷', code: 'PL' },
+    { char: '自', code: 'PM' },
+    { char: '條', code: 'PN' },
+    { char: '個', code: 'PO' },
+    { char: '修', code: 'PP' },
+    { char: '歸', code: 'PQ' },
+    { char: '側', code: 'PR' },
+    { char: '係', code: 'PS' },
+    { char: '停', code: 'PT' },
+    { char: '偶', code: 'PU' },
+    { char: '泉', code: 'PV' },
+    { char: '邀', code: 'PW' },
+    { char: '皮', code: 'PX' },
+    { char: '片', code: 'PY' },
+    { char: '促', code: 'PZ' },
+    { char: '貴', code: 'QA' },
+    { char: '弱', code: 'QB' },
+    { char: '獨', code: 'QC' },
+    { char: '體', code: 'QD' },
+    { char: '里', code: 'QE' },
+    { char: '默', code: 'QF' },
+    { char: '孤', code: 'QG' },
+    { char: '愚', code: 'QH' },
+    { char: '甲', code: 'QI' },
+    { char: '畢', code: 'QJ' },
+    { char: '弓', code: 'QK' },
+    { char: '規', code: 'QL' },
+    { char: '們', code: 'QM' },
+    { char: '兼', code: 'QN' },
+    { char: '田', code: 'QO' },
+    { char: '繳', code: 'QP' },
+    { char: '蒙', code: 'QQ' },
+    { char: '界', code: 'QR' },
+    { char: '獵', code: 'QS' },
+    { char: '悲', code: 'QT' },
+    { char: '獲', code: 'QU' },
+    { char: '懼', code: 'QV' },
+    { char: '遇', code: 'QW' },
+    { char: '丈', code: 'QX' },
+    { char: '酬', code: 'QY' },
+    { char: '跟', code: 'QZ' },
+    { char: '兆', code: 'RA' },
+    { char: '共', code: 'RB' },
+    { char: '輩', code: 'RC' },
+    { char: '著', code: 'RD' },
+    { char: '臣', code: 'RE' },
+    { char: '聯', code: 'RF' },
+    { char: '舊', code: 'RG' },
+    { char: '聽', code: 'RH' },
+    { char: '而', code: 'RI' },
+    { char: '耳', code: 'RJ' },
+    { char: '考', code: 'RK' },
+    { char: '兒', code: 'RL' },
+    { char: '惹', code: 'RM' },
+    { char: '樂', code: 'RN' },
+    { char: '落', code: 'RO' },
+    { char: '乃', code: 'RP' },
+    { char: '福', code: 'RQ' },
+    { char: '視', code: 'RR' },
+    { char: '非', code: 'RS' },
+    { char: '藝', code: 'RT' },
+    { char: '萬', code: 'RU' },
+    { char: '臨', code: 'RV' },
+    { char: '遭', code: 'RW' },
+    { char: '爾', code: 'RX' },
+    { char: '勒', code: 'RY' },
+    { char: '微', code: 'RZ' },
+    { char: '小', code: 'SA' },
+    { char: '續', code: 'SB' },
+    { char: '輝', code: 'SC' },
+    { char: '縮', code: 'SD' },
+    { char: '生', code: 'SE' },
+    { char: '黨', code: 'SF' },
+    { char: '績', code: 'SG' },
+    { char: '總', code: 'SH' },
+    { char: '川', code: 'SI' },
+    { char: '牛', code: 'SJ' },
+    { char: '製', code: 'SK' },
+    { char: '世', code: 'SL' },
+    { char: '省', code: 'SM' },
+    { char: '常', code: 'SN' },
+    { char: '當', code: 'SO' },
+    { char: '少', code: 'SP' },
+    { char: '緣', code: 'SQ' },
+    { char: '覺', code: 'SR' },
+    { char: '綜', code: 'SS' },
+    { char: '街', code: 'ST' },
+    { char: '淑', code: 'SU' },
+    { char: '線', code: 'SV' },
+    { char: '繼', code: 'SW' },
+    { char: '身', code: 'SX' },
+    { char: '堂', code: 'SY' },
+    { char: '縱', code: 'SZ' },
+    { char: '頁', code: 'TA' },
+    { char: '檢', code: 'TB' },
+    { char: '夢', code: 'TC' },
+    { char: '替', code: 'TD' },
+    { char: '臺', code: 'TE' },
+    { char: '碼', code: 'TF' },
+    { char: '樓', code: 'TG' },
+    { char: '想', code: 'TH' },
+    { char: '丁', code: 'TI' },
+    { char: '面', code: 'TJ' },
+    { char: '極', code: 'TK' },
+    { char: '充', code: 'TL' },
+    { char: '相', code: 'TM' },
+    { char: '木', code: 'TN' },
+    { char: '可', code: 'TO' },
+    { char: '弟', code: 'TP' },
+    { char: '棒', code: 'TQ' },
+    { char: '械', code: 'TR' },
+    { char: '標', code: 'TS' },
+    { char: '哥', code: 'TT' },
+    { char: '樣', code: 'TU' },
+    { char: '模', code: 'TV' },
+    { char: '禁', code: 'TW' },
+    { char: '更', code: 'TX' },
+    { char: '構', code: 'TY' },
+    { char: '楚', code: 'TZ' },
+    { char: '雨', code: 'UA' },
+    { char: '預', code: 'UB' },
+    { char: '遺', code: 'UC' },
+    { char: '勝', code: 'UD' },
+    { char: '月', code: 'UE' },
+    { char: '熊', code: 'UF' },
+    { char: '牌', code: 'UG' },
+    { char: '態', code: 'UH' },
+    { char: '予', code: 'UI' },
+    { char: '于', code: 'UJ' },
+    { char: '粵', code: 'UK' },
+    { char: '能', code: 'UL' },
+    { char: '參', code: 'UM' },
+    { char: '永', code: 'UN' },
+    { char: '台', code: 'UO' },
+    { char: '才', code: 'UP' },
+    { char: '鮮', code: 'UQ' },
+    { char: '脫', code: 'UR' },
+    { char: '罪', code: 'US' },
+    { char: '衡', code: 'UT' },
+    { char: '服', code: 'UU' },
+    { char: '越', code: 'UV' },
+    { char: '遙', code: 'UW' },
+    { char: '又', code: 'UX' },
+    { char: '墾', code: 'UY' },
+    { char: '腳', code: 'UZ' },
+    { char: '鬼', code: 'VA' },
+    { char: '賴', code: 'VB' },
+    { char: '副', code: 'VC' },
+    { char: '智', code: 'VD' },
+    { char: '佳', code: 'VE' },
+    { char: '無', code: 'VF' },
+    { char: '矮', code: 'VG' },
+    { char: '怎', code: 'VH' },
+    { char: '差', code: 'VI' },
+    { char: '弗', code: 'VJ' },
+    { char: '表', code: 'VK' },
+    { char: '覽', code: 'VL' },
+    { char: '每', code: 'VM' },
+    { char: '邁', code: 'VN' },
+    { char: '詹', code: 'VO' },
+    { char: '複', code: 'VP' },
+    { char: '裡', code: 'VQ' },
+    { char: '介', code: 'VR' },
+    { char: '舞', code: 'VS' },
+    { char: '集', code: 'VT' },
+    { char: '鬆', code: 'VU' },
+    { char: '、', code: 'VV' },
+    { char: '速', code: 'VW' },
+    { char: '敏', code: 'VX' },
+    { char: '萬', code: 'VY' },
+    { char: '礙', code: 'VZ' },
+    { char: '瓦', code: 'WA' },
+    { char: '顏', code: 'WB' },
+    { char: '濁', code: 'WC' },
+    { char: '響', code: 'WD' },
+    { char: '武', code: 'WE' },
+    { char: '濕', code: 'WF' },
+    { char: '灑', code: 'WG' },
+    { char: '濾', code: 'WH' },
+    { char: '了', code: 'WI' },
+    { char: '午', code: 'WJ' },
+    { char: '漲', code: 'WK' },
+    { char: '流', code: 'WL' },
+    { char: '海', code: 'WM' },
+    { char: '水', code: 'WN' },
+    { char: '谷', code: 'WO' },
+    { char: '激', code: 'WP' },
+    { char: '灣', code: 'WQ' },
+    { char: '測', code: 'WR' },
+    { char: '漂', code: 'WS' },
+    { char: '梁', code: 'WT' },
+    { char: '法', code: 'WU' },
+    { char: '巫', code: 'WV' },
+    { char: '滋', code: 'WW' },
+    { char: '文', code: 'WX' },
+    { char: '洲', code: 'WY' },
+    { char: '汽', code: 'WZ' },
+    { char: '專', code: 'XA' },
+    { char: '鄰', code: 'XB' },
+    { char: '蜜', code: 'XC' },
+    { char: '藉', code: 'XD' },
+    { char: '密', code: 'XE' },
+    { char: '網', code: 'XF' },
+    { char: '諸', code: 'XG' },
+    { char: '徐', code: 'XH' },
+    { char: '鄉', code: 'XI' },
+    { char: '升', code: 'XJ' },
+    { char: '夸', code: 'XK' },
+    { char: '奄', code: 'XL' },
+    { char: '儲', code: 'XM' },
+    { char: '食', code: 'XN' },
+    { char: '商', code: 'XO' },
+    { char: '牙', code: 'XP' },
+    { char: '蓄', code: 'XQ' },
+    { char: '薄', code: 'XR' },
+    { char: '綠', code: 'XS' },
+    { char: '操', code: 'XT' },
+    { char: '殺', code: 'XU' },
+    { char: '贏', code: 'XV' },
+    { char: '隨', code: 'XW' },
+    { char: '氏', code: 'XX' },
+    { char: '在', code: 'XY' },
+    { char: '存', code: 'XZ' },
+    { char: '原', code: 'YA' },
+    { char: '都', code: 'YB' },
+    { char: '聲', code: 'YC' },
+    { char: '勢', code: 'YD' },
+    { char: '士', code: 'YE' },
+    { char: '熱', code: 'YF' },
+    { char: '趕', code: 'YG' },
+    { char: '摯', code: 'YH' },
+    { char: '款', code: 'YI' },
+    { char: '幸', code: 'YJ' },
+    { char: '壞', code: 'YK' },
+    { char: '起', code: 'YL' },
+    { char: '趁', code: 'YM' },
+    { char: '厭', code: 'YN' },
+    { char: '超', code: 'YO' },
+    { char: '牙', code: 'YP' },
+    { char: '嘉', code: 'YQ' },
+    { char: '境', code: 'YR' },
+    { char: '末', code: 'YS' },
+    { char: '願', code: 'YT' },
+    { char: '報', code: 'YU' },
+    { char: '土', code: 'YV' },
+    { char: '遠', code: 'YW' },
+    { char: '憂', code: 'YX' },
+    { char: '州', code: 'YY' },
+    { char: '執', code: 'YZ' },
+    { char: '舟', code: 'ZA' },
+    { char: '籲', code: 'ZB' },
+    { char: '趨', code: 'ZC' },
+    { char: '籍', code: 'ZD' },
+    { char: '止', code: 'ZE' },
+    { char: '盤', code: 'ZF' },
+    { char: '孤', code: 'ZG' },
+    { char: '慮', code: 'ZH' },
+    { char: '竹', code: 'ZI' },
+    { char: '子', code: 'ZJ' },
+    { char: '虧', code: 'ZK' },
+    { char: '乙', code: 'ZL' },
+    { char: '偵', code: 'ZM' },
+    { char: '餐', code: 'ZN' },
+    { char: '店', code: 'ZO' },
+    { char: '第', code: 'ZP' },
+    { char: '戲', code: 'ZQ' },
+    { char: '劇', code: 'ZR' },
+    { char: '歲', code: 'ZS' },
+    { char: '築', code: 'ZT' },
+    { char: '般', code: 'ZU' },
+    { char: '處', code: 'ZV' },
+    { char: '遽', code: 'ZW' },
+    { char: '丸', code: 'ZX' },
+    { char: '塑', code: 'ZY' },
+    { char: '乙', code: 'ZZ' }
+    ];
+
+    let currentList = [];
+    let currentIndex = 0;
+    let isFlipped = false;
+
+    const charTarget = document.getElementById('char-target');
+    const codeAnswer = document.getElementById('code-answer');
+    const userInput = document.getElementById('user-input');
+    const card = document.getElementById('card');
+    const progressBar = document.getElementById('progress-bar');
+
+    function init() {
+        currentList = [...correctedBank].sort(() => Math.random() - 0.5);
+        currentIndex = 0;
+        showCard(true); // 首次載入直接顯示
+        updateProgress();
+    }
+
+    // 更新卡片內容
+    // isImmediate: 是否立即更新（不考慮翻轉動畫）
+    function showCard(isImmediate = false) {
+        const updateContent = () => {
+            const item = currentList[currentIndex];
+            charTarget.textContent = item.char;
+            codeAnswer.textContent = item.code;
+            userInput.value = '';
+            userInput.classList.remove('success');
+            userInput.focus();
+        };
+
+        if (isImmediate) {
+            isFlipped = false;
+            card.classList.remove('flipped');
+            updateContent();
+        } else {
+            // 如果目前是翻開的，先翻回去
+            if (isFlipped) {
+                isFlipped = false;
+                card.classList.remove('flipped');
+                // 等待翻轉動畫進行到一半（看不到背面時）再換字
+                setTimeout(updateContent, 300);
+            } else {
+                updateContent();
+            }
+        }
+    }
+
+    function toggleFlip() {
+        isFlipped = !isFlipped;
+        if (isFlipped) {
+            card.classList.add('flipped');
+        } else {
+            card.classList.remove('flipped');
+        }
+    }
+
+    function nextCard() {
+        currentIndex++;
+        if (currentIndex >= currentList.length) {
+            alert('練習結束！做得好！');
+            init();
+        } else {
+            showCard(false);
+            updateProgress();
+        }
+    }
+
+    function updateProgress() {
+        const progress = (currentIndex / currentList.length) * 100;
+        progressBar.style.width = `${progress}%`;
+    }
+
+    userInput.addEventListener('input', (e) => {
+        const value = e.target.value.toUpperCase().trim();
+        const correctCode = currentList[currentIndex].code;
+
+        if (value === correctCode) {
+            userInput.classList.add('success');
+            // 如果還沒翻開，翻開給使用者看答案
+            if (!isFlipped) {
+                isFlipped = true;
+                card.classList.add('flipped');
+            }
+
+            // 延遲一段時間後自動跳下一題
+            setTimeout(() => {
+                nextCard();
+            }, 800);
+        }
+    });
+
+    userInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && isFlipped) {
+            nextCard();
+        }
+    });
+
+    init();
+</script>
+
+</body>
+</html>
