@@ -6,7 +6,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 // 直接匯入產出的 JSON 檔案
 import photosData from '@site/src/data/photosData.json';
 
-// 洗牌算法放在組件外
+// 洗牌算法
 function shuffleArray(array) {
   const newArray = [...array];
   for (let i = newArray.length - 1; i > 0; i--) {
@@ -21,18 +21,24 @@ export default function PhotoGallery() {
 
   // --- 1. 定義樣式 ---
   const galleryTheme = {
-    container: {
+    // 外層容器改用 flex
+    flexContainer: {
       maxWidth: '1600px',
       margin: '40px auto',
       padding: '0 10px',
-      columnCount: 3,
-      columnGap: '10px',
+      display: 'flex',
+      gap: '15px', // 欄位間距
+      alignItems: 'flex-start',
+    },
+    // 每一欄的樣式
+    column: {
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '15px', // 圖片上下間距
     },
     photoItem: {
-      display: 'inline-block',
       width: '100%',
-      marginBottom: '20px',
-      // 這裡設定微圓角作為預設值
       borderRadius: '6px',
       overflow: 'hidden',
       backfaceVisibility: 'hidden',
@@ -41,8 +47,6 @@ export default function PhotoGallery() {
     img: {
       width: '100%',
       display: 'block',
-      // 移除這裡的 transition，統一在 CSS 中管理
-      // 圖片本身也設定微圓角
       borderRadius: '6px',
     },
     headerTitle: {
@@ -65,23 +69,31 @@ export default function PhotoGallery() {
   };
 
   // --- 2. 狀態與邏輯 ---
-  // 使用 useEffect 確保在客戶端只洗牌一次，解決 SSR 不一致和 Load More 跳動問題
   const [shuffledPhotos, setShuffledPhotos] = useState([]);
   const [visibleCount, setVisibleCount] = useState(12);
 
+  // 初始化只洗牌一次
   useEffect(() => {
     const randomized = shuffleArray(photosData).map((photo, idx) => ({
       ...photo,
-      // 產生穩定的唯一 ID
       stableId: `photo-${idx}-${photo.src}`
     }));
     setShuffledPhotos(randomized);
   }, []);
 
-  // 根據當前數量切割
+  // 取得目前要顯示的圖片
   const visiblePhotos = useMemo(() => {
     return shuffledPhotos.slice(0, visibleCount);
   }, [shuffledPhotos, visibleCount]);
+
+  // 【核心修正】將圖片手動分配到三個欄位，這保證了圖片順序永遠穩定
+  const columns = useMemo(() => {
+    const cols = [[], [], []];
+    visiblePhotos.forEach((photo, index) => {
+      cols[index % 3].push(photo); // 依照索引分配到 0, 1, 2 欄
+    });
+    return cols;
+  }, [visiblePhotos]);
 
   const handleLoadMore = () => {
     setVisibleCount((prev) => prev + 12);
@@ -91,28 +103,31 @@ export default function PhotoGallery() {
     <Layout title="攝影作品集" description="我的攝影作品展示">
       <main style={{ padding: '3rem 0', minHeight: '80vh' }}>
         <div style={{ textAlign: 'center', marginBottom: '4rem', marginTop: '2rem' }}>
-          <h1 style={galleryTheme.headerTitle}>Photograph</h1>
+          <h1 style={galleryTheme.headerTitle}>Photography</h1>
           <p style={galleryTheme.headerSub}>Since 2019 • by Shuo Jen</p>
         </div>
 
-        {/* 瀑布流容器 */}
-        <div className="masonry-container" style={galleryTheme.container}>
-          {visiblePhotos.map((photo) => {
-            const photoSrc = `${baseUrl}${photo.src}`.replace(/\/+/g, '/');
-            return (
-              // 使用穩定的 stableId 作為 key
-              <div key={photo.stableId} style={galleryTheme.photoItem} className="photo-card">
-                <Link to={photo.link} style={{ display: 'block' }}>
-                  <img
-                    src={photoSrc}
-                    alt={photo.title || 'Photo'}
-                    style={galleryTheme.img}
-                    loading="lazy"
-                  />
-                </Link>
-              </div>
-            );
-          })}
+        {/* 修正後的瀑布流：使用 Flex 分欄 */}
+        <div className="masonry-flex-container" style={galleryTheme.flexContainer}>
+          {columns.map((colPhotos, colIdx) => (
+            <div key={`col-${colIdx}`} className={`masonry-column col-${colIdx}`} style={galleryTheme.column}>
+              {colPhotos.map((photo) => {
+                const photoSrc = `${baseUrl}${photo.src}`.replace(/\/+/g, '/');
+                return (
+                  <div key={photo.stableId} style={galleryTheme.photoItem} className="photo-card">
+                    <Link to={photo.link} style={{ display: 'block' }}>
+                      <img
+                        src={photoSrc}
+                        alt={photo.title || 'Photo'}
+                        style={galleryTheme.img}
+                        loading="lazy"
+                      />
+                    </Link>
+                  </div>
+                );
+              })}
+            </div>
+          ))}
         </div>
 
         {/* 載入更多按鈕 */}
@@ -126,41 +141,31 @@ export default function PhotoGallery() {
       </main>
 
       <style>{`
-        /* 設定微圓角，並使用 !important 確保覆蓋全域設定 */
         .photo-card,
         .photo-card img {
           border-radius: 6px !important;
         }
 
-        /* --- 修改後的滑動特效 --- */
         .photo-card {
-          /* 改用更平滑緩慢的 transition */
           transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
           box-shadow: 0 4px 8px rgba(0,0,0,0.1);
           position: relative;
-          z-index: 1;
         }
 
-        /* 圖片本身也要加上 transition 才能平滑縮放 */
         .photo-card img {
            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s ease;
         }
 
         .photo-card:hover {
-          /* 減少上浮距離，從 -7px 改為 -4px，更穩重 */
           transform: translateY(-4px);
-          /* 加深陰影，營造浮起感 */
           box-shadow: 0 12px 24px rgba(0,0,0,0.2);
-          z-index: 2;
+          z-index: 10;
         }
 
         .photo-card:hover img {
-          /* 緩慢放大 */
           transform: scale(1.03);
-          /* 稍微增加一點亮度，讓焦點更突出 */
           filter: brightness(1.08);
         }
-        /* ----------------------- */
 
         .load-more-btn {
           padding: 12px 40px;
@@ -184,11 +189,13 @@ export default function PhotoGallery() {
           transform: translateY(-2px);
         }
 
+        /* 響應式處理：平板與手機的欄位調整 */
         @media (max-width: 1024px) {
-          .masonry-container { column-count: 2 !important; }
+          .col-2 { display: none !important; } /* 隱藏第三欄 */
         }
         @media (max-width: 640px) {
-          .masonry-container { column-count: 1 !important; }
+          .col-1 { display: none !important; } /* 隱藏第二欄 */
+          .masonry-flex-container { padding: 0 20px !important; }
           h1 { font-size: 2.5rem !important; }
         }
       `}</style>
