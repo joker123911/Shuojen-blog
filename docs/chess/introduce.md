@@ -5,6 +5,8 @@ sidebar_position: 1
 import White from '@site/src/components/White';
 import Black from '@site/src/components/Black';
 
+![img](./img/020.webp)
+
 今天我來推坑一個非常好玩的免費遊戲，這個遊戲有以下特色：
 
 1. 【智力博弈】益智策略類型，計算與理解並重。

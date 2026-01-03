@@ -6,7 +6,7 @@ import White from '@site/src/components/White';
 import Black from '@site/src/components/Black';
 
 ## Chess Titans
-小時候家裡的電腦是 Windows Vista 系統，內建了一個西洋棋遊戲[Chess Titans](https://zh.wikipedia.org/zh-tw/Chess_Titans)，但是我不知道棋子的規則和走法，所以從來沒有完整下贏電腦過，這也是我第一次接觸西洋棋遊戲。
+小時候家裡的電腦是 Windows Vista 系統，內建了一個西洋棋遊戲 [Chess Titans](https://zh.wikipedia.org/zh-tw/Chess_Titans)，但是我不知道棋子的規則和走法，所以從來沒有完整下贏電腦過，這也是我第一次接觸西洋棋遊戲。
 
 ![img](./img/018.webp)
 

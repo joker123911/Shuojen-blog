@@ -76,6 +76,7 @@ const config = {
       '@docusaurus/plugin-content-blog',
       {
         id: 'photoblog',
+        // 還原為 photoblog，確保你的 RSS 路徑不變
         routeBasePath: 'photoblog',
         path: './photoblog',
         showReadingTime: false,
@@ -132,10 +133,12 @@ const config = {
             label: '貼文列表',
           },
           {
-          to: '/photoblog',
+          // 修改重點：指向改名後的頁面 photography
+          to: '/photography',
           label: '攝影',
           position: 'left'},
           {
+            // 指向插件產生的攝影列表
             to: '/photoblog/photo-archive',
             position: 'left',
             label: '攝影列表',
@@ -168,7 +171,8 @@ const config = {
               },
               {
                 label: '攝影',
-                to: '/photoblog',
+                // 同步修正為新的頁面路徑
+                to: '/photography',
               },
             ],
           },
@@ -194,6 +198,7 @@ const config = {
               },
               {
                 label: '攝影 RSS',
+                // 維持原本路徑
                 href: 'https://shuojen.site/photoblog/rss.xml',
               },
             ],

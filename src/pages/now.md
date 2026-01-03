@@ -5,7 +5,7 @@ description: 近況更新
 
 # 我在做什麼 `/now`
 
-*最後更新：2025-12-28*
+*最後更新：2026-01-03*
 
 :::note
 靈感來自[Derek Sivers/What I’m doing now](https://sive.rs/now)。
@@ -16,11 +16,11 @@ description: 近況更新
 * [學嘸蝦米](https://shuojen.site/blog/2025/10/03/noshrimprice)：從 2025 十月初開始學，雖然還不快但是勉強可以用，現在部落格的內容都是用嘸蝦米打的，大概 35 wpm 左右。
 * 讀書：完全佛系的準備土木技師考試，我應該想辦法挖掘更多興趣與動力，例如把讀的東西寫成筆記整理在部落格之類的。
 * 健身：現在中午不定時會跟同事哲哲一起去健身房，我寫了一篇[文章](https://shuojen.site/blog/2025/10/14/workout)，可是這篇被蝦波發現了，被她反整。
-* 桌球：每個禮拜三下班，跟同事峻寶寶去打桌球，現在正在學拉下旋。
+* [桌球](https://shuojen.site/blog/2025/10/19/tabletennis)：每個禮拜三下班，跟同事峻寶寶去打桌球，現在正在學拉下旋。
 
 ## 最近在練習
 * 鋼琴：[Debussy Arabesque No.1](https://www.youtube.com/watch?v=JCTQTp1PdnA) 練好一陣子了，還有幾個小節不太熟。
-* 吉他：彈唱陳綺貞的[太聰明](https://www.youtube.com/watch?v=9zdxK7mIKQ4)，鍾成虎的編曲好好聽。
+* 吉他：彈陳綺貞的[太聰明](https://www.youtube.com/watch?v=9zdxK7mIKQ4)，鍾成虎的編曲好好聽。
 * 西洋棋：練習 [Pirc Defense](https://www.youtube.com/playlist?list=PLQKBpQZcRycrdFv_RC9rovYN1Wh6F_JPR) 的各種變化。
 ## 最近喜歡的作品
 * [鬼地方](https://zh.wikipedia.org/zh-tw/%E9%AC%BC%E5%9C%B0%E6%96%B9)：陳思宏老師的作品，超級好看，很久沒看到那麼震撼的小說。
@@ -29,6 +29,7 @@ description: 近況更新
 
 ## 最近正在看的作品
 * [我的英雄學院](https://zh.wikipedia.org/zh-tw/%E6%88%91%E7%9A%84%E8%8B%B1%E9%9B%84%E5%AD%B8%E9%99%A2)：蝦波推薦，最終季在 IMDB 上拿下 9.9 分讓我太好奇了，希望從第一季開始的我看的到那裡。
+* [噬亡村](https://zh.wikipedia.org/zh-tw/%E5%99%AC%E4%BA%A1%E6%9D%91)：大隊長推薦，精彩好看。
 
 ## 最近喜歡的店
 * [BT BURGER](https://maps.app.goo.gl/bqRo8F547KVxC47v5)：跟蝦波[約會](https://shuojen.site/photoblog/2025/12/21/date)發現的寶藏店，義式培根蛋奶麵必點。
