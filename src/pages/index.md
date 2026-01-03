@@ -196,7 +196,7 @@ import Marquee from "react-fast-marquee";
     <p style={{marginTop: '10px', fontSize: '0.95rem', opacity: 0.8}}>部落格式的不定時紀錄， 2025 以前的內容是從社群媒體搬運過來的。</p>
   </a>
 
-  <a href="https://shuojen.site/photoblog/" className="custom-card">
+  <a href="https://shuojen.site/photography/" className="custom-card">
     <div className="card-icon">📷</div>
     <h3 style={{margin: 0, color: 'var(--ifm-color-primary)'}}>攝影作品</h3>
     <p style={{marginTop: '10px', fontSize: '0.95rem', opacity: 0.8}}>偶爾出遊時心血來潮拍攝的作品紀錄，2019 年從底片相機開始入攝影坑。</p>
