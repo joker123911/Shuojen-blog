@@ -18,3 +18,16 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# 排除套件資料夾
+node_modules/
+
+# 排除編譯後的產出（Docusaurus）
+.docusaurus/
+build/
+dist/
+
+# 排除環境變數與暫存檔
+.env
+.DS_Store
+*.log
