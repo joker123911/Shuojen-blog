@@ -37,6 +37,7 @@ export const MovieGrid = ({ movies, onImageClick }) => (
 export const MovieListApp = () => {
   const [activePoster, setActivePoster] = useState(null);
   const [activeTitle, setActiveTitle] = useState('');
+  const [isImgLoaded, setIsImgLoaded] = useState(false);
   
   const [visibleCounts, setVisibleCounts] = useState({
     western: 10,
@@ -154,6 +155,7 @@ export const MovieListApp = () => {
   ];
 
   const handleOpen = (url, title) => {
+    setIsImgLoaded(false); // 重置載入狀態
     setActivePoster(url);
     setActiveTitle(title);
   };
@@ -199,7 +201,16 @@ export const MovieListApp = () => {
               <span className="modal-title">{activeTitle}</span>
               <button className="close-btn" onClick={handleClose}>×</button>
             </div>
-            <img src={require(`${activePoster}`).default} alt={activeTitle} className="poster-img" />
+            
+            {/* 圖片容器：處理載入動畫 */}
+            <div className={`poster-frame ${isImgLoaded ? 'loaded' : 'loading'}`}>
+              <img 
+                src={require(`${activePoster}`).default} 
+                alt={activeTitle} 
+                className="poster-img" 
+                onLoad={() => setIsImgLoaded(true)}
+              />
+            </div>
           </div>
         </div>
       )}
@@ -260,7 +271,6 @@ export const MovieListApp = () => {
     opacity: 0.9;
   }
 
-  /* --- 載入更多按鈕：與攝影集樣式一致 --- */
   .load-more-btn {
     display: block;
     margin: 3rem auto;
@@ -286,6 +296,7 @@ export const MovieListApp = () => {
     transform: translateY(-2px);
   }
 
+  /* --- Modal 基礎樣式 --- */
   .poster-modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0, 0, 0, 0.85);
@@ -310,6 +321,48 @@ export const MovieListApp = () => {
   .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
   .modal-title { font-weight: bold; color: var(--ifm-color-primary); }
   .close-btn { background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--ifm-font-color-base); }
-  .poster-img { max-width: 100%; max-height: 70vh; border-radius: 8px; display: block; margin: 0 auto; }
-`}</style>
 
+  /* --- 圖片載入動畫核心 --- */
+  .poster-frame {
+    position: relative;
+    width: 100%;
+    min-width: 300px; /* 防止載入前容器塌陷 */
+    min-height: 450px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--ifm-color-emphasis-200); /* 骨架屏底色 */
+  }
+
+  /* 骨架屏閃爍效果 */
+  .poster-frame.loading::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    animation: skeleton-shimmer 1.5s infinite;
+  }
+
+  @keyframes skeleton-shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .poster-img {
+    max-width: 100%;
+    max-height: 70vh;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto;
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out; /* 淡入時間 */
+  }
+
+  /* 當圖片載入完成後的狀態 */
+  .poster-frame.loaded .poster-img {
+    opacity: 1;
+  }
+  
+  .poster-frame.loaded {
+    background: transparent;
+  }
+`}</style>
