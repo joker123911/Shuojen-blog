@@ -111,7 +111,7 @@ export default function Guestbook() {
                 {c.replyContent && (
                   <div className={styles.replyBox}>
                     <div className={styles.replyHeader}>
-                      <span>站長回覆</span>
+                      <span>{c.replyName || '站長回覆'}</span>
                       <span className={styles.replyTime}>{formatDate(c.replyTime)}</span>
                     </div>
                     <p className={styles.commentBody}>{c.replyContent}</p>
