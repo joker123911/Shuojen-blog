@@ -135,7 +135,7 @@ const config = {
           {
           // 修改重點：指向改名後的頁面 photography
           to: '/photography',
-          label: '攝影',
+          label: '攝影集',
           position: 'left'},
           {
             // 指向插件產生的攝影列表
@@ -143,6 +143,10 @@ const config = {
             position: 'left',
             label: '攝影列表',
           },
+          {
+          to: '/guestbook',
+          label: '留言板',
+          position: 'left'},
         ],
       },
       footer: {
