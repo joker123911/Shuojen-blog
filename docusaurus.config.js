@@ -174,7 +174,7 @@ const config = {
                 to: '/blog',
               },
               {
-                label: '攝影',
+                label: '攝影集',
                 // 同步修正為新的頁面路徑
                 to: '/photography',
               },

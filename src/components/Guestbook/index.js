@@ -11,6 +11,15 @@ export default function Guestbook() {
   const [fetchLoading, setFetchLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(10);
 
+  // 判斷是否為圖案的邏輯：換行次數大於 10 就視為圖案
+  const getCommentClass = (content) => {
+    if (!content) return styles.commentBody;
+    const lineCount = content.split('\n').length;
+    return lineCount > 10
+      ? `${styles.commentBody} ${styles.asciiArt}`
+      : styles.commentBody;
+  };
+
   const formatDate = (dateStr) => {
     if (!dateStr) return '';
     const date = new Date(dateStr);
@@ -106,7 +115,8 @@ export default function Guestbook() {
                   </span>
                   <span className={styles.commentTime}>{formatDate(c.time)}</span>
                 </div>
-                <p className={styles.commentBody}>{c.content}</p>
+                {/* 使用判斷邏輯套用 CSS Class */}
+                <p className={getCommentClass(c.content)}>{c.content}</p>
 
                 {c.replyContent && (
                   <div className={styles.replyBox}>
@@ -114,7 +124,8 @@ export default function Guestbook() {
                       <span>{c.replyName || '站長回覆'}</span>
                       <span className={styles.replyTime}>{formatDate(c.replyTime)}</span>
                     </div>
-                    <p className={styles.commentBody}>{c.replyContent}</p>
+                    {/* 回覆內容也套用同樣的判斷 */}
+                    <p className={getCommentClass(c.replyContent)}>{c.replyContent}</p>
                   </div>
                 )}
               </div>

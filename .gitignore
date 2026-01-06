@@ -1,33 +1,41 @@
-# Dependencies
-/node_modules
-
-# Production
-/build
-
-# Generated files
-.docusaurus
-.cache-loader
-
-# Misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# 排除套件資料夾
+# --- 依賴與編譯 ---
 node_modules/
-
-# 排除編譯後的產出（Docusaurus）
 .docusaurus/
+.cache-loader/
 build/
 dist/
 
-# 排除環境變數與暫存檔
+# --- 環境變數 (最重要) ---
 .env
+.env.*
+!.env.example  # 這是例外，通常會保留一份範例檔告訴別人需要哪些變數
+
+# --- 作業系統垃圾檔案 ---
 .DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# --- 編輯器設定 (選配) ---
+# 如果你不希望把個人的 VS Code 或 WebStorm 設定上傳
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# --- 日誌與除錯 ---
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
 *.log
+
+# --- 特殊大檔案排除 (重要！) ---
+# 如果你有 200GB 的照片或大檔案放在 static/ 下，請務必在此排除
+# 例如：
+# static/my-huge-photos/
+# *.mp4
+# *.zip

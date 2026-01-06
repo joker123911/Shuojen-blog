@@ -61,13 +61,12 @@
   resize: vertical;
 }
 
-/* 修正後的送出按鈕：強制深色背景與白色文字，確保清晰 */
 .submitBtn {
   align-self: flex-end;
   padding: 12px 36px;
-  background-color: #1a1a1a !important; /* 強制使用深黑色背景 */
-  color: #ffffff !important;           /* 強制使用純白色文字 */
-  border: 1px solid #333333;           /* 增加深灰色細邊框強化輪廓 */
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  border: 1px solid #333333;
   border-radius: 4px;
   font-size: 0.9rem;
   font-weight: 700;
@@ -116,11 +115,21 @@
   color: var(--ifm-color-emphasis-600);
 }
 
+/* 基礎樣式：維持原字體並正確換行 */
 .commentBody {
   margin: 0;
   font-size: 1rem;
   line-height: 1.7;
   color: var(--ifm-font-color-base);
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+/* 當判定為圖案時才額外套用的樣式 */
+.asciiArt {
+  font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace !important;
+  line-height: 1.2; /* 讓圖案行距更緊湊，看起來更完整 */
+  font-size: 0.9rem;
 }
 
 .replyBox {
