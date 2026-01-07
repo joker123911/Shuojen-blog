@@ -2,7 +2,7 @@
 title: '留言板功能啟用'
 tags: ['blog']
 ---
-留言板功能終於開放了！前陣子就有看到廢文小天地的留言板教學文：[DIY 網站留言簿](https://trashposts.com/blog/build-my-own-guestbook/)，但是還沒有時間深入研究，直到看到 LQ7 寫的：[做一個留言板](https://lq7.tw/mood/make-a-guestbook/)推坑文燒到我，於是就把這個[留言板](https://shuojen.site/guestbook)頁面產出來啦，做法就不再贅述了，請參考以上兩位朋友的分享。
+留言板功能終於開放了！前陣子就有看到廢文小天地的留言板教學文：[DIY 網站留言簿](https://trashposts.com/blog/build-my-own-guestbook/)，但是還沒有時間深入研究，直到看到 LQ7 寫的：[做一個留言板](https://lq7.tw/tech/make-a-guestbook/)推坑文燒到我，於是就把這個[留言板](https://shuojen.site/guestbook)頁面產出來啦，做法就不再贅述了，請參考以上兩位朋友的分享。
 
 因為前幾天製作攝影集功能的經驗，會遇到一次載入太多照片吃資源的問題，雖然我想只有留言應該是還好，但還是增加了超過十則留言後點擊「Load more」按鈕載入的功能，也順便加了一個留言計數，目前沒有想到還有什麼可以新增的，先試用一陣子再說吧。
 
