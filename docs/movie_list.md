@@ -72,7 +72,7 @@ export const MovieListApp = () => {
     { title: "回到未來系列", note: "經典老片，意猶未盡", poster: "./img/movie/回到未來系列.jpg" },
     { title: "發條橘子", note: "最喜歡的庫柏力克電影，腦洞大開", poster: "./img/movie/發條橘子.jpg" },
     { title: "楚門的世界", note: "很經典的哲學電影，非常值得看", poster: "./img/movie/楚門的世界.jpg" },
-    { title: "北非諜影", note: "經典老片，1942 年的電影但完全不覺得過時", poster: "./img/movie/北非諜影.jpg" },
+    { title: "北非諜影", note: "經典老片，1942 年的電影但完全不覺得過時", poster: "./img/movie/北非諜影.webp" },
     { title: "進擊的鼓手", note: "不瘋魔不成活的代表片", poster: "./img/movie/進擊的鼓手.jpg" },
     { title: "彗星來的那一夜", note: "小成本但懸疑感滿滿，絕對不輸大片", poster: "./img/movie/彗星來的那一夜.jpg" },
     { title: "K星異客", note: "超有趣的科幻小品", poster: "./img/movie/K星異客.jpg" },
@@ -108,8 +108,10 @@ export const MovieListApp = () => {
     { title: "豪情四兄弟", note: "美國少年監獄片，沉重但非常精采", poster: "./img/movie/豪情四兄弟.jpg" },
     { title: "戀夏 500 日", note: "PTT 戰男女神片，拍的很美，很真實", poster: "./img/movie/戀夏 500 日.jpg" },
     { title: "海灘", note: "皮卡丘的老電影，有意思的反烏托邦驚悚片", poster: "./img/movie/海灘.jpg" },
-    { title: "芬奇的旅程", note: "Tom Hank 獨挑大樑的末日公路電影", poster: "./img/movie/芬奇的旅程.jpg" }
-  ];
+    { title: "芬奇的旅程", note: "Tom Hank 獨挑大樑的末日公路電影", poster: "./img/movie/芬奇的旅程.jpg" },
+    { title: "F1", note: "小布的賽車爽片，畫面美，流暢過癮", poster: "./img/movie/F1.webp" }
+  ]
+  ;
 
   const asiaMovies = [
     { title: "寄生上流", note: "奉導集大成神作，節奏與寓意完美結合", poster: "./img/movie/寄生上流.jpg" },
