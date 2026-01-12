@@ -67,7 +67,7 @@ export const MovieListApp = () => {
     { title: "阿甘正傳", note: "不管從頭從中間從哪裡都可以超順的看完", poster: "./img/movie/阿甘正傳.jpg" },
     { title: "神鬼交鋒", note: "很有意思的劇情片，輕鬆流暢，也是真實原型改編的人物", poster: "./img/movie/神鬼交鋒.jpg" },
     { title: "靈異第六感", note: "絕對不能被暴雷系列，趕快把它看掉以防萬一吧", poster: "./img/movie/靈異第六感.jpg" },
-    { title: "意外", note: "黑色犯罪劇情片，看演技就很值得了，淡淡的惆訝類型", poster: "./img/movie/意外.jpg" },
+    { title: "意外", note: "黑色犯罪劇情片，看演技就很值得了，淡淡的惆悵類型", poster: "./img/movie/意外.jpg" },
     { title: "不", note: "喬登皮爾作品之中最喜歡的，題材就是很對到我的電波", poster: "./img/movie/不.jpg" },
     { title: "回到未來系列", note: "經典老片，意猶未盡", poster: "./img/movie/回到未來系列.jpg" },
     { title: "發條橘子", note: "最喜歡的庫柏力克電影，腦洞大開", poster: "./img/movie/發條橘子.jpg" },
@@ -85,7 +85,7 @@ export const MovieListApp = () => {
     { title: "一級玩家", note: "中規中矩的科幻爽片，值得一看", poster: "./img/movie/一級玩家.jpg" },
     { title: "科洛弗10號地窖", note: "小成本的懸疑作品，女主角好漂亮", poster: "./img/movie/科洛弗10號地窖.jpg" },
     { title: "龍捲風暴", note: "很棒的災難片，流暢也夠爽", poster: "./img/movie/龍捲風暴.jpg" },
-    { title: "美麗境界", note: "經典的天才傳記片，描寫天才與凡人一樣人性的部分", poster: "./img/movie/美麗境界.jpg" },
+    { title: "美麗境界", note: "經典的天才傳記片，描寫天才人性的部分", poster: "./img/movie/美麗境界.jpg" },
     { title: "天才的禮物", note: "天才傳記片，光看小妹妹的美顏就值得了", poster: "./img/movie/天才的禮物.jpg" },
     { title: "雨人", note: "天才傳記片，溫暖類型", poster: "./img/movie/雨人.jpg" },
     { title: "模仿遊戲", note: "天才傳記類型的戰爭片，看完也是淡淡的惆悵", poster: "./img/movie/模仿遊戲.jpg" },
@@ -109,9 +109,9 @@ export const MovieListApp = () => {
     { title: "戀夏 500 日", note: "PTT 戰男女神片，拍的很美，很真實", poster: "./img/movie/戀夏 500 日.jpg" },
     { title: "海灘", note: "皮卡丘的老電影，有意思的反烏托邦驚悚片", poster: "./img/movie/海灘.jpg" },
     { title: "芬奇的旅程", note: "Tom Hank 獨挑大樑的末日公路電影", poster: "./img/movie/芬奇的旅程.jpg" },
-    { title: "F1", note: "小布的賽車爽片，畫面美，流暢過癮", poster: "./img/movie/F1.webp" }
-  ]
-  ;
+    { title: "F1", note: "小布的賽車爽片，畫面美，流暢過癮", poster: "./img/movie/F1.webp" },
+    { title: "八惡人", note: "昆丁也是很流暢的一部，角色慢慢登場最後大混戰很過癮", poster: "./img/movie/八惡人.webp" },
+  ];
 
   const asiaMovies = [
     { title: "寄生上流", note: "奉導集大成神作，節奏與寓意完美結合", poster: "./img/movie/寄生上流.jpg" },
@@ -147,11 +147,11 @@ export const MovieListApp = () => {
     { title: "可可夜總會", note: "感人有轉折畫面又漂亮", poster: "./img/movie/可可夜總會.jpg" },
     { title: "動物方城市", note: "很天才的描寫種族主義的可愛故事", poster: "./img/movie/動物方城市.jpg" },
     { title: "神隱少女", note: "最喜歡的宮崎駿作品，音樂劇情都無敵", poster: "./img/movie/神隱少女.jpg" },
-    { title: "無敵破壞王", note: "有創意又溫慢的冒險故事", poster: "./img/movie/無敵破壞王.jpg" },
+    { title: "無敵破壞王", note: "有創意又溫暖的冒險故事", poster: "./img/movie/無敵破壞王.jpg" },
     { title: "大英雄天團", note: "角色可愛劇情流暢", poster: "./img/movie/大英雄天團.jpg" },
     { title: "你的名字", note: "新海誠畫面絢麗，純愛劇情", poster: "./img/movie/你的名字.jpg" },
     { title: "跳躍吧時空少女", note: "最喜歡的細田守作品", poster: "./img/movie/跳躍吧時空少女.jpg" },
-    { title: "驀然回首", note: "藤本樹招牌畫風，意猶微盡", poster: "./img/movie/驀然回首.jpg" },
+    { title: "驀然回首", note: "藤本樹招牌畫風，讓你意猶未盡一整天", poster: "./img/movie/驀然回首.jpg" },
     { title: "鏈鋸人-蕾潔篇", note: "文藝電影感跟戰鬥畫面都超級棒", poster: "./img/movie/鏈鋸人-蕾潔篇.jpg" },
     { title: "荒野機器人", note: "夢工廠佳作，畫面精緻漂亮，劇情也是上乘的好電影", poster: "./img/movie/荒野機器人.jpg" }
   ];
