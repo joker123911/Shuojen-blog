@@ -45,7 +45,7 @@ export const MovieListApp = () => {
   });
 
   const westernMovies = [
-    { title: "刺激1995", note: "監獄劇情神片，很療育，就連電影名也是個神奇的傳說", poster: "./img/movie/刺激1995.jpg" },
+    { title: "刺激1995", note: "監獄劇情神片，很療癒，就連電影名也是個神奇的傳說", poster: "./img/movie/刺激1995.jpg" },
     { title: "頂尖對決", note: "心中最佳的諾蘭神片，絕對不能被劇透，看第二次體驗更佳", poster: "./img/movie/頂尖對決.jpg" },
     { title: "星際效應", note: "畫面劇情演員都無可挑剔，重映又去美麗華 imax 體驗感動", poster: "./img/movie/星際效應.jpg" },
     { title: "全面啟動", note: "原來小學的我就是諾蘭粉了，只是當年的我不知道導演是誰", poster: "./img/movie/全面啟動.jpg" },
