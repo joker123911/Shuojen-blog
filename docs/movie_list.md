@@ -151,6 +151,7 @@ export const MovieListApp = () => {
     { title: "大英雄天團", note: "角色可愛劇情流暢", poster: "./img/movie/大英雄天團.jpg" },
     { title: "你的名字", note: "新海誠畫面絢麗，純愛劇情", poster: "./img/movie/你的名字.jpg" },
     { title: "跳躍吧時空少女", note: "最喜歡的細田守作品", poster: "./img/movie/跳躍吧時空少女.jpg" },
+<<<<<<< Updated upstream
     { title: "驀然回首", note: "藤本樹招牌畫風，讓你意猶未盡一整天", poster: "./img/movie/驀然回首.jpg" },
     { title: "鏈鋸人-蕾潔篇", note: "文藝電影感跟戰鬥畫面都超級棒", poster: "./img/movie/鏈鋸人-蕾潔篇.jpg" },
     { title: "荒野機器人", note: "夢工廠佳作，畫面精緻漂亮，劇情也是上乘的好電影", poster: "./img/movie/荒野機器人.jpg" }
