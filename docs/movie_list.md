@@ -224,21 +224,31 @@ export const MovieListApp = () => {
 <MovieListApp />
 
 <style>{`
+  /* --- 標籤分頁優化 --- */
   .tabs {
     display: flex !important;
     overflow-x: auto !important;
     white-space: nowrap !important;
     flex-wrap: nowrap !important;
     scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
   .tabs::-webkit-scrollbar { display: none; }
 
+  /* --- 電影卡片網格 --- */
   .movie-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 16px;
     margin-top: 1.5rem;
+  }
+
+  /* 手機版網格調整：讓卡片在窄螢幕也能適當顯示 */
+  @media (max-width: 480px) {
+    .movie-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   .movie-card {
@@ -278,9 +288,6 @@ export const MovieListApp = () => {
     display: block;
     margin: 3rem auto;
     padding: 12px 40px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 2px;
     font-size: 0.8rem;
     font-weight: 500;
     background: transparent;
@@ -296,24 +303,32 @@ export const MovieListApp = () => {
     opacity: 1;
     background: var(--ifm-font-color-base);
     color: var(--ifm-background-color);
-    transform: translateY(-2px);
   }
 
-  /* --- Modal 基礎樣式 --- */
+  /* --- Modal 彈窗核心修正 --- */
   .poster-modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    position: fixed; 
+    top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0, 0, 0, 0.85);
-    display: flex; justify-content: center; align-items: center;
-    z-index: 1000; backdrop-filter: blur(5px);
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    z-index: 1000; 
+    backdrop-filter: blur(5px);
+    padding: 20px; /* 防止邊緣貼齊螢幕 */
   }
 
   .poster-modal-content {
     background: var(--ifm-card-background-color);
     border-radius: 12px;
-    max-width: 90%;
+    width: 100%;
+    max-width: 450px; /* 限制電腦版寬度，避免海報過大 */
     max-height: 90vh;
-    padding: 1rem;
+    padding: 1.25rem;
     animation: zoomIn 0.2s ease-out;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
   }
 
   @keyframes zoomIn {
@@ -321,22 +336,46 @@ export const MovieListApp = () => {
     to { transform: scale(1); opacity: 1; }
   }
 
-  .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-  .modal-title { font-weight: bold; color: var(--ifm-color-primary); }
-  .close-btn { background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--ifm-font-color-base); }
+  .modal-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 12px; 
+  }
 
-  /* --- 圖片載入動畫核心 --- */
+  .modal-title { 
+    font-weight: bold; 
+    color: var(--ifm-color-primary);
+    font-size: 1.1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 80%;
+  }
+
+  .close-btn { 
+    background: none; 
+    border: none; 
+    font-size: 1.8rem; 
+    cursor: pointer; 
+    color: var(--ifm-font-color-base);
+    line-height: 1;
+  }
+
+  /* --- 圖片載入容器修正 --- */
   .poster-frame {
     position: relative;
     width: 100%;
-    min-width: 300px; /* 防止載入前容器塌陷 */
-    min-height: 450px;
+    min-height: 200px; /* 降低最小高度初始值 */
     border-radius: 8px;
     overflow: hidden;
-    background: var(--ifm-color-emphasis-200); /* 骨架屏底色 */
+    background: var(--ifm-color-emphasis-200);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  /* 骨架屏閃爍效果 */
+  /* 骨架屏閃爍 */
   .poster-frame.loading::after {
     content: "";
     position: absolute;
@@ -351,21 +390,38 @@ export const MovieListApp = () => {
   }
 
   .poster-img {
-    max-width: 100%;
+    width: 100%;
+    height: auto;
     max-height: 70vh;
     border-radius: 8px;
     display: block;
-    margin: 0 auto;
+    object-fit: contain; /* 確保不變形 */
     opacity: 0;
-    transition: opacity 0.6s ease-in-out; /* 淡入時間 */
+    transition: opacity 0.4s ease-in-out;
   }
 
-  /* 當圖片載入完成後的狀態 */
   .poster-frame.loaded .poster-img {
     opacity: 1;
   }
   
   .poster-frame.loaded {
     background: transparent;
+  }
+
+  /* --- 手機版微調 --- */
+  @media (max-width: 768px) {
+    .poster-modal-overlay {
+      padding: 10px;
+    }
+    .poster-modal-content {
+      padding: 1rem;
+      max-width: 95%; /* 手機版佔用較寬比例 */
+    }
+    .modal-title {
+      font-size: 1rem;
+    }
+    .poster-img {
+      max-height: 65vh; /* 給標題留點空間 */
+    }
   }
 `}</style>
