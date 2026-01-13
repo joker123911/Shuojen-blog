@@ -12,11 +12,10 @@ import TabItem from '@theme/TabItem';
 *最後更新：2026-01-13*
 
 :::info 持續更新中
-如果有什麼電影想要補充進名單歡迎留言或寫信大力推薦我。
+如果有什麼電影想要補充歡迎留言或寫信大力推薦我。
 :::
 
-這是一份適合週日夜晚的電影推薦。
-每一部都是我的誠意之選，看完不會讓你失望。
+這是一份適合週日夜晚的電影推薦，每一部都是我的誠意之選。
 
 export const MovieGrid = ({ movies, onImageClick }) => (
   <div className="movie-grid">
@@ -110,7 +109,7 @@ export const MovieListApp = () => {
     { title: "海灘", note: "皮卡丘的老電影，有意思的反烏托邦驚悚片", poster: "./img/movie/海灘.jpg" },
     { title: "芬奇的旅程", note: "Tom Hank 獨挑大樑的末日公路電影", poster: "./img/movie/芬奇的旅程.jpg" },
     { title: "F1", note: "小布的賽車爽片，畫面美，流暢過癮", poster: "./img/movie/F1.webp" },
-    { title: "八惡人", note: "昆丁也是很流暢的一部，角色慢慢登場最後大混戰很過癮", poster: "./img/movie/八惡人.webp" },
+    { title: "八惡人", note: "昆丁很流暢的一部，角色慢慢登場最後大混戰很過癮", poster: "./img/movie/八惡人.webp" },
     { title: "險路勿近", note: "犯罪驚悚片，柯恩兄弟最有名的一部，全片無配樂但壓迫感超強", poster: "./img/movie/險路勿近.webp" },	
   ];
 
@@ -154,7 +153,8 @@ export const MovieListApp = () => {
     { title: "跳躍吧時空少女", note: "最喜歡的細田守作品", poster: "./img/movie/跳躍吧時空少女.jpg" },
     { title: "驀然回首", note: "藤本樹招牌畫風，讓你意猶未盡一整天", poster: "./img/movie/驀然回首.jpg" },
     { title: "鏈鋸人-蕾潔篇", note: "文藝電影感跟戰鬥畫面都超級棒", poster: "./img/movie/鏈鋸人-蕾潔篇.jpg" },
-    { title: "荒野機器人", note: "夢工廠佳作，畫面精緻漂亮，劇情也是上乘的好電影", poster: "./img/movie/荒野機器人.jpg" }
+    { title: "荒野機器人", note: "夢工廠佳作，畫面精緻漂亮，劇情也是上乘的好電影", poster: "./img/movie/荒野機器人.jpg" },
+	{ title: "100公尺", note: "雨中的那場比賽，一鏡到底配上手繪線條太強了，教科書等級", poster: "./img/movie/100公尺.webp" },
   ];
 
   const handleOpen = (url, title) => {
@@ -170,7 +170,7 @@ export const MovieListApp = () => {
   const loadMore = (category) => {
     setVisibleCounts(prev => ({
       ...prev,
-      [category]: prev[category] + 10
+      [category]: prev[category] + 20
     }));
   };
 
