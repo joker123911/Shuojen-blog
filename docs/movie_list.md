@@ -9,10 +9,10 @@ import TabItem from '@theme/TabItem';
 
 # 電影推薦清單
 
-*最後更新：2026-01-04*
+*最後更新：2026-01-13*
 
 :::info 持續更新中
-如果有什麼電影想要補充進名單歡迎寫信大力推薦我。
+如果有什麼電影想要補充進名單歡迎留言或寫信大力推薦我。
 :::
 
 這是一份適合週日夜晚的電影推薦。
@@ -111,6 +111,7 @@ export const MovieListApp = () => {
     { title: "芬奇的旅程", note: "Tom Hank 獨挑大樑的末日公路電影", poster: "./img/movie/芬奇的旅程.jpg" },
     { title: "F1", note: "小布的賽車爽片，畫面美，流暢過癮", poster: "./img/movie/F1.webp" },
     { title: "八惡人", note: "昆丁也是很流暢的一部，角色慢慢登場最後大混戰很過癮", poster: "./img/movie/八惡人.webp" },
+    { title: "險路勿近", note: "犯罪驚悚片，柯恩兄弟最有名的一部，全片無配樂但壓迫感超強", poster: "./img/movie/險路勿近.webp" },	
   ];
 
   const asiaMovies = [
@@ -151,7 +152,6 @@ export const MovieListApp = () => {
     { title: "大英雄天團", note: "角色可愛劇情流暢", poster: "./img/movie/大英雄天團.jpg" },
     { title: "你的名字", note: "新海誠畫面絢麗，純愛劇情", poster: "./img/movie/你的名字.jpg" },
     { title: "跳躍吧時空少女", note: "最喜歡的細田守作品", poster: "./img/movie/跳躍吧時空少女.jpg" },
-<<<<<<< Updated upstream
     { title: "驀然回首", note: "藤本樹招牌畫風，讓你意猶未盡一整天", poster: "./img/movie/驀然回首.jpg" },
     { title: "鏈鋸人-蕾潔篇", note: "文藝電影感跟戰鬥畫面都超級棒", poster: "./img/movie/鏈鋸人-蕾潔篇.jpg" },
     { title: "荒野機器人", note: "夢工廠佳作，畫面精緻漂亮，劇情也是上乘的好電影", poster: "./img/movie/荒野機器人.jpg" }
