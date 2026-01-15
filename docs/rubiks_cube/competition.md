@@ -4,13 +4,13 @@ sidebar_position: 2
 ---
 *最後更新2025-10-19*
 ## 比賽紀錄&成績
-這是我的[世界魔術方塊協會(WCA)](https://www.worldcubeassociation.org/persons/2021HAUN01)頁面
+這是我的[世界魔術方塊協會（WCA）](https://www.worldcubeassociation.org/persons/2021HAUN01)頁面
 
 ![img](./img/001.png)
 
 ### [2021台北回歸賽](https://www.worldcubeassociation.org/competitions/WelcomeBackTaipei2021)
 
-我的人生第一場正式WCA魔術方塊比賽
+我的人生第一場正式 WCA 魔術方塊比賽
 
 * 刷新個人三階單次記錄11.51
 * 刷新個人三階平均記錄12.59
@@ -54,7 +54,7 @@ sidebar_position: 2
 * 刷新個人金字塔平均記錄7.24
 ### [2022台灣錦標賽](https://www.worldcubeassociation.org/competitions/TaiwanChampionship2022)
 
-這場比賽最開心的是上台三階第一轉就直接sub10達成我的夢想。
+這場比賽最開心的是上台三階第一轉就直接 sub10 達成我的夢想。
 
 * 刷新個人三階單次記錄8.81
 * 刷新個人三階平均記錄11.40
@@ -69,7 +69,7 @@ sidebar_position: 2
 * 刷新個人SQ-1單次記錄19.97
 * 刷新個人SQ-1平均記錄20.59
 
-*官方記錄三階單次8.81*
+*官方記錄三階單次 8.81*
 
 <video controls width="320">
     <source src="/video/881.mp4" type="video/mp4" />

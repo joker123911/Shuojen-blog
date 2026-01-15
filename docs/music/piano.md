@@ -24,7 +24,7 @@ sidebar_position: 2
 
 ### 不能說的秘密片段
 
-高中音樂課跟馬朗文一起四手聯彈(國中的時候也跟大隊長一起彈過)
+高中音樂課跟馬朗文一起四手聯彈（國中的時候也跟大隊長一起彈過）
 
 <video controls width="320">
     <source src="/video/005.mp4" type="video/mp4" />
@@ -33,6 +33,16 @@ sidebar_position: 2
 </video>
 
 
+### 彈一小段
+*2023-12-14*
+
+看完[演唱會](https://shuojen.site/docs/concert/#2024-%E5%91%A8%E6%9D%B0%E5%80%AB%E5%98%89%E5%B9%B4%E8%8F%AF)出一題，周杰倫鐵粉猜一下是哪首。
+
+<video controls width="320">
+    <source src="/video/014.mp4" type="video/mp4" />
+
+    抱歉，您的瀏覽器不支援內嵌影片。
+</video>
 
 ### Jane Doe 片段
 *2025-10-24*
