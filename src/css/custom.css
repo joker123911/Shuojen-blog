@@ -71,7 +71,7 @@ article img {
 
 .navbar__title {
   font-family: 'Rock Salt', cursive !important;
-  font-size: 1.0rem;
+  font-size: 0.85rem;
   font-weight: 400;
   letter-spacing: 0.5px;
   line-height: 2.0 !important;
@@ -90,7 +90,7 @@ article img {
     --ifm-font-size-base: 17px;
   }
   .navbar__title {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
   h1 { font-size: 1.8rem; }
   h2 { font-size: 1.4rem; }
@@ -123,3 +123,11 @@ article img {
   background-color: var(--ifm-color-emphasis-100);
 }
 
+.spoiler-text {
+  filter: blur(5px);
+  transition: filter 0.3s;
+  cursor: help;
+}
+.spoiler-text:hover {
+  filter: blur(0);
+}

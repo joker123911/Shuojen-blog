@@ -83,27 +83,27 @@ sidebar_position: 1
 
   <a href="https://shuojen.site/docs/aqua" class="interest-card">
     <h3>🐠 水族造景</h3>
-    <p>以前玩的一些水草造景，之後會再補充一些個人的水族筆記。</p>
+    <p>記錄我的一些水草造景，之後再補充一些個人的水族筆記。</p>
   </a>
 
   <a href="https://shuojen.site/docs/chess/introduce" class="interest-card">
     <h3>♟️ 西洋棋</h3>
-    <p>記錄玩西洋棋的啟蒙還有一些記錄，之後想要詳細記錄我使用的開局系統。</p>
+    <p>記錄玩西洋棋的啟蒙還有一些分數成長史，之後想要詳細記錄我使用的開局系統。</p>
   </a>
 
   <a href="https://shuojen.site/docs/music/guitar" class="interest-card">
     <h3>🎸 吉他</h3>
-    <p>記錄一些吉他演奏，之後補充一些吉他啟蒙故事。</p>
+    <p>記錄一些吉他演奏，之後再補充一些吉他啟蒙故事。</p>
   </a>
 
   <a href="https://shuojen.site/docs/music/piano" class="interest-card">
     <h3>🎹 鋼琴</h3>
-    <p>記錄一些學鋼琴故事，有練好的曲子錄影再放上來做記錄。</p>
+    <p>記錄一些學鋼琴故事，有認真練好的曲子再放上來。</p>
   </a>
 
   <a href="https://shuojen.site/docs/rubiks_cube/start" class="interest-card">
     <h3>🧊 魔術方塊</h3>
-    <p>記錄玩魔術方塊的故事還有 WCA 比賽，之後把我所有買過的方塊補充上來。</p>
+    <p>記錄玩魔術方塊的故事還有 WCA 比賽，盲解學習停滯中。</p>
   </a>
 
   <a href="https://shuojen.site/docs/keyboard" class="interest-card">
@@ -113,7 +113,11 @@ sidebar_position: 1
 
   <a href="https://shuojen.site/docs/concert/" class="interest-card">
     <h3>🎙️ 演唱會</h3>
-    <p>各種演唱會紀錄。</p>
+    <p>記錄參加過的各種演唱會。</p>
   </a>
 
+  <a href="https://shuojen.site/docs/draw/" class="interest-card">
+    <h3> 🖌️塗鴉</h3>
+    <p>記錄一些隨筆塗鴉。</p>
+  </a>
 </div>

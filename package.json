@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
+    "prestart": "git pull",
     "start": "node gen-photos.js && docusaurus start",
     "build": "node gen-photos.js && docusaurus build",
     "swizzle": "docusaurus swizzle",

@@ -3,7 +3,7 @@
   margin: 3rem 0;
   color: var(--ifm-font-color-base);
   /* 確保容器優先使用粉圓體 */
-  font-family: "jf-openhuninn", "Open Huninn", "Kosugi Maru", sans-serif;
+  font-family: "jfOpenHuninn", "Open Huninn", "Kosugi Maru", sans-serif;
 }
 
 .sectionTitle {
@@ -187,4 +187,64 @@
   background-color: var(--ifm-font-color-base);
   color: var(--ifm-background-color);
   border-color: var(--ifm-font-color-base);
+}
+
+/* 站長標籤 - 灰色風格 */
+.masterBadge {
+  /* 使用半透明灰色，會根據背景自動調整深淺 */
+  background-color: rgba(128, 128, 128, 0.2);
+  /* 文字顏色使用 Docusaurus 的強調色變數，或是固定淡灰色 */
+  color: var(--ifm-color-content);
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  margin-left: 4px;
+}
+
+/* 回覆區塊 */
+.replyBox {
+  margin-top: 15px;
+  padding: 15px;
+  /* 使用 Docusaurus 變數，讓它在夜間模式變深，白天模式變淺 */
+  background-color: var(--ifm-color-emphasis-100, rgba(0, 0, 0, 0.03));
+  border-left: 4px solid #666; /* 灰色側邊條 */
+  border-radius: 4px;
+}
+
+.replyUser {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.replyHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.replyName {
+  font-weight: bold;
+  opacity: 0.9;
+}
+
+.replyTime {
+  font-size: 12px;
+  opacity: 0.5;
+}
+
+/* 夜間模式特定微調 (如果 Docusaurus 有設定 [data-theme='dark']) */
+:global([data-theme='dark']) .masterBadge {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+:global([data-theme='dark']) .replyBox {
+  background-color: rgba(255, 255, 255, 0.05);
 }

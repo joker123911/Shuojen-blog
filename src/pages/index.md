@@ -229,7 +229,7 @@ https://shuojen.site/photoblog/rss.xml
 ![me](./img/me.webp)
 
 # 聯絡我
-[留言板](https://shuojen.site/guestbook)啟用測試中，歡迎逛逛，有任何想法，也歡迎聯絡我的信箱。
+[留言板](https://shuojen.site/guestbook)運作中，有任何想法，也歡迎聯絡我的信箱。
 >me@shuojen.site
 
 

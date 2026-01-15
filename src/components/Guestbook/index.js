@@ -11,21 +11,26 @@ export default function Guestbook() {
   const [fetchLoading, setFetchLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(10);
 
-  // --- 關鍵修正：確保 content 必定為字串 ---
+  // --- 優化後的圖案偵測邏輯 ---
   const getCommentClass = (content) => {
     if (!content) return styles.commentBody;
-    // 使用 String() 強制轉型，防止數字 123 導致 split 失敗
     const safeContent = String(content);
-    const lineCount = safeContent.split('\n').length;
-    return lineCount > 10
-      ? `${styles.commentBody} ${styles.asciiArt}`
-      : styles.commentBody;
+    const lines = safeContent.split('\n');
+    const hasAlignmentSpaces = / {3,}/.test(safeContent);
+    const hasBackslash = safeContent.includes('\\');
+    const drawingChars = (safeContent.match(/[|_=+*<>]/g) || []).length;
+    const isSymbolDense = drawingChars > 10;
+
+    if (lines.length > 1 && (hasAlignmentSpaces || hasBackslash || isSymbolDense)) {
+      return `${styles.commentBody} ${styles.asciiArt}`;
+    }
+    return styles.commentBody;
   };
 
   const formatDate = (dateStr) => {
     if (!dateStr) return '';
     const date = new Date(dateStr);
-    if (isNaN(date.getTime())) return dateStr; // 如果日期無效則回傳原始字串
+    if (isNaN(date.getTime())) return dateStr;
     const y = date.getFullYear();
     const m = String(date.getMonth() + 1).padStart(2, '0');
     const d = String(date.getDate()).padStart(2, '0');
@@ -36,7 +41,6 @@ export default function Guestbook() {
 
   const fetchComments = async () => {
     try {
-      // 加上時間戳記防止快取
       const res = await fetch(`${GIST_JSON_URL}?t=${new Date().getTime()}`);
       const data = await res.json();
       if (Array.isArray(data)) {
@@ -57,33 +61,25 @@ export default function Guestbook() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.content.trim()) return;
-
     setLoading(true);
     let finalWebsite = formData.website.trim();
     if (finalWebsite && !/^https?:\/\//i.test(finalWebsite)) {
       finalWebsite = `https://${finalWebsite}`;
     }
-
     const submitData = { ...formData, website: finalWebsite };
-
     try {
-      // 使用 no-cors 是因為 GAS 不支援 CORS 預檢
       await fetch(GAS_APP_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain' },
         body: JSON.stringify(submitData),
       });
-
       alert('留言已送出！');
       setFormData({ name: '', content: '', website: '' });
-
-      // 嘗試延遲重新抓取一次（雖然 Gist 更新沒那麼快，但這是好習慣）
       setTimeout(fetchComments, 3000);
-
     } catch (error) {
       console.error("送出錯誤:", error);
-      alert('送出失敗，請檢查網路連線');
+      alert('送出失敗');
     } finally {
       setLoading(false);
     }
@@ -137,15 +133,19 @@ export default function Guestbook() {
                   </span>
                   <span className={styles.commentTime}>{formatDate(c.time)}</span>
                 </div>
-                <p className={getCommentClass(c.content)}>{c.content}</p>
+                <div className={getCommentClass(c.content)}>{c.content}</div>
 
+                {/* 站長回覆區塊 */}
                 {c.replyContent && (
                   <div className={styles.replyBox}>
                     <div className={styles.replyHeader}>
-                      <span>{c.replyName || '站長回覆'}</span>
+                      <div className={styles.replyUser}>
+                        <span className={styles.replyName}>{c.replyName || 'shuojen'}</span>
+                        <span className={styles.masterBadge}>站長</span>
+                      </div>
                       <span className={styles.replyTime}>{formatDate(c.replyTime)}</span>
                     </div>
-                    <p className={getCommentClass(c.replyContent)}>{c.replyContent}</p>
+                    <div className={getCommentClass(c.replyContent)}>{c.replyContent}</div>
                   </div>
                 )}
               </div>
