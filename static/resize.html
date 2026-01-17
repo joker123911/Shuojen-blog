@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圖片批次處理工具</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #7c74ff;
+            --bg-color: #f8fafc;
+            --text-color: #4a5568;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --secondary-btn: #edf2f7;
+            --success-color: #48bb78;
+        }
+
+        body {
+            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column; /* 改為垂直排列以支援 Footer 固定在底部 */
+            align-items: center;
+            min-height: 100vh; /* 確保 body 至少跟視窗一樣高 */
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 650px;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            flex-shrink: 0; /* 防止 container 被壓縮 */
+        }
+
+        h2 { font-size: 1.4rem; margin-bottom: 25px; color: #2d3748; }
+
+        #drop-zone {
+            border: 2px dashed var(--border-color);
+            border-radius: 16px;
+            padding: 40px 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fafaff;
+        }
+
+        #drop-zone.dragover {
+            border-color: var(--primary-color);
+            background-color: rgba(124, 116, 255, 0.05);
+        }
+
+        .control-group { text-align: left; margin-bottom: 15px; }
+        .row { display: flex; gap: 15px; flex-wrap: wrap; }
+        .row > div { flex: 1; min-width: 120px; }
+
+        label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: #718096; }
+        input, select {
+            width: 100%; padding: 12px; border: 2px solid var(--border-color);
+            border-radius: 12px; font-size: 1rem; box-sizing: border-box; outline: none;
+        }
+
+        button {
+            width: 100%; padding: 15px; border-radius: 12px; font-size: 1rem;
+            font-weight: 600; cursor: pointer; border: none;
+            transition: opacity 0.2s;
+        }
+
+        #processBtn { background-color: var(--primary-color); color: white; margin-top: 10px; }
+        #downloadAllBtn { background-color: #2d3748; color: white; margin-top: 15px; display: none; }
+
+        #result-list {
+            margin-top: 30px;
+            text-align: left;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        .result-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .file-info { display: flex; flex-direction: column; gap: 2px; }
+        .file-name { font-weight: 600; color: #2d3748; }
+        .file-size { font-size: 0.75rem; color: #a0aec0; }
+
+        .single-download {
+            background: var(--secondary-btn);
+            color: var(--primary-color);
+            padding: 6px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        /* 註腳樣式設定 */
+        footer {
+            margin-top: auto; /* 將 Footer 推向底部 */
+            padding: 40px 0 20px 0;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🔧圖片批次處理工具</h2>
+
+    <div id="drop-zone">
+        <p id="drop-text">拖曳圖片到這裡，或點擊選擇檔案</p>
+        <input type="file" id="upload" accept="image/*" multiple style="display: none;">
+    </div>
+
+    <div class="control-group">
+        <div class="row">
+            <div style="flex: 2;">
+                <label>命名前綴</label>
+                <input type="text" id="prefix" placeholder="例如：img" value="photo">
+            </div>
+            <div>
+                <label>起始編號</label>
+                <input type="text" id="startNum" placeholder="001" value="001">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="control-group">
+            <label>最大寬度 (px)</label>
+            <input type="number" id="maxWidth" value="1200">
+        </div>
+        <div class="control-group">
+            <label>大小限制 (KB)</label>
+            <input type="number" id="maxSize" value="500">
+        </div>
+        <div class="control-group">
+            <label>輸出格式</label>
+            <select id="format">
+                <option value="image/jpg">JPG</option>
+                <option value="image/webp">WebP</option>
+                <option value="image/png">PNG (無損/較大)</option>
+                <option value="image/avif">AVIF (高壓縮比)</option>
+            </select>
+        </div>
+    </div>
+
+    <button id="processBtn">開始批次處理</button>
+    <button id="downloadAllBtn">打包下載所有圖片 (.zip)</button>
+
+    <div id="result-list"></div>
+</div>
+
+<footer>
+    © Shuojen.site Resize Tool
+</footer>
+
+<script>
+    // ... JavaScript 內容與前一版本相同 ...
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('upload');
+    const resultList = document.getElementById('result-list');
+    const processBtn = document.getElementById('processBtn');
+    const downloadAllBtn = document.getElementById('downloadAllBtn');
+
+    let selectedFiles = [];
+    let processedItems = [];
+
+    dropZone.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+        handleFiles(e.dataTransfer.files);
+    });
+
+    fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+    function handleFiles(files) {
+        selectedFiles = Array.from(files);
+        document.getElementById('drop-text').innerText = `已載入 ${selectedFiles.length} 張圖片`;
+        downloadAllBtn.style.display = 'none';
+        resultList.innerHTML = '';
+    }
+
+    processBtn.addEventListener('click', async () => {
+        if (selectedFiles.length === 0) return alert('請先選擇圖片');
+
+        processBtn.disabled = true;
+        processBtn.innerText = '處理中...';
+        resultList.innerHTML = '<h4>處理結果：</h4>';
+        processedItems = [];
+
+        const prefix = document.getElementById('prefix').value;
+        const startNumStr = document.getElementById('startNum').value;
+        const format = document.getElementById('format').value;
+        const ext = format.split('/')[1];
+
+        const startNum = parseInt(startNumStr) || 1;
+        const padLength = startNumStr.length;
+
+        for (let i = 0; i < selectedFiles.length; i++) {
+            const num = (startNum + i).toString().padStart(padLength, '0');
+            const fileName = `${prefix}${num}.${ext}`;
+
+            const blob = await processImage(selectedFiles[i], format);
+            processedItems.push({ blob, fileName });
+
+            addResultItem(blob, fileName);
+        }
+
+        processBtn.disabled = false;
+        processBtn.innerText = '開始批次處理';
+        if (processedItems.length > 0) downloadAllBtn.style.display = 'block';
+    });
+
+    async function processImage(file, format) {
+        const img = await loadImage(file);
+        const maxWidth = parseInt(document.getElementById('maxWidth').value);
+        const maxSize = parseInt(document.getElementById('maxSize').value) * 1024;
+
+        let tw = img.width, th = img.height;
+        if (img.width > maxWidth) {
+            tw = maxWidth;
+            th = (img.height / img.width) * maxWidth;
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = tw; canvas.height = th;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, tw, th);
+
+        if (format === 'image/png') {
+            return new Promise(r => canvas.toBlob(r, format));
+        }
+
+        let q = 0.95, blob;
+        do {
+            blob = await new Promise(r => canvas.toBlob(r, format, q));
+            q -= 0.05;
+        } while (blob.size > maxSize && q > 0.1);
+        return blob;
+    }
+
+    function loadImage(file) {
+        return new Promise(r => {
+            const reader = new FileReader();
+            reader.onload = e => {
+                const img = new Image();
+                img.onload = () => r(img);
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    function addResultItem(blob, fileName) {
+        const url = URL.createObjectURL(blob);
+        const sizeKB = (blob.size / 1024).toFixed(1);
+
+        const item = document.createElement('div');
+        item.className = 'result-item';
+        item.innerHTML = `
+            <div class="file-info">
+                <span class="file-name">${fileName}</span>
+                <span class="file-size">${sizeKB} KB</span>
+            </div>
+            <a href="${url}" download="${fileName}" class="single-download">下載</a>
+        `;
+        resultList.appendChild(item);
+    }
+
+    downloadAllBtn.addEventListener('click', async () => {
+        const zip = new JSZip();
+        processedItems.forEach(item => {
+            zip.file(item.fileName, item.blob);
+        });
+
+        const content = await zip.generateAsync({ type: "blob" });
+        const url = URL.createObjectURL(content);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = "batch_images.zip";
+        a.click();
+    });
+</script>
+
+</body>
+</html>
