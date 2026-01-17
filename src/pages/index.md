@@ -208,7 +208,7 @@ import Marquee from "react-fast-marquee";
 Blog 貼文 RSS：
 
 ```
-https://shuojen.site/blog/rss.xml`
+https://shuojen.site/blog/rss.xml
 ```
 
 攝影作品 RSS：
