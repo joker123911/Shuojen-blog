@@ -53,6 +53,8 @@
   font-size: 0.95rem;
   transition: border-color 0.2s ease;
   font-family: inherit;
+  box-sizing: border-box; /* 讓 padding 和 border 包含在 100% 寬度內 */
+  width: 100%;           /* 確保在 Grid 容器中填滿寬度 */
 }
 
 .commentForm input:focus, .commentForm textarea:focus {
