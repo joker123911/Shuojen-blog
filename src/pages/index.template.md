@@ -217,7 +217,7 @@ https://shuojen.site/photoblog/rss.xml
 ```
 
 # 即時數據
-貼文區目前共有 **135** 篇文章，共累積了 **82,322** 個字。
+貼文區目前共有 **[POST_COUNT]** 篇文章，共累積了 **[WORD_COUNT]** 個字。
 
 # 其他頁面
 * [我在用什麼`/use`](https://shuojen.site/use)

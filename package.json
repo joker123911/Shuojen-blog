@@ -5,8 +5,8 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "prestart": "git pull",
-    "start": "node gen-photos.js && docusaurus start",
-    "build": "node gen-photos.js && docusaurus build",
+    "start": "node gen-photos.js && node update-stats.js && docusaurus start",
+    "build": "node gen-photos.js && node update-stats.js && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
