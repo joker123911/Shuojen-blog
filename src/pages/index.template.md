@@ -171,7 +171,9 @@ import Marquee from "react-fast-marquee";
   }
 `}</style>
 
-這裡是我記錄生活和筆記的地方，我支持每個人都架設自己的網站，讓社群媒體不再受格式、軟體的限制，享受沒有**商業廣告**、沒有**演算法**、沒有**登入限制**的自由，希望這個地方讓你感到有趣，很高興認識你。
+# 🏠 /ᐠ .ᆺ. ᐟ\ﾉ
+
+這裡是我記錄生活和興趣的地方，我支持每個人都架設自己的網站，讓社群媒體不再受格式、軟體的限制，享受沒有**商業廣告**、沒有**演算法**、沒有**登入限制**的自由，希望這個地方讓你感到有趣，很高興認識你。
 
 <Marquee gradient={false} speed={60}>
   <div style={{padding: '10px 0', fontSize: '1.1rem'}}>
@@ -231,7 +233,7 @@ https://shuojen.site/photoblog/rss.xml
 ![me](./img/me.webp)
 
 # 聯絡我
-[留言板](https://shuojen.site/guestbook)運作中，有任何想法，也歡迎聯絡我的信箱。
+歡迎到[留言板](https://shuojen.site/guestbook)逛逛，有任何想法，也可以聯絡我的信箱。
 >me@shuojen.site
 
 

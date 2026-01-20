@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 # 電影推薦清單
 
-*最後更新：2026-01-13*
+*最後更新：2026-01-20*
 
 :::info 持續更新中
 如果有什麼電影想要補充歡迎留言或寫信大力推薦我。
@@ -110,7 +110,8 @@ export const MovieListApp = () => {
     { title: "芬奇的旅程", note: "Tom Hank 獨挑大樑的末日公路電影", poster: "./img/movie/芬奇的旅程.jpg" },
     { title: "F1", note: "小布的賽車爽片，畫面美，流暢過癮", poster: "./img/movie/F1.webp" },
     { title: "八惡人", note: "昆丁很流暢的一部，角色慢慢登場最後大混戰很過癮", poster: "./img/movie/八惡人.webp" },
-    { title: "險路勿近", note: "犯罪驚悚片，柯恩兄弟最有名的一部，全片無配樂但壓迫感超強", poster: "./img/movie/險路勿近.webp" },	
+    { title: "險路勿近", note: "犯罪驚悚片，柯恩兄弟最有名的一部，全片無配樂但壓迫感超強", poster: "./img/movie/險路勿近.webp" },
+    { title: "波斯語課", note: "納粹時代背景的劇情片，為了生存，主角虛構了一門不存在的語言，非常值得一看", poster: "./img/movie/波斯語課.webp" },
   ];
 
   const asiaMovies = [
