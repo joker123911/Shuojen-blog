@@ -36,7 +36,7 @@ sidebar_position: 2
 ### 彈一小段
 *2023-12-14*
 
-看完[演唱會](https://shuojen.site/docs/concert/#2024-%E5%91%A8%E6%9D%B0%E5%80%AB%E5%98%89%E5%B9%B4%E8%8F%AF)出一題，周杰倫鐵粉猜一下是哪首。
+看完[演唱會](/docs/concert/#2024-%E5%91%A8%E6%9D%B0%E5%80%AB%E5%98%89%E5%B9%B4%E8%8F%AF)出一題，周杰倫鐵粉猜一下是哪首。
 
 <video controls width="320">
     <source src="/video/014.mp4" type="video/mp4" />

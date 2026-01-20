@@ -38,21 +38,21 @@ description: 記錄我愛用的工具
 烏克麗麗
 * Uma ukulele - 高中社團購入，入坑吉他的起點。
 
-[吉他](https://shuojen.site/docs/music/guitar/)
+[吉他](/docs/music/guitar/)
 * Andrew White FREJA 2013NAT - 高中用第一筆薪水跟紅大入手的吉他。
 * Squier Affinity Telecaster - 最愛 Telecaster 的外型和經典 。
 
-[鋼琴](https://shuojen.site/docs/music/piano)
+[鋼琴](/docs/music/piano)
 * Kawai CA49 - 二手購入，手感很滿意。
 
-### [影音相關](https://shuojen.site/blog/2025/09/19/movie)
+### [影音相關](/blog/2025/09/19/movie)
 
 * JMGO N1S Ultra - 投影機，在房間看電影很讚。
 * 100 吋 16:9 白玻纖布幕 - 便宜投影幕。
 * Google chromecast 4k - Google TV 電影棒。
 * Klipsch R-51PM - CP 值高的書架音響。
 
-### [攝影相關](https://shuojen.site/photoblog/photo-archive)
+### [攝影相關](/photography)
 
 富士
 * FujiFilm XT-20 - 主力相機，二手購入，用五年了還是覺得不需要升級。
@@ -71,7 +71,7 @@ description: 記錄我愛用的工具
 相機儲存
 * 收藏家 PC-69N - 57 公升防潮箱。
 
-### [魔術方塊相關](https://shuojen.site/docs/rubiks_cube/start)
+### [魔術方塊相關](/docs/rubiks_cube/start)
 
 七階
 * 永駿 MGC 七階 - 七階主力。
@@ -132,7 +132,7 @@ description: 記錄我愛用的工具
 
 作業系統
 * Windows - 主力用，很吃資源，想找時機換掉。
-* Linux Mint- 輕量速度快，但需要時間習慣，現在在[客廳老電腦](https://shuojen.site/blog/2025/10/05/mint)偶爾用。
+* Linux Mint- 輕量速度快，但需要時間習慣，現在在[客廳老電腦](/blog/2025/10/05/mint)偶爾用。
 * macOS - 筆電較少用。
 
 電腦
@@ -145,7 +145,7 @@ description: 記錄我愛用的工具
 * Ableton Live Lite - 音樂編輯軟體。
 * Audacity - 另一個簡易的音樂編輯軟體。
 * Docusaurus - 架設靜態網頁工具。
-* Asunder - Linux 轉檔 CD 的工具，我寫過一篇轉檔 CD 的[文章](https://shuojen.site/blog/2025/10/24/CD)。
+* Asunder - Linux 轉檔 CD 的工具，我寫過一篇轉檔 CD 的[文章](/blog/2025/10/24/CD)。
 * mp3tag - 整理所有 Aiff 資訊的工具。
 * LocalSent - 好用的共享檔案工具。
 * Lightroom CLassic - 現在都不修圖了，懶人直出。
@@ -165,8 +165,8 @@ Apps
 * 臺北市立圖書館 - 預約借書用。
 
 Shuojen.site 小工具
-* [投資報酬試算表](https://shuojen.site/calculator.html) - 投資報酬試算用。
-* [吃什麼都可以終結者](https://shuojen.site/food.html) - 決定吃什麼用。
-* [嘸蝦米兩碼字練習器](https://shuojen.site/boshiamy.html) - 練習嘸蝦米用。
-* [圖片批次處理工具](https://shuojen.site/resize.html) - 圖片批次處理用。
-* [猜人名遊戲](https://shuojen.site/guestname.html) - 實體猜人名遊戲用。
+* [投資報酬試算表](/calculator.html) - 投資報酬試算用。
+* [吃什麼都可以終結者](/food.html) - 決定吃什麼用。
+* [嘸蝦米兩碼字練習器](/boshiamy.html) - 練習嘸蝦米用。
+* [圖片批次處理工具](/resize.html) - 圖片批次處理用。
+* [猜人名遊戲](/guestname.html) - 實體猜人名遊戲用。

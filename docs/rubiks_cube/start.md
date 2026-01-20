@@ -23,11 +23,11 @@ sidebar_position: 1
 
 ## 回鍋
 
-大學三年級的某一天在房間，順手拿起了我的舊魔術方塊玩，好奇之下查詢一下過了十年魔術方塊有什麼變革，瞬間排山倒海的資訊，不論是方塊的革新、還有解法的突破、更新好多更順手的公式，讓我驚訝的同時，又重新燃起來熱情，而且過了許多年，教學資源又更豐富了，剛開始回來玩的成績大約跟國中時差不多約 30~40 秒，我開始認真地從頭學習 F2L 技術，並且同時補齊 PLL 和 全部的 57 個 OLL 公式，我很喜歡[鍾以理 Daniel](https://www.youtube.com/@dcube204)的講解，讓我慢慢地融會貫通 F2L，後來我最愛的頻道是 [Jperm](https://www.youtube.com/@JPerm/videos) 的教學，非常的好懂又清楚，非常推薦 [How to be Sub-X](https://www.youtube.com/watch?v=1KfmzTewWyI&list=PLI24ciRbl8BVh6cuX4UMgfbqOTZqb8eNf) 系列，可以按部就班的慢慢突破自己的秒數，~~只是我常常越級看~~。經過一連串的訓練，我漸漸突破到了現在的 15 秒內，並開始試著參加 WCA [比賽](https://shuojen.site/docs/rubiks_cube/competition)。
+大學三年級的某一天在房間，順手拿起了我的舊魔術方塊玩，好奇之下查詢一下過了十年魔術方塊有什麼變革，瞬間排山倒海的資訊，不論是方塊的革新、還有解法的突破、更新好多更順手的公式，讓我驚訝的同時，又重新燃起來熱情，而且過了許多年，教學資源又更豐富了，剛開始回來玩的成績大約跟國中時差不多約 30~40 秒，我開始認真地從頭學習 F2L 技術，並且同時補齊 PLL 和 全部的 57 個 OLL 公式，我很喜歡[鍾以理 Daniel](https://www.youtube.com/@dcube204)的講解，讓我慢慢地融會貫通 F2L，後來我最愛的頻道是 [Jperm](https://www.youtube.com/@JPerm/videos) 的教學，非常的好懂又清楚，非常推薦 [How to be Sub-X](https://www.youtube.com/watch?v=1KfmzTewWyI&list=PLI24ciRbl8BVh6cuX4UMgfbqOTZqb8eNf) 系列，可以按部就班的慢慢突破自己的秒數，~~只是我常常越級看~~。經過一連串的訓練，我漸漸突破到了現在的 15 秒內，並開始試著參加 WCA [比賽](/docs/rubiks_cube/competition)。
 
 ## 現在
 
-停滯許久沒玩了，偶爾回鍋一下，玩玩[魔術方塊連解](https://shuojen.site/blog/2025/12/28/cube)，想再找個時間把盲解練好，再參加比賽把紀錄刷出來，我的心願就滿足了。
+停滯許久沒玩了，偶爾回鍋一下，玩玩[魔術方塊連解](/blog/2025/12/28/cube)，想再找個時間把盲解練好，再參加比賽把紀錄刷出來，我的心願就滿足了。
 
 **少數有成功的盲解練習紀錄**
 

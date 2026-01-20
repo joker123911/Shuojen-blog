@@ -13,10 +13,10 @@ description: 近況更新
 
 ## 最近在幹嘛
 * 寫部落格：從 2025 九月初開始經營，不定時更新，很喜歡這種整理人生軌跡的感覺。
-* [學嘸蝦米](https://shuojen.site/blog/2025/10/03/noshrimprice)：從 2025 十月初開始學，雖然還不快但是勉強可以用，現在部落格的內容都是用嘸蝦米打的，大概 35 wpm 左右。
+* [學嘸蝦米](/blog/2025/10/03/noshrimprice)：從 2025 十月初開始學，雖然還不快但是勉強可以用，現在部落格的內容都是用嘸蝦米打的，大概 35 wpm 左右。
 * 讀書：完全佛系的準備土木技師考試，我應該想辦法挖掘更多興趣與動力，例如把讀的東西寫成筆記整理在部落格之類的。
-* 健身：現在中午不定時會跟同事哲哲一起去健身房，我寫了一篇[文章](https://shuojen.site/blog/2025/10/14/workout)，可是這篇被蝦波發現了，被她反整。
-* [桌球](https://shuojen.site/blog/2025/10/19/tabletennis)：每個禮拜三下班，跟同事峻寶寶去打桌球，現在正在學拉下旋。
+* 健身：現在中午不定時會跟同事哲哲一起去健身房，我寫了一篇[文章](/blog/2025/10/14/workout)，可是這篇被蝦波發現了，被她反整。
+* [桌球](/blog/2025/10/19/tabletennis)：每個禮拜三下班，跟同事峻寶寶去打桌球，現在正在學拉下旋。
 
 ## 最近在練習
 * 鋼琴：[Debussy Arabesque No.1](https://www.youtube.com/watch?v=JCTQTp1PdnA) 練好一陣子了，還有幾個小節不太熟。
@@ -32,4 +32,4 @@ description: 近況更新
 * [噬亡村](https://zh.wikipedia.org/zh-tw/%E5%99%AC%E4%BA%A1%E6%9D%91)：大隊長推薦，精彩好看。
 
 ## 最近喜歡的店
-* [BT BURGER](https://maps.app.goo.gl/bqRo8F547KVxC47v5)：跟蝦波[約會](https://shuojen.site/photoblog/2025/12/21/date)發現的寶藏店，義式培根蛋奶麵必點。
+* [BT BURGER](https://maps.app.goo.gl/bqRo8F547KVxC47v5)：跟蝦波[約會](/photoblog/2025/12/21/date)發現的寶藏店，義式培根蛋奶麵必點。

@@ -4,7 +4,7 @@ sidebar_position: 7
 # 演唱會
 紀錄一下所有參加過的演唱會，太久以前連照片都翻不到的，只好留存在腦海裡了。
 
-## [2026 蔡依林《PLEASURE》](https://shuojen.site/photoblog/2026/01/01/concert)
+## [2026 蔡依林《PLEASURE》](/photoblog/2026/01/01/concert)
 
 *2026-01-01*
 
