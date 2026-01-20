@@ -173,7 +173,7 @@ import Marquee from "react-fast-marquee";
 
 # 🏠 /ᐠ .ᆺ. ᐟ\ﾉ
 
-這裡是我記錄生活和筆記的地方，我支持每個人都架設自己的網站，讓社群媒體不再受格式、軟體的限制，享受沒有**商業廣告**、沒有**演算法**、沒有**登入限制**的自由，希望這個地方讓你感到有趣，很高興認識你。
+這裡是我記錄生活和興趣的地方，我支持每個人都架設自己的網站，讓社群媒體不再受格式、軟體的限制，享受沒有**商業廣告**、沒有**演算法**、沒有**登入限制**的自由，希望這個地方讓你感到有趣，很高興認識你。
 
 <Marquee gradient={false} speed={60}>
   <div style={{padding: '10px 0', fontSize: '1.1rem'}}>
@@ -185,26 +185,26 @@ import Marquee from "react-fast-marquee";
 # 主要內容
 
 <div className="content-grid">
-  <a href="https://shuojen.site/docs/intro" className="custom-card">
+  <a href="/docs/intro" className="custom-card">
     <div className="card-icon">🧩</div>
     <h3 style={{margin: 0, color: 'var(--ifm-color-primary)'}}>興趣分享</h3>
     <p style={{marginTop: '10px', fontSize: '0.95rem', opacity: 0.8}}>常駐的興趣分享區塊，包含西洋棋、魔術方塊等。電影選片請看：**電影推薦清單**。</p>
   </a>
 
-  <a href="https://shuojen.site/blog" className="custom-card">
+  <a href="/blog" className="custom-card">
     <div className="card-icon">✍️</div>
     <h3 style={{margin: 0, color: 'var(--ifm-color-primary)'}}>貼文紀錄</h3>
     <p style={{marginTop: '10px', fontSize: '0.95rem', opacity: 0.8}}>部落格式的不定時紀錄， 2025 以前的內容是從社群媒體搬運過來的。</p>
   </a>
 
-  <a href="https://shuojen.site/photography/" className="custom-card">
+  <a href="/photography" className="custom-card">
     <div className="card-icon">📷</div>
     <h3 style={{margin: 0, color: 'var(--ifm-color-primary)'}}>攝影作品</h3>
     <p style={{marginTop: '10px', fontSize: '0.95rem', opacity: 0.8}}>偶爾出遊時心血來潮拍攝的作品紀錄，2019 年從底片相機開始入攝影坑。</p>
   </a>
 </div>
 
-歡迎在下方使用 RSS 連結訂閱我的文章（ [那是什麼？](https://shuojen.site/blog/2025/09/16/rss#%E8%AA%8D%E8%AD%98-rss)）
+歡迎在下方使用 RSS 連結訂閱我的文章（ [那是什麼？](/blog/2025/09/16/rss#%E8%AA%8D%E8%AD%98-rss)）
 
 Blog 貼文 RSS：
 
@@ -219,13 +219,13 @@ https://shuojen.site/photoblog/rss.xml
 ```
 
 # 即時數據
-貼文區目前共有 **135** 篇文章，共累積了 **82,373** 個字。
+貼文區目前共有 **135** 篇文章，共累積了 **66,069** 個字。
 
 # 其他頁面
-* [我在用什麼`/use`](https://shuojen.site/use)
-* [我在做什麼`/now`](https://shuojen.site/now)
-* [貼文列表`/blog/archive`](https://shuojen.site/blog/archive)
-* [攝影列表`/photoblog/photo-archive`](https://shuojen.site/photoblog/photo-archive)
+* [我在用什麼`/use`](/use)
+* [我在做什麼`/now`](/now)
+* [貼文列表`/blog/archive`](/blog/archive)
+* [攝影列表`/photoblog/photo-archive`](/photoblog/photo-archive)
 
 # 關於我
 黃碩人，出生於西元 1998 年，現居臺北，土木工程師，女朋友綽號是蝦波。
@@ -233,7 +233,7 @@ https://shuojen.site/photoblog/rss.xml
 ![me](./img/me.webp)
 
 # 聯絡我
-歡迎到[留言板](https://shuojen.site/guestbook)逛逛，有任何想法，也可以聯絡我的信箱。
+歡迎到[留言板](/guestbook)逛逛，有任何想法，也可以聯絡我的信箱。
 >me@shuojen.site
 
 

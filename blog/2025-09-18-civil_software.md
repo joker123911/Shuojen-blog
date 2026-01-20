@@ -2,7 +2,7 @@
 title: '軟體綁架'
 tags: ['work','tool']
 ---
-在前面 [RSS](https://shuojen.site/blog/2025/09/16/rss) 的文章中有提到，我目前必須**被迫**使用 Windows 系統的電腦，原因就在於業界環境中有太多工程軟體是被壟斷的，以目前我待的土木業較常見的為例
+在前面 [RSS](/blog/2025/09/16/rss) 的文章中有提到，我目前必須**被迫**使用 Windows 系統的電腦，原因就在於業界環境中有太多工程軟體是被壟斷的，以目前我待的土木業較常見的為例
 
 ### [CSI](https://www.csiamerica.com/products)
 1. 建築分析設計軟體 ETABS

@@ -3,19 +3,19 @@ const path = require('path');
 
 // --- 配置區 ---
 const BLOG_DIR = './blog';                   // 文章存放的資料夾
-const TEMPLATE_FILE = './src/pages/index.template.md'; // 模板檔案 (永遠保留標籤)
-const OUTPUT_FILE = './src/pages/index.md';           // 生成的目標檔案 (Docusaurus 使用)
+const TEMPLATE_FILE = './src/pages/index.template.md'; // 模板檔案
+const OUTPUT_FILE = './src/pages/index.md';           // 生成的目標檔案
 // --------------
 
 /**
- * 數字轉千分位格式化函數
+ * 數字轉千分位格式化
  */
 function formatNumber(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 /**
- * 遞迴取得資料夾內所有 Markdown 檔案路徑
+ * 遞迴取得資料夾內所有 Markdown 檔案
  */
 function getAllMarkdownFiles(dirPath, arrayOfFiles = []) {
   if (!fs.existsSync(dirPath)) return [];
@@ -36,38 +36,46 @@ function getAllMarkdownFiles(dirPath, arrayOfFiles = []) {
 }
 
 try {
-  // 1. 取得所有檔案與字數統計
   const allFiles = getAllMarkdownFiles(BLOG_DIR);
   const postCount = allFiles.length;
 
   let totalWords = 0;
   allFiles.forEach((filePath) => {
-    const content = fs.readFileSync(filePath, 'utf8');
-    totalWords += content.length;
+    let content = fs.readFileSync(filePath, 'utf8');
+
+    // 1. 統一換行符號：將 Windows 的 \r\n 轉為 \n，確保跨平台字數一致
+    content = content.replace(/\r\n/g, '\n');
+
+    // 2. 移除 YAML Front Matter (--- ... ---)
+    content = content.replace(/^---[\s\S]*?---/, '');
+
+    // 3. 移除所有空白與換行，只計算「實際文字內容」
+    // 如果你想要包含標點符號，就用這行。如果連空白都不要，就用下面這行：
+    const cleanContent = content.replace(/\s+/g, '');
+
+    totalWords += cleanContent.length;
   });
 
-  // 2. 格式化數字
   const formattedPostCount = formatNumber(postCount);
   const formattedWordCount = formatNumber(totalWords);
 
-  // 3. 檢查模板檔案是否存在
   if (!fs.existsSync(TEMPLATE_FILE)) {
-    throw new Error(`找不到模板檔案：${TEMPLATE_FILE}\n請先將 index.md 改名為 index.template.md`);
+    throw new Error(`找不到模板檔案：${TEMPLATE_FILE}`);
   }
 
-  // 4. 讀取模板內容並替換
   let templateContent = fs.readFileSync(TEMPLATE_FILE, 'utf8');
 
+  // 替換標籤
   let finalContent = templateContent
     .replace(/\{post_count\}|\[POST_COUNT\]/g, formattedPostCount)
     .replace(/\{word_count\}|\[WORD_COUNT\]/g, formattedWordCount);
 
-  // 5. 寫入到正式的 index.md
+  // 寫入正式檔案
   fs.writeFileSync(OUTPUT_FILE, finalContent);
 
-  console.log(`✅ 自動更新完成！`);
-  console.log(`來源模板: ${TEMPLATE_FILE}`);
-  console.log(`生成檔案: ${OUTPUT_FILE} (文章: ${formattedPostCount}, 字數: ${formattedWordCount})`);
+  console.log(`✅ 統計更新完成！`);
+  console.log(`文章數: ${formattedPostCount}`);
+  console.log(`純文字字數: ${formattedWordCount}`);
 
 } catch (error) {
   console.error('❌ 執行失敗：', error.message);
