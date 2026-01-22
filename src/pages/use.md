@@ -26,9 +26,6 @@ description: 記錄我愛用的工具
 * LG 22MP58VQ-P - 大二買的螢幕，現在充當副螢幕。
 * Universal Audio UA Volt 2 - 錄音介面兼耳機 DAC 使用。
 * Audio-Technica ATR2100x - CP 值高的動圈麥克風。
-* Sennheiser HD 599 SE - 電鋼琴用耳機。
-* Sennheiser HD 600 - 音樂用耳機。
-* final E4000 - 有線耳道式耳機。
 * Edifier M1380 - 大二用到現在的桌上用喇叭。
 * Leobog Hi75 - 搭漢白玉軸，CP 值超高的鍵盤，手感一級棒。
 * Logitech G102 - 簡單好用的滑鼠，微動自己換又是一尾活龍。
@@ -52,6 +49,10 @@ description: 記錄我愛用的工具
 * 100 吋 16:9 白玻纖布幕 - 便宜投影幕。
 * Google chromecast 4k - Google TV 電影棒。
 * Klipsch R-51PM - CP 值高的書架音響。
+* Sennheiser HD 599 SE - 電鋼琴用耳機。
+* Sennheiser HD 600 - 音樂用耳機。
+* final E4000 - 有線耳道式耳機。
+* QCY MeloBuds Pro - 無線藍芽耳機。
 
 ### [攝影相關](/photography)
 
@@ -150,7 +151,7 @@ description: 記錄我愛用的工具
 * Asunder - Linux 轉檔 CD 的工具，我寫過一篇轉檔 CD 的[文章](/blog/2025/10/24/CD)。
 * mp3tag - 整理所有 Aiff 資訊的工具。
 * LocalSent - 好用的共享檔案工具。
-* Lightroom CLassic - 現在都不修圖了，懶人直出。
+* Lightrlighoom Classic - 現在都不修圖了，懶人直出。
 
 Apps
 * 天天記帳 - 直覺的記帳軟體。
