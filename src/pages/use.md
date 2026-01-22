@@ -5,7 +5,7 @@ description: 記錄我愛用的工具
 
 # 我在用什麼 `/use`
 
-*最後更新：2025-01-17*
+*最後更新：2025-01-22*
 
 :::note
 靈感參考來自[Derek Sivers/What I use](https://sive.rs/uses)。
@@ -28,6 +28,7 @@ description: 記錄我愛用的工具
 * Audio-Technica ATR2100x - CP 值高的動圈麥克風。
 * Sennheiser HD 599 SE - 電鋼琴用耳機。
 * Sennheiser HD 600 - 音樂用耳機。
+* final E4000 - 有線耳道式耳機。
 * Edifier M1380 - 大二用到現在的桌上用喇叭。
 * Leobog Hi75 - 搭漢白玉軸，CP 值超高的鍵盤，手感一級棒。
 * Logitech G102 - 簡單好用的滑鼠，微動自己換又是一尾活龍。
@@ -132,8 +133,9 @@ description: 記錄我愛用的工具
 
 作業系統
 * Windows - 主力用，很吃資源，想找時機換掉。
-* Linux Mint- 輕量速度快，但需要時間習慣，現在在[客廳老電腦](/blog/2025/10/05/mint)偶爾用。
-* macOS - 筆電較少用。
+* Linux Mint- 輕量速度快，但需要時間習慣，現在在[客廳老電腦](/blog/2025/10/05/mint)用，還有我的 PC 雙系統使用。
+* macOS - 筆電主力用。
+* Asahi linux - 筆電偶爾用。
 
 電腦
 * Brave - 最好用的瀏覽器。
