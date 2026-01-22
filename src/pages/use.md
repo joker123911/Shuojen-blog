@@ -167,8 +167,8 @@ Apps
 * 臺北市立圖書館 - 預約借書用。
 
 Shuojen.site 小工具
-* [投資報酬試算表](/calculator.html) - 投資報酬試算用。
-* [吃什麼都可以終結者](/food.html) - 決定吃什麼用。
-* [嘸蝦米兩碼字練習器](/boshiamy.html) - 練習嘸蝦米用。
-* [圖片批次處理工具](/resize.html) - 圖片批次處理用。
-* [猜人名遊戲](/guestname.html) - 實體猜人名遊戲用。
+* [投資報酬試算表](https://shuojen.site/calculator) - 投資報酬試算用。
+* [吃什麼都可以終結者](https://shuojen.site/food.html) - 決定吃什麼用。
+* [嘸蝦米兩碼字練習器](https://shuojen.site/boshiamy.html) - 練習嘸蝦米用。
+* [圖片批次處理工具](https://shuojen.site/resize.html) - 圖片批次處理用。
+* [猜人名遊戲](https://shuojen.site/guestname.html) - 實體猜人名遊戲用。
