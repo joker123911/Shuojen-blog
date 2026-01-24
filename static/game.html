@@ -2,51 +2,73 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>成語交叉尋寶 - 完整版</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>成語迷宮</title>
+    <script src="puzzle.js"></script>
+    <script src="dictionary.js"></script>
     <style>
         :root { --bg: #fdf5e6; --primary: #8b4513; --highlight: #fff3cd; --border: #f39c12; --key: #e74c3c; --locked-bg: #f0f0f0; --locked-text: #bbb; }
-        body { font-family: sans-serif; background: var(--bg); display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        body { font-family: sans-serif; background: var(--bg); display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; }
         
-        /* 管理區（按鈕與下拉選單） */
-        .top-bar { display: flex; gap: 10px; margin-bottom: 20px; align-items: center; }
+        .top-bar { display: flex; gap: 10px; margin-bottom: 20px; align-items: center; flex-wrap: wrap; justify-content: center; }
         .btn { padding: 8px 16px; font-size: 14px; cursor: pointer; background: var(--primary); color: white; border: none; border-radius: 4px; transition: 0.2s; }
         .btn:hover { opacity: 0.9; }
         select { font-size: 14px; padding: 7px 10px; cursor: pointer; border: 1px solid var(--primary); border-radius: 4px; }
 
-        /* 遊戲說明彈窗 */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 100; justify-content: center; align-items: center; }
-        .modal-content { background: var(--bg); padding: 30px; border-radius: 12px; max-width: 450px; border: 4px solid var(--primary); position: relative; line-height: 1.8; }
+        .modal-content { background: var(--bg); padding: 30px; border-radius: 12px; max-width: 450px; width: 90%; border: 4px solid var(--primary); position: relative; line-height: 1.8; overflow-y: auto; max-height: 90vh; }
         .modal-content h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
         .modal-content ol { padding-left: 20px; color: #444; }
         .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: var(--primary); font-weight: bold; }
 
-        /* 遊戲主體 */
-        .game-wrapper { position: relative; padding: 5px; background: #444; border: 4px solid var(--primary); border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .grid { display: grid; grid-template-columns: repeat(12, 40px); gap: 2px; }
-        .cell { width: 40px; height: 40px; background: white; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; cursor: pointer; user-select: none; position: relative; z-index: 1; transition: all 0.2s; }
+        /* 簡潔外框設計 - 修改：padding 改為 3px 以匹配內部格線 */
+        .game-wrapper { position: relative; padding: 3px; background: #fff; border: 2px solid var(--primary); border-radius: 8px; width: 100%; max-width: 490px; }
+        /* 格線背景色 - 修改：gap 改為 3px 讓格線變粗 */
+        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; background: #999; }
+        .cell { aspect-ratio: 1 / 1; background: white; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; cursor: pointer; user-select: none; position: relative; z-index: 1; transition: all 0.2s; }
         
+        @media (max-width: 450px) { .cell { font-size: 4vw; } }
+
         .cell.selected { background: var(--highlight); box-shadow: inset 0 0 0 2px var(--border); }
-        .cell.locked:not(.is-key) { background: var(--locked-bg) !important; color: var(--locked-text) !important; cursor: default; box-shadow: none !important; }
-        .cell.is-key { cursor: grab; z-index: 5; background: white !important; color: var(--primary) !important; box-shadow: 0 0 10px rgba(0,0,0,0.2) !important; }
+        
+        /* 鎖定格子的樣式 */
+        .cell.locked:not(.is-key) {
+            background: var(--locked-bg) !important;
+            color: var(--locked-text) !important;
+            cursor: default;
+        }
+
+        .cell.is-key { cursor: grab; z-index: 5; background: white !important; color: var(--primary) !important; }
+        
+        /* 紅圈圈樣式 */
         .cell.is-key::after { 
-            content: ''; position: absolute; width: 34px; height: 34px; 
-            border: 3px solid var(--key); border-radius: 50%; z-index: 2; 
+            content: ''; position: absolute;
+            width: 88%; height: 88%; 
+            border: 4px solid var(--key); 
+            border-radius: 50%; z-index: 2; 
             pointer-events: none; animation: pulse 1s infinite; 
         }
+        
+        /* 選中狀態變紅 */
+        .cell.is-key.active-key { background: #ffdad6 !important; outline: 2px solid var(--key); z-index: 6; }
+
         @keyframes pulse { 0% { transform: scale(0.9); opacity: 0.7; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(0.9); opacity: 0.7; } }
 
         #svg-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; }
         .red-line { stroke: rgba(231, 76, 60, 0.6); stroke-width: 6; stroke-linecap: round; }
         .black-line { stroke: rgba(0, 0, 0, 0.8); stroke-width: 6; stroke-linecap: round; }
 
-        .answer-section { margin-top: 40px; text-align: center; }
-        .slots { display: flex; gap: 10px; margin-top: 15px; justify-content: center; }
+        .answer-section { margin-top: 40px; text-align: center; width: 100%; }
+        .slots { display: flex; gap: 10px; margin-top: 15px; justify-content: center; flex-wrap: wrap; }
         .slot { width: 55px; height: 55px; border: 2px solid var(--primary); background: #fff; display: flex; justify-content: center; align-items: center; font-size: 26px; font-weight: bold; border-radius: 8px; cursor: pointer; color: #d35400; transition: background 0.2s; }
         .slot:empty { cursor: default; background: rgba(255,255,255,0.5); border-style: dashed; }
         .slot.drag-over { background: #eee; border-color: var(--key); }
         
         #win-msg { display: none; margin-top: 25px; color: #27ae60; font-size: 24px; font-weight: bold; }
+        
+        .badge { padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+        .bg-yellow { background: var(--highlight); }
+        .bg-red-circle { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--key); border-radius: 50%; vertical-align: middle; }
     </style>
 </head>
 <body ondragover="event.preventDefault()">
@@ -60,16 +82,20 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-btn" onclick="toggleModal(false)">&times;</span>
             <h3>📜 遊戲規則說明</h3>
-            <ol>
-                <li>表格中藏有數個四字成語，排列順序可能是由上而下，由左而右、由右而左，或是呈對角線，請先找出表格裡的成語。</li>
-                <li>每兩個成語的交叉處可得到一個關鍵字。關鍵字有可能會重複。</li>
-                <li>找到的關鍵字可組成一個俚語，即為最後答案。</li>
-                <li><b>選字反黃</b>：點擊格子進行反黃選取，當連線<b>剛好組成四字直線</b>時，會出現紅線提示。</li>
-                <li><b>圈選關鍵字</b>：與另一條四字紅線<b>交叉</b>後，點擊該交點。若該字屬於答案文字，將會出現<b>呼吸燈紅圈</b>。</li>
-                <li><b>鎖定成語</b>：關鍵字圈選後，該成語路徑會變為<b>黑線並淡化背景</b>。鎖定後的格子不再參與其他連線判斷。</li>
-                <li><b>動態檢查</b>：若取消選取的格子導致連線不足四字，對應的線條與圈選狀態將會自動退回。</li>
-                <li><b>拼湊答案</b>：將圈選出的文字<b>拖曳</b>到下方空格，拼出正確成語即可獲勝。</li>
-            </ol>
+                <ul>
+                    <li data-num="1.">表格中藏有數個四字成語，排列順序可能是由上而下、由左而右、由右而左，或是呈對角線，請先找出表格裡的成語。</li>
+                    <li data-num="2.">每兩個成語的交叉處可得到一個關鍵字。關鍵字有可能會重複。</li>
+                    <li data-num="3.">找到的關鍵字可組成一個俚語，即為最後答案。</li>
+                </ul>
+
+                <h4>操作提示</h4>
+                <ul class="rule-list">
+                    <li data-num="◆">點擊文字進行<span class="badge bg-yellow">反黃</span>選取，連線<b>剛好</b>四字會出現輔助紅線（不能超過）。</li>
+                    <li data-num="◆">與另一條紅線交叉後，點擊<b>交叉處</b>可圈選關鍵字<span class="bg-red-circle"></span>。</li>
+                    <li data-num="◆">圈選後，若正確，成語會鎖定變為<b>黑線並淡化</b>。</li>
+                    <li data-num="◆"><b>關鍵字操作</b>：點擊一下變紅可填入空格；若選錯了，<b>再點一下變紅的字</b>即可取消圈選並解鎖成語。</li>
+                    <li data-num="◆">將關鍵字<b>拖曳或點選</b>至下方空格，拼出正確俚語即可獲勝。</li>
+                </ul>
             <div style="text-align: center; margin-top: 20px;">
                 <button class="btn" onclick="toggleModal(false)">開始遊戲</button>
             </div>
@@ -83,19 +109,10 @@
 
     <div class="answer-section">
         <div class="slots" id="slots"></div>
-        <div id="win-msg">🎉 恭喜完成！</div>
+        <div id="win-msg">🎉 正確答案，恭喜！</div>
     </div>
 
     <script>
-        // --- 快速出題區 ---
-        const puzzles = [
-            {
-                id: "001",
-                grid: "情機少其時太空原中是價門勤事洛課常非行懷榮蓋無批朗鳥在陽非想先華竹太之報及發月人紙入富待華北保腦密才時明為貴人之集王文率人帶不主星接古當及班門地大想費解物稀務物大無弄府因卡司新之換以正地貴身替報抱印年多類星貌咪海分細果之家獲聚化逢移取區義剛器而與向天吉兇上碼人木訥大晚成人之每天晚分分折和",
-                answer: "物以稀為貴"
-            }
-        ];
-
         const gridEl = document.getElementById('grid');
         const svgEl = document.getElementById('svg-overlay');
         const slotsEl = document.getElementById('slots');
@@ -105,12 +122,18 @@
         let selectedIndices = new Set(); 
         let manualKeys = new Map(); 
         let lockedCells = new Set(); 
+        let mobileSelectedChar = null; 
+        let activeKeyIdx = null; 
 
         function toggleModal(show) {
             document.getElementById('info-modal').style.display = show ? 'flex' : 'none';
         }
 
         function setupLevelSelect() {
+            if (typeof puzzles === 'undefined') {
+                alert("找不到題目檔 (puzzle.js)，請確認檔案路徑是否正確。");
+                return;
+            }
             puzzles.forEach((p, index) => {
                 const opt = document.createElement('option');
                 opt.value = index;
@@ -125,6 +148,8 @@
             selectedIndices.clear();
             manualKeys.clear();
             lockedCells.clear();
+            mobileSelectedChar = null;
+            activeKeyIdx = null;
             document.getElementById('win-msg').style.display = 'none';
             initBoard(p);
             updateVisuals();
@@ -152,12 +177,16 @@
                 const slot = document.createElement('div');
                 slot.className = 'slot';
                 slot.draggable = true;
-                slot.onclick = () => { slot.textContent = ""; checkWin(); };
-                slot.ondragstart = (e) => {
-                    if (!slot.textContent) return e.preventDefault();
-                    e.dataTransfer.setData('text', slot.textContent);
-                    e.dataTransfer.setData('sourceType', 'slot');
-                    e.dataTransfer.setData('sourceIdx', i);
+                slot.onclick = () => { 
+                    if(mobileSelectedChar) {
+                        slot.textContent = mobileSelectedChar;
+                        mobileSelectedChar = null;
+                        activeKeyIdx = null;
+                        updateVisuals();
+                    } else {
+                        slot.textContent = ""; 
+                    }
+                    checkWin(); 
                 };
                 slot.ondragover = e => { e.preventDefault(); slot.classList.add('drag-over'); };
                 slot.ondragleave = () => slot.classList.remove('drag-over');
@@ -168,14 +197,26 @@
 
         function handleCellClick(idx, el) {
             if (lockedCells.has(idx) && !manualKeys.has(idx)) return;
+            
             if (manualKeys.has(idx)) {
-                const lines = manualKeys.get(idx);
-                lines.forEach(line => line.forEach(id => {
-                    lockedCells.delete(id);
-                    selectedIndices.add(id);
-                }));
-                manualKeys.delete(idx);
-            } else if (selectedIndices.has(idx)) {
+                if (activeKeyIdx === idx) {
+                    const lines = manualKeys.get(idx);
+                    lines.forEach(line => line.forEach(id => {
+                        lockedCells.delete(id);
+                        selectedIndices.add(id); 
+                    }));
+                    manualKeys.delete(idx);
+                    mobileSelectedChar = null;
+                    activeKeyIdx = null;
+                } else {
+                    mobileSelectedChar = el.textContent;
+                    activeKeyIdx = idx;
+                }
+                updateVisuals();
+                return;
+            }
+
+            if (selectedIndices.has(idx)) {
                 const junctionLines = get4CharLines(idx, selectedIndices);
                 const isAnswerChar = puzzles[levelSelect.value].answer.includes(el.textContent);
                 if (junctionLines.length >= 2 && isAnswerChar) {
@@ -199,16 +240,18 @@
             cells.forEach((c, i) => {
                 c.classList.toggle('selected', selectedIndices.has(i));
                 c.classList.toggle('locked', lockedCells.has(i));
-                c.classList.remove('is-key');
-                c.draggable = false;
+                c.classList.remove('is-key', 'active-key');
+                if (manualKeys.has(i)) {
+                    c.classList.add('is-key');
+                    c.draggable = true;
+                    if (activeKeyIdx === i) c.classList.add('active-key');
+                }
             });
             findAll4CharLines(selectedIndices).forEach(line => {
                 const ends = getEnds(line);
                 drawSvgLine(ends.start, ends.end, 'red-line');
             });
             manualKeys.forEach((lines, keyIdx) => {
-                cells[keyIdx].classList.add('is-key');
-                cells[keyIdx].draggable = true;
                 lines.forEach(line => {
                     const ends = getEnds(line);
                     drawSvgLine(ends.start, ends.end, 'black-line');
@@ -274,9 +317,11 @@
 
         function drawSvgLine(sIdx, eIdx, cls) {
             const s = gridEl.children[sIdx], e = gridEl.children[eIdx];
+            if (!s || !e) return;
             const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            line.setAttribute("x1", s.offsetLeft + 20); line.setAttribute("y1", s.offsetTop + 20);
-            line.setAttribute("x2", e.offsetLeft + 20); line.setAttribute("y2", e.offsetTop + 20);
+            const offset = s.offsetWidth / 2;
+            line.setAttribute("x1", s.offsetLeft + offset); line.setAttribute("y1", s.offsetTop + offset);
+            line.setAttribute("x2", e.offsetLeft + offset); line.setAttribute("y2", e.offsetTop + offset);
             line.setAttribute("class", cls);
             svgEl.appendChild(line);
         }
@@ -285,16 +330,7 @@
             e.preventDefault();
             this.classList.remove('drag-over');
             const char = e.dataTransfer.getData('text');
-            const sourceType = e.dataTransfer.getData('sourceType');
-            if (sourceType === 'grid') {
-                this.textContent = char;
-            } else {
-                const sIdx = e.dataTransfer.getData('sourceIdx');
-                const sSlot = document.querySelectorAll('.slot')[sIdx];
-                const temp = this.textContent;
-                this.textContent = char;
-                sSlot.textContent = temp;
-            }
+            this.textContent = char;
             checkWin();
         }
 
@@ -303,6 +339,7 @@
             document.getElementById('win-msg').style.display = (current === puzzles[levelSelect.value].answer) ? 'block' : 'none';
         }
 
+        window.addEventListener('resize', updateVisuals);
         setupLevelSelect();
     </script>
 </body>
