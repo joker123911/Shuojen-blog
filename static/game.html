@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成語迷宮</title>
+    <style>
+        :root { --bg: #fdf5e6; --primary: #8b4513; --highlight: #fff3cd; --border: #f39c12; --key: #e74c3c; }
+        body { font-family: sans-serif; background: var(--bg); display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        
+        .game-wrapper { position: relative; padding: 5px; background: #444; border: 4px solid var(--primary); border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .grid { display: grid; grid-template-columns: repeat(12, 40px); gap: 2px; }
+        .cell { width: 40px; height: 40px; background: white; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; cursor: pointer; user-select: none; position: relative; z-index: 1; }
+        
+        .cell.selected { background: var(--highlight); box-shadow: inset 0 0 0 2px var(--border); }
+        .cell.is-key { cursor: grab; z-index: 5; }
+        .cell.is-key::after { 
+            content: ''; position: absolute; width: 32px; height: 32px; 
+            border: 3px solid var(--key); border-radius: 50%; z-index: 2; 
+            pointer-events: none; animation: pulse 1.2s infinite; 
+        }
+        @keyframes pulse { 0% { transform: scale(0.9); opacity: 0.7; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(0.9); opacity: 0.7; } }
+
+        #svg-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; }
+        .red-line { stroke: rgba(231, 76, 60, 0.6); stroke-width: 6; stroke-linecap: round; }
+
+        .answer-section { margin-top: 40px; text-align: center; }
+        .slots { display: flex; gap: 10px; margin-top: 15px; justify-content: center; }
+        .slot { width: 55px; height: 55px; border: 2px solid var(--primary); background: #fff; display: flex; justify-content: center; align-items: center; font-size: 26px; font-weight: bold; border-radius: 8px; cursor: pointer; color: #d35400; }
+        .slot:empty { cursor: default; background: rgba(255,255,255,0.5); border-style: dashed; }
+        
+        #win-msg { display: none; margin-top: 25px; color: #27ae60; font-size: 24px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h2 style="color: var(--primary);">成語迷宮</h2>
+    
+    <div class="game-wrapper">
+        <div class="grid" id="grid"></div>
+        <svg id="svg-overlay"></svg>
+    </div>
+
+    <div class="answer-section">
+        <div class="slots" id="slots"></div>
+        <div id="win-msg">🎉 恭喜完成！</div>
+    </div>
+
+    <script>
+        // 批量輸入格式：[144字, 答案]
+        const levelInput = "情機少其時太空原中是價門勤事洛課常非行懷榮蓋無批朗鳥在陽非想先華竹太之報及發月人紙入富待華北保腦密才時明為貴人之集王文率人帶不主星接古當及班門地大想費解物稀務物大無弄府因卡司新之換以正地貴身替報抱印年多類星貌咪海分細果之家獲聚化逢移取區義剛器而與向天吉兇上碼人木訥大晚成人之每天晚分分折和,物以稀為貴";
+
+        const [rawText, finalAnswer] = levelInput.split(',');
+        const gridEl = document.getElementById('grid');
+        const svgEl = document.getElementById('svg-overlay');
+        const slotsEl = document.getElementById('slots');
+        const size = 12;
+
+        let selectedIndices = new Set();
+        let manualKeys = new Set(); 
+
+        function init() {
+            rawText.split('').forEach((char, i) => {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.textContent = char;
+                cell.dataset.idx = i;
+                cell.onclick = () => handleCellClick(i, cell);
+                cell.draggable = false;
+                cell.ondragstart = (e) => {
+                    if (!cell.classList.contains('is-key')) return e.preventDefault();
+                    e.dataTransfer.setData('text', cell.textContent);
+                    e.dataTransfer.setData('sourceType', 'grid');
+                };
+                gridEl.appendChild(cell);
+            });
+
+            finalAnswer.split('').forEach((_, i) => {
+                const slot = document.createElement('div');
+                slot.className = 'slot';
+                slot.onclick = () => { slot.textContent = ""; checkWin(); };
+                slot.ondragover = e => e.preventDefault();
+                slot.ondrop = handleSlotDrop;
+                slotsEl.appendChild(slot);
+            });
+        }
+
+        function handleCellClick(idx, el) {
+            const isSelected = selectedIndices.has(idx);
+            const isKey = manualKeys.has(idx);
+
+            if (!isSelected) {
+                // 未選取 -> 變黃
+                selectedIndices.add(idx);
+            } else if (isKey) {
+                // 已是圈選狀態 -> 完全取消
+                selectedIndices.delete(idx);
+                manualKeys.delete(idx);
+            } else {
+                // 已反黃但未圈選 -> 檢查是否符合圈選資格
+                const isAnswerChar = finalAnswer.includes(el.textContent);
+                const isJunction = checkIsJunction(idx);
+                
+                if (isAnswerChar && isJunction) {
+                    manualKeys.add(idx); // 符合資格 -> 變圈圈
+                } else {
+                    selectedIndices.delete(idx); // 不符合資格 -> 取消反黃 (解決選錯不能移除的Bug)
+                }
+            }
+            updateVisuals();
+        }
+
+        function updateVisuals() {
+            svgEl.innerHTML = '';
+            const cells = Array.from(gridEl.children);
+            
+            cells.forEach((c, i) => {
+                c.classList.toggle('selected', selectedIndices.has(i));
+                c.classList.remove('is-key');
+                c.draggable = false;
+            });
+
+            const paths = findLines(4);
+            paths.forEach(path => drawLine(path[0], path[path.length - 1]));
+
+            manualKeys.forEach(idx => {
+                if (selectedIndices.has(idx) && checkIsJunction(idx)) {
+                    cells[idx].classList.add('is-key');
+                    cells[idx].draggable = true;
+                } else {
+                    manualKeys.delete(idx);
+                }
+            });
+        }
+
+        function checkIsJunction(idx) {
+            const r = Math.floor(idx / size), c = idx % size;
+            const dirs = [[0,1],[1,0],[1,1],[1,-1]];
+            let linesCount = 0;
+            dirs.forEach(([dr, dc]) => {
+                let count = 1;
+                [[dr, dc], [-dr, -dc]].forEach(([tr, tc]) => {
+                    for (let k = 1; k < size; k++) {
+                        let nr = r + tr*k, nc = c + tc*k;
+                        if (nr>=0 && nr<size && nc>=0 && nc<size && selectedIndices.has(nr*size+nc)) count++; else break;
+                    }
+                });
+                if (count >= 4) linesCount++;
+            });
+            return linesCount >= 2;
+        }
+
+        function findLines(minLen) {
+            const paths = [];
+            const dirs = [[0,1],[1,0],[1,1],[1,-1]];
+            for (let i = 0; i < size * size; i++) {
+                if (!selectedIndices.has(i)) continue;
+                const r = Math.floor(i / size), c = i % size;
+                dirs.forEach(([dr, dc]) => {
+                    let path = [i];
+                    for (let k = 1; k < size; k++) {
+                        let nr = r + dr * k, nc = c + dc * k;
+                        if (nr>=0 && nr<size && nc>=0 && nc<size && selectedIndices.has(nr*size+nc)) path.push(nr*size+nc); else break;
+                    }
+                    if (path.length >= minLen) paths.push(path);
+                });
+            }
+            return paths;
+        }
+
+        function drawLine(startIdx, endIdx) {
+            const s = gridEl.children[startIdx], e = gridEl.children[endIdx];
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line.setAttribute("x1", s.offsetLeft + 20); line.setAttribute("y1", s.offsetTop + 20);
+            line.setAttribute("x2", e.offsetLeft + 20); line.setAttribute("y2", e.offsetTop + 20);
+            line.setAttribute("class", "red-line");
+            svgEl.appendChild(line);
+        }
+
+        function handleSlotDrop(e) {
+            e.preventDefault();
+            this.textContent = e.dataTransfer.getData('text');
+            checkWin();
+        }
+
+        function checkWin() {
+            const current = Array.from(document.querySelectorAll('.slot')).map(s => s.textContent).join('');
+            document.getElementById('win-msg').style.display = (current === finalAnswer) ? 'block' : 'none';
+        }
+
+        init();
+    </script>
+</body>
+</html>
