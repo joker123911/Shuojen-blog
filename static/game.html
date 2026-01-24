@@ -3,38 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>成語迷宮</title>
+    <title>成語交叉尋寶 - 完整版</title>
     <style>
-        :root { --bg: #fdf5e6; --primary: #8b4513; --highlight: #fff3cd; --border: #f39c12; --key: #e74c3c; }
+        :root { --bg: #fdf5e6; --primary: #8b4513; --highlight: #fff3cd; --border: #f39c12; --key: #e74c3c; --locked-bg: #f0f0f0; --locked-text: #bbb; }
         body { font-family: sans-serif; background: var(--bg); display: flex; flex-direction: column; align-items: center; padding: 20px; }
         
+        /* 管理區（按鈕與下拉選單） */
+        .top-bar { display: flex; gap: 10px; margin-bottom: 20px; align-items: center; }
+        .btn { padding: 8px 16px; font-size: 14px; cursor: pointer; background: var(--primary); color: white; border: none; border-radius: 4px; transition: 0.2s; }
+        .btn:hover { opacity: 0.9; }
+        select { font-size: 14px; padding: 7px 10px; cursor: pointer; border: 1px solid var(--primary); border-radius: 4px; }
+
+        /* 遊戲說明彈窗 */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 100; justify-content: center; align-items: center; }
+        .modal-content { background: var(--bg); padding: 30px; border-radius: 12px; max-width: 450px; border: 4px solid var(--primary); position: relative; line-height: 1.8; }
+        .modal-content h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
+        .modal-content ol { padding-left: 20px; color: #444; }
+        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: var(--primary); font-weight: bold; }
+
+        /* 遊戲主體 */
         .game-wrapper { position: relative; padding: 5px; background: #444; border: 4px solid var(--primary); border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         .grid { display: grid; grid-template-columns: repeat(12, 40px); gap: 2px; }
-        .cell { width: 40px; height: 40px; background: white; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; cursor: pointer; user-select: none; position: relative; z-index: 1; }
+        .cell { width: 40px; height: 40px; background: white; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; cursor: pointer; user-select: none; position: relative; z-index: 1; transition: all 0.2s; }
         
         .cell.selected { background: var(--highlight); box-shadow: inset 0 0 0 2px var(--border); }
-        .cell.is-key { cursor: grab; z-index: 5; }
+        .cell.locked:not(.is-key) { background: var(--locked-bg) !important; color: var(--locked-text) !important; cursor: default; box-shadow: none !important; }
+        .cell.is-key { cursor: grab; z-index: 5; background: white !important; color: var(--primary) !important; box-shadow: 0 0 10px rgba(0,0,0,0.2) !important; }
         .cell.is-key::after { 
-            content: ''; position: absolute; width: 32px; height: 32px; 
+            content: ''; position: absolute; width: 34px; height: 34px; 
             border: 3px solid var(--key); border-radius: 50%; z-index: 2; 
-            pointer-events: none; animation: pulse 1.2s infinite; 
+            pointer-events: none; animation: pulse 1s infinite; 
         }
         @keyframes pulse { 0% { transform: scale(0.9); opacity: 0.7; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(0.9); opacity: 0.7; } }
 
         #svg-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; }
         .red-line { stroke: rgba(231, 76, 60, 0.6); stroke-width: 6; stroke-linecap: round; }
+        .black-line { stroke: rgba(0, 0, 0, 0.8); stroke-width: 6; stroke-linecap: round; }
 
         .answer-section { margin-top: 40px; text-align: center; }
         .slots { display: flex; gap: 10px; margin-top: 15px; justify-content: center; }
-        .slot { width: 55px; height: 55px; border: 2px solid var(--primary); background: #fff; display: flex; justify-content: center; align-items: center; font-size: 26px; font-weight: bold; border-radius: 8px; cursor: pointer; color: #d35400; }
+        .slot { width: 55px; height: 55px; border: 2px solid var(--primary); background: #fff; display: flex; justify-content: center; align-items: center; font-size: 26px; font-weight: bold; border-radius: 8px; cursor: pointer; color: #d35400; transition: background 0.2s; }
         .slot:empty { cursor: default; background: rgba(255,255,255,0.5); border-style: dashed; }
+        .slot.drag-over { background: #eee; border-color: var(--key); }
         
         #win-msg { display: none; margin-top: 25px; color: #27ae60; font-size: 24px; font-weight: bold; }
     </style>
 </head>
-<body>
+<body ondragover="event.preventDefault()">
 
-    <h2 style="color: var(--primary);">成語迷宮</h2>
+    <div class="top-bar">
+        <button class="btn" onclick="toggleModal(true)">遊戲說明</button>
+        <select id="level-select" onchange="loadLevel(this.value)"></select>
+    </div>
+
+    <div id="info-modal" class="modal" onclick="toggleModal(false)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="toggleModal(false)">&times;</span>
+            <h3>📜 遊戲規則說明</h3>
+            <ol>
+                <li>表格中藏有數個四字成語，排列順序可能是由上而下，由左而右、由右而左，或是呈對角線，請先找出表格裡的成語。</li>
+                <li>每兩個成語的交叉處可得到一個關鍵字。關鍵字有可能會重複。</li>
+                <li>找到的關鍵字可組成一個俚語，即為最後答案。</li>
+                <li><b>選字反黃</b>：點擊格子進行反黃選取，當連線<b>剛好組成四字直線</b>時，會出現紅線提示。</li>
+                <li><b>圈選關鍵字</b>：與另一條四字紅線<b>交叉</b>後，點擊該交點。若該字屬於答案文字，將會出現<b>呼吸燈紅圈</b>。</li>
+                <li><b>鎖定成語</b>：關鍵字圈選後，該成語路徑會變為<b>黑線並淡化背景</b>。鎖定後的格子不再參與其他連線判斷。</li>
+                <li><b>動態檢查</b>：若取消選取的格子導致連線不足四字，對應的線條與圈選狀態將會自動退回。</li>
+                <li><b>拼湊答案</b>：將圈選出的文字<b>拖曳</b>到下方空格，拼出正確成語即可獲勝。</li>
+            </ol>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn" onclick="toggleModal(false)">開始遊戲</button>
+            </div>
+        </div>
+    </div>
     
     <div class="game-wrapper">
         <div class="grid" id="grid"></div>
@@ -47,20 +87,53 @@
     </div>
 
     <script>
-        // 批量輸入格式：[144字, 答案]
-        const levelInput = "情機少其時太空原中是價門勤事洛課常非行懷榮蓋無批朗鳥在陽非想先華竹太之報及發月人紙入富待華北保腦密才時明為貴人之集王文率人帶不主星接古當及班門地大想費解物稀務物大無弄府因卡司新之換以正地貴身替報抱印年多類星貌咪海分細果之家獲聚化逢移取區義剛器而與向天吉兇上碼人木訥大晚成人之每天晚分分折和,物以稀為貴";
+        // --- 快速出題區 ---
+        const puzzles = [
+            {
+                id: "001",
+                grid: "情機少其時太空原中是價門勤事洛課常非行懷榮蓋無批朗鳥在陽非想先華竹太之報及發月人紙入富待華北保腦密才時明為貴人之集王文率人帶不主星接古當及班門地大想費解物稀務物大無弄府因卡司新之換以正地貴身替報抱印年多類星貌咪海分細果之家獲聚化逢移取區義剛器而與向天吉兇上碼人木訥大晚成人之每天晚分分折和",
+                answer: "物以稀為貴"
+            }
+        ];
 
-        const [rawText, finalAnswer] = levelInput.split(',');
         const gridEl = document.getElementById('grid');
         const svgEl = document.getElementById('svg-overlay');
         const slotsEl = document.getElementById('slots');
+        const levelSelect = document.getElementById('level-select');
         const size = 12;
 
-        let selectedIndices = new Set();
-        let manualKeys = new Set(); 
+        let selectedIndices = new Set(); 
+        let manualKeys = new Map(); 
+        let lockedCells = new Set(); 
 
-        function init() {
-            rawText.split('').forEach((char, i) => {
+        function toggleModal(show) {
+            document.getElementById('info-modal').style.display = show ? 'flex' : 'none';
+        }
+
+        function setupLevelSelect() {
+            puzzles.forEach((p, index) => {
+                const opt = document.createElement('option');
+                opt.value = index;
+                opt.textContent = `第 ${p.id} 關`;
+                levelSelect.appendChild(opt);
+            });
+            loadLevel(0);
+        }
+
+        function loadLevel(index) {
+            const p = puzzles[index];
+            selectedIndices.clear();
+            manualKeys.clear();
+            lockedCells.clear();
+            document.getElementById('win-msg').style.display = 'none';
+            initBoard(p);
+            updateVisuals();
+        }
+
+        function initBoard(puzzle) {
+            gridEl.innerHTML = '';
+            slotsEl.innerHTML = '';
+            puzzle.grid.split('').forEach((char, i) => {
                 const cell = document.createElement('div');
                 cell.className = 'cell';
                 cell.textContent = char;
@@ -75,37 +148,47 @@
                 gridEl.appendChild(cell);
             });
 
-            finalAnswer.split('').forEach((_, i) => {
+            puzzle.answer.split('').forEach((_, i) => {
                 const slot = document.createElement('div');
                 slot.className = 'slot';
+                slot.draggable = true;
                 slot.onclick = () => { slot.textContent = ""; checkWin(); };
-                slot.ondragover = e => e.preventDefault();
+                slot.ondragstart = (e) => {
+                    if (!slot.textContent) return e.preventDefault();
+                    e.dataTransfer.setData('text', slot.textContent);
+                    e.dataTransfer.setData('sourceType', 'slot');
+                    e.dataTransfer.setData('sourceIdx', i);
+                };
+                slot.ondragover = e => { e.preventDefault(); slot.classList.add('drag-over'); };
+                slot.ondragleave = () => slot.classList.remove('drag-over');
                 slot.ondrop = handleSlotDrop;
                 slotsEl.appendChild(slot);
             });
         }
 
         function handleCellClick(idx, el) {
-            const isSelected = selectedIndices.has(idx);
-            const isKey = manualKeys.has(idx);
-
-            if (!isSelected) {
-                // 未選取 -> 變黃
-                selectedIndices.add(idx);
-            } else if (isKey) {
-                // 已是圈選狀態 -> 完全取消
-                selectedIndices.delete(idx);
+            if (lockedCells.has(idx) && !manualKeys.has(idx)) return;
+            if (manualKeys.has(idx)) {
+                const lines = manualKeys.get(idx);
+                lines.forEach(line => line.forEach(id => {
+                    lockedCells.delete(id);
+                    selectedIndices.add(id);
+                }));
                 manualKeys.delete(idx);
-            } else {
-                // 已反黃但未圈選 -> 檢查是否符合圈選資格
-                const isAnswerChar = finalAnswer.includes(el.textContent);
-                const isJunction = checkIsJunction(idx);
-                
-                if (isAnswerChar && isJunction) {
-                    manualKeys.add(idx); // 符合資格 -> 變圈圈
+            } else if (selectedIndices.has(idx)) {
+                const junctionLines = get4CharLines(idx, selectedIndices);
+                const isAnswerChar = puzzles[levelSelect.value].answer.includes(el.textContent);
+                if (junctionLines.length >= 2 && isAnswerChar) {
+                    manualKeys.set(idx, junctionLines);
+                    junctionLines.forEach(line => line.forEach(id => {
+                        lockedCells.add(id);
+                        selectedIndices.delete(id);
+                    }));
                 } else {
-                    selectedIndices.delete(idx); // 不符合資格 -> 取消反黃 (解決選錯不能移除的Bug)
+                    selectedIndices.delete(idx);
                 }
+            } else {
+                selectedIndices.add(idx);
             }
             updateVisuals();
         }
@@ -113,82 +196,114 @@
         function updateVisuals() {
             svgEl.innerHTML = '';
             const cells = Array.from(gridEl.children);
-            
             cells.forEach((c, i) => {
                 c.classList.toggle('selected', selectedIndices.has(i));
+                c.classList.toggle('locked', lockedCells.has(i));
                 c.classList.remove('is-key');
                 c.draggable = false;
             });
-
-            const paths = findLines(4);
-            paths.forEach(path => drawLine(path[0], path[path.length - 1]));
-
-            manualKeys.forEach(idx => {
-                if (selectedIndices.has(idx) && checkIsJunction(idx)) {
-                    cells[idx].classList.add('is-key');
-                    cells[idx].draggable = true;
-                } else {
-                    manualKeys.delete(idx);
-                }
+            findAll4CharLines(selectedIndices).forEach(line => {
+                const ends = getEnds(line);
+                drawSvgLine(ends.start, ends.end, 'red-line');
+            });
+            manualKeys.forEach((lines, keyIdx) => {
+                cells[keyIdx].classList.add('is-key');
+                cells[keyIdx].draggable = true;
+                lines.forEach(line => {
+                    const ends = getEnds(line);
+                    drawSvgLine(ends.start, ends.end, 'black-line');
+                });
             });
         }
 
-        function checkIsJunction(idx) {
-            const r = Math.floor(idx / size), c = idx % size;
+        function get4CharLines(idx, set) {
+            const lines = [];
             const dirs = [[0,1],[1,0],[1,1],[1,-1]];
-            let linesCount = 0;
+            const r = Math.floor(idx / size), c = idx % size;
             dirs.forEach(([dr, dc]) => {
-                let count = 1;
+                let path = [idx];
                 [[dr, dc], [-dr, -dc]].forEach(([tr, tc]) => {
                     for (let k = 1; k < size; k++) {
-                        let nr = r + tr*k, nc = c + tc*k;
-                        if (nr>=0 && nr<size && nc>=0 && nc<size && selectedIndices.has(nr*size+nc)) count++; else break;
+                        const nr = r + tr*k, nc = c + tc*k;
+                        const nIdx = nr * size + nc;
+                        if (nr>=0 && nr<size && nc>=0 && nc<size && set.has(nIdx)) path.push(nIdx); else break;
                     }
                 });
-                if (count >= 4) linesCount++;
+                if (path.length === 4) lines.push(path);
             });
-            return linesCount >= 2;
+            return lines;
         }
 
-        function findLines(minLen) {
+        function findAll4CharLines(set) {
             const paths = [];
             const dirs = [[0,1],[1,0],[1,1],[1,-1]];
-            for (let i = 0; i < size * size; i++) {
-                if (!selectedIndices.has(i)) continue;
-                const r = Math.floor(i / size), c = i % size;
+            const checked = new Set();
+            set.forEach(idx => {
                 dirs.forEach(([dr, dc]) => {
-                    let path = [i];
-                    for (let k = 1; k < size; k++) {
-                        let nr = r + dr * k, nc = c + dc * k;
-                        if (nr>=0 && nr<size && nc>=0 && nc<size && selectedIndices.has(nr*size+nc)) path.push(nr*size+nc); else break;
-                    }
-                    if (path.length >= minLen) paths.push(path);
+                    const k = `${idx}-${dr}-${dc}`;
+                    if (checked.has(k)) return;
+                    let path = [idx];
+                    [[dr, dc], [-dr, -dc]].forEach(([tr, tc]) => {
+                        for (let k = 1; k < size; k++) {
+                            const nr = Math.floor(idx/size) + tr*k, nc = (idx%size) + tc*k;
+                            const nIdx = nr*size + nc;
+                            if (nr>=0 && nr<size && nc>=0 && nc<size && set.has(nIdx)) {
+                                path.push(nIdx);
+                                checked.add(`${nIdx}-${dr}-${dc}`);
+                                checked.add(`${nIdx}-${-dr}-${-dc}`);
+                            } else break;
+                        }
+                    });
+                    if (path.length === 4) paths.push(path);
                 });
-            }
+            });
             return paths;
         }
 
-        function drawLine(startIdx, endIdx) {
-            const s = gridEl.children[startIdx], e = gridEl.children[endIdx];
+        function getEnds(path) {
+            let start = path[0], end = path[0];
+            path.forEach(i => {
+                const r = Math.floor(i/12), c = i%12;
+                const sr = Math.floor(start/12), sc = start%12;
+                const er = Math.floor(end/12), ec = end%12;
+                if (r < sr || (r === sr && c < sc)) start = i;
+                if (r > er || (r === er && c > ec)) end = i;
+            });
+            return { start, end };
+        }
+
+        function drawSvgLine(sIdx, eIdx, cls) {
+            const s = gridEl.children[sIdx], e = gridEl.children[eIdx];
             const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
             line.setAttribute("x1", s.offsetLeft + 20); line.setAttribute("y1", s.offsetTop + 20);
             line.setAttribute("x2", e.offsetLeft + 20); line.setAttribute("y2", e.offsetTop + 20);
-            line.setAttribute("class", "red-line");
+            line.setAttribute("class", cls);
             svgEl.appendChild(line);
         }
 
         function handleSlotDrop(e) {
             e.preventDefault();
-            this.textContent = e.dataTransfer.getData('text');
+            this.classList.remove('drag-over');
+            const char = e.dataTransfer.getData('text');
+            const sourceType = e.dataTransfer.getData('sourceType');
+            if (sourceType === 'grid') {
+                this.textContent = char;
+            } else {
+                const sIdx = e.dataTransfer.getData('sourceIdx');
+                const sSlot = document.querySelectorAll('.slot')[sIdx];
+                const temp = this.textContent;
+                this.textContent = char;
+                sSlot.textContent = temp;
+            }
             checkWin();
         }
 
         function checkWin() {
             const current = Array.from(document.querySelectorAll('.slot')).map(s => s.textContent).join('');
-            document.getElementById('win-msg').style.display = (current === finalAnswer) ? 'block' : 'none';
+            document.getElementById('win-msg').style.display = (current === puzzles[levelSelect.value].answer) ? 'block' : 'none';
         }
 
-        init();
+        setupLevelSelect();
     </script>
 </body>
 </html>
