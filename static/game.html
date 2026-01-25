@@ -217,8 +217,17 @@
             }
 
             if (selectedIndices.has(idx)) {
-                const junctionLines = get4CharLines(idx, selectedIndices);
+                // 獲取交叉線段並過濾掉不在成語庫中的無效組合
+                const junctionLines = get4CharLines(idx, selectedIndices).filter(line => {
+                    const sortedLine = [...line].sort((a, b) => a - b);
+                    const word = sortedLine.map(i => gridEl.children[i].textContent).join('');
+                    const revWord = word.split('').reverse().join('');
+                    return ALL_IDIOMS.has(word) || ALL_IDIOMS.has(revWord);
+                });
+
                 const isAnswerChar = puzzles[levelSelect.value].answer.includes(el.textContent);
+                
+                // 必須是有效成語的交叉點，且字元存在於最終答案中，才允許鎖定
                 if (junctionLines.length >= 2 && isAnswerChar) {
                     manualKeys.set(idx, junctionLines);
                     junctionLines.forEach(line => line.forEach(id => {
