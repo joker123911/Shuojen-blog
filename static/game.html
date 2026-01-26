@@ -21,35 +21,27 @@
         .modal-content ol { padding-left: 20px; color: #444; }
         .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: var(--primary); font-weight: bold; }
 
-        /* 簡潔外框設計 - 修改：padding 改為 3px 以匹配內部格線 */
         .game-wrapper { position: relative; padding: 3px; background: #fff; border: 2px solid var(--primary); border-radius: 8px; width: 100%; max-width: 490px; }
-        /* 格線背景色 - 修改：gap 改為 3px 讓格線變粗 */
         .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; background: #999; }
-        .cell { aspect-ratio: 1 / 1; background: white; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; cursor: pointer; user-select: none; position: relative; z-index: 1; transition: all 0.2s; }
+        .cell { aspect-ratio: 1 / 1; background: white; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; cursor: pointer; user-select: none; position: relative; z-index: 1; transition: all 0.2s; color: black; }
         
         @media (max-width: 450px) { .cell { font-size: 4vw; } }
 
-        .cell.selected { background: var(--highlight); box-shadow: inset 0 0 0 2px var(--border); }
+        /* 選中狀態：橘色高亮 */
+        .cell.selected { background: var(--highlight) !important; box-shadow: inset 0 0 0 2px var(--border); }
         
-        /* 鎖定格子的樣式 */
-        .cell.locked:not(.is-key) {
-            background: var(--locked-bg) !important;
-            color: var(--locked-text) !important;
-            cursor: default;
-        }
-
+        /* 已移除 .cell.locked:not(.is-key) 的淡化樣式。
+           現在鎖定但非關鍵字的格子看起來與普通格子相同，
+           但會有一條黑線劃過（由 JS 控制 SVG 繪製）。
+        */
+        
+        /* 關鍵字樣式 */
         .cell.is-key { cursor: grab; z-index: 5; background: white !important; color: var(--primary) !important; }
-        
-        /* 紅圈圈樣式 */
         .cell.is-key::after { 
-            content: ''; position: absolute;
-            width: 88%; height: 88%; 
-            border: 4px solid var(--key); 
-            border-radius: 50%; z-index: 2; 
+            content: ''; position: absolute; width: 88%; height: 88%; 
+            border: 4px solid var(--key); border-radius: 50%; z-index: 2; 
             pointer-events: none; animation: pulse 1s infinite; 
         }
-        
-        /* 選中狀態變紅 */
         .cell.is-key.active-key { background: #ffdad6 !important; outline: 2px solid var(--key); z-index: 6; }
 
         @keyframes pulse { 0% { transform: scale(0.9); opacity: 0.7; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(0.9); opacity: 0.7; } }
@@ -63,15 +55,10 @@
         .slot { width: 55px; height: 55px; border: 2px solid var(--primary); background: #fff; display: flex; justify-content: center; align-items: center; font-size: 26px; font-weight: bold; border-radius: 8px; cursor: pointer; color: #d35400; transition: background 0.2s; }
         .slot:empty { cursor: default; background: rgba(255,255,255,0.5); border-style: dashed; }
         .slot.drag-over { background: #eee; border-color: var(--key); }
-        
         #win-msg { display: none; margin-top: 25px; color: #27ae60; font-size: 24px; font-weight: bold; }
-        
-        .badge { padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
-        .bg-yellow { background: var(--highlight); }
-        .bg-red-circle { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--key); border-radius: 50%; vertical-align: middle; }
     </style>
 </head>
-<body ondragover="event.preventDefault()">
+<body ondragover="event.preventDefault()" ondrop="handleBodyDrop(event)">
 
     <div class="top-bar">
         <button class="btn" onclick="toggleModal(true)">遊戲說明</button>
@@ -82,20 +69,19 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-btn" onclick="toggleModal(false)">&times;</span>
             <h3>📜 遊戲規則說明</h3>
-                <ul>
-                    <li data-num="1.">表格中藏有數個四字成語，排列順序可能是由上而下、由左而右、由右而左，或是呈對角線，請先找出表格裡的成語。</li>
-                    <li data-num="2.">每兩個成語的交叉處可得到一個關鍵字。關鍵字有可能會重複。</li>
-                    <li data-num="3.">找到的關鍵字可組成一個俚語，即為最後答案。</li>
-                </ul>
-
-                <h4>操作提示</h4>
-                <ul class="rule-list">
-                    <li data-num="◆">點擊文字進行<span class="badge bg-yellow">反黃</span>選取，連線<b>剛好</b>四字會出現輔助紅線（不能超過）。</li>
-                    <li data-num="◆">與另一條紅線交叉後，點擊<b>交叉處</b>可圈選關鍵字<span class="bg-red-circle"></span>。</li>
-                    <li data-num="◆">圈選後，若正確，成語會鎖定變為<b>黑線並淡化</b>。</li>
-                    <li data-num="◆"><b>關鍵字操作</b>：點擊一下變紅可填入空格；若選錯了，<b>再點一下變紅的字</b>即可取消圈選並解鎖成語。</li>
-                    <li data-num="◆">將關鍵字<b>拖曳或點選</b>至下方空格，拼出正確俚語即可獲勝。</li>
-                </ul>
+            <ul>
+                <li>表格中藏有數個四字成語。</li>
+                <li>成語重疊處即為<b>關鍵字</b>。</li>
+                <li><b>操作提示：</b>
+                    <ul>
+                        <li>點擊文字選取，四字成語會出現紅線。</li>
+                        <li>點擊重疊處可圈選關鍵字並鎖定成語（黑色線）。</li>
+                        <li><b>重疊字處理：</b>若某字已鎖定（有黑線通過），仍可點擊它來配合其他字組成新成語。</li>
+                        <li>關鍵字可<b>拖曳</b>或<b>點選</b>至空格。</li>
+                        <li>空格內的字也可以<b>互相拖曳換位</b>。</li>
+                    </ul>
+                </li>
+            </ul>
             <div style="text-align: center; margin-top: 20px;">
                 <button class="btn" onclick="toggleModal(false)">開始遊戲</button>
             </div>
@@ -131,7 +117,7 @@
 
         function setupLevelSelect() {
             if (typeof puzzles === 'undefined') {
-                alert("找不到題目檔 (puzzle.js)，請確認檔案路徑是否正確。");
+                alert("找不到題目檔 (puzzle.js)");
                 return;
             }
             puzzles.forEach((p, index) => {
@@ -145,11 +131,8 @@
 
         function loadLevel(index) {
             const p = puzzles[index];
-            selectedIndices.clear();
-            manualKeys.clear();
-            lockedCells.clear();
-            mobileSelectedChar = null;
-            activeKeyIdx = null;
+            selectedIndices.clear(); manualKeys.clear(); lockedCells.clear();
+            mobileSelectedChar = null; activeKeyIdx = null;
             document.getElementById('win-msg').style.display = 'none';
             initBoard(p);
             updateVisuals();
@@ -164,7 +147,6 @@
                 cell.textContent = char;
                 cell.dataset.idx = i;
                 cell.onclick = () => handleCellClick(i, cell);
-                cell.draggable = false;
                 cell.ondragstart = (e) => {
                     if (!cell.classList.contains('is-key')) return e.preventDefault();
                     e.dataTransfer.setData('text', cell.textContent);
@@ -176,17 +158,23 @@
             puzzle.answer.split('').forEach((_, i) => {
                 const slot = document.createElement('div');
                 slot.className = 'slot';
+                slot.dataset.slotIdx = i;
                 slot.draggable = true;
                 slot.onclick = () => { 
                     if(mobileSelectedChar) {
                         slot.textContent = mobileSelectedChar;
-                        mobileSelectedChar = null;
-                        activeKeyIdx = null;
+                        mobileSelectedChar = null; activeKeyIdx = null;
                         updateVisuals();
                     } else {
                         slot.textContent = ""; 
                     }
                     checkWin(); 
+                };
+                slot.ondragstart = (e) => {
+                    if (!slot.textContent) return e.preventDefault();
+                    e.dataTransfer.setData('text', slot.textContent);
+                    e.dataTransfer.setData('sourceType', 'slot');
+                    e.dataTransfer.setData('sourceIdx', i);
                 };
                 slot.ondragover = e => { e.preventDefault(); slot.classList.add('drag-over'); };
                 slot.ondragleave = () => slot.classList.remove('drag-over');
@@ -196,43 +184,27 @@
         }
 
         function handleCellClick(idx, el) {
-            if (lockedCells.has(idx) && !manualKeys.has(idx)) return;
-            
             if (manualKeys.has(idx)) {
                 if (activeKeyIdx === idx) {
-                    const lines = manualKeys.get(idx);
-                    lines.forEach(line => line.forEach(id => {
-                        lockedCells.delete(id);
-                        selectedIndices.add(id); 
+                    manualKeys.get(idx).forEach(line => line.forEach(id => {
+                        lockedCells.delete(id); selectedIndices.add(id); 
                     }));
-                    manualKeys.delete(idx);
-                    mobileSelectedChar = null;
-                    activeKeyIdx = null;
+                    manualKeys.delete(idx); mobileSelectedChar = null; activeKeyIdx = null;
                 } else {
-                    mobileSelectedChar = el.textContent;
-                    activeKeyIdx = idx;
+                    mobileSelectedChar = el.textContent; activeKeyIdx = idx;
                 }
-                updateVisuals();
-                return;
+                updateVisuals(); return;
             }
 
             if (selectedIndices.has(idx)) {
-                // 獲取交叉線段並過濾掉不在成語庫中的無效組合
-                const junctionLines = get4CharLines(idx, selectedIndices).filter(line => {
-                    const sortedLine = [...line].sort((a, b) => a - b);
-                    const word = sortedLine.map(i => gridEl.children[i].textContent).join('');
-                    const revWord = word.split('').reverse().join('');
-                    return ALL_IDIOMS.has(word) || ALL_IDIOMS.has(revWord);
-                });
-
-                const isAnswerChar = puzzles[levelSelect.value].answer.includes(el.textContent);
+                const combined = new Set([...selectedIndices, ...lockedCells]);
+                const validLines = getValidIdiomsAtPoint(idx, combined);
                 
-                // 必須是有效成語的交叉點，且字元存在於最終答案中，才允許鎖定
-                if (junctionLines.length >= 2 && isAnswerChar) {
-                    manualKeys.set(idx, junctionLines);
-                    junctionLines.forEach(line => line.forEach(id => {
-                        lockedCells.add(id);
-                        selectedIndices.delete(id);
+                if (validLines.length >= 2 && puzzles[levelSelect.value].answer.includes(el.textContent)) {
+                    manualKeys.set(idx, validLines);
+                    validLines.forEach(line => line.forEach(id => { 
+                        lockedCells.add(id); 
+                        selectedIndices.delete(id); 
                     }));
                 } else {
                     selectedIndices.delete(idx);
@@ -243,104 +215,102 @@
             updateVisuals();
         }
 
+        function getValidIdiomsAtPoint(idx, set) {
+            const lines = []; const dirs = [[0,1],[1,0],[1,1],[1,-1]];
+            const r = Math.floor(idx / size), c = idx % size;
+            dirs.forEach(([dr, dc]) => {
+                for (let offset = 0; offset < 4; offset++) {
+                    let path = [];
+                    for (let i = -offset; i < 4 - offset; i++) {
+                        const nr = r + dr * i, nc = c + dc * i; const nIdx = nr * size + nc;
+                        if (nr >= 0 && nr < size && nc >= 0 && nc < size && set.has(nIdx)) path.push(nIdx); else break;
+                    }
+                    if (path.length === 4) {
+                        const word = path.map(i => gridEl.children[i].textContent).join('');
+                        if (ALL_IDIOMS.has(word) || ALL_IDIOMS.has(word.split('').reverse().join(''))) lines.push([...path]);
+                    }
+                }
+            });
+            const unique = []; const seen = new Set();
+            lines.forEach(l => { const k = [...l].sort((a,b)=>a-b).join(','); if(!seen.has(k)){ unique.push(l); seen.add(k); }});
+            return unique;
+        }
+
         function updateVisuals() {
             svgEl.innerHTML = '';
-            const cells = Array.from(gridEl.children);
-            cells.forEach((c, i) => {
+            Array.from(gridEl.children).forEach((c, i) => {
                 c.classList.toggle('selected', selectedIndices.has(i));
                 c.classList.toggle('locked', lockedCells.has(i));
                 c.classList.remove('is-key', 'active-key');
+                c.draggable = manualKeys.has(i);
                 if (manualKeys.has(i)) {
                     c.classList.add('is-key');
-                    c.draggable = true;
                     if (activeKeyIdx === i) c.classList.add('active-key');
                 }
             });
-            findAll4CharLines(selectedIndices).forEach(line => {
-                const ends = getEnds(line);
-                drawSvgLine(ends.start, ends.end, 'red-line');
+            findAllValid4CharLines(selectedIndices).forEach(line => {
+                const ends = getEnds(line); drawSvgLine(ends.start, ends.end, 'red-line');
             });
-            manualKeys.forEach((lines, keyIdx) => {
-                lines.forEach(line => {
-                    const ends = getEnds(line);
-                    drawSvgLine(ends.start, ends.end, 'black-line');
-                });
-            });
+            manualKeys.forEach(lines => lines.forEach(line => {
+                const ends = getEnds(line); drawSvgLine(ends.start, ends.end, 'black-line');
+            }));
         }
 
-        function get4CharLines(idx, set) {
-            const lines = [];
-            const dirs = [[0,1],[1,0],[1,1],[1,-1]];
-            const r = Math.floor(idx / size), c = idx % size;
-            dirs.forEach(([dr, dc]) => {
-                let path = [idx];
-                [[dr, dc], [-dr, -dc]].forEach(([tr, tc]) => {
-                    for (let k = 1; k < size; k++) {
-                        const nr = r + tr*k, nc = c + tc*k;
-                        const nIdx = nr * size + nc;
-                        if (nr>=0 && nr<size && nc>=0 && nc<size && set.has(nIdx)) path.push(nIdx); else break;
-                    }
-                });
-                if (path.length === 4) lines.push(path);
-            });
-            return lines;
-        }
-
-        function findAll4CharLines(set) {
-            const paths = [];
-            const dirs = [[0,1],[1,0],[1,1],[1,-1]];
-            const checked = new Set();
+        function findAllValid4CharLines(set) {
+            const paths = []; const dirs = [[0,1],[1,0],[1,1],[1,-1]]; const seen = new Set();
             set.forEach(idx => {
                 dirs.forEach(([dr, dc]) => {
-                    const k = `${idx}-${dr}-${dc}`;
-                    if (checked.has(k)) return;
                     let path = [idx];
-                    [[dr, dc], [-dr, -dc]].forEach(([tr, tc]) => {
-                        for (let k = 1; k < size; k++) {
-                            const nr = Math.floor(idx/size) + tr*k, nc = (idx%size) + tc*k;
-                            const nIdx = nr*size + nc;
-                            if (nr>=0 && nr<size && nc>=0 && nc<size && set.has(nIdx)) {
-                                path.push(nIdx);
-                                checked.add(`${nIdx}-${dr}-${dc}`);
-                                checked.add(`${nIdx}-${-dr}-${-dc}`);
-                            } else break;
-                        }
-                    });
-                    if (path.length === 4) paths.push(path);
+                    for(let k=1; k<4; k++) {
+                        const nr = Math.floor(idx/size) + dr*k, nc = (idx%size) + dc*k; const nIdx = nr*size + nc;
+                        if(nr>=0 && nr<size && nc>=0 && nc<size && set.has(nIdx)) path.push(nIdx); else break;
+                    }
+                    if(path.length === 4) {
+                        const k = [...path].sort((a,b)=>a-b).join(',');
+                        if(!seen.has(k)) { paths.push(path); seen.add(k); }
+                    }
                 });
             });
             return paths;
         }
 
         function getEnds(path) {
-            let start = path[0], end = path[0];
-            path.forEach(i => {
-                const r = Math.floor(i/12), c = i%12;
-                const sr = Math.floor(start/12), sc = start%12;
-                const er = Math.floor(end/12), ec = end%12;
-                if (r < sr || (r === sr && c < sc)) start = i;
-                if (r > er || (r === er && c > ec)) end = i;
-            });
-            return { start, end };
+            const s = [...path].sort((a, b) => (Math.floor(a/size) - Math.floor(b/size)) || (a%size - b%size));
+            return { start: s[0], end: s[s.length-1] };
         }
 
         function drawSvgLine(sIdx, eIdx, cls) {
             const s = gridEl.children[sIdx], e = gridEl.children[eIdx];
             if (!s || !e) return;
             const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            const offset = s.offsetWidth / 2;
-            line.setAttribute("x1", s.offsetLeft + offset); line.setAttribute("y1", s.offsetTop + offset);
-            line.setAttribute("x2", e.offsetLeft + offset); line.setAttribute("y2", e.offsetTop + offset);
-            line.setAttribute("class", cls);
-            svgEl.appendChild(line);
+            const off = s.offsetWidth / 2;
+            line.setAttribute("x1", s.offsetLeft + off); line.setAttribute("y1", s.offsetTop + off);
+            line.setAttribute("x2", e.offsetLeft + off); line.setAttribute("y2", e.offsetTop + off);
+            line.setAttribute("class", cls); svgEl.appendChild(line);
         }
 
         function handleSlotDrop(e) {
-            e.preventDefault();
-            this.classList.remove('drag-over');
+            e.preventDefault(); this.classList.remove('drag-over');
             const char = e.dataTransfer.getData('text');
+            const type = e.dataTransfer.getData('sourceType');
+            
+            if (type === 'slot') {
+                const srcIdx = e.dataTransfer.getData('sourceIdx');
+                slotsEl.children[srcIdx].textContent = '';
+            }
             this.textContent = char;
             checkWin();
+        }
+
+        function handleBodyDrop(e) {
+            const type = e.dataTransfer.getData('sourceType');
+            if (type === 'slot') {
+                const srcIdx = e.dataTransfer.getData('sourceIdx');
+                if (srcIdx !== "") {
+                    slotsEl.children[srcIdx].textContent = '';
+                    checkWin();
+                }
+            }
         }
 
         function checkWin() {
