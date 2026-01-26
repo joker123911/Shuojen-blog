@@ -1,12 +1,5 @@
 // @ts-check
-// `@type` JSDoc annotations allow editor autocompletion and type checking
-// (when paired with `@ts-check`).
-// There are various equivalent ways to declare your Docusaurus config.
-// See: https://docusaurus.io/docs/api/docusaurus-config
-
 import {themes as prismThemes} from 'prism-react-renderer';
-
-// This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -17,7 +10,8 @@ const config = {
     v4: true,
   },
 
-  url: 'https://shuojen.site/',
+  // 修改：正式切換至新網域
+  url: 'https://shuojen.com/',
   baseUrl: '/',
 
   organizationName: 'joker123911',
@@ -42,6 +36,13 @@ const config = {
         blog: false,
         theme: {
           customCss: './src/css/custom.css',
+        },
+        // --- 新增：SEO Sitemap 設定 ---
+        sitemap: {
+          changefreq: 'weekly',
+          priority: 0.5,
+          ignorePatterns: ['/tags/**'],
+          filename: 'sitemap.xml',
         },
       }),
     ],
@@ -76,7 +77,6 @@ const config = {
       '@docusaurus/plugin-content-blog',
       {
         id: 'photoblog',
-        // 還原為 photoblog，確保你的 RSS 路徑不變
         routeBasePath: 'photoblog',
         path: './photoblog',
         showReadingTime: false,
@@ -95,17 +95,24 @@ const config = {
       },
     ],
     [
-    require.resolve("@easyops-cn/docusaurus-search-local"),
-          {
-            hashed: true,
-            language:["en", "zh"],
-          },
+      require.resolve("@easyops-cn/docusaurus-search-local"),
+      {
+        hashed: true,
+        language:["en", "zh"],
+      },
     ],
   ],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      // --- 新增：有利於 SEO 的 Metadata ---
+      metadata: [
+        {name: 'description', content: 'Shuo-jen 的個人部落格，分享土木工程、攝影紀錄、程式開發與生活隨筆。'},
+        {name: 'keywords', content: 'Shuo-jen, 土木工程, 攝影, Docusaurus, 部落格, 台北, 橋梁工程'},
+        {name: 'author', content: 'Shuo-jen Huang'},
+        {name: 'robots', content: 'index, follow'},
+      ],
       image: 'img/me.webp',
       navbar: {
         title: 'Shuo-Jen Huang',
@@ -120,33 +127,29 @@ const config = {
             position: 'left',
             label: '興趣',
           },
-          // --- 新增連結 ---
           {to: '/use', label: '愛用', position: 'left'},
           {to: '/now', label: '近況', position: 'left'},
-          // ----------------
-          {to: '/blog',
-          label: '貼文',
-          position: 'left'},
+          {to: '/blog', label: '貼文', position: 'left'},
           {
             to: '/blog/archive',
             position: 'left',
             label: '貼文列表',
           },
           {
-          // 修改重點：指向改名後的頁面 photography
-          to: '/photography',
-          label: '攝影集',
-          position: 'left'},
+            to: '/photography',
+            label: '攝影集',
+            position: 'left'
+          },
           {
-            // 指向插件產生的攝影列表
             to: '/photoblog/photo-archive',
             position: 'left',
             label: '攝影列表',
           },
           {
-          to: '/guestbook',
-          label: '留言板',
-          position: 'left'},
+            to: '/guestbook',
+            label: '留言板',
+            position: 'left'
+          },
         ],
       },
       footer: {
@@ -155,29 +158,11 @@ const config = {
           {
             title: '站內連結',
             items: [
-              {
-                label: '興趣',
-                to: '/docs/intro',
-              },
-              // --- 新增頁尾連結 ---
-              {
-                label: '愛用',
-                to: '/use',
-              },
-              {
-                label: '近況',
-                to: '/now',
-              },
-              // ------------------
-              {
-                label: '貼文',
-                to: '/blog',
-              },
-              {
-                label: '攝影集',
-                // 同步修正為新的頁面路徑
-                to: '/photography',
-              },
+              { label: '興趣', to: '/docs/intro' },
+              { label: '愛用', to: '/use' },
+              { label: '近況', to: '/now' },
+              { label: '貼文', to: '/blog' },
+              { label: '攝影集', to: '/photography' },
             ],
           },
           {
@@ -198,26 +183,24 @@ const config = {
               },
               {
                 label: '貼文 RSS',
-                href: 'https://shuojen.site/blog/rss.xml',
+                href: 'https://shuojen.com/blog/rss.xml',
               },
               {
                 label: '攝影 RSS',
-                // 維持原本路徑
-                href: 'https://shuojen.site/photoblog/rss.xml',
+                href: 'https://shuojen.com/photoblog/rss.xml',
               },
             ],
           },
         ],
-        // highlight-start
-        // --- 修改重點：在此處加入了不蒜子的顯示 HTML ---
         copyright: `
         <div style="display: flex; justify-content: center; align-items: center;">
           <span>Copyright © ${new Date().getFullYear()} Shuo-jen Huang.</span>
-          <a href="https://shuojen.site" style="margin-left: 10px; display: flex;">
+          <a href="https://shuojen.com" style="margin-left: 10px; display: flex;">
             <img src="https://visitor-badge.laobi.icu/badge?page_id=shuojen.site&left_text=Visitors&left_color=black&right_color=gray" alt="visitor badge"/>
           </a>
         </div>
         `,
+        // 上方的 page_id 已改回 shuojen.site，以延續舊有的統計數字。
       },
       prism: {
         theme: prismThemes.github,
