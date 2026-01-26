@@ -7,35 +7,97 @@
     <script src="puzzle.js"></script>
     <script src="dictionary.js"></script>
     <style>
+        /* 載入本地饅頭字體 */
+        @font-face {
+            font-family: 'MantouSans';
+            src: url('MantouSans-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         :root { --bg: #fdf5e6; --primary: #8b4513; --highlight: #fff3cd; --border: #f39c12; --key: #e74c3c; --locked-bg: #f0f0f0; --locked-text: #bbb; }
         body { font-family: sans-serif; background: var(--bg); display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; }
         
-        .top-bar { display: flex; gap: 10px; margin-bottom: 20px; align-items: center; flex-wrap: wrap; justify-content: center; }
-        .btn { padding: 8px 16px; font-size: 14px; cursor: pointer; background: var(--primary); color: white; border: none; border-radius: 4px; transition: 0.2s; }
+        /* 標題樣式 */
+        .game-header { text-align: center; margin-bottom: 20px; }
+        .game-title { 
+            font-family: 'MantouSans', sans-serif; 
+            font-size: 80px; 
+            color: var(--primary); 
+            margin: 0; 
+            letter-spacing: 0px;
+            text-shadow: 2px 2px 0px rgba(243, 156, 18, 0.5);
+            font-weight: normal;
+        }
+
+        /* 置中對齊容器 */
+        .top-bar { 
+            display: flex; 
+            gap: 15px; 
+            margin-bottom: 20px; 
+            align-items: center; 
+            justify-content: center; 
+            width: 100%;
+        }
+
+        /* 統一按鈕與選單的大小與外觀 */
+        .btn, select { 
+            width: 140px;          /* 統一寬度 */
+            height: 42px;         /* 統一高度 */
+            font-family: inherit;  /* 繼承 body 的字體 */
+            font-size: 15px; 
+            font-weight: bold;
+            border-radius: 8px; 
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: 0.2s;
+            cursor: pointer;
+            border: 2px solid var(--primary); /* 改回原先的邊框樣式 */
+        }
+
+        .btn { 
+            background: var(--primary); 
+            color: white; 
+            padding: 0; 
+        }
         .btn:hover { opacity: 0.9; }
-        select { font-size: 14px; padding: 7px 10px; cursor: pointer; border: 1px solid var(--primary); border-radius: 4px; }
+
+        select { 
+            background: #fff;
+            color: #000000;         /* 文字改為黑色 */
+            outline: none;
+            padding: 0 25px 0 15px; /* 留出右側箭頭空間 */
+            appearance: none;
+            -webkit-appearance: none;
+            /* 箭頭顏色改回深咖啡色以匹配原邊框 */
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b4513' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+        }
+        select:hover {
+            border-color: var(--key);
+        }
 
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 100; justify-content: center; align-items: center; }
         .modal-content { background: var(--bg); padding: 30px; border-radius: 12px; max-width: 450px; width: 90%; border: 4px solid var(--primary); position: relative; line-height: 1.8; overflow-y: auto; max-height: 90vh; }
         .modal-content h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
-        .modal-content ol { padding-left: 20px; color: #444; }
         .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: var(--primary); font-weight: bold; }
 
         .game-wrapper { position: relative; padding: 3px; background: #fff; border: 2px solid var(--primary); border-radius: 8px; width: 100%; max-width: 490px; }
         .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; background: #999; }
         .cell { aspect-ratio: 1 / 1; background: white; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; cursor: pointer; user-select: none; position: relative; z-index: 1; transition: all 0.2s; color: black; }
         
-        @media (max-width: 450px) { .cell { font-size: 4vw; } }
+        @media (max-width: 450px) { 
+            .cell { font-size: 4vw; } 
+            .game-title { font-size: 36px; }
+            .btn, select { width: 120px; height: 38px; font-size: 14px; }
+        }
 
-        /* 選中狀態：橘色高亮 */
         .cell.selected { background: var(--highlight) !important; box-shadow: inset 0 0 0 2px var(--border); }
-        
-        /* 已移除 .cell.locked:not(.is-key) 的淡化樣式。
-           現在鎖定但非關鍵字的格子看起來與普通格子相同，
-           但會有一條黑線劃過（由 JS 控制 SVG 繪製）。
-        */
-        
-        /* 關鍵字樣式 */
         .cell.is-key { cursor: grab; z-index: 5; background: white !important; color: var(--primary) !important; }
         .cell.is-key::after { 
             content: ''; position: absolute; width: 88%; height: 88%; 
@@ -56,9 +118,15 @@
         .slot:empty { cursor: default; background: rgba(255,255,255,0.5); border-style: dashed; }
         .slot.drag-over { background: #eee; border-color: var(--key); }
         #win-msg { display: none; margin-top: 25px; color: #27ae60; font-size: 24px; font-weight: bold; }
+        
+        .footer { margin-top: 40px; padding-bottom: 20px; font-size: 14px; color: var(--primary); opacity: 0.8; }
     </style>
 </head>
 <body ondragover="event.preventDefault()" ondrop="handleBodyDrop(event)">
+
+    <div class="game-header">
+        <h1 class="game-title">成語迷宮</h1>
+    </div>
 
     <div class="top-bar">
         <button class="btn" onclick="toggleModal(true)">遊戲說明</button>
@@ -70,20 +138,12 @@
             <span class="close-btn" onclick="toggleModal(false)">&times;</span>
             <h3>📜 遊戲規則說明</h3>
             <ul>
-                <li>表格中藏有數個四字成語。</li>
-                <li>成語重疊處即為<b>關鍵字</b>。</li>
-                <li><b>操作提示：</b>
-                    <ul>
-                        <li>點擊文字選取，四字成語會出現紅線。</li>
-                        <li>點擊重疊處可圈選關鍵字並鎖定成語（黑色線）。</li>
-                        <li><b>重疊字處理：</b>若某字已鎖定（有黑線通過），仍可點擊它來配合其他字組成新成語。</li>
-                        <li>關鍵字可<b>拖曳</b>或<b>點選</b>至空格。</li>
-                        <li>空格內的字也可以<b>互相拖曳換位</b>。</li>
-                    </ul>
-                </li>
+                <li>表格中藏有數個<b>四字成語</b>，排列順序可能是由上而下，由左而右、由右而左，或是呈對角線，請先找出表格裡的成語。</li>
+                <li>每兩個成語的交叉處可得到一個<b>關鍵字</b>，關鍵字有可能會重複。</li>
+                <li>找到的關鍵字可組成一個<b>俚語</b>，即為最後答案。</li>
             </ul>
             <div style="text-align: center; margin-top: 20px;">
-                <button class="btn" onclick="toggleModal(false)">開始遊戲</button>
+                <button class="btn" style="width: 120px; display: inline-block;" onclick="toggleModal(false)">開始遊戲</button>
             </div>
         </div>
     </div>
@@ -96,6 +156,9 @@
     <div class="answer-section">
         <div class="slots" id="slots"></div>
         <div id="win-msg">🎉 正確答案，恭喜！</div>
+        <div class="footer">
+            Original by Ching-huan,Huang（黃慶桓） , Developed by shuojen.com
+        </div>
     </div>
 
     <script>
