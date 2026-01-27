@@ -10,6 +10,21 @@ const config = {
     v4: true,
   },
 
+  // 新增：Plausible Analytics 腳本
+  headTags: [
+    {
+      tagName: 'script',
+      attributes: {
+        async: true,
+        src: 'https://plausible.io/js/pa-otIEX7MxW0xE1WZ_7-i9j.js',
+      },
+    },
+    {
+      tagName: 'script',
+      innerHTML: `window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()`,
+    },
+  ],
+
   // 修改：正式切換至新網域
   url: 'https://shuojen.com/',
   baseUrl: '/',
