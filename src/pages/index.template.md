@@ -238,6 +238,6 @@ https://shuojen.com/photoblog/rss.xml
 
 # 聯絡我
 歡迎到[留言板](/guestbook)逛逛，有任何想法，也可以聯絡我的信箱。
->me@shuojen.site
+>me@shuojen.com
 
 
