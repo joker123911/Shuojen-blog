@@ -18,6 +18,9 @@ import Black from '@site/src/components/Black';
 
 ## 第一種變化
 
-
-1. 如果對方馬吃上來，讓后到中心，我們已經佔優勢了。這時后在中心很靈活，對方沒有輕子能夠
+1. 如果對方馬吃上來，讓后到中心，我們已經佔優勢了。這時后在中心很靈活，對方沒有輕子能夠攻擊。
 <White pgn="11. e4 e5 2. Nf3 Nc6 3. Nc3 Nf6 4. d4 exd4 5. Nxd4 Nxd4 6. Qxd4" />
+
+:::note
+待續
+:::
