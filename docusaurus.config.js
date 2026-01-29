@@ -29,6 +29,7 @@ const config = {
   // 修改：正式切換至新網域
   url: 'https://shuojen.com/',
   baseUrl: '/',
+  trailingSlash: false, // 新增：統一 URL 格式，合併 /blog 與 /blog/ 的流量
 
   organizationName: 'joker123911',
   projectName: 'Shuojen-blog',
@@ -125,7 +126,7 @@ const config = {
       // --- 新增：有利於 SEO 的 Metadata ---
       metadata: [
         {name: 'description', content: 'Shuo-jen 的個人部落格，分享土木工程、攝影紀錄、程式開發與生活隨筆。'},
-        {name: 'keywords', content: 'Shuo-jen, 土木工程, 攝影, Docusaurus, 部落格, 台北, 橋梁工程'},
+        {name: 'keywords', content: 'Shuo-jen, 土木工程, 攝影, Docusaurus, 部落格, 台北, 西洋棋, 魔術方塊, 演唱會'},
         {name: 'author', content: 'Shuo-jen Huang'},
         {name: 'robots', content: 'index, follow'},
       ],
