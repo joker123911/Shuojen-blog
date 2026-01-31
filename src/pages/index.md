@@ -172,7 +172,7 @@ import Marquee from "react-fast-marquee";
 `}</style>
 
 :::info
-[網址更新](/blog/2026/01/26/com)囉，記得手動更換一下 [RSS](https://shuojen.com/blog/rss.xml) 連結。
+歡迎來玩我的文字遊戲：[成語迷宮](/blog/2026/01/28/game)。
 :::
 
 # 🏠 /ᐠ .ᆺ. ᐟ\ﾉ
