@@ -154,7 +154,7 @@ export default function Guestbook() {
             {visibleCount < comments.length && (
               <div className={styles.loadMoreContainer}>
                 <button onClick={() => setVisibleCount(v => v + 10)} className={styles.loadMoreBtn}>
-                  顯示更多
+                  LOAD MORE
                 </button>
               </div>
             )}

@@ -181,19 +181,19 @@ export const MovieListApp = () => {
         <TabItem value="western" label="🌎 歐美電影" default>
           <MovieGrid movies={westernMovies.slice(0, visibleCounts.western)} onImageClick={handleOpen} />
           {visibleCounts.western < westernMovies.length && (
-            <button className="load-more-btn" onClick={() => loadMore('western')}>Load More</button>
+            <button className="load-more-btn" onClick={() => loadMore('western')}>LOAD MORE</button>
           )}
         </TabItem>
         <TabItem value="asia" label="🥢 華語日韓">
           <MovieGrid movies={asiaMovies.slice(0, visibleCounts.asia)} onImageClick={handleOpen} />
           {visibleCounts.asia < asiaMovies.length && (
-            <button className="load-more-btn" onClick={() => loadMore('asia')}>Load More</button>
+            <button className="load-more-btn" onClick={() => loadMore('asia')}>LOAD MORE</button>
           )}
         </TabItem>
         <TabItem value="anime" label="🎨 動畫電影">
           <MovieGrid movies={animeMovies.slice(0, visibleCounts.anime)} onImageClick={handleOpen} />
           {visibleCounts.anime < animeMovies.length && (
-            <button className="load-more-btn" onClick={() => loadMore('anime')}>Load More</button>
+            <button className="load-more-btn" onClick={() => loadMore('anime')}>LOAD MORE</button>
           )}
         </TabItem>
       </Tabs>
