@@ -27,9 +27,9 @@ const config = {
   ],
 
   // 修改：正式切換至新網域
-  url: 'https://shuojen.com/',
+  url: 'https://shuojen.com',
   baseUrl: '/',
-  trailingSlash: false, // 新增：統一 URL 格式，合併 /blog 與 /blog/ 的流量
+  trailingSlash: undefined,
 
   organizationName: 'joker123911',
   projectName: 'Shuojen-blog',
