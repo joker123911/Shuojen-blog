@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 # 電影推薦清單
 
-*最後更新：2026-01-20*
+*最後更新：2026-02-04*
 
 :::info 持續更新中
 如果有什麼電影想要補充歡迎留言或寫信大力推薦我。
@@ -112,6 +112,8 @@ export const MovieListApp = () => {
     { title: "八惡人", note: "昆丁很流暢的一部，角色慢慢登場最後大混戰很過癮", poster: "./img/movie/八惡人.webp" },
     { title: "險路勿近", note: "犯罪驚悚片，柯恩兄弟最有名的一部，全片無配樂但壓迫感超強", poster: "./img/movie/險路勿近.webp" },
     { title: "波斯語課", note: "納粹時代背景的劇情片，為了生存，主角虛構了一門不存在的語言，非常值得一看", poster: "./img/movie/波斯語課.webp" },
+    { title: "再見列寧", note: "柏林圍牆倒下為背景的電影，以喜劇作為呈現方式非常生動有趣，很喜歡", poster: "./img/movie/再見列寧.webp" },
+    { title: "落日殺神", note: "超級好看的公路動作電影，阿湯哥和傑米福克斯之間的交談和對手戲都很有韻味", poster: "./img/movie/落日殺神.webp" },
   ];
 
   const asiaMovies = [
@@ -155,7 +157,8 @@ export const MovieListApp = () => {
     { title: "驀然回首", note: "藤本樹招牌畫風，讓你意猶未盡一整天", poster: "./img/movie/驀然回首.jpg" },
     { title: "鏈鋸人-蕾潔篇", note: "文藝電影感跟戰鬥畫面都超級棒", poster: "./img/movie/鏈鋸人-蕾潔篇.jpg" },
     { title: "荒野機器人", note: "夢工廠佳作，畫面精緻漂亮，劇情也是上乘的好電影", poster: "./img/movie/荒野機器人.jpg" },
-	{ title: "100公尺", note: "雨中的那場比賽，一鏡到底配上手繪線條太強了，教科書等級", poster: "./img/movie/100公尺.webp" },
+    { title: "100公尺", note: "雨中的那場比賽，一鏡到底配上手繪線條太強了，教科書等級", poster: "./img/movie/100公尺.webp" },
+    { title: "再見機器人", note: "沒有一句台詞但是會讓人想到前任的好動畫", poster: "./img/movie/再見機器人.webp" },
   ];
 
   const handleOpen = (url, title) => {
