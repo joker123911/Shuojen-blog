@@ -4,6 +4,12 @@ sidebar_position: 7
 # 演唱會
 紀錄一下所有參加過的演唱會，太久以前連照片都翻不到的，只好留存在腦海裡了。
 
+## [2026 魏如萱《怪奇的珍珠》](/photoblog/2026/02/07/concert)
+
+*2026-02-07*
+
+![img](./img/concert/020.webp) 
+
 ## [2026 蔡依林《PLEASURE》](/photoblog/2026/01/01/concert)
 
 *2026-01-01*
