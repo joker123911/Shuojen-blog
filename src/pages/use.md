@@ -5,7 +5,7 @@ description: 記錄我愛用的工具
 
 # 我在用什麼 `/use`
 
-*最後更新：2025-01-22*
+*最後更新：2025-02-12*
 
 :::note
 靈感參考來自[Derek Sivers/What I use](https://sive.rs/uses)。
@@ -123,7 +123,7 @@ description: 記錄我愛用的工具
 ### 交通相關
 
 * Honda MSX（2017）- 二手購入，上班通勤小檔車。
-* SYM GT125 - 方便騎的速可達。
+* SYM GT125 - 家裡的方便騎速可達。
 
 ### 運動相關
 
@@ -133,7 +133,7 @@ description: 記錄我愛用的工具
 ## 軟體
 
 作業系統
-* Windows - 主力用，很吃資源，想找時機換掉。
+* Windows - 主力用，很吃資源，工作換不掉只好少用。
 * Linux Mint- 輕量速度快，但需要時間習慣，現在在[客廳老電腦](/blog/2025/10/05/mint)用，還有我的 PC 雙系統使用。
 * macOS - 筆電主力用。
 * Asahi linux - 筆電偶爾用。
@@ -141,7 +141,8 @@ description: 記錄我愛用的工具
 電腦
 * Brave - 最好用的瀏覽器。
 * Syncthing - 同步照片丶音樂很方便。
-* PyCharm Community Edition - 編寫部落格文章與程式碼。
+* VSCodium - 編寫部落格文章與程式碼。
+* PyCharm Community Edition - 另一個編寫部落格文章與程式碼。
 * MusicBee - 本地無損音樂播放器。
 * foobar2000 - 另一個本地無損音樂播放器。
 * KeePassXC - 同步各裝置密碼。
@@ -149,6 +150,7 @@ description: 記錄我愛用的工具
 * Audacity - 另一個簡易的音樂編輯軟體。
 * Docusaurus - 架設靜態網頁工具。
 * Asunder - Linux 轉檔 CD 的工具，我寫過一篇轉檔 CD 的[文章](/blog/2025/10/24/CD)。
+* whipper - 終端界面的 Linux 轉檔 CD 的工具，轉的更好。
 * mp3tag - 整理所有 Aiff 資訊的工具。
 * LocalSent - 好用的共享檔案工具。
 * Lightrlighoom Classic - 現在都不修圖了，懶人直出。
@@ -166,6 +168,7 @@ Apps
 * CalcES - 隨身 Casio 991。
 * KWGT - 自訂桌面工具。
 * 臺北市立圖書館 - 預約借書用。
+* Simplenote - 在手機電腦都可以同步記錄文字靈感。
 
 Shuojen.site 小工具
 * [投資報酬試算表](https://shuojen.site/calculator.html) - 投資報酬試算用。

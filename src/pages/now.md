@@ -5,7 +5,7 @@ description: 近況更新
 
 # 我在做什麼 `/now`
 
-*最後更新：2026-01-26*
+*最後更新：2026-02-12*
 
 :::note
 靈感來自[Derek Sivers/What I’m doing now](https://sive.rs/now)。
@@ -27,10 +27,11 @@ description: 近況更新
 ## 最近喜歡的作品
 * [鬼地方](https://zh.wikipedia.org/zh-tw/%E9%AC%BC%E5%9C%B0%E6%96%B9)：陳思宏老師的作品，超級好看，很久沒看到那麼震撼的小說。
 * [小太陽的願望](https://zh.wikipedia.org/zh-tw/%E5%B0%8F%E5%A4%AA%E9%99%BD%E7%9A%84%E9%A1%98%E6%9C%9B)：近期最愛的電影，本來就愛溫馨公路電影的我，正中紅心。
+* [落日殺神](https://zh.wikipedia.org/zh-tw/%E8%90%BD%E6%97%A5%E6%AE%BA%E7%A5%9E)：看半小時就知道這會是我人生最愛的殺手片，完美契合我的電波，真的好讚。
 * [萬中選一](https://zh.wikipedia.org/wiki/%E8%90%AC%E4%B8%AD%E9%81%B8%E4%B8%80_(%E9%9B%BB%E8%A6%96%E5%8A%87))：Vince Gilligan 的作品必須看吧，題材超有意思，第一季斷在一個令人生氣的地方。
 
 ## 最近正在看的作品
-* [我的英雄學院](https://zh.wikipedia.org/zh-tw/%E6%88%91%E7%9A%84%E8%8B%B1%E9%9B%84%E5%AD%B8%E9%99%A2)：蝦波推薦，最終季在 IMDB 上拿下 9.9 分讓我太好奇了，希望從第一季開始的我看的到那裡（看到第三季了，好看）。
+* [我的英雄學院](https://zh.wikipedia.org/zh-tw/%E6%88%91%E7%9A%84%E8%8B%B1%E9%9B%84%E5%AD%B8%E9%99%A2)：蝦波推薦，最終季在 IMDB 上拿下 9.9 分讓我太好奇了，希望從第一季開始的我看的到那裡（看到第四季了，好看）。
 
 ## 最近喜歡的店
 * [BT BURGER](https://maps.app.goo.gl/bqRo8F547KVxC47v5)：跟蝦波[約會](/photoblog/2025/12/21/date)發現的寶藏店，義式培根蛋奶麵必點。
