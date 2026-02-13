@@ -172,7 +172,7 @@ import Marquee from "react-fast-marquee";
 `}</style>
 
 :::info
-歡迎來玩我的文字遊戲：[成語迷宮](/blog/2026/01/28/game)。
+文字遊戲試玩：[成語迷宮](/blog/2026/01/28/game)。
 :::
 
 # 🏠 /ᐠ .ᆺ. ᐟ\ﾉ
