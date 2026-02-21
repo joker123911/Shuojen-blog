@@ -172,7 +172,7 @@ import Marquee from "react-fast-marquee";
 `}</style>
 
 :::info
-文字遊戲試玩：[成語迷宮](/blog/2026/01/28/game)。
+網頁版文字遊戲歡迎試玩：[成語迷宮](/blog/2026/01/28/game)。
 :::
 
 # 🏠 /ᐠ .ᆺ. ᐟ\ﾉ
@@ -181,7 +181,7 @@ import Marquee from "react-fast-marquee";
 
 <Marquee gradient={false} speed={60}>
   <div style={{padding: '10px 0', fontSize: '1.1rem'}}>
-    我直接在家門口放一個我最愛的西洋棋開局：四♞蘇格蘭，沒有為什麼，因為個人網頁很***自由***！
+    我直接放一個我最愛的西洋棋開局：四♞蘇格蘭，沒有為什麼，因為個人網頁很***自由***！
   </div>
 </Marquee>
 <White pgn="1. e4 e5 2. Nf3 Nc6 3. Nc3 Nf6 3. d4" />
@@ -223,7 +223,7 @@ https://shuojen.com/photoblog/rss.xml
 ```
 
 # 即時數據
-貼文區目前共有 **149** 篇文章，共累積了 **75,172** 個字。
+貼文區目前共有 **151** 篇文章，共累積了 **75,498** 個字。
 
 # 其他頁面
 * [我在用什麼`/use`](/use)

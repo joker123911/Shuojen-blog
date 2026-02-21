@@ -163,6 +163,11 @@ const config = {
             label: '攝影列表',
           },
           {
+            to: '/homepage',
+            label: '關於',
+            position: 'left'
+          },
+          {
             to: '/guestbook',
             label: '留言板',
             position: 'left'

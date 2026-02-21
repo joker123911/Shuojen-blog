@@ -3,8 +3,7 @@ const path = require('path');
 
 // --- 配置區 ---
 const BLOG_DIR = './blog';                   // 文章存放的資料夾
-const TEMPLATE_FILE = './src/pages/index.template.md'; // 模板檔案
-const OUTPUT_FILE = './src/pages/index.md';           // 生成的目標檔案
+const TARGET_FILE = './src/pages/homepage.md';  
 // --------------
 
 /**
@@ -50,7 +49,6 @@ try {
     content = content.replace(/^---[\s\S]*?---/, '');
 
     // 3. 移除所有空白與換行，只計算「實際文字內容」
-    // 如果你想要包含標點符號，就用這行。如果連空白都不要，就用下面這行：
     const cleanContent = content.replace(/\s+/g, '');
 
     totalWords += cleanContent.length;
@@ -59,19 +57,29 @@ try {
   const formattedPostCount = formatNumber(postCount);
   const formattedWordCount = formatNumber(totalWords);
 
-  if (!fs.existsSync(TEMPLATE_FILE)) {
-    throw new Error(`找不到模板檔案：${TEMPLATE_FILE}`);
+  // 確認目標檔案是否存在
+  if (!fs.existsSync(TARGET_FILE)) {
+    throw new Error(`找不到目標檔案：${TARGET_FILE}`);
   }
 
-  let templateContent = fs.readFileSync(TEMPLATE_FILE, 'utf8');
+  // 讀取目前真實的 Markdown 檔案
+  let fileContent = fs.readFileSync(TARGET_FILE, 'utf8');
 
-  // 替換標籤
-  let finalContent = templateContent
-    .replace(/\{post_count\}|\[POST_COUNT\]/g, formattedPostCount)
-    .replace(/\{word_count\}|\[WORD_COUNT\]/g, formattedWordCount);
+  // 使用正則表達式尋找那句特定的話，並替換裡面的數字
+  // (.*? 會匹配原本裡面的任何數字或千分位符號)
+  const regex = /貼文區目前共有 \*\*(.*?)\*\* 篇文章，共累積了 \*\*(.*?)\*\* 個字。/g;
+  const newString = `貼文區目前共有 **${formattedPostCount}** 篇文章，共累積了 **${formattedWordCount}** 個字。`;
 
-  // 寫入正式檔案
-  fs.writeFileSync(OUTPUT_FILE, finalContent);
+  // 執行替換
+  const finalContent = fileContent.replace(regex, newString);
+
+  // 如果找不到這句話，可能是不小心被刪除了，給個警告
+  if (!regex.test(fileContent)) {
+    console.warn(`⚠️ 警告：在 ${TARGET_FILE} 中找不到用來替換的句子，請確認檔案內是否有「${newString}」類似的格式。`);
+  }
+
+  // 將更新後的內容寫回同一個檔案
+  fs.writeFileSync(TARGET_FILE, finalContent, 'utf8');
 
   console.log(`✅ 統計更新完成！`);
   console.log(`文章數: ${formattedPostCount}`);
