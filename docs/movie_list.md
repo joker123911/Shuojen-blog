@@ -114,6 +114,8 @@ export const MovieListApp = () => {
     { title: "波斯語課", note: "納粹時代背景的劇情片，為了生存，主角虛構了一門不存在的語言，非常值得一看", poster: "./img/movie/波斯語課.webp" },
     { title: "再見列寧", note: "柏林圍牆倒下為背景的電影，以喜劇作為呈現方式非常生動有趣，很喜歡", poster: "./img/movie/再見列寧.webp" },
     { title: "落日殺神", note: "超級好看的公路動作電影，阿湯哥和傑米福克斯之間的交談和對手戲都很有韻味", poster: "./img/movie/落日殺神.webp" },
+    { title: "情感的價值", note: "來自挪威的家庭劇情電影，探討的是家庭創傷與和解，節奏稍慢，但是將情感拍攝的很細膩、真摯，推薦", poster: "./img/movie/情感的價值.jpg" },
+    { title: "日租家庭", note: "以日本為背景的溫馨倫理電影，這部不太有說教感，平淡卻能讓心裡暖暖的，故事完整，收的也很漂亮，好喜歡", poster: "./img/movie/日租家庭.webp" },           
   ];
 
   const asiaMovies = [
@@ -141,7 +143,9 @@ export const MovieListApp = () => {
     { title: "霍元甲", note: "人物成長刻劃極佳，有深度的武打片", poster: "./img/movie/霍元甲.jpg" },
     { title: "功夫", note: "周星馳經典搞笑片，不只有純荒謬", poster: "./img/movie/功夫.jpg" },
     { title: "原罪犯", note: "腦洞大開的復仇片，長鏡頭畫面很厲害", poster: "./img/movie/原罪犯.jpg" },
-    { title: "花束般的戀愛", note: "寫實好看的日本愛情片，不撒狗血", poster: "./img/movie/花束般的戀愛.jpg" }
+    { title: "花束般的戀愛", note: "寫實好看的日本愛情片，不撒狗血", poster: "./img/movie/花束般的戀愛.jpg" },
+    { title: "墊底辣妹", note: "類似《東大特訓班》的勵志電影，這部看完會有滿滿的力量，推薦", poster: "./img/movie/墊底辣妹.webp" },    
+    { title: "左撇子女孩", note: "關於女性意識與家庭功能缺失的問題，很自然流暢，主角妹妹也拍得富有童趣又可愛。", poster: "./img/movie/左撇子女孩.jpg" },     
   ];
 
   const animeMovies = [
