@@ -131,7 +131,7 @@ export default function PhotoGallery() {
   const getFullPath = (src) => `${baseUrl}${src}`.replace(/\/+/g, '/');
 
   return (
-    <Layout title="攝影作品集" description="我的攝影作品展示">
+    <Layout title="攝影集" description="我的攝影作品展示">
       <main style={{ padding: '3rem 0', minHeight: '80vh' }}>
         <div style={{ textAlign: 'center', marginBottom: '4rem', marginTop: '2rem' }}>
           <h1 style={galleryTheme.headerTitle}>Photography</h1>

@@ -1,3 +1,6 @@
+---
+title: 關於
+---
 import White from '@site/src/components/White';
 import Black from '@site/src/components/Black';
 import Marquee from "react-fast-marquee";
@@ -223,7 +226,7 @@ https://shuojen.com/photoblog/rss.xml
 ```
 
 # 即時數據
-貼文區目前共有 **154** 篇文章，共累積了 **77,213** 個字。
+貼文區目前共有 **155** 篇文章，共累積了 **78,248** 個字。
 
 # 其他頁面
 * [我在用什麼`/use`](/use)
