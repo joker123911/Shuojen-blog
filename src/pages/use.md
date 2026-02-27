@@ -8,7 +8,7 @@ description: 記錄我愛用的工具
 *最後更新：2025-02-12*
 
 :::note
-靈感參考來自[Derek Sivers/What I use](https://sive.rs/uses)。
+靈感參考來自[Derek Sivers /uses](https://sive.rs/uses)。
 :::
 
 ## 硬體
