@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
+import Link from '@docusaurus/Link'; // 新增：用於連結
 import photosData from '@site/src/data/photosData.json';
 
 // 洗牌算法
@@ -23,6 +24,9 @@ export default function PhotoGallery() {
   const [showLoading, setShowLoading] = useState(false);
   const [progress, setProgress] = useState(0);
 
+  // 新增：Lightbox 相關 State
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+
   const fullTitle = "> cd shuojen.com";
 
   // 處理照片洗牌
@@ -41,7 +45,6 @@ export default function PhotoGallery() {
         i++;
       } else {
         clearInterval(typingInterval);
-        // 打完字後，停頓 0.3 秒再開始載入條
         setTimeout(() => setShowLoading(true), 300);
       }
     }, 100);
@@ -54,7 +57,6 @@ export default function PhotoGallery() {
     if (showLoading && progress < 100) {
       const loadingInterval = setInterval(() => {
         setProgress((prev) => {
-          // 每次隨機增加 5~20 的進度，看起來更真實
           const jump = Math.floor(Math.random() * 15) + 5; 
           if (prev + jump >= 100) {
             clearInterval(loadingInterval);
@@ -62,10 +64,40 @@ export default function PhotoGallery() {
           }
           return prev + jump;
         });
-      }, 150); // 進度條跳動的節奏
+      }, 150);
       return () => clearInterval(loadingInterval);
     }
   }, [showLoading, progress]);
+
+  // 新增：Lightbox 開關邏輯
+  const openLightbox = (photo) => {
+    setSelectedPhoto(photo);
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = 'hidden'; // 鎖定背景滾動
+    }
+  };
+
+  const closeLightbox = useCallback(() => {
+    setSelectedPhoto(null);
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = 'auto'; // 恢復背景滾動
+    }
+  }, []);
+
+  // 新增：監聽 Esc 鍵關閉 Lightbox
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        closeLightbox();
+      }
+    };
+    if (selectedPhoto) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedPhoto, closeLightbox]);
 
   const nextPhoto = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % photos.length);
@@ -85,18 +117,22 @@ export default function PhotoGallery() {
     );
   }
 
-  const currentImageSrc = typeof photos[currentIndex] === 'string' 
-    ? photos[currentIndex] 
-    : photos[currentIndex].src;
+  // 取得當前圖片物件與路徑 helper
+  const currentPhoto = photos[currentIndex];
+  
+  const getPhotoSrc = (photoItem) => {
+    if (!photoItem) return '';
+    const src = typeof photoItem === 'string' ? photoItem : photoItem.src;
+    return baseUrl + src.replace(/^\//, '');
+  };
 
   // 動態產生類似 [=====>      ] 45% 的字串
   const renderLoadingBar = () => {
-    const barLength = 15; // 括號內的總格數
+    const barLength = 15;
     const filledCount = Math.floor((progress / 100) * barLength);
     const emptyCount = barLength - filledCount;
 
     const filledStr = '='.repeat(filledCount);
-    // 還沒 100% 前，前端給個箭頭
     const headStr = (progress < 100 && filledCount > 0) ? '>' : ''; 
     const emptyStr = ' '.repeat(Math.max(0, emptyCount - (headStr ? 1 : 0)));
 
@@ -152,6 +188,11 @@ export default function PhotoGallery() {
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
           }
+          
+          @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+          }
 
           .gallery-content {
             flex: 1;
@@ -168,6 +209,13 @@ export default function PhotoGallery() {
             max-height: 100%;
             object-fit: contain;
             transition: opacity 0.3s ease-in-out;
+            cursor: pointer; /* 新增：顯示可點擊 */
+          }
+          
+          /* 新增：Hover 效果提示可點擊 */
+          .gallery-image:hover {
+            transform: scale(1.01);
+            transition: transform 0.3s ease;
           }
 
           .nav-btn {
@@ -192,6 +240,52 @@ export default function PhotoGallery() {
           .btn-prev { left: 10px; }
           .btn-next { right: 10px; }
 
+          /* Lightbox 樣式整合 */
+          .lightbox-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: rgba(0, 0, 0, 0.92);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 2000;
+            opacity: 0; animation: fadeInLightbox 0.3s forwards;
+          }
+          .lightbox-content {
+            position: relative; max-width: 90vw; max-height: 90vh;
+            display: flex; flex-direction: column; align-items: center;
+            transform: scale(0.95); animation: zoomIn 0.3s forwards 0.1s;
+          }
+          .lightbox-image {
+            max-width: 100%; max-height: 80vh;
+            object-fit: contain; border-radius: 4px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+          }
+          .lightbox-close-btn {
+            position: absolute; top: 20px; right: 30px;
+            background: none; border: none; color: #fff; font-size: 3rem; line-height: 1;
+            cursor: pointer; z-index: 2001; opacity: 0.7; transition: opacity 0.2s;
+          }
+          .lightbox-close-btn:hover { opacity: 1; }
+          .lightbox-caption {
+            margin-top: 20px;
+          }
+          .lightbox-link-btn {
+            display: inline-block;
+            padding: 10px 24px;
+            background-color: rgba(255,255,255,0.2);
+            color: #fff !important;
+            text-decoration: none !important;
+            border-radius: 30px;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+          }
+          .lightbox-link-btn:hover {
+            background-color: rgba(255,255,255,0.4);
+          }
+
+          @keyframes fadeInLightbox { to { opacity: 1; } }
+          @keyframes zoomIn { to { transform: scale(1); } }
+
           @media (max-width: 768px) {
             .gallery-wrapper {
               flex-direction: column;
@@ -214,6 +308,7 @@ export default function PhotoGallery() {
             }
             .btn-prev { left: 0px; }
             .btn-next { right: 0px; }
+            .lightbox-close-btn { top: 10px; right: 15px; font-size: 2.5rem; }
           }
         `}
       </style>
@@ -237,23 +332,55 @@ export default function PhotoGallery() {
           )}
         </div>
 
-        {/* 右側：在 100% 之前維持透明度為 0 且不可點擊，100% 後淡入 */}
-        <div 
-          className="gallery-content"
-          style={{
-            opacity: progress === 100 ? 1 : 0,
-            pointerEvents: progress === 100 ? 'auto' : 'none',
-            transition: 'opacity 0.8s ease-in-out'
-          }}
-        >
-          <img
-            src={baseUrl + currentImageSrc.replace(/^\//, '')}
-            alt={`Gallery artwork ${currentIndex + 1}`}
-            className="gallery-image"
-          />
-          <button onClick={prevPhoto} aria-label="Previous photo" className="nav-btn btn-prev">‹</button>
-          <button onClick={nextPhoto} aria-label="Next photo" className="nav-btn btn-next">›</button>
+        {/* 右側：根據進度切換顯示 GIF 或 照片 */}
+        <div className="gallery-content">
+          {progress < 100 ? (
+            // 動畫執行中顯示 GIF
+            <img 
+              src={baseUrl + 'img/knight_5x.gif'}
+              alt="Loading..."
+              className="gallery-image"
+              style={{ cursor: 'default' }}
+            />
+          ) : (
+            // 載入完成後顯示相簿內容
+            <>
+              <img
+                src={getPhotoSrc(currentPhoto)}
+                alt={`Gallery artwork ${currentIndex + 1}`}
+                className="gallery-image"
+                style={{ animation: 'fadeIn 0.8s ease-in-out' }} // 套用淡入動畫
+                onClick={() => openLightbox(currentPhoto)} // 新增：點擊打開 Lightbox
+              />
+              <button onClick={prevPhoto} aria-label="Previous photo" className="nav-btn btn-prev">‹</button>
+              <button onClick={nextPhoto} aria-label="Next photo" className="nav-btn btn-next">›</button>
+            </>
+          )}
         </div>
+
+        {/* 新增：Lightbox 模態框結構 */}
+        {selectedPhoto && (
+          <div className="lightbox-overlay" onClick={closeLightbox}>
+            <button className="lightbox-close-btn" onClick={closeLightbox} aria-label="Close">
+              ×
+            </button>
+            <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+              <img
+                src={getPhotoSrc(selectedPhoto)}
+                alt="Enlarged view"
+                className="lightbox-image"
+              />
+              {/* 只有當 photo 是物件且有 link 屬性時才顯示按鈕 */}
+              {typeof selectedPhoto !== 'string' && selectedPhoto.link && (
+                <div className="lightbox-caption">
+                  <Link to={selectedPhoto.link} className="lightbox-link-btn">
+                    查看原文記事
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </main>
     </Layout>
   );
