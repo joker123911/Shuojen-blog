@@ -178,9 +178,9 @@ import Marquee from "react-fast-marquee";
 網頁版文字遊戲歡迎試玩：[成語迷宮](/blog/2026/01/28/game)。
 :::
 
-# 🏠 /ᐠ .ᆺ. ᐟ\ﾉ
+#  /ᐠ .ᆺ. ᐟ\ﾉ
 
-這裡是我記錄生活和興趣的地方，我支持每個人都架設自己的網站，讓社群媒體不再受格式、軟體的限制，享受沒有**商業廣告**、沒有**演算法**、沒有**登入限制**的自由，希望這個地方讓你感到有趣，很高興認識你。
+這裡是我記錄生活和興趣的地方，我支持每個人都架設自己的網站，讓社群媒體自由化，不再受格式、軟體的限制，人人都應該享受沒有**商業廣告**、沒有**演算法**、沒有**登入限制**的自由，不知道該怎麼做嗎？請看[這裡](https://blogblog.club/resources/)。
 
 <Marquee gradient={false} speed={60}>
   <div style={{padding: '10px 0', fontSize: '1.1rem'}}>
@@ -211,6 +211,12 @@ import Marquee from "react-fast-marquee";
   </a>
 </div>
 
+# 其他頁面
+* [我在用什麼`/use`](/use)
+* [我在做什麼`/now`](/now)
+* [貼文列表`/blog/archive`](/blog/archive)
+* [攝影列表`/photoblog/photo-archive`](/photoblog/photo-archive)
+
 歡迎在下方使用 RSS 連結訂閱我的文章（ [那是什麼？](/blog/2025/09/16/rss#%E8%AA%8D%E8%AD%98-rss)）
 
 Blog 貼文 RSS：
@@ -219,7 +225,7 @@ Blog 貼文 RSS：
 https://shuojen.com/blog/rss.xml
 ```
 
-攝影作品 RSS：
+攝影貼文 RSS：
 
 ```
 https://shuojen.com/photoblog/rss.xml
@@ -228,11 +234,6 @@ https://shuojen.com/photoblog/rss.xml
 # 即時數據
 貼文區目前共有 **159** 篇文章，共累積了 **80,665** 個字。
 
-# 其他頁面
-* [我在用什麼`/use`](/use)
-* [我在做什麼`/now`](/now)
-* [貼文列表`/blog/archive`](/blog/archive)
-* [攝影列表`/photoblog/photo-archive`](/photoblog/photo-archive)
 
 # 關於我
 黃碩人，出生於西元 1998 年，現居臺北，土木工程師，女朋友綽號是蝦波。
@@ -240,7 +241,7 @@ https://shuojen.com/photoblog/rss.xml
 ![me](./img/me.webp)
 
 # 聯絡我
-歡迎到[留言板](/guestbook)逛逛，有任何想法，也可以聯絡我的信箱。
+歡迎到[留言板](/guestbook)逛逛，有任何想說的，也可以聯絡我的信箱。
 >me@shuojen.com
 
 

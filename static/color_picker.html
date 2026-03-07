@@ -4,63 +4,119 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>螢幕像素取色工具</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            /* 使用 Noto Sans TC 作為主要字體 */
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            background-color: #f0f2f5;
+            /* 背景色調整為更乾淨的淺灰藍色 */
+            background-color: #f4f7fc;
+            color: #1f2937;
         }
         .container {
             background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            padding: 3rem;
+            /* 增加圓角半徑 */
+            border-radius: 24px;
+            /* 使用更柔和、擴散的陰影 */
+            box-shadow: 0 12px 36px rgba(0,0,0,0.08);
             text-align: center;
-            width: 350px;
+            width: 100%;
+            max-width: 420px;
+            transition: all 0.3s ease;
         }
-        h2 { margin-bottom: 1.5rem; color: #333; }
+        h2 {
+            margin-bottom: 2rem;
+            color: #111827;
+            font-weight: 700;
+            font-size: 1.75rem;
+        }
         #colorPreview {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 1.5rem;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
             border-radius: 50%;
-            border: 4px solid #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            /* 加粗白色邊框，增加層次感 */
+            border: 6px solid #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             background-color: #ddd;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+        .info-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
         .info {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            font-family: monospace;
-            color: #555;
+            /* 將資訊框樣式改為類似標籤的風格 */
+            background-color: #f3e8ff; /* 淺紫色背景 */
+            color: #703DEB; /* 深紫色文字 */
+            padding: 0.75rem 1.25rem;
+            border-radius: 12px;
+            font-family: 'Noto Sans TC', monospace; /* 優先使用 Noto Sans TC */
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
         }
         button {
-            background-color: #007bff;
+            /* 採用標誌性的紫色作為主色調 */
+            background-color: #703DEB;
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 1rem;
+            padding: 1rem 2rem;
+            /* 全圓角按鈕 */
+            border-radius: 9999px;
+            font-size: 1.125rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s ease;
+            /* 增加紫色陰影 */
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #703DEB;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
+        }
+        button:active {
+            transform: translateY(0);
         }
         button:disabled {
-            background-color: #ccc;
+            background-color: #d1d5db;
+            color: #9ca3af;
             cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
         }
         .error {
-            color: #ff4d4d;
-            margin-top: 10px;
+            /* 錯誤訊息樣式調整 */
+            background-color: #fef2f2;
+            color: #b91c1c;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 12px;
             font-size: 0.9rem;
             display: none;
+            font-weight: 500;
+        }
+        /* 加入一個簡單的圖示 */
+        .btn-icon {
+            margin-right: 0.5rem;
+            font-size: 1.25rem;
         }
     </style>
 </head>
@@ -69,9 +125,13 @@
 <div class="container">
     <h2>像素取色器</h2>
     <div id="colorPreview"></div>
-    <div class="info" id="hexValue">#DDDDDD</div>
-    <div class="info" id="rgbValue">rgb(221, 221, 221)</div>
-    <button id="pickBtn">開始取色</button>
+    <div class="info-container">
+        <div class="info" id="hexValue">#DDDDDD</div>
+        <div class="info" id="rgbValue">rgb(221, 221, 221)</div>
+    </div>
+    <button id="pickBtn">
+        <span class="btn-icon">🎨</span> 開始取色
+    </button>
     <p id="errorMsg" class="error">抱歉，您的瀏覽器不支援 EyeDropper API</p>
 </div>
 

@@ -133,13 +133,13 @@ description: 記錄我愛用的工具
 ## 軟體
 
 作業系統
-* Windows - 主力用，很吃資源，工作換不掉只好少用。
-* Linux Mint- 輕量速度快，但需要時間習慣，現在在[客廳老電腦](/blog/2025/10/05/mint)用，還有我的 PC 雙系統使用。
+* Windows - 主力用，工作軟體需要，還有蝦波打 LOL 用。
+* Linux Mint - 輕量速度快，現在在[客廳老電腦](/blog/2025/10/05/mint)用，之後接收蝦波的 PC 我再灌來自己用。
 * macOS - 筆電主力用。
-* Asahi linux - 筆電偶爾用。
+* Asahi linux - 筆電偶爾玩玩用。
 
 電腦
-* Brave - 最好用的瀏覽器。
+* Brave - 最好用的瀏覽器，同步功能方便。
 * Syncthing - 同步照片丶音樂很方便。
 * VSCodium - 編寫部落格文章與程式碼。
 * PyCharm Community Edition - 另一個編寫部落格文章與程式碼。
@@ -171,8 +171,9 @@ Apps
 * Simplenote - 在手機電腦都可以同步記錄文字靈感。
 
 Shuojen.site 小工具
-* [投資報酬試算表](https://shuojen.site/calculator.html) - 投資報酬試算用。
-* [吃什麼都可以終結者](https://shuojen.site/food.html) - 決定吃什麼用。
-* [嘸蝦米兩碼字練習器](https://shuojen.site/boshiamy.html) - 練習嘸蝦米用。
-* [圖片批次處理工具](https://shuojen.site/resize.html) - 圖片批次處理用。
-* [猜人名遊戲](https://shuojen.site/guestname.html) - 實體猜人名遊戲用。
+* [投資報酬試算表](https://shuojen.com/calculator.html) - 投資報酬試算用。
+* [吃什麼都可以終結者](https://shuojen.com/food.html) - 決定吃什麼用。
+* [嘸蝦米兩碼字練習器](https://shuojen.com/boshiamy.html) - 練習嘸蝦米用。
+* [圖片批次處理工具](https://shuojen.com/resize.html) - 圖片批次處理用。
+* [猜人名遊戲](https://shuojen.com/guestname.html) - 實體猜人名遊戲用。
+* [取色器](https://shuojen.com/color_picker.html) - 電腦網頁快速取色器。

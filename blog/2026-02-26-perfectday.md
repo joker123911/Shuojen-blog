@@ -1,6 +1,6 @@
 ---
 title: '橫跨七年的理想日常'
-tags: ['blog']
+tags: ['blogparty','life']
 ---
 :::info
 這是我的「[BlogBlog 同樂會](https://blogblog.club/party/) - 2026 年 3 月」的投稿文章。本月主題是「理想的日常」，由 [Alex Hsu](https://alexhsu.com/perfect-days) 主持。如果你有自己的部落格，歡迎一起來參加！

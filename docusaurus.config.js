@@ -150,7 +150,7 @@ const config = {
           {to: '/blog/archive',label: '貼文列表',position: 'left'},
           {to: '/photography',label: '攝影集',position: 'left'},
           {to: '/photoblog/photo-archive',label: '攝影列表',position: 'left'},
-          {to: '/homepage',label: '關於',position: 'left'},
+          {to: '/about',label: '關於',position: 'left'},
           {to: '/guestbook',label: '留言板',position: 'left'},
         ],
       },
