@@ -170,7 +170,7 @@ Apps
 * 臺北市立圖書館 - 預約借書用。
 * Simplenote - 在手機電腦都可以同步記錄文字靈感。
 
-Shuojen.site 小工具
+Shuojen.com 小工具
 * [投資報酬試算表](https://shuojen.com/calculator.html) - 投資報酬試算用。
 * [吃什麼都可以終結者](https://shuojen.com/food.html) - 決定吃什麼用。
 * [嘸蝦米兩碼字練習器](https://shuojen.com/boshiamy.html) - 練習嘸蝦米用。

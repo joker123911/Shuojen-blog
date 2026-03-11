@@ -151,6 +151,7 @@ const config = {
           {to: '/photography',label: '攝影集',position: 'left'},
           {to: '/photoblog/photo-archive',label: '攝影列表',position: 'left'},
           {to: '/about',label: '關於',position: 'left'},
+          {to: '/blogroll',label: '部落卷',position: 'left'},
           {to: '/guestbook',label: '留言板',position: 'left'},
         ],
       },
