@@ -179,13 +179,43 @@
         color: var(--text-muted);
         margin-top: 20px;
     }
+
+    /* 新增：手機版響應式設計 */
+    @media (max-width: 600px) {
+        body {
+            padding: 20px 10px; /* 縮小螢幕邊緣留白 */
+        }
+
+        .calculator-container {
+            padding: 24px 16px; /* 縮小內部間距保留空間給內容 */
+            border-radius: var(--radius-md);
+        }
+
+        .input-group {
+            grid-template-columns: 1fr; /* 將輸入框改為上下排列 */
+            gap: 12px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto; /* 讓表格在手機上可以左右滑動，避免跑版 */
+        }
+        
+        .results-table th, 
+        .results-table td {
+            padding: 8px 4px; /* 稍微縮小表格內距 */
+        }
+
+        .results-table input {
+            width: 90%;
+            font-size: 14px;
+        }
+    }
 </style>
 </head>
 <body>
 
 <div class="calculator-container">
     <h2>📈 複利試算表</h2>
-    <div class="subtitle">Shuojen.com 投資工具</div>
 
     <div class="input-group">
         <div class="input-field">
@@ -225,7 +255,7 @@
         </table>
     </div>
 
-    <div class="footer-note">© Shuojen-blog Financial Tool</div>
+    <div class="footer-note">© Shuojen.com Financial Tool</div>
 </div>
 
 <script>
