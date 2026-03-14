@@ -177,3 +177,4 @@ Shuojen.com 小工具
 * [圖片批次處理工具](https://shuojen.com/resize.html) - 圖片批次處理用。
 * [猜人名遊戲](https://shuojen.com/guestname.html) - 實體猜人名遊戲用。
 * [取色器](https://shuojen.com/color_picker.html) - 電腦網頁快速取色器。
+* [隨機轉盤](https://shuojen.com/random.html) - 隨機轉盤小工具。
