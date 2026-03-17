@@ -17,7 +17,8 @@
 </head>
 <body class="bg-slate-50 min-h-screen p-2 sm:p-4 md:p-8 text-slate-700 flex flex-col items-center">
 
-    <div class="w-full max-w-5xl mx-auto"> <div class="bg-white rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl p-4 sm:p-6 md:p-10 border border-slate-100">
+    <div class="w-full max-w-5xl mx-auto">
+        <div class="bg-white rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl p-4 sm:p-6 md:p-10 border border-slate-100">
 
             <div class="flex flex-col md:flex-row items-center justify-between mb-6 md:mb-8 gap-4 text-center md:text-left">
                 <div class="flex items-center gap-3 md:gap-4">
@@ -138,7 +139,14 @@
 
             </div>
         </div>
-        <p class="text-center mt-6 text-slate-400 text-xs">© Shuojen-blog Nutrition Tracker</p>
+        
+        <div class="flex justify-center items-center gap-3 mt-6 text-slate-400 text-xs">
+            <p>© Shuojen-blog Nutrition Tracker</p>
+            <span class="text-slate-300">|</span>
+            <button onclick="factoryReset()" class="hover:text-red-500 transition underline flex items-center gap-1">
+                <i class="fa-solid fa-rotate-left text-[10px]"></i> 恢復預設
+            </button>
+        </div>
     </div>
 
     <script>
@@ -243,6 +251,21 @@
 
         function clearDB() { if(confirm('清空食物資料庫？')) { foods = []; updateStorage(); renderFoodDB(); } }
         function clearToday() { if(confirm('重新計算今日攝取？')) { todayIntake = []; saveIntake(); renderToday(); updateDashboard(); } }
+        
+        function factoryReset() {
+            if (confirm('⚠️ 警告：這將會清除所有你新增的食物、今日紀錄與目標設定，並完全恢復到初始狀態。確定要繼續嗎？')) {
+                localStorage.removeItem('nutrition_db_v1');
+                localStorage.removeItem('nutrition_targets_v1');
+                localStorage.removeItem('nutrition_intake_v2');
+                
+                targets = { cal: 2000, pro: 150 };
+                todayIntake = [];
+                parseAndSetData(DEFAULT_RAW);
+                
+                renderAll();
+                alert('已成功恢復預設狀態！');
+            }
+        }
         
         function updateStorage() { localStorage.setItem('nutrition_db_v1', JSON.stringify(foods)); }
         function saveIntake() { localStorage.setItem('nutrition_intake_v2', JSON.stringify({ date: todayStr, items: todayIntake })); }
