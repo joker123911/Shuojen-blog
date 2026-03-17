@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日營養終結者</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        .fade-enter { opacity: 0; transform: translateY(10px); }
+        .fade-enter-active { opacity: 1; transform: translateY(0); transition: opacity 300ms, transform 300ms; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen p-2 sm:p-4 md:p-8 text-slate-700 flex flex-col items-center">
+
+    <div class="w-full max-w-5xl mx-auto"> <div class="bg-white rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl p-4 sm:p-6 md:p-10 border border-slate-100">
+
+            <div class="flex flex-col md:flex-row items-center justify-between mb-6 md:mb-8 gap-4 text-center md:text-left">
+                <div class="flex items-center gap-3 md:gap-4">
+                    <div class="bg-indigo-600 w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200 flex-shrink-0">
+                        <i class="fa-solid fa-dumbbell text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl md:text-2xl font-bold text-slate-800 tracking-tight">營養攝取終結者</h1>
+                        <p class="text-[10px] md:text-xs text-slate-400">Shuojen.com</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap sm:flex-nowrap gap-2 w-full md:w-auto">
+                    <button onclick="toggleSettings()" class="flex-1 sm:flex-none bg-slate-100 hover:bg-slate-200 text-slate-600 px-4 py-2.5 sm:py-2 rounded-xl transition text-xs sm:text-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-bullseye"></i> 目標
+                    </button>
+                    <button onclick="toggleBatchArea()" class="flex-1 sm:flex-none bg-slate-100 hover:bg-slate-200 text-slate-600 px-4 py-2.5 sm:py-2 rounded-xl transition text-xs sm:text-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-file-import"></i> 批次
+                    </button>
+                    <button onclick="toggleAddForm()" class="w-full sm:w-auto flex-1 sm:flex-none bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 sm:py-2 rounded-xl transition text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md">
+                        <i class="fa-solid fa-plus"></i> 新增食物
+                    </button>
+                </div>
+            </div>
+
+            <div id="settingsArea" class="hidden mb-6 bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200 space-y-4">
+                <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm md:text-base">
+                    <i class="fa-solid fa-bullseye text-indigo-500"></i> 設定每日目標
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    <div>
+                        <label class="text-xs text-slate-500 mb-1 block">目標熱量 (kcal)</label>
+                        <input type="number" id="targetCalInput" class="w-full p-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-400 bg-white">
+                    </div>
+                    <div>
+                        <label class="text-xs text-slate-500 mb-1 block">目標蛋白質 (g)</label>
+                        <input type="number" id="targetProInput" class="w-full p-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-400 bg-white">
+                    </div>
+                </div>
+                <div class="flex gap-2 pt-2">
+                    <button onclick="saveTargets()" class="flex-1 bg-indigo-600 text-white py-3 sm:py-2.5 rounded-xl font-bold text-sm">儲存目標</button>
+                    <button onclick="toggleSettings()" class="px-5 py-3 sm:py-2.5 bg-slate-200 text-slate-600 rounded-xl text-sm">取消</button>
+                </div>
+            </div>
+
+            <div id="batchArea" class="hidden mb-6 bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200 space-y-4">
+                <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm md:text-base">
+                    <i class="fa-solid fa-database text-indigo-500"></i> 食物批次匯入/匯出
+                </h3>
+                <p class="text-[10px] sm:text-xs text-slate-500">格式：名稱 | 份量 | 熱量(kcal) | 蛋白質(g) (每行一項)</p>
+                <textarea id="batchInput" rows="5" class="w-full p-3 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500 outline-none custom-scrollbar font-mono bg-white" placeholder="無糖豆漿 | 400ml | 130 | 14"></textarea>
+                <div class="flex gap-2">
+                    <button onclick="importBatch()" class="flex-1 bg-indigo-600 text-white py-3 sm:py-2.5 rounded-xl text-sm font-bold">匯入取代</button>
+                    <button onclick="exportBatch()" class="flex-1 bg-white border border-slate-200 text-slate-600 py-3 sm:py-2.5 rounded-xl text-sm font-bold">產生文字</button>
+                </div>
+            </div>
+
+            <div id="addForm" class="hidden mb-6 bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200 space-y-4">
+                <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm md:text-base mb-2">
+                    <i class="fa-solid fa-plus-circle text-indigo-500"></i> 新增單筆食物
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    <input type="text" id="newName" placeholder="食物名稱 (例: 茶葉蛋)" class="w-full p-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-400 bg-white">
+                    <input type="text" id="newPortion" placeholder="份量 (例: 1顆, 100g)" class="w-full p-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-400 bg-white">
+                    <input type="number" id="newCal" placeholder="熱量 (kcal)" class="w-full p-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-400 bg-white">
+                    <input type="number" id="newPro" placeholder="蛋白質 (g)" class="w-full p-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-400 bg-white">
+                </div>
+                <div class="flex gap-2 pt-2">
+                    <button onclick="saveFood()" class="flex-1 bg-indigo-600 text-white py-3 sm:py-2.5 rounded-xl font-bold text-sm">加入資料庫</button>
+                    <button onclick="toggleAddForm()" class="px-5 py-3 sm:py-2.5 bg-slate-200 text-slate-600 rounded-xl text-sm">取消</button>
+                </div>
+            </div>
+
+            <div class="bg-indigo-50 p-4 sm:p-5 rounded-2xl border border-indigo-100 mb-6 md:mb-8 flex flex-col sm:flex-row gap-4">
+                <div class="flex-1 bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-slate-100 relative overflow-hidden">
+                    <div class="text-xs sm:text-sm font-bold text-slate-400 mb-1 sm:mb-2">今日熱量</div>
+                    <div class="flex justify-between items-baseline mb-2 sm:mb-3 relative z-10">
+                        <span class="text-3xl sm:text-4xl font-black text-orange-500" id="currentCal">0</span>
+                        <span class="text-xs sm:text-sm text-slate-400 font-medium">/ <span id="targetCalDisp">2000</span> kcal</span>
+                    </div>
+                    <div class="w-full bg-slate-100 rounded-full h-2.5 sm:h-3 relative z-10">
+                        <div class="bg-orange-400 h-2.5 sm:h-3 rounded-full transition-all duration-500" id="barCal" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="flex-1 bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-slate-100 relative overflow-hidden">
+                    <div class="text-xs sm:text-sm font-bold text-slate-400 mb-1 sm:mb-2">今日蛋白質</div>
+                    <div class="flex justify-between items-baseline mb-2 sm:mb-3 relative z-10">
+                        <span class="text-3xl sm:text-4xl font-black text-indigo-500" id="currentPro">0</span>
+                        <span class="text-xs sm:text-sm text-slate-400 font-medium">/ <span id="targetProDisp">150</span> g</span>
+                    </div>
+                    <div class="w-full bg-slate-100 rounded-full h-2.5 sm:h-3 relative z-10">
+                        <div class="bg-indigo-500 h-2.5 sm:h-3 rounded-full transition-all duration-500" id="barPro" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+                
+                <div class="flex flex-col h-full">
+                    <div class="flex justify-between items-end mb-3 px-1">
+                        <h2 class="text-sm sm:text-base font-bold text-slate-800"><i class="fa-solid fa-utensils text-indigo-400 mr-1"></i> 今天吃了什麼？</h2>
+                        <button onclick="clearToday()" class="text-xs text-slate-400 hover:text-red-400 transition underline p-1">清空今日</button>
+                    </div>
+                    <div id="todayList" class="flex-1 flex flex-col gap-2 max-h-[350px] lg:max-h-[400px] overflow-y-auto pr-2 custom-scrollbar min-h-[100px] p-2 sm:p-3 bg-slate-50 border border-slate-100 rounded-xl">
+                    </div>
+                </div>
+
+                <div class="flex flex-col h-full mt-2 lg:mt-0">
+                    <div class="flex justify-between items-end mb-3 px-1">
+                        <h2 class="text-sm sm:text-base font-bold text-slate-800"><i class="fa-solid fa-layer-group text-indigo-400 mr-1"></i> 常吃食物庫 <span class="text-xs font-normal text-slate-400 ml-1">(點擊加入)</span></h2>
+                    </div>
+                    <div id="foodList" class="flex-1 grid gap-2 max-h-[350px] lg:max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                    </div>
+                    <div class="text-xs text-slate-400 px-1 mt-3 flex justify-between items-center bg-white pt-2">
+                        <span id="statsCount">資料庫共有 0 項食物</span>
+                        <button onclick="clearDB()" class="hover:text-red-400 transition underline font-medium p-1">清空資料庫</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <p class="text-center mt-6 text-slate-400 text-xs">© Shuojen-blog Nutrition Tracker</p>
+    </div>
+
+    <script>
+        const DEFAULT_RAW = `無糖豆漿 | 400ml | 130 | 14
+水煮蛋 | 1顆 | 75 | 7
+雞胸肉 | 100g | 165 | 31
+白飯 | 1碗 | 280 | 5
+乳清蛋白 | 1份 | 120 | 25
+地瓜 | 100g | 115 | 1
+燕麥片 | 50g | 190 | 7
+無糖優格 | 100g | 60 | 3
+鮭魚 | 100g | 208 | 20
+香蕉 | 1根 | 90 | 1`;
+
+        let foods = [];
+        let todayIntake = [];
+        let targets = { cal: 2000, pro: 150 };
+        const todayStr = new Date().toISOString().split('T')[0];
+
+        window.onload = () => {
+            const savedFoods = localStorage.getItem('nutrition_db_v1');
+            const savedTargets = localStorage.getItem('nutrition_targets_v1');
+            const savedIntake = localStorage.getItem('nutrition_intake_v2');
+
+            if (savedFoods) foods = JSON.parse(savedFoods);
+            else parseAndSetData(DEFAULT_RAW);
+
+            if (savedTargets) targets = JSON.parse(savedTargets);
+
+            if (savedIntake) {
+                const parsed = JSON.parse(savedIntake);
+                if (parsed.date === todayStr) {
+                    todayIntake = parsed.items;
+                } else {
+                    todayIntake = []; 
+                    saveIntake();
+                }
+            }
+
+            renderAll();
+        };
+
+        function toggleBatchArea() { document.getElementById('batchArea').classList.toggle('hidden'); }
+        function toggleAddForm() { document.getElementById('addForm').classList.toggle('hidden'); }
+        function toggleSettings() { 
+            const el = document.getElementById('settingsArea');
+            el.classList.toggle('hidden');
+            if(!el.classList.contains('hidden')) {
+                document.getElementById('targetCalInput').value = targets.cal;
+                document.getElementById('targetProInput').value = targets.pro;
+            }
+        }
+
+        function saveTargets() {
+            const cal = parseFloat(document.getElementById('targetCalInput').value) || 2000;
+            const pro = parseFloat(document.getElementById('targetProInput').value) || 150;
+            targets = { cal, pro };
+            localStorage.setItem('nutrition_targets_v1', JSON.stringify(targets));
+            toggleSettings();
+            updateDashboard();
+        }
+
+        function parseAndSetData(text) {
+            const lines = text.trim().split('\n');
+            foods = lines.map((line, index) => {
+                const parts = line.split('|').map(p => p.trim());
+                return parts[0] ? { id: Date.now() + index, name: parts[0], portion: parts[1]||'-', cal: parseFloat(parts[2])||0, pro: parseFloat(parts[3])||0 } : null;
+            }).filter(r => r);
+            updateStorage();
+        }
+
+        function importBatch() {
+            const text = document.getElementById('batchInput').value;
+            if (confirm('確定取代現有資料庫？')) { parseAndSetData(text); renderAll(); toggleBatchArea(); }
+        }
+
+        function exportBatch() {
+            const str = foods.map(r => `${r.name} | ${r.portion} | ${r.cal} | ${r.pro}`).join('\n');
+            document.getElementById('batchInput').value = str;
+        }
+
+        function saveFood() {
+            const name = document.getElementById('newName').value;
+            if (!name) return;
+            foods.push({ 
+                id: Date.now(), 
+                name, 
+                portion: document.getElementById('newPortion').value || '-', 
+                cal: parseFloat(document.getElementById('newCal').value) || 0, 
+                pro: parseFloat(document.getElementById('newPro').value) || 0 
+            });
+            updateStorage(); renderAll(); toggleAddForm();
+            ['newName', 'newPortion', 'newCal', 'newPro'].forEach(id => document.getElementById(id).value = '');
+        }
+
+        function deleteFood(id, e) { 
+            e.stopPropagation(); 
+            foods = foods.filter(r => r.id !== id); 
+            updateStorage(); 
+            renderFoodDB(); 
+        }
+
+        function clearDB() { if(confirm('清空食物資料庫？')) { foods = []; updateStorage(); renderFoodDB(); } }
+        function clearToday() { if(confirm('重新計算今日攝取？')) { todayIntake = []; saveIntake(); renderToday(); updateDashboard(); } }
+        
+        function updateStorage() { localStorage.setItem('nutrition_db_v1', JSON.stringify(foods)); }
+        function saveIntake() { localStorage.setItem('nutrition_intake_v2', JSON.stringify({ date: todayStr, items: todayIntake })); }
+
+        function addToToday(dbId) {
+            const food = foods.find(f => f.id === dbId);
+            if (food) {
+                const existingIndex = todayIntake.findIndex(i => i.id === dbId);
+                if (existingIndex > -1) {
+                    todayIntake[existingIndex].count += 1;
+                } else {
+                    todayIntake.push({ ...food, count: 1 });
+                }
+                saveIntake();
+                renderToday();
+                updateDashboard();
+            }
+        }
+
+        function removeFromToday(dbId) {
+            const existingIndex = todayIntake.findIndex(i => i.id === dbId);
+            if (existingIndex > -1) {
+                if (todayIntake[existingIndex].count > 1) {
+                    todayIntake[existingIndex].count -= 1;
+                } else {
+                    todayIntake.splice(existingIndex, 1);
+                }
+                saveIntake();
+                renderToday();
+                updateDashboard();
+            }
+        }
+
+        function renderAll() {
+            renderFoodDB();
+            renderToday();
+            updateDashboard();
+        }
+
+        function renderFoodDB() {
+            const listDiv = document.getElementById('foodList');
+            document.getElementById('statsCount').innerText = `資料庫共有 ${foods.length} 項食物`;
+            listDiv.innerHTML = '';
+
+            if (foods.length === 0) {
+                listDiv.innerHTML = '<div class="text-center py-6 text-slate-300 text-sm italic border border-dashed border-slate-200 rounded-xl">資料庫沒有食物，請新增或匯入</div>';
+                return;
+            }
+
+            foods.forEach(f => {
+                const card = document.createElement('div');
+                card.className = "bg-white border border-slate-100 p-3 sm:p-4 rounded-xl flex justify-between items-center group transition-all hover:border-indigo-300 cursor-pointer shadow-sm hover:shadow-md active:scale-[0.99]";
+                card.onclick = () => addToToday(f.id);
+                card.innerHTML = `
+                    <div class="flex-1 min-w-0 pr-2">
+                        <div class="flex items-center gap-2 mb-1.5">
+                            <h3 class="font-bold text-slate-800 text-sm sm:text-base truncate">${f.name}</h3>
+                            <span class="text-[10px] sm:text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">${f.portion}</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs sm:text-sm font-bold text-orange-500 bg-orange-50 px-2 py-0.5 rounded-md flex items-center"><i class="fa-solid fa-fire mr-1 text-[10px]"></i>${f.cal} <span class="text-[10px] ml-0.5 font-normal">kcal</span></span>
+                            <span class="text-xs sm:text-sm font-bold text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded-md flex items-center"><i class="fa-solid fa-drumstick-bite mr-1 text-[10px]"></i>${f.pro} <span class="text-[10px] ml-0.5 font-normal">g</span></span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="deleteFood(${f.id}, event)" class="text-slate-300 hover:text-red-400 w-10 h-10 flex justify-center items-center rounded-xl transition-colors bg-slate-50 hover:bg-red-50"><i class="fa-solid fa-trash-can"></i></button>
+                        <div class="text-indigo-500 bg-indigo-50 w-10 h-10 flex justify-center items-center rounded-xl transition-colors group-hover:bg-indigo-500 group-hover:text-white shadow-sm"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                `;
+                listDiv.appendChild(card);
+            });
+        }
+
+        function renderToday() {
+            const listDiv = document.getElementById('todayList');
+            listDiv.innerHTML = '';
+
+            if (todayIntake.length === 0) {
+                listDiv.innerHTML = '<div class="text-center py-6 text-slate-400 text-sm italic h-full flex items-center justify-center">還沒吃任何東西喔</div>';
+                return;
+            }
+
+            todayIntake.forEach(f => {
+                const rowCal = Math.round(f.cal * f.count * 10) / 10;
+                const rowPro = Math.round(f.pro * f.count * 10) / 10;
+                
+                const card = document.createElement('div');
+                card.className = "bg-white border border-slate-200 p-3 sm:p-4 rounded-xl flex justify-between items-center animate-in fade-in duration-300 shadow-sm";
+                card.innerHTML = `
+                    <div class="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0"></span>
+                        <h3 class="font-bold text-slate-800 text-sm sm:text-base truncate">${f.name}</h3>
+                        <span class="text-xs sm:text-sm font-black text-indigo-600 bg-indigo-100 px-2 py-0.5 rounded-md flex-shrink-0">x ${f.count}</span>
+                    </div>
+                    <div class="flex items-center gap-3 sm:gap-4 flex-shrink-0 ml-2">
+                        <div class="flex flex-col sm:flex-row sm:gap-3 text-right">
+                            <span class="text-orange-500 font-bold text-xs sm:text-sm w-16">${rowCal} <span class="text-[10px] font-normal text-orange-400">kcal</span></span>
+                            <span class="text-indigo-500 font-bold text-xs sm:text-sm w-14">${rowPro} <span class="text-[10px] font-normal text-indigo-400">g</span></span>
+                        </div>
+                        <button onclick="removeFromToday(${f.id})" class="text-slate-400 hover:text-red-500 w-8 h-8 sm:w-10 sm:h-10 flex justify-center items-center rounded-full bg-slate-100 hover:bg-red-50 transition-colors shadow-sm"><i class="fa-solid fa-minus"></i></button>
+                    </div>
+                `;
+                listDiv.appendChild(card);
+            });
+            listDiv.scrollTop = listDiv.scrollHeight;
+        }
+
+        function updateDashboard() {
+            document.getElementById('targetCalDisp').innerText = targets.cal;
+            document.getElementById('targetProDisp').innerText = targets.pro;
+
+            let totalCal = 0;
+            let totalPro = 0;
+            todayIntake.forEach(item => {
+                totalCal += item.cal * item.count;
+                totalPro += item.pro * item.count;
+            });
+
+            totalCal = Math.round(totalCal * 10) / 10;
+            totalPro = Math.round(totalPro * 10) / 10;
+
+            document.getElementById('currentCal').innerText = totalCal;
+            document.getElementById('currentPro').innerText = totalPro;
+
+            const calPct = Math.min(100, (totalCal / targets.cal) * 100) || 0;
+            const proPct = Math.min(100, (totalPro / targets.pro) * 100) || 0;
+
+            const barCal = document.getElementById('barCal');
+            const barPro = document.getElementById('barPro');
+
+            barCal.style.width = calPct + '%';
+            barPro.style.width = proPct + '%';
+
+            barCal.className = calPct >= 100 ? "bg-red-500 h-2.5 sm:h-3 rounded-full transition-all duration-500" : "bg-orange-400 h-2.5 sm:h-3 rounded-full transition-all duration-500";
+            barPro.className = proPct >= 100 ? "bg-emerald-500 h-2.5 sm:h-3 rounded-full transition-all duration-500" : "bg-indigo-500 h-2.5 sm:h-3 rounded-full transition-all duration-500";
+        }
+    </script>
+</body>
+</html>
