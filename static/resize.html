@@ -3,318 +3,346 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>圖片批次處理工具</title>
+    <title>圖片批次處理工具 | Clean Dashboard UI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Noto Sans TC"', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
     <style>
-        :root {
-            --primary-color: #7c74ff;
-            --bg-color: #f8f9fc;
-            --text-color: #2d3748;
-            --card-bg: #ffffff;
-            --border-color: #e2e8f0;
-            --secondary-btn: #edf2f7;
+        /* 自定義捲軸 */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
 
-        body {
-            font-family: -apple-system, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 40px 20px;
-            box-sizing: border-box;
-        }
-
-        .container {
-            background: var(--card-bg);
-            width: 100%;
-            max-width: 650px;
-            padding: 40px;
-            border-radius: 24px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            text-align: center;
-        }
-
-        /* --- 標題修正：超粗體 --- */
-        h2 {
-            font-size: 1.8rem;
-            font-weight: 900;
-            margin-bottom: 25px;
-            color: #1a202c;
-            letter-spacing: -0.05em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        #drop-zone {
-            border: 2px dashed var(--border-color);
-            border-radius: 16px;
-            padding: 40px 20px;
-            margin-bottom: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: #fafaff;
-        }
-
+        /* 拖曳區動畫與狀態 */
         #drop-zone.dragover {
-            border-color: var(--primary-color);
-            background-color: rgba(124, 116, 255, 0.05);
+            border-color: #4f46e5; /* indigo-600 */
+            background-color: #eef2ff; /* indigo-50 */
         }
 
-        .control-group { text-align: left; margin-bottom: 15px; }
-        .row { display: flex; gap: 15px; flex-wrap: wrap; }
-        .row > div { flex: 1; min-width: 120px; }
-
-        label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 6px; color: #718096; }
-        input, select {
-            width: 100%; padding: 12px; border: 2px solid var(--border-color);
-            border-radius: 12px; font-size: 1rem; box-sizing: border-box; outline: none;
+        /* 簡單的載入動畫 */
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
         }
-
-        button {
-            width: 100%; padding: 15px; border-radius: 12px; font-size: 1rem;
-            font-weight: 700; cursor: pointer; border: none;
-            transition: opacity 0.2s;
-        }
-
-        #processBtn { background-color: var(--primary-color); color: white; margin-top: 10px; }
-        #processBtn:disabled { background-color: #cbd5e0; cursor: not-allowed; }
-        #downloadAllBtn { background-color: #2d3748; color: white; margin-top: 15px; display: none; }
-
-        /* 進度條 */
-        #progress-container { display: none; margin-top: 20px; background: #edf2f7; border-radius: 10px; overflow: hidden; }
-        #progress-bar { width: 0%; height: 10px; background: var(--primary-color); transition: width 0.2s; }
-
-        #result-list {
-            margin-top: 30px;
-            text-align: left;
-            border-top: 1px solid var(--border-color);
-            padding-top: 20px;
-        }
-
-        .result-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px;
-            background: #fff;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-        }
-
-        footer {
-            margin-top: auto;
-            padding: 40px 0 20px 0;
-            font-size: 0.85rem;
-            color: #94a3b8;
-            text-align: center;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col items-center py-6 px-4 md:py-12">
 
-<div class="container">
-    <h2><span>📷</span> 圖片批次處理工具</h2>
-
-    <div id="drop-zone">
-        <p id="drop-text">拖曳圖片到這裡，或點擊選擇檔案</p>
-        <input type="file" id="upload" accept="image/*" multiple style="display: none;">
-    </div>
-
-    <div class="control-group">
-        <div class="row">
-            <div style="flex: 2;">
-                <label>命名前綴</label>
-                <input type="text" id="prefix" value="photo">
+    <main class="w-full max-w-5xl bg-white rounded-[2rem] shadow-2xl border border-slate-100 p-4 md:p-10 fade-in flex flex-col">
+        
+        <header class="flex items-center gap-4 mb-8">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 shadow-lg shadow-indigo-200 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-images"></i>
             </div>
             <div>
-                <label>起始編號</label>
-                <input type="text" id="startNum" value="001">
+                <h1 class="text-2xl md:text-3xl font-black text-slate-800 tracking-tight">圖片批次處理工具</h1>
+                <p class="text-sm text-slate-500 mt-1">快速壓縮、調整尺寸並批次重新命名您的圖片</p>
             </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <section class="flex flex-col gap-6">
+                <div id="drop-zone" class="border-2 border-dashed border-slate-300 rounded-2xl p-8 text-center cursor-pointer transition-all hover:border-indigo-400 hover:bg-slate-50 flex flex-col items-center justify-center gap-3">
+                    <div class="w-14 h-14 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 text-2xl mb-2">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-700 text-lg" id="drop-text">拖曳圖片到這裡</h3>
+                    <p class="text-sm text-slate-400">或點擊選擇檔案 (支援 JPG, PNG, WebP)</p>
+                    <input type="file" id="upload" accept="image/*" multiple class="hidden">
+                </div>
+
+                <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100 flex flex-col gap-4">
+                    <h3 class="font-bold text-slate-700 border-b border-slate-200 pb-2 mb-2"><i class="fa-solid fa-sliders text-indigo-500 mr-2"></i>處理設定</h3>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">命名前綴</label>
+                            <input type="text" id="prefix" value="photo_" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">起始編號 (決定位數)</label>
+                            <input type="text" id="startNum" value="001" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">最大寬度 (px)</label>
+                            <input type="number" id="maxWidth" value="1200" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">大小限制 (KB)</label>
+                            <input type="number" id="maxSize" value="1000" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all text-orange-500 font-bold">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 mb-1">輸出格式</label>
+                        <select id="format" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
+                            <option value="image/jpeg">JPG (預設壓縮)</option>
+                            <option value="image/webp">WebP (更佳壓縮率)</option>
+                            <option value="image/png">PNG (保留畫質，無檔案大小限制)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="processBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl shadow-md shadow-indigo-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2">
+                    <i class="fa-solid fa-play"></i> 開始批次處理
+                </button>
+            </section>
+
+            <section class="flex flex-col bg-slate-50 rounded-2xl border border-slate-100 p-6 h-[600px]">
+                
+                <div class="flex justify-between items-end mb-4 border-b border-slate-200 pb-3">
+                    <h3 class="font-bold text-slate-700"><i class="fa-solid fa-list-check text-emerald-500 mr-2"></i>處理結果</h3>
+                    <div id="status-text" class="text-xs font-bold text-slate-400">尚未開始</div>
+                </div>
+
+                <div id="progress-container" class="hidden mb-4">
+                    <div class="w-full bg-slate-200 rounded-full h-2.5">
+                        <div id="progress-bar" class="bg-emerald-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div id="result-list" class="flex-1 overflow-y-auto custom-scrollbar pr-2 flex flex-col gap-3">
+                    <div id="empty-state" class="flex flex-col items-center justify-center h-full text-slate-400 opacity-50">
+                        <i class="fa-regular fa-folder-open text-4xl mb-3"></i>
+                        <p class="text-sm">處理後的檔案會顯示在這裡</p>
+                    </div>
+                </div>
+
+                <button id="downloadAllBtn" class="hidden w-full mt-4 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl shadow-md transition-all flex justify-center items-center gap-2">
+                    <i class="fa-solid fa-file-zipper"></i> 打包下載所有圖片 (.zip)
+                </button>
+
+            </section>
         </div>
-    </div>
+    </main>
 
-    <div class="row">
-        <div class="control-group">
-            <label>最大寬度 (px)</label>
-            <input type="number" id="maxWidth" value="1200">
-        </div>
-        <div class="control-group">
-            <label>大小限制 (KB)</label>
-            <input type="number" id="maxSize" value="1000">
-        </div>
-        <div class="control-group">
-            <label>輸出格式</label>
-            <select id="format">
-                <option value="image/jpeg">JPG</option>
-                <option value="image/webp">WebP</option>
-                <option value="image/png">PNG (無縮小大小效果)</option>
-            </select>
-        </div>
-    </div>
+	<footer class="mt-8 text-center text-slate-400 text-sm flex flex-col items-center gap-2">
+        <p>© Shuojen.com Resize Tool</p>
+        <button onclick="location.reload()" class="text-slate-500 hover:text-indigo-600 transition-colors text-xs underline">
+            <i class="fa-solid fa-rotate-right mr-1"></i>恢復預設值
+        </button>
+    </footer>
 
-    <button id="processBtn">開始批次處理</button>
-    <div id="progress-container"><div id="progress-bar"></div></div>
-    <div id="status-text" style="font-size: 0.8rem; margin-top: 5px; color: var(--primary-color);"></div>
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('upload');
+        const resultList = document.getElementById('result-list');
+        const emptyState = document.getElementById('empty-state');
+        const processBtn = document.getElementById('processBtn');
+        const downloadAllBtn = document.getElementById('downloadAllBtn');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        const statusText = document.getElementById('status-text');
 
-    <button id="downloadAllBtn">打包下載所有圖片 (.zip)</button>
-    <div id="result-list"></div>
-</div>
+        let selectedFiles = [];
+        let processedItems = [];
 
-<footer>© Shuojen.com Resize Tool</footer>
-
-<script>
-    const dropZone = document.getElementById('drop-zone');
-    const fileInput = document.getElementById('upload');
-    const resultList = document.getElementById('result-list');
-    const processBtn = document.getElementById('processBtn');
-    const downloadAllBtn = document.getElementById('downloadAllBtn');
-    const progressBar = document.getElementById('progress-bar');
-    const statusText = document.getElementById('status-text');
-
-    let selectedFiles = [];
-    let processedItems = [];
-
-    dropZone.addEventListener('click', () => fileInput.click());
-    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
-    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-    dropZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropZone.classList.remove('dragover');
-        handleFiles(e.dataTransfer.files);
-    });
-
-    fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
-
-    function handleFiles(files) {
-        selectedFiles = Array.from(files);
-        document.getElementById('drop-text').innerText = `已載入 ${selectedFiles.length} 張圖片`;
-        downloadAllBtn.style.display = 'none';
-        resultList.innerHTML = '';
-        document.getElementById('progress-container').style.display = 'none';
-    }
-
-    processBtn.addEventListener('click', async () => {
-        if (selectedFiles.length === 0) return alert('請先選擇圖片');
-
-        processBtn.disabled = true;
-        document.getElementById('progress-container').style.display = 'block';
-        resultList.innerHTML = '<h4>處理結果：</h4>';
-        processedItems = [];
-
-        const prefix = document.getElementById('prefix').value;
-        const startNumStr = document.getElementById('startNum').value;
-        const format = document.getElementById('format').value;
-        const maxSize = parseInt(document.getElementById('maxSize').value) * 1024;
-
-        // 修正副檔名命名邏輯
-        let ext = 'jpg';
-        if (format === 'image/webp') ext = 'webp';
-        if (format === 'image/png') ext = 'png';
-
-        for (let i = 0; i < selectedFiles.length; i++) {
-            const num = (parseInt(startNumStr) + i).toString().padStart(startNumStr.length, '0');
-            const fileName = `${prefix}${num}.${ext}`;
-
-            // 使用 Promise + setTimeout 讓 UI 不會卡死並釋放記憶體
-            const blob = await new Promise(resolve => {
-                setTimeout(async () => {
-                    const result = await processImage(selectedFiles[i], format, maxSize);
-                    resolve(result);
-                }, 5);
-            });
-
-            processedItems.push({ blob, fileName });
-            addResultItem(blob, fileName);
-
-            // 更新進度條
-            const percent = Math.round(((i + 1) / selectedFiles.length) * 100);
-            progressBar.style.width = percent + '%';
-            statusText.innerText = `正在處理第 ${i + 1} / ${selectedFiles.length} 張...`;
-        }
-
-        processBtn.disabled = false;
-        processBtn.innerText = '開始批次處理';
-        statusText.innerText = '處理完成！';
-        if (processedItems.length > 0) downloadAllBtn.style.display = 'block';
-    });
-
-    async function processImage(file, format, maxSize) {
-        const originalImg = await loadImage(file);
-        let maxWidth = parseInt(document.getElementById('maxWidth').value);
-        let currentWidth = maxWidth;
-        let quality = 0.9;
-        let blob;
-
-        // 循環壓縮邏輯：若大小不符合，先降品質，品質到底則縮解析度
-        while (true) {
-            const canvas = document.createElement('canvas');
-            const scale = Math.min(1, currentWidth / originalImg.width);
-            canvas.width = originalImg.width * scale;
-            canvas.height = originalImg.height * scale;
-
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(originalImg, 0, 0, canvas.width, canvas.height);
-
-            blob = await new Promise(r => canvas.toBlob(r, format, quality));
-
-            // 跳出條件：PNG (不支援壓縮) 或 檔案已達標 或 已經縮到極限
-            if (format === 'image/png' || blob.size <= maxSize || (quality <= 0.2 && currentWidth < 300)) {
-                break;
-            }
-
-            if (quality > 0.2) {
-                quality -= 0.1;
-            } else {
-                currentWidth -= 150; // 品質已降至極限仍太大，強行縮小寬度
-            }
-        }
-        return blob;
-    }
-
-    function loadImage(file) {
-        return new Promise(r => {
-            const reader = new FileReader();
-            reader.onload = e => {
-                const img = new Image();
-                img.onload = () => r(img);
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
+        // --- 拖曳與選擇檔案邏輯 ---
+        dropZone.addEventListener('click', () => fileInput.click());
+        dropZone.addEventListener('dragover', (e) => { 
+            e.preventDefault(); 
+            dropZone.classList.add('dragover'); 
         });
-    }
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+        fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
 
-    function addResultItem(blob, fileName) {
-        const url = URL.createObjectURL(blob);
-        const item = document.createElement('div');
-        item.className = 'result-item';
-        item.innerHTML = `
-            <div>
-                <div style="font-weight:700;">${fileName}</div>
-                <div style="font-size:0.75rem; color:#a0aec0;">${(blob.size / 1024).toFixed(1)} KB</div>
-            </div>
-            <a href="${url}" download="${fileName}" style="color:var(--primary-color); text-decoration:none; font-weight:700;">下載</a>
-        `;
-        resultList.appendChild(item);
-    }
+        function handleFiles(files) {
+            const validFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
+            if (validFiles.length === 0) return alert('請選擇有效的圖片檔案！');
+            
+            selectedFiles = validFiles;
+            document.getElementById('drop-text').innerHTML = `<span class="text-indigo-600">已載入 ${selectedFiles.length} 張圖片</span>`;
+            
+            // 重置狀態
+            downloadAllBtn.classList.add('hidden');
+            resultList.innerHTML = '';
+            resultList.appendChild(emptyState);
+            emptyState.style.display = 'flex';
+            progressContainer.classList.add('hidden');
+            statusText.innerText = '等待處理...';
+            progressBar.style.width = '0%';
+        }
 
-    downloadAllBtn.addEventListener('click', async () => {
-        const zip = new JSZip();
-        processedItems.forEach(item => zip.file(item.fileName, item.blob));
-        const content = await zip.generateAsync({ type: "blob" });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(content);
-        a.download = "images.zip";
-        a.click();
-    });
-</script>
+        // --- 核心處理邏輯 ---
+        processBtn.addEventListener('click', async () => {
+            if (selectedFiles.length === 0) return alert('請先拖曳或選擇圖片！');
 
+            // UI 狀態切換
+            processBtn.disabled = true;
+            processBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 處理中...';
+            progressContainer.classList.remove('hidden');
+            emptyState.style.display = 'none';
+            resultList.innerHTML = '';
+            processedItems = [];
+            downloadAllBtn.classList.add('hidden');
+
+            const prefix = document.getElementById('prefix').value;
+            const startNumStr = document.getElementById('startNum').value;
+            const format = document.getElementById('format').value;
+            const maxSize = parseInt(document.getElementById('maxSize').value) * 1024;
+            const numLength = startNumStr.length; // 動態抓取使用者輸入的位數
+
+            let ext = 'jpg';
+            if (format === 'image/webp') ext = 'webp';
+            if (format === 'image/png') ext = 'png';
+
+            for (let i = 0; i < selectedFiles.length; i++) {
+                // 修正補零邏輯
+                const num = (parseInt(startNumStr) + i).toString().padStart(numLength, '0');
+                const fileName = `${prefix}${num}.${ext}`;
+
+                statusText.innerText = `處理中: ${i + 1} / ${selectedFiles.length}`;
+                
+                // 執行壓縮與尺寸調整
+                const blob = await processImage(selectedFiles[i], format, maxSize);
+
+                processedItems.push({ blob, fileName });
+                addResultItem(blob, fileName);
+
+                // 更新進度條
+                const percent = Math.round(((i + 1) / selectedFiles.length) * 100);
+                progressBar.style.width = percent + '%';
+            }
+
+            // 處理完成狀態
+            processBtn.disabled = false;
+            processBtn.innerHTML = '<i class="fa-solid fa-play"></i> 重新處理';
+            statusText.innerText = '處理完成！';
+            if (processedItems.length > 0) {
+                downloadAllBtn.classList.remove('hidden');
+                downloadAllBtn.classList.add('flex'); // 確保 flex 置中生效
+            }
+        });
+
+        // --- 圖片壓縮修正邏輯 (避免卡死) ---
+        async function processImage(file, format, maxSize) {
+            const originalImg = await loadImage(file);
+            let targetWidth = parseInt(document.getElementById('maxWidth').value);
+            let currentWidth = Math.min(targetWidth, originalImg.width); // 避免放大圖片
+            let quality = 0.9;
+            let blob;
+            
+            let attempts = 0;
+            const maxAttempts = 6; // 最大重試次數，防止無限迴圈卡死
+
+            while (attempts < maxAttempts) {
+                attempts++;
+                const canvas = document.createElement('canvas');
+                const scale = currentWidth / originalImg.width;
+                canvas.width = currentWidth;
+                canvas.height = originalImg.height * scale;
+
+                const ctx = canvas.getContext('2d');
+                // 填充白色背景（防止 PNG 轉 JPG 時透明背景變黑）
+                if (format === 'image/jpeg') {
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+                ctx.drawImage(originalImg, 0, 0, canvas.width, canvas.height);
+
+                blob = await new Promise(r => canvas.toBlob(r, format, quality));
+
+                // 跳出條件：PNG(不壓縮)、達標、或已經重試達上限
+                if (format === 'image/png' || blob.size <= maxSize || attempts >= maxAttempts) {
+                    break;
+                }
+
+                // 遞減邏輯：先降畫質，再縮尺寸
+                if (quality > 0.4) {
+                    quality -= 0.15;
+                } else {
+                    currentWidth = Math.floor(currentWidth * 0.8); // 直接縮小 20% 寬度
+                }
+            }
+            return blob;
+        }
+
+        function loadImage(file) {
+            return new Promise(r => {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const img = new Image();
+                    img.onload = () => r(img);
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // --- UI 生成邏輯 ---
+        function addResultItem(blob, fileName) {
+            const url = URL.createObjectURL(blob);
+            const sizeKB = (blob.size / 1024).toFixed(1);
+            
+            const item = document.createElement('div');
+            item.className = 'bg-white border border-slate-100 rounded-xl p-3 flex justify-between items-center hover:border-indigo-300 transition-all shadow-sm fade-in';
+            item.innerHTML = `
+                <div class="flex items-center gap-3 overflow-hidden">
+                    <div class="w-10 h-10 rounded-lg bg-slate-100 flex-shrink-0 flex items-center justify-center overflow-hidden">
+                        <img src="${url}" class="w-full h-full object-cover opacity-80" alt="preview">
+                    </div>
+                    <div class="truncate">
+                        <div class="font-bold text-slate-700 text-sm truncate">${fileName}</div>
+                        <div class="text-xs text-orange-500 font-medium">${sizeKB} KB</div>
+                    </div>
+                </div>
+                <a href="${url}" download="${fileName}" class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors flex items-center justify-center" title="單獨下載">
+                    <i class="fa-solid fa-download text-xs"></i>
+                </a>
+            `;
+            resultList.appendChild(item);
+        }
+
+        // --- 打包下載邏輯 ---
+        downloadAllBtn.addEventListener('click', async () => {
+            const zip = new JSZip();
+            downloadAllBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 打包中...';
+            
+            processedItems.forEach(item => zip.file(item.fileName, item.blob));
+            const content = await zip.generateAsync({ type: "blob" });
+            
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(content);
+            a.download = "processed_images.zip";
+            a.click();
+            
+            downloadAllBtn.innerHTML = '<i class="fa-solid fa-file-zipper"></i> 打包下載所有圖片 (.zip)';
+        });
+    </script>
 </body>
 </html>
