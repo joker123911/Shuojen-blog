@@ -153,7 +153,7 @@ description: 記錄我愛用的工具
 * whipper - 終端界面的 Linux 轉檔 CD 的工具，轉的更好。
 * mp3tag - 整理所有 Aiff 資訊的工具。
 * LocalSent - 好用的共享檔案工具。
-* Lightrlighoom Classic - 現在都不修圖了，懶人直出。
+* Lightroom Classic - 現在都不修圖了，懶人直出。
 
 Apps
 * 天天記帳 - 直覺的記帳軟體。
@@ -172,6 +172,7 @@ Apps
 
 Shuojen.com 小工具
 * [投資報酬試算表](https://shuojen.com/calculator.html) - 投資報酬試算用。
+* [營養攝取終結者](https://shuojen.com/calories.html) - 計算每日營養攝取。
 * [吃什麼都可以終結者](https://shuojen.com/food.html) - 決定吃什麼用。
 * [嘸蝦米兩碼字練習器](https://shuojen.com/boshiamy.html) - 練習嘸蝦米用。
 * [圖片批次處理工具](https://shuojen.com/resize.html) - 圖片批次處理用。
