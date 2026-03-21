@@ -71,6 +71,7 @@ export const westernMovies = [
   { title: "情感的價值", note: "來自挪威的家庭劇情電影，探討的是家庭創傷與和解，節奏稍慢，但是將情感拍攝的很細膩、真摯，推薦", poster: "./img/movie/情感的價值.jpg" },
   { title: "日租家庭", note: "以日本為背景的溫馨倫理電影，這部不太有說教感，平淡卻能讓心裡暖暖的，故事完整，收的也很漂亮，好喜歡", poster: "./img/movie/日租家庭.webp" },
   { title: "艾諾拉", note: "西恩貝克的限制級喜劇，吵吵鬧鬧的滿有意思", poster: "./img/movie/艾諾拉.webp" },  
+  { title: "極限返航", note: "這部太空科幻電影表現不俗，偏向一點詼諧輕鬆的氛圍，角色很討喜，看完會覺得很暖暖的，充滿希望。", poster: "./img/movie/極限返航.webp" },  
 ];
 
 export const asiaMovies = [
