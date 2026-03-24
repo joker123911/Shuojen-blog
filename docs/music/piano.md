@@ -53,6 +53,15 @@ sidebar_position: 2
     抱歉，您的瀏覽器不支援內嵌影片。
 </video>
 
+### Bohemian Rhapsody 片段
+*2026-03-24*
+
+<video controls width="320">
+    <source src="/video/017.mp4" type="video/mp4" />
+
+    抱歉，您的瀏覽器不支援內嵌影片。
+</video>
+
 
 :::note
 有其他彈琴影片會再放上來。
