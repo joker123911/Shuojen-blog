@@ -72,6 +72,7 @@ export const westernMovies = [
   { title: "日租家庭", note: "以日本為背景的溫馨倫理電影，這部不太有說教感，平淡卻能讓心裡暖暖的，故事完整，收的也很漂亮，好喜歡", poster: "./img/movie/日租家庭.webp" },
   { title: "艾諾拉", note: "西恩貝克的限制級喜劇，吵吵鬧鬧的滿有意思", poster: "./img/movie/艾諾拉.webp" },  
   { title: "極限返航", note: "這部太空科幻電影表現不俗，偏向一點詼諧輕鬆的氛圍，角色很討喜，看完會覺得很暖暖的，充滿希望。", poster: "./img/movie/極限返航.webp" },  
+  { title: "空中危機", note: "茱蒂佛斯特的有趣的懸疑片，反轉也不錯。", poster: "./img/movie/空中危機.jpg" },   
 ];
 
 export const asiaMovies = [
