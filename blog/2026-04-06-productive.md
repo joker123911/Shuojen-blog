@@ -1,5 +1,5 @@
 ---
-title: 'AI 是生產力陷阱'
+title: 'AI 寫作的生產力陷阱'
 tags: ['blogparty','life']
 ---
 :::info
