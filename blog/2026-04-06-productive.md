@@ -39,7 +39,7 @@ tags: ['blogparty','life']
 >
 >但他們往往有意無意忽視了一點，那就是AI不會只「幫助」「有判斷力的人」，也會「幫助」沒有判斷力的人，以前所未見的效率，去量產文字垃圾。
 >
-> —— [朱宥勳](https://chuckchu.com.tw/)[〈臉書貼文〉](https://www.facebook.com/share/1EGu4jbtYN/)
+> —— [朱宥勳](https://chuckchu.com.tw/)[〈臉書貼文〉](https://www.facebook.com/share/p/1GK2224ehb/)
 
 AI 本質上是「毫無判斷力」的，它只是在機率模型下預測字句的關聯。然而，人類也可能是「毫無判斷力」的。
 
