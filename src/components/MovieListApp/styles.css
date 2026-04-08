@@ -1,83 +1,163 @@
-/* --- 標籤分頁優化 --- */
-.tabs {
-  display: flex !important;
-  overflow-x: auto !important;
-  white-space: nowrap !important;
-  flex-wrap: nowrap !important;
+/* --- 篩選按鈕區 --- */
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
   scrollbar-width: none;
-  -ms-overflow-style: none;
 }
-.tabs::-webkit-scrollbar { display: none; }
+.filter-bar::-webkit-scrollbar { display: none; }
 
-/* --- 電影卡片網格 --- */
-.movie-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-  margin-top: 1.5rem;
-}
-
-@media (max-width: 480px) {
-  .movie-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.movie-card {
-  border: 1px solid var(--ifm-color-emphasis-200);
-  border-radius: 12px;
-  padding: 1.25rem;
+.filter-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--ifm-color-emphasis-300);
   background: var(--ifm-card-background-color);
-  transition: all 0.25s ease;
+  color: var(--ifm-font-color-base);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+}
+
+.filter-btn.active {
+  background: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+  color: #fff;
+}
+
+/* --- IMDb 風格列表 --- */
+.imdb-list {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  gap: 16px;
 }
 
-.movie-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
-  border-color: var(--ifm-color-primary);
+.list-item {
+  display: flex;
+  align-items: flex-start; /* 讓內容靠上對齊 */
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--ifm-card-background-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  transition: all 0.2s ease; 
+  cursor: pointer;
 }
 
-.movie-title {
-  font-weight: 800;
-  font-size: 1.1rem;
-  color: var(--ifm-color-primary);
-  margin-bottom: 10px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--ifm-color-emphasis-100);
+.list-item:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  transform: scale(1.02); 
+  border-color: var(--ifm-color-primary); 
 }
 
-.movie-note {
+/* 海報區塊 */
+.list-poster {
+  width: 70px;
+  flex-shrink: 0;
+  margin-right: 16px; /* 與右側資訊保持距離 */
+}
+
+.list-poster img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* 右側資訊區塊 */
+.list-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* --- 新增：IMDb 風格的排名標籤 --- */
+.list-rank-badge {
+  background-color: #3B3B3F; /* IMDb 常見的藍色系 */
+  color: white;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 2px 14px 2px 8px;
+  display: inline-block;
+  align-self: flex-start; /* 確保標籤寬度隨內容變化 */
+  margin-bottom: 6px;
+  border-radius: 2px 0 0 2px;
+  /* 使用 clip-path 做出右側稍微傾斜的緞帶感 */
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+}
+
+.list-title {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--ifm-font-color-base); /* 讓標題顏色更像一般文字 */
+  margin: 0 0 6px 0;
+}
+
+.list-note {
   font-size: 0.9rem;
   line-height: 1.5;
   color: var(--ifm-font-color-base);
-  opacity: 0.9;
+  opacity: 0.7; /* 稍微變淡，當作年份或分級等次要資訊 */
+  margin: 0 0 10px 0;
 }
 
+/* 評分與操作列 */
+.list-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.list-score {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ifm-font-color-base);
+}
+
+.star-icon {
+  color: #f5c518; /* IMDb 經典黃色 */
+  margin-right: 4px;
+}
+
+/* 模擬 IMDb 的 Rate 文字按鈕 */
+.list-rate-btn {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1a66cc;
+  cursor: pointer;
+}
+.list-rate-btn:hover {
+  text-decoration: underline;
+}
+
+/* --- 載入更多按鈕 --- */
 .load-more-btn {
   display: block;
-  margin: 3rem auto;
+  margin: 2rem auto;
   padding: 12px 40px;
-  font-size: 0.8rem;
-  font-weight: 500;
+  font-size: 0.9rem;
+  font-weight: 600;
   background: transparent;
-  border: 1px solid var(--ifm-font-color-base);
+  border: 1px solid var(--ifm-color-emphasis-400);
   color: var(--ifm-font-color-base);
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s ease;
-  opacity: 0.7;
 }
 
 .load-more-btn:hover {
-  opacity: 1;
-  background: var(--ifm-font-color-base);
-  color: var(--ifm-background-color);
+  background: var(--ifm-color-emphasis-200);
 }
 
-/* --- Modal 彈窗核心修正 --- */
+/* --- Modal 彈窗核心 --- */
 .poster-modal-overlay {
   position: fixed; 
   top: 0; left: 0; width: 100%; height: 100%;
@@ -101,6 +181,7 @@
   display: flex;
   flex-direction: column;
   box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  cursor: default; 
 }
 
 @keyframes zoomIn {
@@ -134,7 +215,6 @@
   line-height: 1;
 }
 
-/* --- 圖片載入容器修正 --- */
 .poster-frame {
   position: relative;
   width: 100%;
@@ -171,27 +251,17 @@
   transition: opacity 0.4s ease-in-out;
 }
 
-.poster-frame.loaded .poster-img {
-  opacity: 1;
-}
-
-.poster-frame.loaded {
-  background: transparent;
-}
+.poster-frame.loaded .poster-img { opacity: 1; }
+.poster-frame.loaded { background: transparent; }
 
 /* --- 手機版微調 --- */
 @media (max-width: 768px) {
-  .poster-modal-overlay {
-    padding: 10px;
-  }
-  .poster-modal-content {
-    padding: 1rem;
-    max-width: 95%;
-  }
-  .modal-title {
-    font-size: 1rem;
-  }
-  .poster-img {
-    max-height: 65vh;
-  }
+  .list-item { padding: 12px; }
+  .list-poster { width: 55px; margin-right: 12px; }
+  .list-title { font-size: 1.05rem; }
+  
+  .poster-modal-overlay { padding: 10px; }
+  .poster-modal-content { padding: 1rem; max-width: 95%; }
+  .modal-title { font-size: 1rem; }
+  .poster-img { max-height: 65vh; }
 }

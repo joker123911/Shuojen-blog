@@ -1,91 +1,111 @@
 import React, { useState, useMemo } from 'react';
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-// 匯入拆分出去的資料與 CSS
+// 匯入拆分出去的資料
 import { westernMovies, asiaMovies, animeMovies } from '@site/src/data/movies';
 import './styles.css';
-
-// 建立一個洗牌函數 (Fisher-Yates Shuffle)，讓陣列隨機排序
-const shuffleArray = (array) => {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-};
-
-const MovieGrid = ({ movies, onImageClick }) => (
-  <div className="movie-grid">
-    {movies.map((movie, idx) => (
-      <div 
-        key={idx} 
-        className="movie-card" 
-        onClick={() => onImageClick(movie.poster, movie.title)}
-        style={{ cursor: 'pointer' }}
-      >
-        <span className="movie-title">{movie.title}</span>
-        <p className="movie-note">{movie.note}</p>
-      </div>
-    ))}
-  </div>
-);
 
 export default function MovieListApp() {
   const [activePoster, setActivePoster] = useState(null);
   const [activeTitle, setActiveTitle] = useState('');
   const [isImgLoaded, setIsImgLoaded] = useState(false);
   
-  const [visibleCounts, setVisibleCounts] = useState({
-    western: 50,
-    asia: 50,
-    anime: 50
-  });
+  const [filter, setFilter] = useState('all');
+  const [visibleCount, setVisibleCount] = useState(100); 
 
-  // 使用 useMemo 確保每次組件載入時只洗牌一次，避免點擊 LOAD MORE 時重新洗牌
-  const randomizedWestern = useMemo(() => shuffleArray(westernMovies), []);
-  const randomizedAsia = useMemo(() => shuffleArray(asiaMovies), []);
-  const randomizedAnime = useMemo(() => shuffleArray(animeMovies), []);
+  const sortedMovies = useMemo(() => {
+    const combined = [
+      ...westernMovies.map(m => ({ ...m, category: 'western' })),
+      ...asiaMovies.map(m => ({ ...m, category: 'asia' })),
+      ...animeMovies.map(m => ({ ...m, category: 'anime' }))
+    ];
+    return combined.sort((a, b) => (b.score || 0) - (a.score || 0));
+  }, []);
+
+  const filteredMovies = useMemo(() => {
+    if (filter === 'top100') return sortedMovies.slice(0, 100);
+    if (filter === 'all') return sortedMovies;
+    return sortedMovies.filter(m => m.category === filter);
+  }, [sortedMovies, filter]);
+
+  const displayedMovies = filteredMovies.slice(0, visibleCount);
 
   const handleOpen = (url, title) => {
     setIsImgLoaded(false);
     setActivePoster(url);
     setActiveTitle(title);
   };
+  
+  const handleClose = () => setActivePoster(null);
 
-  const handleClose = () => {
-    setActivePoster(null);
+  const loadMore = () => setVisibleCount(prev => prev + 100);
+
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+    setVisibleCount(100);
   };
 
-  const loadMore = (category) => {
-    setVisibleCounts(prev => ({
-      ...prev,
-      [category]: prev[category] + 50
-    }));
-  };
+  const filterOptions = [
+    { value: 'all', label: '🏆 全部排名' },
+    { value: 'top100', label: '💯 Top 100' },
+    { value: 'western', label: '🌎 歐美電影' },
+    { value: 'asia', label: '🥢 華語日韓' },
+    { value: 'anime', label: '🎨 動畫電影' }
+  ];
 
   return (
-    <div className="tabs-container">
-      <Tabs>
-        <TabItem value="western" label="🌎 歐美電影" default>
-          <MovieGrid movies={randomizedWestern.slice(0, visibleCounts.western)} onImageClick={handleOpen} />
-          {visibleCounts.western < randomizedWestern.length && (
-            <button className="load-more-btn" onClick={() => loadMore('western')}>LOAD MORE</button>
-          )}
-        </TabItem>
-        <TabItem value="asia" label="🥢 華語日韓">
-          <MovieGrid movies={randomizedAsia.slice(0, visibleCounts.asia)} onImageClick={handleOpen} />
-          {visibleCounts.asia < randomizedAsia.length && (
-            <button className="load-more-btn" onClick={() => loadMore('asia')}>LOAD MORE</button>
-          )}
-        </TabItem>
-        <TabItem value="anime" label="🎨 動畫電影">
-          <MovieGrid movies={randomizedAnime.slice(0, visibleCounts.anime)} onImageClick={handleOpen} />
-          {visibleCounts.anime < randomizedAnime.length && (
-            <button className="load-more-btn" onClick={() => loadMore('anime')}>LOAD MORE</button>
-          )}
-        </TabItem>
-      </Tabs>
+    <div className="movie-app-container">
+      <div className="filter-bar">
+        {filterOptions.map(opt => (
+          <button 
+            key={opt.value}
+            className={`filter-btn ${filter === opt.value ? 'active' : ''}`}
+            onClick={() => handleFilterChange(opt.value)}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="imdb-list">
+        {displayedMovies.map((movie, index) => {
+          const rank = index + 1;
+          
+          return (
+            <div 
+              key={`${movie.title}-${index}`} 
+              className="list-item"
+              onClick={() => handleOpen(movie.poster, movie.title)}
+            >
+              {/* 海報現在在最左側 */}
+              <div className="list-poster">
+                <img 
+                  src={require(`@site/docs/${movie.poster.replace('./', '')}`).default} 
+                  alt={movie.title} 
+                />
+              </div>
+              
+              {/* 右側資訊區塊 */}
+              <div className="list-info">
+                {/* 新增的 IMDb 風格排名標籤 */}
+                <div className="list-rank-badge">#{rank}</div>
+                
+                <h3 className="list-title">{movie.title}</h3>
+                <p className="list-note">{movie.note}</p>
+                
+                {/* 評分區 */}
+                <div className="list-actions">
+                  <span className="list-score">
+                    <span className="star-icon">★</span> {movie.score ? movie.score.toFixed(1) : 'N/A'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {visibleCount < filteredMovies.length && (
+        <button className="load-more-btn" onClick={loadMore}>LOAD MORE</button>
+      )}
 
       {activePoster && (
         <div className="poster-modal-overlay" onClick={handleClose}>
@@ -97,8 +117,6 @@ export default function MovieListApp() {
             
             <div className={`poster-frame ${isImgLoaded ? 'loaded' : 'loading'}`}>
               <img 
-                // 將 "./img/movie/..." 轉換為 Docusaurus 可識別的絕對路徑
-                // 假設你的 md 檔放在 docs/ 資料夾內
                 src={require(`@site/docs/${activePoster.replace('./', '')}`).default} 
                 alt={activeTitle} 
                 className="poster-img" 
