@@ -29,7 +29,7 @@ export const westernMovies = [
   { title: "進擊的鼓手", score: 7.5, note: "不瘋魔不成活的代表片", poster: "./img/movie/進擊的鼓手.jpg" },
   { title: "彗星來的那一夜", score: 8.8, note: "小成本但懸疑感滿滿，絕對不輸大片", poster: "./img/movie/彗星來的那一夜.jpg" },
   { title: "K星異客", score: 7.8, note: "超有趣的科幻小品", poster: "./img/movie/K星異客.jpg" },
-  { title: "型男飛行日誌", score: 8.6, note: "憂鬱型男喬治克隆尼的療癒電影", poster: "./img/movie/型男飛行日誌.jpg" },
+  { title: "型男飛行日誌", score: 8.9, note: "我超愛的一部，憂鬱型男喬治克隆尼的療癒電影，很厲害的描寫寂寞", poster: "./img/movie/型男飛行日誌.jpg" },
   { title: "捍衛戰士獨行俠", score: 7.9, note: "簡單流暢直球對決的爽片卻不出戲，完美續作", poster: "./img/movie/捍衛戰士獨行俠.jpg" },
   { title: "鬼手鬼手請開口", score: 7.1, note: "A24 恐怖小品，有照公式但是滿有意思，值得一看", poster: "./img/movie/鬼手鬼手請開口.jpg" },
   { title: "明日邊界", score: 8.7, note: "流暢有趣，題材有意思的科幻爽片", poster: "./img/movie/明日邊界.jpg" },
@@ -74,6 +74,14 @@ export const westernMovies = [
   { title: "極限返航", score: 8.5, note: "這部太空科幻電影表現不俗，偏向一點詼諧輕鬆的氛圍，角色很討喜，看完會覺得很暖暖的，充滿希望", poster: "./img/movie/極限返航.webp" },  
   { title: "空中危機", score: 7.2, note: "茱蒂佛斯特的有趣的懸疑片，反轉也不錯", poster: "./img/movie/空中危機.jpg" },
   { title: "抓馬戀人", score: 7.0, note: "很喜歡這種用對白推進劇情的驚悚愛情版，氣氛掌握的很好", poster: "./img/movie/抓馬戀人.webp" },     
+  { title: "手札情緣", score: 6.7, note: "浪漫愛情片，不會不好看但吐槽點實在超多", poster: "./img/movie/手札情緣.webp" },
+  { title: "黑色追緝令", score: 8.5, note: "環型敘事的始祖，超經典", poster: "./img/movie/黑色追緝令.jpg" },
+  { title: "教父", score: 7.4, note: "經典黑幫電影，中間很刺激精彩", poster: "./img/movie/教父.webp" },
+  { title: "辛德勒的名單", score: 7.2, note: "老片比較悶一點，但是連恩尼遜最後那段自白很感人", poster: "./img/movie/辛德勒的名單.webp" },
+  { title: "魔戒", score: 8.4, note: "超經典的史詩冒險，我最愛雙城奇謀，還記得大學的時候我看了十小時的魔戒馬拉松，超過癮", poster: "./img/movie/魔戒.webp" },
+  { title: "駭客任務", score: 8.2, note: "背景設定超越時代的厲害，基哥沒演技但真的很會選片", poster: "./img/movie/駭客任務.webp" },
+  { title: "飛越杜鵑窩", score: 7.6, note: "經典老片，用喜劇包裝的悲劇，值得一看", poster: "./img/movie/飛越杜鵑窩.webp" },
+  { title: "沉默的羔羊", score: 7.6, note: "經典老片，用喜劇包裝的悲劇，值得一看", poster: "./img/movie/沉默的羔羊.webp" },
 ];
 
 export const asiaMovies = [
@@ -89,7 +97,7 @@ export const asiaMovies = [
   { title: "破地獄", score: 8.8, note: "近期最喜歡的香港電影，感動人心的殯葬題材", poster: "./img/movie/破地獄.jpg" },
   { title: "陽光普照", score: 8.4, note: "鍾孟宏的集大成作品，台灣電影中不俗的存在", poster: "./img/movie/陽光普照.jpg" },
   { title: "大佛普拉斯", score: 9.0, note: "我最喜歡的台灣電影，黑白畫面的荒謬感極佳", poster: "./img/movie/大佛普拉斯.jpg" },
-  { title: "孤味", score: 7.6, note: "平淡順暢有餘韻的故事", poster: "./img/movie/孤味.jpg" },
+  { title: "孤味", score: 7.2, note: "平淡順暢有餘韻的故事", poster: "./img/movie/孤味.jpg" },
   { title: "老狐狸", score: 7.8, note: "有趣的故事，流暢的劇情片", poster: "./img/movie/老狐狸.jpg" },
   { title: "目擊者", score: 8.2, note: "我覺得台灣最好的懸疑電影", poster: "./img/movie/目擊者.jpg" },
   { title: "怪物", score: 7.9, note: "是枝裕和作品，看完會有淡淡的惆悵感", poster: "./img/movie/怪物.jpg" },
@@ -120,5 +128,6 @@ export const animeMovies = [
   { title: "鏈鋸人-蕾潔篇", score: 9.2, note: "文藝電影感跟戰鬥畫面都超級棒", poster: "./img/movie/鏈鋸人-蕾潔篇.jpg" },
   { title: "荒野機器人", score: 7.1, note: "夢工廠佳作，畫面精緻漂亮，劇情也是上乘的好電影", poster: "./img/movie/荒野機器人.jpg" },
   { title: "100公尺", score: 7.2, note: "雨中的那場比賽，一鏡到底配上手繪線條太強了，教科書等級", poster: "./img/movie/100公尺.webp" },
-  { title: "再見機器人", score: 7.4, note: "沒有一句台詞但是會讓人想到前任的好動畫", poster: "./img/movie/再見機器人.webp" }
+  { title: "再見機器人", score: 7.4, note: "沒有一句台詞但是會讓人想到前任的好動畫", poster: "./img/movie/再見機器人.webp" },
+  { title: "閃光的哈薩威", score: 6.5, note: "我的第一部 4DX，文戲有點太多，非鋼彈迷要補很多功課", poster: "./img/movie/閃光的哈薩威.webp" },
 ];
