@@ -39,18 +39,31 @@ function processFiles(dir) {
       }
 
       if (targetDate) {
-        const dateStr = targetDate instanceof Date ? targetDate.toISOString() : String(targetDate);
-        const datePart = dateStr.split('T')[0];
+        // 將文章日期轉換為台灣時間的 YYYY-MM-DD 格式
+        let datePart = '';
+        if (targetDate instanceof Date) {
+          // 加上 8 小時偏移以取得台灣日期的 YYYY-MM-DD
+          const twDate = new Date(targetDate.getTime() + offset * 3600 * 1000);
+          datePart = twDate.toISOString().split('T')[0];
+        } else {
+          datePart = String(targetDate).split('T')[0];
+        }
 
-        // 如果是今天，更新為最新的完整時間 (ISO 格式)
+        // 如果是今天，更新為執行當下的最新完整時間
         if (datePart === todayStr) {
-          if (data.date !== currentFullTime) {
+          // 取得目前檔案內的時間字串 (用於比對是否有變動)
+          const existingDateStr = (data.date instanceof Date) 
+            ? new Date(data.date.getTime() + offset * 3600 * 1000).toISOString().split('.')[0] + '+08:00' 
+            : String(data.date);
+
+          // 只要目前時間跟檔案時間不同，就寫入新的時間 (達到每次執行都更新)
+          if (existingDateStr !== currentFullTime) {
             data.date = currentFullTime;
             saveFile(filePath, parsed.content, data, file, `同步為最新時間: ${currentFullTime}`);
           }
         } 
         // 如果是未來日期且尚未包含時間字串，則補上凌晨時間
-        else if (datePart > todayStr && !dateStr.includes('T')) {
+        else if (datePart > todayStr && !String(targetDate).includes('T')) {
           data.date = `${datePart}T00:00:01+08:00`;
           saveFile(filePath, parsed.content, data, file, `補上預排發布時間`);
         }

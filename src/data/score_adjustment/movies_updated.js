@@ -129,6 +129,6 @@ export const animeMovies = [
   { title: "100公尺", score: 7.2, note: "雨中的那場比賽，一鏡到底配上手繪線條太強了，教科書等級", poster: "./img/movie/100公尺.webp" },
   { title: "再見機器人", score: 7.2, note: "沒有一句台詞但是會讓人想到前任的好動畫", poster: "./img/movie/再見機器人.webp" },
   { title: "荒野機器人", score: 7.1, note: "夢工廠佳作，畫面精緻漂亮，劇情也是上乘的好電影", poster: "./img/movie/荒野機器人.jpg" },
-  { title: "閃光的哈薩威", score: 6.5, note: "我的第一部 4DX，文戲有點太多，非鋼彈迷要補很多功課", poster: "./img/movie/閃光的哈薩威.webp" },
+  { title: "閃光的哈薩威", score: 6.8, note: "我的第一部 4DX，文戲有點太多，非鋼彈迷要補很多功課", poster: "./img/movie/閃光的哈薩威.webp" },
 ];
 
