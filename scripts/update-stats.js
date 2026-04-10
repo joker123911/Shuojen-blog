@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // --- 配置區 ---
-const BLOG_DIR = './blog';                   // 文章存放的資料夾
+const BLOG_DIR = '../blog';                   // 文章存放的資料夾
 const TARGET_FILE = './src/pages/about.md';  
 // --------------
 

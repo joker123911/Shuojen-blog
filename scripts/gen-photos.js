@@ -3,10 +3,10 @@ const path = require('path');
 const matter = require('gray-matter');
 
 // 設定路徑
-const BLOG_DIR = path.join(__dirname, 'photoblog');
-const IMG_SRC_DIR = path.join(__dirname, 'photoblog', 'img');
-const IMG_DEST_DIR = path.join(__dirname, 'static', 'img');
-const OUTPUT_FILE = path.join(__dirname, './src/data/photosData.json');
+const BLOG_DIR = path.join(__dirname, '../photoblog');
+const IMG_SRC_DIR = path.join(__dirname, '../photoblog', 'img');
+const IMG_DEST_DIR = path.join(__dirname, '../static', 'img');
+const OUTPUT_FILE = path.join(__dirname, '../src/data/photosData.json');
 
 function syncImages() {
   console.log('🔄 正在同步圖片...');

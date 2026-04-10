@@ -2,13 +2,13 @@
   "name": "my-blog",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
+"scripts": {
     "docusaurus": "docusaurus",
     "prestart": "git pull",
-    "start": "node gen-photos.js && node update-stats.js && docusaurus start",
-    "build": "node gen-photos.js && node update-stats.js && docusaurus build",
-    "swizzle": "docusaurus swizzle",
-    "deploy": "docusaurus deploy",
+    "start": "node scripts/gen-photos.js && node scripts/update-stats.js && docusaurus start",
+    "build": "node scripts/gen-photos.js && node scripts/update-stats.js && node scripts/sync-build-time.js && docusaurus build",
+    "deploy": "node scripts/gen-photos.js && node scripts/update-stats.js && node scripts/sync-build-time.js && docusaurus deploy",
+    "push": "node scripts/sync-build-time.js && node scripts/push.js",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
@@ -25,7 +25,6 @@
     "chess.js": "^1.4.0",
     "clsx": "^2.0.0",
     "cm-chessboard": "^8.11.0",
-    "gray-matter": "^4.0.3",
     "lucide-react": "^0.562.0",
     "prism-react-renderer": "^2.3.0",
     "react": "^19.0.0",
@@ -36,7 +35,8 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.9.1",
-    "@docusaurus/types": "^3.9.1"
+    "@docusaurus/types": "^3.9.1",
+    "gray-matter": "^4.0.3"
   },
   "browserslist": {
     "production": [
