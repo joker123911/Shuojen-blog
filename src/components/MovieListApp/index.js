@@ -1,21 +1,24 @@
 import React, { useState, useMemo } from 'react';
 // 匯入拆分出去的資料
-import { westernMovies, asiaMovies, animeMovies } from '@site/src/data/movies';
+import { westernMovies, asiaMovies, animeMovies, hongkongMovies } from '@site/src/data/movies';
 import './styles.css';
 
-export default function MovieListApp() {
+// 這裡加入了 initialFilter 和 hideFilterBar 兩個參數
+export default function MovieListApp({ initialFilter = 'all', hideFilterBar = false }) {
   const [activePoster, setActivePoster] = useState(null);
   const [activeTitle, setActiveTitle] = useState('');
   const [isImgLoaded, setIsImgLoaded] = useState(false);
   
-  const [filter, setFilter] = useState('all');
+  // 初始分類由外部傳入
+  const [filter, setFilter] = useState(initialFilter);
   const [visibleCount, setVisibleCount] = useState(100); 
 
   const sortedMovies = useMemo(() => {
     const combined = [
       ...westernMovies.map(m => ({ ...m, category: 'western' })),
       ...asiaMovies.map(m => ({ ...m, category: 'asia' })),
-      ...animeMovies.map(m => ({ ...m, category: 'anime' }))
+      ...animeMovies.map(m => ({ ...m, category: 'anime' })),
+      ...hongkongMovies.map(m => ({ ...m, category: 'hongkong' }))
     ];
     return combined.sort((a, b) => (b.score || 0) - (a.score || 0));
   }, []);
@@ -48,22 +51,26 @@ export default function MovieListApp() {
     { value: 'top100', label: '💯 Top 100' },
     { value: 'western', label: '🌎 歐美電影' },
     { value: 'asia', label: '🥢 華語日韓' },
+    { value: 'hongkong', label: '🎞️ 童年港片' },    
     { value: 'anime', label: '🎨 動畫電影' }
   ];
 
   return (
     <div className="movie-app-container">
-      <div className="filter-bar">
-        {filterOptions.map(opt => (
-          <button 
-            key={opt.value}
-            className={`filter-btn ${filter === opt.value ? 'active' : ''}`}
-            onClick={() => handleFilterChange(opt.value)}
-          >
-            {opt.label}
-          </button>
-        ))}
-      </div>
+      {/* 只有在 hideFilterBar 為 false 時才顯示按鈕列 */}
+      {!hideFilterBar && (
+        <div className="filter-bar">
+          {filterOptions.map(opt => (
+            <button 
+              key={opt.value}
+              className={`filter-btn ${filter === opt.value ? 'active' : ''}`}
+              onClick={() => handleFilterChange(opt.value)}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       <div className="imdb-list">
         {displayedMovies.map((movie, index) => {
@@ -75,7 +82,6 @@ export default function MovieListApp() {
               className="list-item"
               onClick={() => handleOpen(movie.poster, movie.title)}
             >
-              {/* 海報現在在最左側 */}
               <div className="list-poster">
                 <img 
                   src={require(`@site/docs/${movie.poster.replace('./', '')}`).default} 
@@ -83,15 +89,10 @@ export default function MovieListApp() {
                 />
               </div>
               
-              {/* 右側資訊區塊 */}
               <div className="list-info">
-                {/* 新增的 IMDb 風格排名標籤 */}
                 <div className="list-rank-badge">#{rank}</div>
-                
                 <h3 className="list-title">{movie.title}</h3>
                 <p className="list-note">{movie.note}</p>
-                
-                {/* 評分區 */}
                 <div className="list-actions">
                   <span className="list-score">
                     <span className="star-icon">★</span> {movie.score ? movie.score.toFixed(1) : 'N/A'}

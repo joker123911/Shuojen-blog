@@ -3,32 +3,45 @@ import json
 import os
 import random
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 import math
 
 # 設定檔
 PROGRESS_FILE = 'progress.json'
 INPUT_JS = 'movies.js'
-OUTPUT_JS = 'movies_updated.js'
+OUTPUT_JS = 'movies.js' 
+
+# Elo 轉換分數的權重設定 (適配 5.9 ~ 9.5 區間)
+BASE_ELO = 1400      
+BASE_SCORE = 7.7     
+POINTS_PER_SCORE = 200 
+MIN_SCORE = 5.9
+MAX_SCORE = 9.5
+
+# 現代化配色
+COLOR_BG = "#F8F9FA"       # 淺灰色背景
+COLOR_CARD = "#FFFFFF"     # 純白卡片
+COLOR_PRIMARY = "#007AFF"  # 蘋果藍 (儲存按鈕)
+COLOR_TEXT = "#212529"     # 深灰色文字
+COLOR_VS = "#ADB5BD"      # VS 文字顏色
 
 class MovieSorterApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("電影二選一評分系統 (同步模式)")
+        self.root.title("電影二選一評分系統")
         self.root.geometry("600x450")
+        self.root.configure(bg=COLOR_BG)
         
         self.movies = []
         self.match_count = 0
         self.load_data()
         
-        # 計算建議場次 (N * log2(N))，會隨電影總數動態增加
         self.target_matches = int(len(self.movies) * math.log2(max(2, len(self.movies))))
         
         self.setup_ui()
         self.next_match()
 
     def parse_js_file(self, file_path):
-        """解析最新的 movies.js 檔案"""
         if not os.path.exists(file_path):
             messagebox.showerror("錯誤", f"找不到 {file_path}")
             exit()
@@ -42,96 +55,101 @@ class MovieSorterApp:
             if match:
                 jt = re.sub(r'(\w+):', r'"\1":', match.group(1))
                 jt = re.sub(r',\s*]', ']', jt)
-                for m in json.loads(jt):
-                    m['category'] = cat
-                    all_movies.append(m)
+                try:
+                    data = json.loads(jt)
+                    for m in data:
+                        m['category'] = cat
+                        all_movies.append(m)
+                except:
+                    continue
         return all_movies
 
     def load_data(self):
-        """同步 JS 資料與進度檔"""
+        """同步 JS 資料與進度檔，確保初始 Elo 完全照原始分數"""
         js_movies = self.parse_js_file(INPUT_JS)
         
+        saved_movies_map = {}
         if os.path.exists(PROGRESS_FILE):
             with open(PROGRESS_FILE, 'r', encoding='utf-8') as f:
                 saved_data = json.load(f)
-                # 處理舊版格式相容性
-                if isinstance(saved_data, list):
-                    saved_movies = saved_data
-                    self.match_count = 0
-                else:
+                if isinstance(saved_data, dict):
                     saved_movies = saved_data.get('movies', [])
                     self.match_count = saved_data.get('match_count', 0)
-            
-            # 以 title 為 Key 建立索引，保留舊有的 Elo 戰績
-            progress_map = {m['title']: m for m in saved_movies}
-            
-            final_list = []
-            new_count = 0
-            for m in js_movies:
-                if m['title'] in progress_map:
-                    # 已存在的電影：保留 Elo 分數，但同步最新的 note/poster
-                    existing = progress_map[m['title']]
-                    m['elo'] = existing.get('elo', 1200)
-                    final_list.append(m)
                 else:
-                    # 新電影：給予初始 Elo (依據原始 score 微調)
-                    m['elo'] = 1200 + (m.get('score', 8.0) - 7.0) * 200
-                    final_list.append(m)
-                    new_count += 1
+                    saved_movies = saved_data
+                saved_movies_map = {m['title']: m for m in saved_movies}
+
+        final_list = []
+        for m in js_movies:
+            # 如果進度檔有紀錄則讀取，若無則從原始分數反推 Elo
+            if m['title'] in saved_movies_map:
+                m['elo'] = saved_movies_map[m['title']].get('elo')
             
-            self.movies = final_list
-            if new_count > 0:
-                print(f"--- 同步完成：發現 {new_count} 部新電影 ---")
-        else:
-            # 初次執行，直接使用 JS 資料
-            self.movies = js_movies
-            self.match_count = 0
-            for m in self.movies:
-                m['elo'] = 1200 + (m.get('score', 8.0) - 7.0) * 200
-            print("--- 初次執行：已載入原始清單 ---")
+            # 確保初始 Elo 與 JS 裡的 score 一致
+            if 'elo' not in m or m['elo'] is None:
+                orig_score = m.get('score', BASE_SCORE)
+                m['elo'] = BASE_ELO + (orig_score - BASE_SCORE) * POINTS_PER_SCORE
+            
+            final_list.append(m)
+            
+        self.movies = final_list
 
     def get_display_score(self, elo):
-        """將 Elo 映射為顯示用的 6.5 - 9.5 分"""
-        all_elo = [m['elo'] for m in self.movies]
-        min_e, max_e = min(all_elo), max(all_elo)
-        if max_e == min_e: return 8.0
-        return round(6.5 + (elo - min_e) * (3.0 / (max_e - min_e)), 1)
+        raw_score = BASE_SCORE + (elo - BASE_ELO) / POINTS_PER_SCORE
+        final_score = max(MIN_SCORE, min(MAX_SCORE, raw_score))
+        return round(final_score, 1)
 
     def setup_ui(self):
-        self.prog_label = tk.Label(self.root, text="", font=("Arial", 10))
-        self.prog_label.pack(pady=10)
+        # 頂部進度文字
+        self.prog_label = tk.Label(self.root, text="", font=("Segoe UI", 10), 
+                                   bg=COLOR_BG, fg=COLOR_TEXT)
+        self.prog_label.pack(pady=(20, 10))
 
-        frame = tk.Frame(self.root)
-        frame.pack(expand=True, fill="both", padx=20)
+        # 核心對戰區域
+        frame = tk.Frame(self.root, bg=COLOR_BG)
+        frame.pack(expand=True, fill="both", padx=30)
 
-        self.btn_left = tk.Button(frame, text="", wraplength=200, font=("微軟正黑體", 14, "bold"),
-                                 command=lambda: self.handle_choice(1), height=8, width=20, bg="#f0f0f0")
+        # 左側電影按鈕 (卡片樣式)
+        self.btn_left = tk.Button(frame, text="", wraplength=180, font=("微軟正黑體", 13, "bold"),
+                                 command=lambda: self.handle_choice(1), height=8, width=18,
+                                 bg=COLOR_CARD, fg=COLOR_TEXT, relief="flat", 
+                                 activebackground="#E9ECEF", bd=0, cursor="hand2")
         self.btn_left.pack(side="left", expand=True, padx=10)
 
-        tk.Label(frame, text="VS", font=("Arial", 16, "italic")).pack(side="left")
+        # VS 標籤
+        tk.Label(frame, text="VS", font=("Segoe UI", 18, "italic bold"), 
+                 bg=COLOR_BG, fg=COLOR_VS).pack(side="left", padx=5)
 
-        self.btn_right = tk.Button(frame, text="", wraplength=200, font=("微軟正黑體", 14, "bold"),
-                                  command=lambda: self.handle_choice(2), height=8, width=20, bg="#f0f0f0")
+        # 右側電影按鈕
+        self.btn_right = tk.Button(frame, text="", wraplength=180, font=("微軟正黑體", 13, "bold"),
+                                  command=lambda: self.handle_choice(2), height=8, width=18,
+                                  bg=COLOR_CARD, fg=COLOR_TEXT, relief="flat", 
+                                  activebackground="#E9ECEF", bd=0, cursor="hand2")
         self.btn_right.pack(side="left", expand=True, padx=10)
 
-        btn_frame = tk.Frame(self.root)
-        btn_frame.pack(pady=20)
+        # 底部功能按鈕區
+        btn_frame = tk.Frame(self.root, bg=COLOR_BG)
+        btn_frame.pack(pady=30)
         
-        tk.Button(btn_frame, text="儲存並導出 JS", command=self.export_js, bg="#e1f5fe").pack(side="left", padx=10)
-        tk.Button(btn_frame, text="退出", command=self.root.quit).pack(side="left", padx=10)
+        save_style = {"font": ("微軟正黑體", 10), "bg": COLOR_PRIMARY, "fg": "white", 
+                      "relief": "flat", "padx": 15, "pady": 5, "cursor": "hand2"}
+        exit_style = {"font": ("微軟正黑體", 10), "bg": "#6C757D", "fg": "white", 
+                      "relief": "flat", "padx": 15, "pady": 5, "cursor": "hand2"}
+
+        tk.Button(btn_frame, text="儲存並更新 JS 檔案", command=self.export_js, **save_style).pack(side="left", padx=10)
+        tk.Button(btn_frame, text="關閉退出", command=self.root.quit, **exit_style).pack(side="left", padx=10)
 
     def next_match(self):
-        """選擇 Elo 較接近的兩部，比較更有意義"""
-        # 簡單隨機挑選
+        if len(self.movies) < 2: return
         self.m1, self.m2 = random.sample(self.movies, 2)
         
         s1 = self.get_display_score(self.m1['elo'])
         s2 = self.get_display_score(self.m2['elo'])
         
-        self.btn_left.config(text=f"{self.m1['title']}\n\n(目前: {s1})")
-        self.btn_right.config(text=f"{self.m2['title']}\n\n(目前: {s2})")
+        self.btn_left.config(text=f"{self.m1['title']}\n\n★ {s1}")
+        self.btn_right.config(text=f"{self.m2['title']}\n\n★ {s2}")
         
-        prog_text = f"已比對: {self.match_count} 次 | 建議目標: {self.target_matches} 次"
+        prog_text = f"已比對: {self.match_count} 次  |  建議目標: {self.target_matches} 次"
         self.prog_label.config(text=prog_text)
 
     def handle_choice(self, winner):
@@ -157,24 +175,21 @@ class MovieSorterApp:
                       f, ensure_ascii=False, indent=2)
 
     def export_js(self):
-        all_elo = [m['elo'] for m in self.movies]
-        min_e, max_e = min(all_elo), max(all_elo)
-        
         categories = {'westernMovies': [], 'asiaMovies': [], 'animeMovies': []}
+        
         for m in self.movies:
             cat = m['category']
-            new_score = round(6.5 + (m['elo'] - min_e) * (3.0 / (max_e - min_e)), 1)
-            m['score'] = new_score
+            m['score'] = self.get_display_score(m['elo'])
             categories[cat].append(m)
 
         with open(OUTPUT_JS, 'w', encoding='utf-8') as f:
             for cat, m_list in categories.items():
                 f.write(f"export const {cat} = [\n")
-                for m in sorted(m_list, key=lambda x: x['score'], reverse=True):
+                for m in sorted(m_list, key=lambda x: x['elo'], reverse=True):
                     f.write(f'  {{ title: "{m["title"]}", score: {m["score"]}, note: "{m["note"]}", poster: "{m["poster"]}" }},\n')
                 f.write("];\n\n")
         
-        messagebox.showinfo("成功", f"新資料已導出至 {OUTPUT_JS}")
+        messagebox.showinfo("儲存成功", f"分數已更新至 {OUTPUT_JS}\n範圍：{MIN_SCORE} ~ {MAX_SCORE}")
 
 if __name__ == "__main__":
     root = tk.Tk()
