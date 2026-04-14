@@ -5,37 +5,37 @@ description: 近況更新
 
 # 我在做什麼 `/now`
 
-*最後更新：2026-03-21*
+*最後更新：2026-04-14*
 
 :::note
 靈感來自[Derek Sivers /now](https://sive.rs/now)。
 :::
 
 ## 最近在幹嘛
-* 跟蝦波同居了，[嗶寶](/photoblog/2025/04/26/bpo)這個愛貼貼的小貓現在住我房間。
+* 跟蝦波同居中，[嗶寶](/blog/2026/03/13/bpo)這個愛貼貼的小貓現在住我房間。
 * 寫[「成語迷宮」](/blog/2026/01/28/game)這個遊戲，網頁版已經上線了！有空研究要怎麼寫成一個 App。
 * 寫部落格：從 2025 九月初開始經營，不定時更新，很喜歡這種整理人生軌跡的感覺。
-* [學嘸蝦米](/blog/2025/10/03/noshrimprice)：從 2025 十月初開始學，雖然還不快但是勉強可以用，現在部落格的內容都是用嘸蝦米打的，大概 45 wpm 左右。
-* 讀書：完全佛系的準備土木技師考試，我應該想辦法挖掘更多興趣與動力，例如把讀的東西寫成筆記整理在部落格之類的。
+* [學嘸蝦米](/blog/2025/10/03/noshrimprice)：從 2025 十月初開始學，雖然還不快但是勉強可以用，現在部落格的內容都是用嘸蝦米打的，大概 55 wpm 左右。
+* 讀書：準備土木技師考試（開始時間：明天），我應該想辦法挖掘更多興趣與動力，例如把讀的東西寫成筆記整理在部落格之類的。
 * 健身：體檢後發現輕微脂肪肝、體脂過高、尿酸過高、胰島素阻抗，所以打算平日下班都要健身加有氧一小時再飲控了。
 * [桌球](/blog/2025/10/19/tabletennis)：每個禮拜三下班，跟同事峻寶寶去打桌球，現在正在學拉下旋。
 
 ## 最近在練習
 * 鋼琴：[Debussy Arabesque No.1](https://www.youtube.com/watch?v=JCTQTp1PdnA) 練好一陣子了，還有幾個小節不太熟。
 * 吉他：彈陳綺貞的[太聰明](https://www.youtube.com/watch?v=9zdxK7mIKQ4)，鍾成虎的編曲好好聽。
-* 西洋棋：練習 [Pirc Defense](https://www.youtube.com/playlist?list=PLQKBpQZcRycrdFv_RC9rovYN1Wh6F_JPR) 的各種變化。
+* 西洋棋：隨意玩 blitz game 當消遣，最近都沒認真訓練了。
 
 ## 最近喜歡的作品
 * [鬼地方](https://zh.wikipedia.org/zh-tw/%E9%AC%BC%E5%9C%B0%E6%96%B9)：陳思宏老師的作品，超級好看，很久沒看到那麼震撼的小說。
-* [小太陽的願望](https://zh.wikipedia.org/zh-tw/%E5%B0%8F%E5%A4%AA%E9%99%BD%E7%9A%84%E9%A1%98%E6%9C%9B)：近期最愛的電影，本來就愛溫馨公路電影的我，正中紅心。
 * [落日殺神](https://zh.wikipedia.org/zh-tw/%E8%90%BD%E6%97%A5%E6%AE%BA%E7%A5%9E)：看半小時就知道這會是我人生最愛的殺手片，完美契合我的電波，真的好讚。
-* [萬中選一](https://zh.wikipedia.org/wiki/%E8%90%AC%E4%B8%AD%E9%81%B8%E4%B8%80_(%E9%9B%BB%E8%A6%96%E5%8A%87))：Vince Gilligan 的作品必須看吧，題材超有意思，第一季斷在一個令人生氣的地方。
+
 
 ## 最近正在看的作品
-* [我的英雄學院](https://zh.wikipedia.org/zh-tw/%E6%88%91%E7%9A%84%E8%8B%B1%E9%9B%84%E5%AD%B8%E9%99%A2)：蝦波推薦，最終季在 IMDB 上拿下 9.9 分讓我太好奇了，希望從第一季開始的我看的到那裡（看到第五季了）。
-* [86—不存在的戰區—](https://zh.wikipedia.org/zh-tw/86%E2%80%94%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E6%88%B0%E5%8D%80%E2%80%94)：蝦波推薦，設定很不錯，喜歡。
+* [我的英雄學院](https://zh.wikipedia.org/zh-tw/%E6%88%91%E7%9A%84%E8%8B%B1%E9%9B%84%E5%AD%B8%E9%99%A2)：蝦波推薦，最終季在 IMDB 上拿下 9.9 分讓我太好奇了，希望從第一季開始的我看的到那裡（看到第六季了）。
 * [極限返航小說](/blog/2026/03/21/drm)：看完電影就想要補小說，很好看。
-
+* [婚姻劇毒](https://zh.wikipedia.org/zh-tw/%E5%A9%9A%E5%A7%BB%E5%8A%87%E6%AF%92)：看第一集就好愛，完全對到我的電波。
+* [魔法帽的工作室](https://zh.wikipedia.org/zh-tw/%E9%AD%94%E6%B3%95%E5%B8%BD%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%AE%A4)：設定滿有新意的，好看。
+* [黃泉使者](https://zh.wikipedia.org/zh-tw/%E9%BB%83%E6%B3%89%E4%BD%BF%E8%80%85)：王道作品，「牛媽」荒川弘新作必看阿。
 
 ## 最近喜歡的店
-* [BT BURGER](https://maps.app.goo.gl/bqRo8F547KVxC47v5)：跟蝦波[約會](/photoblog/2025/12/21/date)發現的寶藏店，義式培根蛋奶麵必點，最近搬家了，哭哭。
+* [BT BURGER](https://maps.app.goo.gl/bqRo8F547KVxC47v5)：跟蝦波[約會](/photoblog/2025/12/21/date)發現的寶藏店，義式培根蛋奶麵必點，但已經搬家了，哭哭。
