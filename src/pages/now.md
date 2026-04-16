@@ -37,5 +37,5 @@ description: 近況更新
 * [魔法帽的工作室](https://zh.wikipedia.org/zh-tw/%E9%AD%94%E6%B3%95%E5%B8%BD%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%AE%A4)：設定滿有新意的，好看。
 * [黃泉使者](https://zh.wikipedia.org/zh-tw/%E9%BB%83%E6%B3%89%E4%BD%BF%E8%80%85)：王道作品，「牛媽」荒川弘新作必看阿。
 
-## 最近喜歡的店
+## 最近喜歡的店 
 * [BT BURGER](https://maps.app.goo.gl/bqRo8F547KVxC47v5)：跟蝦波[約會](/photoblog/2025/12/21/date)發現的寶藏店，義式培根蛋奶麵必點，但已經搬家了，哭哭。
