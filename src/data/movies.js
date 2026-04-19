@@ -126,6 +126,10 @@ export const westernMovies = [
   { title: "浴血狂花", score: 7.2, note: "復仇爽片，很直球對決的一部片", poster: "./img/movie/浴血狂花.webp" },  
   { title: "關鍵公敵", score: 7.3, note: "節奏超快超緊湊，雖然邏輯跟設定有些不通，但其實暇不掩瑜，滿有意思的", poster: "./img/movie/關鍵公敵.webp" },  
   { title: "長腿", score: 6.2, note: "很固弄玄虛的一部恐怖片，期待太高了", poster: "./img/movie/長腿.webp" },  
+  { title: "暴蜂尼亞", score: 7.4, note: "滿有趣的懸疑電影，很有導演尤格的風格", poster: "./img/movie/暴蜂尼亞.webp" },    
+  { title: "穿著PRADA的惡魔", score: 8.3, note: "我很愛的一部經典職場電影", poster: "./img/movie/穿著PRADA的惡魔.webp" },     
+  { title: "我的完美日常", score: 9.2, note: "好喜歡這部電影的氛圍，生活哲學還有孤寂感", poster: "./img/movie/我的完美日常.webp" }, 
+  { title: "你是不會當樹嗎", score: 6.5, note: "畫面很美，但是劇情之間沒什麼深刻的關連，很沉悶", poster: "./img/movie/你是不會當樹嗎.webp" },   
 ];
 
 export const asiaMovies = [

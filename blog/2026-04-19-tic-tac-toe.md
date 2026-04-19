@@ -1,9 +1,13 @@
 ---
-title: '圈圈叉叉必勝騙人把戲'
+title: '圈圈叉叉必勝把戲'
 tags: ['fun', 'game']
+date: 2026-04-19T14:34:39+08:00
 ---
 
-昨天看了電影《我的完美日常》後，就想到小時候玩圈圈叉叉的必勝騙人把戲。
+![img](img202604/018.jpg) 
+*Photo by <a href="https://unsplash.com/@jontyson?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Jon Tyson</a> on <a href="https://unsplash.com/photos/brown-and-white-textile-on-brown-wooden-table-eTjX8xc1in8?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>*
+    
+看了電影《我的完美日常》後，就想到小時候玩圈圈叉叉的騙人把戲。
 
 ## 先手
 所有具有先後手的益智遊戲，先手必定具有優勢，所以在圍棋中有貼目這個機制、卡牌遊戲《爐石戰記》裡的平衡法是後手多一費幸運幣，而西洋棋這種攻殺型的遊戲，在電腦引擎中會判定先手有大約+0.2~0.3的優勢（單位是一隻兵），這種類型遊戲的平衡性建立在賽局之外，例如雙方互相持先手與後手，所以持白的目標都會想要取勝，而持黑則是力求和棋，象棋也是同理。
