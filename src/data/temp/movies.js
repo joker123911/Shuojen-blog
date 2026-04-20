@@ -126,6 +126,18 @@ export const westernMovies = [
   { title: "浴血狂花", score: 7.2, note: "復仇爽片，很直球對決的一部片", poster: "./img/movie/浴血狂花.webp" },  
   { title: "關鍵公敵", score: 7.3, note: "節奏超快超緊湊，雖然邏輯跟設定有些不通，但其實暇不掩瑜，滿有意思的", poster: "./img/movie/關鍵公敵.webp" },  
   { title: "長腿", score: 6.2, note: "很固弄玄虛的一部恐怖片，期待太高了", poster: "./img/movie/長腿.webp" },  
+  { title: "暴蜂尼亞", score: 7.4, note: "滿有趣的懸疑電影，很有導演尤格的風格", poster: "./img/movie/暴蜂尼亞.webp" },    
+  { title: "穿著PRADA的惡魔", score: 8.3, note: "我很愛的一部經典職場電影", poster: "./img/movie/穿著PRADA的惡魔.webp" },     
+  { title: "我的完美日常", score: 9.2, note: "好喜歡這部電影的氛圍，生活哲學還有孤寂感", poster: "./img/movie/我的完美日常.webp" }, 
+  { title: "你是不會當樹嗎", score: 6.5, note: "畫面很美，但是劇情之間沒什麼深刻的關連，很沉悶", poster: "./img/movie/你是不會當樹嗎.webp" },  
+  { title: "哈利波特系列", score: 7.5, note: "經典童年，選角很棒，雖然小說更完整，但是電影拍的很不錯了，3>2=4>6=1>5=7", poster: "./img/movie/哈利波特系列.webp" },  
+  { title: "神鬼玩家", score: 6.8, note: "人物傳記電影，中規中矩，看完沒什麼驚豔之處", poster: "./img/movie/神鬼玩家.webp" },  
+  { title: "怒火邊界", score: 7.0, note: "復仇電影，特別的是用艾蜜莉布朗的視角，有種無力感，提醒一下這部不是爽片", poster: "./img/movie/怒火邊界.webp" },  
+  { title: "殺手", score: 6.5, note: "我超愛大衛芬奇但這部真的沒 get 到，吃電波的一部", poster: "./img/movie/殺手.webp" },  
+  { title: "摯友維尼", score: 6.8, note: "童趣的真人版電影，中規中矩", poster: "./img/movie/摯友維尼.webp" },  
+  { title: "美國殺人魔", score: 7.6, note: "經典的瘋子驚悚片，克里斯丁貝爾演的很讚", poster: "./img/movie/美國殺人魔.webp" },  
+  { title: "樂來越愛你", score: 8.0, note: "音樂太出色，我很喜歡的一部愛情電影", poster: "./img/movie/樂來越愛你.webp" }, 
+  { title: "魔鬼代言人", score: 7.7, note: "很酷的一部關於人性與虛榮的法庭電影", poster: "./img/movie/魔鬼代言人.webp" },   
 ];
 
 export const asiaMovies = [
@@ -216,6 +228,7 @@ export const asiaMovies = [
   { title: "重慶森林", score: 7.4, note: "王家衛我看不多，梁朝偉和王菲的這段故事真的好喜歡", poster: "./img/movie/重慶森林.webp" }, 
   { title: "桃姐", score: 7.7, note: "許鞍華的感人作品，很值得看", poster: "./img/movie/桃姐.webp" },   
   { title: "西遊·降魔篇", score: 6.3, note: "周星馳系列，周星馳不演後唯一看的一部，", poster: "./img/movie/西遊·降魔篇.webp" },  
+  { title: "在車上", score: 6.5, note: "一直覺得好像要發生什麼但是沒有，我覺得很悶的一部電影，畫面很美，老車也好漂亮", poster: "./img/movie/在車上.webp" },   
 ];
 
 export const hongkongMovies = [
@@ -290,4 +303,3 @@ export const animeMovies = [
   { title: "怪獸電力公司", score: 8.4, note: "超愛的一部，阿布跟童年告別那段真的會心碎", poster: "./img/movie/怪獸電力公司.webp" },  
   { title: "超人特攻隊 1~2", score: 7.8, note: "小學去電影院看，很喜歡，有趣的一部", poster: "./img/movie/超人特攻隊.webp" },   
 ];
-

@@ -11,15 +11,19 @@ PROGRESS_FILE = 'progress.json'
 INPUT_JS = 'movies.js'
 OUTPUT_JS = 'movies.js' 
 
-# 絕對固定的分數與 Elo 轉換權重
-ELO_MULTIPLIER = 200
+# Elo 轉換分數的權重設定 (適配 5.9 ~ 9.5 區間)
+BASE_ELO = 1400      
+BASE_SCORE = 7.7     
+POINTS_PER_SCORE = 200 
+MIN_SCORE = 5.9
+MAX_SCORE = 9.5
 
 # 現代化配色
-COLOR_BG = "#F8F9FA"       
-COLOR_CARD = "#FFFFFF"     
-COLOR_PRIMARY = "#007AFF"  
-COLOR_TEXT = "#212529"     
-COLOR_VS = "#ADB5BD"      
+COLOR_BG = "#F8F9FA"       # 淺灰色背景
+COLOR_CARD = "#FFFFFF"     # 純白卡片
+COLOR_PRIMARY = "#007AFF"  # 蘋果藍 (儲存按鈕)
+COLOR_TEXT = "#212529"     # 深灰色文字
+COLOR_VS = "#ADB5BD"      # VS 文字顏色
 
 class MovieSorterApp:
     def __init__(self, root):
@@ -30,12 +34,6 @@ class MovieSorterApp:
         
         self.movies = []
         self.match_count = 0
-        self.categories = [] # 動態儲存偵測到的類別名稱
-        
-        # 動態區間，用於限制顯示分數的上下限
-        self.min_score = 0.0
-        self.max_score = 10.0
-        
         self.load_data()
         
         self.target_matches = int(len(self.movies) * math.log2(max(2, len(self.movies))))
@@ -47,20 +45,14 @@ class MovieSorterApp:
         if not os.path.exists(file_path):
             messagebox.showerror("錯誤", f"找不到 {file_path}")
             exit()
-            
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
-        
-        # 【修正重點】：自動偵測所有 export const 變數名稱
-        found_categories = re.findall(r'export const (\w+) =', content)
-        self.categories = found_categories
-        
+        categories = ['westernMovies', 'asiaMovies', 'animeMovies']
         all_movies = []
-        for cat in self.categories:
+        for cat in categories:
             pattern = rf'export const {cat} = (\[.*?\]);'
             match = re.search(pattern, content, re.DOTALL)
             if match:
-                # 處理 JS 物件轉 JSON 格式
                 jt = re.sub(r'(\w+):', r'"\1":', match.group(1))
                 jt = re.sub(r',\s*]', ']', jt)
                 try:
@@ -73,15 +65,9 @@ class MovieSorterApp:
         return all_movies
 
     def load_data(self):
+        """同步 JS 資料與進度檔，確保初始 Elo 完全照原始分數"""
         js_movies = self.parse_js_file(INPUT_JS)
         
-        # 1. 動態抓取原始資料的最高分與最低分
-        scores = [m.get('score', 0) for m in js_movies]
-        if scores:
-            self.min_score = min(scores)
-            self.max_score = max(scores)
-            
-        # 2. 讀取進度檔
         saved_movies_map = {}
         if os.path.exists(PROGRESS_FILE):
             with open(PROGRESS_FILE, 'r', encoding='utf-8') as f:
@@ -93,57 +79,55 @@ class MovieSorterApp:
                     saved_movies = saved_data
                 saved_movies_map = {m['title']: m for m in saved_movies}
 
-        # 3. 合併資料並進行分數/Elo轉換
         final_list = []
         for m in js_movies:
-            orig_score = m.get('score', 0)
-            base_elo = orig_score * ELO_MULTIPLIER
+            # 如果進度檔有紀錄則讀取，若無則從原始分數反推 Elo
+            if m['title'] in saved_movies_map:
+                m['elo'] = saved_movies_map[m['title']].get('elo')
             
-            if m['title'] in saved_movies_map and 'elo' in saved_movies_map[m['title']]:
-                saved_elo = saved_movies_map[m['title']]['elo']
-                raw_saved_score = saved_elo / ELO_MULTIPLIER
-                clamped_saved_score = max(self.min_score, min(self.max_score, raw_saved_score))
-                expected_js_score = round(clamped_saved_score, 1)
-                
-                if abs(expected_js_score - orig_score) > 0.01:
-                    m['elo'] = base_elo
-                else:
-                    m['elo'] = saved_elo
-            else:
-                m['elo'] = base_elo
+            # 確保初始 Elo 與 JS 裡的 score 一致
+            if 'elo' not in m or m['elo'] is None:
+                orig_score = m.get('score', BASE_SCORE)
+                m['elo'] = BASE_ELO + (orig_score - BASE_SCORE) * POINTS_PER_SCORE
             
             final_list.append(m)
             
         self.movies = final_list
 
     def get_display_score(self, elo):
-        raw_score = elo / ELO_MULTIPLIER
-        final_score = max(self.min_score, min(self.max_score, raw_score))
+        raw_score = BASE_SCORE + (elo - BASE_ELO) / POINTS_PER_SCORE
+        final_score = max(MIN_SCORE, min(MAX_SCORE, raw_score))
         return round(final_score, 1)
 
     def setup_ui(self):
+        # 頂部進度文字
         self.prog_label = tk.Label(self.root, text="", font=("Segoe UI", 10), 
                                    bg=COLOR_BG, fg=COLOR_TEXT)
         self.prog_label.pack(pady=(20, 10))
 
+        # 核心對戰區域
         frame = tk.Frame(self.root, bg=COLOR_BG)
         frame.pack(expand=True, fill="both", padx=30)
 
+        # 左側電影按鈕 (卡片樣式)
         self.btn_left = tk.Button(frame, text="", wraplength=180, font=("微軟正黑體", 13, "bold"),
                                  command=lambda: self.handle_choice(1), height=8, width=18,
                                  bg=COLOR_CARD, fg=COLOR_TEXT, relief="flat", 
                                  activebackground="#E9ECEF", bd=0, cursor="hand2")
         self.btn_left.pack(side="left", expand=True, padx=10)
 
+        # VS 標籤
         tk.Label(frame, text="VS", font=("Segoe UI", 18, "italic bold"), 
                  bg=COLOR_BG, fg=COLOR_VS).pack(side="left", padx=5)
 
+        # 右側電影按鈕
         self.btn_right = tk.Button(frame, text="", wraplength=180, font=("微軟正黑體", 13, "bold"),
                                   command=lambda: self.handle_choice(2), height=8, width=18,
                                   bg=COLOR_CARD, fg=COLOR_TEXT, relief="flat", 
                                   activebackground="#E9ECEF", bd=0, cursor="hand2")
         self.btn_right.pack(side="left", expand=True, padx=10)
 
+        # 底部功能按鈕區
         btn_frame = tk.Frame(self.root, bg=COLOR_BG)
         btn_frame.pack(pady=30)
         
@@ -191,23 +175,21 @@ class MovieSorterApp:
                       f, ensure_ascii=False, indent=2)
 
     def export_js(self):
-        # 【修正重點】：根據偵測到的類別動態初始化清單
-        categories_output = {cat: [] for cat in self.categories}
+        categories = {'westernMovies': [], 'asiaMovies': [], 'animeMovies': []}
         
         for m in self.movies:
             cat = m['category']
             m['score'] = self.get_display_score(m['elo'])
-            if cat in categories_output:
-                categories_output[cat].append(m)
+            categories[cat].append(m)
 
         with open(OUTPUT_JS, 'w', encoding='utf-8') as f:
-            for cat, m_list in categories_output.items():
+            for cat, m_list in categories.items():
                 f.write(f"export const {cat} = [\n")
                 for m in sorted(m_list, key=lambda x: x['elo'], reverse=True):
                     f.write(f'  {{ title: "{m["title"]}", score: {m["score"]}, note: "{m["note"]}", poster: "{m["poster"]}" }},\n')
                 f.write("];\n\n")
         
-        messagebox.showinfo("儲存成功", f"分數已更新至 {OUTPUT_JS}\n已偵測並保留類別：{', '.join(self.categories)}")
+        messagebox.showinfo("儲存成功", f"分數已更新至 {OUTPUT_JS}\n範圍：{MIN_SCORE} ~ {MAX_SCORE}")
 
 if __name__ == "__main__":
     root = tk.Tk()

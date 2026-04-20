@@ -9,10 +9,14 @@ export default function MovieListApp({ initialFilter = 'all', hideFilterBar = fa
   const [activeTitle, setActiveTitle] = useState('');
   const [isImgLoaded, setIsImgLoaded] = useState(false);
   
+  // 新增：搜尋關鍵字狀態
+  const [searchTerm, setSearchTerm] = useState('');
+  
   // 初始分類由外部傳入
   const [filter, setFilter] = useState(initialFilter);
   const [visibleCount, setVisibleCount] = useState(100); 
 
+  // 合併並排序原始資料
   const sortedMovies = useMemo(() => {
     const combined = [
       ...westernMovies.map(m => ({ ...m, category: 'western' })),
@@ -23,11 +27,28 @@ export default function MovieListApp({ initialFilter = 'all', hideFilterBar = fa
     return combined.sort((a, b) => (b.score || 0) - (a.score || 0));
   }, []);
 
+  // 核心篩選邏輯（分類 + 搜尋）
   const filteredMovies = useMemo(() => {
-    if (filter === 'top100') return sortedMovies.slice(0, 100);
-    if (filter === 'all') return sortedMovies;
-    return sortedMovies.filter(m => m.category === filter);
-  }, [sortedMovies, filter]);
+    let result = sortedMovies;
+
+    // 1. 處理分類篩選
+    if (filter === 'top100') {
+      result = sortedMovies.slice(0, 100);
+    } else if (filter !== 'all') {
+      result = sortedMovies.filter(m => m.category === filter);
+    }
+
+    // 2. 處理搜尋關鍵字篩選
+    if (searchTerm.trim()) {
+      const lowerSearch = searchTerm.toLowerCase();
+      result = result.filter(m => 
+        m.title.toLowerCase().includes(lowerSearch) || 
+        (m.note && m.note.toLowerCase().includes(lowerSearch))
+      );
+    }
+
+    return result;
+  }, [sortedMovies, filter, searchTerm]);
 
   const displayedMovies = filteredMovies.slice(0, visibleCount);
 
@@ -43,7 +64,13 @@ export default function MovieListApp({ initialFilter = 'all', hideFilterBar = fa
 
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);
+    setSearchTerm(''); // 切換分類時清空搜尋，避免找不到東西
     setVisibleCount(100);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    setVisibleCount(100); // 搜尋時重置顯示數量
   };
 
   const filterOptions = [
@@ -57,6 +84,26 @@ export default function MovieListApp({ initialFilter = 'all', hideFilterBar = fa
 
   return (
     <div className="movie-app-container">
+      {/* 搜尋欄區域：包含電影總數顯示 */}
+      <div className="search-container">
+        <div className="search-box">
+          <span className="search-icon">🔍</span>
+          <input 
+            type="text" 
+            placeholder="搜尋電影標題或心得..." 
+            value={searchTerm}
+            onChange={handleSearchChange}
+            className="search-input"
+          />
+          {searchTerm && (
+            <button className="search-clear" onClick={() => setSearchTerm('')}>×</button>
+          )}
+        </div>
+        <div className="movie-count-badge">
+          收錄電影：{sortedMovies.length} 部
+        </div>
+      </div>
+
       {/* 只有在 hideFilterBar 為 false 時才顯示按鈕列 */}
       {!hideFilterBar && (
         <div className="filter-bar">
@@ -69,6 +116,13 @@ export default function MovieListApp({ initialFilter = 'all', hideFilterBar = fa
               {opt.label}
             </button>
           ))}
+        </div>
+      )}
+
+      {/* 搜尋無結果提示 */}
+      {filteredMovies.length === 0 && (
+        <div className="no-results">
+          <p>找不到符合「{searchTerm}」的電影 🎬</p>
         </div>
       )}
 

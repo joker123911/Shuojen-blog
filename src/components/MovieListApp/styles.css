@@ -42,7 +42,7 @@
 
 .list-item {
   display: flex;
-  align-items: flex-start; /* 讓內容靠上對齊 */
+  align-items: flex-start;
   padding: 16px;
   border-radius: 8px;
   background: var(--ifm-card-background-color);
@@ -52,7 +52,7 @@
 }
 
 .list-item:hover {
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  box-shadow: var(--ifm-global-shadow-md);
   transform: scale(1.02); 
   border-color: var(--ifm-color-primary); 
 }
@@ -61,7 +61,7 @@
 .list-poster {
   width: 70px;
   flex-shrink: 0;
-  margin-right: 16px; /* 與右側資訊保持距離 */
+  margin-right: 16px;
 }
 
 .list-poster img {
@@ -79,25 +79,24 @@
   justify-content: flex-start;
 }
 
-/* --- 新增：IMDb 風格的排名標籤 --- */
+/* --- 排名標籤：固定為深底白字，確保日夜模式皆清晰 --- */
 .list-rank-badge {
-  background-color: #3B3B3F; /* IMDb 常見的藍色系 */
-  color: white;
+  background-color: #313131; /* 固定深色背景 */
+  color: #ffffff;            /* 固定白色文字 */
   font-weight: 700;
   font-size: 0.9rem;
   padding: 2px 14px 2px 8px;
   display: inline-block;
-  align-self: flex-start; /* 確保標籤寬度隨內容變化 */
+  align-self: flex-start;
   margin-bottom: 6px;
   border-radius: 2px 0 0 2px;
-  /* 使用 clip-path 做出右側稍微傾斜的緞帶感 */
   clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
 }
 
 .list-title {
   font-weight: 700;
   font-size: 1.15rem;
-  color: var(--ifm-font-color-base); /* 讓標題顏色更像一般文字 */
+  color: var(--ifm-heading-color); 
   margin: 0 0 6px 0;
 }
 
@@ -105,7 +104,7 @@
   font-size: 0.9rem;
   line-height: 1.5;
   color: var(--ifm-font-color-base);
-  opacity: 0.7; /* 稍微變淡，當作年份或分級等次要資訊 */
+  opacity: 0.8; 
   margin: 0 0 10px 0;
 }
 
@@ -123,15 +122,14 @@
 }
 
 .star-icon {
-  color: #f5c518; /* IMDb 經典黃色 */
+  color: #f5c518; 
   margin-right: 4px;
 }
 
-/* 模擬 IMDb 的 Rate 文字按鈕 */
 .list-rate-btn {
   font-size: 0.95rem;
   font-weight: 600;
-  color: #1a66cc;
+  color: var(--ifm-color-primary);
   cursor: pointer;
 }
 .list-rate-btn:hover {
@@ -155,6 +153,7 @@
 
 .load-more-btn:hover {
   background: var(--ifm-color-emphasis-200);
+  border-color: var(--ifm-color-primary);
 }
 
 /* --- Modal 彈窗核心 --- */
@@ -180,7 +179,7 @@
   animation: zoomIn 0.2s ease-out;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
   cursor: default; 
 }
 
@@ -221,23 +220,10 @@
   min-height: 200px;
   border-radius: 8px;
   overflow: hidden;
-  background: var(--ifm-color-emphasis-200);
+  background: var(--ifm-color-emphasis-100);
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.poster-frame.loading::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-  animation: skeleton-shimmer 1.5s infinite;
-}
-
-@keyframes skeleton-shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
 }
 
 .poster-img {
@@ -254,7 +240,80 @@
 .poster-frame.loaded .poster-img { opacity: 1; }
 .poster-frame.loaded { background: transparent; }
 
-/* --- 手機版微調 --- */
+/* --- 搜尋區域：增加彈性排版與間距 --- */
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 15px; 
+  margin-bottom: 25px;
+  justify-content: center;
+  flex-wrap: wrap; 
+}
+
+.search-box {
+  position: relative;
+  flex-grow: 1;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  color: var(--ifm-color-emphasis-600);
+  z-index: 1;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 40px 12px 45px;
+  border-radius: 25px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-color); 
+  color: var(--ifm-font-color-base);
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.search-input:focus {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 0 0 2px var(--ifm-color-primary-lighter);
+}
+
+.search-clear {
+  position: absolute;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--ifm-color-emphasis-500);
+  cursor: pointer;
+}
+
+/* --- 電影總數標籤樣式 --- */
+.movie-count-badge {
+  background-color: var(--ifm-color-emphasis-200);
+  color: var(--ifm-font-color-base);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.no-results {
+  text-align: center;
+  padding: 40px;
+  color: var(--ifm-color-emphasis-600);
+  font-size: 1.1rem;
+}
+
+/* 手機版微調 */
 @media (max-width: 768px) {
   .list-item { padding: 12px; }
   .list-poster { width: 55px; margin-right: 12px; }
@@ -264,4 +323,16 @@
   .poster-modal-content { padding: 1rem; max-width: 95%; }
   .modal-title { font-size: 1rem; }
   .poster-img { max-height: 65vh; }
+}
+
+@media (max-width: 600px) {
+  .search-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .movie-count-badge {
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+  }
 }
