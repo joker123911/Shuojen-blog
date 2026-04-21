@@ -73,7 +73,7 @@ export const westernMovies = [
   { title: "險路勿近", score: 7.7, note: "犯罪驚悚片，柯恩兄弟最有名的一部，全片無配樂但壓迫感超強", poster: "./img/movie/險路勿近.webp" },
   { title: "站在我這邊", score: 7.7, note: "很棒的史蒂芬金原作電影，青少年冒險類型", poster: "./img/movie/站在我這邊.jpg" },
   { title: "美麗境界", score: 7.7, note: "經典的天才傳記片，描寫天才人性的部分", poster: "./img/movie/美麗境界.jpg" },
-  { title: "沉默的羔羊", score: 7.7, note: "經典老片，用喜劇包裝的悲劇，值得一看", poster: "./img/movie/沉默的羔羊.webp" },
+  { title: "沉默的羔羊", score: 7.7, note: "經典老片，老拔叔演技太強", poster: "./img/movie/沉默的羔羊.webp" },
   { title: "美麗人生", score: 7.7, note: "我小學的時候看的，用喜劇包裝的集中營悲劇", poster: "./img/movie/美麗人生.webp" },
   { title: "媽的多重宇宙", score: 7.7, note: "我能大膽的說看過最有創意的一部電影", poster: "./img/movie/媽的多重宇宙.webp" },
   { title: "情感的價值", score: 7.7, note: "來自挪威的家庭劇情電影，探討的是家庭創傷與和解，節奏稍慢，但是將情感拍攝的很細膩、真摯，推薦", poster: "./img/movie/情感的價值.jpg" },
