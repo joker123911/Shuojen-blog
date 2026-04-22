@@ -10,23 +10,15 @@ const config = {
     v4: true,
   },
 
-  // 新增：Plausible Analytics 腳本 (已修正格式錯誤)
-  headTags: [
+  // 已更換為 Umami Analytics 腳本
+  scripts: [
     {
-      tagName: 'script',
-      attributes: {
-        async: 'true',
-        src: 'https://plausible.io/js/pa-otIEX7MxW0xE1WZ_7-i9j.js',
-      },
-    },
-    {
-      tagName: 'script',
-      attributes: {}, 
-      innerHTML: `window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()`,
+      src: 'https://cloud.umami.is/script.js',
+      'data-website-id': '45021ff8-89a4-45a9-a0ba-e6352cb94d3c',
+      defer: true,
     },
   ],
 
-  // 修改：正式切換至新網域
   url: 'https://shuojen.com',
   baseUrl: '/',
   trailingSlash: undefined,
@@ -54,7 +46,6 @@ const config = {
         theme: {
           customCss: './src/css/custom.css',
         },
-        // --- 新增：SEO Sitemap 設定 ---
         sitemap: {
           changefreq: 'weekly',
           priority: 0.5,
@@ -123,7 +114,6 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      // --- 新增：有利於 SEO 的 Metadata ---
       metadata: [
         {name: 'description', content: 'Shuo-jen 的個人部落格，分享土木工程、攝影紀錄、程式開發與生活隨筆。'},
         {name: 'keywords', content: 'Shuo-jen, 土木工程, 攝影, Docusaurus, 部落格, 台北, 西洋棋, 魔術方塊, 演唱會'},
@@ -203,7 +193,6 @@ const config = {
           </a>
         </div>
         `,
-        // 上方的 page_id 已改回 shuojen.site，以延續舊有的統計數字。
       },
       prism: {
         theme: prismThemes.github,
