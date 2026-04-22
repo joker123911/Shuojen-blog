@@ -21,7 +21,7 @@ date: 2026-04-22T22:31:25+08:00
 
 後來我就依樣畫葫蘆，跟著 Wiwi 和 Jaron 用了 Docusaurus 這個靜態網頁生成套件，並照著 [Federico Tartarini](https://reurl.cc/5RZk6q) 的系列影片一步一步完成，可以看到我連 favicon 都是照他的教學照抄的（笑死）。
 
-當時我還沒有用 AI 的習慣，從小到大，我所有感興趣的東西都是在 Youtube 上學的，包括小學的時候學[魔術方塊](/docs/rubiks_cube/competition)、國中的時候學轉筆[^1]、高中學[吉他](http://localhost:3000/docs/music/guitar)、大學跟室友一起玩[水族](/docs/aqua)、研究所學怎麼下[西洋棋](/docs/chess/introduce)、這陣子學[嘸蝦米](/blog/2025/10/03/noshrimprice#嘸蝦米輸入法)也是，我真的活在一個很幸福的時代，什麼東西都能在網路上找到教學。
+當時我還沒有用 AI 的習慣，從小到大，我所有感興趣的東西都是在 Youtube 上學的，包括小學的時候學[魔術方塊](/docs/rubiks_cube/competition)、國中的時候學轉筆[^1]、高中學[吉他](/docs/music/guitar)、大學跟室友一起玩[水族](/docs/aqua)、研究所學怎麼下[西洋棋](/docs/chess/introduce)、這陣子學[嘸蝦米](/blog/2025/10/03/noshrimprice#嘸蝦米輸入法)也是，我真的活在一個很幸福的時代，什麼東西都能在網路上找到教學。
 
 後來架站有些卡關，或者我的網頁需要高度客製化的時候，我開始學著求助 AI，才發現到：
 
