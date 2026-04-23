@@ -7,7 +7,8 @@ description: 個人網頁名冊
 
 *最後更新：2025-04-21*
 
-<img src="/img/blogroll_logo.png" style={{ borderRadius: '0' }} alt="logo" /> ◀ 我的部落格徽章，歡迎取用
+<img src="/img/blogroll_logo.png" style={{ borderRadius: '0' }} alt="logo" /> 
+▲ 我的部落格徽章，歡迎取用
 
 :::info
 本頁面收錄我的 [RSS](/blog/2025/09/16/rss) 訂閱清單（隨機順序）。來源就是到處在各個網站連來連去，只要看到有趣的就加進來；讀著讀著，那些令人驚豔的文章總會讓我不知不覺記住作者，然後忍不住也寫一篇帶原文連結的文章來表達支持，對我來說，這就是部落格最純粹丶迷人之處吧。
