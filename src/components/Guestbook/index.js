@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from '@docusaurus/router';
+import Link from '@docusaurus/Link'; // 引入 Docusaurus 連結組件
 import styles from './styles.module.css';
 
 const GIST_JSON_URL = "https://gist.githubusercontent.com/joker123911/b7156615c093aee48f41ef1839da8dde/raw/comments.json";
-const GAS_APP_URL = "https://script.google.com/macros/s/AKfycbz1XA-9i4SWcwplB6U-KO17g3Qo8Rle5vqqiFhWOjmlbZ_MY_FNN26jMJw7pBAh5Zik/exec";
+const GAS_APP_URL = "https://script.google.com/macros/s/AKfycbxFQZfN81BHW8nKH7HsIE8IGwcSsy2z0wffCtV36JoP4THcFlXJnkDk_gNhmoE39Q82/exec";
 
-export default function Guestbook() {
-  const [comments, setComments] = useState([]);
+export default function Guestbook({ readOnly = false, postSlug }) {
+  const location = useLocation();
+  
+  // 優先使用傳入的 postSlug (來自列表頁)，否則用當前網址 (來自單篇文章或留言板頁)
+  const currentSlug = postSlug || location.pathname;
+  const isGuestbookPage = currentSlug === '/guestbook';
+
+  const [allComments, setAllComments] = useState([]);
+  const [activeTab, setActiveTab] = useState('current');
   const [formData, setFormData] = useState({ name: '', content: '', website: '' });
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(10);
 
-  // --- 優化後的圖案偵測邏輯 ---
+  // --- 圖案偵測邏輯 ---
   const getCommentClass = (content) => {
     if (!content) return styles.commentBody;
     const safeContent = String(content);
@@ -20,13 +29,12 @@ export default function Guestbook() {
     const hasBackslash = safeContent.includes('\\');
     const drawingChars = (safeContent.match(/[|_=+*<>]/g) || []).length;
     const isSymbolDense = drawingChars > 10;
-
-    if (lines.length > 1 && (hasAlignmentSpaces || hasBackslash || isSymbolDense)) {
-      return `${styles.commentBody} ${styles.asciiArt}`;
-    }
-    return styles.commentBody;
+    return (lines.length > 1 && (hasAlignmentSpaces || hasBackslash || isSymbolDense)) 
+      ? `${styles.commentBody} ${styles.asciiArt}` 
+      : styles.commentBody;
   };
 
+  // --- 日期格式化 ---
   const formatDate = (dateStr) => {
     if (!dateStr) return '';
     const date = new Date(dateStr);
@@ -44,8 +52,7 @@ export default function Guestbook() {
       const res = await fetch(`${GIST_JSON_URL}?t=${new Date().getTime()}`);
       const data = await res.json();
       if (Array.isArray(data)) {
-        const sortedData = data.sort((a, b) => new Date(b.time) - new Date(a.time));
-        setComments(sortedData);
+        setAllComments(data.sort((a, b) => new Date(b.time) - new Date(a.time)));
       }
     } catch (err) {
       console.error("載入錯誤:", err);
@@ -56,17 +63,27 @@ export default function Guestbook() {
 
   useEffect(() => {
     fetchComments();
-  }, []);
+    setActiveTab('current');
+    setVisibleCount(10);
+  }, [currentSlug]);
+
+  // 資料過濾
+  const currentPageComments = allComments.filter(c => c.slug === currentSlug);
+  const allPostComments = allComments.filter(c => c.slug !== '/guestbook');
+  
+  const displayComments = (isGuestbookPage && activeTab === 'all_posts') 
+    ? allPostComments 
+    : currentPageComments;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.content.trim()) return;
     setLoading(true);
     let finalWebsite = formData.website.trim();
-    if (finalWebsite && !/^https?:\/\//i.test(finalWebsite)) {
-      finalWebsite = `https://${finalWebsite}`;
-    }
-    const submitData = { ...formData, website: finalWebsite };
+    if (finalWebsite && !/^https?:\/\//i.test(finalWebsite)) finalWebsite = `https://${finalWebsite}`;
+
+    const submitData = { ...formData, website: finalWebsite, slug: currentSlug };
+    
     try {
       await fetch(GAS_APP_URL, {
         method: 'POST',
@@ -87,55 +104,87 @@ export default function Guestbook() {
 
   return (
     <div className={styles.guestbookContainer}>
-      <div className={styles.formSection}>
-        <h3 className={styles.sectionTitle}>發表留言</h3>
-        <form onSubmit={handleSubmit} className={styles.commentForm}>
-          <div className={styles.inputRow}>
-            <input
-              type="text" placeholder="名稱（必填）" required
-              value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})}
+      {!readOnly ? (
+        <div className={styles.formSection}>
+          <h3 className={styles.sectionTitle}>發表留言</h3>
+          <form onSubmit={handleSubmit} className={styles.commentForm}>
+            <div className={styles.inputRow}>
+              <input
+                type="text" placeholder="名稱（必填）" required
+                value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})}
+              />
+              <input
+                type="text" placeholder="個人網站（選填）"
+                value={formData.website} onChange={e => setFormData({...formData, website: e.target.value})}
+              />
+            </div>
+            <textarea
+              placeholder="輸入內容（必填）" required
+              value={formData.content} onChange={e => setFormData({...formData, content: e.target.value})}
             />
-            <input
-              type="text" placeholder="個人網站（選填）"
-              value={formData.website} onChange={e => setFormData({...formData, website: e.target.value})}
-            />
-          </div>
-          <textarea
-            placeholder="輸入內容（必填）" required
-            value={formData.content} onChange={e => setFormData({...formData, content: e.target.value})}
-          />
-          <button type="submit" className={styles.submitBtn} disabled={loading}>
-            {loading ? '傳送中...' : '送出留言'}
-          </button>
-        </form>
-      </div>
+            <button type="submit" className={styles.submitBtn} disabled={loading}>
+              {loading ? '傳送中...' : '送出留言'}
+            </button>
+          </form>
+        </div>
+      ) : (
+        <div className={styles.readOnlyNote}>
+          <p>
+            💡 想參與討論嗎？點擊進入
+            {/* 修正處：將文字包裝成 Link */}
+            <Link to={currentSlug} style={{ fontWeight: 'bold', margin: '0 4px' }}>
+              本文章
+            </Link>
+            即可發表留言。
+          </p>
+        </div>
+      )}
 
       <div className={styles.listSection}>
+        {isGuestbookPage && (
+          <div className={styles.tabContainer}>
+            <button 
+              className={`${styles.tabBtn} ${activeTab === 'current' ? styles.tabActive : ''}`}
+              onClick={() => { setActiveTab('current'); setVisibleCount(10); }}
+            >
+              一般留言
+            </button>
+            <button 
+              className={`${styles.tabBtn} ${activeTab === 'all_posts' ? styles.tabActive : ''}`}
+              onClick={() => { setActiveTab('all_posts'); setVisibleCount(10); }}
+            >
+              全站文章討論
+            </button>
+          </div>
+        )}
+
         <h3 className={styles.sectionTitle}>
-          所有留言 <span className={styles.count}>/ {comments.length} 則</span>
+          {isGuestbookPage 
+            ? (activeTab === 'current' ? '一般留言' : '全站文章討論') 
+            : '本篇留言'
+          }
+          <span className={styles.count}>/ {displayComments.length} 則</span>
         </h3>
 
         {fetchLoading ? (
           <p className={styles.statusText}>載入中...</p>
-        ) : comments.length === 0 ? (
+        ) : displayComments.length === 0 ? (
           <p className={styles.statusText}>目前尚無留言</p>
         ) : (
           <>
-            {comments.slice(0, visibleCount).map((c, i) => (
+            {displayComments.slice(0, visibleCount).map((c, i) => (
               <div key={i} className={styles.commentItem}>
                 <div className={styles.commentHeader}>
                   <span className={styles.commentName}>
-                    {c.website ? (
-                      <a href={c.website} target="_blank" rel="noopener noreferrer">{c.name}</a>
-                    ) : (
-                      c.name
+                    {c.website ? <a href={c.website} target="_blank" rel="noopener noreferrer">{c.name}</a> : c.name}
+                    {activeTab === 'all_posts' && isGuestbookPage && (
+                       <span className={styles.slugTag}>@{c.slug.replace('/blog/', '')}</span>
                     )}
                   </span>
                   <span className={styles.commentTime}>{formatDate(c.time)}</span>
                 </div>
                 <div className={getCommentClass(c.content)}>{c.content}</div>
 
-                {/* 站長回覆區塊 */}
                 {c.replyContent && (
                   <div className={styles.replyBox}>
                     <div className={styles.replyHeader}>
@@ -151,7 +200,7 @@ export default function Guestbook() {
               </div>
             ))}
 
-            {visibleCount < comments.length && (
+            {visibleCount < displayComments.length && (
               <div className={styles.loadMoreContainer}>
                 <button onClick={() => setVisibleCount(v => v + 10)} className={styles.loadMoreBtn}>
                   LOAD MORE
