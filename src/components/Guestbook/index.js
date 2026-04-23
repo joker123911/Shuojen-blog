@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from '@docusaurus/router';
-import Link from '@docusaurus/Link'; // 引入 Docusaurus 連結組件
+import Link from '@docusaurus/Link'; 
 import styles from './styles.module.css';
 
 const GIST_JSON_URL = "https://gist.githubusercontent.com/joker123911/b7156615c093aee48f41ef1839da8dde/raw/comments.json";
-const GAS_APP_URL = "https://script.google.com/macros/s/AKfycbxFQZfN81BHW8nKH7HsIE8IGwcSsy2z0wffCtV36JoP4THcFlXJnkDk_gNhmoE39Q82/exec";
+const GAS_APP_URL = "https://script.google.com/macros/s/AKfycbzqlUX8yz0eYzb72WOtjXTpeuhuVtwHYfuMJzs2rrspAKXynIbPugc02OdYWAM66nR7/exec";
 
 export default function Guestbook({ readOnly = false, postSlug }) {
   const location = useLocation();
   
-  // 優先使用傳入的 postSlug (來自列表頁)，否則用當前網址 (來自單篇文章或留言板頁)
   const currentSlug = postSlug || location.pathname;
   const isGuestbookPage = currentSlug === '/guestbook';
 
@@ -20,7 +19,6 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   const [fetchLoading, setFetchLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(10);
 
-  // --- 圖案偵測邏輯 ---
   const getCommentClass = (content) => {
     if (!content) return styles.commentBody;
     const safeContent = String(content);
@@ -34,7 +32,6 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       : styles.commentBody;
   };
 
-  // --- 日期格式化 ---
   const formatDate = (dateStr) => {
     if (!dateStr) return '';
     const date = new Date(dateStr);
@@ -67,7 +64,6 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     setVisibleCount(10);
   }, [currentSlug]);
 
-  // 資料過濾
   const currentPageComments = allComments.filter(c => c.slug === currentSlug);
   const allPostComments = allComments.filter(c => c.slug !== '/guestbook');
   
@@ -82,7 +78,14 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     let finalWebsite = formData.website.trim();
     if (finalWebsite && !/^https?:\/\//i.test(finalWebsite)) finalWebsite = `https://${finalWebsite}`;
 
-    const submitData = { ...formData, website: finalWebsite, slug: currentSlug };
+    const pageTitle = document.title.split(' | ')[0];
+
+    const submitData = { 
+      ...formData, 
+      website: finalWebsite, 
+      slug: currentSlug,
+      title: pageTitle 
+    };
     
     try {
       await fetch(GAS_APP_URL, {
@@ -130,8 +133,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       ) : (
         <div className={styles.readOnlyNote}>
           <p>
-            💡 想參與討論嗎？點擊進入
-            {/* 修正處：將文字包裝成 Link */}
+            💡 點擊進入
             <Link to={currentSlug} style={{ fontWeight: 'bold', margin: '0 4px' }}>
               本文章
             </Link>
@@ -178,7 +180,14 @@ export default function Guestbook({ readOnly = false, postSlug }) {
                   <span className={styles.commentName}>
                     {c.website ? <a href={c.website} target="_blank" rel="noopener noreferrer">{c.name}</a> : c.name}
                     {activeTab === 'all_posts' && isGuestbookPage && (
-                       <span className={styles.slugTag}>@{c.slug.replace('/blog/', '')}</span>
+                       // --- 修改處：將標籤包裝在 Link 中，並加上 style 取消底線 ---
+                       <Link 
+                         to={c.slug} 
+                         className={styles.slugTag} 
+                         style={{ textDecoration: 'none' }}
+                       >
+                         @{c.title || c.slug.replace('/blog/', '')}
+                       </Link>
                     )}
                   </span>
                   <span className={styles.commentTime}>{formatDate(c.time)}</span>
