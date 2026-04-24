@@ -132,3 +132,32 @@ article img {
 .spoiler-text:hover {
   filter: blur(0);
 }
+
+/* =========================================
+   6. Markdown 標題樣式 - 版本二：側邊重音簡潔風
+   ========================================= */
+
+.markdown h2 {
+  /* 使用主題色作為左側邊框 */
+  border-left: 10px solid var(--ifm-color-primary);
+  /* 使用透明灰色作為背景，日夜模式皆能自然融合 */
+  background-color: rgba(136, 136, 136, 0.08); 
+  padding: 0.8rem 1.2rem;
+  margin-top: 3.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: none; /* 移除 Docusaurus 預設底線 */
+  border-radius: 0 8px 8px 0;
+  color: var(--ifm-color-emphasis-900);
+  font-weight: 600;
+  display: block;
+}
+
+/* 手機版微調 */
+@media screen and (max-width: 996px) {
+  .markdown h2 {
+    margin-top: 2.5rem;
+    border-left-width: 6px;
+    padding: 0.6rem 1rem;
+    font-size: 1.4rem;
+  }
+}

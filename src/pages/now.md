@@ -5,7 +5,7 @@ description: 近況更新
 
 # 我在做什麼 `/now`
 
-*最後更新：2026-04-14*
+*最後更新：2026-04-24*
 
 :::note
 靈感來自[Derek Sivers /now](https://sive.rs/now)。
@@ -27,15 +27,13 @@ description: 近況更新
 
 ## 最近喜歡的作品
 * [鬼地方](https://zh.wikipedia.org/zh-tw/%E9%AC%BC%E5%9C%B0%E6%96%B9)：陳思宏老師的作品，超級好看，很久沒看到那麼震撼的小說。
-* [落日殺神](https://zh.wikipedia.org/zh-tw/%E8%90%BD%E6%97%A5%E6%AE%BA%E7%A5%9E)：看半小時就知道這會是我人生最愛的殺手片，完美契合我的電波，真的好讚。
+* [我的完美日常](https://zh.wikipedia.org/zh-tw/%E6%88%91%E7%9A%84%E5%AE%8C%E7%BE%8E%E6%97%A5%E5%B8%B8)：太好看，又一部 9 分的電影出現了，好感動。
 
 
 ## 最近正在看的作品
-* [我的英雄學院](https://zh.wikipedia.org/zh-tw/%E6%88%91%E7%9A%84%E8%8B%B1%E9%9B%84%E5%AD%B8%E9%99%A2)：蝦波推薦，最終季在 IMDB 上拿下 9.9 分讓我太好奇了，希望從第一季開始的我看的到那裡（看到第六季了）。
+* [我的英雄學院](https://zh.wikipedia.org/zh-tw/%E6%88%91%E7%9A%84%E8%8B%B1%E9%9B%84%E5%AD%B8%E9%99%A2)：蝦波推薦，最終季在 IMDB 上拿下 9.9 分讓我太好奇了，希望從第一季開始的我看的到那裡（看到第七季了）。
 * [極限返航小說](/blog/2026/03/21/drm)：看完電影就想要補小說，很好看。
-* [婚姻劇毒](https://zh.wikipedia.org/zh-tw/%E5%A9%9A%E5%A7%BB%E5%8A%87%E6%AF%92)：看第一集就好愛，完全對到我的電波。
-* [魔法帽的工作室](https://zh.wikipedia.org/zh-tw/%E9%AD%94%E6%B3%95%E5%B8%BD%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%AE%A4)：設定滿有新意的，好看。
-* [黃泉使者](https://zh.wikipedia.org/zh-tw/%E9%BB%83%E6%B3%89%E4%BD%BF%E8%80%85)：王道作品，「牛媽」荒川弘新作必看阿。
+* 新番作品太多了都好好看，快來看我的[本季新番觀看指南](/blog/2026/04/24/anime)
 
 ## 最近喜歡的店 
 * [BT BURGER](https://maps.app.goo.gl/bqRo8F547KVxC47v5)：跟蝦波[約會](/photoblog/2025/12/21/date)發現的寶藏店，義式培根蛋奶麵必點，但已經搬家了，哭哭。

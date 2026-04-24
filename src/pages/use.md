@@ -5,7 +5,7 @@ description: 記錄我愛用的工具
 
 # 我在用什麼 `/use`
 
-*最後更新：2025-02-12*
+*最後更新：2025-04-24*
 
 :::note
 靈感參考來自[Derek Sivers /uses](https://sive.rs/uses)。
@@ -59,6 +59,7 @@ description: 記錄我愛用的工具
 富士
 * FujiFilm XT-20 - 主力相機，二手購入，用五年了還是覺得不需要升級。
 * XF18-55mm F2.8-4 R LM OIS - 好用的標準焦段套頭。
+* Viltrox AF 27mm f1.2 - 光圈大，畫質無可挑剔的一支鏡頭，重量有點重就是了。
 
 松下
 * Panasonic GM-1 - 街拍相機，二手購入。
@@ -66,6 +67,9 @@ description: 記錄我愛用的工具
 * LUMIX 14mm F2.5 - 極輕便小餅乾鏡。
 * LUMIX 20mm F1.7ii - 大光圈畫質好，不過對焦稍差，二手購入。
 * LUMIX G VARIO 35-100mm F4.0-5.6 - 長焦掌心砲，二手購入。
+
+老鏡
+* Takumar 55mm f1.8 - 老鏡好讚，手動的浪漫用過就懂。
 
 底片
 * Konica-Auto s1.6 - 小叔阿公留下來的底片相機。
@@ -134,7 +138,6 @@ description: 記錄我愛用的工具
 
 作業系統
 * Windows - 主力用，工作軟體需要，還有蝦波打 LOL 用。
-* Linux Mint - 輕量速度快，現在在[客廳老電腦](/blog/2025/10/05/mint)用，之後接收蝦波的 PC 我再灌來自己用。
 * macOS - 筆電主力用。
 * Asahi linux - 筆電偶爾玩玩用。
 
@@ -142,10 +145,9 @@ description: 記錄我愛用的工具
 * Brave - 最好用的瀏覽器，同步功能方便。
 * Syncthing - 同步照片丶音樂很方便。
 * VSCodium - 編寫部落格文章與程式碼。
-* PyCharm Community Edition - 另一個編寫部落格文章與程式碼。
 * MusicBee - 本地無損音樂播放器。
 * foobar2000 - 另一個本地無損音樂播放器。
-* KeePassXC - 同步各裝置密碼。
+* Bitwarden - 自由開源的密碼管理服務，很喜歡。
 * Ableton Live Lite - 音樂編輯軟體。
 * Audacity - 另一個簡易的音樂編輯軟體。
 * Docusaurus - 架設靜態網頁工具。

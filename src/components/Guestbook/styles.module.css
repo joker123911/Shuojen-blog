@@ -13,8 +13,9 @@
   border-bottom: 1px solid var(--ifm-color-emphasis-300);
   padding-bottom: 10px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start; /* 改為靠左對齊 */
   align-items: baseline;
+  gap: 12px; /* 標題與數量間距 */
 }
 
 .count {
@@ -41,6 +42,13 @@
 
 @media (max-width: 600px) {
   .inputRow { grid-template-columns: 1fr; }
+  
+  /* 手機版留言資訊一律靠左垂直排列，避免擠壓 */
+  .commentHeader, .replyHeader {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 4px !important;
+  }
 }
 
 .commentForm input, .commentForm textarea {
@@ -133,9 +141,11 @@
 
 .commentHeader {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start; /* 靠左對齊 */
   margin-bottom: 8px;
   align-items: center;
+  gap: 12px; /* 元素間距 */
+  flex-wrap: wrap; /* 空間不足時自動換行 */
 }
 
 .commentName {
@@ -197,9 +207,11 @@
 
 .replyHeader {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start; /* 靠左對齊 */
   align-items: center;
   margin-bottom: 10px;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .replyName {
