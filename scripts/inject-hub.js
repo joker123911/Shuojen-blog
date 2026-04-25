@@ -1,28 +1,46 @@
 const fs = require('fs');
 const path = require('path');
 
-// 因為檔案在 scripts/ 夾內，所以要用 '..' 回到根目錄再進到 build
+// 指向 build 後的 RSS 路徑
 const rssPath = path.join(__dirname, '..', 'build', 'blog', 'rss.xml');
 
-console.log(`🔍 正在檢查路徑: ${rssPath}`);
+console.log(`🔍 正在修正 RSS 格式: ${rssPath}`);
 
 if (fs.existsSync(rssPath)) {
   let content = fs.readFileSync(rssPath, 'utf8');
-  
-  // 定義 Hub 標籤
-  const hubTag = '<link href="https://pubsubhubbub.appspot.com/" rel="hub"/>';
-  
-  if (!content.includes(hubTag)) {
-    // 尋找 <channel> 標籤並在後面插入
-    // 使用正則表達式確保精確匹配
-    const updatedContent = content.replace('<channel>', `<channel>\n    ${hubTag}`);
-    
-    fs.writeFileSync(rssPath, updatedContent);
-    console.log('✅ 成功將 WebSub Hub 標籤注入 RSS 檔案！');
-  } else {
-    console.log('ℹ️ RSS 中已經存在 Hub 標籤，跳過修改。');
+
+  // 1. 檢查並注入 Atom 命名空間 (xmlns:atom)
+  // 這是解決 "Unexpected attribute" 的關鍵
+  if (!content.includes('xmlns:atom="http://www.w3.org/2005/Atom"')) {
+    content = content.replace(
+      '<rss version="2.0"',
+      '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"'
+    );
   }
+
+  // 2. 定義要注入的正確標籤 (使用 atom:link)
+  const hubTag = '    <atom:link href="https://pubsubhubbub.appspot.com/" rel="hub"/>';
+  const selfTag = '    <atom:link href="https://shuojen.com/blog/rss.xml" rel="self" type="application/rss+xml"/>';
+
+  // 3. 移除舊的錯誤標籤 (如果有手動改過的殘留)
+  content = content.replace(/<link href="https:\/\/pubsubhubbub\.appspot\.com\/" rel="hub"\/>/g, '');
+
+  // 4. 注入標籤到 <channel> 內
+  // 檢查是否已經存在，避免重複注入
+  if (!content.includes('rel="hub"')) {
+    content = content.replace('<channel>', `<channel>\n${hubTag}`);
+    console.log('✅ 已注入 WebSub Hub 標籤');
+  }
+
+  if (!content.includes('rel="self"')) {
+    content = content.replace('<channel>', `<channel>\n${selfTag}`);
+    console.log('✅ 已注入 rel="self" 標籤');
+  }
+
+  // 5. 寫回檔案
+  fs.writeFileSync(rssPath, content);
+  console.log('✨ RSS 修正完成！');
+
 } else {
-  console.log('❌ 錯誤：找不到 rss.xml。');
-  console.log('   請確認：1. 是否執行過 npm run build？ 2. docusaurus.config.js 是否開啟了 RSS 功能？');
+  console.log('❌ 錯誤：找不到 rss.xml，請確認是否已執行 npm run build。');
 }

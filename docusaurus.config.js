@@ -10,7 +10,6 @@ const config = {
     v4: true,
   },
 
-  // 已更換為 Umami Analytics 腳本
   scripts: [
     {
       src: 'https://cloud.umami.is/script.js',
@@ -21,7 +20,8 @@ const config = {
 
   url: 'https://shuojen.com',
   baseUrl: '/',
-  trailingSlash: undefined,
+  // 建議將 trailingSlash 設定為 false，避免產生帶有結尾斜線的重複 URL 或導致 RSS 解析路徑問題
+  trailingSlash: false,
 
   organizationName: 'joker123911',
   projectName: 'Shuojen-blog',
@@ -42,7 +42,7 @@ const config = {
         docs: {
           sidebarPath: './sidebars.js',
         },
-        blog: false,
+        blog: false, // 禁用預設 blog 以使用下方的多重 blog 外掛
         theme: {
           customCss: './src/css/custom.css',
         },
