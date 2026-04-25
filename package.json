@@ -6,7 +6,7 @@
     "docusaurus": "docusaurus",
     "prestart": "git pull",
     "start": "node scripts/gen-photos.js && node scripts/update-stats.js && docusaurus start",
-    "build": "node scripts/gen-photos.js && node scripts/update-stats.js && node scripts/sync-build-time.js && docusaurus build && node scripts/inject-hub.js",
+    "build": "node scripts/gen-photos.js && node scripts/update-stats.js && node scripts/sync-build-time.js && docusaurus build",
     "deploy": "node scripts/gen-photos.js && node scripts/update-stats.js && node scripts/sync-build-time.js && docusaurus deploy",
     "push": "node scripts/sync-build-time.js && node scripts/push.js",
     "clear": "docusaurus clear",

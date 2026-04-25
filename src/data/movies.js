@@ -158,7 +158,17 @@ export const westernMovies = [
   { title: "異形 ", score: 7.6, note: "經典第一集，滿不錯的，科幻怪物片始祖", poster: "./img/movie/異形.webp" },  
   { title: "異形：羅穆路斯 ", score: 8.1, note: "超級喜歡的驚悚怪物片續集，只要補第一集就能有更讚的觀影體驗", poster: "./img/movie/異形羅穆路斯.webp" },  
   { title: "金剛 ", score: 7.6, note: "經典動作怪物電影，要看 2005 年版", poster: "./img/movie/金剛.webp" },  
-  { title: "2012 ", score: 7.7, note: "經典末日電影，當時覺得特效超讚的", poster: "./img/movie/2012.webp" },  
+  { title: "2012 ", score: 7.7, note: "經典末日電影，當時最讚的特效電影", poster: "./img/movie/2012.webp" },  
+  { title: "龍與地下城：盜賊榮耀 ", score: 7.3, note: "滿不錯的冒險電影，流暢好笑", poster: "./img/movie/龍與地下城：盜賊榮耀.webp" },  
+  { title: "即刻毀滅", score: 7.4, note: "卡司超強的搞笑片，還不錯，很鬧", poster: "./img/movie/即刻毀滅.webp" }, 
+  { title: "偷拐搶騙", score: 6.8, note: "小布演吉普賽人口音很好笑，滿白痴的一部黑色幽默黑幫片", poster: "./img/movie/偷拐搶騙.webp" },
+  { title: "曼哈頓戀習曲", score: 7.7, note: "音樂超棒的一部，喜歡到收藏了原聲帶", poster: "./img/movie/曼哈頓戀習曲.webp" },
+  { title: "攻其不備", score: 8.5, note: "真實故事改編，跨越種族的善良，感人的一部", poster: "./img/movie/攻其不備.webp" },
+  { title: "真愛每一天", score: 7.6, note: "設定有趣，最後反而父子間的情感更讓人印象深刻", poster: "./img/movie/真愛每一天.webp" },
+  { title: "真愛挑日子", score: 7.0, note: "沒什麼感覺的一部愛情片，看在安海瑟薇給高一點點", poster: "./img/movie/真愛挑日子.webp" },
+  { title: "真愛繞圈圈", score: 7.1, note: "跟《真愛挑日子》很像的一部，很喜歡這部的 Lily Collins", poster: "./img/movie/真愛繞圈圈.webp" },
+  { title: "我就要你好好的", score: 6.5, note: "價值觀很不合的一部，不太愛", poster: "./img/movie/我就要你好好的.webp" },
+  { title: "鹽路上有你", score: 7.3, note: "面臨破產的中年夫妻一路的旅途，滿好看", poster: "./img/movie/鹽路上有你.webp" },    
 ];
 
 export const asiaMovies = [
@@ -324,6 +334,8 @@ export const animeMovies = [
   { title: "荒野機器人", score: 7.0, note: "夢工廠佳作，畫面精緻漂亮，劇情也是上乘的好電影", poster: "./img/movie/荒野機器人.jpg" },
   { title: "再見機器人", score: 7.0, note: "沒有一句台詞但是會讓人想到前任的好動畫", poster: "./img/movie/再見機器人.webp" },
   { title: "魔法公主", score: 6.9, note: "角色很有特色，不過長大後看好像略顯平淡", poster: "./img/movie/魔法公主.webp" },
-  { title: "閃光的哈薩威", score: 6.6, note: "我的第一部 4DX，文戲有點太多，非鋼彈迷要補很多功課", poster: "./img/movie/閃光的哈薩威.webp" },
+  { title: "閃光的哈薩威", score: 6.7, note: "我的第一部 4DX，文戲有點太多，非鋼彈迷要補很多功課", poster: "./img/movie/閃光的哈薩威.webp" },
+  { title: "蒼鷺與少年", score: 6.4, note: "實在無法喜歡隱喻的讓故事說不好的一部作品", poster: "./img/movie/蒼鷺與少年.webp" },
+  { title: "冰雪奇緣 1~2", score: 7.4, note: "畫面漂亮、音樂好聽，開始靠向女性主義主題的迪士尼，1>2", poster: "./img/movie/冰雪奇緣.webp" },
 ];
 
