@@ -11,11 +11,13 @@ tags: ['friend','skateboard']
     抱歉，您的瀏覽器不支援內嵌影片。
 </video>
 
+
 <video controls width="360">
     <source src="/video/012.mp4" type="video/mp4" />
 
     抱歉，您的瀏覽器不支援內嵌影片。
 </video>
+
 
 <video controls width="360">
     <source src="/video/011.mp4" type="video/mp4" />
