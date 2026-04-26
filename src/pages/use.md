@@ -5,7 +5,7 @@ description: 記錄我愛用的工具
 
 # 我在用什麼 `/use`
 
-*最後更新：2025-04-24*
+*最後更新：2025-04-26*
 
 :::note
 靈感參考來自[Derek Sivers /uses](https://sive.rs/uses)。
@@ -156,12 +156,13 @@ description: 記錄我愛用的工具
 * mp3tag - 整理所有 Aiff 資訊的工具。
 * LocalSent - 好用的共享檔案工具。
 * Lightroom Classic - 現在都不修圖了，懶人直出。
+* Oracle Cloud - 免費版主機。
 
 Apps
 * 天天記帳 - 直覺的記帳軟體。
 * Aniyomi - 閱讀漫畫。
 * Pitt - 習慣用的 Ptt 閱讀器。
-* Inoreader - 習慣用的 RSS 閱讀器。
+* FreshRSS - 自架的 RSS 閱讀器，手機上搭配 Feedflow 使用。
 * ReVanced - 無廣告 Youtube 好用。
 * KKBOX - 無損串流音樂平台。
 * USB Audio Player PRO - 本地無損音樂播放器，可 Bit Perfect。
