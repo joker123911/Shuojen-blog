@@ -169,6 +169,15 @@ export const westernMovies = [
   { title: "真愛繞圈圈", score: 7.1, note: "跟《真愛挑日子》很像的一部，很喜歡這部的 Lily Collins", poster: "./img/movie/真愛繞圈圈.webp" },
   { title: "我就要你好好的", score: 6.5, note: "價值觀很不合的一部，不太愛", poster: "./img/movie/我就要你好好的.webp" },
   { title: "鹽路上有你", score: 7.3, note: "面臨破產的中年夫妻一路的旅途，滿好看", poster: "./img/movie/鹽路上有你.webp" },    
+  { title: "香草天空", score: 7.2, note: "湯姆克魯斯早期的好片，不錯看", poster: "./img/movie/香草天空.webp" }, 
+  { title: "回到17歲", score: 7.5, note: "小時候看柴克·艾弗隆最帥的一部，老梗喜劇，滿好看的", poster: "./img/movie/回到17歲.webp" }, 
+  { title: "鬥犬", score: 7.3, note: "小時候看覺得很讚，李連杰過癮動作片，爽度滿高的", poster: "./img/movie/鬥犬.webp" }, 
+  { title: "科洛弗檔案", score: 6.6, note: "第一人稱視角很酷，但很晃，劇情一般", poster: "./img/movie/科洛弗檔案.webp" },  
+  { title: "蝴蝶效應", score: 8.2, note: "很小的時候看的有陰影，還滿可怕的，很好看的驚悚片", poster: "./img/movie/蝴蝶效應.webp" },  
+  { title: "獵殺星期一", score: 7.4, note: "細想的話不合理的地方滿多，劇本滿有創意的，我覺得其實不錯", poster: "./img/movie/獵殺星期一.webp" },
+  { title: "逃出絕命鎮", score: 7.8, note: "氣氛很讚的驚悚片，喬登·皮爾打出名號的作品", poster: "./img/movie/逃出絕命鎮.webp" },  
+  { title: "我們", score: 7.3, note: "喬登·皮爾的驚悚片氣氛都很好，但這部是我覺得最普的", poster: "./img/movie/我們.webp" },  
+  { title: "第九禁區", score: 7.5, note: "有關種族議題的一部外星人電影，很酷", poster: "./img/movie/第九禁區.webp" },  
 ];
 
 export const asiaMovies = [
@@ -264,6 +273,9 @@ export const asiaMovies = [
   { title: "我只是個計程車司機", score: 8.0, note: "光州事變電影，韓國的近代史事件都拍的很好看", poster: "./img/movie/我只是個計程車司機.webp" }, 
   { title: "熔爐 ", score: 7.8, note: "超沉重的一部電影，看的很難受，因為這部片韓國修法了", poster: "./img/movie/熔爐.webp" },  
   { title: "千萬別開門 ", score: 7.4, note: "氣氛營造的不錯，關於網路犯罪的驚悚電影", poster: "./img/movie/千萬別開門.webp" },   
+  { title: "嬰兒轉運站 ", score: 7.7, note: "看的時候覺得很像小偷家族，結果查了果然是是枝裕和拍的", poster: "./img/movie/嬰兒轉運站.webp" },
+  { title: "變身機長 ", score: 7.2, note: "滿鬧的搞笑片，中規中矩吧，喜歡曹政爽的話一定要看", poster: "./img/movie/變身機長.webp" },  
+  { title: "我和我的殭屍女兒 ", score: 7.0, note: "搞笑殭屍電影，還滿特別的，適合溫馨輕鬆看", poster: "./img/movie/我和我的殭屍女兒.webp" },    
 ];
 
 export const hongkongMovies = [
