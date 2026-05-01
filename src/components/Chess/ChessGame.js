@@ -43,7 +43,6 @@ function ChessGameLogic({ pgn, orientation = "w" }) {
   // 2. 初始化棋盤 (修正熱更新導致的 invokeExtensionPoints 錯誤)
   useEffect(() => {
     let isMounted = true;
-    let board = null;
 
     const initBoard = async () => {
       try {
@@ -51,19 +50,10 @@ function ChessGameLogic({ pgn, orientation = "w" }) {
 
         if (!isMounted || !boardRef.current) return;
 
-        // 【關鍵修正】初始化前先清空容器，防止 Docusaurus HMR 導致重複掛載
-        if (boardRef.current) {
-          boardRef.current.innerHTML = '';
-        }
+        // 初始化前先清空容器，防止 Docusaurus HMR 或 React StrictMode 導致重複掛載
+        boardRef.current.innerHTML = '';
 
-        // 如果已有舊實例，嘗試銷毀它
-        if (chessboardInstance.current) {
-          try {
-            await chessboardInstance.current.destroy();
-          } catch (e) { /* 忽略銷毀時的錯誤 */ }
-        }
-
-        board = new Chessboard(boardRef.current, {
+        const board = new Chessboard(boardRef.current, {
           position: history[moveIndex] || FEN.start,
           orientation: orientation,
           assetsUrl: "https://cdn.jsdelivr.net/npm/cm-chessboard@8/assets/",
@@ -75,6 +65,7 @@ function ChessGameLogic({ pgn, orientation = "w" }) {
           chessboardInstance.current = board;
           setIsBoardReady(true);
         } else {
+          // 如果異步載入完成時元件已經卸載，立即銷毀以清理殘留的 resize 監聽器
           board.destroy();
         }
       } catch (err) {
@@ -88,32 +79,28 @@ function ChessGameLogic({ pgn, orientation = "w" }) {
     return () => {
       isMounted = false;
       setIsBoardReady(false);
+      
       if (chessboardInstance.current) {
-        const instance = chessboardInstance.current;
+        // 【關鍵修正】必須同步執行 destroy()，絕對不能包在 setTimeout 裡面。
+        // 這樣才能確保在 DOM 被卸載前，立刻解除 resize 事件綁定，避免觸發 invokeExtensionPoints 錯誤。
+        try {
+          chessboardInstance.current.destroy();
+        } catch (e) {
+          console.warn("清理棋盤實例時發生的警告:", e);
+        }
         chessboardInstance.current = null;
-        // 使用延遲或 try-catch 確保 destroy 不會噴錯影響 React 渲染
-        setTimeout(() => {
-          try {
-            instance.destroy();
-          } catch (e) {
-            console.warn("清理棋盤實例時發生的警告:", e);
-          }
-        }, 0);
       }
     };
-  }, [orientation]); // 僅在方向改變時重啟實例
+  }, [orientation]);
 
   // 3. 同步棋盤位置 (加入安全防護)
   useEffect(() => {
-    // 確保實例存在且已準備好
     if (isBoardReady && chessboardInstance.current && history[moveIndex]) {
       try {
-        // 檢查實例是否還有 view 屬性，防止對已銷毀的對象操作
         if (chessboardInstance.current.view) {
           chessboardInstance.current.setPosition(history[moveIndex], true);
         }
       } catch (e) {
-        // 靜默處理，避免紅畫面
         console.warn("setPosition 失敗，可能正處於組件切換中");
       }
     }
@@ -223,4 +210,12 @@ export default function ChessGame(props) {
       {() => <ChessGameLogic {...props} />}
     </BrowserOnly>
   );
+}
+
+export function White({ pgn }) {
+  return <ChessGame pgn={pgn} orientation="w" />;
+}
+
+export function Black({ pgn }) {
+  return <ChessGame pgn={pgn} orientation="b" />;
 }

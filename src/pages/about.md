@@ -1,8 +1,7 @@
 ---
 title: 關於
 ---
-import White from '@site/src/components/White';
-import Black from '@site/src/components/Black';
+import { White, Black } from '/src/components/Chess/ChessGame';
 import Marquee from "react-fast-marquee";
 
 <style>{`
@@ -234,7 +233,7 @@ https://shuojen.com/photoblog/rss.xml
 ```
 
 # 即時數據
-貼文區目前共有 **191** 篇文章，共累積了 **121,869** 個字。
+貼文區目前共有 **191** 篇文章，共累積了 **122,228** 個字。
 
 
 # 關於我

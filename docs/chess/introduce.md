@@ -2,8 +2,7 @@
 title: '西洋棋推坑'
 sidebar_position: 1
 ---
-import White from '@site/src/components/White';
-import Black from '@site/src/components/Black';
+import { White, Black } from '/src/components/Chess/ChessGame';
 
 ![img](./img/020.webp)
 

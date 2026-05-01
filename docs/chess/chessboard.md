@@ -1,8 +1,7 @@
 ---
 title: 四馬蘇格蘭開局
 ---
-import White from '@site/src/components/White';
-import Black from '@site/src/components/Black';
+import { White, Black } from '/src/components/Chess/ChessGame';
  
 今天要分享的是我最喜歡的白方開局四馬蘇格蘭，這個開局非常簡單易學，也很容易就在前期取得優勢，是個非常好的進攻手段，到第四步走出 d4，就正式從四馬開局進入四馬蘇格蘭了。
 

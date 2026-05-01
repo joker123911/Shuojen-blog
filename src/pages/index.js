@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import Link from '@docusaurus/Link'; // 新增：用於連結
+import Link from '@docusaurus/Link';
 import photosData from '@site/src/data/photosData.json';
 
 // 洗牌算法
@@ -24,7 +24,7 @@ export default function PhotoGallery() {
   const [showLoading, setShowLoading] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  // 新增：Lightbox 相關 State
+  // Lightbox 相關 State
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
   const fullTitle = "> cd shuojen.com";
@@ -69,22 +69,22 @@ export default function PhotoGallery() {
     }
   }, [showLoading, progress]);
 
-  // 新增：Lightbox 開關邏輯
+  // Lightbox 開關邏輯
   const openLightbox = (photo) => {
     setSelectedPhoto(photo);
     if (typeof document !== 'undefined') {
-      document.body.style.overflow = 'hidden'; // 鎖定背景滾動
+      document.body.style.overflow = 'hidden';
     }
   };
 
   const closeLightbox = useCallback(() => {
     setSelectedPhoto(null);
     if (typeof document !== 'undefined') {
-      document.body.style.overflow = 'auto'; // 恢復背景滾動
+      document.body.style.overflow = 'auto';
     }
   }, []);
 
-  // 新增：監聽 Esc 鍵關閉 Lightbox
+  // 監聽 Esc 鍵關閉 Lightbox
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -117,7 +117,6 @@ export default function PhotoGallery() {
     );
   }
 
-  // 取得當前圖片物件與路徑 helper
   const currentPhoto = photos[currentIndex];
   
   const getPhotoSrc = (photoItem) => {
@@ -126,7 +125,6 @@ export default function PhotoGallery() {
     return baseUrl + src.replace(/^\//, '');
   };
 
-  // 動態產生類似 [=====>      ] 45% 的字串
   const renderLoadingBar = () => {
     const barLength = 15;
     const filledCount = Math.floor((progress / 100) * barLength);
@@ -209,10 +207,9 @@ export default function PhotoGallery() {
             max-height: 100%;
             object-fit: contain;
             transition: opacity 0.3s ease-in-out;
-            cursor: pointer; /* 新增：顯示可點擊 */
+            cursor: pointer;
           }
           
-          /* 新增：Hover 效果提示可點擊 */
           .gallery-image:hover {
             transform: scale(1.01);
             transition: transform 0.3s ease;
@@ -240,7 +237,6 @@ export default function PhotoGallery() {
           .btn-prev { left: 10px; }
           .btn-next { right: 10px; }
 
-          /* Lightbox 樣式整合 */
           .lightbox-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background-color: rgba(0, 0, 0, 0.92);
@@ -289,21 +285,29 @@ export default function PhotoGallery() {
           @media (max-width: 768px) {
             .gallery-wrapper {
               flex-direction: column;
-              height: auto;
-              min-height: calc(100vh - 60px);
+              height: calc(100vh - 60px);
             }
             .gallery-sidebar {
               width: 100%;
-              padding: 30px 20px 10px 20px;
+              padding: 20px 20px 10px 20px;
               text-align: left;
+              flex-shrink: 0;
+            }
+            .gallery-title {
+              font-size: 1.2rem;
+              white-space: pre-wrap;
+              word-break: break-word;
+            }
+            .gallery-loading {
+              font-size: 1.2rem;
             }
             .gallery-content {
-              padding: 10px;
+              padding: 0 10px;
               flex: 1;
-              min-height: 60vh;
+              min-height: unset;
             }
             .nav-btn {
-              padding: 10px;
+              padding: 10px 5px;
               font-size: 2rem;
             }
             .btn-prev { left: 0px; }
@@ -315,27 +319,21 @@ export default function PhotoGallery() {
 
       <main className="gallery-wrapper">
         <div className="gallery-sidebar">
-          {/* 第一行：打指令 */}
           <div className="gallery-title">
             {typedTitle}
-            {/* 載入條還沒出現前，游標留在第一行 */}
             {!showLoading && <span className="typewriter-cursor"></span>}
           </div>
           
-          {/* 第二行：進度條 */}
           {showLoading && (
             <div className="gallery-title gallery-loading">
               {renderLoadingBar()}
-              {/* 游標移到第二行，並在進度達到 100% 後繼續閃爍，模擬系統閒置 */}
               <span className="typewriter-cursor"></span>
             </div>
           )}
         </div>
 
-        {/* 右側：根據進度切換顯示 GIF 或 照片 */}
         <div className="gallery-content">
           {progress < 100 ? (
-            // 動畫執行中顯示 GIF
             <img 
               src={baseUrl + 'img/knight_5x.gif'}
               alt="Loading..."
@@ -343,14 +341,13 @@ export default function PhotoGallery() {
               style={{ cursor: 'default' }}
             />
           ) : (
-            // 載入完成後顯示相簿內容
             <>
               <img
                 src={getPhotoSrc(currentPhoto)}
                 alt={`Gallery artwork ${currentIndex + 1}`}
                 className="gallery-image"
-                style={{ animation: 'fadeIn 0.8s ease-in-out' }} // 套用淡入動畫
-                onClick={() => openLightbox(currentPhoto)} // 新增：點擊打開 Lightbox
+                style={{ animation: 'fadeIn 0.8s ease-in-out' }}
+                onClick={() => openLightbox(currentPhoto)}
               />
               <button onClick={prevPhoto} aria-label="Previous photo" className="nav-btn btn-prev">‹</button>
               <button onClick={nextPhoto} aria-label="Next photo" className="nav-btn btn-next">›</button>
@@ -358,7 +355,6 @@ export default function PhotoGallery() {
           )}
         </div>
 
-        {/* 新增：Lightbox 模態框結構 */}
         {selectedPhoto && (
           <div className="lightbox-overlay" onClick={closeLightbox}>
             <button className="lightbox-close-btn" onClick={closeLightbox} aria-label="Close">
@@ -370,7 +366,6 @@ export default function PhotoGallery() {
                 alt="Enlarged view"
                 className="lightbox-image"
               />
-              {/* 只有當 photo 是物件且有 link 屬性時才顯示按鈕 */}
               {typeof selectedPhoto !== 'string' && selectedPhoto.link && (
                 <div className="lightbox-caption">
                   <Link to={selectedPhoto.link} className="lightbox-link-btn">
