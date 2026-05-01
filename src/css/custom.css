@@ -161,3 +161,14 @@ article img {
     font-size: 1.4rem;
   }
 }
+
+/* =========================================
+   7. 防止導覽列擠壓 (Hide Navbar Items on specific width)
+   ========================================= */
+/* 當螢幕寬度開始擠壓 (1350px) 到正式變成手機版漢堡選單 (996px) 之間時，直接隱藏文字連結 */
+@media (max-width: 1350px) and (min-width: 997px) {
+  .navbar__item.navbar__link,
+  .navbar__item.dropdown {
+    display: none !important;
+  }
+}

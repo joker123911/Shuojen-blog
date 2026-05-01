@@ -157,6 +157,9 @@ const config = {
               { label: '近況', to: '/now' },
               { label: '貼文', to: '/blog' },
               { label: '攝影集', to: '/photography' },
+              { label: '關於', to: '/about' },
+              { label: '部落卷', to: '/blogroll' },
+              { label: '留言板', to: '/guestbook' },
             ],
           },
           {

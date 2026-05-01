@@ -52,7 +52,9 @@ function listPostsByYears(blogPosts) {
   const postsByYear = blogPosts.reduce((posts, post) => {
     const year = post.metadata.date.split('-')[0];
     const yearPosts = posts.get(year) ?? [];
-    return posts.set(year, [post, ...yearPosts]);
+    // 這裡已將 [post, ...yearPosts] 改為 [...yearPosts, post]
+    // 以維持由新到舊的降冪排序
+    return posts.set(year, [...yearPosts, post]);
   }, new Map());
   return Array.from(postsByYear, ([year, posts]) => ({
     year,
