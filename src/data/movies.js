@@ -179,6 +179,9 @@ export const westernMovies = [
   { title: "長腿", score: 6.0, note: "很固弄玄虛的一部恐怖片，期待太高了", poster: "./img/movie/長腿.webp" },
   { title: "魔法師的學徒", score: 5.9, note: "凱吉破產拍的，不知所云的一部", poster: "./img/movie/魔法師的學徒.webp" },
   { title: "迷魂記", score: 5.9, note: "希區考克經典，但我看完真的一臉問號，看老片要有心裡準備", poster: "./img/movie/迷魂記.webp" },
+  { title: "鳥人", score: 8.0, note: "很喜歡這部描寫演員不得志的心情", poster: "./img/movie/鳥人.webp" },
+  { title: "醉好的時光", score: 6.5, note: "有一點悶，沒有對到我的電波", poster: "./img/movie/醉好的時光.webp" },
+  { title: "噤界：入侵日", score: 8.2, note: "三部裡面我最喜歡的一部，喜歡這種單純的主線就把故事完整講好的電影，3>1>2", poster: "./img/movie/噤界：入侵日.webp" },   
 ];
 
 export const asiaMovies = [
@@ -351,4 +354,3 @@ export const animeMovies = [
   { title: "閃光的哈薩威", score: 6.6, note: "我的第一部 4DX，文戲有點太多，非鋼彈迷要補很多功課", poster: "./img/movie/閃光的哈薩威.webp" },
   { title: "蒼鷺與少年", score: 6.4, note: "實在無法喜歡隱喻的讓故事說不好的一部作品", poster: "./img/movie/蒼鷺與少年.webp" },
 ];
-
