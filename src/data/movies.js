@@ -1,4 +1,5 @@
 export const westernMovies = [
+  { title: "芭比", score: 7.2, note: "滿特別有童趣的一部電影，不過對我來說沒有太大的共鳴和記憶點", poster: "./img/movie/芭比.jpg" },
   { title: "星際效應", score: 9.5, note: "畫面劇情演員都無可挑剔，重映又去美麗華 Imax 體驗感動", poster: "./img/movie/星際效應.jpg" },
   { title: "頂尖對決", score: 9.5, note: "心中最佳的諾蘭神片，絕對不能被劇透，看第二次體驗更佳", poster: "./img/movie/頂尖對決.jpg" },
   { title: "小丑", score: 9.4, note: "醉後大丈夫導演是真的有兩把刷子，第一次看真的很震驚", poster: "./img/movie/小丑.jpg" },
@@ -197,6 +198,7 @@ export const westernMovies = [
 ];
 
 export const asiaMovies = [
+  { title: "富都青年", score: 7.8, note: "很好看的一部，演出了生活在底層的掙扎，吳慷仁最後的演技真的很棒", poster: "./img/movie/富都青年.jpg" },
   { title: "寄生上流", score: 9.4, note: "奉導集大成神作，商業與藝術完美結合", poster: "./img/movie/寄生上流.jpg" },
   { title: "大佛普拉斯", score: 9.2, note: "我最喜歡的臺灣電影，黑白畫面的荒謬感極佳", poster: "./img/movie/大佛普拉斯.jpg" },
   { title: "盲探", score: 9.1, note: "心中最佳的劉德華電影，人物塑造劇情都滿分", poster: "./img/movie/盲探.jpg" },
