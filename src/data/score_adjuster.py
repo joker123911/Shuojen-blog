@@ -24,7 +24,7 @@ COLOR_VS = "#ADB5BD"
 class MovieSorterApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("電影二選一評分系統")
+        self.root.title("電影二選一評分系統 - 快速收斂版")
         self.root.geometry("600x450")
         self.root.configure(bg=COLOR_BG)
         
@@ -51,7 +51,6 @@ class MovieSorterApp:
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
         
-        # 【修正重點】：自動偵測所有 export const 變數名稱
         found_categories = re.findall(r'export const (\w+) =', content)
         self.categories = found_categories
         
@@ -60,7 +59,6 @@ class MovieSorterApp:
             pattern = rf'export const {cat} = (\[.*?\]);'
             match = re.search(pattern, content, re.DOTALL)
             if match:
-                # 處理 JS 物件轉 JSON 格式
                 jt = re.sub(r'(\w+):', r'"\1":', match.group(1))
                 jt = re.sub(r',\s*]', ']', jt)
                 try:
@@ -75,13 +73,11 @@ class MovieSorterApp:
     def load_data(self):
         js_movies = self.parse_js_file(INPUT_JS)
         
-        # 1. 動態抓取原始資料的最高分與最低分
         scores = [m.get('score', 0) for m in js_movies]
         if scores:
             self.min_score = min(scores)
             self.max_score = max(scores)
             
-        # 2. 讀取進度檔
         saved_movies_map = {}
         if os.path.exists(PROGRESS_FILE):
             with open(PROGRESS_FILE, 'r', encoding='utf-8') as f:
@@ -93,7 +89,6 @@ class MovieSorterApp:
                     saved_movies = saved_data
                 saved_movies_map = {m['title']: m for m in saved_movies}
 
-        # 3. 合併資料並進行分數/Elo轉換
         final_list = []
         for m in js_movies:
             orig_score = m.get('score', 0)
@@ -130,18 +125,18 @@ class MovieSorterApp:
         frame.pack(expand=True, fill="both", padx=30)
 
         self.btn_left = tk.Button(frame, text="", wraplength=180, font=("微軟正黑體", 13, "bold"),
-                                 command=lambda: self.handle_choice(1), height=8, width=18,
-                                 bg=COLOR_CARD, fg=COLOR_TEXT, relief="flat", 
-                                 activebackground="#E9ECEF", bd=0, cursor="hand2")
+                                  command=lambda: self.handle_choice(1), height=8, width=18,
+                                  bg=COLOR_CARD, fg=COLOR_TEXT, relief="flat", 
+                                  activebackground="#E9ECEF", bd=0, cursor="hand2")
         self.btn_left.pack(side="left", expand=True, padx=10)
 
         tk.Label(frame, text="VS", font=("Segoe UI", 18, "italic bold"), 
                  bg=COLOR_BG, fg=COLOR_VS).pack(side="left", padx=5)
 
         self.btn_right = tk.Button(frame, text="", wraplength=180, font=("微軟正黑體", 13, "bold"),
-                                  command=lambda: self.handle_choice(2), height=8, width=18,
-                                  bg=COLOR_CARD, fg=COLOR_TEXT, relief="flat", 
-                                  activebackground="#E9ECEF", bd=0, cursor="hand2")
+                                   command=lambda: self.handle_choice(2), height=8, width=18,
+                                   bg=COLOR_CARD, fg=COLOR_TEXT, relief="flat", 
+                                   activebackground="#E9ECEF", bd=0, cursor="hand2")
         self.btn_right.pack(side="left", expand=True, padx=10)
 
         btn_frame = tk.Frame(self.root, bg=COLOR_BG)
@@ -156,8 +151,29 @@ class MovieSorterApp:
         tk.Button(btn_frame, text="關閉退出", command=self.root.quit, **exit_style).pack(side="left", padx=10)
 
     def next_match(self):
+        """改進的挑選邏輯：鄰近對決（Proximity Matchmaking）"""
         if len(self.movies) < 2: return
-        self.m1, self.m2 = random.sample(self.movies, 2)
+        
+        # 1. 隨機選出第一個對手
+        self.m1 = random.choice(self.movies)
+        
+        # 2. 將所有電影按目前的 Elo 排序
+        sorted_movies = sorted(self.movies, key=lambda x: x['elo'])
+        idx = sorted_movies.index(self.m1)
+        
+        # 3. 定義搜尋區間（挑選附近的 6 部電影），這能讓勝負更具懸念，收斂更快
+        window_size = 6
+        start = max(0, idx - window_size)
+        end = min(len(sorted_movies) - 1, idx + window_size)
+        
+        # 排除掉自己
+        candidates = [m for i, m in enumerate(sorted_movies) if start <= i <= end and m != self.m1]
+        
+        # 如果候選人不足（極端情況），則退回全隨機
+        if not candidates:
+            self.m2 = random.choice([m for m in self.movies if m != self.m1])
+        else:
+            self.m2 = random.choice(candidates)
         
         s1 = self.get_display_score(self.m1['elo'])
         s2 = self.get_display_score(self.m2['elo'])
@@ -169,8 +185,11 @@ class MovieSorterApp:
         self.prog_label.config(text=prog_text)
 
     def handle_choice(self, winner):
+        # 增加 K 值可以加速前期收斂，這裡維持 32 是一個穩健的選擇
         k = 32
         r1, r2 = self.m1['elo'], self.m2['elo']
+        
+        # Elo 期望勝率公式
         exp1 = 1 / (1 + 10 ** ((r2 - r1) / 400))
         exp2 = 1 - exp1
         
@@ -191,7 +210,6 @@ class MovieSorterApp:
                       f, ensure_ascii=False, indent=2)
 
     def export_js(self):
-        # 【修正重點】：根據偵測到的類別動態初始化清單
         categories_output = {cat: [] for cat in self.categories}
         
         for m in self.movies:
@@ -203,6 +221,7 @@ class MovieSorterApp:
         with open(OUTPUT_JS, 'w', encoding='utf-8') as f:
             for cat, m_list in categories_output.items():
                 f.write(f"export const {cat} = [\n")
+                # 匯出時按分數由高到低排序，保持檔案整潔
                 for m in sorted(m_list, key=lambda x: x['elo'], reverse=True):
                     f.write(f'  {{ title: "{m["title"]}", score: {m["score"]}, note: "{m["note"]}", poster: "{m["poster"]}" }},\n')
                 f.write("];\n\n")
