@@ -1,84 +1,12 @@
 {
   "movies": [
     {
-      "title": "出竅情人",
-      "score": 8.0,
-      "note": "小時候很喜歡的一部愛情電影，回憶加成，真的很好看",
-      "poster": "./img/movie/出竅情人.jpg",
-      "category": "westernMovies",
-      "elo": 1600.0
-    },
-    {
-      "title": "神鬼獵人",
-      "score": 7.9,
-      "note": "皮卡丘值得一座奧斯卡，很不錯的一部劇情本，很酷",
-      "poster": "./img/movie/神鬼獵人.jpg",
-      "category": "westernMovies",
-      "elo": 1580.0
-    },
-    {
-      "title": "五星主廚快餐車",
-      "score": 8.0,
-      "note": "我個人鍾愛公路電影，這部的父子親情也描寫的很不錯，溫暖好看",
-      "poster": "./img/movie/五星主廚快餐車.jpg",
-      "category": "westernMovies",
-      "elo": 1600.0
-    },
-    {
-      "title": "戰爭遊戲",
-      "score": 7.0,
-      "note": "中規中矩的鬥智片，反轉普通，還算OK",
-      "poster": "./img/movie/戰爭遊戲.jpg",
-      "category": "westernMovies",
-      "elo": 1400.0
-    },
-    {
-      "title": "我是傳奇",
-      "score": 7.8,
-      "note": "很不錯的末日孤獨電影，值得一看",
-      "poster": "./img/movie/我是傳奇.jpg",
-      "category": "westernMovies",
-      "elo": 1560.0
-    },
-    {
-      "title": "全民超人",
-      "score": 7.4,
-      "note": "前半我真的很喜歡，威爾史密斯演太好，可惜劇本不是很好，最後有點搞砸",
-      "poster": "./img/movie/全民超人.jpg",
-      "category": "westernMovies",
-      "elo": 1480.0
-    },
-    {
-      "title": "大娛樂家",
-      "score": 7.5,
-      "note": "很棒的歌舞片，劇情也不錯，音樂真的很好聽",
-      "poster": "./img/movie/大娛樂家.jpg",
-      "category": "westernMovies",
-      "elo": 1500.0
-    },
-    {
-      "title": "刺客聯盟",
-      "score": 7.0,
-      "note": "有點扯，但是小時候看覺得滿酷的",
-      "poster": "./img/movie/刺客聯盟.jpg",
-      "category": "westernMovies",
-      "elo": 1400.0
-    },
-    {
-      "title": "芭比",
-      "score": 7.2,
-      "note": "滿特別有童趣的一部電影，不過對我來說沒有太大的共鳴和記憶點",
-      "poster": "./img/movie/芭比.jpg",
-      "category": "westernMovies",
-      "elo": 1440.0
-    },
-    {
       "title": "星際效應",
-      "score": 9.5,
+      "score": 9.4,
       "note": "畫面劇情演員都無可挑剔，重映又去美麗華 Imax 體驗感動",
       "poster": "./img/movie/星際效應.jpg",
       "category": "westernMovies",
-      "elo": 1913.3022213727618
+      "elo": 1880.0
     },
     {
       "title": "頂尖對決",
@@ -174,7 +102,7 @@
       "note": "基努李維最佳，超酷炫的驅魔爽片，沒有之一",
       "poster": "./img/movie/康斯坦丁.jpg",
       "category": "westernMovies",
-      "elo": 1810.2564246552631
+      "elo": 1812.6773313844649
     },
     {
       "title": "同盟鶼鰈",
@@ -241,6 +169,14 @@
       "elo": 1762.505904678858
     },
     {
+      "title": "三個傻瓜",
+      "score": 8.7,
+      "note": "我心中的第一名印度電影，經典，有笑有淚",
+      "poster": "./img/movie/三個傻瓜.webp",
+      "category": "westernMovies",
+      "elo": 1744.4510994089553
+    },
+    {
       "title": "靈異第六感",
       "score": 8.7,
       "note": "絕對不能被暴雷系列，趕快把它看掉以防萬一吧",
@@ -257,12 +193,12 @@
       "elo": 1741.3740943070252
     },
     {
-      "title": "三個傻瓜",
+      "title": "極限返航",
       "score": 8.7,
-      "note": "我心中的第一名印度電影，經典，有笑有淚",
-      "poster": "./img/movie/三個傻瓜.webp",
+      "note": "這部太空科幻電影表現不俗，偏向一點詼諧輕鬆的氛圍，角色很討喜，看完會覺得很暖暖的，充滿希望",
+      "poster": "./img/movie/極限返航.webp",
       "category": "westernMovies",
-      "elo": 1741.0517043035684
+      "elo": 1730.0063685579921
     },
     {
       "title": "波斯語課",
@@ -279,14 +215,6 @@
       "poster": "./img/movie/日租家庭.webp",
       "category": "westernMovies",
       "elo": 1724.8546127398006
-    },
-    {
-      "title": "極限返航",
-      "score": 8.6,
-      "note": "這部太空科幻電影表現不俗，偏向一點詼諧輕鬆的氛圍，角色很討喜，看完會覺得很暖暖的，充滿希望",
-      "poster": "./img/movie/極限返航.webp",
-      "category": "westernMovies",
-      "elo": 1720.0
     },
     {
       "title": "龍捲風暴",
@@ -329,6 +257,14 @@
       "elo": 1696.789870419956
     },
     {
+      "title": "逆轉人生",
+      "score": 8.5,
+      "note": "真實故事改編的溫馨感動故事",
+      "poster": "./img/movie/逆轉人生.webp",
+      "category": "westernMovies",
+      "elo": 1694.5495310625156
+    },
+    {
       "title": "科洛弗10號地窖",
       "score": 8.4,
       "note": "小成本的懸疑作品，女主角好漂亮",
@@ -345,20 +281,20 @@
       "elo": 1687.856011990178
     },
     {
-      "title": "逆轉人生",
-      "score": 8.4,
-      "note": "真實故事改編的溫馨感動故事",
-      "poster": "./img/movie/逆轉人生.webp",
-      "category": "westernMovies",
-      "elo": 1681.5718513238123
-    },
-    {
       "title": "航站情緣",
       "score": 8.4,
       "note": "很愛這部有趣的溫暖電影，核心在講述等待的一部片",
       "poster": "./img/movie/航站情緣.webp",
       "category": "westernMovies",
       "elo": 1680.0
+    },
+    {
+      "title": "帝國浩劫：美國內戰",
+      "score": 8.4,
+      "note": "由記者視角演繹的戰爭片，很特別",
+      "poster": "./img/movie/帝國浩劫：美國內戰.jpg",
+      "category": "westernMovies",
+      "elo": 1676.2746225046421
     },
     {
       "title": "一級玩家",
@@ -409,20 +345,20 @@
       "elo": 1665.3164702917115
     },
     {
-      "title": "帝國浩劫：美國內戰",
-      "score": 8.3,
-      "note": "由記者視角演繹的戰爭片，很特別",
-      "poster": "./img/movie/帝國浩劫：美國內戰.jpg",
-      "category": "westernMovies",
-      "elo": 1663.9952710659734
-    },
-    {
       "title": "蝴蝶效應",
       "score": 8.3,
       "note": "很小的時候看的有陰影，還滿可怕的，很好看的驚悚片",
       "poster": "./img/movie/蝴蝶效應.webp",
       "category": "westernMovies",
-      "elo": 1652.6648150107371
+      "elo": 1664.4958300188714
+    },
+    {
+      "title": "北非諜影",
+      "score": 8.3,
+      "note": "經典老片，1942 年的電影但完全不覺得過時",
+      "poster": "./img/movie/北非諜影.webp",
+      "category": "westernMovies",
+      "elo": 1652.2563786807311
     },
     {
       "title": "奧本海默",
@@ -447,14 +383,6 @@
       "poster": "./img/movie/社群網站.jpg",
       "category": "westernMovies",
       "elo": 1646.9833353402587
-    },
-    {
-      "title": "北非諜影",
-      "score": 8.2,
-      "note": "經典老片，1942 年的電影但完全不覺得過時",
-      "poster": "./img/movie/北非諜影.webp",
-      "category": "westernMovies",
-      "elo": 1645.646980803258
     },
     {
       "title": "不",
@@ -521,6 +449,14 @@
       "elo": 1620.0
     },
     {
+      "title": "險路勿近",
+      "score": 8.1,
+      "note": "犯罪驚悚片，柯恩兄弟最有名的一部，全片無配樂但壓迫感超強，希斯萊傑跟安東尼霍普金斯等級的反派",
+      "poster": "./img/movie/險路勿近.webp",
+      "category": "westernMovies",
+      "elo": 1620.0
+    },
+    {
       "title": "屍樂園",
       "score": 8.1,
       "note": "喪屍題材結合公路電影，超好看的輕鬆小品",
@@ -545,6 +481,14 @@
       "elo": 1607.8312453965061
     },
     {
+      "title": "出竅情人",
+      "score": 8.0,
+      "note": "小時候很喜歡的一部愛情電影，回憶加成，真的很好看",
+      "poster": "./img/movie/出竅情人.jpg",
+      "category": "westernMovies",
+      "elo": 1604.8342875343883
+    },
+    {
       "title": "少年PI的奇幻漂流",
       "score": 8.0,
       "note": "奇幻色彩的經典作品，非常好看，結局會讓人回味無窮，很高明",
@@ -553,12 +497,12 @@
       "elo": 1603.2611168824355
     },
     {
-      "title": "進擊的鼓手",
+      "title": "五星主廚快餐車",
       "score": 8.0,
-      "note": "不瘋魔不成活的代表片",
-      "poster": "./img/movie/進擊的鼓手.jpg",
+      "note": "我個人鍾愛公路電影，這部的父子親情也描寫的很不錯，溫暖好看",
+      "poster": "./img/movie/五星主廚快餐車.jpg",
       "category": "westernMovies",
-      "elo": 1600.3857781269658
+      "elo": 1585.514835186458
     },
     {
       "title": "鳥人",
@@ -567,6 +511,22 @@
       "poster": "./img/movie/鳥人.webp",
       "category": "westernMovies",
       "elo": 1600.0
+    },
+    {
+      "title": "天才的禮物",
+      "score": 8.0,
+      "note": "天才傳記片，光看小妹妹的美顏就值得了",
+      "poster": "./img/movie/天才的禮物.jpg",
+      "category": "westernMovies",
+      "elo": 1593.9797131703758
+    },
+    {
+      "title": "進擊的鼓手",
+      "score": 8.0,
+      "note": "不瘋魔不成活的代表片",
+      "poster": "./img/movie/進擊的鼓手.jpg",
+      "category": "westernMovies",
+      "elo": 1593.728658912833
     },
     {
       "title": "模仿遊戲",
@@ -601,12 +561,12 @@
       "elo": 1588.0177106640633
     },
     {
-      "title": "天才的禮物",
+      "title": "神鬼獵人",
       "score": 7.9,
-      "note": "天才傳記片，光看小妹妹的美顏就值得了",
-      "poster": "./img/movie/天才的禮物.jpg",
+      "note": "皮卡丘值得一座奧斯卡，很不錯的一部劇情本，很酷",
+      "poster": "./img/movie/神鬼獵人.jpg",
       "category": "westernMovies",
-      "elo": 1586.1751851612876
+      "elo": 1580.0
     },
     {
       "title": "沙丘",
@@ -623,6 +583,14 @@
       "poster": "./img/movie/逃出絕命鎮.webp",
       "category": "westernMovies",
       "elo": 1569.4274535543134
+    },
+    {
+      "title": "異星入境",
+      "score": 7.8,
+      "note": "喜歡這種引起觀眾好奇心的科幻電影",
+      "poster": "./img/movie/異星入境.jpg",
+      "category": "westernMovies",
+      "elo": 1567.7182821979427
     },
     {
       "title": "瘋狂麥斯憤怒道",
@@ -654,7 +622,15 @@
       "note": "很酷的一部關於人性與虛榮的法庭電影",
       "poster": "./img/movie/魔鬼代言人.webp",
       "category": "westernMovies",
-      "elo": 1562.489273489774
+      "elo": 1565.578932307858
+    },
+    {
+      "title": "金剛 ",
+      "score": 7.8,
+      "note": "經典動作怪物電影，要看 2005 年版",
+      "poster": "./img/movie/金剛.webp",
+      "category": "westernMovies",
+      "elo": 1564.686700019639
     },
     {
       "title": "父親",
@@ -663,6 +639,22 @@
       "poster": "./img/movie/父親.webp",
       "category": "westernMovies",
       "elo": 1561.182697888425
+    },
+    {
+      "title": "班傑明的奇幻旅程",
+      "score": 7.8,
+      "note": "好看的奇幻愛情電影，小布越活越帥，顏值真的頂天了",
+      "poster": "./img/movie/班傑明的奇幻旅程.jpg",
+      "category": "westernMovies",
+      "elo": 1560.0
+    },
+    {
+      "title": "我是傳奇",
+      "score": 7.8,
+      "note": "很不錯的末日孤獨電影，值得一看",
+      "poster": "./img/movie/我是傳奇.jpg",
+      "category": "westernMovies",
+      "elo": 1560.0
     },
     {
       "title": "星際大戰系列",
@@ -697,14 +689,6 @@
       "elo": 1553.264042282502
     },
     {
-      "title": "異星入境",
-      "score": 7.8,
-      "note": "喜歡這種引起觀眾好奇心的科幻電影",
-      "poster": "./img/movie/異星入境.jpg",
-      "category": "westernMovies",
-      "elo": 1567.7182821979427
-    },
-    {
       "title": "曼哈頓戀習曲",
       "score": 7.8,
       "note": "音樂超棒的一部，喜歡到收藏了原聲帶",
@@ -713,36 +697,12 @@
       "elo": 1551.1027554024324
     },
     {
-      "title": "險路勿近",
-      "score": 7.7,
-      "note": "犯罪驚悚片，柯恩兄弟最有名的一部，全片無配樂但壓迫感超強",
-      "poster": "./img/movie/險路勿近.webp",
-      "category": "westernMovies",
-      "elo": 1549.1845672207476
-    },
-    {
       "title": "心中的小星星",
       "score": 7.7,
       "note": "感人的好片，關於教育的電影",
       "poster": "./img/movie/心中的小星星.webp",
       "category": "westernMovies",
       "elo": 1547.926701527322
-    },
-    {
-      "title": "末代武士",
-      "score": 7.7,
-      "note": "背景在 19 世紀的戰爭武士片",
-      "poster": "./img/movie/末代武士.jpg",
-      "category": "westernMovies",
-      "elo": 1545.2317268795807
-    },
-    {
-      "title": "站在我這邊",
-      "score": 7.7,
-      "note": "很棒的史蒂芬金原作電影，青少年冒險類型",
-      "poster": "./img/movie/站在我這邊.jpg",
-      "category": "westernMovies",
-      "elo": 1544.8523042455934
     },
     {
       "title": "刺激驚爆點",
@@ -769,14 +729,6 @@
       "elo": 1540.7041014429835
     },
     {
-      "title": "美麗境界",
-      "score": 7.7,
-      "note": "經典的天才傳記片，描寫天才人性的部分",
-      "poster": "./img/movie/美麗境界.jpg",
-      "category": "westernMovies",
-      "elo": 1540.440922646644
-    },
-    {
       "title": "2012 ",
       "score": 7.7,
       "note": "經典末日電影，當時最讚的特效電影",
@@ -785,20 +737,36 @@
       "elo": 1540.0
     },
     {
-      "title": "沉默的羔羊",
+      "title": "這個男人來自地球",
       "score": 7.7,
-      "note": "經典老片，老拔叔演技太強",
-      "poster": "./img/movie/沉默的羔羊.webp",
+      "note": "小成本哲學電影，只有聊天畫面但是會覺得很有趣",
+      "poster": "./img/movie/這個男人來自地球.jpg",
       "category": "westernMovies",
-      "elo": 1523.4624007824812
+      "elo": 1537.304715790524
     },
     {
-      "title": "金剛 ",
+      "title": "站在我這邊",
       "score": 7.7,
-      "note": "經典動作怪物電影，要看 2005 年版",
-      "poster": "./img/movie/金剛.webp",
+      "note": "很棒的史蒂芬金原作電影，青少年冒險類型",
+      "poster": "./img/movie/站在我這邊.jpg",
       "category": "westernMovies",
-      "elo": 1537.6701260448776
+      "elo": 1536.3520988624457
+    },
+    {
+      "title": "回到未來系列",
+      "score": 7.7,
+      "note": "經典老片，意猶未盡",
+      "poster": "./img/movie/回到未來系列.jpg",
+      "category": "westernMovies",
+      "elo": 1534.7508588896148
+    },
+    {
+      "title": "媽的多重宇宙",
+      "score": 7.7,
+      "note": "我能大膽的說看過最有創意的一部電影",
+      "poster": "./img/movie/媽的多重宇宙.webp",
+      "category": "westernMovies",
+      "elo": 1534.5624790569743
     },
     {
       "title": "真愛每一天",
@@ -817,12 +785,20 @@
       "elo": 1533.4989685822086
     },
     {
-      "title": "這個男人來自地球",
+      "title": "末代武士",
       "score": 7.7,
-      "note": "小成本哲學電影，只有聊天畫面但是會覺得很有趣",
-      "poster": "./img/movie/這個男人來自地球.jpg",
+      "note": "背景在 19 世紀的戰爭武士片",
+      "poster": "./img/movie/末代武士.jpg",
       "category": "westernMovies",
-      "elo": 1533.1054930879905
+      "elo": 1531.0678092547437
+    },
+    {
+      "title": "美麗境界",
+      "score": 7.7,
+      "note": "經典的天才傳記片，描寫天才人性的部分",
+      "poster": "./img/movie/美麗境界.jpg",
+      "category": "westernMovies",
+      "elo": 1530.604886571395
     },
     {
       "title": "賭王之王",
@@ -833,20 +809,20 @@
       "elo": 1528.3784839809518
     },
     {
-      "title": "回到未來系列",
-      "score": 7.6,
-      "note": "經典老片，意猶未盡",
-      "poster": "./img/movie/回到未來系列.jpg",
-      "category": "westernMovies",
-      "elo": 1526.6033423972883
-    },
-    {
       "title": "羊男的迷宮",
       "score": 7.6,
       "note": "我小學時看的經典驚悚片，以奇幻的方式描寫戰爭的恐怖",
       "poster": "./img/movie/羊男的迷宮.webp",
       "category": "westernMovies",
       "elo": 1523.677775444977
+    },
+    {
+      "title": "沉默的羔羊",
+      "score": 7.6,
+      "note": "經典老片，老拔叔演技太強",
+      "poster": "./img/movie/沉默的羔羊.webp",
+      "category": "westernMovies",
+      "elo": 1523.4624007824812
     },
     {
       "title": "駭客任務",
@@ -881,12 +857,12 @@
       "elo": 1518.485576067753
     },
     {
-      "title": "媽的多重宇宙",
+      "title": "蜘蛛人（陶比版） 1~3",
       "score": 7.6,
-      "note": "我能大膽的說看過最有創意的一部電影",
-      "poster": "./img/movie/媽的多重宇宙.webp",
+      "note": "超級英雄電影氾濫前我覺得很不錯的系列, 2>1>3 ",
+      "poster": "./img/movie/蜘蛛人（陶比）.webp",
       "category": "westernMovies",
-      "elo": 1516.8615192592824
+      "elo": 1516.1594970231115
     },
     {
       "title": "魔戒",
@@ -897,20 +873,20 @@
       "elo": 1511.6131824814238
     },
     {
-      "title": "蜘蛛人（陶比版） 1~3",
-      "score": 7.5,
-      "note": "超級英雄電影氾濫前我覺得很不錯的系列, 2>1>3 ",
-      "poster": "./img/movie/蜘蛛人（陶比）.webp",
-      "category": "westernMovies",
-      "elo": 1505.5616958641515
-    },
-    {
       "title": "異形 ",
       "score": 7.5,
       "note": "經典第一集，滿不錯的，科幻怪物片始祖",
       "poster": "./img/movie/異形.webp",
       "category": "westernMovies",
       "elo": 1500.4058483514596
+    },
+    {
+      "title": "大娛樂家",
+      "score": 7.5,
+      "note": "很棒的歌舞片，劇情也不錯，音樂真的很好聽",
+      "poster": "./img/movie/大娛樂家.jpg",
+      "category": "westernMovies",
+      "elo": 1500.0
     },
     {
       "title": "回到17歲",
@@ -953,6 +929,22 @@
       "elo": 1490.7928299577143
     },
     {
+      "title": "間諜橋",
+      "score": 7.5,
+      "note": "挺喜歡這部的氛圍，好看的諜戰片",
+      "poster": "./img/movie/間諜橋.webp",
+      "category": "westernMovies",
+      "elo": 1490.3412925381654
+    },
+    {
+      "title": "超人",
+      "score": 7.4,
+      "note": "也是一部還不錯的超人起源電影 ",
+      "poster": "./img/movie/超人.webp",
+      "category": "westernMovies",
+      "elo": 1486.8107122944455
+    },
+    {
       "title": "美國殺人魔",
       "score": 7.4,
       "note": "經典的瘋子驚悚片，克里斯丁貝爾演的很讚",
@@ -969,12 +961,12 @@
       "elo": 1484.979292318357
     },
     {
-      "title": "侏羅紀公園",
+      "title": "抓馬戀人",
       "score": 7.4,
-      "note": "雖然是老片，但一樣很經典很讚",
-      "poster": "./img/movie/侏羅紀公園.webp",
+      "note": "很喜歡這種用對白推進劇情的驚悚愛情版，氣氛掌握的很好",
+      "poster": "./img/movie/抓馬戀人.webp",
       "category": "westernMovies",
-      "elo": 1483.2308141941178
+      "elo": 1483.2480143762928
     },
     {
       "title": "暴蜂尼亞",
@@ -985,26 +977,26 @@
       "elo": 1480.7225642843966
     },
     {
-      "title": "超人",
+      "title": "扭轉奇蹟",
       "score": 7.4,
-      "note": "也是一部還不錯的超人起源電影 ",
-      "poster": "./img/movie/超人.webp",
+      "note": "經典的凱吉溫馨電影",
+      "poster": "./img/movie/扭轉奇蹟.jpg",
       "category": "westernMovies",
-      "elo": 1480.384055073429
+      "elo": 1480.4926892080118
+    },
+    {
+      "title": "全民超人",
+      "score": 7.4,
+      "note": "前半我真的很喜歡，威爾史密斯演太好，可惜劇本不是很好，最後有點搞砸",
+      "poster": "./img/movie/全民超人.jpg",
+      "category": "westernMovies",
+      "elo": 1480.0
     },
     {
       "title": "第六感生死緣",
       "score": 7.4,
       "note": "來看小布的神級顏值，怎麼安東尼·霍普金斯都長一樣",
       "poster": "./img/movie/第六感生死緣.webp",
-      "category": "westernMovies",
-      "elo": 1480.0
-    },
-    {
-      "title": "間諜橋",
-      "score": 7.4,
-      "note": "挺喜歡這部的氛圍，好看的諜戰片",
-      "poster": "./img/movie/間諜橋.webp",
       "category": "westernMovies",
       "elo": 1480.0
     },
@@ -1065,20 +1057,28 @@
       "elo": 1468.86821916038
     },
     {
-      "title": "抓馬戀人",
+      "title": "戀夏 500 日",
       "score": 7.3,
-      "note": "很喜歡這種用對白推進劇情的驚悚愛情版，氣氛掌握的很好",
-      "poster": "./img/movie/抓馬戀人.webp",
+      "note": "PTT 戰男女神片，拍的很美，很真實",
+      "poster": "./img/movie/戀夏 500 日.jpg",
       "category": "westernMovies",
-      "elo": 1468.56031073431
+      "elo": 1468.1242494981748
     },
     {
-      "title": "扭轉奇蹟",
+      "title": "美國心玫瑰情",
       "score": 7.3,
-      "note": "經典的凱吉溫馨電影",
-      "poster": "./img/movie/扭轉奇蹟.jpg",
+      "note": "完全猜不到劇情的發展，很邪門的好看",
+      "poster": "./img/movie/美國心玫瑰情.jpg",
       "category": "westernMovies",
-      "elo": 1468.0070294463442
+      "elo": 1467.140743614632
+    },
+    {
+      "title": "侏羅紀公園",
+      "score": 7.3,
+      "note": "雖然是老片，但一樣很經典很讚",
+      "poster": "./img/movie/侏羅紀公園.webp",
+      "category": "westernMovies",
+      "elo": 1466.6315297781505
     },
     {
       "title": "關鍵公敵",
@@ -1087,14 +1087,6 @@
       "poster": "./img/movie/關鍵公敵.webp",
       "category": "westernMovies",
       "elo": 1465.3284854719216
-    },
-    {
-      "title": "戀夏 500 日",
-      "score": 7.3,
-      "note": "PTT 戰男女神片，拍的很美，很真實",
-      "poster": "./img/movie/戀夏 500 日.jpg",
-      "category": "westernMovies",
-      "elo": 1462.0312013636074
     },
     {
       "title": "變臉",
@@ -1153,20 +1145,12 @@
       "elo": 1456.0393382057941
     },
     {
-      "title": "即刻毀滅",
+      "title": "雲端情人",
       "score": 7.3,
-      "note": "卡司超強的搞笑片，還不錯，很鬧",
-      "poster": "./img/movie/即刻毀滅.webp",
+      "note": "講述科技與孤獨的一部電影，設定滿有意思",
+      "poster": "./img/movie/雲端情人.webp",
       "category": "westernMovies",
-      "elo": 1453.9018683445659
-    },
-    {
-      "title": "美國心玫瑰情",
-      "score": 7.3,
-      "note": "完全猜不到劇情的發展，很邪門的好看",
-      "poster": "./img/movie/美國心玫瑰情.jpg",
-      "category": "westernMovies",
-      "elo": 1451.0074539912896
+      "elo": 1452.8268345633676
     },
     {
       "title": "獵殺星期一",
@@ -1185,14 +1169,6 @@
       "elo": 1447.015657897971
     },
     {
-      "title": "雲端情人",
-      "score": 7.2,
-      "note": "講述科技與孤獨的一部電影，設定滿有意思",
-      "poster": "./img/movie/雲端情人.webp",
-      "category": "westernMovies",
-      "elo": 1443.8590048860485
-    },
-    {
       "title": "芬奇的旅程",
       "score": 7.2,
       "note": "Tom Hank 獨挑大樑的末日公路電影",
@@ -1209,10 +1185,10 @@
       "elo": 1440.541720601582
     },
     {
-      "title": "香草天空",
+      "title": "芭比",
       "score": 7.2,
-      "note": "湯姆克魯斯早期的好片，不錯看",
-      "poster": "./img/movie/香草天空.webp",
+      "note": "滿特別有童趣的一部電影，不過對我來說沒有太大的共鳴和記憶點",
+      "poster": "./img/movie/芭比.jpg",
       "category": "westernMovies",
       "elo": 1440.0
     },
@@ -1225,12 +1201,36 @@
       "elo": 1440.0
     },
     {
+      "title": "終極追殺令",
+      "score": 7.2,
+      "note": "非常經典的電影，充滿衝突矛盾的複雜情感",
+      "poster": "./img/movie/終極追殺令.jpg",
+      "category": "westernMovies",
+      "elo": 1438.3597582968273
+    },
+    {
+      "title": "即刻毀滅",
+      "score": 7.2,
+      "note": "卡司超強的搞笑片，還不錯，很鬧",
+      "poster": "./img/movie/即刻毀滅.webp",
+      "category": "westernMovies",
+      "elo": 1437.7685787212235
+    },
+    {
       "title": "賽道狂人",
       "score": 7.2,
       "note": "還不錯，但我比較喜歡 F1",
       "poster": "./img/movie/賽道狂人.webp",
       "category": "westernMovies",
       "elo": 1437.0588212775995
+    },
+    {
+      "title": "教父",
+      "score": 7.2,
+      "note": "經典黑幫電影，中間很刺激精彩",
+      "poster": "./img/movie/教父.webp",
+      "category": "westernMovies",
+      "elo": 1434.186338017906
     },
     {
       "title": "天能",
@@ -1241,20 +1241,28 @@
       "elo": 1433.0272661914144
     },
     {
-      "title": "終極追殺令",
-      "score": 7.2,
-      "note": "非常經典的電影，充滿衝突矛盾的複雜情感",
-      "poster": "./img/movie/終極追殺令.jpg",
-      "category": "westernMovies",
-      "elo": 1431.8534253162168
-    },
-    {
       "title": "真愛繞圈圈",
       "score": 7.2,
       "note": "跟《真愛挑日子》很像的一部，很喜歡這部的 Lily Collins",
       "poster": "./img/movie/真愛繞圈圈.webp",
       "category": "westernMovies",
       "elo": 1431.415309067513
+    },
+    {
+      "title": "飛越杜鵑窩",
+      "score": 7.1,
+      "note": "經典老片，用喜劇包裝的悲劇，值得一看",
+      "poster": "./img/movie/飛越杜鵑窩.webp",
+      "category": "westernMovies",
+      "elo": 1428.9236563477398
+    },
+    {
+      "title": "香草天空",
+      "score": 7.1,
+      "note": "湯姆克魯斯早期的好片，不錯看",
+      "poster": "./img/movie/香草天空.webp",
+      "category": "westernMovies",
+      "elo": 1425.3122963580172
     },
     {
       "title": "敦克爾克大行動",
@@ -1265,20 +1273,12 @@
       "elo": 1423.7010243698346
     },
     {
-      "title": "教父",
+      "title": "特務愛很大",
       "score": 7.1,
-      "note": "經典黑幫電影，中間很刺激精彩",
-      "poster": "./img/movie/教父.webp",
+      "note": "兩位特務追一個女生的愛情喜劇，表現的還 OK 的一部。",
+      "poster": "./img/movie/特務愛很大.jpg",
       "category": "westernMovies",
-      "elo": 1417.2085618523627
-    },
-    {
-      "title": "飛越杜鵑窩",
-      "score": 7.1,
-      "note": "經典老片，用喜劇包裝的悲劇，值得一看",
-      "poster": "./img/movie/飛越杜鵑窩.webp",
-      "category": "westernMovies",
-      "elo": 1428.9236563477398
+      "elo": 1420.0
     },
     {
       "title": "我和我的冠軍女兒",
@@ -1313,6 +1313,30 @@
       "elo": 1411.3500608095926
     },
     {
+      "title": "史密斯任務",
+      "score": 7.0,
+      "note": "經典的殺手愛情電影，有意思的喜劇。",
+      "poster": "./img/movie/史密斯任務.jpg",
+      "category": "westernMovies",
+      "elo": 1400.0
+    },
+    {
+      "title": "戰爭遊戲",
+      "score": 7.0,
+      "note": "中規中矩的鬥智片，反轉普通，還算OK",
+      "poster": "./img/movie/戰爭遊戲.jpg",
+      "category": "westernMovies",
+      "elo": 1400.0
+    },
+    {
+      "title": "刺客聯盟",
+      "score": 7.0,
+      "note": "有點扯，但是小時候看覺得滿酷的",
+      "poster": "./img/movie/刺客聯盟.jpg",
+      "category": "westernMovies",
+      "elo": 1400.0
+    },
+    {
       "title": "派特的幸福劇本",
       "score": 7.0,
       "note": "有心理疾病的兩人互相治癒的故事",
@@ -1345,14 +1369,6 @@
       "elo": 1392.9643612497985
     },
     {
-      "title": "記憶拼圖",
-      "score": 6.9,
-      "note": "敘事手法真的是劃時代的有創意",
-      "poster": "./img/movie/記憶拼圖.webp",
-      "category": "westernMovies",
-      "elo": 1385.985934763323
-    },
-    {
       "title": "人造意識",
       "score": 6.9,
       "note": "科幻驚悚片，氣氛營造的滿好的",
@@ -1361,12 +1377,12 @@
       "elo": 1384.4657807514097
     },
     {
-      "title": "蝙蝠俠：開戰時刻",
-      "score": 6.9,
-      "note": "三部曲我只愛第二部，另外兩部算平平無奇吧",
-      "poster": "./img/movie/蝙蝠俠：開戰時刻.webp",
+      "title": "記憶拼圖",
+      "score": 7.4,
+      "note": "敘事手法真的是劃時代的有創意",
+      "poster": "./img/movie/記憶拼圖.webp",
       "category": "westernMovies",
-      "elo": 1383.4646447361133
+      "elo": 1480.0
     },
     {
       "title": "驚魂記",
@@ -1383,6 +1399,14 @@
       "poster": "./img/movie/復仇者聯盟：無限之戰.webp",
       "category": "westernMovies",
       "elo": 1374.3843809096027
+    },
+    {
+      "title": "蝙蝠俠：開戰時刻",
+      "score": 6.9,
+      "note": "三部曲我只愛第二部，另外兩部算平平無奇吧",
+      "poster": "./img/movie/蝙蝠俠：開戰時刻.webp",
+      "category": "westernMovies",
+      "elo": 1372.8668435771533
     },
     {
       "title": "蜘蛛人（加菲版） 1~2",
@@ -1434,11 +1458,11 @@
     },
     {
       "title": "睡人",
-      "score": 6.8,
+      "score": 6.7,
       "note": "節奏偏慢的老電影，男女主角跳舞的那段非常淒美",
       "poster": "./img/movie/睡人.jpg",
       "category": "westernMovies",
-      "elo": 1356.5381904889414
+      "elo": 1349.5577757736303
     },
     {
       "title": "神鬼玩家",
@@ -1513,30 +1537,6 @@
       "elo": 1309.6000621663309
     },
     {
-      "title": "華爾街之狼",
-      "score": 6.5,
-      "note": "瘋狂黑色傳記片，不過我個人對馬丁史柯西斯一直電波都沒有很合",
-      "poster": "./img/movie/華爾街之狼.webp",
-      "category": "westernMovies",
-      "elo": 1304.5032457589004
-    },
-    {
-      "title": "大法師",
-      "score": 6.5,
-      "note": "經典鬼片，很多套路的始祖，不過我對鬼片沒什麼太大興趣",
-      "poster": "./img/movie/大法師.webp",
-      "category": "westernMovies",
-      "elo": 1303.250738872906
-    },
-    {
-      "title": "科洛弗檔案",
-      "score": 6.5,
-      "note": "第一人稱視角很酷，但很晃，劇情一般",
-      "poster": "./img/movie/科洛弗檔案.webp",
-      "category": "westernMovies",
-      "elo": 1300.1245513023591
-    },
-    {
       "title": "我就要你好好的",
       "score": 6.5,
       "note": "價值觀很不合的一部，不太愛",
@@ -1553,12 +1553,28 @@
       "elo": 1300.0
     },
     {
-      "title": "出神入化",
-      "score": 6.4,
-      "note": "都用超能力，跟魔術沒什麼關係的魔術電影",
-      "poster": "./img/movie/出神入化.webp",
+      "title": "大法師",
+      "score": 6.5,
+      "note": "經典鬼片，很多套路的始祖，不過我對鬼片沒什麼太大興趣",
+      "poster": "./img/movie/大法師.webp",
       "category": "westernMovies",
-      "elo": 1280.0
+      "elo": 1298.908670139159
+    },
+    {
+      "title": "科洛弗檔案",
+      "score": 6.5,
+      "note": "第一人稱視角很酷，但很晃，劇情一般",
+      "poster": "./img/movie/科洛弗檔案.webp",
+      "category": "westernMovies",
+      "elo": 1295.2902637679708
+    },
+    {
+      "title": "華爾街之狼",
+      "score": 6.5,
+      "note": "瘋狂黑色傳記片，不過我個人對馬丁史柯西斯一直電波都沒有很合",
+      "poster": "./img/movie/華爾街之狼.webp",
+      "category": "westernMovies",
+      "elo": 1293.959356088901
     },
     {
       "title": "你是不會當樹嗎",
@@ -1569,12 +1585,28 @@
       "elo": 1275.017984291315
     },
     {
-      "title": "鬼店",
+      "title": "刺殺傑西",
       "score": 6.4,
+      "note": "雖然是小布說他自己最愛的一部電影，但我實在覺得劇情很悶，沒對到電波",
+      "poster": "./img/movie/刺殺傑西.jpg",
+      "category": "westernMovies",
+      "elo": 1274.8171218172474
+    },
+    {
+      "title": "出神入化",
+      "score": 6.4,
+      "note": "都用超能力，跟魔術沒什麼關係的魔術電影",
+      "poster": "./img/movie/出神入化.webp",
+      "category": "westernMovies",
+      "elo": 1271.032170322681
+    },
+    {
+      "title": "鬼店",
+      "score": 6.3,
       "note": "經典老片，氣氛不錯但是以現代來說節奏太慢了",
       "poster": "./img/movie/鬼店.webp",
       "category": "westernMovies",
-      "elo": 1273.941596635746
+      "elo": 1266.455354318559
     },
     {
       "title": "殺手",
@@ -1590,7 +1622,7 @@
       "note": "X戰警系列看很少的我，實在沒共鳴，當成獨立作品我也覺得不夠好看",
       "poster": "./img/movie/羅根.webp",
       "category": "westernMovies",
-      "elo": 1218.4804564109052
+      "elo": 1212.7311790250099
     },
     {
       "title": "計程車司機",
@@ -1606,7 +1638,7 @@
       "note": "很固弄玄虛的一部恐怖片，期待太高了",
       "poster": "./img/movie/長腿.webp",
       "category": "westernMovies",
-      "elo": 1197.4639812094397
+      "elo": 1195.957818034595
     },
     {
       "title": "人工進化",
@@ -1631,38 +1663,6 @@
       "poster": "./img/movie/迷魂記.webp",
       "category": "westernMovies",
       "elo": 973.2591598523534
-    },
-    {
-      "title": "聖母峰",
-      "score": 7.4,
-      "note": "還不錯的災難電影，大自然的威力不容小覷",
-      "poster": "./img/movie/聖母峰.jpg",
-      "category": "asiaMovies",
-      "elo": 1480.0
-    },
-    {
-      "title": "新幹線驚爆倒數",
-      "score": 6.5,
-      "note": "滿無聊的一部，沒什麼特別，不太值得看",
-      "poster": "./img/movie/新幹線驚爆倒數.jpg",
-      "category": "asiaMovies",
-      "elo": 1300.0
-    },
-    {
-      "title": "模犯生",
-      "score": 7.4,
-      "note": "泰國電影很傑出的一部，滿有緊張感的",
-      "poster": "./img/movie/模犯生.jpg",
-      "category": "asiaMovies",
-      "elo": 1480.0
-    },
-    {
-      "title": "富都青年",
-      "score": 7.8,
-      "note": "很好看的一部，演出了生活在底層的掙扎，吳慷仁最後的演技真的很棒",
-      "poster": "./img/movie/富都青年.jpg",
-      "category": "asiaMovies",
-      "elo": 1560.0
     },
     {
       "title": "寄生上流",
@@ -1702,7 +1702,7 @@
       "note": "我個人最喜歡的殭屍片，沒有之一",
       "poster": "./img/movie/屍速列車.jpg",
       "category": "asiaMovies",
-      "elo": 1798.5504687565194
+      "elo": 1799.4097762230779
     },
     {
       "title": "破地獄",
@@ -1718,7 +1718,7 @@
       "note": "時代悲歌，哥哥張國榮的巔峰之作",
       "poster": "./img/movie/霸王別姬.jpg",
       "category": "asiaMovies",
-      "elo": 1752.8802959944524
+      "elo": 1756.3342039429967
     },
     {
       "title": "小偷家族",
@@ -1782,7 +1782,7 @@
       "note": "寫實好看的日本愛情片，不撒狗血",
       "poster": "./img/movie/花束般的戀愛.jpg",
       "category": "asiaMovies",
-      "elo": 1632.9930455909941
+      "elo": 1647.4782104045362
     },
     {
       "title": "投名狀",
@@ -1825,28 +1825,20 @@
       "elo": 1597.217149580525
     },
     {
-      "title": "墊底辣妹",
-      "score": 7.9,
-      "note": "類似《東大特訓班》的勵志電影，這部看完會有滿滿的力量，推薦",
-      "poster": "./img/movie/墊底辣妹.webp",
-      "category": "asiaMovies",
-      "elo": 1581.6969652709508
-    },
-    {
       "title": "報告老師！怪怪怪怪物！",
       "score": 7.9,
       "note": "我覺得九把刀最好的一部電影，臺灣電影中非常少有的題材，但拍得完整性很高",
       "poster": "./img/movie/報告老師！怪怪怪怪物！.webp",
       "category": "asiaMovies",
-      "elo": 1577.4206590265012
+      "elo": 1587.9154324436877
     },
     {
       "title": "腿",
-      "score": 7.8,
+      "score": 7.9,
       "note": "不知道為什麼好喜歡這部的荒謬感，桂綸鎂提神雕俠侶的那段台詞真的讓我笑好久，很吃電波的一部，小心服用",
       "poster": "./img/movie/腿.webp",
       "category": "asiaMovies",
-      "elo": 1563.228244107415
+      "elo": 1574.2653504922987
     },
     {
       "title": "新宿事件",
@@ -1854,7 +1846,15 @@
       "note": "認真演戲的成龍黑道片",
       "poster": "./img/movie/新宿事件.jpg",
       "category": "asiaMovies",
-      "elo": 1560.2552760622211
+      "elo": 1569.8319752653279
+    },
+    {
+      "title": "墊底辣妹",
+      "score": 7.8,
+      "note": "類似《東大特訓班》的勵志電影，這部看完會有滿滿的力量，推薦",
+      "poster": "./img/movie/墊底辣妹.webp",
+      "category": "asiaMovies",
+      "elo": 1569.417613832282
     },
     {
       "title": "熔爐 ",
@@ -1863,14 +1863,6 @@
       "poster": "./img/movie/熔爐.webp",
       "category": "asiaMovies",
       "elo": 1560.0
-    },
-    {
-      "title": "怪物",
-      "score": 7.8,
-      "note": "是枝裕和作品，看完會有淡淡的惆悵感",
-      "poster": "./img/movie/怪物.jpg",
-      "category": "asiaMovies",
-      "elo": 1553.9374906661506
     },
     {
       "title": "門徒",
@@ -1882,11 +1874,19 @@
     },
     {
       "title": "桃姐",
-      "score": 7.7,
+      "score": 7.8,
       "note": "許鞍華的感人作品，很值得看",
       "poster": "./img/movie/桃姐.webp",
       "category": "asiaMovies",
-      "elo": 1543.694418745904
+      "elo": 1550.4473054946666
+    },
+    {
+      "title": "富都青年",
+      "score": 7.7,
+      "note": "很好看的一部，演出了生活在底層的掙扎，吳慷仁最後的演技真的很棒",
+      "poster": "./img/movie/富都青年.jpg",
+      "category": "asiaMovies",
+      "elo": 1548.1689849918657
     },
     {
       "title": "咒",
@@ -1905,6 +1905,22 @@
       "elo": 1540.0
     },
     {
+      "title": "霍元甲",
+      "score": 7.7,
+      "note": "人物成長刻劃極佳，有深度的武打片",
+      "poster": "./img/movie/霍元甲.jpg",
+      "category": "asiaMovies",
+      "elo": 1536.8611989912679
+    },
+    {
+      "title": "怪物",
+      "score": 7.7,
+      "note": "是枝裕和作品，看完會有淡淡的惆悵感",
+      "poster": "./img/movie/怪物.jpg",
+      "category": "asiaMovies",
+      "elo": 1536.2365308684587
+    },
+    {
       "title": "無間道",
       "score": 7.7,
       "note": "香港警匪片巔峰，經典必看",
@@ -1919,14 +1935,6 @@
       "poster": "./img/movie/青春18×2 通往有你的旅程.webp",
       "category": "asiaMovies",
       "elo": 1530.992276217962
-    },
-    {
-      "title": "霍元甲",
-      "score": 7.6,
-      "note": "人物成長刻劃極佳，有深度的武打片",
-      "poster": "./img/movie/霍元甲.jpg",
-      "category": "asiaMovies",
-      "elo": 1527.1908200781543
     },
     {
       "title": "殺人回憶",
@@ -1993,12 +2001,36 @@
       "elo": 1497.352768317562
     },
     {
+      "title": "聖母峰",
+      "score": 7.4,
+      "note": "還不錯的災難電影，大自然的威力不容小覷",
+      "poster": "./img/movie/聖母峰.jpg",
+      "category": "asiaMovies",
+      "elo": 1480.0
+    },
+    {
+      "title": "模犯生",
+      "score": 7.4,
+      "note": "泰國電影很傑出的一部，滿有緊張感的",
+      "poster": "./img/movie/模犯生.jpg",
+      "category": "asiaMovies",
+      "elo": 1480.0
+    },
+    {
       "title": "大隻佬",
       "score": 7.4,
       "note": "小時候有陰影，哲學懸疑電影",
       "poster": "./img/movie/大隻佬.jpg",
       "category": "asiaMovies",
       "elo": 1470.3111233651975
+    },
+    {
+      "title": "孤味",
+      "score": 7.3,
+      "note": "平淡順暢有餘韻的故事",
+      "poster": "./img/movie/孤味.jpg",
+      "category": "asiaMovies",
+      "elo": 1469.2456789370742
     },
     {
       "title": "瀑布",
@@ -2033,14 +2065,6 @@
       "elo": 1460.1941528988052
     },
     {
-      "title": "孤味",
-      "score": 7.3,
-      "note": "平淡順暢有餘韻的故事",
-      "poster": "./img/movie/孤味.jpg",
-      "category": "asiaMovies",
-      "elo": 1455.5509960738389
-    },
-    {
       "title": "不能說的秘密",
       "score": 7.3,
       "note": "不得不說不落俗套，真的很不錯，鬥琴很經典，音樂也很出色的一部",
@@ -2050,19 +2074,19 @@
     },
     {
       "title": "艋舺",
-      "score": 7.3,
+      "score": 7.2,
       "note": "我覺得最好看的臺灣黑道電影（導演親自示範入獄，滿幽默）",
       "poster": "./img/movie/艋舺.webp",
       "category": "asiaMovies",
-      "elo": 1452.7922765697451
+      "elo": 1442.2975031525586
     },
     {
       "title": "變身機長 ",
-      "score": 7.3,
+      "score": 7.2,
       "note": "滿鬧的搞笑片，中規中矩吧，喜歡曹政爽的話一定要看",
       "poster": "./img/movie/變身機長.webp",
       "category": "asiaMovies",
-      "elo": 1451.7898434408046
+      "elo": 1440.752737055921
     },
     {
       "title": "瘋狂的賽車",
@@ -2070,7 +2094,7 @@
       "note": "荒謬的黑色幽默電影，很有趣的喜劇",
       "poster": "./img/movie/瘋狂的賽車.webp",
       "category": "asiaMovies",
-      "elo": 1427.9233020955273
+      "elo": 1421.4894155999834
     },
     {
       "title": "那些年，我們一起追的女孩",
@@ -2089,20 +2113,20 @@
       "elo": 1414.4841101525676
     },
     {
-      "title": "夜校女生",
-      "score": 7.1,
-      "note": "還不錯的青春小品",
-      "poster": "./img/movie/夜校女生.webp",
-      "category": "asiaMovies",
-      "elo": 1411.8425394506858
-    },
-    {
       "title": "我和我的殭屍女兒 ",
       "score": 7.0,
       "note": "搞笑殭屍電影，還滿特別的，適合溫馨輕鬆看",
       "poster": "./img/movie/我和我的殭屍女兒.webp",
       "category": "asiaMovies",
       "elo": 1409.5526066030075
+    },
+    {
+      "title": "夜校女生",
+      "score": 7.0,
+      "note": "還不錯的青春小品",
+      "poster": "./img/movie/夜校女生.webp",
+      "category": "asiaMovies",
+      "elo": 1405.2331415732126
     },
     {
       "title": "血觀音",
@@ -2119,14 +2143,6 @@
       "poster": "./img/movie/菜鳥警校生.webp",
       "category": "asiaMovies",
       "elo": 1400.0
-    },
-    {
-      "title": "聽說",
-      "score": 6.9,
-      "note": "雖然是愛情片，但多一個題材就能將故事說的不俗，推薦",
-      "poster": "./img/movie/聽說.webp",
-      "category": "asiaMovies",
-      "elo": 1389.620203191377
     },
     {
       "title": "查無此心",
@@ -2150,7 +2166,15 @@
       "note": "不俗的臺灣恐怖片，遊戲為基底改編，我也很推",
       "poster": "./img/movie/返校.webp",
       "category": "asiaMovies",
-      "elo": 1375.4537049656578
+      "elo": 1373.032798236456
+    },
+    {
+      "title": "聽說",
+      "score": 6.9,
+      "note": "雖然是愛情片，但多一個題材就能將故事說的不俗，推薦",
+      "poster": "./img/movie/聽說.webp",
+      "category": "asiaMovies",
+      "elo": 1372.145296269175
     },
     {
       "title": "怪胎",
@@ -2186,11 +2210,11 @@
     },
     {
       "title": "紅衣小女孩",
-      "score": 6.7,
+      "score": 6.8,
       "note": "還不錯的國產恐怖片，內容屬於看過就忘",
       "poster": "./img/movie/紅衣小女孩.webp",
       "category": "asiaMovies",
-      "elo": 1345.3276726697557
+      "elo": 1354.247364840669
     },
     {
       "title": "陣頭",
@@ -2238,7 +2262,7 @@
       "note": "楊德昌的經典之一，雖然老片很長且有點悶，但滿精彩的",
       "poster": "./img/movie/牯嶺街少年殺人事件.webp",
       "category": "asiaMovies",
-      "elo": 1306.162020427369
+      "elo": 1303.0203767639148
     },
     {
       "title": "消失的情人節",
@@ -2247,6 +2271,14 @@
       "poster": "./img/movie/消失的情人節.webp",
       "category": "asiaMovies",
       "elo": 1300.3091066357354
+    },
+    {
+      "title": "新幹線驚爆倒數",
+      "score": 6.5,
+      "note": "滿無聊的一部，沒什麼特別，不太值得看",
+      "poster": "./img/movie/新幹線驚爆倒數.jpg",
+      "category": "asiaMovies",
+      "elo": 1300.0
     },
     {
       "title": "當男人戀愛時",
@@ -2274,11 +2306,11 @@
     },
     {
       "title": "我的少女時代",
-      "score": 6.5,
+      "score": 6.4,
       "note": "很標準的愛情國片，沒什麼評語",
       "poster": "./img/movie/我的少女時代.webp",
       "category": "asiaMovies",
-      "elo": 1295.7610692096744
+      "elo": 1289.7943137724833
     },
     {
       "title": "囧男孩",
@@ -2286,7 +2318,7 @@
       "note": "小學的我看不是很懂，我覺得是有藝術成份的一部電影",
       "poster": "./img/movie/囧男孩.webp",
       "category": "asiaMovies",
-      "elo": 1263.3537129381232
+      "elo": 1255.989456876348
     },
     {
       "title": "黑的教育",
@@ -2338,11 +2370,11 @@
     },
     {
       "title": "愛的麵包魂",
-      "score": 6.1,
+      "score": 6.0,
       "note": "看完不會有什麼印象的標準小情小愛國片",
       "poster": "./img/movie/愛的麵包魂.webp",
       "category": "asiaMovies",
-      "elo": 1210.5985176946826
+      "elo": 1204.5054695601152
     },
     {
       "title": "月老",
@@ -2350,7 +2382,7 @@
       "note": "原作黨覺得不能接受，要不要韋禮安的音樂，分數會更低",
       "poster": "./img/movie/月老.webp",
       "category": "asiaMovies",
-      "elo": 1204.7502806685047
+      "elo": 1200.5510579659713
     },
     {
       "title": "樓下的房客",
@@ -2362,11 +2394,11 @@
     },
     {
       "title": "等一個人咖啡",
-      "score": 6.0,
+      "score": 5.9,
       "note": "小說好看太多，沒什麼評語",
       "poster": "./img/movie/等一個人咖啡.webp",
       "category": "asiaMovies",
-      "elo": 1194.615016015271
+      "elo": 1188.1086830346605
     },
     {
       "title": "聽見下雨的聲音",
@@ -2377,22 +2409,6 @@
       "elo": 1184.2029979069625
     },
     {
-      "title": "關於我和鬼變成家人的那件事",
-      "score": 5.9,
-      "note": "有一點尷尬的鬧劇，庹宗華那一段演技是唯一亮點",
-      "poster": "./img/movie/關於我和鬼變成家人的那件事.webp",
-      "category": "asiaMovies",
-      "elo": 1180.1709805819628
-    },
-    {
-      "title": "全知讀者視角",
-      "score": 5.9,
-      "note": "榮登我的 2025 最難看，從頭到尾都很尷尬",
-      "poster": "./img/movie/全知讀者視角.webp",
-      "category": "asiaMovies",
-      "elo": 1180.0
-    },
-    {
       "title": "愛",
       "score": 5.9,
       "note": "雖然卡司很強，但看完依然不會有什麼印象的標準小情小愛國片",
@@ -2401,12 +2417,28 @@
       "elo": 1176.6201885834805
     },
     {
+      "title": "全知讀者視角",
+      "score": 5.9,
+      "note": "榮登我的 2025 最難看，從頭到尾都很尷尬",
+      "poster": "./img/movie/全知讀者視角.webp",
+      "category": "asiaMovies",
+      "elo": 1174.0192888335491
+    },
+    {
+      "title": "關於我和鬼變成家人的那件事",
+      "score": 5.9,
+      "note": "有一點尷尬的鬧劇，庹宗華那一段演技是唯一亮點",
+      "poster": "./img/movie/關於我和鬼變成家人的那件事.webp",
+      "category": "asiaMovies",
+      "elo": 1171.2512884110495
+    },
+    {
       "title": "雞排英雄",
       "score": 5.9,
       "note": "看了等於沒看，但還不至於生氣",
       "poster": "./img/movie/雞排英雄.webp",
       "category": "asiaMovies",
-      "elo": 1174.0321963849995
+      "elo": 1170.9425375669155
     },
     {
       "title": "「吃吃」的愛",
@@ -2446,7 +2478,7 @@
       "note": "周星馳系列，最成熟的作品，完整度太好了，不只有純荒謬",
       "poster": "./img/movie/功夫.jpg",
       "category": "hongkongMovies",
-      "elo": 1624.8999385029265
+      "elo": 1629.2420072366733
     },
     {
       "title": "大話西遊",
@@ -2489,14 +2521,6 @@
       "elo": 1499.734638737007
     },
     {
-      "title": "食神",
-      "score": 7.5,
-      "note": "周星馳系列，全盛時期的作品",
-      "poster": "./img/movie/食神.webp",
-      "category": "hongkongMovies",
-      "elo": 1494.1660277196065
-    },
-    {
       "title": "與龍共舞",
       "score": 7.4,
       "note": "從小看到大，好想去大嶼山玩",
@@ -2510,7 +2534,15 @@
       "note": "賭神高進真的太經典了",
       "poster": "./img/movie/賭神.webp",
       "category": "hongkongMovies",
-      "elo": 1482.2916565341145
+      "elo": 1488.0409339200098
+    },
+    {
+      "title": "食神",
+      "score": 7.4,
+      "note": "周星馳系列，全盛時期的作品",
+      "poster": "./img/movie/食神.webp",
+      "category": "hongkongMovies",
+      "elo": 1480.159060262757
     },
     {
       "title": "武狀元蘇乞兒",
@@ -2594,7 +2626,7 @@
     },
     {
       "title": "鹿鼎記",
-      "score": 7.1,
+      "score": 7.0,
       "note": "周星馳系列，跟原著完全沒關係但很好笑，1>2",
       "poster": "./img/movie/鹿鼎記.webp",
       "category": "hongkongMovies",
@@ -2602,11 +2634,19 @@
     },
     {
       "title": "好賭英雄",
-      "score": 7.1,
+      "score": 7.0,
       "note": "祝枝山當主角，好笑的一部",
       "poster": "./img/movie/好賭英雄.webp",
       "category": "hongkongMovies",
-      "elo": 1412.4617976520271
+      "elo": 1402.8850984489204
+    },
+    {
+      "title": "倚天屠龍記之魔教教主",
+      "score": 7.0,
+      "note": "經典到不行，趙敏還在大都等張無忌",
+      "poster": "./img/movie/倚天屠龍記之魔教教主.webp",
+      "category": "hongkongMovies",
+      "elo": 1401.521051515824
     },
     {
       "title": "絕世好賓",
@@ -2625,12 +2665,12 @@
       "elo": 1392.5197226546027
     },
     {
-      "title": "倚天屠龍記之魔教教主",
+      "title": "龍的傳人",
       "score": 6.9,
-      "note": "經典到不行，趙敏還在大都等張無忌",
-      "poster": "./img/movie/倚天屠龍記之魔教教主.webp",
+      "note": "周星馳系列，比較少看但其實很有趣的一部",
+      "poster": "./img/movie/龍的傳人.webp",
       "category": "hongkongMovies",
-      "elo": 1388.276026742672
+      "elo": 1381.659677643672
     },
     {
       "title": "殭屍先生",
@@ -2639,14 +2679,6 @@
       "poster": "./img/movie/殭屍先生.webp",
       "category": "hongkongMovies",
       "elo": 1373.2032350245047
-    },
-    {
-      "title": "龍的傳人",
-      "score": 6.9,
-      "note": "周星馳系列，比較少看但其實很有趣的一部",
-      "poster": "./img/movie/龍的傳人.webp",
-      "category": "hongkongMovies",
-      "elo": 1381.659677643672
     },
     {
       "title": "賭俠II：上海灘賭聖",
@@ -2673,14 +2705,6 @@
       "elo": 1352.1634990451437
     },
     {
-      "title": "鹿鼎大帝",
-      "score": 6.8,
-      "note": "周星馳系列，很荒謬，中間有段打架很好笑",
-      "poster": "./img/movie/鹿鼎大帝.webp",
-      "category": "hongkongMovies",
-      "elo": 1351.5769153350739
-    },
-    {
       "title": "家有囍事",
       "score": 6.7,
       "note": "周星馳系列，很經典但我沒那麼喜歡",
@@ -2689,20 +2713,28 @@
       "elo": 1349.3720249377384
     },
     {
+      "title": "鹿鼎大帝",
+      "score": 6.7,
+      "note": "周星馳系列，很荒謬，中間有段打架很好笑",
+      "poster": "./img/movie/鹿鼎大帝.webp",
+      "category": "hongkongMovies",
+      "elo": 1341.2356227969085
+    },
+    {
       "title": "監獄風雲 1~2",
       "score": 6.7,
       "note": "滿可怕的監獄片，小時候看有點怕，1>2",
       "poster": "./img/movie/監獄風雲.webp",
       "category": "hongkongMovies",
-      "elo": 1337.8652629326823
+      "elo": 1330.8224118519615
     },
     {
       "title": "超級學校霸王",
-      "score": 6.6,
+      "score": 6.5,
       "note": "我一定判你有罪",
       "poster": "./img/movie/超級學校霸王.webp",
       "category": "hongkongMovies",
-      "elo": 1327.850538779797
+      "elo": 1307.8526272578824
     },
     {
       "title": "雀聖 1~3",
@@ -2753,20 +2785,12 @@
       "elo": 1238.8834974196805
     },
     {
-      "title": "鈴芽之旅",
-      "score": 7.5,
-      "note": "跟天氣之子平分秋色，算是不會到太失望，但也沒有很驚豔的一部作品",
-      "poster": "./img/movie/鈴芽之旅.jpg",
-      "category": "animeMovies",
-      "elo": 1500.0
-    },
-    {
       "title": "鏈鋸人-蕾潔篇",
       "score": 9.2,
       "note": "文藝電影感跟戰鬥畫面都超級棒，當一部完整的作品看，完全沒問題",
       "poster": "./img/movie/鏈鋸人-蕾潔篇.jpg",
       "category": "animeMovies",
-      "elo": 1832.6136366792146
+      "elo": 1839.2707558933473
     },
     {
       "title": "神隱少女",
@@ -2809,6 +2833,14 @@
       "elo": 1642.8009161742962
     },
     {
+      "title": "你的名字",
+      "score": 8.1,
+      "note": "新海誠畫面絢麗，純愛劇情",
+      "poster": "./img/movie/你的名字.jpg",
+      "category": "animeMovies",
+      "elo": 1623.1840171901538
+    },
+    {
       "title": "龍貓",
       "score": 8.1,
       "note": "我直接承認童年濾鐿加成，但這部真的值得在人生中看一遍",
@@ -2817,20 +2849,20 @@
       "elo": 1615.8986252750067
     },
     {
-      "title": "你的名字",
-      "score": 8.1,
-      "note": "新海誠畫面絢麗，純愛劇情",
-      "poster": "./img/movie/你的名字.jpg",
-      "category": "animeMovies",
-      "elo": 1613.011389995203
-    },
-    {
       "title": "料理鼠王",
-      "score": 7.9,
+      "score": 8.0,
       "note": "經典中的經典，家喻戶曉到已經是迷因等級",
       "poster": "./img/movie/料理鼠王.webp",
       "category": "animeMovies",
-      "elo": 1578.297743023699
+      "elo": 1599.4420753638472
+    },
+    {
+      "title": "無敵破壞王",
+      "score": 7.9,
+      "note": "有創意又溫暖的冒險故事",
+      "poster": "./img/movie/無敵破壞王.jpg",
+      "category": "animeMovies",
+      "elo": 1570.7193435412312
     },
     {
       "title": "超人特攻隊 1~2",
@@ -2841,12 +2873,20 @@
       "elo": 1565.640470546562
     },
     {
-      "title": "無敵破壞王",
-      "score": 7.8,
-      "note": "有創意又溫暖的冒險故事",
-      "poster": "./img/movie/無敵破壞王.jpg",
+      "title": "天氣之子",
+      "score": 7.6,
+      "note": "新海誠的畫面無可挑剔，但劇本稍弱了一點",
+      "poster": "./img/movie/天氣之子.jpg",
       "category": "animeMovies",
-      "elo": 1565.5364653584786
+      "elo": 1520.0
+    },
+    {
+      "title": "動物方城市",
+      "score": 7.6,
+      "note": "很天才的描寫種族主義的可愛故事",
+      "poster": "./img/movie/動物方城市.jpg",
+      "category": "animeMovies",
+      "elo": 1520.0
     },
     {
       "title": "跳躍吧時空少女",
@@ -2881,18 +2921,18 @@
       "elo": 1489.6371925521764
     },
     {
-      "title": "動物方城市",
-      "score": 7.4,
-      "note": "很天才的描寫種族主義的可愛故事",
-      "poster": "./img/movie/動物方城市.jpg",
-      "category": "animeMovies",
-      "elo": 1487.2668558660553
-    },
-    {
       "title": "冰雪奇緣 1~2",
       "score": 7.4,
       "note": "畫面漂亮、音樂好聽，開始靠向女性主義主題的迪士尼，1>2",
       "poster": "./img/movie/冰雪奇緣.webp",
+      "category": "animeMovies",
+      "elo": 1487.486242317187
+    },
+    {
+      "title": "鈴芽之旅",
+      "score": 7.4,
+      "note": "跟天氣之子平分秋色，算是不會到太失望，但也沒有很驚豔的一部作品",
+      "poster": "./img/movie/鈴芽之旅.jpg",
       "category": "animeMovies",
       "elo": 1480.0
     },
@@ -2950,7 +2990,7 @@
       "note": "沒有一句台詞但是會讓人想到前任的好動畫",
       "poster": "./img/movie/再見機器人.webp",
       "category": "animeMovies",
-      "elo": 1405.140884912642
+      "elo": 1391.4462020494066
     },
     {
       "title": "腦筋急轉彎 1~2",
@@ -2962,11 +3002,19 @@
     },
     {
       "title": "魔法公主",
-      "score": 6.9,
+      "score": 6.8,
       "note": "角色很有特色，不過長大後看好像略顯平淡",
       "poster": "./img/movie/魔法公主.webp",
       "category": "animeMovies",
-      "elo": 1371.0622748349504
+      "elo": 1367.6628797295634
+    },
+    {
+      "title": "秒速五公分",
+      "score": 6.7,
+      "note": "看不懂想表達什麼，劇情有點無病呻吟，但畫面跟音樂很讚",
+      "poster": "./img/movie/秒速五公分.jpg",
+      "category": "animeMovies",
+      "elo": 1331.8524835076735
     },
     {
       "title": "閃光的哈薩威",
@@ -2983,23 +3031,7 @@
       "poster": "./img/movie/蒼鷺與少年.webp",
       "category": "animeMovies",
       "elo": 1275.4604422285436
-    },
-    {
-      "title": "秒速五公分",
-      "score": 6.7,
-      "note": "看不懂想表達什麼，劇情有點無病呻吟，但畫面跟音樂很讚",
-      "poster": "./img/movie/秒速五公分.jpg",
-      "category": "animeMovies",
-      "elo": 1340.0
-    },
-    {
-      "title": "天氣之子",
-      "score": 7.7,
-      "note": "新海誠的畫面無可挑剔，但劇本稍弱了一點",
-      "poster": "./img/movie/天氣之子.jpg",
-      "category": "animeMovies",
-      "elo": 1540.0
     }
   ],
-  "match_count": 1521
+  "match_count": 1570
 }

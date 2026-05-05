@@ -163,12 +163,21 @@ article img {
 }
 
 /* =========================================
-   7. 防止導覽列擠壓 (Hide Navbar Items on specific width)
+   7. 防止導覽列擠壓 (Responsive Navbar Adjustments)
    ========================================= */
-/* 當螢幕寬度開始擠壓 (1350px) 到正式變成手機版漢堡選單 (996px) 之間時，直接隱藏文字連結 */
+/* 
+   注意：Docusaurus 在 996px 以上會透過 JS 移除手機版選單，
+   因此無法用 CSS 強制喚醒漢堡選單。
+   這裡改為在 1350px ~ 997px 之間，自動縮小選單間距與字體，
+   確保選單能完整排在一行而不破版。
+*/
 @media (max-width: 1350px) and (min-width: 997px) {
-  .navbar__item.navbar__link,
-  .navbar__item.dropdown {
-    display: none !important;
+  .navbar__item {
+    padding: 0 8px !important; /* 縮小左右間距 */
+    font-size: 14px !important; /* 縮小字體大小 */
+  }
+  
+  .navbar__brand {
+    margin-right: 0.5rem; /* 縮小 Logo 旁的空間 */
   }
 }
