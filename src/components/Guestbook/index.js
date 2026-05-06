@@ -19,6 +19,35 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   const [fetchLoading, setFetchLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(10);
 
+  // 解析 Markdown 超連結語法，並自動補齊網址協議
+  const renderMarkdown = (text) => {
+    if (!text) return text;
+    const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
+    return parts.map((part, index) => {
+      const match = part.match(/\[([^\]]+)\]\(([^)]+)\)/);
+      if (match) {
+        let url = match[2].trim();
+        // 如果網址不是以 http(s)://, / (站內路徑), 或 # (錨點) 開頭，則補上 https://
+        if (!/^https?:\/\//i.test(url) && !url.startsWith('/') && !url.startsWith('#')) {
+          url = `https://${url}`;
+        }
+
+        return (
+          <a 
+            key={index} 
+            href={url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{ color: 'var(--ifm-color-primary)', textDecoration: 'underline' }}
+          >
+            {match[1]}
+          </a>
+        );
+      }
+      return part;
+    });
+  };
+
   const getCommentClass = (content) => {
     if (!content) return styles.commentBody;
     const safeContent = String(content);
@@ -180,7 +209,6 @@ export default function Guestbook({ readOnly = false, postSlug }) {
                   <span className={styles.commentName}>
                     {c.website ? <a href={c.website} target="_blank" rel="noopener noreferrer">{c.name}</a> : c.name}
                     {activeTab === 'all_posts' && isGuestbookPage && (
-                       // --- 修改處：將標籤包裝在 Link 中，並加上 style 取消底線 ---
                        <Link 
                          to={c.slug} 
                          className={styles.slugTag} 
@@ -192,7 +220,9 @@ export default function Guestbook({ readOnly = false, postSlug }) {
                   </span>
                   <span className={styles.commentTime}>{formatDate(c.time)}</span>
                 </div>
-                <div className={getCommentClass(c.content)}>{c.content}</div>
+                <div className={getCommentClass(c.content)}>
+                  {renderMarkdown(c.content)}
+                </div>
 
                 {c.replyContent && (
                   <div className={styles.replyBox}>
@@ -203,7 +233,9 @@ export default function Guestbook({ readOnly = false, postSlug }) {
                       </div>
                       <span className={styles.replyTime}>{formatDate(c.replyTime)}</span>
                     </div>
-                    <div className={getCommentClass(c.replyContent)}>{c.replyContent}</div>
+                    <div className={getCommentClass(c.replyContent)}>
+                      {renderMarkdown(c.replyContent)}
+                    </div>
                   </div>
                 )}
               </div>
