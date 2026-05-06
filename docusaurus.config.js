@@ -191,9 +191,9 @@ const config = {
         ],
         copyright: `
         <div style="display: flex; justify-content: center; align-items: center;">
-          <span>Copyright © ${new Date().getFullYear()} Shuo-jen Huang.</span>
+          <span>Copyright © ${new Date().getFullYear()} Shuo-jen Huang</span>
           <a href="https://shuojen.com" style="margin-left: 10px; display: flex;">
-            <img src="https://visitor-badge.laobi.icu/badge?page_id=shuojen.site&left_text=Visitors&left_color=black&right_color=gray" alt="visitor badge"/>
+            <img src="https://visitor-badge.laobi.icu/badge?page_id=shuojen.site&left_text=Visits&left_color=black&right_color=gray" alt="visitor badge"/>
           </a>
         </div>
         `,
