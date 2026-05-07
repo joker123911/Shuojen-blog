@@ -2,7 +2,7 @@
   "name": "my-blog",
   "version": "0.0.0",
   "private": true,
-"scripts": {
+  "scripts": {
     "docusaurus": "docusaurus",
     "prestart": "git pull",
     "start": "node scripts/gen-photos.js && node scripts/update-stats.js && docusaurus start",
@@ -31,7 +31,9 @@
     "react-chessboard": "^5.8.6",
     "react-dom": "^19.0.0",
     "react-fast-marquee": "^1.6.5",
-    "react-photo-album": "^3.4.0"
+    "react-photo-album": "^3.4.0",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.9.1",

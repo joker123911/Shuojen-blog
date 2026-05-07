@@ -1,5 +1,7 @@
 // @ts-check
 import {themes as prismThemes} from 'prism-react-renderer';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -41,6 +43,8 @@ const config = {
       ({
         docs: {
           sidebarPath: './sidebars.js',
+          remarkPlugins: [remarkMath],
+          rehypePlugins: [rehypeKatex],
         },
         blog: false, // 禁用預設 blog 以使用下方的多重 blog 外掛
         theme: {
@@ -69,6 +73,8 @@ const config = {
         blogSidebarTitle: '全部貼文',
         blogSidebarCount: 'ALL',
         archiveBasePath: 'archive',
+        remarkPlugins: [remarkMath],
+        rehypePlugins: [rehypeKatex],
         feedOptions: {
           type: 'all',
           title: 'Shuo-jen Blog',
@@ -93,6 +99,8 @@ const config = {
         archiveBasePath: 'photo-archive',
         blogTitle: '攝影集',
         blogDescription: '光影紀錄。',
+        remarkPlugins: [remarkMath],
+        rehypePlugins: [rehypeKatex],
         feedOptions: {
           type: 'all',
           title: 'Shuo-jen Photography',

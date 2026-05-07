@@ -12,6 +12,7 @@
 @import url("https://font.emtech.cc/css/jfOpenHuninn?display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap');
 @import url('https://fonts.google.com/specimen/Cormorant+Garamond?query=Cormorant+Garamond');
+@import url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css');
 
 /* =========================================
    2. 全域變數與基礎設定 (Global Variables)
