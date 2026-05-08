@@ -3,8 +3,8 @@ import { useLocation } from '@docusaurus/router';
 import Link from '@docusaurus/Link'; 
 import styles from './styles.module.css';
 
-const GIST_JSON_URL = "https://gist.githubusercontent.com/joker123911/b7156615c093aee48f41ef1839da8dde/raw/comments.json";
-const GAS_APP_URL = "https://script.google.com/macros/s/AKfycbzqlUX8yz0eYzb72WOtjXTpeuhuVtwHYfuMJzs2rrspAKXynIbPugc02OdYWAM66nR7/exec";
+// --- 1. 換成你專屬的 Cloudflare Worker 網址 ---
+const WORKER_URL = "https://blog-comments-api.joker123911.workers.dev";
 
 export default function Guestbook({ readOnly = false, postSlug }) {
   const location = useLocation();
@@ -19,7 +19,37 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   const [fetchLoading, setFetchLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(10);
 
-  // 解析 Markdown 超連結語法，並自動補齊網址協議
+  // --- 管理員狀態 ---
+  const [adminKey, setAdminKey] = useState('');
+  const [clickCount, setClickCount] = useState(0);
+
+  // --- 內嵌編輯器狀態 ---
+  const [replyingTo, setReplyingTo] = useState(null); 
+  const [replyText, setReplyText] = useState('');     
+
+  useEffect(() => {
+    const savedKey = localStorage.getItem('guestbook_admin_key');
+    if (savedKey) setAdminKey(savedKey);
+  }, []);
+
+  const handleSecretClick = () => {
+    setClickCount((prev) => {
+      const nextCount = prev + 1;
+      if (nextCount >= 5) {
+        setTimeout(() => {
+          const key = prompt('🔑 進入管理員模式\n請輸入你的 ADMIN_KEY：');
+          if (key) {
+            localStorage.setItem('guestbook_admin_key', key);
+            setAdminKey(key);
+            alert('管理員模式已啟用！');
+          }
+        }, 50);
+        return 0;
+      }
+      return nextCount;
+    });
+  };
+
   const renderMarkdown = (text) => {
     if (!text) return text;
     const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
@@ -27,11 +57,9 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       const match = part.match(/\[([^\]]+)\]\(([^)]+)\)/);
       if (match) {
         let url = match[2].trim();
-        // 如果網址不是以 http(s)://, / (站內路徑), 或 # (錨點) 開頭，則補上 https://
         if (!/^https?:\/\//i.test(url) && !url.startsWith('/') && !url.startsWith('#')) {
           url = `https://${url}`;
         }
-
         return (
           <a 
             key={index} 
@@ -74,18 +102,19 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   };
 
   const fetchComments = async () => {
-    try {
-      const res = await fetch(`${GIST_JSON_URL}?t=${new Date().getTime()}`);
-      const data = await res.json();
-      if (Array.isArray(data)) {
-        setAllComments(data.sort((a, b) => new Date(b.time) - new Date(a.time)));
+      try {
+        const res = await fetch(WORKER_URL);
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          // 在前端強制轉換成真實的時間物件進行比對，確保「最晚的在最上面」
+          setAllComments(data.sort((a, b) => new Date(b.time) - new Date(a.time)));
+        }
+      } catch (err) {
+        console.error("載入錯誤:", err);
+      } finally {
+        setFetchLoading(false);
       }
-    } catch (err) {
-      console.error("載入錯誤:", err);
-    } finally {
-      setFetchLoading(false);
-    }
-  };
+    };
 
   useEffect(() => {
     fetchComments();
@@ -117,15 +146,14 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     };
     
     try {
-      await fetch(GAS_APP_URL, {
+      await fetch(WORKER_URL, {
         method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(submitData),
       });
       alert('留言已送出！');
       setFormData({ name: '', content: '', website: '' });
-      setTimeout(fetchComments, 3000);
+      setTimeout(fetchComments, 500); 
     } catch (error) {
       console.error("送出錯誤:", error);
       alert('送出失敗');
@@ -134,11 +162,60 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     }
   };
 
+  const startReply = (id, currentReply) => {
+    setReplyingTo(id);
+    setReplyText(currentReply || ''); 
+  };
+
+  const cancelReply = () => {
+    setReplyingTo(null);
+    setReplyText('');
+  };
+
+  const submitReply = async (id) => {
+    try {
+      const res = await fetch(WORKER_URL, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': adminKey
+        },
+        body: JSON.stringify({ id, replyContent: replyText, replyName: 'shuojen' })
+      });
+
+      if (res.ok) {
+        fetchComments();
+        setReplyingTo(null); 
+        setReplyText('');
+      } else {
+        alert('回覆失敗：金鑰錯誤或權限不足');
+      }
+    } catch (error) {
+      alert('連線失敗');
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm('🗑️ 確定要徹底刪除這則留言嗎？無法復原喔！')) return;
+    try {
+      const res = await fetch(`${WORKER_URL}?id=${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': adminKey }
+      });
+      if (res.ok) fetchComments();
+      else alert('刪除失敗：金鑰錯誤或權限不足');
+    } catch (error) {
+      alert('連線失敗');
+    }
+  };
+
   return (
     <div className={styles.guestbookContainer}>
       {!readOnly ? (
         <div className={styles.formSection}>
-          <h3 className={styles.sectionTitle}>發表留言</h3>
+          <h3 className={styles.sectionTitle} onClick={handleSecretClick} style={{ cursor: 'default', userSelect: 'none' }}>
+            發表留言 {adminKey && '🛡️'}
+          </h3>
           <form onSubmit={handleSubmit} className={styles.commentForm}>
             <div className={styles.inputRow}>
               <input
@@ -218,25 +295,64 @@ export default function Guestbook({ readOnly = false, postSlug }) {
                        </Link>
                     )}
                   </span>
-                  <span className={styles.commentTime}>{formatDate(c.time)}</span>
+                  <span className={styles.commentTime}>
+                    {formatDate(c.time)}
+                    
+                    {adminKey && (
+                      <span style={{ marginLeft: '12px' }}>
+                        <button onClick={() => startReply(c.id, c.replyContent)} style={{ cursor: 'pointer', background: 'none', border: 'none', color: '#0070f3', padding: '0 4px', fontSize: '0.9em' }}>
+                          ✏️{c.replyContent ? '編輯' : '回覆'}
+                        </button>
+                        <button onClick={() => handleDelete(c.id)} style={{ cursor: 'pointer', background: 'none', border: 'none', color: '#ff4081', padding: '0 4px', fontSize: '0.9em' }}>
+                          🗑️刪除
+                        </button>
+                      </span>
+                    )}
+                  </span>
                 </div>
                 <div className={getCommentClass(c.content)}>
                   {renderMarkdown(c.content)}
                 </div>
 
-                {c.replyContent && (
-                  <div className={styles.replyBox}>
-                    <div className={styles.replyHeader}>
-                      <div className={styles.replyUser}>
-                        <span className={styles.replyName}>{c.replyName || 'shuojen'}</span>
-                        <span className={styles.masterBadge}>站長</span>
-                      </div>
-                      <span className={styles.replyTime}>{formatDate(c.replyTime)}</span>
-                    </div>
-                    <div className={getCommentClass(c.replyContent)}>
-                      {renderMarkdown(c.replyContent)}
+                {replyingTo === c.id ? (
+                  <div style={{ marginTop: '15px', padding: '12px', background: 'var(--ifm-background-surface-color)', border: '1px solid var(--ifm-color-emphasis-300)', borderRadius: '8px' }}>
+                    <div style={{ marginBottom: '8px', fontSize: '0.9em', fontWeight: 'bold', color: 'var(--ifm-color-primary)' }}>站長回覆編輯模式</div>
+                    <textarea
+                      value={replyText}
+                      onChange={(e) => setReplyText(e.target.value)}
+                      placeholder="支援 Markdown 超連結與多行換行..."
+                      rows={4}
+                      style={{ 
+                        width: '100%', 
+                        padding: '8px', 
+                        borderRadius: '4px', 
+                        border: '1px solid var(--ifm-color-emphasis-400)',
+                        background: 'var(--ifm-background-color)',
+                        color: 'var(--ifm-font-color-base)',
+                        fontFamily: 'inherit',
+                        resize: 'vertical'
+                      }}
+                    />
+                    <div style={{ textAlign: 'right', marginTop: '8px' }}>
+                      <button onClick={cancelReply} style={{ marginRight: '8px', padding: '6px 16px', cursor: 'pointer', borderRadius: '4px', border: '1px solid var(--ifm-color-emphasis-500)', background: 'transparent', color: 'var(--ifm-font-color-base)' }}>取消</button>
+                      <button onClick={() => submitReply(c.id)} style={{ padding: '6px 16px', cursor: 'pointer', borderRadius: '4px', border: 'none', background: 'var(--ifm-color-primary)', color: '#fff', fontWeight: 'bold' }}>儲存回覆</button>
                     </div>
                   </div>
+                ) : (
+                  c.replyContent && (
+                    <div className={styles.replyBox}>
+                      <div className={styles.replyHeader}>
+                        <div className={styles.replyUser}>
+                          <span className={styles.replyName}>{c.replyName === '站長' ? 'shuojen' : (c.replyName || 'shuojen')}</span>
+                          <span className={styles.masterBadge}>站長</span>
+                        </div>
+                        <span className={styles.replyTime}>{formatDate(c.replyTime)}</span>
+                      </div>
+                      <div className={getCommentClass(c.replyContent)}>
+                        {renderMarkdown(c.replyContent)}
+                      </div>
+                    </div>
+                  )
                 )}
               </div>
             ))}

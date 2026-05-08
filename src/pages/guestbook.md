@@ -4,10 +4,10 @@ title: 留言板
 # 留言板
 import Guestbook from '@site/src/components/Guestbook';
 
-:::info **新增功能：支援簡單的 Markdown 超連結！** 
+:::info **支援 Markdown 超連結！** 
 
 
-使用格式為：`[顯示的文字](網址)`，就會自動變成可以點擊的[連結](/)。
+輸入`[顯示的文字](網址)`，自動變成可點擊的[連結](/)。
 
 :::
 
