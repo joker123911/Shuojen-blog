@@ -27,6 +27,10 @@ export default function PhotoGallery() {
   // Lightbox 相關 State
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
+  // 滑動/拖曳 相關 State
+  const [touchStartX, setTouchStartX] = useState(0);
+  const [touchEndX, setTouchEndX] = useState(0);
+
   const fullTitle = "> cd shuojen.com";
 
   // 處理照片洗牌
@@ -47,7 +51,7 @@ export default function PhotoGallery() {
         clearInterval(typingInterval);
         setTimeout(() => setShowLoading(true), 300);
       }
-    }, 100);
+    }, 50);
 
     return () => clearInterval(typingInterval);
   }, []);
@@ -96,7 +100,7 @@ export default function PhotoGallery() {
     }
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-    };
+    }
   }, [selectedPhoto, closeLightbox]);
 
   const nextPhoto = () => {
@@ -105,6 +109,46 @@ export default function PhotoGallery() {
 
   const prevPhoto = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + photos.length) % photos.length);
+  };
+
+  // 處理滑動/拖曳邏輯
+  const handleStart = (clientX) => {
+    setTouchStartX(clientX);
+    setTouchEndX(0);
+  };
+
+  const handleMove = (clientX) => {
+    if (touchStartX) {
+      setTouchEndX(clientX);
+    }
+  };
+
+  const handleEnd = () => {
+    if (!touchStartX || !touchEndX) {
+      setTouchStartX(0);
+      return;
+    }
+    const distance = touchStartX - touchEndX;
+    const minSwipeDistance = 50;
+
+    if (distance > minSwipeDistance) {
+      nextPhoto();
+    } else if (distance < -minSwipeDistance) {
+      prevPhoto();
+    }
+    
+    setTimeout(() => {
+      setTouchStartX(0);
+      setTouchEndX(0);
+    }, 50); 
+  };
+
+  const handleImageClick = (e, photo) => {
+    // 判定如果是滑動操作，就不觸發 Lightbox
+    if (touchStartX && touchEndX && Math.abs(touchStartX - touchEndX) > 10) {
+      return;
+    }
+    openLightbox(photo);
   };
 
   if (photos.length === 0) {
@@ -141,6 +185,8 @@ export default function PhotoGallery() {
     <Layout description="Shuo-jen 的個人部落格與攝影集">
       <style>
         {`
+          @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
           .gallery-wrapper {
             display: flex;
             flex-direction: row;
@@ -160,7 +206,7 @@ export default function PhotoGallery() {
           .gallery-title {
             font-size: 1.8rem;
             font-weight: 500;
-            font-family: 'Courier Prime', 'Consolas', 'Courier New', monospace; 
+            font-family: 'Courier Prime', Consolas, Menlo, Monaco, 'Courier New', monospace; 
             line-height: 1.5;
             color: var(--ifm-font-color-base);
             margin: 0;
@@ -200,6 +246,11 @@ export default function PhotoGallery() {
             position: relative;
             padding: 40px;
             min-width: 0; 
+            cursor: grab;
+          }
+          
+          .gallery-content:active {
+            cursor: grabbing;
           }
 
           .gallery-image {
@@ -214,28 +265,6 @@ export default function PhotoGallery() {
             transform: scale(1.01);
             transition: transform 0.3s ease;
           }
-
-          .nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: transparent;
-            border: none;
-            font-size: 2.5rem;
-            cursor: pointer;
-            color: var(--ifm-font-color-base);
-            padding: 20px;
-            z-index: 10;
-            opacity: 0.7;
-            transition: opacity 0.2s;
-          }
-
-          .nav-btn:hover {
-            opacity: 1;
-          }
-
-          .btn-prev { left: 10px; }
-          .btn-next { right: 10px; }
 
           .lightbox-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -306,12 +335,6 @@ export default function PhotoGallery() {
               flex: 1;
               min-height: unset;
             }
-            .nav-btn {
-              padding: 10px 5px;
-              font-size: 2rem;
-            }
-            .btn-prev { left: 0px; }
-            .btn-next { right: 0px; }
             .lightbox-close-btn { top: 10px; right: 15px; font-size: 2.5rem; }
           }
         `}
@@ -324,34 +347,46 @@ export default function PhotoGallery() {
             {!showLoading && <span className="typewriter-cursor"></span>}
           </div>
           
-          {showLoading && (
-            <div className="gallery-title gallery-loading">
-              {renderLoadingBar()}
-              <span className="typewriter-cursor"></span>
-            </div>
-          )}
+          <div className="gallery-title gallery-loading">
+            {showLoading ? (
+              <>
+                {renderLoadingBar()}
+                <span className="typewriter-cursor"></span>
+              </>
+            ) : (
+              <span style={{ visibility: 'hidden' }}>&nbsp;</span>
+            )}
+          </div>
         </div>
 
-        <div className="gallery-content">
+        <div 
+          className="gallery-content"
+          onTouchStart={(e) => handleStart(e.targetTouches[0].clientX)}
+          onTouchMove={(e) => handleMove(e.targetTouches[0].clientX)}
+          onTouchEnd={handleEnd}
+          onMouseDown={(e) => handleStart(e.clientX)}
+          onMouseMove={(e) => handleMove(e.clientX)}
+          onMouseUp={handleEnd}
+          onMouseLeave={handleEnd}
+        >
           {progress < 100 ? (
             <img 
               src={baseUrl + 'img/knight_5x.gif'}
               alt="Loading..."
               className="gallery-image"
               style={{ cursor: 'default' }}
+              onDragStart={(e) => e.preventDefault()}
             />
           ) : (
-            <>
-              <img
-                src={getPhotoSrc(currentPhoto)}
-                alt={`Gallery artwork ${currentIndex + 1}`}
-                className="gallery-image"
-                style={{ animation: 'fadeIn 0.8s ease-in-out' }}
-                onClick={() => openLightbox(currentPhoto)}
-              />
-              <button onClick={prevPhoto} aria-label="Previous photo" className="nav-btn btn-prev">‹</button>
-              <button onClick={nextPhoto} aria-label="Next photo" className="nav-btn btn-next">›</button>
-            </>
+            <img
+              key={currentIndex} 
+              src={getPhotoSrc(currentPhoto)}
+              alt={`Gallery artwork ${currentIndex + 1}`}
+              className="gallery-image"
+              style={{ animation: 'fadeIn 0.8s ease-in-out' }}
+              onClick={(e) => handleImageClick(e, currentPhoto)}
+              onDragStart={(e) => e.preventDefault()} 
+            />
           )}
         </div>
 
