@@ -65,9 +65,12 @@ const handleSecretClick = () => {
     });
   };
 
-  const renderMarkdown = (text) => {
+const renderMarkdown = (text) => {
     if (!text) return text;
+
+    // 1. 先處理超連結 [文字](網址)
     const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
+    
     return parts.map((part, index) => {
       const match = part.match(/\[([^\]]+)\]\(([^)]+)\)/);
       if (match) {
@@ -76,21 +79,48 @@ const handleSecretClick = () => {
           url = `https://${url}`;
         }
         return (
-          <a 
-            key={index} 
-            href={url} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            style={{ color: 'var(--ifm-color-primary)', textDecoration: 'underline' }}
-          >
+          <a key={index} href={url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--ifm-color-primary)', textDecoration: 'underline' }}>
             {match[1]}
           </a>
         );
       }
-      return part;
+
+      // 2. 處理剩餘的常用語法：粗體、斜體、刪除線、內嵌程式碼
+      // 我們將文字切碎，依照順序處理
+      let subParts = [part];
+
+      // 定義要支援的語法清單 [Regex, 標籤]
+      const rules = [
+        { reg: /(`[^`]+`)/g, tag: 'code' },        // 內嵌程式碼 `code`
+        { reg: /(\*\*[^*]+\*\*)/g, tag: 'b' },     // 粗體 **bold**
+        { reg: /(\*[^*]+\*)/g, tag: 'i' },         // 斜體 *italic*
+        { reg: /(~~[^~]+~~)/g, tag: 'del' },      // 刪除線 ~~strike~~
+      ];
+
+      // 這裡使用巢狀處理，確保語法可以並存（例如：**粗體加~~刪除線~~**）
+      // 為了簡單起見，我們這裡實作最常用的單層過濾
+      return (
+        <span key={index}>
+          {part.split(/(`[^`]+`|\*\*[^*]+\*\*|\*[^*]+\*|~~[^~]+~~)/g).map((subPart, subIndex) => {
+            if (subPart.startsWith('`') && subPart.endsWith('`')) {
+              return <code key={subIndex} style={{ backgroundColor: 'var(--ifm-color-emphasis-200)', padding: '2px 4px', borderRadius: '4px' }}>{subPart.slice(1, -1)}</code>;
+            }
+            if (subPart.startsWith('**') && subPart.endsWith('**')) {
+              return <b key={subIndex}>{subPart.slice(2, -2)}</b>;
+            }
+            if (subPart.startsWith('*') && subPart.endsWith('*')) {
+              return <i key={subIndex}>{subPart.slice(1, -1)}</i>;
+            }
+            if (subPart.startsWith('~~') && subPart.endsWith('~~')) {
+              return <del key={subIndex}>{subPart.slice(2, -2)}</del>;
+            }
+            return subPart;
+          })}
+        </span>
+      );
     });
   };
-
+  
   const getCommentClass = (content) => {
     if (!content) return styles.commentBody;
     const safeContent = String(content);
