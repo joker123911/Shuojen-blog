@@ -1,7 +1,7 @@
 ---
 title: 留言板
 ---
-# 留言板
+# 留言板 `/guestbook`
 import Guestbook from '@site/src/components/Guestbook';
 
 :::info **支援 Markdown 超連結！** 

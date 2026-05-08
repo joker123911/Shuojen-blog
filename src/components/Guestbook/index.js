@@ -32,16 +32,31 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     if (savedKey) setAdminKey(savedKey);
   }, []);
 
-  const handleSecretClick = () => {
+const handleSecretClick = () => {
     setClickCount((prev) => {
       const nextCount = prev + 1;
       if (nextCount >= 5) {
-        setTimeout(() => {
-          const key = prompt('🔑 進入管理員模式\n請輸入你的 ADMIN_KEY：');
+        setTimeout(async () => {
+          const key = prompt('🎉 恭喜你發現了隱藏大門！\n如果你是站長，請輸入通關密語：');
+          
           if (key) {
-            localStorage.setItem('guestbook_admin_key', key);
-            setAdminKey(key);
-            alert('管理員模式已啟用！');
+            try {
+              // 向 Worker 發起驗證請求
+              const res = await fetch(`${WORKER_URL}/verify`, {
+                headers: { 'Authorization': key }
+              });
+              const result = await res.json();
+
+              if (result.success) {
+                localStorage.setItem('guestbook_admin_key', key);
+                setAdminKey(key);
+                alert('身分驗證成功！歡迎回來，shuojen 🛡️');
+              } else {
+                alert('你是不是想刪我留言 (⁰⊖⁰)');
+              }
+            } catch (err) {
+              alert('連線失敗，請檢查網路或 Worker 狀態。');
+            }
           }
         }, 50);
         return 0;
