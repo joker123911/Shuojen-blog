@@ -1,6 +1,6 @@
 ---
 title: 'AI 寫作的生產力陷阱'
-tags: ['blogparty','life']
+tags: [blogparty, life, read]
 ---
 :::info
 這是我的「[BlogBlog 同樂會](https://blogblog.club/party/?ref=wen-lab.tw) - 2026 年 4 月」投稿文章。本月主題是[「生產力」](https://www.wen-lab.tw/blogblog-party-productivity/)！

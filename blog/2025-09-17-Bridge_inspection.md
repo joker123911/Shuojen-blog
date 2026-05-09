@@ -1,6 +1,6 @@
 ---
 title: '橋梁空拍檢測'
-tags: ['work']
+tags: [friend, trip, work]
 ---
 今天難得離開辦公室公出，騎車來到[新北大橋](https://zh.wikipedia.org/zh-tw/%E6%96%B0%E5%8C%97%E5%A4%A7%E6%A9%8B)做橋梁目視檢測[^1]，主要用空拍機針對橋面板底、橋墩及帽梁巡視並錄製空拍影片。
 

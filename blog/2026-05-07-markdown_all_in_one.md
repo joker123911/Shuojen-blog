@@ -1,6 +1,6 @@
 ---
 title: 'Markdown All in One'
-tags: ['blog', 'tool']
+tags: [blog, note, tool]
 date: 2026-05-07T16:59:04+08:00
 ---
 

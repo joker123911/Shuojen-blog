@@ -1,6 +1,6 @@
 ---
 title: '部落卷徽章'
-tags: ['fun', 'pixel art']
+tags: [blog, fun, pixel art]
 date: 2026-04-21T23:07:29+08:00
 ---
 

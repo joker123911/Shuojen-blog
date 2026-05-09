@@ -1,6 +1,6 @@
 ---
 title: '街拍'
-tags: ['life']
+tags: [life, read]
 date: 2026-04-20T14:43:56+08:00
 ---
 

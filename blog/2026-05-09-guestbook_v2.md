@@ -1,6 +1,6 @@
 ---
 title: '留言板系統全新改版'
-tags: ['blog', 'tool']
+tags: [blog, note, tool]
 date: 2026-05-09T01:11:45+08:00
 ---
 

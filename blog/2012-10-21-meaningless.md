@@ -1,6 +1,6 @@
 ---
 title: '廢文'
-tags: ['fun']
+tags: [fun, shitpost]
 ---
 
 我家隔壁一直有人在吹直笛

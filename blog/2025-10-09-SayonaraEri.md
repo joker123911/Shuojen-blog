@@ -1,6 +1,6 @@
 ---
 title: '再見繪梨'
-tags: ['friend','movie']
+tags: [anime, friend]
 ---
 
 ## 下班逛街

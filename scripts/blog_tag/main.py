@@ -29,6 +29,7 @@ class TagManagerApp:
         self.displayed_files = [] 
         self.all_tags = set()
         self.tag_file_map = {}    
+        self.file_titles = {} # 儲存檔案對應的標題
         self.current_file = None
 
         self.setup_ui()
@@ -94,7 +95,7 @@ class TagManagerApp:
         
         # 扁平化 Listbox
         self.file_listbox = tk.Listbox(list_frame1, yscrollcommand=file_scroll.set, 
-                                       bg="#F8FAFC", fg="#2D3748", font=("Consolas", 11),
+                                       bg="#F8FAFC", fg="#2D3748", font=("微軟正黑體", 11),
                                        selectbackground="#3182CE", selectforeground="#FFFFFF",
                                        activestyle="none", relief="flat", highlightthickness=1, highlightbackground="#E2E8F0",
                                        exportselection=False)
@@ -148,7 +149,7 @@ class TagManagerApp:
         save_btn.pack(fill=tk.X)
         self.create_hover_effect(save_btn, "#48BB78", "#38A169")
 
-    # ================= 邏輯層 (功能完全不變) =================
+    # ================= 邏輯層 =================
 
     def on_dir_change(self, event=None):
         selected_dir_name = self.dir_combo.get()
@@ -167,10 +168,12 @@ class TagManagerApp:
             self.files = []
             self.all_tags = set()
             self.tag_file_map = {}
+            self.file_titles = {}
         else:
             self.files = []
             self.all_tags = set()
             self.tag_file_map = {}
+            self.file_titles = {}
 
             for root_dir, _, filenames in os.walk(self.current_dir_path):
                 for filename in filenames:
@@ -178,7 +181,9 @@ class TagManagerApp:
                         filepath = os.path.join(root_dir, filename)
                         self.files.append(filepath)
                         
-                        _, tags, _ = self.parse_frontmatter(filepath)
+                        _, tags, _, title = self.parse_frontmatter(filepath)
+                        self.file_titles[filepath] = title
+                        
                         for t in tags:
                             self.all_tags.add(t)
                             if t not in self.tag_file_map:
@@ -223,8 +228,8 @@ class TagManagerApp:
                 self.displayed_files = self.files
 
         for f in self.displayed_files:
-            rel_path = os.path.relpath(f, self.current_dir_path)
-            self.file_listbox.insert(tk.END, rel_path)
+            title = self.file_titles.get(f, os.path.basename(f))
+            self.file_listbox.insert(tk.END, title)
             
         self.file_count_label.config(text=f"共 {len(self.displayed_files)} 篇")
 
@@ -238,11 +243,11 @@ class TagManagerApp:
             with open(filepath, 'r', encoding='utf-8') as f:
                 content = f.read()
         except Exception as e:
-            return None, [], content
+            return None, [], content, os.path.basename(filepath)
 
         match = re.match(r'^---\n(.*?)\n---\n(.*)', content, re.DOTALL)
         if not match:
-            return None, [], content
+            return None, [], content, os.path.basename(filepath)
 
         fm_text = match.group(1)
         body = match.group(2)
@@ -259,7 +264,14 @@ class TagManagerApp:
                 tags_raw = tags_str.split('\n')
                 tags = [t.strip().lstrip('-').strip().strip('"\'') for t in tags_raw if t.strip().startswith('-')]
                 
-        return fm_text, tags, body
+        title = os.path.basename(filepath)
+        title_match = re.search(r'^title:\s*(.*?)$', fm_text, re.MULTILINE)
+        if title_match:
+            extracted_title = title_match.group(1).strip().strip('"\'')
+            if extracted_title:
+                title = extracted_title
+                
+        return fm_text, tags, body, title
 
     def on_file_select(self, event):
         selection = self.file_listbox.curselection()
@@ -269,7 +281,7 @@ class TagManagerApp:
         index = selection[0]
         self.current_file = self.displayed_files[index]
         
-        _, tags, _ = self.parse_frontmatter(self.current_file)
+        _, tags, _, _ = self.parse_frontmatter(self.current_file)
         
         self.tag_listbox.selection_clear(0, tk.END)
         all_tags_list = sorted(list(self.all_tags))
@@ -301,10 +313,19 @@ class TagManagerApp:
             messagebox.showwarning("警告", "請先選擇左側的一個檔案！")
             return
 
+        # 取得下一個檔案，以便儲存後自動選取
+        next_file = None
+        try:
+            current_idx = self.displayed_files.index(self.current_file)
+            if current_idx + 1 < len(self.displayed_files):
+                next_file = self.displayed_files[current_idx + 1]
+        except ValueError:
+            pass
+
         selected_indices = self.tag_listbox.curselection()
         selected_tags = [self.tag_listbox.get(i) for i in selected_indices]
 
-        fm_text, old_tags, body = self.parse_frontmatter(self.current_file)
+        fm_text, old_tags, body, _ = self.parse_frontmatter(self.current_file)
         
         if fm_text is None:
             messagebox.showerror("錯誤", "此檔案沒有 YAML Frontmatter (---) 區塊，無法寫入！")
@@ -333,9 +354,21 @@ class TagManagerApp:
         try:
             with open(self.current_file, 'w', encoding='utf-8') as f:
                 f.write(f"---\n{new_fm}\n---\n{body}")
-            messagebox.showinfo("成功", f"已成功更新檔案：\n{os.path.basename(self.current_file)}")
             
+            # 重新載入左側列表資料
             self.load_data()
+
+            # 自動選取下一篇
+            if next_file and next_file in self.displayed_files:
+                new_idx = self.displayed_files.index(next_file)
+                self.file_listbox.selection_clear(0, tk.END)
+                self.file_listbox.selection_set(new_idx)
+                self.file_listbox.see(new_idx) # 讓左側列表自動滾動到下一篇的位置
+                self.on_file_select(None) # 觸發讀取，更新右側 Tag 區塊
+            else:
+                # 如果已經是最後一篇了，清空狀態
+                self.current_file = None
+                self.tag_listbox.selection_clear(0, tk.END)
             
         except Exception as e:
             messagebox.showerror("錯誤", f"儲存失敗：{e}")

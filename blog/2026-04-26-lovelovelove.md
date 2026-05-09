@@ -1,6 +1,6 @@
 ---
 title: '愛愛愛'
-tags: ['guitar']
+tags: [guitar, life, music]
 date: 2026-04-26T12:43:44+08:00
 ---
 

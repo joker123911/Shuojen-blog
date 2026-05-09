@@ -1,4 +1,5 @@
 export const westernMovies = [
+  { title: "實習大叔", score: 6.7, note: "沒什麼特別的職場喜劇電影，還可以吧", poster: "./img/movie/實習大叔.jpg" },
   { title: "頂尖對決", score: 9.5, note: "心中最佳的諾蘭神片，絕對不能被劇透，看第二次體驗更佳", poster: "./img/movie/頂尖對決.jpg" },
   { title: "火線追緝令", score: 9.5, note: "心中最佳的大衛芬奇，百看不厭凱文史貝西的神演技", poster: "./img/movie/火線追緝令.jpg" },
   { title: "星際效應", score: 9.4, note: "畫面劇情演員都無可挑剔，重映又去美麗華 Imax 體驗感動", poster: "./img/movie/星際效應.jpg" },
@@ -210,6 +211,8 @@ export const westernMovies = [
 ];
 
 export const asiaMovies = [
+  { title: "失戀33天", score: 7.6, note: "小時候看的，我少數喜歡的中國愛情喜劇", poster: "./img/movie/失戀33天.jpg" },
+  { title: "魯冰花", score: 7.5, note: "經典臺灣電影，必看", poster: "./img/movie/魯冰花.jpg" },
   { title: "大佛普拉斯", score: 9.3, note: "我最喜歡的臺灣電影，黑白畫面的荒謬感極佳", poster: "./img/movie/大佛普拉斯.jpg" },
   { title: "寄生上流", score: 9.3, note: "奉導集大成神作，商業與藝術完美結合", poster: "./img/movie/寄生上流.jpg" },
   { title: "破地獄", score: 9.2, note: "近期最喜歡的香港電影，感動人心的殯葬題材", poster: "./img/movie/破地獄.jpg" },

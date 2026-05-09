@@ -1,6 +1,6 @@
 ---
 title: '中打速度'
-tags: ['fun','tool','type']
+tags: [life, tool, type]
 ---
 
 ## 打字測試

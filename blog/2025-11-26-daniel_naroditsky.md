@@ -1,6 +1,6 @@
 ---
 title: 'Daniel Naroditsky'
-tags: ['life']
+tags: [chess, life]
 ---
 ![img](img202511/daniel.png)
 

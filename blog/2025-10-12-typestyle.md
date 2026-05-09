@@ -1,6 +1,6 @@
 ---
 title: '中文文案排版'
-tags: ['type']
+tags: [blog, note, type]
 ---
 開始寫部落格後，發現自己對於文章中英文格式、標點符號和排版完全一無所知，全形半形也都混在一起誤用（真感謝以前社群媒體幫我養成的習慣）。於是我搜尋到了這個[「中文文案排版指北」](https://github.com/sparanoid/chinese-copywriting-guidelines)令我受益良多，以下為其宗旨：
 

@@ -1,6 +1,6 @@
 ---
 title: '九把刀'
-tags: ['life']
+tags: [life, read]
 ---
 今天聽台灣通勤第一品牌的節目：[EP525 免費柯景騰 ft. 九把刀](https://www.youtube.com/watch?v=KyhCo_CeUHM)，應該是我最近聽到最好笑又有趣的一個訪談。
 

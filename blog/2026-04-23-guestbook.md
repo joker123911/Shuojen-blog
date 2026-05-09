@@ -1,6 +1,6 @@
 ---
 title: '留言區功能啟用'
-tags: ['blog']
+tags: [blog, note, tool]
 date: 2026-04-23T21:33:49+08:00
 ---
 
