@@ -33,12 +33,33 @@ export default function PhotoGallery() {
 
   const fullTitle = "> cd shuojen.com";
 
+  // 取得圖片網址的函式 (往上移，方便預載入使用)
+  const getPhotoSrc = useCallback((photoItem) => {
+    if (!photoItem) return '';
+    const src = typeof photoItem === 'string' ? photoItem : photoItem.src;
+    return baseUrl + src.replace(/^\//, '');
+  }, [baseUrl]);
+
   // 處理照片洗牌
   useEffect(() => {
     if (photosData && photosData.length > 0) {
       setPhotos(shuffleArray(photosData));
     }
   }, []);
+
+  // 預載入上一張與下一張照片
+  useEffect(() => {
+    if (photos.length > 0) {
+      const nextIndex = (currentIndex + 1) % photos.length;
+      const prevIndex = (currentIndex - 1 + photos.length) % photos.length;
+      
+      const imgNext = new window.Image();
+      imgNext.src = getPhotoSrc(photos[nextIndex]);
+      
+      const imgPrev = new window.Image();
+      imgPrev.src = getPhotoSrc(photos[prevIndex]);
+    }
+  }, [currentIndex, photos, getPhotoSrc]);
 
   // 動畫第一階段：打字機效果
   useEffect(() => {
@@ -162,12 +183,6 @@ export default function PhotoGallery() {
   }
 
   const currentPhoto = photos[currentIndex];
-  
-  const getPhotoSrc = (photoItem) => {
-    if (!photoItem) return '';
-    const src = typeof photoItem === 'string' ? photoItem : photoItem.src;
-    return baseUrl + src.replace(/^\//, '');
-  };
 
   const renderLoadingBar = () => {
     const barLength = 15;
