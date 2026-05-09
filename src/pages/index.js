@@ -109,28 +109,35 @@ export default function PhotoGallery() {
     }
   }, []);
 
-  // 監聽 Esc 鍵關閉 Lightbox
+  const nextPhoto = useCallback(() => {
+    if (photos.length > 0) {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % photos.length);
+    }
+  }, [photos.length]);
+
+  const prevPhoto = useCallback(() => {
+    if (photos.length > 0) {
+      setCurrentIndex((prevIndex) => (prevIndex - 1 + photos.length) % photos.length);
+    }
+  }, [photos.length]);
+
+  // 監聽 Esc 鍵關閉 Lightbox，以及左右方向鍵切換照片
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
+      if (e.key === 'Escape' && selectedPhoto) {
         closeLightbox();
       }
+      // 如果 Lightbox 沒開，允許使用鍵盤左右鍵切換照片
+      if (!selectedPhoto) {
+        if (e.key === 'ArrowRight') nextPhoto();
+        if (e.key === 'ArrowLeft') prevPhoto();
+      }
     };
-    if (selectedPhoto) {
-      window.addEventListener('keydown', handleKeyDown);
-    }
+    window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     }
-  }, [selectedPhoto, closeLightbox]);
-
-  const nextPhoto = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % photos.length);
-  };
-
-  const prevPhoto = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + photos.length) % photos.length);
-  };
+  }, [selectedPhoto, closeLightbox, nextPhoto, prevPhoto]);
 
   // 處理滑動/拖曳邏輯
   const handleStart = (clientX) => {
@@ -281,6 +288,43 @@ export default function PhotoGallery() {
             transition: transform 0.3s ease;
           }
 
+          /* 電腦版左右按鈕樣式 */
+          .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            border: none;
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.3s ease, background 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          
+          .gallery-content:hover .nav-button {
+            opacity: 1;
+          }
+
+          .nav-button:hover {
+            background: rgba(0, 0, 0, 0.7);
+          }
+
+          .nav-button.left {
+            left: 20px;
+          }
+
+          .nav-button.right {
+            right: 20px;
+          }
+
           .lightbox-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background-color: rgba(0, 0, 0, 0.92);
@@ -351,6 +395,11 @@ export default function PhotoGallery() {
               min-height: unset;
             }
             .lightbox-close-btn { top: 10px; right: 15px; font-size: 2.5rem; }
+            
+            /* 手機版隱藏左右按鈕，強制依賴滑動 */
+            .nav-button {
+              display: none;
+            }
           }
         `}
       </style>
@@ -384,6 +433,16 @@ export default function PhotoGallery() {
           onMouseUp={handleEnd}
           onMouseLeave={handleEnd}
         >
+          {progress >= 100 && (
+            <button 
+              className="nav-button left" 
+              onClick={(e) => { e.stopPropagation(); prevPhoto(); }}
+              aria-label="Previous Photo"
+            >
+              &#10094;
+            </button>
+          )}
+
           {progress < 100 ? (
             <img 
               src={baseUrl + 'img/knight_5x.gif'}
@@ -402,6 +461,16 @@ export default function PhotoGallery() {
               onClick={(e) => handleImageClick(e, currentPhoto)}
               onDragStart={(e) => e.preventDefault()} 
             />
+          )}
+
+          {progress >= 100 && (
+            <button 
+              className="nav-button right" 
+              onClick={(e) => { e.stopPropagation(); nextPhoto(); }}
+              aria-label="Next Photo"
+            >
+              &#10095;
+            </button>
           )}
         </div>
 
