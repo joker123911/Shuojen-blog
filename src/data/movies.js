@@ -1,4 +1,6 @@
 export const westernMovies = [
+  { title: "阿拉斯加之死", score: 7.3, note: "有意思的出世電影，只是有點沒 get 到", poster: "./img/movie/阿拉斯加之死.jpg" },
+  { title: "真愛一世情", score: 8.0, note: "背景為一戰時期，三兄弟一家的故事，精彩好看", poster: "./img/movie/真愛一世情.jpg" },
   { title: "頂尖對決", score: 9.5, note: "心中最佳的諾蘭神片，絕對不能被劇透，看第二次體驗更佳", poster: "./img/movie/頂尖對決.jpg" },
   { title: "刺激1995", score: 9.4, note: "監獄劇情神片，很療癒，就連電影名也是個神奇的傳說", poster: "./img/movie/刺激1995.jpg" },
   { title: "星際效應", score: 9.4, note: "畫面劇情演員都無可挑剔，重映又去美麗華 Imax 體驗感動", poster: "./img/movie/星際效應.jpg" },
