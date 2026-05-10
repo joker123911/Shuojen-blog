@@ -6,6 +6,7 @@ import rehypeKatex from 'rehype-katex';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Shuo-jen Blog',
+  staticDirectories: ['static', 'photoblog'],
   tagline: 'Hello',
   favicon: 'img/favicon.ico',
   future: {
@@ -29,7 +30,11 @@ const config = {
   projectName: 'Shuojen-blog',
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  markdown: {
+      hooks: {
+        onBrokenMarkdownLinks: 'warn',
+      },
+    },
 
   i18n: {
     defaultLocale: 'zh-TW',
@@ -84,7 +89,7 @@ const config = {
         },
         onInlineTags: 'warn',
         onInlineAuthors: 'warn',
-        onUntruncatedBlogPosts: 'warn',
+        onUntruncatedBlogPosts: 'ignore',
       },
     ],
     [
@@ -108,6 +113,7 @@ const config = {
           copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen Huang`,
           language: 'zh-TW',
         },
+        onUntruncatedBlogPosts: 'ignore',
       },
     ],
     [

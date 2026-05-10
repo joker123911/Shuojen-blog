@@ -2,33 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const matter = require('gray-matter');
 
-// 設定路徑
+// 設定路徑 (移除了不需要的靜態資料夾路徑)
 const BLOG_DIR = path.join(__dirname, '../photoblog');
-const IMG_SRC_DIR = path.join(__dirname, '../photoblog', 'img');
-const IMG_DEST_DIR = path.join(__dirname, '../static', 'img');
 const OUTPUT_FILE = path.join(__dirname, '../src/data/photosData.json');
-
-function syncImages() {
-  console.log('🔄 正在同步圖片...');
-  if (!fs.existsSync(IMG_SRC_DIR)) {
-    console.warn(`⚠️ 找不到圖片來源目錄: ${IMG_SRC_DIR}，跳過同步。`);
-    return;
-  }
-
-  // 確保目標資料夾存在
-  if (!fs.existsSync(IMG_DEST_DIR)) {
-    fs.mkdirSync(IMG_DEST_DIR, { recursive: true });
-  }
-
-  // 將 photoblog/img 同步至 static/img
-  // 使用 cpSync (Node.js 16.7+ 支援) 進行遞迴複製
-  try {
-    fs.cpSync(IMG_SRC_DIR, IMG_DEST_DIR, { recursive: true, force: true });
-    console.log(`✅ 圖片已同步至: ${IMG_DEST_DIR}`);
-  } catch (err) {
-    console.error(`❌ 圖片同步失敗: ${err.message}`);
-  }
-}
 
 function generatePhotosData() {
   if (!fs.existsSync(BLOG_DIR)) {
@@ -94,6 +70,5 @@ function generatePhotosData() {
   console.log('--------------------------------------------------');
 }
 
-// 執行流程
-syncImages();
+// 執行流程 (只需產生 JSON，不再複製圖片)
 generatePhotosData();

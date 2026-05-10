@@ -182,3 +182,15 @@ article img {
     margin-right: 0.5rem; /* 縮小 Logo 旁的空間 */
   }
 }
+
+/* 隱藏標題旁邊的錨點連結符號 (#) */
+.hash-link {
+  display: none !important;
+}
+
+/* 如果只想在手機版（小螢幕）隱藏，請使用以下程式碼 */
+@media screen and (max-width: 996px) {
+  .hash-link {
+    display: none !important;
+  }
+}
