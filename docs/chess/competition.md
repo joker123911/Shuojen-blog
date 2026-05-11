@@ -2,7 +2,7 @@
 title: '西洋棋紀錄'
 sidebar_position: 3
 ---
-*最後更新：2025-09-21*
+*最後更新：2025-12-19*
 
 ![img](./img/019.webp)
 ## 積分(Rating)

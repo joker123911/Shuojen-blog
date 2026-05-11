@@ -5,7 +5,7 @@ description: 個人網頁名冊
 
 # 部落卷 `/blogroll`
 
-*最後更新：2025-05-05*
+*最後更新：2026-05-05*
 
 <img src="/img/blogroll_logo.png" style={{ borderRadius: '0' }} alt="logo" /> 
 ▲ 我的部落格徽章，歡迎取用
