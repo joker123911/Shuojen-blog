@@ -6,7 +6,7 @@
     "docusaurus": "docusaurus",
 	"check": "node scripts/check-broken-links.js",
     "prestart": "git pull",
-    "prepare-data": "node scripts/sync-build-time.js && node scripts/update-stats.js && node scripts/update-date.js && node scripts/gen-photos.js",
+    "prepare-data": "node scripts/sync-build-time.js && node scripts/update-stats.js && node scripts/gen-photos.js",
     "start": "npm run prepare-data && docusaurus start",
     "build": "npm run prepare-data && docusaurus build",
     "deploy": "npm run prepare-data && docusaurus deploy",
