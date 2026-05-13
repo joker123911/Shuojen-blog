@@ -5,7 +5,7 @@ description: 記錄我愛用的工具
 
 # 我在用什麼 `/use`
 
-*最後更新：2026-04-26*
+*最後更新：2026-05-11*
 
 :::note
 靈感參考來自[Derek Sivers /uses](https://sive.rs/uses)。
