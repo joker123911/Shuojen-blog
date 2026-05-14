@@ -82,8 +82,13 @@ title: 興趣
 <div class="interest-grid">
 
   <a href="/docs/movie_list" class="interest-card">
-    <h3>🎬 電影推薦</h3>
-    <p>記錄我看過而且很喜歡的電影列表，持續更新中。</p>
+    <h3>🍿 電影清單</h3>
+    <p>我專屬的 IMDb 電影列表，持續更新中。</p>
+  </a>
+
+    <a href="/docs/anime/" class="interest-card">
+    <h3>🎬 動漫清單</h3>
+    <p>記錄我的動漫 Tier 列表。</p>
   </a>
 
   <a href="/docs/aqua" class="interest-card">

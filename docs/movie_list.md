@@ -1,11 +1,11 @@
 ---
-title: '電影推薦清單'
+title: '電影清單'
 sidebar_position: 2
 ---
 
 import MovieListApp from '@site/src/components/MovieListApp';
 
-*最後更新：2026-05-11*
+*最後更新：2026-05-13*
 
 這是一份我自己專屬的 TOP RANKING 電影排名！
 

@@ -2,27 +2,57 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import os
 import requests
-import threading  # 新增：用來處理多執行緒，避免視窗卡死
+import threading
+import re  # 新增：用於解析與排序 JS 內容
 
 # ==========================================
-# 請確認這裡的檔名與您的目標 JS 檔案名稱一致
+# 檔案路徑設定
 # ==========================================
-JS_FILE_PATH = "movies.js" 
+MOVIE_JS_PATH = "movies.js" 
+ANIME_JS_PATH = "anime.js"
 
 # ==========================================
-# 請在這裡填入您的 TMDB API Key (v3 auth)
+# TMDB API Key
 # ==========================================
 TMDB_API_KEY = "728ef67fd1e7160cbe667eed11549e19"
 
-def add_movie_click():
-    # 類別對應表
+def on_mode_change(event):
+    """當切換模式時，調整 UI 顯示"""
+    mode = mode_combobox.get()
+    if mode == "電影模式 (Movie)":
+        lbl_category.config(text="選擇類別：")
+        category_combobox.config(values=[
+            "歐美電影 (westernMovies)", 
+            "亞洲電影 (asiaMovies)", 
+            "童年港片 (hongkongMovies)", 
+            "動畫電影 (animeMovies)"
+        ])
+        category_combobox.current(0)
+        lbl_score.place(x=30, y=130)
+        entry_score.place(x=120, y=130)
+    else:
+        lbl_category.config(text="選擇等級：")
+        category_combobox.config(values=["SSS", "SS", "S", "A", "B"])
+        category_combobox.current(0)
+        # 動漫模式隱藏評分
+        lbl_score.place_forget()
+        entry_score.place_forget()
+
+def add_data_click():
+    mode = mode_combobox.get()
+    
+    if mode == "電影模式 (Movie)":
+        process_movie()
+    else:
+        process_anime()
+
+def process_movie():
     category_map = {
         "歐美電影 (westernMovies)": "westernMovies",
         "亞洲電影 (asiaMovies)": "asiaMovies",
         "童年港片 (hongkongMovies)": "hongkongMovies",
         "動畫電影 (animeMovies)": "animeMovies"
     }
-
     selected_cat = category_combobox.get()
     if selected_cat not in category_map:
         messagebox.showwarning("警告", "請選擇有效的電影類別！")
@@ -30,124 +60,147 @@ def add_movie_click():
 
     category_var = category_map[selected_cat]
     title = entry_title.get().strip()
-    score = entry_score.get().strip()
+    score = entry_score.get().strip() or "7.0"
     note = text_note.get("1.0", tk.END).strip()
 
     if not title or not note:
         messagebox.showwarning("警告", "電影名與心得不可為空！")
         return
 
-    # 若未填寫評分，預設為 7.0
-    if not score:
-        score = "7.0"
-
-    # ==========================================
-    # 改變 UI 狀態：鎖定按鈕，提示處理中
-    # ==========================================
     btn_submit.config(text="下載處理中...", state=tk.DISABLED)
-
-    # 啟動背景執行緒去處理下載與檔案寫入
-    # 這樣視窗就不會因為等待網路而被卡死 (沒有回應)
     threading.Thread(
-        target=process_and_save, 
-        args=(category_var, title, score, note),
-        daemon=True # 設定為 daemon，當主視窗關閉時，背景工作也會自動結束
+        target=save_worker, 
+        args=("movie", category_var, title, score, note, None),
+        daemon=True
     ).start()
 
+def process_anime():
+    tier = category_combobox.get()
+    title = entry_title.get().strip()
+    note = text_note.get("1.0", tk.END).strip()
 
-def process_and_save(category_var, title, score, note):
-    # ==========================================
-    # 路徑分離設定
-    # ==========================================
-    js_poster_path = f"./img/movie/{title}.jpg"
-    new_entry = f'  {{ title: "{title}", score: {score}, note: "{note}", poster: "{js_poster_path}" }},'
+    if not title or not note:
+        messagebox.showwarning("警告", "動畫名與心得不可為空！")
+        return
 
-    save_dir = "../../docs/img/movie"
+    btn_submit.config(text="下載處理中...", state=tk.DISABLED)
+    threading.Thread(
+        target=save_worker, 
+        args=("anime", "animeList", title, None, note, tier),
+        daemon=True
+    ).start()
+
+def save_worker(data_type, target_var, title, score, note, tier):
+    # 路徑與格式設定
+    if data_type == "movie":
+        js_file = MOVIE_JS_PATH
+        js_poster_path = f"./img/movie/{title}.jpg"
+        save_dir = "../../docs/img/movie"
+        new_entry = f'  {{ title: "{title}", score: {score}, note: "{note}", poster: "{js_poster_path}" }},'
+        target_line = f"export const {target_var} = ["
+        search_type = "movie"
+        poster_langs = "zh-TW,en,null"
+    else:
+        js_file = ANIME_JS_PATH
+        js_poster_path = f"./img/anime/{title}.jpg"
+        save_dir = "../../docs/img/anime"
+        # 建立不帶尾巴逗號的基礎物件格式，方便後續排序處理
+        new_entry = f'  {{ title: "{title}", note: "{note}", poster: "{js_poster_path}", tier: "{tier}" }}'
+        target_line = "export const animeList = ["
+        search_type = "multi"
+        poster_langs = "ja,zh,en,null"
+
     save_poster_path = os.path.join(save_dir, f"{title}.jpg")
 
-    # ==========================================
-    # 新增功能：自動從 TMDB 下載對應語言海報
-    # ==========================================
+    # TMDB 下載邏輯
     if TMDB_API_KEY:
         try:
             os.makedirs(save_dir, exist_ok=True)
-            
-            search_url = "https://api.themoviedb.org/3/search/movie"
+            search_url = f"https://api.themoviedb.org/3/search/{search_type}"
             search_params = {"api_key": TMDB_API_KEY, "query": title, "language": "zh-TW"}
             search_resp = requests.get(search_url, params=search_params)
-            search_resp.raise_for_status()
             search_data = search_resp.json()
             
             if search_data.get("results"):
-                first_result = search_data["results"][0]
-                movie_id = first_result["id"]
-                original_lang = first_result.get("original_language", "en")
+                res = search_data["results"][0]
+                m_id = res["id"]
+                m_type = res.get("media_type", "movie") if search_type == "multi" else search_type
                 
-                if category_var == "westernMovies":
-                    target_langs = "en,null"
+                img_api_url = f"https://api.themoviedb.org/3/{m_type}/{m_id}/images"
+                img_params = {"api_key": TMDB_API_KEY, "include_image_language": poster_langs}
+                img_data = requests.get(img_api_url, params=img_params).json()
+                
+                poster_path = None
+                if img_data.get("posters"):
+                    poster_path = img_data["posters"][0]["file_path"]
                 else:
-                    target_langs = f"{original_lang},zh,en,null"
-                
-                img_api_url = f"https://api.themoviedb.org/3/movie/{movie_id}/images"
-                img_params = {"api_key": TMDB_API_KEY, "include_image_language": target_langs}
-                img_resp = requests.get(img_api_url, params=img_params)
-                img_resp.raise_for_status()
-                img_data = img_resp.json()
-                
-                target_poster_path = None
-                if img_data.get("posters") and len(img_data["posters"]) > 0:
-                    target_poster_path = img_data["posters"][0]["file_path"]
-                else:
-                    target_poster_path = first_result.get("poster_path")
+                    poster_path = res.get("poster_path")
 
-                if target_poster_path:
-                    download_url = f"https://image.tmdb.org/t/p/w780{target_poster_path}"
-                    img_bytes = requests.get(download_url).content
+                if poster_path:
+                    img_bytes = requests.get(f"https://image.tmdb.org/t/p/w780{poster_path}").content
                     with open(save_poster_path, "wb") as f:
                         f.write(img_bytes)
-                else:
-                    root.after(0, lambda: messagebox.showwarning("海報提示", f"TMDB 上沒有《{title}》的海報圖片。"))
-            else:
-                root.after(0, lambda: messagebox.showwarning("海報提示", f"在 TMDB 找不到名為《{title}》的電影，將跳過下載。"))
         except Exception as e:
-            root.after(0, lambda e=e: messagebox.showerror("海報下載錯誤", f"下載海報時發生問題：\n{e}\n\n將跳過下載，繼續寫入文字資料。"))
-    else:
-        root.after(0, lambda: messagebox.showinfo("海報提示", "尚未填寫 TMDB_API_KEY，將跳過海報下載功能。"))
+            print(f"Poster Error: {e}")
 
-    # ==========================================
-    # 寫入 movies.js 的邏輯
-    # ==========================================
+    # 寫入檔案邏輯
     try:
-        with open(JS_FILE_PATH, 'r', encoding='utf-8') as file:
+        with open(js_file, 'r', encoding='utf-8') as file:
             content = file.read()
 
-        target_line = f"export const {category_var} = ["
+        if data_type == "movie":
+            # 電影模式：維持原樣，直接在 array 開頭插入
+            if target_line not in content:
+                root.after(0, lambda: messagebox.showerror("錯誤", f"找不到 '{target_line}'"))
+                root.after(0, reset_ui_on_error)
+                return
+            new_content = content.replace(target_line, f"{target_line}\n{new_entry}")
         
-        if target_line not in content:
-            root.after(0, lambda: messagebox.showerror("錯誤", f"在檔案中找不到 '{target_line}'\n請確認 JS 檔案格式或檔名設定。"))
-            root.after(0, reset_ui_on_error)
-            return
+        else:
+            # 動漫模式：執行 Tier 排序邏輯
+            # 定義優先順序
+            tier_priority = {"SSS": 0, "SS": 1, "S": 2, "A": 3, "B": 4}
+            
+            # 使用 Regex 抓取 export const animeList = [ ... ]; 之間的內容
+            pattern = r"(export const animeList = \[)(.*?)(\];)"
+            match = re.search(pattern, content, re.DOTALL)
+            
+            if not match:
+                root.after(0, lambda: messagebox.showerror("錯誤", "找不到 'export const animeList = [];' 格式"))
+                root.after(0, reset_ui_on_error)
+                return
+            
+            header, body, footer = match.groups()
+            
+            # 抓取現有的所有物件 { ... }
+            existing_items = re.findall(r'\{[^{}]*?\}', body, re.DOTALL)
+            
+            # 移除舊物件尾巴的逗號，統一格式
+            processed_items = [item.strip().rstrip(',') for item in existing_items]
+            processed_items.append(new_entry.strip())
+            
+            # 排序函數：依照 tier_priority 排序
+            def sort_key(item_str):
+                m = re.search(r'tier:\s*"(SSS|SS|S|A|B)"', item_str)
+                tier_val = m.group(1) if m else "B"
+                return tier_priority.get(tier_val, 99)
+            
+            processed_items.sort(key=sort_key)
+            
+            # 重新組合成 JS 格式字串
+            new_body_content = "\n  " + ",\n  ".join(processed_items) + "\n"
+            new_content = re.sub(pattern, f"{header}{new_body_content}{footer}", content, flags=re.DOTALL)
 
-        new_content = content.replace(target_line, f"{target_line}\n{new_entry}")
-
-        with open(JS_FILE_PATH, 'w', encoding='utf-8') as file:
+        with open(js_file, 'w', encoding='utf-8') as file:
             file.write(new_content)
 
-        # 成功完成所有動作，通知主視窗更新 UI
-        root.after(0, lambda: reset_ui_on_success(title, category_var))
-
-    except FileNotFoundError:
-        root.after(0, lambda: messagebox.showerror("錯誤", f"找不到檔案：{JS_FILE_PATH}\n請確認 Python 執行路徑與 JS 檔案是否在同一層資料夾。"))
-        root.after(0, reset_ui_on_error)
+        root.after(0, lambda: reset_ui_on_success(title, mode_combobox.get()))
     except Exception as e:
-        root.after(0, lambda e=e: messagebox.showerror("錯誤", f"發生未知的錯誤：{e}"))
+        root.after(0, lambda e=e: messagebox.showerror("錯誤", str(e)))
         root.after(0, reset_ui_on_error)
 
-# ==========================================
-# UI 恢復控制的函式 (透過 root.after 呼叫，確保安全)
-# ==========================================
-def reset_ui_on_success(title, category_var):
-    messagebox.showinfo("成功", f"已成功將《{title}》新增至 {category_var}！")
+def reset_ui_on_success(title, mode):
+    messagebox.showinfo("成功", f"已成功將《{title}》新增至 {mode}！")
     entry_title.delete(0, tk.END)
     entry_score.delete(0, tk.END)
     text_note.delete("1.0", tk.END)
@@ -156,49 +209,49 @@ def reset_ui_on_success(title, category_var):
 def reset_ui_on_error():
     btn_submit.config(text="寫入檔案", state=tk.NORMAL)
 
-
-# 建立主視窗
+# --- UI 建立 ---
 root = tk.Tk()
-root.title("電影資料新增工具")
-root.geometry("450x400")
+root.title("多媒體資料新增工具")
+root.geometry("450x450")
 root.resizable(False, False)
 
-# 設定視窗樣式
 style = ttk.Style()
 style.configure("TLabel", font=("微軟正黑體", 11))
 style.configure("TButton", font=("微軟正黑體", 11))
 
-# --- UI 元件區 ---
+# 模式切換
+ttk.Label(root, text="操作模式：").place(x=30, y=20)
+mode_combobox = ttk.Combobox(root, values=["電影模式 (Movie)", "動漫模式 (Anime)"], state="readonly", width=25)
+mode_combobox.place(x=120, y=20)
+mode_combobox.current(0)
+mode_combobox.bind("<<ComboboxSelected>>", on_mode_change)
 
-# 類別選擇
-ttk.Label(root, text="選擇類別：").place(x=30, y=30)
+# 類別/等級選擇
+lbl_category = ttk.Label(root, text="選擇類別：")
+lbl_category.place(x=30, y=65)
 category_combobox = ttk.Combobox(root, values=[
-    "歐美電影 (westernMovies)", 
-    "亞洲電影 (asiaMovies)", 
-    "童年港片 (hongkongMovies)", 
-    "動畫電影 (animeMovies)"
-], state="readonly", width=25, font=("微軟正黑體", 10))
-category_combobox.place(x=120, y=30)
-category_combobox.current(0)  # 預設選擇第一項
+    "歐美電影 (westernMovies)", "亞洲電影 (asiaMovies)", "童年港片 (hongkongMovies)", "動畫電影 (animeMovies)"
+], state="readonly", width=25)
+category_combobox.place(x=120, y=65)
+category_combobox.current(0)
 
-# 電影名輸入
-ttk.Label(root, text="電影名：").place(x=30, y=80)
-entry_title = ttk.Entry(root, width=27, font=("微軟正黑體", 10))
-entry_title.place(x=120, y=80)
+# 標題
+ttk.Label(root, text="標題名稱：").place(x=30, y=110)
+entry_title = ttk.Entry(root, width=27)
+entry_title.place(x=120, y=110)
 
-# 評分輸入
-ttk.Label(root, text="評分(數字)：").place(x=30, y=130)
-entry_score = ttk.Entry(root, width=27, font=("微軟正黑體", 10))
-entry_score.place(x=120, y=130)
+# 評分 (動漫模式會隱藏)
+lbl_score = ttk.Label(root, text="評分(數字)：")
+lbl_score.place(x=30, y=155)
+entry_score = ttk.Entry(root, width=27)
+entry_score.place(x=120, y=155)
 
-# 心得輸入
-ttk.Label(root, text="心得：").place(x=30, y=180)
+# 心得
+ttk.Label(root, text="心得備註：").place(x=30, y=200)
 text_note = tk.Text(root, width=27, height=6, font=("微軟正黑體", 10))
-text_note.place(x=120, y=180)
+text_note.place(x=120, y=200)
 
-# 新增按鈕 (注意：command 改為 add_movie_click)
-btn_submit = ttk.Button(root, text="寫入檔案", command=add_movie_click)
-btn_submit.place(x=175, y=330)
+btn_submit = ttk.Button(root, text="寫入檔案", command=add_data_click)
+btn_submit.place(x=175, y=360)
 
-# 啟動主迴圈
 root.mainloop()

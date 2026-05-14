@@ -375,6 +375,7 @@ export const hongkongMovies = [
 ];
 
 export const animeMovies = [
+  { title: "名偵探柯南：貝克街的亡靈", score: 8.0, note: "我最喜歡的柯南劇場版，設定非常酷", poster: "./img/movie/名偵探柯南：貝克街的亡靈.jpg" },
   { title: "鏈鋸人-蕾潔篇", score: 9.2, note: "文藝電影感丶戰鬥畫面跟音樂都超級棒，整部當成完整的作品看也完全沒問題", poster: "./img/movie/鏈鋸人-蕾潔篇.jpg" },
   { title: "神隱少女", score: 9.0, note: "最喜歡的宮崎駿作品，音樂劇情都無敵", poster: "./img/movie/神隱少女.jpg" },
   { title: "玩具總動員", score: 8.9, note: "我最愛的皮克斯電影，純真又可愛的童年回憶，3>1>2>4", poster: "./img/movie/玩具總動員 1～3.jpg" },
