@@ -49,7 +49,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 畫布背景設計 */
+        /* 畫布背景設計 - 筆電 */
         .bg-laptop {
             background: linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%);
             box-shadow: inset 0 0 60px rgba(0,0,0,0.1);
@@ -68,18 +68,16 @@
             pointer-events: none;
         }
 
+        /* 畫布背景設計 - 行李箱 (垂直紋路) */
         .bg-suitcase {
             background: repeating-linear-gradient(
                 90deg,
-                #d1d5db,
-                #d1d5db 20px,
-                #e5e7eb 20px,
-                #e5e7eb 40px
+                #cbd5e1,
+                #cbd5e1 24px,
+                #e2e8f0 24px,
+                #e2e8f0 48px
             );
-            box-shadow: inset 0 0 40px rgba(0,0,0,0.2);
-        }
-        .bg-plain {
-            background-color: #f1f5f9;
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.3);
         }
     </style>
 </head>
@@ -101,7 +99,7 @@
             </div>
             <div class="flex gap-3">
                 <button onclick="clearCanvas()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl font-medium transition-colors text-sm flex items-center gap-2">
-                    <i class="fa-solid fa-trash-can"></i> 清空畫布
+                    <i class="fa-solid fa-trash-can"></i> 清空貼紙
                 </button>
             </div>
         </div>
@@ -117,15 +115,12 @@
                     <h3 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
                         <i class="fa-solid fa-laptop text-indigo-500"></i> 選擇表面材質
                     </h3>
-                    <div class="grid grid-cols-3 gap-2">
+                    <div class="grid grid-cols-2 gap-2">
                         <button onclick="setCanvasBg('laptop')" class="bg-slate-100 hover:bg-indigo-50 hover:border-indigo-300 border border-transparent transition-all rounded-lg p-2 text-xs font-medium text-slate-600 flex flex-col items-center gap-1">
                             <i class="fa-solid fa-computer text-lg mb-1"></i> 筆電(正面)
                         </button>
                         <button onclick="setCanvasBg('suitcase')" class="bg-slate-100 hover:bg-indigo-50 hover:border-indigo-300 border border-transparent transition-all rounded-lg p-2 text-xs font-medium text-slate-600 flex flex-col items-center gap-1">
                             <i class="fa-solid fa-suitcase-rolling text-lg mb-1"></i> 行李箱
-                        </button>
-                        <button onclick="setCanvasBg('plain')" class="bg-slate-100 hover:bg-indigo-50 hover:border-indigo-300 border border-transparent transition-all rounded-lg p-2 text-xs font-medium text-slate-600 flex flex-col items-center gap-1">
-                            <i class="fa-solid fa-square text-lg mb-1"></i> 純色
                         </button>
                     </div>
                 </div>
@@ -151,22 +146,28 @@
 
             <!-- 右側：畫布區域 -->
             <div class="w-full md:w-2/3 flex flex-col">
-                <div id="canvas-container" class="relative w-full h-[400px] md:h-[500px] bg-laptop rounded-2xl overflow-hidden border-4 border-slate-300 transition-all duration-300">
-                    <!-- 貼紙會被加到這裡 -->
+                <!-- 外層置中容器 -->
+                <div class="flex-1 w-full flex items-center justify-center min-h-[400px] md:min-h-[500px]">
+                    <!-- 畫布本體 -->
+                    <div id="canvas-container" class="relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden border-4 border-slate-300 transition-all duration-500 bg-laptop shadow-md">
+                        <!-- 貼紙會被加到這裡 -->
+                    </div>
                 </div>
-                <p class="text-center text-xs text-slate-400 mt-3"><i class="fa-solid fa-circle-info mr-1"></i> 點擊左側加入貼紙，可自由拖曳。游標移至貼紙可旋轉或刪除。</p>
+                <p class="text-center text-xs text-slate-400 mt-3"><i class="fa-solid fa-circle-info mr-1"></i> 點擊左側加入貼紙。拖曳圖片移動，按住右下角按鈕拖曳可旋轉。</p>
             </div>
 
         </div>
 
         <!-- 頁尾 -->
-        <div class="p-4 bg-white border-t border-slate-100 text-center flex justify-center">
-            <span class="text-xs font-medium text-slate-400">© Shuojen.com Sticker Simulator</span>
+        <div class="p-4 bg-white border-t border-slate-100 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 text-xs font-medium text-slate-400">
+            <span>© Shuojen.com Sticker Simulator</span>
+            <span class="hidden sm:inline text-slate-300">|</span>
+            <span>Icons from <a href="https://icons.shuyuart.com/" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-500 transition-colors">icons.shuyuart.com</a></span>
         </div>
     </div>
 
     <script>
-        // 修正路徑：相對於 static 目錄下的 html 檔案，圖片路徑應為 ./sticker/
+        // 確認圖片相對路徑
         const stickerFiles = [
             '8thnotex216_cr128.png', 'book_blue16_cr128.png', 'bucket_blue16_cr128.png', 
             'bucket_orange16_cr128.png', 'cassette16_cr128.png', 'chickencutlet16_cr128.png', 
@@ -184,25 +185,40 @@
         const libraryContainer = document.getElementById('sticker-library');
         const canvasContainer = document.getElementById('canvas-container');
         
+        // 拖曳與狀態變數
         let zIndexCounter = 10;
         let activeSticker = null;
         let isDragging = false;
         let startX, startY, initialLeft, initialTop;
+
+        // 旋轉變數
+        let isRotating = false;
+        let activeRotator = null;
+        let startAngle = 0;
+        let initialRotation = 0;
+        let centerX, centerY;
 
         // 初始化圖庫
         function initLibrary() {
             defaultStickers.forEach(src => {
                 const btn = document.createElement('button');
                 btn.className = 'bg-slate-50 hover:bg-indigo-50 transition-all rounded-lg p-2 border border-slate-100 flex items-center justify-center shadow-sm h-14';
-                btn.innerHTML = `<img src="${src}" alt="sticker" class="max-w-full max-h-full object-contain pointer-events-none">`;
+                // 加上 onerror 確保即使路徑錯了也有提示
+                btn.innerHTML = `<img src="${src}" alt="sticker" class="max-w-full max-h-full object-contain pointer-events-none" onerror="this.style.display='none'">`;
                 btn.onclick = () => addSticker(src, 'image');
                 libraryContainer.appendChild(btn);
             });
         }
 
-        // 切換背景
+        // 切換背景與形狀
         function setCanvasBg(type) {
-            canvasContainer.className = `relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden border-4 border-slate-300 transition-all duration-300 bg-${type}`;
+            if (type === 'laptop') {
+                // 筆電：滿寬、橫向比例
+                canvasContainer.className = 'relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden border-4 border-slate-300 transition-all duration-500 bg-laptop shadow-md';
+            } else if (type === 'suitcase') {
+                // 行李箱：限制寬度、直向比例、大圓角
+                canvasContainer.className = 'relative w-[280px] md:w-[340px] h-[450px] md:h-[550px] rounded-[3rem] overflow-hidden border-[6px] border-slate-400 transition-all duration-500 bg-suitcase shadow-2xl';
+            }
         }
 
         // 處理圖片上傳
@@ -221,8 +237,8 @@
         // 加入貼紙到畫布
         function addSticker(content, type) {
             const wrapperEl = document.createElement('div');
-            // 移除 hover:scale-105 以免與拖曳/點擊產生視覺突兀
-            wrapperEl.className = 'absolute cursor-grab select-none drop-shadow-xl group';
+            wrapperEl.className = 'sticker-wrapper absolute cursor-grab select-none drop-shadow-xl group';
+            wrapperEl.setAttribute('data-rotation', '0');
             
             // 隨機放在中間附近
             const randomOffsetX = Math.floor(Math.random() * 80) - 40;
@@ -232,19 +248,16 @@
             wrapperEl.style.top = `calc(50% - 40px + ${randomOffsetY}px)`;
             wrapperEl.style.zIndex = ++zIndexCounter;
 
-            // 分離外層(負責拖曳)與內層(負責旋轉)，讓按鈕不會跟著轉
             const innerHtml = `
-                <div class="sticker-img-container transition-transform duration-200" data-rotation="0" style="transform: rotate(0deg);">
-                    <img src="${content}" class="w-24 h-auto pointer-events-none object-contain max-h-32" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZWVlIi8+PHRleHQgeD0iNTAiIHk9IjUwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzY2NiIgZHk9Ii4zZW0iPlBob3RvPC90ZXh0Pjwvc3ZnPg=='">
-                </div>
+                <img src="${content}" class="w-24 h-auto pointer-events-none object-contain max-h-32" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZWVlIi8+PHRleHQgeD0iNTAiIHk9IjUwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzY2NiIgZHk9Ii4zZW0iPkVycm9yPC90ZXh0Pjwvc3ZnPg=='">
                 
                 <!-- 刪除按鈕 -->
-                <button type="button" class="action-btn absolute -top-3 -right-3 bg-red-500 text-white rounded-full w-7 h-7 flex items-center justify-center text-xs shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-20 hover:bg-red-600" onclick="removeSticker(this, event)">
+                <button type="button" class="action-btn delete-btn absolute -top-3 -right-3 bg-red-500 text-white rounded-full w-7 h-7 flex items-center justify-center text-xs shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-20 hover:bg-red-600" onclick="removeSticker(this, event)">
                     <i class="fa-solid fa-xmark pointer-events-none"></i>
                 </button>
                 
                 <!-- 旋轉按鈕 -->
-                <button type="button" class="action-btn absolute -bottom-3 -right-3 bg-indigo-500 text-white rounded-full w-7 h-7 flex items-center justify-center text-xs shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-20 hover:bg-indigo-600" onclick="rotateSticker(this, event)">
+                <button type="button" class="action-btn rotate-btn absolute -bottom-3 -right-3 bg-indigo-500 text-white rounded-full w-7 h-7 flex items-center justify-center text-xs shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-20 hover:bg-indigo-600 cursor-alias">
                     <i class="fa-solid fa-rotate-right pointer-events-none"></i>
                 </button>
             `;
@@ -255,6 +268,11 @@
             wrapperEl.addEventListener('mousedown', dragStart);
             wrapperEl.addEventListener('touchstart', dragStart, {passive: false});
 
+            // 綁定旋轉事件
+            const rotateBtn = wrapperEl.querySelector('.rotate-btn');
+            rotateBtn.addEventListener('mousedown', rotateStart);
+            rotateBtn.addEventListener('touchstart', rotateStart, {passive: false});
+
             canvasContainer.appendChild(wrapperEl);
         }
 
@@ -262,18 +280,7 @@
         function removeSticker(btn, e) {
             e.preventDefault();
             e.stopPropagation();
-            btn.closest('.absolute.cursor-grab').remove();
-        }
-
-        // 旋轉貼紙 (只旋轉圖片層，不旋轉按鈕外框)
-        function rotateSticker(btn, e) {
-            e.preventDefault();
-            e.stopPropagation();
-            const container = btn.closest('.group').querySelector('.sticker-img-container');
-            let currentRotation = parseInt(container.getAttribute('data-rotation')) || 0;
-            currentRotation += 15;
-            container.setAttribute('data-rotation', currentRotation);
-            container.style.transform = `rotate(${currentRotation}deg)`;
+            btn.closest('.sticker-wrapper').remove();
         }
 
         // 清空畫布
@@ -283,9 +290,53 @@
             }
         }
 
-        // 拖曳邏輯開始
+        // --- 旋轉邏輯 ---
+        function rotateStart(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            isRotating = true;
+            activeRotator = this.closest('.sticker-wrapper');
+            activeRotator.style.zIndex = ++zIndexCounter;
+            
+            // 取得貼紙中心點座標
+            const rect = activeRotator.getBoundingClientRect();
+            centerX = rect.left + rect.width / 2;
+            centerY = rect.top + rect.height / 2;
+
+            const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+
+            // 計算初始角度
+            startAngle = Math.atan2(clientY - centerY, clientX - centerX);
+            initialRotation = parseFloat(activeRotator.getAttribute('data-rotation')) || 0;
+        }
+
+        function rotateDrag(e) {
+            if (!isRotating || !activeRotator) return;
+            e.preventDefault();
+            
+            const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+
+            // 計算當前滑鼠/手指位置與中心的角度
+            const currentAngle = Math.atan2(clientY - centerY, clientX - centerX);
+            const angleDiff = (currentAngle - startAngle) * (180 / Math.PI);
+
+            const newRotation = initialRotation + angleDiff;
+            activeRotator.style.transform = `rotate(${newRotation}deg)`;
+            activeRotator.setAttribute('data-rotation', newRotation);
+        }
+
+        function rotateEnd(e) {
+            if (isRotating) {
+                isRotating = false;
+                activeRotator = null;
+            }
+        }
+
+        // --- 拖曳邏輯 ---
         function dragStart(e) {
-            // 如果點擊到功能按鈕，不觸發拖曳
+            // 如果點擊到功能按鈕，不觸發位移拖曳
             if(e.target.closest('.action-btn')) return; 
             
             activeSticker = this;
@@ -307,7 +358,6 @@
             e.preventDefault(); 
         }
 
-        // 拖曳中
         function drag(e) {
             if (!isDragging || !activeSticker) return;
 
@@ -331,19 +381,30 @@
             }
         }
 
-        // 拖曳結束
         function dragEnd(e) {
-            if (!activeSticker) return;
-            activeSticker.style.cursor = 'grab';
-            isDragging = false;
-            activeSticker = null;
+            if (isDragging && activeSticker) {
+                activeSticker.style.cursor = 'grab';
+                isDragging = false;
+                activeSticker = null;
+            }
         }
 
-        // 全域綁定滑鼠/觸控事件
-        document.addEventListener('mousemove', drag);
-        document.addEventListener('touchmove', drag, {passive: false});
-        document.addEventListener('mouseup', dragEnd);
-        document.addEventListener('touchend', dragEnd);
+        // --- 全域事件分配 ---
+        function handleMove(e) {
+            if (isDragging) drag(e);
+            if (isRotating) rotateDrag(e);
+        }
+
+        function handleEnd(e) {
+            dragEnd(e);
+            rotateEnd(e);
+        }
+
+        // 綁定全域滑鼠/觸控事件
+        document.addEventListener('mousemove', handleMove);
+        document.addEventListener('touchmove', handleMove, {passive: false});
+        document.addEventListener('mouseup', handleEnd);
+        document.addEventListener('touchend', handleEnd);
 
         // 啟動工具
         initLibrary();
