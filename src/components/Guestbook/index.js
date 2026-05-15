@@ -86,34 +86,26 @@ const renderMarkdown = (text) => {
       }
 
       // 2. 處理剩餘的常用語法：粗體、斜體、刪除線、內嵌程式碼
-      // 我們將文字切碎，依照順序處理
-      let subParts = [part];
+      const splitRegex = /(`[^`]+`|\*\*[^*]+\*\*|\*[^*]+\*|~~[^~]+~~)/g;
 
-      // 定義要支援的語法清單 [Regex, 標籤]
-      const rules = [
-        { reg: /(`[^`]+`)/g, tag: 'code' },        // 內嵌程式碼 `code`
-        { reg: /(\*\*[^*]+\*\*)/g, tag: 'b' },     // 粗體 **bold**
-        { reg: /(\*[^*]+\*)/g, tag: 'i' },         // 斜體 *italic*
-        { reg: /(~~[^~]+~~)/g, tag: 'del' },      // 刪除線 ~~strike~~
-      ];
-
-      // 這裡使用巢狀處理，確保語法可以並存（例如：**粗體加~~刪除線~~**）
-      // 為了簡單起見，我們這裡實作最常用的單層過濾
       return (
         <span key={index}>
-          {part.split(/(`[^`]+`|\*\*[^*]+\*\*|\*[^*]+\*|~~[^~]+~~)/g).map((subPart, subIndex) => {
+          {part.split(splitRegex).map((subPart, subIndex) => {
+            if (!subPart) return null;
+            
             if (subPart.startsWith('`') && subPart.endsWith('`')) {
               return <code key={subIndex} style={{ backgroundColor: 'var(--ifm-color-emphasis-200)', padding: '2px 4px', borderRadius: '4px' }}>{subPart.slice(1, -1)}</code>;
             }
             if (subPart.startsWith('**') && subPart.endsWith('**')) {
               return <b key={subIndex}>{subPart.slice(2, -2)}</b>;
             }
-            if (subPart.startsWith('*') && subPart.endsWith('*')) {
+            if (subPart.startsWith('*') && subPart.endsWith('*') && subPart.length > 2) {
               return <i key={subIndex}>{subPart.slice(1, -1)}</i>;
             }
             if (subPart.startsWith('~~') && subPart.endsWith('~~')) {
               return <del key={subIndex}>{subPart.slice(2, -2)}</del>;
             }
+            
             return subPart;
           })}
         </span>
@@ -121,17 +113,9 @@ const renderMarkdown = (text) => {
     });
   };
   
-  const getCommentClass = (content) => {
-    if (!content) return styles.commentBody;
-    const safeContent = String(content);
-    const lines = safeContent.split('\n');
-    const hasAlignmentSpaces = / {3,}/.test(safeContent);
-    const hasBackslash = safeContent.includes('\\');
-    const drawingChars = (safeContent.match(/[|_=+*<>]/g) || []).length;
-    const isSymbolDense = drawingChars > 10;
-    return (lines.length > 1 && (hasAlignmentSpaces || hasBackslash || isSymbolDense)) 
-      ? `${styles.commentBody} ${styles.asciiArt}` 
-      : styles.commentBody;
+  // 完全移除等寬字體判定，一律回傳一般樣式
+  const getCommentClass = () => {
+    return styles.commentBody;
   };
 
   const formatDate = (dateStr) => {
