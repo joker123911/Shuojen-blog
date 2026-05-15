@@ -125,9 +125,9 @@ description: 乾淨自由又無廣告的網頁小工具和小遊戲
     <p>快速吸取並複製螢幕上的十六進位色碼</p>
   </a>
 
-  <a href="https://shuojen.com/random.html" class="interest-card">
+  <a href="https://shuojen.com/option.html" class="interest-card">
     <h3>隨機轉盤</h3>
-    <p>活動抽獎、分組或日常決策都適用的自訂轉盤工具</p>
+    <p>活動抽獎或日常決策都適用的自訂轉盤工具</p>
   </a>
 
   <a href="https://shuojen.com/boshiamy" class="interest-card">
