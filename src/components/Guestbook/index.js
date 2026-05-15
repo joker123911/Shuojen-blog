@@ -32,7 +32,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     if (savedKey) setAdminKey(savedKey);
   }, []);
 
-const handleSecretClick = () => {
+  const handleSecretClick = () => {
     setClickCount((prev) => {
       const nextCount = prev + 1;
       if (nextCount >= 5) {
@@ -65,8 +65,49 @@ const handleSecretClick = () => {
     });
   };
 
-const renderMarkdown = (text) => {
+  // --- ASCII Art 判斷邏輯 ---
+  const isAsciiArt = (text) => {
+    if (!text) return false;
+    const lines = text.split('\n');
+    // 第一道門檻：必須超過 5 行
+    if (lines.length < 5) return false;
+
+    let artLineCount = 0;
+    // 繪圖常用字元集 (包含符號、點、線、空白)
+    const artCharsRegex = /[\\\/\|\_\-\.\*\:\;\+\=\(\)\[\]\{\}\s\u2500-\u257F\.,'"`]/g;
+
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (trimmed.length < 2) continue; 
+      
+      const symbols = line.match(artCharsRegex) || [];
+      // 如果該行符號/空白比例超過 90%，視為繪圖行
+      if (symbols.length / line.length > 0.9) {
+        artLineCount++;
+      }
+    }
+    // 第二道門檻：繪圖行必須達到 5 行以上
+    return artLineCount >= 5;
+  };
+
+  const renderMarkdown = (text) => {
     if (!text) return text;
+
+    // 如果判定為圖案，直接回傳等寬字體容器，不執行 Markdown
+    if (isAsciiArt(text)) {
+      return (
+        <div style={{ 
+          fontFamily: '"Cascadia Code", Consolas, "Courier New", monospace', 
+          whiteSpace: 'pre', 
+          overflowX: 'auto', 
+          lineHeight: '1.25',
+          fontSize: '0.9em',
+          padding: '4px 0'
+        }}>
+          {text}
+        </div>
+      );
+    }
 
     // 1. 先處理超連結 [文字](網址)
     const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
@@ -113,8 +154,8 @@ const renderMarkdown = (text) => {
     });
   };
   
-  // 完全移除等寬字體判定，一律回傳一般樣式
-  const getCommentClass = () => {
+  const getCommentClass = (text) => {
+    // 若為圖案則不額外添加可能干擾的樣式類別
     return styles.commentBody;
   };
 
@@ -135,7 +176,6 @@ const renderMarkdown = (text) => {
         const res = await fetch(WORKER_URL);
         const data = await res.json();
         if (Array.isArray(data)) {
-          // 在前端強制轉換成真實的時間物件進行比對，確保「最晚的在最上面」
           setAllComments(data.sort((a, b) => new Date(b.time) - new Date(a.time)));
         }
       } catch (err) {

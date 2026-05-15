@@ -172,13 +172,3 @@ Apps
 * KWGT - 自訂桌面工具。
 * 臺北市立圖書館 - 預約借書用。
 * Simplenote - 在手機電腦都可以同步記錄文字靈感。
-
-Shuojen.com 小工具
-* [投資報酬試算表](https://shuojen.com/calculator.html) - 投資報酬試算用。
-* [營養攝取終結者](https://shuojen.com/calories.html) - 計算每日營養攝取。
-* [吃什麼都可以終結者](https://shuojen.com/food.html) - 決定吃什麼用。
-* [嘸蝦米兩碼字練習器](https://shuojen.com/boshiamy.html) - 練習嘸蝦米用。
-* [圖片批次處理工具](https://shuojen.com/resize.html) - 圖片批次處理用。
-* [猜人名遊戲](https://shuojen.com/guestname.html) - 實體猜人名遊戲用。
-* [取色器](https://shuojen.com/color_picker.html) - 電腦網頁快速取色器。
-* [隨機轉盤](https://shuojen.com/random.html) - 隨機轉盤小工具。

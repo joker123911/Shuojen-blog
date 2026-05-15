@@ -83,7 +83,7 @@ const config = {
         feedOptions: {
           type: 'all',
           title: 'Shuo-jen Blog',
-          description: '訂閱追蹤最新的貼文！',
+          description: '訂閱最新的貼文！',
           copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen Huang`,
           language: 'zh-TW',
         },
@@ -103,13 +103,13 @@ const config = {
         blogSidebarCount: 'ALL',
         archiveBasePath: 'photo-archive',
         blogTitle: '攝影集',
-        blogDescription: '光影紀錄。',
+        blogDescription: '日常紀錄。',
         remarkPlugins: [remarkMath],
         rehypePlugins: [rehypeKatex],
         feedOptions: {
           type: 'all',
           title: 'Shuo-jen Photography',
-          description: '訂閱我的攝影紀錄。',
+          description: '訂閱攝影紀錄。',
           copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen Huang`,
           language: 'zh-TW',
         },
@@ -129,8 +129,8 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       metadata: [
-        {name: 'description', content: 'Shuo-jen 的個人部落格，分享土木工程、攝影紀錄、程式開發與生活隨筆。'},
-        {name: 'keywords', content: 'Shuo-jen, 土木工程, 攝影, Docusaurus, 部落格, 台北, 西洋棋, 魔術方塊, 演唱會'},
+        {name: 'description', content: 'Shuo-jen 的個人部落格，分享電影動漫、攝影紀錄、小工具開發與生活隨筆。'},
+        {name: 'keywords', content: 'Shuo-jen, 土木工程, 攝影, Docusaurus, 部落格, 台北, 西洋棋, 魔術方塊, 演唱會, 電影, 動漫'},
         {name: 'author', content: 'Shuo-jen Huang'},
         {name: 'robots', content: 'index, follow'},
       ],
@@ -156,6 +156,7 @@ const config = {
           {to: '/photography',label: '攝影集',position: 'left'},
           {to: '/photoblog/photo-archive',label: '攝影列表',position: 'left'},
           {to: '/about',label: '關於',position: 'left'},
+		  {to: '/tool',label: '小工具',position: 'left'},
           {to: '/blogroll',label: '部落卷',position: 'left'},
           {to: '/guestbook',label: '留言板',position: 'left'},
         ],
