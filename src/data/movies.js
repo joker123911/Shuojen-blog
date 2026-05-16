@@ -227,6 +227,7 @@ export const westernMovies = [
 ];
 
 export const asiaMovies = [
+  { title: "小雁與吳愛麗", score: 8.7, note: "講述家庭創傷與和解的電影，臺灣電影難得有這種高度的劇本和張力", poster: "./img/movie/小雁與吳愛麗.jpg" },
   { title: "寄生上流", score: 9.3, note: "奉導集大成神作，商業與藝術完美結合", poster: "./img/movie/寄生上流.jpg" },
   { title: "大佛普拉斯", score: 9.2, note: "我最喜歡的臺灣電影，黑白畫面的荒謬感極佳", poster: "./img/movie/大佛普拉斯.jpg" },
   { title: "盲探", score: 9.2, note: "心中最佳的劉德華電影，人物塑造劇情都滿分", poster: "./img/movie/盲探.jpg" },
