@@ -5,7 +5,7 @@ description: 記錄我愛用的工具
 
 # 我在用什麼 `/use`
 
-*最後更新：2026-05-11*
+*最後更新：2026-05-17*
 
 :::note
 靈感參考來自[Derek Sivers /uses](https://sive.rs/uses)。
@@ -156,7 +156,9 @@ description: 記錄我愛用的工具
 * mp3tag - 整理所有 Aiff 資訊的工具。
 * LocalSent - 好用的共享檔案工具。
 * Lightroom Classic - 現在都不修圖了，懶人直出。
-* Oracle Cloud - 免費版主機。
+* Oracle Cloud - 免費自架主機。
+* Navidrome - 免費自架音樂串流。
+* tailscale - 所有的裝置互相連線的私人 VPN。
 
 Apps
 * 天天記帳 - 直覺的記帳軟體。
@@ -172,3 +174,4 @@ Apps
 * KWGT - 自訂桌面工具。
 * 臺北市立圖書館 - 預約借書用。
 * Simplenote - 在手機電腦都可以同步記錄文字靈感。
+* symfonirm - 連上 Navidrome 聽自架音樂串流。
