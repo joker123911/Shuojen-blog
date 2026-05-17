@@ -1,4 +1,8 @@
 export const westernMovies = [
+  { title: "戰慄遊戲", score: 8.6, note: "經典老驚悚片，超級好看又精彩", poster: "./img/movie/戰慄遊戲.jpg" },
+  { title: "罪人", score: 7.8, note: "音樂非常讚，前半的氣氛也非常好，不過後半風格大變我沒那麼喜歡，整體非常值得一看", poster: "./img/movie/罪人.jpg" },
+  { title: "亞果出任務", score: 8.0, note: "氣氛很好的政治劇情片，緊張感很強烈", poster: "./img/movie/亞果出任務.jpg" },
+  { title: "新娘百分百", score: 7.1, note: "經典老派愛情電影，算還滿有意思的，喜歡朋友一起吃飯的那個片段", poster: "./img/movie/新娘百分百.jpg" },
   { title: "頂尖對決", score: 9.5, note: "心中最佳的諾蘭神片，絕對不能被劇透，看第二次體驗更佳", poster: "./img/movie/頂尖對決.jpg" },
   { title: "刺激1995", score: 9.4, note: "監獄劇情神片，很療癒，就連電影名也是個神奇的傳說", poster: "./img/movie/刺激1995.jpg" },
   { title: "小丑", score: 9.4, note: "醉後大丈夫導演是真的有兩把刷子，第一次看真的很震驚", poster: "./img/movie/小丑.jpg" },
@@ -227,6 +231,7 @@ export const westernMovies = [
 ];
 
 export const asiaMovies = [
+  { title: "毒舌大狀", score: 6.6, note: "說教成份太重，角色太扁平，劇情也不夠突出，不要期待太高", poster: "./img/movie/毒舌大狀.jpg" },
   { title: "小雁與吳愛麗", score: 8.7, note: "講述家庭創傷與和解的電影，臺灣電影難得有這種高度的劇本和張力", poster: "./img/movie/小雁與吳愛麗.jpg" },
   { title: "寄生上流", score: 9.3, note: "奉導集大成神作，商業與藝術完美結合", poster: "./img/movie/寄生上流.jpg" },
   { title: "大佛普拉斯", score: 9.2, note: "我最喜歡的臺灣電影，黑白畫面的荒謬感極佳", poster: "./img/movie/大佛普拉斯.jpg" },
@@ -376,6 +381,7 @@ export const hongkongMovies = [
 ];
 
 export const animeMovies = [
+  { title: "Kpop 獵魔女團", score: 7.2, note: "歌很洗腦，劇情普通吧", poster: "./img/movie/Kpop 獵魔女團.jpg" },
   { title: "名偵探柯南：貝克街的亡靈", score: 8.0, note: "我最喜歡的柯南劇場版，設定非常酷", poster: "./img/movie/名偵探柯南：貝克街的亡靈.jpg" },
   { title: "鏈鋸人-蕾潔篇", score: 9.2, note: "文藝電影感丶戰鬥畫面跟音樂都超級棒，整部當成完整的作品看也完全沒問題", poster: "./img/movie/鏈鋸人-蕾潔篇.jpg" },
   { title: "神隱少女", score: 9.0, note: "最喜歡的宮崎駿作品，音樂劇情都無敵", poster: "./img/movie/神隱少女.jpg" },
