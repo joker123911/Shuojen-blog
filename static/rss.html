@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSS 文章連結檢測工具</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome 6.4.0 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Noto Sans TC -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+        /* 細窄灰色圓角滾動條 */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        /* 漸入動畫 */
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col justify-between antialiased">
+
+    <!-- 主要內容區塊 -->
+    <main class="flex-grow p-4 md:p-10 flex items-center justify-center">
+        <div class="max-w-5xl w-full bg-white rounded-[2rem] shadow-2xl border border-slate-100 p-6 md:p-10 transition-all duration-300">
+            
+            <!-- 頂部標頭 -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-6 mb-8 text-center sm:text-left">
+                <div class="flex flex-col sm:flex-row items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center shadow-lg shadow-indigo-200/50 text-indigo-600 text-xl">
+                        <i class="fa-solid fa-rss"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-slate-800 text-2xl font-bold tracking-tight">RSS 文章連結檢測工具</h1>
+                        <p class="text-slate-500 text-sm mt-0.5">輸入 RSS 摘要網址，自動深度掃描並分析內文死鏈</p>
+                    </div>
+                </div>
+                <div>
+                    <button id="btn-show-settings" class="text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center gap-1.5 mx-auto sm:mx-0 transition-colors">
+                        <i class="fa-solid fa-gear"></i> 進階設定
+                    </button>
+                </div>
+            </div>
+
+            <!-- 進階設定區域 (預設隱藏) -->
+            <div id="settings-area" class="hidden fade-in bg-slate-50 border border-slate-100 rounded-2xl p-4 mb-6">
+                <h3 class="text-slate-800 font-semibold text-sm mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-indigo-600"></i> 掃描配置參數
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <label class="block text-slate-500 mb-1">並發請求限制 (降低可防封鎖)</label>
+                        <select id="setting-concurrency" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-700 focus:outline-none focus:border-indigo-300">
+                            <option value="2">2 個並發 (最安全)</option>
+                            <option value="4" selected>4 個並發 (推薦)</option>
+                            <option value="8">8 個並發 (速度快)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-500 mb-1">檢測目標範圍</label>
+                        <select id="setting-scope" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-700 focus:outline-none focus:border-indigo-300">
+                            <option value="all" selected>檢測文章連結 + 內文所有外鏈</option>
+                            <option value="only-articles">僅檢測文章原始連結</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 輸入表單區塊 -->
+            <div class="bg-white border border-slate-100 rounded-2xl p-1.5 shadow-sm flex flex-col sm:flex-row items-stretch gap-2 mb-8 focus-within:border-indigo-300 transition-all duration-200">
+                <div class="flex-grow flex items-center gap-3 px-3 py-2 sm:py-0">
+                    <i class="fa-solid fa-link text-slate-400 text-lg"></i>
+                    <input id="rss-input" type="url" placeholder="請輸入 RSS Feed 網址 (例如 https://shuojen.com/blog/rss.xml)" 
+                           class="w-full text-slate-700 placeholder-slate-400 focus:outline-none bg-transparent text-sm md:text-base">
+                </div>
+                <button id="btn-start-scan" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-3 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md shadow-indigo-100 text-sm md:text-base whitespace-nowrap">
+                    <i class="fa-solid fa-magnifying-glass"></i> 開始檢測
+                </button>
+            </div>
+
+            <!-- 儀表板數據看板 (初始隱藏) -->
+            <div id="dashboard-stats" class="hidden fade-in grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+                <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 text-center">
+                    <div class="text-slate-400 text-xs font-medium mb-1">已掃描文章</div>
+                    <div id="stat-articles" class="text-slate-800 text-2xl font-bold">0</div>
+                </div>
+                <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 text-center">
+                    <div class="text-slate-400 text-xs font-medium mb-1">總計檢測連結</div>
+                    <div id="stat-links" class="text-slate-800 text-2xl font-bold">0</div>
+                </div>
+                <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-4 text-center">
+                    <div class="text-emerald-500 text-xs font-medium mb-1">正常連結</div>
+                    <div id="stat-valid" class="text-emerald-600 text-2xl font-bold">0</div>
+                </div>
+                <div class="bg-orange-50 border border-orange-100 rounded-2xl p-4 text-center">
+                    <div class="text-orange-500 text-xs font-medium mb-1">異常連結 (壞鏈)</div>
+                    <div id="stat-broken" class="text-orange-600 text-2xl font-bold">0</div>
+                </div>
+            </div>
+
+            <!-- 進度條 -->
+            <div id="progress-container" class="hidden mb-6 bg-slate-100 rounded-full h-2 overflow-hidden">
+                <div id="progress-bar" class="bg-indigo-600 h-full w-0 transition-all duration-300 rounded-full"></div>
+            </div>
+
+            <!-- 狀態提示與錯誤訊息 -->
+            <div id="status-message" class="hidden text-center py-6 text-slate-500 text-sm"></div>
+
+            <!-- 檢測結果清單容器 -->
+            <div id="results-container" class="space-y-4 max-h-[500px] overflow-y-auto custom-scrollbar pr-1 hidden">
+                <!-- 動態插入檢測結果卡片 -->
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 頁尾宣告與功能按鈕 -->
+    <footer class="w-full text-center py-6 border-t border-slate-100 bg-white px-4 flex flex-col sm:flex-row justify-between items-center gap-4 max-w-5xl mx-auto rounded-t-[2rem] shadow-inner">
+        <span class="text-slate-400 text-xs md:text-sm tracking-wide">© Shuojen.com RSS Link Checker</span>
+        <button id="btn-reset" class="text-xs md:text-sm text-slate-400 hover:text-slate-600 transition-colors flex items-center gap-1">
+            <i class="fa-solid fa-arrow-rotate-left"></i> 恢復預設值
+        </button>
+    </footer>
+
+    <!-- 核心功能腳本 -->
+    <script>
+        // DOM 節點初始化
+        const rssInput = document.getElementById('rss-input');
+        const btnStartScan = document.getElementById('btn-start-scan');
+        const btnShowSettings = document.getElementById('btn-show-settings');
+        const settingsArea = document.getElementById('settings-area');
+        const dashboardStats = document.getElementById('dashboard-stats');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        const statusMessage = document.getElementById('status-message');
+        const resultsContainer = document.getElementById('results-container');
+        const btnReset = document.getElementById('btn-reset');
+
+        const statArticles = document.getElementById('stat-articles');
+        const statLinks = document.getElementById('stat-links');
+        const statValid = document.getElementById('stat-valid');
+        const statBroken = document.getElementById('stat-broken');
+
+        const settingConcurrency = document.getElementById('setting-concurrency');
+        const settingScope = document.getElementById('setting-scope');
+
+        // 使用 AllOrigins Proxy 繞過瀏覽器跨網域 (CORS) 限制
+        const PROXY_URL = 'https://api.allorigins.win/get?url=';
+
+        let globalStats = { articles: 0, totalLinks: 0, valid: 0, broken: 0 };
+        let scanQueue = [];
+        let activeRequests = 0;
+        let totalTasks = 0;
+        let completedTasks = 0;
+
+        // 切換進階設定區塊
+        btnShowSettings.addEventListener('click', () => {
+            settingsArea.classList.toggle('hidden');
+        });
+
+        // 重設應用狀態
+        btnReset.addEventListener('click', () => {
+            rssInput.value = '';
+            hideElements([dashboardStats, progressContainer, statusMessage, resultsContainer, settingsArea]);
+            btnStartScan.disabled = false;
+            btnStartScan.innerHTML = `<i class="fa-solid fa-magnifying-glass"></i> 開始檢測`;
+        });
+
+        // 主要點擊觸發事件
+        btnStartScan.addEventListener('click', async () => {
+            const feedUrl = rssInput.value.trim();
+            if (!feedUrl) {
+                showStatus('請輸入有效的 RSS 網址。', 'text-orange-500');
+                return;
+            }
+
+            // 初始化狀態與 UI 清空
+            initScanUI();
+
+            showStatus('<i class="fa-solid fa-spinner fa-spin mr-2"></i>正在獲取並解析 RSS 摘要資訊...', 'text-indigo-600');
+
+            try {
+                // 1. 抓取 RSS XML 資料
+                const response = await fetch(`${PROXY_URL}${encodeURIComponent(feedUrl)}`);
+                if (!response.ok) throw new Error('網絡連線異常，無法擷取 RSS 資料');
+                
+                const jsonResult = await response.json();
+                if (!jsonResult.contents) throw new Error('無法讀取目標 RSS 內容');
+
+                // 2. 解析 XML 內容
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(jsonResult.contents, 'text/xml');
+                
+                // 檢查是否為有效的 XML 格式
+                const parseError = xmlDoc.querySelector('parsererror');
+                if (parseError) throw new Error('RSS XML 格式解析錯誤');
+
+                const items = xmlDoc.querySelectorAll('item');
+                if (items.length === 0) {
+                    showStatus('找不到任何文章節點 (item)。請確認該網址為正確的 RSS 規範。', 'text-orange-500');
+                    btnStartScan.disabled = false;
+                    return;
+                }
+
+                globalStats.articles = items.length;
+                statArticles.innerText = globalStats.articles;
+
+                // 3. 抽取文章與內文連結任務
+                buildScanTasks(items);
+
+                if (scanQueue.length === 0) {
+                    showStatus('未在文章內文或標題中偵測到任何可驗證的連結。', 'text-slate-500');
+                    return;
+                }
+
+                // 4. 開始併發非同步佇列調度處理
+                statusMessage.classList.add('hidden');
+                progressContainer.classList.remove('hidden');
+                resultsContainer.classList.remove('hidden');
+                
+                totalTasks = scanQueue.length;
+                processQueue();
+
+            } catch (error) {
+                showStatus(`檢測終止：${error.message}。請確認網址或稍後再試。`, 'text-orange-500');
+                btnStartScan.disabled = false;
+                progressContainer.classList.add('hidden');
+            }
+        });
+
+        // 初始化掃描介面
+        function initScanUI() {
+            resultsContainer.innerHTML = '';
+            globalStats = { articles: 0, totalLinks: 0, valid: 0, broken: 0 };
+            scanQueue = [];
+            activeRequests = 0;
+            completedTasks = 0;
+            
+            statArticles.innerText = '0';
+            statLinks.innerText = '0';
+            statValid.innerText = '0';
+            statBroken.innerText = '0';
+            progressBar.style.width = '0%';
+
+            btnStartScan.disabled = true;
+            btnStartScan.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> 檢測中...`;
+            
+            dashboardStats.classList.remove('hidden');
+            statusMessage.classList.remove('hidden');
+            resultsContainer.classList.add('hidden');
+        }
+
+        // 建立待掃描任務佇列
+        function buildScanTasks(items) {
+            const scope = settingScope.value;
+
+            items.forEach((item, index) => {
+                const title = item.querySelector('title')?.textContent || '未命名文章';
+                const articleUrl = item.querySelector('link')?.textContent || '';
+                
+                // 建立文章的外層容器
+                const articleCardId = `article-card-${index}`;
+                renderArticleCard(articleCardId, title, articleUrl);
+
+                // 收集該文章名下所有需要受檢的網址
+                let urlsToCheck = [];
+                
+                if (articleUrl) {
+                    urlsToCheck.push({ url: articleUrl, type: '文章原始連結' });
+                }
+
+                if (scope === 'all') {
+                    // 抽取內文 description 或 content:encoded
+                    const descriptionHtml = item.querySelector('description')?.textContent || '';
+                    const contentEncodedHtml = item.querySelector('encoded')?.textContent || '';
+                    const combinedHtml = descriptionHtml + contentEncodedHtml;
+
+                    if (combinedHtml) {
+                        const doc = new DOMParser().parseFromString(combinedHtml, 'text/html');
+                        const anchors = doc.querySelectorAll('a');
+                        anchors.forEach(a => {
+                            const href = a.getAttribute('href');
+                            if (href && href.startsWith('http')) {
+                                // 避免重複推入相同網址
+                                if (!urlsToCheck.some(task => task.url === href)) {
+                                    urlsToCheck.push({ url: href, type: '內文嵌入連結' });
+                                }
+                            }
+                        });
+                    }
+                }
+
+                // 將各網址轉換成子任務綁定至佇列中
+                urlsToCheck.forEach(taskInfo => {
+                    const linkRowId = `link-row-${Math.random().toString(36).substr(2, 9)}`;
+                    renderLinkRowPlaceholder(articleCardId, linkRowId, taskInfo.url, taskInfo.type);
+
+                    globalStats.totalLinks++;
+                    scanQueue.push({
+                        url: taskInfo.url,
+                        cardId: articleCardId,
+                        rowId: linkRowId
+                    });
+                });
+            });
+
+            statLinks.innerText = globalStats.totalLinks;
+        }
+
+        // 動態渲染文章包覆區塊
+        function renderArticleCard(id, title, url) {
+            const cardHtml = `
+                <div id="${id}" class="fade-in bg-white border border-slate-100 rounded-xl p-4 hover:border-indigo-200 transition-all shadow-sm">
+                    <div class="border-b border-slate-50 pb-2 mb-3">
+                        <h4 class="text-slate-800 font-bold text-base flex items-center gap-2">
+                            <i class="fa-regular fa-file-lines text-indigo-500"></i> ${escapeHtml(title)}
+                        </h4>
+                        <a href="${url}" target="_blank" class="text-xs text-slate-400 hover:text-indigo-600 transition-colors inline-block mt-1 break-all">
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> ${url}
+                        </a>
+                    </div>
+                    <div class="link-rows-container space-y-2">
+                        <!-- 連結細項檢測結果將置於此 -->
+                    </div>
+                </div>
+            `;
+            resultsContainer.insertAdjacentHTML('beforeend', cardHtml);
+        }
+
+        // 預先在文章卡片中塞入檢測中的骨架占位
+        function renderLinkRowPlaceholder(cardId, rowId, url, type) {
+            const container = document.getElementById(cardId).querySelector('.link-rows-container');
+            const rowHtml = `
+                <div id="${rowId}" class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-2 rounded-lg bg-slate-50 border border-transparent text-xs text-slate-600">
+                    <div class="flex items-center gap-2 min-w-0 flex-1">
+                        <span class="px-2 py-0.5 rounded bg-slate-200 text-slate-500 text-[10px] scale-90 origin-left whitespace-nowrap">${type}</span>
+                        <span class="truncate font-mono text-slate-500 break-all">${url}</span>
+                    </div>
+                    <div class="link-status-badge flex items-center gap-1.5 font-medium text-slate-400 whitespace-nowrap sm:text-right">
+                        <i class="fa-solid fa-circle-notch fa-spin text-indigo-500"></i> 檢測中
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', rowHtml);
+        }
+
+        // 佇列調度與流量控制
+        function processQueue() {
+            const maxConcurrency = parseInt(settingConcurrency.value, 10);
+
+            while (scanQueue.length > 0 && activeRequests < maxConcurrency) {
+                const currentTask = scanQueue.shift();
+                activeRequests++;
+                validateLinkStatus(currentTask);
+            }
+
+            // 全部任務皆執行完畢後的處理
+            if (activeRequests === 0 && scanQueue.length === 0) {
+                btnStartScan.disabled = false;
+                btnStartScan.innerHTML = `<i class="fa-solid fa-check"></i> 檢測完成`;
+                progressContainer.classList.add('hidden');
+            }
+        }
+
+        // 透過 Proxy 來異步發包 GET 請求取得目標 Http Status
+        async function validateLinkStatus(task) {
+            const rowElement = document.getElementById(task.rowId);
+            const badgeContainer = rowElement.querySelector('.link-status-badge');
+
+            try {
+                // 利用 allorigins JSON 回傳格式來直接解析 http_code
+                const verifyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(task.url)}`;
+                const response = await fetch(verifyUrl);
+                
+                if (!response.ok) throw new Error();
+
+                const data = await response.json();
+                const httpStatus = data.status?.http_code;
+
+                // 2xx 或者是 3xx 的轉址皆視為正常可用連結
+                if (httpStatus && httpStatus >= 200 && httpStatus < 400) {
+                    updateRowSuccess(rowElement, badgeContainer, httpStatus);
+                } else {
+                    updateRowFailure(rowElement, badgeContainer, httpStatus || 'Error');
+                }
+            } catch (err) {
+                // 連線失敗、超時或封鎖均列入壞鏈異常
+                updateRowFailure(rowElement, badgeContainer, 'Block/Failed');
+            } finally {
+                activeRequests--;
+                completedTasks++;
+                
+                // 更新進度條
+                const percent = Math.round((completedTasks / totalTasks) * 100);
+                progressBar.style.width = `${percent}%`;
+
+                // 遞迴調用下一批次
+                processQueue();
+            }
+        }
+
+        // 網頁連線正常 UI 更新
+        function updateRowSuccess(rowEl, badgeContainer, status) {
+            globalStats.valid++;
+            statValid.innerText = globalStats.valid;
+
+            rowEl.classList.add('border-emerald-100', 'bg-emerald-50/20');
+            badgeContainer.innerHTML = `<span class="text-emerald-600"><i class="fa-solid fa-circle-check"></i> ${status} OK</span>`;
+        }
+
+        // 網頁連線異常或死鏈 UI 更新
+        function updateRowFailure(rowEl, badgeContainer, status) {
+            globalStats.broken++;
+            statBroken.innerText = globalStats.broken;
+
+            rowEl.classList.add('border-orange-100', 'bg-orange-50/40');
+            badgeContainer.innerHTML = `<span class="text-orange-600 font-bold"><i class="fa-solid fa-circle-exclamation"></i> ${status}</span>`;
+        }
+
+        // 輔助工具函式
+        function showStatus(htmlContent, textColorClass) {
+            statusMessage.innerHTML = htmlContent;
+            statusMessage.className = `text-center py-6 text-sm ${textColorClass}`;
+            statusMessage.classList.remove('hidden');
+        }
+
+        function hideElements(elementsArray) {
+            elementsArray.forEach(el => el.classList.add('hidden'));
+        }
+
+        function escapeHtml(text) {
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+    </script>
+</body>
+</html>

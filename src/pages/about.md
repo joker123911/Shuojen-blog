@@ -3,6 +3,7 @@ title: 關於
 ---
 import { White, Black } from '/src/components/Chess/ChessGame';
 import Marquee from "react-fast-marquee";
+import ContributionCalendar from '@site/src/components/ContributionCalendar/ContributionCalendar';
 
 <style>{`
   /* Hero 佈局優化 */
@@ -231,6 +232,8 @@ https://shuojen.com/photoblog/rss.xml
 # 即時數據
 貼文區目前共有 **202** 篇文章，共累積了 **132,271** 個字。
 
+<ContributionCalendar />
+
 
 # 關於我
 黃碩人，出生於西元 1998 年，現居臺北，土木工程師，女朋友綽號是蝦波。
@@ -240,5 +243,4 @@ https://shuojen.com/photoblog/rss.xml
 # 聯絡我
 歡迎到[留言板](/guestbook)逛逛，有任何想說的，也可以聯絡我的信箱。
 >me@shuojen.com
-
 
