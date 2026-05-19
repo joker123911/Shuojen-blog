@@ -1,9 +1,11 @@
 const fs = require('fs');
 const path = require('path');
+const matter = require('gray-matter'); // 引入 gray-matter 解析 Frontmatter
 
 // --- 配置區 ---
 const BLOG_DIR = './blog';                   // 文章存放的資料夾
-const TARGET_FILE = './src/pages/about.md';  
+const PHOTOBLOG_DIR = './photoblog';         // 攝影文章存放的資料夾
+const TARGET_FILE = './src/pages/about.md';  // 目標檔案
 // --------------
 
 /**
@@ -35,55 +37,76 @@ function getAllMarkdownFiles(dirPath, arrayOfFiles = []) {
 }
 
 try {
+  // --- 1. 計算貼文區 (Blog) 統計 ---
   const allFiles = getAllMarkdownFiles(BLOG_DIR);
   const postCount = allFiles.length;
 
   let totalWords = 0;
   allFiles.forEach((filePath) => {
     let content = fs.readFileSync(filePath, 'utf8');
-
-    // 1. 統一換行符號：將 Windows 的 \r\n 轉為 \n，確保跨平台字數一致
     content = content.replace(/\r\n/g, '\n');
-
-    // 2. 移除 YAML Front Matter (--- ... ---)
     content = content.replace(/^---[\s\S]*?---/, '');
-
-    // 3. 移除所有空白與換行，只計算「實際文字內容」
     const cleanContent = content.replace(/\s+/g, '');
-
     totalWords += cleanContent.length;
   });
 
+  // --- 2. 計算攝影區 (Photoblog) 統計 ---
+  const photoFiles = getAllMarkdownFiles(PHOTOBLOG_DIR);
+  const photoPostCount = photoFiles.length;
+  let totalPhotos = 0;
+
+  photoFiles.forEach((filePath) => {
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    const { data, content } = matter(fileContent);
+    const currentPostImages = new Set();
+
+    // 優先加入 Frontmatter 中的主圖 (data.image)
+    if (data.image) {
+      currentPostImages.add(data.image);
+    }
+
+    // 抓取內文所有圖片 ![](/path/to/img)
+    const imgRegex = /!\[.*?\]\((.*?)\)/g;
+    const matches = content.matchAll(imgRegex);
+
+    for (const match of matches) {
+      currentPostImages.add(match[1]);
+    }
+
+    totalPhotos += currentPostImages.size;
+  });
+
+  // --- 3. 格式化輸出資料 ---
   const formattedPostCount = formatNumber(postCount);
   const formattedWordCount = formatNumber(totalWords);
+  const formattedPhotoPostCount = formatNumber(photoPostCount);
+  const formattedPhotoCount = formatNumber(totalPhotos);
 
-  // 確認目標檔案是否存在
+  // --- 4. 更新檔案內容 ---
   if (!fs.existsSync(TARGET_FILE)) {
     throw new Error(`找不到目標檔案：${TARGET_FILE}`);
   }
 
-  // 讀取目前真實的 Markdown 檔案
   let fileContent = fs.readFileSync(TARGET_FILE, 'utf8');
 
-  // 使用正則表達式尋找那句特定的話，並替換裡面的數字
-  // (.*? 會匹配原本裡面的任何數字或千分位符號)
-  const regex = /貼文區目前共有 \*\*(.*?)\*\* 篇文章，共累積了 \*\*(.*?)\*\* 個字。/g;
-  const newString = `貼文區目前共有 **${formattedPostCount}** 篇文章，共累積了 **${formattedWordCount}** 個字。`;
+  // 正則表達式：使用 [\s\S]*? 來相容中間可能出現的換行符號或 <br />
+  const regex = /貼文區目前共有 \*\*(.*?)\*\* 篇文章，共累積了 \*\*(.*?)\*\* 個字(?:；[\s\S]*?攝影區目前共有 \*\*(.*?)\*\* 篇文章，共累積了 \*\*(.*?)\*\* 張照片)?。/g;
+  
+  // 使用 <br /> 確保在 Markdown / Docusaurus 中正確換行
+  const newString = `貼文區目前共有 **${formattedPostCount}** 篇文章，共累積了 **${formattedWordCount}** 個字；<br />\n攝影區目前共有 **${formattedPhotoPostCount}** 篇文章，共累積了 **${formattedPhotoCount}** 張照片。`;
 
-  // 執行替換
-  const finalContent = fileContent.replace(regex, newString);
-
-  // 如果找不到這句話，可能是不小心被刪除了，給個警告
   if (!regex.test(fileContent)) {
-    console.warn(`⚠️ 警告：在 ${TARGET_FILE} 中找不到用來替換的句子，請確認檔案內是否有「${newString}」類似的格式。`);
+    console.warn(`⚠️ 警告：在 ${TARGET_FILE} 中找不到用來替換的句子，請確認檔案內文字格式。`);
+  } else {
+    // 執行替換
+    const finalContent = fileContent.replace(regex, newString);
+    // 將更新後的內容寫回同一個檔案
+    fs.writeFileSync(TARGET_FILE, finalContent, 'utf8');
   }
 
-  // 將更新後的內容寫回同一個檔案
-  fs.writeFileSync(TARGET_FILE, finalContent, 'utf8');
-
   console.log(`✅ 統計更新完成！`);
-  console.log(`文章數: ${formattedPostCount}`);
-  console.log(`純文字字數: ${formattedWordCount}`);
+  console.log(`📝 貼文區: ${formattedPostCount} 篇文章, ${formattedWordCount} 個字`);
+  console.log(`📸 攝影區: ${formattedPhotoPostCount} 篇文章, ${formattedPhotoCount} 張照片`);
 
 } catch (error) {
   console.error('❌ 執行失敗：', error.message);

@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const blogDir = 'C:/Users/95193/Shuojen-blog/blog';
-const photoblogDir = 'C:/Users/95193/Shuojen-blog/photoblog';
-const outputJsonPath = 'C:/Users/95193/Shuojen-blog/src/data/contribution-data.json';
+const blogDir = path.join(process.cwd(), 'blog');
+const photoblogDir = path.join(process.cwd(), 'photoblog');
+const outputJsonPath = path.join(process.cwd(), 'src/data/contribution-data.json');
 
 function getFiles(dir, filesList = []) {
   if (!fs.existsSync(dir)) return filesList;
