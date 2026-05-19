@@ -48,18 +48,39 @@ function extractPostData(filePath, baseRoute) {
     title = path.basename(filePath, path.extname(filePath));
   }
 
-  // 3. 提取網址 (Slug)
+  // 3. 提取網址 (修正為符合 Docusaurus 預設規則)
   let url = '';
   const slugMatch = content.match(/^slug:\s*['"]?(.*?)['"]?$/m);
+  
   if (slugMatch) {
-    url = `${baseRoute}/${slugMatch[1].trim()}`.replace(/\/\/+/g, '/');
+    // 如果文章有手動設定 slug，優先使用手動設定的
+    let customSlug = slugMatch[1].trim();
+    url = customSlug.startsWith('/') 
+      ? `${baseRoute}${customSlug}` 
+      : `${baseRoute}/${customSlug}`;
   } else {
-    // 若沒有 slug，依照 Docusaurus 預設規則，以檔名（去掉日期前綴）作為網址
+    // 沒有 slug，使用 Docusaurus 預設規則： /blog/YYYY/MM/DD/檔名
     const fileName = path.basename(filePath, path.extname(filePath));
-    const nameWithoutDate = fileName.replace(/^\d{4}-\d{2}-\d{2}-/, '');
-    url = `${baseRoute}/${nameWithoutDate}`.replace(/\/\/+/g, '/');
+    let nameWithoutDate = fileName;
+    
+    // 把檔名前面的日期去掉 (例如 "2026-05-17-new_function" 變成 "new_function")
+    if (/^\d{4}-\d{2}-\d{2}-/.test(fileName)) {
+      nameWithoutDate = fileName.replace(/^\d{4}-\d{2}-\d{2}-/, '');
+    } else if (fileName === 'index') {
+      // 處理資料夾形式 (例如 new_function/index.md)
+      const parentDir = path.basename(path.dirname(filePath));
+      nameWithoutDate = parentDir.replace(/^\d{4}-\d{2}-\d{2}-/, '');
+    }
+
+    // 把 "2026-05-17" 轉換成 "2026/05/17"
+    const datePath = dateStr.replace(/-/g, '/'); 
+    
+    // 組合出最終的 Docusaurus 網址
+    url = `${baseRoute}/${datePath}/${nameWithoutDate}`;
   }
 
+  // 清除可能出現的雙斜線 (//)
+  url = url.replace(/\/\/+/g, '/'); 
   return { date: dateStr, title, url };
 }
 
@@ -72,7 +93,7 @@ const dateData = {};
 
 allPosts.forEach(post => {
   if (!dateData[post.date]) {
-    dateData[post.date] = []; // 改為陣列來儲存當天的所有文章物件
+    dateData[post.date] = [];
   }
   dateData[post.date].push({ title: post.title, url: post.url });
 });
