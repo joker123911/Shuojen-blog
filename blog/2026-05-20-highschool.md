@@ -1,7 +1,7 @@
 ---
 title: '高職 FAQ'
 tags: ['life']
-date: 2026-05-20T00:15:36+08:00
+date: 2026-05-20T00:42:47+08:00
 ---
 這幾天突然看到 RSS 吹起一陣高職討論，像是 EO 的[《後悔讀高職》](https://eoiiio.bearblog.dev/7091/)、JN 的[《讀高職是我一點都不後悔的事情》](https://blog.giveanornot.com/vocational-high-school/)還有 ikuka 的[《讀高職不代表我成績差》](https://blog.ikukaroom.com/vocational-high-school/)。
 
