@@ -1,4 +1,7 @@
 export const westernMovies = [
+  { title: "卡特教頭", score: 8.0, note: "經典的勵志片，會對人生充滿力量", poster: "./img/movie/卡特教頭.jpg" },
+  { title: "K歌情人", score: 7.5, note: "還不錯的浪漫喜劇，音樂好聽，童年回憶", poster: "./img/movie/K歌情人.jpg" },
+  { title: "奪魂鋸", score: 8.2, note: "第一集真的是驚悚片的大經典，一定要看看", poster: "./img/movie/奪魂鋸.jpg" },
   { title: "戰慄遊戲", score: 8.6, note: "經典老驚悚片，超級好看又精彩", poster: "./img/movie/戰慄遊戲.jpg" },
   { title: "罪人", score: 7.8, note: "音樂非常讚，前半的氣氛也非常好，不過後半風格大變我沒那麼喜歡，整體非常值得一看", poster: "./img/movie/罪人.jpg" },
   { title: "亞果出任務", score: 8.0, note: "氣氛很好的政治劇情片，緊張感很強烈", poster: "./img/movie/亞果出任務.jpg" },
@@ -231,6 +234,7 @@ export const westernMovies = [
 ];
 
 export const asiaMovies = [
+  { title: "徵人啟弒", score: 6.8, note: "拍攝手法丶畫面丶演員都非常厲害，但是劇本不是很好，能理解想走荒謬的黑色幽默路線", poster: "./img/movie/徵人啟弒.jpg" },
   { title: "毒舌大狀", score: 6.6, note: "說教成份太重，角色太扁平，劇情也不夠突出，不要期待太高", poster: "./img/movie/毒舌大狀.jpg" },
   { title: "小雁與吳愛麗", score: 8.7, note: "講述家庭創傷與和解的電影，臺灣電影難得有這種高度的劇本和張力", poster: "./img/movie/小雁與吳愛麗.jpg" },
   { title: "寄生上流", score: 9.3, note: "奉導集大成神作，商業與藝術完美結合", poster: "./img/movie/寄生上流.jpg" },
