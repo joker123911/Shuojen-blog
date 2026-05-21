@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-	"check": "node scripts/check-broken-links.js",
+    "check": "node scripts/check-broken-links.js",
     "prestart": "git pull",
     "prepare-data": "node scripts/sync-build-time.js && node scripts/update-stats.js && node scripts/gen-photos.js && node scripts/generate-calendar.js",
     "start": "npm run prepare-data && docusaurus start",
@@ -17,9 +17,6 @@
     "write-heading-ids": "docusaurus write-heading-ids"
   },
   "dependencies": {
-    "@chess-barebones/chess": "^0.1.0",
-    "@chess-barebones/chess-react": "^0.1.0",
-    "@chess-barebones/core": "^0.1.0",
     "@docusaurus/core": "^3.9.1",
     "@docusaurus/preset-classic": "^3.9.1",
     "@easyops-cn/docusaurus-search-local": "^0.52.1",
@@ -27,13 +24,10 @@
     "chess.js": "^1.4.0",
     "clsx": "^2.0.0",
     "cm-chessboard": "^8.11.0",
-    "lucide-react": "^0.562.0",
     "prism-react-renderer": "^2.3.0",
     "react": "^19.0.0",
-    "react-chessboard": "^5.8.6",
     "react-dom": "^19.0.0",
     "react-fast-marquee": "^1.6.5",
-    "react-photo-album": "^3.4.0",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0"
   },
