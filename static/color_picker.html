@@ -3,11 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>螢幕像素取色工具</title>
+    <title>螢幕像素取色工具 - Shuojen.com</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #6366f1;
+            --primary-hover: #4f46e5;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+
         body {
             /* 使用 Noto Sans TC 作為主要字體 */
             font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -16,12 +25,11 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            /* 背景色調整為更乾淨的淺灰藍色 */
-            background-color: #f4f7fc;
-            color: #1f2937;
+            background-color: var(--bg-color);
+            color: var(--text-main);
         }
         .container {
-            background: white;
+            background: var(--card-bg);
             padding: 3rem;
             /* 增加圓角半徑 */
             border-radius: 24px;
@@ -34,7 +42,7 @@
         }
         h2 {
             margin-bottom: 2rem;
-            color: #111827;
+            color: var(--text-main);
             font-weight: 700;
             font-size: 1.75rem;
         }
@@ -58,8 +66,8 @@
         }
         .info {
             /* 將資訊框樣式改為類似標籤的風格 */
-            background-color: #f3e8ff; /* 淺紫色背景 */
-            color: #703DEB; /* 深紫色文字 */
+            background-color: rgba(99, 102, 241, 0.1); /* 淺印地哥背景 */
+            color: var(--primary-color);
             padding: 0.75rem 1.25rem;
             border-radius: 12px;
             font-family: 'Noto Sans TC', monospace; /* 優先使用 Noto Sans TC */
@@ -70,7 +78,7 @@
         }
         button {
             /* 採用標誌性的紫色作為主色調 */
-            background-color: #703DEB;
+            background-color: var(--primary-color);
             color: white;
             border: none;
             padding: 1rem 2rem;
@@ -81,16 +89,16 @@
             cursor: pointer;
             transition: all 0.2s ease;
             /* 增加紫色陰影 */
-            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
         }
         button:hover {
-            background-color: #703DEB;
+            background-color: var(--primary-hover);
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
+            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
         }
         button:active {
             transform: translateY(0);
@@ -118,6 +126,15 @@
             margin-right: 0.5rem;
             font-size: 1.25rem;
         }
+        .footer-note {
+            text-align: center;
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 32px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+        }
     </style>
 </head>
 <body>
@@ -133,6 +150,7 @@
         <span class="btn-icon">🎨</span> 開始取色
     </button>
     <p id="errorMsg" class="error">抱歉，您的瀏覽器不支援 EyeDropper API</p>
+    <div class="footer-note">© Shuojen.com Color Picker Tool</div>
 </div>
 
 <script>

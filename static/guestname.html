@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>猜人名遊戲 - Guess Who</title>
+    <title>猜人名遊戲 - Guess Who - Shuojen.com</title>
     <style>
         :root {
-            --primary-color: #7c73ff;
-            --bg-color: #f4f7f9;
+            --primary-color: #6366f1;
+            --bg-color: #f8fafc;
             --card-bg: #ffffff;
             --text-main: #2c3e50;
             --text-sub: #7f8c8d;
@@ -83,7 +83,7 @@
         }
 
         #rules-box {
-            background: #fdfdff;
+            background: #f8fafc;
             border: 1px solid var(--btn-gray);
             border-radius: 15px;
             padding: 15px;
@@ -129,7 +129,11 @@
             font-weight: 600;
             cursor: pointer;
             width: 100%;
-            transition: opacity 0.2s;
+            transition: all 0.2s ease;
+        }
+
+        button:active {
+            transform: scale(0.98);
         }
 
         .btn-primary {
@@ -138,10 +142,18 @@
             margin-top: 10px;
         }
 
+        .btn-primary:hover {
+            background-color: #4f46e5;
+        }
+
         .btn-secondary {
             background-color: var(--btn-gray);
             color: var(--text-main);
             margin-top: 10px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #cbd5e1;
         }
 
         .hidden {
@@ -158,7 +170,7 @@
         .others-list {
             text-align: left;
             margin: 20px 0;
-            background: #f9f9ff;
+            background: #f8fafc;
             padding: 15px;
             border-radius: 15px;
         }
@@ -182,10 +194,14 @@
             margin-bottom: 20px;
         }
 
-        .footer {
-            margin-top: 30px;
+        .footer-note {
+            text-align: center;
             font-size: 12px;
-            color: var(--text-sub);
+            color: #94a3b8;
+            margin-top: 32px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.05em;
         }
     </style>
 </head>
@@ -256,7 +272,7 @@
         </div>
     </div>
 
-    <div class="footer">
+    <div class="footer-note">
         © Shuojen.com Guest Game
     </div>
 </div>
