@@ -234,6 +234,7 @@ export const westernMovies = [
 ];
 
 export const asiaMovies = [
+  { title: "超時空武士", score: 7.1, note: "有趣的低成本作品，前半節奏有點拖沓，但是後面越來越有趣，最後的決戰真的好精彩。", poster: "./img/movie/超時空武士.jpg" },
   { title: "徵人啟弒", score: 6.8, note: "拍攝手法丶畫面丶演員都非常厲害，但是劇本不是很好，能理解想走荒謬的黑色幽默路線", poster: "./img/movie/徵人啟弒.jpg" },
   { title: "毒舌大狀", score: 6.6, note: "說教成份太重，角色太扁平，劇情也不夠突出，不要期待太高", poster: "./img/movie/毒舌大狀.jpg" },
   { title: "小雁與吳愛麗", score: 8.7, note: "講述家庭創傷與和解的電影，臺灣電影難得有這種高度的劇本和張力", poster: "./img/movie/小雁與吳愛麗.jpg" },
