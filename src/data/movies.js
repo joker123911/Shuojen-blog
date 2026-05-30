@@ -1,4 +1,5 @@
 export const westernMovies = [
+  { title: "水底情深", score: 7.5, note: "滿酷的奇幻愛情電影，算中規中矩的一部", poster: "./img/movie/水底情深.jpg" },
   { title: "卡特教頭", score: 8.0, note: "經典的勵志片，會對人生充滿力量", poster: "./img/movie/卡特教頭.jpg" },
   { title: "K歌情人", score: 7.5, note: "還不錯的浪漫喜劇，音樂好聽，童年回憶", poster: "./img/movie/K歌情人.jpg" },
   { title: "奪魂鋸", score: 8.2, note: "第一集真的是驚悚片的大經典，一定要看看", poster: "./img/movie/奪魂鋸.jpg" },
@@ -386,6 +387,7 @@ export const hongkongMovies = [
 ];
 
 export const animeMovies = [
+  { title: "北極百貨的秋乃小姐", score: 7.2, note: "還不錯的輕鬆可愛的百貨日常，金叔的聲音好頂", poster: "./img/movie/北極百貨的秋乃小姐.jpg" },
   { title: "Kpop 獵魔女團", score: 7.2, note: "歌很洗腦，劇情普通吧", poster: "./img/movie/Kpop 獵魔女團.jpg" },
   { title: "名偵探柯南：貝克街的亡靈", score: 8.0, note: "我最喜歡的柯南劇場版，設定非常酷", poster: "./img/movie/名偵探柯南：貝克街的亡靈.jpg" },
   { title: "鏈鋸人-蕾潔篇", score: 9.2, note: "文藝電影感丶戰鬥畫面跟音樂都超級棒，整部當成完整的作品看也完全沒問題", poster: "./img/movie/鏈鋸人-蕾潔篇.jpg" },

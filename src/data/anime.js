@@ -22,6 +22,7 @@ export const animeList = [
   { title: "章魚嗶的原罪", note: "好看但是胃好痛，不會想再點開看第二次", poster: "./img/anime/章魚嗶的原罪.jpg", tier: "SS" },
   { title: "棒球大聯盟", note: "童年回憶，應該是我最愛的王道運動作品", poster: "./img/anime/棒球大聯盟.jpg", tier: "SS" },
   { title: "未聞花名", note: "最愛這種短篇就把故事好好交待完整的作品，感人的神作推推", poster: "./img/anime/未聞花名.jpg", tier: "SS" },
+  { title: "本田小狼與我", note: "超級喜歡這個平淡的騎車日常", poster: "./img/anime/本田小狼與我.jpg", tier: "SS" },
   { title: "迷宮飯", note: "角色太可愛，冒險料理作品好讚", poster: "./img/anime/迷宮飯.jpg", tier: "S" },
   { title: "擅長捉弄人的高木同學", note: "每話都是短短的小品，很輕鬆的戀愛作品，《爆擊》這一話至今印象深刻", poster: "./img/anime/擅長捉弄人的高木同學.jpg", tier: "S" },
   { title: "海賊王", note: "到魚人島之前都很好看，最愛救羅賓的篇章", poster: "./img/anime/海賊王.jpg", tier: "S" },
@@ -45,6 +46,9 @@ export const animeList = [
   { title: "給不滅的你", note: "看完現代篇而已，很好看的一部，設定有趣", poster: "./img/anime/給不滅的你.jpg", tier: "S" },
   { title: "86—不存在的戰區—", note: "音樂超強，網戀番無誤（？），我喜歡前半", poster: "./img/anime/86—不存在的戰區—.jpg", tier: "S" },
   { title: "烘焙王", note: "這個題材很酷，真的滿好看的，但把漫畫看完的我只能說，很明顯作者到最後都在故意亂畫，可惜了", poster: "./img/anime/烘焙王.jpg", tier: "S" },
+  { title: "我推的孩子", note: "滿不錯的，前面很愛，但最後結尾收的不是很喜歡", poster: "./img/anime/我推的孩子.jpg", tier: "S" },
+  { title: "敗北女角太多了", note: "滿喜歡的，微甜，作品名的故事很有趣", poster: "./img/anime/敗北女角太多了.jpg", tier: "S" },
+  { title: "電馭叛客：邊緣行者", note: "百分百露西派！", poster: "./img/anime/電馭叛客：邊緣行者.jpg", tier: "S" },
   { title: "七龍珠", note: "童年的最愛，打架作品經典教科書", poster: "./img/anime/七龍珠.jpg", tier: "A" },
   { title: "我的英雄學院", note: "好幾集都有哭，不過整體來說沒有特別愛", poster: "./img/anime/我的英雄學院.jpg", tier: "A" },
   { title: "一拳超人", note: "很有趣的設定，前面兩季都很不錯，但後面就沒看了", poster: "./img/anime/一拳超人.jpg", tier: "A" },
@@ -59,9 +63,14 @@ export const animeList = [
   { title: "平屋慢生活", note: "可愛的日常生活作品，暖暖的好看", poster: "./img/anime/平屋慢生活.jpg", tier: "A" },
   { title: "怪獸八號", note: "還滿不錯的但是有點後繼無力", poster: "./img/anime/怪獸八號.jpg", tier: "A" },
   { title: "網球王子", note: "童年回憶，經典裝逼運動作品，新的聽說一堆超能力我就沒看了", poster: "./img/anime/網球王子.jpg", tier: "A" },
+  { title: "雞鬥士", note: "很有創意的有趣，滿白痴的一部作品", poster: "./img/anime/雞鬥士.jpg", tier: "A" },
+  { title: "藥師少女的獨語", note: "推理解謎類，對我來說沒有很對到電波", poster: "./img/anime/藥師少女的獨語.jpg", tier: "A" },
+  { title: "天竺鼠車車", note: "滿可愛的一個泡麵小作品", poster: "./img/anime/天竺鼠車車.jpg", tier: "A" },
+  { title: "肌肉魔法使", note: "不錯的搞笑作品，不過沒看完", poster: "./img/anime/肌肉魔法使.jpg", tier: "A" },
   { title: "路人超能100", note: "雖然感覺是我會喜歡的設定跟類型，但不知為何沒對到電波", poster: "./img/anime/路人超能100.jpg", tier: "B" },
   { title: "鬼滅之刃", note: "真的電波不太合，沒有看下去的動力", poster: "./img/anime/鬼滅之刃.jpg", tier: "B" },
   { title: "新世紀福音戰士", note: "雖然是貴為經典的神作，但我真的不知道在演什麼，歐美爹豆", poster: "./img/anime/新世紀福音戰士.jpg", tier: "B" },
   { title: "來自深淵", note: "跟蝦波看了十集左右就棄了，角色不太喜歡", poster: "./img/anime/來自深淵.jpg", tier: "B" },
-  { title: "天元突破 紅蓮螺巖", note: "覺得不是很適合我的一部，對故事沒有很喜歡，看一半棄坑", poster: "./img/anime/天元突破 紅蓮螺巖.jpg", tier: "B" }
+  { title: "天元突破 紅蓮螺巖", note: "覺得不是很適合我的一部，對故事沒有很喜歡，看一半棄坑", poster: "./img/anime/天元突破 紅蓮螺巖.jpg", tier: "B" },
+  { title: "夜晚的水母不會游泳", note: "前面還不錯，後半就棄坑了，有點沒記憶點", poster: "./img/anime/夜晚的水母不會游泳.jpg", tier: "B" }
 ];
