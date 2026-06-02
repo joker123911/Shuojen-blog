@@ -9,18 +9,18 @@ date: 2026-06-01T23:26:30+08:00
 
 對我來說，電影最迷人的地方有三個，劇本、畫面再來就是配樂[^1]，一段好的電影配樂，能為好作品增添情緒，勾起記憶，有時候那些在背景響起的美妙旋律，平平淡淡的流過，不搶戲也不居功，卻會讓我非常難忘，對那些場景又更印象深刻。
 
-這些是我腦海中馬上想到的幾個配樂，非常喜歡，我在 Youtube 上節錄前一分鐘的片段，有興趣的話，可以點進連結中慢慢享受。
+我腦海中馬上想到幾個非常喜歡的配樂，我在 Youtube 上節錄前一分鐘的片段，有興趣的話，可以點進連結中慢慢享受。
 
 ## 睡人
 
 ### [Dexter's Tune](https://www.youtube.com/watch?v=RAS1qgSGFGM&list=OLAK5uy_mHwpsSI1fxxu8NFRuVxIMV_5c0N_NwBfI&index=12)<audio controls src={require('./img202606/001.mp3').default}></audio>
 
-這部關於罕見疾病的老電影，步調緩慢憂傷。勞勃·狄尼洛與女主角跳舞的場景，應該是令我至今最難忘的一場戲，背景幽幽響起這首 Randy Newman 編寫的〈Dexter's Tune〉，充滿淡淡的哀愁與無奈，尾韻久久不散。
+這部關於罕見疾病的老電影，步調緩慢憂傷。勞勃·狄尼洛與女主角跳舞的場景，應該是所有電影中最令我難忘的一場戲，背景幽幽響起這首 Randy Newman 編寫的〈Dexter's Tune〉，充滿淡淡的哀愁與無奈，尾韻久久不散。
 
 ## 星際效應
 ### [Cornfield Chase](https://www.youtube.com/watch?v=7GlsxNI4LVI&list=PLS87EG7TZn6XBNIxf6mr-JQkJpb17MMED&index=1)<audio controls src={require('./img202606/002.mp3').default}></audio>
 
-我最喜歡的前十大電影之一，當年重映又去美麗華的 IMAX 影廳體驗一次感動，鼎鼎大名的 Hans Zimmer 應該不用多介紹了，星際效應的配樂絕對是教科書等級的，當時在電影院，看著一望無際的麥田圈，〈Cornfield Chase〉的配樂一出現，眼淚就不自覺的掉下來了，配樂對我而言，就是這部電影的靈魂記憶，《星際效應》的 Ghost。
+我最喜歡的前十大電影之一，當年重映又去美麗華的 IMAX 影廳體驗一次感動，鼎鼎大名的 Hans Zimmer 應該不用多介紹了，星際效應的配樂絕對是教科書等級的，當時在電影院，看著一望無際的麥田圈，〈Cornfield Chase〉的配樂一出現，眼淚就不自覺的掉下來了，這個經典對我而言，就是這部電影的靈魂記憶，《星際效應》的 Ghost。
 
 ## 不能說的秘密
 ### [The Swan](https://www.youtube.com/watch?v=rrWANKcX3Qg&list=PLIyoFsIz2Ou4HZnA7z7OYhwmBhGA-sPHY&index=16)<audio controls src={require('./img202606/003.mp3').default}></audio>
