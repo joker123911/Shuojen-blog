@@ -1,4 +1,5 @@
 export const westernMovies = [
+  { title: "後室", score: 7.3, note: "不錯的恐怖電影，只是沒有很可怕，比較聚焦在角色精神失常的部份，而不是整體的背景設定，有點可惜", poster: "./img/movie/後室.jpg" },
   { title: "水底情深", score: 7.5, note: "滿酷的奇幻愛情電影，算中規中矩的一部", poster: "./img/movie/水底情深.jpg" },
   { title: "卡特教頭", score: 8.0, note: "經典的勵志片，會對人生充滿力量", poster: "./img/movie/卡特教頭.jpg" },
   { title: "K歌情人", score: 7.5, note: "還不錯的浪漫喜劇，音樂好聽，童年回憶", poster: "./img/movie/K歌情人.jpg" },
@@ -235,6 +236,7 @@ export const westernMovies = [
 ];
 
 export const asiaMovies = [
+  { title: "大濛", score: 7.6, note: "年代感和氛圍做得還不錯，場景漂亮，滿喜歡的，不俗的國片", poster: "./img/movie/大濛.jpg" },
   { title: "超時空武士", score: 7.1, note: "有趣的低成本作品，前半節奏有點拖沓，但是後面越來越有趣，最後的決戰真的好精彩。", poster: "./img/movie/超時空武士.jpg" },
   { title: "徵人啟弒", score: 6.8, note: "拍攝手法丶畫面丶演員都非常厲害，但是劇本不是很好，能理解想走荒謬的黑色幽默路線", poster: "./img/movie/徵人啟弒.jpg" },
   { title: "毒舌大狀", score: 6.6, note: "說教成份太重，角色太扁平，劇情也不夠突出，不要期待太高", poster: "./img/movie/毒舌大狀.jpg" },
@@ -387,6 +389,7 @@ export const hongkongMovies = [
 ];
 
 export const animeMovies = [
+  { title: "聲之形", score: 8.7, note: "非常好看的動畫電影，讓人心情很沉重，講述負罪與救贖的故事。", poster: "./img/movie/聲之形.jpg" },
   { title: "北極百貨的秋乃小姐", score: 7.2, note: "還不錯的輕鬆可愛的百貨日常，金叔的聲音好頂", poster: "./img/movie/北極百貨的秋乃小姐.jpg" },
   { title: "Kpop 獵魔女團", score: 7.2, note: "歌很洗腦，劇情普通吧", poster: "./img/movie/Kpop 獵魔女團.jpg" },
   { title: "名偵探柯南：貝克街的亡靈", score: 8.0, note: "我最喜歡的柯南劇場版，設定非常酷", poster: "./img/movie/名偵探柯南：貝克街的亡靈.jpg" },
