@@ -1,0 +1,338 @@
+/* --- 篩選按鈕區 --- */
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  scrollbar-width: none;
+}
+.filter-bar::-webkit-scrollbar { display: none; }
+
+.filter-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-card-background-color);
+  color: var(--ifm-font-color-base);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+}
+
+.filter-btn.active {
+  background: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+  color: #fff;
+}
+
+/* --- IMDb 風格列表 --- */
+.imdb-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.list-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--ifm-card-background-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  transition: all 0.2s ease; 
+  cursor: pointer;
+}
+
+.list-item:hover {
+  box-shadow: var(--ifm-global-shadow-md);
+  transform: scale(1.02); 
+  border-color: var(--ifm-color-primary); 
+}
+
+/* 海報區塊 */
+.list-poster {
+  width: 70px;
+  flex-shrink: 0;
+  margin-right: 16px;
+}
+
+.list-poster img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* 右側資訊區塊 */
+.list-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* --- 排名標籤：固定為深底白字，確保日夜模式皆清晰 --- */
+.list-rank-badge {
+  background-color: #313131; /* 固定深色背景 */
+  color: #ffffff;            /* 固定白色文字 */
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 2px 14px 2px 8px;
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 6px;
+  border-radius: 2px 0 0 2px;
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+}
+
+.list-title {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--ifm-heading-color); 
+  margin: 0 0 6px 0;
+}
+
+.list-note {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ifm-font-color-base);
+  opacity: 0.8; 
+  margin: 0 0 10px 0;
+}
+
+/* 評分與操作列 */
+.list-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.list-score {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ifm-font-color-base);
+}
+
+.star-icon {
+  color: #f5c518; 
+  margin-right: 4px;
+}
+
+.list-rate-btn {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+  cursor: pointer;
+}
+.list-rate-btn:hover {
+  text-decoration: underline;
+}
+
+/* --- 載入更多按鈕 --- */
+.load-more-btn {
+  display: block;
+  margin: 2rem auto;
+  padding: 12px 40px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: transparent;
+  border: 1px solid var(--ifm-color-emphasis-400);
+  color: var(--ifm-font-color-base);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.load-more-btn:hover {
+  background: var(--ifm-color-emphasis-200);
+  border-color: var(--ifm-color-primary);
+}
+
+/* --- Modal 彈窗核心 --- */
+.poster-modal-overlay {
+  position: fixed; 
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  z-index: 1000; 
+  backdrop-filter: blur(5px);
+  padding: 20px;
+}
+
+.poster-modal-content {
+  background: var(--ifm-card-background-color);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 450px;
+  max-height: 90vh;
+  padding: 1.25rem;
+  animation: zoomIn 0.2s ease-out;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  cursor: default; 
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 12px; 
+}
+
+.modal-title { 
+  font-weight: bold; 
+  color: var(--ifm-color-primary);
+  font-size: 1.1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 80%;
+}
+
+.close-btn { 
+  background: none; 
+  border: none; 
+  font-size: 1.8rem; 
+  cursor: pointer; 
+  color: var(--ifm-font-color-base);
+  line-height: 1;
+}
+
+.poster-frame {
+  position: relative;
+  width: 100%;
+  min-height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--ifm-color-emphasis-100);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.poster-img {
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+  border-radius: 8px;
+  display: block;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.poster-frame.loaded .poster-img { opacity: 1; }
+.poster-frame.loaded { background: transparent; }
+
+/* --- 搜尋區域：增加彈性排版與間距 --- */
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 15px; 
+  margin-bottom: 25px;
+  justify-content: center;
+  flex-wrap: wrap; 
+}
+
+.search-box {
+  position: relative;
+  flex-grow: 1;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  color: var(--ifm-color-emphasis-600);
+  z-index: 1;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 40px 12px 45px;
+  border-radius: 25px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-color); 
+  color: var(--ifm-font-color-base);
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.search-input:focus {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 0 0 2px var(--ifm-color-primary-lighter);
+}
+
+.search-clear {
+  position: absolute;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--ifm-color-emphasis-500);
+  cursor: pointer;
+}
+
+/* --- 電影總數標籤樣式 --- */
+.movie-count-badge {
+  background-color: var(--ifm-color-emphasis-200);
+  color: var(--ifm-font-color-base);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.no-results {
+  text-align: center;
+  padding: 40px;
+  color: var(--ifm-color-emphasis-600);
+  font-size: 1.1rem;
+}
+
+/* 手機版微調 */
+@media (max-width: 768px) {
+  .list-item { padding: 12px; }
+  .list-poster { width: 55px; margin-right: 12px; }
+  .list-title { font-size: 1.05rem; }
+  
+  .poster-modal-overlay { padding: 10px; }
+  .poster-modal-content { padding: 1rem; max-width: 95%; }
+  .modal-title { font-size: 1rem; }
+  .poster-img { max-height: 65vh; }
+}
+
+@media (max-width: 600px) {
+  .search-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .movie-count-badge {
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+  }
+}

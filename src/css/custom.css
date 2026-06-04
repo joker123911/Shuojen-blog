@@ -24,7 +24,7 @@
   /* 根據 Setup 規範，字體名稱應為 "jfOpenHuninn" */
   --ifm-font-family-base: "jfOpenHuninn", system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif;
 
-  /* 增加行高，提升閱讀舒適度 */
+  /* 增加行高，提升閱讀舒適度 */  
   --ifm-line-height-base: 1.6;
 
   /* 灰階色票設定 (Primary Colors) */
