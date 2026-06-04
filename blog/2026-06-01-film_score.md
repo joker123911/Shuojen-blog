@@ -1,6 +1,6 @@
 ---
 title: '電影配樂記憶'
-tags: ['movie']
+tags: ['movie','blogparty']
 date: 2026-06-01T23:26:30+08:00
 ---
 :::info

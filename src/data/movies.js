@@ -1,4 +1,6 @@
 export const westernMovies = [
+  { title: "繼承人生", score: 7.7, note: "平淡的日常片，我滿喜歡這種家庭和解的電影", poster: "./img/movie/繼承人生.jpg" },
+  { title: "絕命終結站", score: 7.6, note: "從小看到大的經典系列，小時候第一次看真的覺得很讚，1=血脈>3>2>4>5", poster: "./img/movie/絕命終結站.jpg" },
   { title: "後室", score: 7.3, note: "不錯的恐怖電影，只是沒有很可怕，比較聚焦在角色精神失常的部份，而不是整體的背景設定，有點可惜", poster: "./img/movie/後室.jpg" },
   { title: "水底情深", score: 7.5, note: "滿酷的奇幻愛情電影，算中規中矩的一部", poster: "./img/movie/水底情深.jpg" },
   { title: "卡特教頭", score: 8.0, note: "經典的勵志片，會對人生充滿力量", poster: "./img/movie/卡特教頭.jpg" },
