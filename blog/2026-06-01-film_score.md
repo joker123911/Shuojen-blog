@@ -25,8 +25,8 @@ date: 2026-06-01T23:26:30+08:00
 ## 不能說的秘密
 ### [The Swan](https://www.youtube.com/watch?v=rrWANKcX3Qg&list=PLIyoFsIz2Ou4HZnA7z7OYhwmBhGA-sPHY&index=16)<audio controls src={require('./img202606/003.mp3').default}></audio>
 
-這部電影其實表現的非常好，我認為排在國片愛情電影的第一也不為過，周杰倫在這部電影裡編寫的配樂都很悅耳，為這部電影更增添一抹色彩，電影也把桂綸鎂的古靈精怪展現的非常可愛。這首〈The Swan〉，改編自聖桑的《動物狂歡節》[^2
-]，小時候在電影院時，是我第一次聽到這個經典的古典作品，喜歡到現在是我每天的鬧鐘鈴聲。
+這部電影其實表現的非常好，我認為排在國片愛情電影的第一也不為過，周杰倫在這部電影裡編寫的配樂都很悅耳，為這部電影更增添一抹色彩，電影也把桂綸鎂的古靈精怪展現的非常可愛。這首〈The Swan〉，改編自聖桑的《動物狂歡節》[^2]，小時候在電影院看這部，是我第一次聽到這個經典的古典作品，當時沒有特別的感覺，但現在
+喜歡到是我每天的鬧鐘鈴聲。
 
 ## 鏈鋸人蕾潔篇
 ### [in the pool](https://www.youtube.com/watch?v=rOWDEfnWx5s)<audio controls src={require('./img202606/004.mp3').default}></audio>
