@@ -10,6 +10,7 @@ import re  # 新增：用於解析與排序 JS 內容
 # ==========================================
 MOVIE_JS_PATH = "movies.js" 
 ANIME_JS_PATH = "anime.js"
+SERIES_JS_PATH = "series.js"
 
 # ==========================================
 # TMDB API Key
@@ -28,13 +29,20 @@ def on_mode_change(event):
             "動畫電影 (animeMovies)"
         ])
         category_combobox.current(0)
-        lbl_score.place(x=30, y=130)
-        entry_score.place(x=120, y=130)
-    else:
+        lbl_score.place(x=30, y=155)
+        entry_score.place(x=120, y=155)
+    elif mode == "動漫模式 (Anime)":
         lbl_category.config(text="選擇等級：")
         category_combobox.config(values=["SSS", "SS", "S", "A", "B"])
         category_combobox.current(0)
         # 動漫模式隱藏評分
+        lbl_score.place_forget()
+        entry_score.place_forget()
+    elif mode == "影集模式 (Series)":
+        lbl_category.config(text="選擇等級：")
+        category_combobox.config(values=["SSS", "SS", "S", "A", "B"])
+        category_combobox.current(0)
+        # 影集模式隱藏評分
         lbl_score.place_forget()
         entry_score.place_forget()
 
@@ -43,8 +51,10 @@ def add_data_click():
     
     if mode == "電影模式 (Movie)":
         process_movie()
-    else:
+    elif mode == "動漫模式 (Anime)":
         process_anime()
+    elif mode == "影集模式 (Series)":
+        process_series()
 
 def process_movie():
     category_map = {
@@ -90,6 +100,22 @@ def process_anime():
         daemon=True
     ).start()
 
+def process_series():
+    tier = category_combobox.get()
+    title = entry_title.get().strip()
+    note = text_note.get("1.0", tk.END).strip()
+
+    if not title or not note:
+        messagebox.showwarning("警告", "影集名與心得不可為空！")
+        return
+
+    btn_submit.config(text="下載處理中...", state=tk.DISABLED)
+    threading.Thread(
+        target=save_worker, 
+        args=("series", "animeList", title, None, note, tier),
+        daemon=True
+    ).start()
+
 def save_worker(data_type, target_var, title, score, note, tier):
     # 路徑與格式設定
     if data_type == "movie":
@@ -100,15 +126,23 @@ def save_worker(data_type, target_var, title, score, note, tier):
         target_line = f"export const {target_var} = ["
         search_type = "movie"
         poster_langs = "zh-TW,en,null"
-    else:
+    elif data_type == "anime":
         js_file = ANIME_JS_PATH
         js_poster_path = f"./img/anime/{title}.jpg"
         save_dir = "../../docs/img/anime"
-        # 建立不帶尾巴逗號的基礎物件格式，方便後續排序處理
         new_entry = f'  {{ title: "{title}", note: "{note}", poster: "{js_poster_path}", tier: "{tier}" }}'
         target_line = "export const animeList = ["
         search_type = "multi"
         poster_langs = "ja,zh,en,null"
+    else:  # series
+        js_file = SERIES_JS_PATH
+        # 注意：你的 series.js 範例是用 .webp，若要配合 TMDB 下載轉存，這裡統一先用 .jpg 格式，或可維持原樣
+        js_poster_path = f"./img/series/{title}.jpg"
+        save_dir = r"C:\Users\shuojen\Desktop\Shuojen-blog\docs\img\series"
+        new_entry = f'  {{ title: "{title}", note: "{note}", poster: "{js_poster_path}", tier: "{tier}" }}'
+        target_line = "export const animeList = ["
+        search_type = "tv"  # TMDB 搜尋影集使用 tv 類型
+        poster_langs = "zh-TW,en,null"
 
     save_poster_path = os.path.join(save_dir, f"{title}.jpg")
 
@@ -124,7 +158,7 @@ def save_worker(data_type, target_var, title, score, note, tier):
             if search_data.get("results"):
                 res = search_data["results"][0]
                 m_id = res["id"]
-                m_type = res.get("media_type", "movie") if search_type == "multi" else search_type
+                m_type = res.get("media_type", search_type) if search_type == "multi" else search_type
                 
                 img_api_url = f"https://api.themoviedb.org/3/{m_type}/{m_id}/images"
                 img_params = {"api_key": TMDB_API_KEY, "include_image_language": poster_langs}
@@ -157,8 +191,7 @@ def save_worker(data_type, target_var, title, score, note, tier):
             new_content = content.replace(target_line, f"{target_line}\n{new_entry}")
         
         else:
-            # 動漫模式：執行 Tier 排序邏輯
-            # 定義優先順序
+            # 動漫與影集模式：執行 Tier 排序邏輯
             tier_priority = {"SSS": 0, "SS": 1, "S": 2, "A": 3, "B": 4}
             
             # 使用 Regex 抓取 export const animeList = [ ... ]; 之間的內容
@@ -221,7 +254,7 @@ style.configure("TButton", font=("微軟正黑體", 11))
 
 # 模式切換
 ttk.Label(root, text="操作模式：").place(x=30, y=20)
-mode_combobox = ttk.Combobox(root, values=["電影模式 (Movie)", "動漫模式 (Anime)"], state="readonly", width=25)
+mode_combobox = ttk.Combobox(root, values=["電影模式 (Movie)", "動漫模式 (Anime)", "影集模式 (Series)"], state="readonly", width=25)
 mode_combobox.place(x=120, y=20)
 mode_combobox.current(0)
 mode_combobox.bind("<<ComboboxSelected>>", on_mode_change)
@@ -240,7 +273,7 @@ ttk.Label(root, text="標題名稱：").place(x=30, y=110)
 entry_title = ttk.Entry(root, width=27)
 entry_title.place(x=120, y=110)
 
-# 評分 (動漫模式會隱藏)
+# 評分 (動漫、影集模式會隱藏)
 lbl_score = ttk.Label(root, text="評分(數字)：")
 lbl_score.place(x=30, y=155)
 entry_score = ttk.Entry(root, width=27)

@@ -1,4 +1,5 @@
 export const westernMovies = [
+  { title: "海邊的曼徹斯特", score: 7.1, note: "很悲傷的電影，交錯的時間線娓娓道出男主的故事與被掏空的心", poster: "./img/movie/海邊的曼徹斯特.jpg" },
   { title: "繼承人生", score: 7.7, note: "平淡的日常片，我滿喜歡這種家庭和解的電影", poster: "./img/movie/繼承人生.jpg" },
   { title: "絕命終結站", score: 7.6, note: "從小看到大的經典系列，小時候第一次看真的覺得很讚，1=血脈>3>2>4>5", poster: "./img/movie/絕命終結站.jpg" },
   { title: "後室", score: 7.3, note: "不錯的恐怖電影，只是沒有很可怕，比較聚焦在角色精神失常的部份，而不是整體的背景設定，有點可惜", poster: "./img/movie/後室.jpg" },
@@ -238,6 +239,8 @@ export const westernMovies = [
 ];
 
 export const asiaMovies = [
+  { title: "運轉手之戀", score: 7.4, note: "計程車司機的戀愛故事，有趣的老電影", poster: "./img/movie/運轉手之戀.jpg" },
+  { title: "悲情城市", score: 6.8, note: "台灣的經典老片，講述一家的興衰與時代的悲劇，略微沉悶", poster: "./img/movie/悲情城市.jpg" },
   { title: "大濛", score: 7.6, note: "年代感和氛圍做得還不錯，場景漂亮，滿喜歡的，不俗的國片", poster: "./img/movie/大濛.jpg" },
   { title: "超時空武士", score: 7.1, note: "有趣的低成本作品，前半節奏有點拖沓，但是後面越來越有趣，最後的決戰真的好精彩。", poster: "./img/movie/超時空武士.jpg" },
   { title: "徵人啟弒", score: 6.8, note: "拍攝手法丶畫面丶演員都非常厲害，但是劇本不是很好，能理解想走荒謬的黑色幽默路線", poster: "./img/movie/徵人啟弒.jpg" },
