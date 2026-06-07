@@ -214,7 +214,7 @@ export default function ContributionCalendar() {
         </div>
 
         {/* 右側日曆格子與月份標籤 */}
-        <div style={{ display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', flexShrink: 0, paddingRight: '20px' }}>
 
           {/* 月份標籤 */}
           <div style={{ height: '20px', position: 'relative', width: `${weeksArray.length * 15}px` }}>
@@ -223,7 +223,8 @@ export default function ContributionCalendar() {
                 position: 'absolute',
                 left: `${m.index * 15}px`,
                 fontSize: '11px',
-                color: 'var(--ifm-color-emphasis-500)'
+                color: 'var(--ifm-color-emphasis-500)',
+                whiteSpace: 'nowrap'
               }}>
                 {m.label}
               </span>
