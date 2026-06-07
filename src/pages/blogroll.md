@@ -32,6 +32,7 @@ export const BlogrollSearch = () => {
     { title: "Hong-Sheng Huang's Blog", url: "https://hshuang.blog/" },
     { title: "I'm j2hongming", url: "https://j2hongming.github.io/" },
     { title: "It's小白不是小白 – It's小白不是小白", url: "https://itsxiaobai.github.io/" },
+    { title: "kamesun", url: "https://kamesun.com/" },
     { title: "KNOX ▲ LIVE WILD", url: "https://knoxyang.blogspot.com/" },
     { title: "Lorrain's SITE", url: "https://inkwell-y.blog/" },
     { title: "Matsuko Blog", url: "https://matsukozui.github.io/matsuko-blog/blog" },
@@ -192,7 +193,7 @@ export const BlogrollSearch = () => {
 
 # 部落卷 `/blogroll`
 
-*最後更新：2026-05-11*
+*最後更新：2026-06-07*
 
 <img src="/img/blogroll_logo.png" style={{ borderRadius: '0' }} alt="logo" /> 
 ▲ 我的部落格徽章，歡迎取用

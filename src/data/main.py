@@ -2,6 +2,7 @@ import os
 import requests
 import threading
 import re
+import datetime
 
 # ==========================================
 # 自動偵測環境：檢查是否有真實的圖形介面顯示器
@@ -55,7 +56,6 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, success_c
     else:  # series
         js_file = SERIES_JS_PATH
         js_poster_path = f"./img/series/{title}.jpg"
-        # 修正：將原本的 Windows 絕對路徑改為相對路徑，讓手機 Termux 也能正確寫入專案資料夾
         save_dir = "../../docs/img/series"
         new_entry = f'  {{ title: "{title}", note: "{note}", poster: "{js_poster_path}", tier: "{tier}" }}'
         target_line = "export const animeList = ["
@@ -130,6 +130,35 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, success_c
 
         with open(js_file, 'w', encoding='utf-8') as file:
             file.write(new_content)
+
+        # ==========================================
+        # 修正功能：根據新增的類別，只更新對應的 .md 檔
+        # ==========================================
+        try:
+            today_str = datetime.date.today().strftime('%Y-%m-%d')
+            docs_dir = "../../docs"
+            
+            # 建立類別與 md 檔案的對應關係
+            md_map = {
+                "movie": "movie_list.md",
+                "anime": "anime.md",
+                "series": "series.md"
+            }
+            target_file = md_map.get(data_type)
+            
+            if target_file:
+                f_path = os.path.join(docs_dir, target_file)
+                if os.path.exists(f_path):
+                    with open(f_path, 'r', encoding='utf-8') as f:
+                        doc_content = f.read()
+                    
+                    # 尋找 *最後更新：YYYY-MM-DD* 並替換為今天的日期
+                    updated_doc_content = re.sub(r'\*最後更新：\d{4}-\d{2}-\d{2}\*', f'*最後更新：{today_str}*', doc_content)
+                    
+                    with open(f_path, 'w', encoding='utf-8') as f:
+                        f.write(updated_doc_content)
+        except Exception as date_err:
+            print(f"Date Update Error: {date_err}")
 
         success_callback(title)
     except Exception as e:
@@ -234,7 +263,7 @@ class AppGUI:
         ).start()
 
     def gui_success(self, title):
-        self.root.after(0, lambda: messagebox.showinfo("成功", f"已成功將《{title}》新增至 {self.mode_combobox.get()}！"))
+        self.root.after(0, lambda: messagebox.showinfo("成功", f"已成功將《{title}》新增！\n並已更新對應頁面的最後更新日期。"))
         self.root.after(0, self.reset_ui)
 
     def gui_error(self, msg):
@@ -312,6 +341,7 @@ def run_terminal():
         
         def term_success(t):
             print(f"\n>> 成功：已成功將《{t}》新增至 {mode_str}！")
+            print(">> 提示：對應頁面的最後更新日期已同步更新。")
         
         def term_error(msg):
             print(f"\n>> 錯誤：{msg}")

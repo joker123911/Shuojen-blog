@@ -1,4 +1,5 @@
 export const westernMovies = [
+  { title: "鋼鐵英雄", score: 7.7, note: "滿讚的一部戰爭片，畫面呈現得很慘烈寫實，而且現實故事比電影還扯", poster: "./img/movie/鋼鐵英雄.jpg" },
   { title: "海邊的曼徹斯特", score: 7.1, note: "很悲傷的電影，交錯的時間線娓娓道出男主的故事與被掏空的心", poster: "./img/movie/海邊的曼徹斯特.jpg" },
   { title: "繼承人生", score: 7.7, note: "平淡的日常片，我滿喜歡這種家庭和解的電影", poster: "./img/movie/繼承人生.jpg" },
   { title: "絕命終結站", score: 7.6, note: "從小看到大的經典系列，小時候第一次看真的覺得很讚，1=血脈>3>2>4>5", poster: "./img/movie/絕命終結站.jpg" },
