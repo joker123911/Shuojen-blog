@@ -67,6 +67,7 @@ export const animeList = [
   { title: "藥師少女的獨語", note: "推理解謎類，對我來說沒有很對到電波", poster: "./img/anime/藥師少女的獨語.jpg", tier: "A" , tags: ["懸疑"]},
   { title: "天竺鼠車車", note: "滿可愛的一個泡麵小作品", poster: "./img/anime/天竺鼠車車.jpg", tier: "A" , tags: ["泡麵","治癒"]},
   { title: "肌肉魔法使", note: "不錯的搞笑作品，不過沒看完", poster: "./img/anime/肌肉魔法使.jpg", tier: "A" , tags: ["搞笑"]},
+  { title: "杖與劍的魔劍譚", note: "音樂和戰鬥畫面不錯，但劇情就像超大縫合怪，嘈點超多", poster: "./img/anime/杖與劍的魔劍譚.jpg", tier: "A", tags: ["戰鬥", "奇幻"] },
   { title: "路人超能100", note: "雖然感覺是我會喜歡的設定跟類型，但不知為何沒對到電波", poster: "./img/anime/路人超能100.jpg", tier: "B" , tags: ["搞笑","戰鬥"]},
   { title: "鬼滅之刃", note: "真的電波不太合，沒有看下去的動力", poster: "./img/anime/鬼滅之刃.jpg", tier: "B" , tags: ["奇幻","戰鬥"]},
   { title: "新世紀福音戰士", note: "雖然是貴為經典的神作，但我真的不知道在演什麼，歐美爹豆", poster: "./img/anime/新世紀福音戰士.jpg", tier: "B" , tags: ["經典", "科幻"]},
