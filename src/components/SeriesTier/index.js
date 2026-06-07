@@ -31,7 +31,12 @@ export default function AnimeTierApp({ initialFilter = 'all', hideFilterBar = fa
       const lowerSearch = searchTerm.toLowerCase();
       result = result.filter(m => 
         m.title.toLowerCase().includes(lowerSearch) || 
-        (m.note && m.note.toLowerCase().includes(lowerSearch))
+        (m.note && m.note.toLowerCase().includes(lowerSearch)) ||
+        (m.tags && (
+          Array.isArray(m.tags)
+            ? m.tags.some(tag => tag.toLowerCase().includes(lowerSearch))
+            : m.tags.toLowerCase().includes(lowerSearch)
+        ))
       );
     }
 
@@ -60,6 +65,12 @@ export default function AnimeTierApp({ initialFilter = 'all', hideFilterBar = fa
     setVisibleCount(100);
   };
 
+  const handleTagClick = (tag, e) => {
+    e.stopPropagation();
+    setSearchTerm(tag);
+    setVisibleCount(100);
+  };
+
   // 移除 C Tier 的選項
   const filterOptions = [
     { value: 'all', label: '🌈 全部等級' },
@@ -77,7 +88,7 @@ export default function AnimeTierApp({ initialFilter = 'all', hideFilterBar = fa
           <span className="search-icon">🔍</span>
           <input 
             type="text" 
-            placeholder="搜尋動畫標題或心得..." 
+            placeholder="搜尋劇集標題或心得..." 
             value={searchTerm}
             onChange={handleSearchChange}
             className="search-input"
@@ -127,9 +138,23 @@ export default function AnimeTierApp({ initialFilter = 'all', hideFilterBar = fa
               </div>
               
               <div className="list-info">
-                {/* 移除 # 編號，僅顯示 Tier 名稱 */}
-                <div className="list-rank-badge">
-                   {anime.tier ? `${anime.tier} Tier` : 'Anime'}
+                <div className="list-badge-container">
+                  <div className="list-rank-badge">
+                     {anime.tier ? `${anime.tier} Tier` : 'Anime'}
+                  </div>
+                  {anime.tags && (
+                    <div className="list-tags">
+                      {(Array.isArray(anime.tags) ? anime.tags : anime.tags.split(',').map(t => t.trim()).filter(Boolean)).map((tag, idx) => (
+                        <span 
+                          key={idx} 
+                          className="list-tag"
+                          onClick={(e) => handleTagClick(tag, e)}
+                        >
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <h3 className="list-title">{anime.title}</h3>
                 <p className="list-note">{anime.note}</p>

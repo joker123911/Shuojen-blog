@@ -3,6 +3,7 @@ import requests
 import threading
 import re
 import datetime
+import json
 
 # ==========================================
 # 自動偵測環境：檢查是否有真實的圖形介面顯示器
@@ -35,41 +36,57 @@ TMDB_API_KEY = "728ef67fd1e7160cbe667eed11549e19"
 # ==========================================
 # 核心邏輯處理函數（兩種模式共用）
 # ==========================================
-def save_worker_logic(data_type, target_var, title, score, note, tier, success_callback, error_callback):
+def save_worker_logic(data_type, target_var, title, score, note, tier, tags, success_callback, error_callback):
+    # 處理分季後綴（如 S1、S2 等），擷取主劇名進行搜尋與圖片命名
+    base_title = re.sub(r'\s*[Ss]\d+$', '', title)
+    if not base_title:
+        base_title = title
+
+    # 處理標籤 (Tags) 格式
+    if not tags:
+        tags_list = []
+    elif isinstance(tags, str):
+        tags_list = [t.strip() for t in tags.split(",") if t.strip()]
+    elif isinstance(tags, list):
+        tags_list = tags
+    else:
+        tags_list = []
+    tags_json = json.dumps(tags_list, ensure_ascii=False)
+
     # 路徑與格式設定
     if data_type == "movie":
         js_file = MOVIE_JS_PATH
-        js_poster_path = f"./img/movie/{title}.jpg"
+        js_poster_path = f"./img/movie/{base_title}.jpg"
         save_dir = "../../docs/img/movie"
-        new_entry = f'  {{ title: "{title}", score: {score}, note: "{note}", poster: "{js_poster_path}" }},'
+        new_entry = f'  {{ title: "{title}", score: {score}, note: "{note}", poster: "{js_poster_path}", tags: {tags_json} }},'
         target_line = f"export const {target_var} = ["
         search_type = "movie"
         poster_langs = "zh-TW,en,null"
     elif data_type == "anime":
         js_file = ANIME_JS_PATH
-        js_poster_path = f"./img/anime/{title}.jpg"
+        js_poster_path = f"./img/anime/{base_title}.jpg"
         save_dir = "../../docs/img/anime"
-        new_entry = f'  {{ title: "{title}", note: "{note}", poster: "{js_poster_path}", tier: "{tier}" }}'
+        new_entry = f'  {{ title: "{title}", note: "{note}", poster: "{js_poster_path}", tier: "{tier}", tags: {tags_json} }}'
         target_line = "export const animeList = ["
         search_type = "multi"
         poster_langs = "ja,zh,en,null"
     else:  # series
         js_file = SERIES_JS_PATH
-        js_poster_path = f"./img/series/{title}.jpg"
+        js_poster_path = f"./img/series/{base_title}.jpg"
         save_dir = "../../docs/img/series"
-        new_entry = f'  {{ title: "{title}", note: "{note}", poster: "{js_poster_path}", tier: "{tier}" }}'
+        new_entry = f'  {{ title: "{title}", note: "{note}", poster: "{js_poster_path}", tier: "{tier}", tags: {tags_json} }}'
         target_line = "export const animeList = ["
         search_type = "tv"
         poster_langs = "zh-TW,en,null"
 
-    save_poster_path = os.path.join(save_dir, f"{title}.jpg")
+    save_poster_path = os.path.join(save_dir, f"{base_title}.jpg")
 
     # TMDB 下載邏輯
     if TMDB_API_KEY:
         try:
             os.makedirs(save_dir, exist_ok=True)
             search_url = f"https://api.themoviedb.org/3/search/{search_type}"
-            search_params = {"api_key": TMDB_API_KEY, "query": title, "language": "zh-TW"}
+            search_params = {"api_key": TMDB_API_KEY, "query": base_title, "language": "zh-TW"}
             search_resp = requests.get(search_url, params=search_params)
             search_data = search_resp.json()
             
@@ -201,17 +218,22 @@ class AppGUI:
 
         # 評分
         self.lbl_score = ttk.Label(self.root, text="評分(數字)：")
-        self.lbl_score.place(x=30, y=155)
+        self.lbl_score.place(x=30, y=150)
         self.entry_score = ttk.Entry(self.root, width=27)
-        self.entry_score.place(x=120, y=155)
+        self.entry_score.place(x=120, y=150)
+
+        # 標籤
+        ttk.Label(self.root, text="標籤(Tags)：").place(x=30, y=190)
+        self.entry_tags = ttk.Entry(self.root, width=27)
+        self.entry_tags.place(x=120, y=190)
 
         # 心得
-        ttk.Label(self.root, text="心得備註：").place(x=30, y=200)
-        self.text_note = tk.Text(self.root, width=27, height=6, font=("微軟正黑體", 10))
-        self.text_note.place(x=120, y=200)
+        ttk.Label(self.root, text="心得備註：").place(x=30, y=230)
+        self.text_note = tk.Text(self.root, width=27, height=5, font=("微軟正黑體", 10))
+        self.text_note.place(x=120, y=230)
 
         self.btn_submit = ttk.Button(self.root, text="寫入檔案", command=self.add_data_click)
-        self.btn_submit.place(x=175, y=360)
+        self.btn_submit.place(x=175, y=370)
 
     def on_mode_change(self, event):
         mode = self.mode_combobox.get()
@@ -221,8 +243,8 @@ class AppGUI:
                 "歐美電影 (westernMovies)", "亞洲電影 (asiaMovies)", "童年港片 (hongkongMovies)", "動畫電影 (animeMovies)"
             ])
             self.category_combobox.current(0)
-            self.lbl_score.place(x=30, y=155)
-            self.entry_score.place(x=120, y=155)
+            self.lbl_score.place(x=30, y=150)
+            self.entry_score.place(x=120, y=150)
         else:
             self.lbl_category.config(text="選擇等級：")
             self.category_combobox.config(values=["SSS", "SS", "S", "A", "B"])
@@ -241,6 +263,8 @@ class AppGUI:
 
         self.btn_submit.config(text="下載處理中...", state=tk.DISABLED)
 
+        tags = self.entry_tags.get().strip()
+
         if mode == "電影模式 (Movie)":
             category_map = {
                 "歐美電影 (westernMovies)": "westernMovies", "亞洲電影 (asiaMovies)": "asiaMovies",
@@ -248,13 +272,13 @@ class AppGUI:
             }
             selected_cat = self.category_combobox.get()
             score = self.entry_score.get().strip() or "7.0"
-            args = ("movie", category_map[selected_cat], title, score, note, None)
+            args = ("movie", category_map[selected_cat], title, score, note, None, tags)
         elif mode == "動漫模式 (Anime)":
             tier = self.category_combobox.get()
-            args = ("anime", "animeList", title, None, note, tier)
+            args = ("anime", "animeList", title, None, note, tier, tags)
         else:
             tier = self.category_combobox.get()
-            args = ("series", "animeList", title, None, note, tier)
+            args = ("series", "animeList", title, None, note, tier, tags)
 
         threading.Thread(
             target=save_worker_logic, 
@@ -273,6 +297,7 @@ class AppGUI:
     def reset_ui(self):
         self.entry_title.delete(0, tk.END)
         self.entry_score.delete(0, tk.END)
+        self.entry_tags.delete(0, tk.END)
         self.text_note.delete("1.0", tk.END)
         self.btn_submit.config(text="寫入檔案", state=tk.NORMAL)
 
@@ -312,6 +337,8 @@ def run_terminal():
             print("警告: 心得不可為空！")
             continue
 
+        tags = input("請輸入標籤 (多個請用英文逗號隔開，可為空): ").strip()
+
         if choice == "1": # 電影
             print("\n[選擇電影類別]")
             print("1. 歐美電影 (westernMovies)")
@@ -324,17 +351,17 @@ def run_terminal():
                 print("類別選擇錯誤，返回主選單。")
                 continue
             score = input("請輸入評分 (預設 7.0): ").strip() or "7.0"
-            args = ("movie", cat_map[cat_choice], title, score, note, None)
+            args = ("movie", cat_map[cat_choice], title, score, note, None, tags)
             mode_str = "電影模式"
         else: # 動漫 或 影集
             tier = input("\n請輸入等級分區 (SSS/SS/S/A/B，預設 B): ").strip().upper()
             if tier not in ["SSS", "SS", "S", "A", "B"]:
                 tier = "B"
             if choice == "2":
-                args = ("anime", "animeList", title, None, note, tier)
+                args = ("anime", "animeList", title, None, note, tier, tags)
                 mode_str = "動漫模式"
             else:
-                args = ("series", "animeList", title, None, note, tier)
+                args = ("series", "animeList", title, None, note, tier, tags)
                 mode_str = "影集模式"
 
         print("\n資料下載與寫入中，請稍候...")

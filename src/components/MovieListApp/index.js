@@ -43,7 +43,12 @@ export default function MovieListApp({ initialFilter = 'all', hideFilterBar = fa
       const lowerSearch = searchTerm.toLowerCase();
       result = result.filter(m => 
         m.title.toLowerCase().includes(lowerSearch) || 
-        (m.note && m.note.toLowerCase().includes(lowerSearch))
+        (m.note && m.note.toLowerCase().includes(lowerSearch)) ||
+        (m.tags && (
+          Array.isArray(m.tags)
+            ? m.tags.some(tag => tag.toLowerCase().includes(lowerSearch))
+            : m.tags.toLowerCase().includes(lowerSearch)
+        ))
       );
     }
 
@@ -71,6 +76,12 @@ export default function MovieListApp({ initialFilter = 'all', hideFilterBar = fa
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
     setVisibleCount(100); // 搜尋時重置顯示數量
+  };
+
+  const handleTagClick = (tag, e) => {
+    e.stopPropagation(); // 避免點擊標籤時觸發開窗效果
+    setSearchTerm(tag);
+    setVisibleCount(100);
   };
 
   const filterOptions = [
@@ -144,7 +155,22 @@ export default function MovieListApp({ initialFilter = 'all', hideFilterBar = fa
               </div>
               
               <div className="list-info">
-                <div className="list-rank-badge">#{rank}</div>
+                <div className="list-badge-container">
+                  <div className="list-rank-badge">#{rank}</div>
+                  {movie.tags && (
+                    <div className="list-tags">
+                      {(Array.isArray(movie.tags) ? movie.tags : movie.tags.split(',').map(t => t.trim()).filter(Boolean)).map((tag, idx) => (
+                        <span 
+                          key={idx} 
+                          className="list-tag"
+                          onClick={(e) => handleTagClick(tag, e)}
+                        >
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
                 <h3 className="list-title">{movie.title}</h3>
                 <p className="list-note">{movie.note}</p>
                 <div className="list-actions">
