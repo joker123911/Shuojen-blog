@@ -15,6 +15,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   const [allComments, setAllComments] = useState([]);
   const [activeTab, setActiveTab] = useState('current');
   const [formData, setFormData] = useState({ name: '', content: '', website: '' });
+  const [replyData, setReplyData] = useState({ name: '', content: '', website: '' });
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(10);
@@ -23,9 +24,10 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   const [adminKey, setAdminKey] = useState('');
   const [clickCount, setClickCount] = useState(0);
 
-  // --- 內嵌編輯器狀態 ---
+  // --- 互動狀態（回覆與編輯） ---
   const [replyingTo, setReplyingTo] = useState(null); 
-  const [replyText, setReplyText] = useState('');     
+  const [editingId, setEditingId] = useState(null);
+  const [editContent, setEditContent] = useState('');     
 
   useEffect(() => {
     const savedKey = localStorage.getItem('guestbook_admin_key');
@@ -41,7 +43,6 @@ export default function Guestbook({ readOnly = false, postSlug }) {
           
           if (key) {
             try {
-              // 向 Worker 發起驗證請求
               const res = await fetch(`${WORKER_URL}/verify`, {
                 headers: { 'Authorization': key }
               });
@@ -69,11 +70,9 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   const isAsciiArt = (text) => {
     if (!text) return false;
     const lines = text.split('\n');
-    // 第一道門檻：必須超過 5 行
     if (lines.length < 5) return false;
 
     let artLineCount = 0;
-    // 繪圖常用字元集 (包含符號、點、線、空白)
     const artCharsRegex = /[\\\/\|\_\-\.\*\:\;\+\=\(\)\[\]\{\}\s\u2500-\u257F\.,'"`]/g;
 
     for (const line of lines) {
@@ -81,19 +80,16 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       if (trimmed.length < 2) continue; 
       
       const symbols = line.match(artCharsRegex) || [];
-      // 如果該行符號/空白比例超過 90%，視為繪圖行
       if (symbols.length / line.length > 0.9) {
         artLineCount++;
       }
     }
-    // 第二道門檻：繪圖行必須達到 5 行以上
     return artLineCount >= 5;
   };
 
   const renderMarkdown = (text) => {
     if (!text) return text;
 
-    // 如果判定為圖案，直接回傳等寬字體容器，不執行 Markdown
     if (isAsciiArt(text)) {
       return (
         <div style={{ 
@@ -109,7 +105,6 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       );
     }
 
-    // 1. 先處理超連結 [文字](網址)
     const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
     
     return parts.map((part, index) => {
@@ -126,7 +121,6 @@ export default function Guestbook({ readOnly = false, postSlug }) {
         );
       }
 
-      // 2. 處理剩餘的常用語法：粗體、斜體、刪除線、內嵌程式碼
       const splitRegex = /(`[^`]+`|\*\*[^*]+\*\*|\*[^*]+\*|~~[^~]+~~)/g;
 
       return (
@@ -154,8 +148,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     });
   };
   
-  const getCommentClass = (text) => {
-    // 若為圖案則不額外添加可能干擾的樣式類別
+  const getCommentClass = () => {
     return styles.commentBody;
   };
 
@@ -172,18 +165,18 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   };
 
   const fetchComments = async () => {
-      try {
-        const res = await fetch(WORKER_URL);
-        const data = await res.json();
-        if (Array.isArray(data)) {
-          setAllComments(data.sort((a, b) => new Date(b.time) - new Date(a.time)));
-        }
-      } catch (err) {
-        console.error("載入錯誤:", err);
-      } finally {
-        setFetchLoading(false);
+    try {
+      const res = await fetch(WORKER_URL);
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        setAllComments(data);
       }
-    };
+    } catch (err) {
+      console.error("載入錯誤:", err);
+    } finally {
+      setFetchLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchComments();
@@ -198,6 +191,61 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     ? allPostComments 
     : currentPageComments;
 
+  // --- 建立樹狀結構邏輯（型態強化版修正） ---
+  const buildCommentTree = (flatComments) => {
+    const extendedComments = [];
+    
+    flatComments.forEach(c => {
+      extendedComments.push({ ...c });
+      if (c.replyContent && c.replyContent.trim() !== '') {
+        extendedComments.push({
+          id: `legacy-reply-${c.id}`,
+          parentId: String(c.id), // 確保轉為字串型態
+          name: c.replyName === '站長' ? 'shuojen' : (c.replyName || 'shuojen'),
+          content: c.replyContent,
+          time: c.replyTime || c.time,
+          isAdmin: 1,
+          slug: c.slug,
+          title: c.title,
+          website: ''
+        });
+      }
+    });
+
+    const map = {};
+    extendedComments.forEach(c => {
+      // 關鍵修正：強制將 Map 的 Key 轉為字串
+      map[String(c.id)] = { ...c, children: [] };
+    });
+
+    const roots = [];
+    extendedComments.forEach(c => {
+      const mapped = map[String(c.id)];
+      // 關鍵修正：將 parentId 轉換為字串後進行比對查找
+      const pId = c.parentId ? String(c.parentId) : null;
+      if (pId && map[pId]) {
+        map[pId].children.push(mapped);
+      } else {
+        roots.push(mapped);
+      }
+    });
+
+    roots.sort((a, b) => new Date(b.time) - new Date(a.time));
+
+    const sortChildren = (node) => {
+      if (node.children && node.children.length > 0) {
+        node.children.sort((a, b) => new Date(a.time) - new Date(b.time));
+        node.children.forEach(sortChildren);
+      }
+    };
+    roots.forEach(sortChildren);
+
+    return roots;
+  };
+
+  const commentTree = buildCommentTree(displayComments);
+
+  // --- 表單送出（一般留言） ---
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.content.trim()) return;
@@ -211,13 +259,17 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       ...formData, 
       website: finalWebsite, 
       slug: currentSlug,
-      title: pageTitle 
+      title: pageTitle,
+      parentId: null
     };
     
     try {
       await fetch(WORKER_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          ...(adminKey ? { 'Authorization': adminKey } : {})
+        },
         body: JSON.stringify(submitData),
       });
       alert('留言已送出！');
@@ -231,17 +283,66 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     }
   };
 
-  const startReply = (id, currentReply) => {
+  // --- 表單送出（樹狀回覆） ---
+  const handleReplySubmit = async (e, parentComment) => {
+    e.preventDefault();
+    if (!adminKey && !replyData.name.trim()) return;
+    if (!replyData.content.trim()) return;
+    setLoading(true);
+
+    let finalWebsite = replyData.website.trim();
+    if (finalWebsite && !/^https?:\/\//i.test(finalWebsite)) finalWebsite = `https://${finalWebsite}`;
+
+    const submitData = {
+      name: adminKey ? 'shuojen' : replyData.name,
+      website: adminKey ? '' : finalWebsite,
+      content: replyData.content,
+      slug: parentComment.slug,     
+      title: parentComment.title,   
+      parentId: String(parentComment.id) // 送出時即確保轉為字串
+    };
+
+    try {
+      await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          ...(adminKey ? { 'Authorization': adminKey } : {})
+        },
+        body: JSON.stringify(submitData),
+      });
+      alert('回覆已送出！');
+      setReplyData({ name: '', content: '', website: '' });
+      setReplyingTo(null);
+      setTimeout(fetchComments, 500);
+    } catch (error) {
+      console.error("回覆錯誤:", error);
+      alert('回覆失敗');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const startReply = (id) => {
     setReplyingTo(id);
-    setReplyText(currentReply || ''); 
+    setReplyData({ name: '', content: '', website: '' });
   };
 
   const cancelReply = () => {
     setReplyingTo(null);
-    setReplyText('');
   };
 
-  const submitReply = async (id) => {
+  const startEdit = (id, content) => {
+    setEditingId(id);
+    setEditContent(content);
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditContent('');
+  };
+
+  const submitEdit = async (id) => {
     try {
       const res = await fetch(WORKER_URL, {
         method: 'PATCH',
@@ -249,15 +350,15 @@ export default function Guestbook({ readOnly = false, postSlug }) {
           'Content-Type': 'application/json',
           'Authorization': adminKey
         },
-        body: JSON.stringify({ id, replyContent: replyText, replyName: 'shuojen' })
+        body: JSON.stringify({ id, content: editContent })
       });
 
       if (res.ok) {
         fetchComments();
-        setReplyingTo(null); 
-        setReplyText('');
+        setEditingId(null); 
+        setEditContent('');
       } else {
-        alert('回覆失敗：金鑰錯誤或權限不足');
+        alert('修改失敗：金鑰錯誤或權限不足');
       }
     } catch (error) {
       alert('連線失敗');
@@ -276,6 +377,116 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     } catch (error) {
       alert('連線失敗');
     }
+  };
+
+  // --- 遞迴渲染留言組件 ---
+  const renderCommentNode = (c) => {
+    return (
+      <div key={c.id} className={styles.commentNodeWrapper}>
+        <div className={styles.commentItemInner}>
+          <div className={styles.commentHeader}>
+            <span className={styles.commentName}>
+              {c.website ? <a href={c.website} target="_blank" rel="noopener noreferrer">{c.name}</a> : c.name}
+              {c.isAdmin === 1 && <span className={styles.masterBadge}>站長</span>}
+              {activeTab === 'all_posts' && isGuestbookPage && (
+                 <Link 
+                   to={c.slug} 
+                   className={styles.slugTag} 
+                   style={{ textDecoration: 'none' }}
+                 >
+                   @{c.title || c.slug.replace('/blog/', '')}
+                 </Link>
+              )}
+            </span>
+            <span className={styles.commentTime}>
+              {formatDate(c.time)}
+              
+              <span style={{ marginLeft: '12px' }}>
+                {!readOnly && (
+                  <button onClick={() => startReply(c.id)} style={{ cursor: 'pointer', background: 'none', border: 'none', color: '#0070f3', padding: '0 4px', fontSize: '0.9em' }}>
+                    💬回覆
+                  </button>
+                )}
+                {adminKey && (
+                  <>
+                    <button onClick={() => startEdit(c.id, c.content)} style={{ cursor: 'pointer', background: 'none', border: 'none', color: '#0070f3', padding: '0 4px', fontSize: '0.9em' }}>
+                      ✏️編輯
+                    </button>
+                    <button onClick={() => handleDelete(c.id)} style={{ cursor: 'pointer', background: 'none', border: 'none', color: '#ff4081', padding: '0 4px', fontSize: '0.9em' }}>
+                      🗑️刪除
+                    </button>
+                  </>
+                )}
+              </span>
+            </span>
+          </div>
+
+          {editingId === c.id ? (
+            <div style={{ marginTop: '10px' }}>
+              <textarea
+                value={editContent}
+                onChange={(e) => setEditContent(e.target.value)}
+                rows={4}
+                style={{ 
+                  width: '100%', padding: '8px', borderRadius: '4px',
+                  background: 'var(--ifm-background-color)', color: 'var(--ifm-font-color-base)',
+                  border: '1px solid var(--ifm-color-emphasis-400)', fontFamily: 'inherit', resize: 'vertical'
+                }}
+              />
+              <div style={{ textAlign: 'right', marginTop: '8px' }}>
+                <button onClick={cancelEdit} style={{ marginRight: '8px', padding: '4px 12px', cursor: 'pointer', borderRadius: '4px', border: '1px solid var(--ifm-color-emphasis-500)', background: 'transparent', color: 'var(--ifm-font-color-base)' }}>取消</button>
+                <button onClick={() => submitEdit(c.id)} style={{ padding: '4px 12px', cursor: 'pointer', borderRadius: '4px', border: 'none', background: 'var(--ifm-color-primary)', color: '#fff' }}>儲存修改</button>
+              </div>
+            </div>
+          ) : (
+            <div className={getCommentClass()}>
+              {renderMarkdown(c.content)}
+            </div>
+          )}
+
+          {/* 內嵌回覆表單 */}
+          {replyingTo === c.id && (
+            <div className={styles.replyFormContainer}>
+              <div style={{ marginBottom: '8px', fontSize: '0.9em', fontWeight: 'bold', color: 'var(--ifm-color-primary)' }}>
+                回覆 @{c.name} {adminKey && '🛡️ (將以站長身分發言)'}
+              </div>
+              <form onSubmit={(e) => handleReplySubmit(e, c)} className={styles.commentForm}>
+                {!adminKey && (
+                  <div className={styles.inputRow}>
+                    <input
+                      type="text" placeholder="名稱（必填）" required
+                      value={replyData.name} onChange={e => setReplyData({...replyData, name: e.target.value})}
+                    />
+                    <input
+                      type="text" placeholder="個人網站（選填）"
+                      value={replyData.website} onChange={e => setReplyData({...replyData, website: e.target.value})}
+                    />
+                  </div>
+                )}
+                <textarea
+                  placeholder="輸入回覆內容（必填）支援 Markdown..." required
+                  value={replyData.content} onChange={e => setReplyData({...replyData, content: e.target.value})}
+                  rows={3}
+                />
+                <div style={{ textAlign: 'right' }}>
+                  <button type="button" onClick={cancelReply} style={{ marginRight: '8px', padding: '6px 16px', cursor: 'pointer', borderRadius: '4px', border: '1px solid var(--ifm-color-emphasis-500)', background: 'transparent', color: 'var(--ifm-font-color-base)' }}>取消</button>
+                  <button type="submit" className={styles.submitBtn} style={{ display: 'inline-flex', padding: '6px 20px' }} disabled={loading}>
+                    {loading ? '傳送中...' : '送出回覆'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+        </div>
+
+        {/* 遞迴結構：渲染子留言 */}
+        {c.children && c.children.length > 0 && (
+          <div className={styles.commentChildren}>
+            {c.children.map(child => renderCommentNode(child))}
+          </div>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -345,88 +556,15 @@ export default function Guestbook({ readOnly = false, postSlug }) {
 
         {fetchLoading ? (
           <p className={styles.statusText}>載入中...</p>
-        ) : displayComments.length === 0 ? (
+        ) : commentTree.length === 0 ? (
           <p className={styles.statusText}>目前尚無留言</p>
         ) : (
           <>
-            {displayComments.slice(0, visibleCount).map((c, i) => (
-              <div key={i} className={styles.commentItem}>
-                <div className={styles.commentHeader}>
-                  <span className={styles.commentName}>
-                    {c.website ? <a href={c.website} target="_blank" rel="noopener noreferrer">{c.name}</a> : c.name}
-                    {activeTab === 'all_posts' && isGuestbookPage && (
-                       <Link 
-                         to={c.slug} 
-                         className={styles.slugTag} 
-                         style={{ textDecoration: 'none' }}
-                       >
-                         @{c.title || c.slug.replace('/blog/', '')}
-                       </Link>
-                    )}
-                  </span>
-                  <span className={styles.commentTime}>
-                    {formatDate(c.time)}
-                    
-                    {adminKey && (
-                      <span style={{ marginLeft: '12px' }}>
-                        <button onClick={() => startReply(c.id, c.replyContent)} style={{ cursor: 'pointer', background: 'none', border: 'none', color: '#0070f3', padding: '0 4px', fontSize: '0.9em' }}>
-                          ✏️{c.replyContent ? '編輯' : '回覆'}
-                        </button>
-                        <button onClick={() => handleDelete(c.id)} style={{ cursor: 'pointer', background: 'none', border: 'none', color: '#ff4081', padding: '0 4px', fontSize: '0.9em' }}>
-                          🗑️刪除
-                        </button>
-                      </span>
-                    )}
-                  </span>
-                </div>
-                <div className={getCommentClass(c.content)}>
-                  {renderMarkdown(c.content)}
-                </div>
+            <div className={styles.commentsListRoot}>
+              {commentTree.slice(0, visibleCount).map(c => renderCommentNode(c))}
+            </div>
 
-                {replyingTo === c.id ? (
-                  <div style={{ marginTop: '15px', padding: '12px', background: 'var(--ifm-background-surface-color)', border: '1px solid var(--ifm-color-emphasis-300)', borderRadius: '8px' }}>
-                    <div style={{ marginBottom: '8px', fontSize: '0.9em', fontWeight: 'bold', color: 'var(--ifm-color-primary)' }}>站長回覆編輯模式</div>
-                    <textarea
-                      value={replyText}
-                      onChange={(e) => setReplyText(e.target.value)}
-                      placeholder="支援 Markdown 超連結與多行換行..."
-                      rows={4}
-                      style={{ 
-                        width: '100%', 
-                        padding: '8px', 
-                        borderRadius: '4px', 
-                        border: '1px solid var(--ifm-color-emphasis-400)',
-                        background: 'var(--ifm-background-color)',
-                        color: 'var(--ifm-font-color-base)',
-                        fontFamily: 'inherit',
-                        resize: 'vertical'
-                      }}
-                    />
-                    <div style={{ textAlign: 'right', marginTop: '8px' }}>
-                      <button onClick={cancelReply} style={{ marginRight: '8px', padding: '6px 16px', cursor: 'pointer', borderRadius: '4px', border: '1px solid var(--ifm-color-emphasis-500)', background: 'transparent', color: 'var(--ifm-font-color-base)' }}>取消</button>
-                      <button onClick={() => submitReply(c.id)} style={{ padding: '6px 16px', cursor: 'pointer', borderRadius: '4px', border: 'none', background: 'var(--ifm-color-primary)', color: '#fff', fontWeight: 'bold' }}>儲存回覆</button>
-                    </div>
-                  </div>
-                ) : (
-                  c.replyContent && (
-                    <div className={styles.replyBox}>
-                      <div className={styles.replyHeader}>
-                        <div className={styles.replyUser}>
-                          <span className={styles.replyName}>{c.replyName === '站長' ? 'shuojen' : (c.replyName || 'shuojen')}</span>
-                          <span className={styles.masterBadge}>站長</span>
-                        </div>
-                        <span className={styles.replyTime}>{formatDate(c.replyTime)}</span>
-                      </div>
-                      <div className={getCommentClass(c.replyContent)}>
-                        {renderMarkdown(c.replyContent)}
-                      </div>
-                    </div>
-                  )
-                )}
-              </div>
-            ))}
-
-            {visibleCount < displayComments.length && (
+            {visibleCount < commentTree.length && (
               <div className={styles.loadMoreContainer}>
                 <button onClick={() => setVisibleCount(v => v + 10)} className={styles.loadMoreBtn}>
                   LOAD MORE
