@@ -194,3 +194,47 @@ article img {
     display: none !important;
   }
 }
+
+/* =========================================
+   8. 程式碼區塊繽紛高亮 (Vibrant Code Highlight)
+   ========================================= */
+
+/* 1. 調整程式碼區塊的背景色與外觀 */
+div[class*='codeBlockContainer_'] {
+  background-color: #1e1e24 !important; /* 如果想要對方那種帶紅的深褐底色，可以改成 #251a1a */
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* 2. 複製對方的繽紛配色（針對 Prism.js 標籤高亮） */
+
+/* 【草莓粉】用於：Markdown 括號內的文字、HTML 標籤名 (如 img) */
+.token.string,
+.token.tag,
+.token.keyword {
+  color: #ff557f !important; 
+}
+
+/* 【螢光綠】用於：網址 (URL)、HTML 屬性名稱 (如 src, alt) */
+.token.url,
+.token.attr-name,
+.token.property {
+  color: #a6e22e !important; 
+}
+
+/* 【亮黃色】用於：HTML 屬性裡面的雙引號數值 */
+.token.attr-value {
+  color: #f1fa8c !important; 
+}
+
+/* 【淺色】用於：驚嘆號、中括號、圓括號等符號 (!, [, ], (, )) */
+.token.punctuation,
+.token.operator {
+  color: #f8f8f2 !important; 
+}
+
+/* 【行號微調】讓左側的程式碼行號顏色不會太刺眼 */
+div[class*='codeBlockLines_'] {
+  color: #6272a4 !important;
+}

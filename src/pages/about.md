@@ -219,18 +219,18 @@ import ContributionCalendar from '@site/src/components/ContributionCalendar/Cont
 
 Blog 貼文 RSS：
 
-```
+```markdown
 https://shuojen.com/blog/rss.xml
 ```
 
 攝影貼文 RSS：
 
-```
+```markdown
 https://shuojen.com/photoblog/rss.xml
 ```
 
 # 即時數據
-貼文區目前共有 **218** 篇文章，共累積了 **145,956** 個字；<br />
+貼文區目前共有 **218** 篇文章，共累積了 **146,151** 個字；<br />
 攝影區目前共有 **64** 篇文章，共累積了 **813** 張照片。
 
 <ContributionCalendar />

@@ -24,10 +24,11 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   const [adminKey, setAdminKey] = useState('');
   const [clickCount, setClickCount] = useState(0);
 
-  // --- 互動狀態（回覆與編輯） ---
+  // --- 互動狀態（回覆、編輯與摺疊控制） ---
   const [replyingTo, setReplyingTo] = useState(null); 
   const [editingId, setEditingId] = useState(null);
   const [editContent, setEditContent] = useState('');     
+  const [expandedComments, setExpandedComments] = useState({}); 
 
   useEffect(() => {
     const savedKey = localStorage.getItem('guestbook_admin_key');
@@ -191,7 +192,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     ? allPostComments 
     : currentPageComments;
 
-  // --- 核心重構：強制限制最大兩層樹狀結構演算法 ---
+  // --- 強制限制最大兩層樹狀結構演算法 ---
   const buildCommentTree = (flatComments) => {
     const extendedComments = [];
     
@@ -225,21 +226,17 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       if (!c.parentId) {
         roots.push(mapped);
       } else {
-        // 核心邏輯：不斷向上追溯，直到找到最頂層的根留言 (Level 1)
         let rootParent = map[String(c.parentId)];
         while (rootParent && rootParent.parentId && map[String(rootParent.parentId)]) {
           rootParent = map[String(rootParent.parentId)];
         }
         
         if (rootParent) {
-          // 如果被回覆的目標「不是」最頂層根留言，代表這是更深層的回覆
-          // 紀錄 immediateParent 的名稱，用來在前端渲染 FB 風格的 @提及 標籤
           const immediateParent = map[String(c.parentId)];
           if (immediateParent && String(immediateParent.id) !== String(rootParent.id)) {
             mapped.replyToName = immediateParent.name;
           }
           
-          // 強制將該留言塞入第一層根留言的 children 中（直接扁平化對齊第二層）
           map[String(rootParent.id)].children.push(mapped);
         } else {
           roots.push(mapped);
@@ -247,10 +244,8 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       }
     });
 
-    // 主留言排序（新到舊）
     roots.sort((a, b) => new Date(b.time) - new Date(a.time));
 
-    // 二層回覆排序（舊到新對話流）
     roots.forEach(root => {
       if (root.children) {
         root.children.sort((a, b) => new Date(a.time) - new Date(b.time));
@@ -261,6 +256,20 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   };
 
   const commentTree = buildCommentTree(displayComments);
+
+  // --- 關鍵修正：精準計算所有留言與回覆的總和（包含舊版站長回覆欄位） ---
+  const totalCommentCount = displayComments.reduce((acc, c) => {
+    const hasLegacyReply = c.replyContent && c.replyContent.trim() !== '';
+    return acc + 1 + (hasLegacyReply ? 1 : 0);
+  }, 0);
+
+  // --- 切換展開與摺疊狀態 ---
+  const toggleReplies = (commentId) => {
+    setExpandedComments(prev => ({
+      ...prev,
+      [commentId]: !prev[commentId]
+    }));
+  };
 
   // --- 表單送出（一般留言） ---
   const handleSubmit = async (e) => {
@@ -329,6 +338,9 @@ export default function Guestbook({ readOnly = false, postSlug }) {
         body: JSON.stringify(submitData),
       });
       alert('回覆已送出！');
+      
+      setExpandedComments(prev => ({ ...prev, [parentComment.id]: true }));
+      
       setReplyData({ name: '', content: '', website: '' });
       setReplyingTo(null);
       setTimeout(fetchComments, 500);
@@ -398,6 +410,8 @@ export default function Guestbook({ readOnly = false, postSlug }) {
 
   // --- 遞迴渲染留言組件（最多至兩層） ---
   const renderCommentNode = (c, isChild = false) => {
+    const isExpanded = expandedComments[c.id];
+
     return (
       <div key={c.id} className={styles.commentNodeWrapper}>
         <div className={styles.commentItemInner}>
@@ -457,7 +471,6 @@ export default function Guestbook({ readOnly = false, postSlug }) {
             </div>
           ) : (
             <div className={getCommentClass()}>
-              {/* FB/IG 風格：如果是被扁平化的深層回覆，前面加上帶有高亮效果的被回覆者標籤 */}
               {c.replyToName && (
                 <span style={{ color: 'var(--ifm-color-primary)', fontWeight: '700', marginRight: '8px', userSelect: 'none' }}>
                   @{c.replyToName}
@@ -502,11 +515,24 @@ export default function Guestbook({ readOnly = false, postSlug }) {
           )}
         </div>
 
-        {/* 渲染子留言（因為算法已扁平化，此處只會在第一層（Root）底下渲染一整列第二層的子留言，不會再無限縮進） */}
+        {/* FB/IG 風格：收摺與展開控制區塊 */}
         {!isChild && c.children && c.children.length > 0 && (
-          <div className={styles.commentChildren}>
-            {c.children.map(child => renderCommentNode(child, true))}
-          </div>
+          <>
+            {c.children.length > 1 && (
+              <div className={styles.toggleRepliesContainer} onClick={() => toggleReplies(c.id)}>
+                <span className={styles.toggleRepliesLine}></span>
+                <span className={styles.toggleRepliesText}>
+                  {isExpanded ? '隱藏回覆' : `查看回覆 (${c.children.length} 則)`}
+                </span>
+              </div>
+            )}
+            
+            {(c.children.length === 1 || isExpanded) && (
+              <div className={styles.commentChildren}>
+                {c.children.map(child => renderCommentNode(child, true))}
+              </div>
+            )}
+          </>
         )}
       </div>
     );
@@ -574,7 +600,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
             ? (activeTab === 'current' ? '一般留言' : '全站文章討論') 
             : '本篇留言'
           }
-          <span className={styles.count}>/ {displayComments.length} 則</span>
+          <span className={styles.count}>/ {totalCommentCount} 則</span>
         </h3>
 
         {fetchLoading ? (

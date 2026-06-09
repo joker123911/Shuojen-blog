@@ -131,7 +131,6 @@
   background-color: var(--ifm-color-emphasis-200) !important;
 }
 
-/* 樹狀留言容器與垂直縮進線 */
 .commentsListRoot {
   display: flex;
   flex-direction: column;
@@ -146,6 +145,7 @@
   border-bottom: 1px solid var(--ifm-color-emphasis-200);
 }
 
+/* 樹狀回覆延伸對齊與線條 */
 .commentChildren {
   margin-left: 28px;
   border-left: 2px solid var(--ifm-color-emphasis-300);
@@ -160,10 +160,49 @@
   border-radius: 8px;
 }
 
+/* --- FB / IG 風格的「查看回覆」摺疊按鈕樣式 --- */
+.toggleRepliesContainer {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 14px;
+  margin-left: 12px;
+  cursor: pointer;
+  user-select: none;
+  color: var(--ifm-color-emphasis-600);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.toggleRepliesLine {
+  width: 28px;
+  height: 1px;
+  background-color: var(--ifm-color-emphasis-400);
+}
+
+.toggleRepliesText {
+  transition: color 0.15s ease;
+}
+
+.toggleRepliesContainer:hover .toggleRepliesText {
+  color: var(--ifm-color-primary);
+}
+
+.toggleRepliesContainer:hover .toggleRepliesLine {
+  background-color: var(--ifm-color-primary);
+}
+
 @media (max-width: 600px) {
   .commentChildren {
     margin-left: 12px;
     padding-left: 10px;
+  }
+  .toggleRepliesContainer {
+    margin-left: 4px;
+    gap: 10px;
+  }
+  .toggleRepliesLine {
+    width: 18px;
   }
 }
 
@@ -257,7 +296,6 @@
   border-color: var(--ifm-font-color-base);
 }
 
-/* 夜間模式微調 */
 :global([data-theme='dark']) .masterBadge {
   background-color: rgba(255, 255, 255, 0.15);
   border-color: rgba(255, 255, 255, 0.2);

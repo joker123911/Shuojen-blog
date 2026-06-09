@@ -21,3 +21,8 @@ date: 2026-04-21T23:07:29+08:00
 * [Shuyu](https://shuyulin1127.com/blogroll/)：![img](img202604/shuyupixelart_88x31.gif) 
 
 * [廢文小天地](https://trashposts.com/about)：![img](img202604/trashposts-88x31.png) 
+
+* [資工小廢物](https://blog.giveanornot.com/about-this-blog/)：![資工小廢物 - JN 的露狗](https://blog.giveanornot.com/logo.webp)
+
+* [YangBear'Blog](https://yangbear.bearblog.dev/)：![img](img202604/yangbear_88x31.gif)
+
