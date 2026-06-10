@@ -257,7 +257,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
 
   const commentTree = buildCommentTree(displayComments);
 
-  // --- 關鍵修正：精準計算所有留言與回覆的總和（包含舊版站長回覆欄位） ---
+  // --- 精準計算所有留言與回覆的總和（包含舊版站長回覆欄位） ---
   const totalCommentCount = displayComments.reduce((acc, c) => {
     const hasLegacyReply = c.replyContent && c.replyContent.trim() !== '';
     return acc + 1 + (hasLegacyReply ? 1 : 0);

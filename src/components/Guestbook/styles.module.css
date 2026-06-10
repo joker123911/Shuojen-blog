@@ -45,7 +45,7 @@
   .commentHeader {
     flex-direction: column;
     align-items: flex-start !important;
-    gap: 4px !important;
+    gap: 6px !important;
   }
 }
 
@@ -145,7 +145,6 @@
   border-bottom: 1px solid var(--ifm-color-emphasis-200);
 }
 
-/* 樹狀回覆延伸對齊與線條 */
 .commentChildren {
   margin-left: 28px;
   border-left: 2px solid var(--ifm-color-emphasis-300);
@@ -160,7 +159,6 @@
   border-radius: 8px;
 }
 
-/* --- FB / IG 風格的「查看回覆」摺疊按鈕樣式 --- */
 .toggleRepliesContainer {
   display: inline-flex;
   align-items: center;
@@ -221,6 +219,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap; /* 讓手機版名稱與長標籤能正常折行，不推擠徽章 */
 }
 
 .commentName a {
@@ -235,6 +234,10 @@
   background: var(--ifm-color-emphasis-100);
   padding: 2px 8px;
   border-radius: 4px;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* 限制手機版文章小標籤最大寬度，避免無限撐開 */
 }
 
 .commentTime {
@@ -251,6 +254,7 @@
   overflow-wrap: break-word;
 }
 
+/* 站長徽章防跑版核心修正 */
 .masterBadge {
   background-color: var(--ifm-color-primary-lightest);
   color: var(--ifm-color-primary);
@@ -263,6 +267,8 @@
   align-items: center;
   height: 20px;
   margin-left: 4px;
+  white-space: nowrap; /* 關鍵修正：防止文字上下重疊換行 */
+  flex-shrink: 0;      /* 關鍵修正：防止寬度被兩側長標籤擠壓 */
 }
 
 .statusText {
