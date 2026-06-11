@@ -124,6 +124,18 @@ const config = {
         language:["en", "zh"],
       },
     ],
+    [
+      'docusaurus-plugin-image-zoom',
+      {
+        // 同時支援傳統 img 和打包後的 picture 標籤
+        selector: '.markdown img, .markdown picture img',
+        options: {
+          margin: 24,
+          background: 'rgba(0, 0, 0, 0.9)',
+          scrollOffset: 0,
+        },
+      },
+    ],
   ],
 
   themeConfig:
@@ -157,7 +169,7 @@ const config = {
           {to: '/photography',label: '攝影集',position: 'left'},
           {to: '/photoblog/photo-archive',label: '攝影列表',position: 'left'},
           {to: '/about',label: '關於',position: 'left'},
-		  {to: '/tool',label: '小工具',position: 'left'},
+      {to: '/tool',label: '小工具',position: 'left'},
           {to: '/blogroll',label: '部落卷',position: 'left'},
           {to: '/guestbook',label: '留言板',position: 'left'},
         ],
