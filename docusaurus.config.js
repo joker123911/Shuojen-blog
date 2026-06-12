@@ -124,23 +124,23 @@ const config = {
         language:["en", "zh"],
       },
     ],
-    [
-      'docusaurus-plugin-image-zoom',
-      {
-        // 同時支援傳統 img 和打包後的 picture 標籤
-        selector: '.markdown img, .markdown picture img',
-        options: {
-          margin: 24,
-          background: 'rgba(0, 0, 0, 0.9)',
-          scrollOffset: 0,
-        },
-      },
-    ],
+    'docusaurus-plugin-image-zoom',
   ],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      zoom: {
+        selector: '.markdown img, .markdown picture img',
+        background: {
+          light: 'rgba(255, 255, 255, 0.9)',
+          dark: 'rgba(0, 0, 0, 0.9)',
+        },
+        config: {
+          margin: 24,
+          scrollOffset: 0,
+        },
+      },
       metadata: [
         {name: 'description', content: 'Shuo-jen 的個人部落格，分享電影動漫、攝影紀錄、小工具開發與生活隨筆。'},
         {name: 'keywords', content: 'Shuo-jen, 土木工程, 攝影, Docusaurus, 部落格, 台北, 西洋棋, 魔術方塊, 演唱會, 電影, 動漫'},
