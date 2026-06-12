@@ -1,7 +1,8 @@
 ---
 title: '討論部落格生態'
 tags: ['blog']
-date: 2026-06-11T08:51:37+08:00
+date: 2026-06-11
+rss_date: '2026-06-11T08:51:37+08:00'
 ---
 讀到這篇[〈每日包叫停更的原因〉](https://puzelee.cc/posts/daily-update-suspended-reason/)，PuzeLee 提到不太喜歡目前部落格的生態
 

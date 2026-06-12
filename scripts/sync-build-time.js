@@ -45,28 +45,42 @@ function processFiles(dir) {
         if (targetDate instanceof Date) {
           const twDate = new Date(targetDate.getTime() + offset * 3600 * 1000);
           const isoStr = twDate.toISOString();
-          datePart = isoStr.split('T')[0];
-          // 如果原始 Date 對象的時分秒不是 00:00:00，代表它可能已經包含特定時間
-          // 或者檢查原始字串是否包含 T (gray-matter 轉換前)
+          datePart = isoStr.slice(0, 10);
           hasSpecificTime = targetDate.getUTCHours() !== 0 || targetDate.getUTCMinutes() !== 0;
         } else {
           const dateStr = String(targetDate);
-          datePart = dateStr.split('T')[0];
-          // 檢查字串中是否已經包含 ISO 時間格式
-          hasSpecificTime = dateStr.includes('T');
+          datePart = dateStr.slice(0, 10);
+          hasSpecificTime = dateStr.includes('T') || dateStr.includes(' ') || dateStr.length > 10;
         }
 
-        // 修改邏輯：如果是今天
-        if (datePart === todayStr) {
-          // 只有在「尚未包含精確時間」的情況下才更新 (防止當天重複執行時一直往後推)
-          if (!hasSpecificTime) {
-            data.date = currentFullTime;
-            saveFile(filePath, parsed.content, data, file, `初次設定今日發布時間: ${currentFullTime}`);
+        // 如果 front matter 已經有 rss_date，代表已經設定過精確發布時間
+        if (data.rss_date) {
+          hasSpecificTime = true;
+        }
+
+        // 如果原本的 date 包含精確時間，但尚未設定 rss_date，則進行分開
+        if (hasSpecificTime && !data.rss_date) {
+          let originalDateStr = '';
+          if (data.date instanceof Date) {
+            const twDate = new Date(data.date.getTime() + offset * 3600 * 1000);
+            originalDateStr = twDate.toISOString().split('.')[0] + '+08:00';
+          } else {
+            originalDateStr = String(data.date).replace(' ', 'T');
           }
+          data.rss_date = originalDateStr;
+          data.date = datePart;
+          saveFile(filePath, parsed.content, data, file, `分開 date 和 rss_date`);
+        }
+        // 如果是今天且尚未設定精確的 RSS 發布時間
+        else if (datePart === todayStr && !hasSpecificTime) {
+          data.date = datePart;
+          data.rss_date = currentFullTime;
+          saveFile(filePath, parsed.content, data, file, `初次設定今日發布時間: ${currentFullTime}`);
         } 
-        // 如果是未來日期且尚未包含時間字串，則補上凌晨時間
+        // 如果是未來日期且尚未設定精確的 RSS 發布時間
         else if (datePart > todayStr && !hasSpecificTime) {
-          data.date = `${datePart}T00:00:01+08:00`;
+          data.date = datePart;
+          data.rss_date = `${datePart}T00:00:01+08:00`;
           saveFile(filePath, parsed.content, data, file, `補上預排發布時間`);
         }
       }

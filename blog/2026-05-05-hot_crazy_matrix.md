@@ -1,7 +1,8 @@
 ---
 title: 'Hot Crazy Matrix'
 tags: ['fun']
-date: 2026-05-05T12:12:46+08:00
+date: 2026-05-05
+rss_date: '2026-05-05T12:12:46+08:00'
 ---
 昨天蝦波傳這個影片給我看跟我討論：[《選女友，其實是一道數學題｜Hot Crazy Matrix》](https://www.youtube.com/watch?v=Ow2DLTYhIs4&t=6s)，真的把我笑死了，一定要來筆記一下重點整理。（她很驕傲的說她覺得自己是 Unicorn）
 

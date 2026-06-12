@@ -1,7 +1,8 @@
 ---
 title: '街拍'
 tags: [life, read]
-date: 2026-04-20T14:43:56+08:00
+date: 2026-04-20
+rss_date: '2026-04-20T14:43:56+08:00'
 ---
 
 最近看到了好幾篇文章都有探討到街拍與隱私，例如小白的[〈關於街拍〉](https://itsxiaobai.github.io/blog/protrait/)和Eddie的[〈街拍與偷拍定義？社群媒體的人們都忽略了肖像權（我也是）〉](https://eddielv.com/musings/protrait-rights/)以及 LQ7 的[〈Actions speak louder than words〉](https://lq7.tw/thinking/actions-speak-louder-than-words/)，我仔細回想了一下，我自己好像從 2019 年開始拿相機東拍西拍到現在，從來沒有這樣子的想法。

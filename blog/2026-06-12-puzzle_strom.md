@@ -1,7 +1,8 @@
 ---
 title: 'Puzzle Storm'
 tags: ['game', 'chess']
-date: 2026-06-12T20:16:52+08:00
+date: 2026-06-12
+rss_date: '2026-06-12T20:16:52+08:00'
 ---
 這個部落格在第一期[ blogblogclub ](https://blogblog.club/)曾經推薦過[西洋棋](/blog/2025/12/19/chess)這個遊戲，最近我想到，可能有的玩家不想要跟別人競爭，只想享受解謎的樂趣，例如 LQ7 推薦的[ Neutral ](https://lq7.tw/mood/neutral-room-escape-games/)系列，享受那種解出題目的暢快。
 

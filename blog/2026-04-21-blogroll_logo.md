@@ -1,7 +1,8 @@
 ---
 title: '部落卷徽章'
 tags: [blog, fun, pixel art]
-date: 2026-04-21T23:07:29+08:00
+date: 2026-04-21
+rss_date: '2026-04-21T23:07:29+08:00'
 ---
 
 ![img](img202604/shuojen-88x31-3x.png) 

@@ -1,7 +1,8 @@
 ---
 title: '愛愛愛'
 tags: [guitar, life, music]
-date: 2026-04-26T12:43:44+08:00
+date: 2026-04-26
+rss_date: '2026-04-26T12:43:44+08:00'
 ---
 
 今天發生了好神奇的一件事，昨天晚上剛參加完同事的婚禮，第一次聽到方大同的《愛愛愛》這首歌，腦袋被洗了一整晚都是這個旋律。結果一早就在 RSS 裡看到小白的[〈繼續 cover!〉](https://itsxiaobai.github.io/blog/keep-making-cover/)還有 EO 的[〈愛愛愛〉](https://eoiiio.bearblog.dev/1560/)，簡直比 Google 監聽還精準。

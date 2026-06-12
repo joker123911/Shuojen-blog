@@ -1,7 +1,8 @@
 ---
 title: '留言板系統全新改版'
 tags: [blog, note, tool]
-date: 2026-05-09T01:11:45+08:00
+date: 2026-05-09
+rss_date: '2026-05-09T01:11:45+08:00'
 ---
 
 昨天在 Leaf 的新文章[〈Nebula探索系統？〉](https://www.leaftechblog.cloudns.biz/posts/2026_05_07_1/)的留言板留言，馬上就被那個留言速度驚豔到了，後來逛到了[〈第二個留言區測試〉](https://www.leaftechblog.cloudns.biz/posts/2026_04_24_3/)這篇文章，看到 Leaf 跟皮皮的討論如獲至寶，馬上就如火如荼來進行改版了，這裡感謝 Leaf 和皮皮的啟發。

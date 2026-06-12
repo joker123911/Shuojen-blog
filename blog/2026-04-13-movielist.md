@@ -1,7 +1,8 @@
 ---
 title: '我的專屬 IMDB 排名 2'
 tags: [movie, tool]
-date: 2026-04-13T00:00:01+08:00
+date: 2026-04-13
+rss_date: '2026-04-13T00:00:01+08:00'
 ---
 import MovieListApp from '@site/src/components/MovieListApp';
 import Details from '@theme/Details';
