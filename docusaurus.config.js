@@ -87,6 +87,26 @@ const config = {
           description: '訂閱最新的貼文！',
           copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen Huang`,
           language: 'zh-TW',
+          createFeedItems: async (params) => {
+            const {blogPosts, defaultCreateFeedItems, ...rest} = params;
+            const localizedPosts = blogPosts.map((post) => {
+              const customRssDate = post.frontMatter.rss_date;
+              if (customRssDate) {
+                return {
+                  ...post,
+                  metadata: {
+                    ...post.metadata,
+                    date: customRssDate,
+                  },
+                };
+              }
+              return post;
+            });
+            return defaultCreateFeedItems({
+              blogPosts: localizedPosts,
+              ...rest,
+            });
+          },
         },
         onInlineTags: 'warn',
         onInlineAuthors: 'warn',
@@ -113,8 +133,34 @@ const config = {
           description: '訂閱攝影紀錄。',
           copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen Huang`,
           language: 'zh-TW',
+          createFeedItems: async (params) => {
+            const {blogPosts, defaultCreateFeedItems, ...rest} = params;
+            const localizedPosts = blogPosts.map((post) => {
+              const customRssDate = post.frontMatter.rss_date;
+              if (customRssDate) {
+                return {
+                  ...post,
+                  metadata: {
+                    ...post.metadata,
+                    date: customRssDate,
+                  },
+                };
+              }
+              return post;
+            });
+            return defaultCreateFeedItems({
+              blogPosts: localizedPosts,
+              ...rest,
+            });
+          },
         },
         onUntruncatedBlogPosts: 'ignore',
+      },
+    ],
+    [
+      './src/plugins/rss-absolute-urls',
+      {
+         blogPostIds: ['default', 'photoblog'],
       },
     ],
     [
@@ -169,7 +215,7 @@ const config = {
           {to: '/photography',label: '攝影集',position: 'left'},
           {to: '/photoblog/photo-archive',label: '攝影列表',position: 'left'},
           {to: '/about',label: '關於',position: 'left'},
-      {to: '/tool',label: '小工具',position: 'left'},
+          {to: '/tool',label: '小工具',position: 'left'},
           {to: '/blogroll',label: '部落卷',position: 'left'},
           {to: '/guestbook',label: '留言板',position: 'left'},
         ],
