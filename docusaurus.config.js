@@ -87,16 +87,19 @@ const config = {
           description: '訂閱最新的貼文！',
           copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen Huang`,
           language: 'zh-TW',
+          /** @param {any} params */
           createFeedItems: async (params) => {
             const {blogPosts, defaultCreateFeedItems, ...rest} = params;
-            const localizedPosts = blogPosts.map((post) => {
-              const customRssDate = post.frontMatter.rss_date;
+            const localizedPosts = blogPosts.map(
+              /** @param {any} post */
+              (post) => {
+              const customRssDate = post.metadata?.frontMatter?.rss_date;
               if (customRssDate) {
                 return {
                   ...post,
                   metadata: {
                     ...post.metadata,
-                    date: customRssDate,
+                    date: new Date(customRssDate),
                   },
                 };
               }
@@ -133,16 +136,19 @@ const config = {
           description: '訂閱攝影紀錄。',
           copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen Huang`,
           language: 'zh-TW',
+          /** @param {any} params */
           createFeedItems: async (params) => {
             const {blogPosts, defaultCreateFeedItems, ...rest} = params;
-            const localizedPosts = blogPosts.map((post) => {
-              const customRssDate = post.frontMatter.rss_date;
+            const localizedPosts = blogPosts.map(
+              /** @param {any} post */
+              (post) => {
+              const customRssDate = post.metadata?.frontMatter?.rss_date;
               if (customRssDate) {
                 return {
                   ...post,
                   metadata: {
                     ...post.metadata,
-                    date: customRssDate,
+                    date: new Date(customRssDate),
                   },
                 };
               }
@@ -155,12 +161,6 @@ const config = {
           },
         },
         onUntruncatedBlogPosts: 'ignore',
-      },
-    ],
-    [
-      './src/plugins/rss-absolute-urls',
-      {
-         blogPostIds: ['default', 'photoblog'],
       },
     ],
     [
