@@ -70,7 +70,7 @@ rss_date: '2026-06-12T20:16:52+08:00'
 
 隨意錄了一場範例，其實我也不厲害，最高紀錄才 37 而已（喂，還不好好一題一題慢慢做謎題）。
 
-<video controls width="360">
+<video controls width="300">
     <source src="/video/020.mp4" type="video/mp4" />
 
     抱歉，您的瀏覽器不支援內嵌影片。
