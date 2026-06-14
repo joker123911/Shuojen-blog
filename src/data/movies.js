@@ -1,4 +1,6 @@
 export const westernMovies = [
+  { title: "遊戲夜殺必死", score: 7.5, note: "很有意思的推理喜劇，還有反轉也有點意思", poster: "./img/movie/遊戲夜殺必死.jpg", tags: ["2018", "喜劇"] },
+  { title: "環太平洋", score: 6.9, note: "音樂跟機器人畫面很讚，但劇情真的很不行", poster: "./img/movie/環太平洋.jpg", tags: ["2013", "動作"] },
   { title: "揭密日", score: 7.2, note: "概念不錯，但劇本不太好，愛蜜莉布朗演得超好", poster: "./img/movie/揭密日.jpg", tags: ["2026", "懸疑", "動作"] },
   { title: "鋼鐵英雄", score: 7.7, note: "滿讚的一部戰爭片，畫面呈現得很慘烈寫實，而且現實故事比電影還扯", poster: "./img/movie/鋼鐵英雄.jpg", tags: ["2016", "戰爭"] },
   { title: "海邊的曼徹斯特", score: 7.1, note: "很悲傷的電影，交錯的時間線娓娓道出男主的故事與被掏空的心", poster: "./img/movie/海邊的曼徹斯特.jpg", tags: ["2016", "劇情", "家庭"] },
@@ -425,14 +427,14 @@ export const animeMovies = [
   { title: "瓦力", score: 7.2, note: "沒有台詞，但是很有意思的末日電影", poster: "./img/movie/瓦力.webp" , tags: ["2008", "科幻"]},
   { title: "冰雪奇緣 1~2", score: 7.2, note: "畫面漂亮、音樂好聽，開始靠向女性主義主題的迪士尼，1>2", poster: "./img/movie/冰雪奇緣.webp" , tags: ["2013", "動畫"]},
   { title: "荒野機器人", score: 7.1, note: "夢工廠佳作，畫面精緻漂亮，劇情也是上乘的好電影", poster: "./img/movie/荒野機器人.jpg" , tags: ["2024", "劇情"]},
-  { title: "馴龍高手", score: 7.1, note: "最愛第一集，真人版也不錯，全系列都值得看", poster: "./img/movie/馴龍高手.webp" , tags: ["2025", "劇情"]},
+  { title: "馴龍高手", score: 7.1, note: "最愛第一集，真人版也不錯，全系列都值得看", poster: "./img/movie/馴龍高手.webp" , tags: ["2010", "劇情"]},
   { title: "再見機器人", score: 7.1, note: "沒有一句台詞但是會讓人想到前任的好動畫", poster: "./img/movie/再見機器人.webp" , tags: ["2023", "動畫"]},
   { title: "腦筋急轉彎 1~2", score: 7.1, note: "創意很可愛很棒，但沒有特別有共鳴的一部", poster: "./img/movie/腦筋急轉彎.webp" , tags: ["2015", "劇情"]},
   { title: "鈴芽之旅", score: 7.0, note: "跟天氣之子平分秋色，算是不會到太失望，但也沒有很驚豔的一部作品", poster: "./img/movie/鈴芽之旅.jpg" , tags: ["2022", "劇情"]},
   { title: "蜘蛛人：新宇宙", score: 7.0, note: "看完沒有什麼記憶點，但是記得整體很不錯", poster: "./img/movie/蜘蛛人：新宇宙.webp" , tags: ["2018", "劇情"]},
   { title: "崖上的波妞", score: 7.0, note: "很可愛童趣的一部", poster: "./img/movie/崖上的波妞.jpg" , tags: ["2008", "劇情"]},
   { title: "秒速五公分", score: 6.9, note: "看不懂想表達什麼，劇情有點無病呻吟，但畫面跟音樂很讚", poster: "./img/movie/秒速五公分.jpg" , tags: ["2007", "劇情"]},
-  { title: "閃光的哈薩威", score: 6.7, note: "我的第一部 4DX，文戲有點太多，非鋼彈迷要補很多功課", poster: "./img/movie/閃光的哈薩威.webp" , tags: ["2026", "劇情"]},
+  { title: "閃光的哈薩威", score: 6.9, note: "我的第一部 4DX，文戲有點太多，非鋼彈迷要補很多功課", poster: "./img/movie/閃光的哈薩威.webp" , tags: ["2026", "劇情"]},
   { title: "魔法公主", score: 6.7, note: "角色很有特色，不過長大後看好像略顯平淡", poster: "./img/movie/魔法公主.webp" , tags: ["1997", "劇情"]},
   { title: "蒼鷺與少年", score: 6.2, note: "實在無法喜歡隱喻的讓故事說不好的一部作品", poster: "./img/movie/蒼鷺與少年.webp" , tags: ["2023", "劇情"]},
 ];

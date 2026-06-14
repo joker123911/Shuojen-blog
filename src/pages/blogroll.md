@@ -103,7 +103,6 @@ export const BlogrollSearch = () => {
     { title: "首頁 on AngeCI’s Blog", url: "https://angeci.github.io/blog/zh/" },
     { title: "１１０號道路", url: "https://route110.blog/" },
     { title: "Derek Sivers", url: "https://sivers.org/" },
-    { title: "Kev Quirk", url: "https://kevquirk.com/" },
     { title: "Leo's Blog", url: "https://leo3391.github.io/blog/" },
     { title: "Alex Hsu 徐小翔", url: "https://alexhsu.com/" },
     { title: "Alice Hsu's Blog", url: "http://alicehsu.blog/zh-tw/" },
@@ -197,8 +196,8 @@ export const BlogrollSearch = () => {
 
 <img src="/img/blogroll_logo.png" style={{ borderRadius: '0' }} alt="logo" /> 
 
-```markdown
-![shuojen](https://shuojen.com/logo.png)
+```
+![shuojen的徽章](https://shuojen.com/logo.png)
 ```
 
 ▲ 我的部落格徽章，歡迎自行取用或直連

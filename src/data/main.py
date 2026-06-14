@@ -34,9 +34,36 @@ SERIES_JS_PATH = "series.js"
 TMDB_API_KEY = "728ef67fd1e7160cbe667eed11549e19"
 
 # ==========================================
+# 電影標題清理與候選清單搜尋（整合自 year 邏輯）
+# ==========================================
+def clean_title(title):
+    """清理電影標題，過濾系列作後綴以利精準搜尋"""
+    t = title.replace("系列", "")
+    t = re.sub(r'[\(（][^）\)]+版[\)傷]', '', t)
+    t = re.sub(r'\s*\d+\s*[~～\-]\s*\d+', '', t)
+    return t.strip()
+
+def search_tmdb_movies_candidates(title):
+    """從 TMDB 抓取前 4 筆候選電影資料"""
+    search_title = clean_title(title)
+    url = "https://api.themoviedb.org/3/search/movie"
+    params = {
+        "api_key": TMDB_API_KEY,
+        "query": search_title,
+        "language": "zh-TW"
+    }
+    try:
+        resp = requests.get(url, params=params, timeout=10)
+        if resp.status_code == 200:
+            return resp.json().get("results", [])[:4]
+    except Exception as e:
+        print(f"\n[TMDB 連線錯誤] ({search_title}): {e}")
+    return []
+
+# ==========================================
 # 核心邏輯處理函數（兩種模式共用）
 # ==========================================
-def save_worker_logic(data_type, target_var, title, score, note, tier, tags, success_callback, error_callback):
+def save_worker_logic(data_type, target_var, title, score, note, tier, tags, success_callback, error_callback, interactive_choice_func=None):
     # 處理分季後綴（如 S1、S2 等），擷取主劇名進行搜尋與圖片命名
     base_title = re.sub(r'\s*[Ss]\d+$', '', title)
     if not base_title:
@@ -81,24 +108,57 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, tags, suc
     if TMDB_API_KEY:
         try:
             os.makedirs(save_dir, exist_ok=True)
-            search_url = f"https://api.themoviedb.org/3/search/{search_type}"
-            search_params = {"api_key": TMDB_API_KEY, "query": base_title, "language": "zh-TW"}
-            search_resp = requests.get(search_url, params=search_params)
-            search_data = search_resp.json()
             
-            if search_data.get("results"):
-                res = search_data["results"][0]
-                m_id = res["id"]
-                m_type = res.get("media_type", search_type) if search_type == "multi" else search_type
+            chosen_res = None
+            chosen_year = None
+
+            if data_type == "movie":
+                # 整合 year.py 的搜尋與互動/自動比對邏輯
+                results = search_tmdb_movies_candidates(title)
                 
-                # 如果是電影模式，順便讀取上映年份並加入標籤列表
-                if data_type == "movie":
-                    release_date = res.get("release_date")
+                # 策略判定：長度 > 2 且第一筆完全命中片名 -> 自動通過
+                if results and len(title) > 2 and (results[0].get("title") == title or results[0].get("original_title") == title):
+                    chosen_res = results[0]
+                    release_date = chosen_res.get("release_date")
                     if release_date and "-" in release_date:
-                        year = release_date.split("-")[0]
-                        if year and year not in tags_list:
-                            tags_list.append(year)
+                        chosen_year = release_date.split("-")[0]
+                        print(f"【自動通過】{title} -> {chosen_year}")
+                else:
+                    # 觸發互動比對模式
+                    if interactive_choice_func:
+                        chosen_res, chosen_year = interactive_choice_func(title, note, results)
+                    else:
+                        # 若無提供互動介面（例如 GUI 非同步特殊處理），預設拿第一筆
+                        if results:
+                            chosen_res = results[0]
+                            release_date = chosen_res.get("release_date")
+                            if release_date and "-" in release_date:
+                                chosen_year = release_date.split("-")[0]
+
+                if chosen_year and chosen_year not in tags_list:
+                    tags_list.insert(0, chosen_year)
                 
+                if chosen_res:
+                    m_id = chosen_res["id"]
+                    m_type = "movie"
+                else:
+                    m_id = None
+            else:
+                # 原始的 anime / series 搜尋邏輯
+                search_url = f"https://api.themoviedb.org/3/search/{search_type}"
+                search_params = {"api_key": TMDB_API_KEY, "query": base_title, "language": "zh-TW"}
+                search_resp = requests.get(search_url, params=search_params)
+                search_data = search_resp.json()
+                
+                if search_data.get("results"):
+                    res = search_data["results"][0]
+                    m_id = res["id"]
+                    m_type = res.get("media_type", search_type) if search_type == "multi" else search_type
+                else:
+                    m_id = None
+
+            # 抓取並儲存海報圖片
+            if m_id:
                 img_api_url = f"https://api.themoviedb.org/3/{m_type}/{m_id}/images"
                 img_params = {"api_key": TMDB_API_KEY, "include_image_language": poster_langs}
                 img_data = requests.get(img_api_url, params=img_params).json()
@@ -106,8 +166,10 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, tags, suc
                 poster_path = None
                 if img_data.get("posters"):
                     poster_path = img_data["posters"][0]["file_path"]
-                else:
-                    poster_path = res.get("poster_path")
+                elif data_type == "movie" and chosen_res:
+                    poster_path = chosen_res.get("poster_path")
+                elif data_type != "movie" and search_data.get("results"):
+                    poster_path = search_data["results"][0].get("poster_path")
 
                 if poster_path:
                     img_bytes = requests.get(f"https://image.tmdb.org/t/p/w780{poster_path}").content
@@ -293,9 +355,10 @@ class AppGUI:
             tier = self.category_combobox.get()
             args = ("series", "animeList", title, None, note, tier, tags)
 
+        # GUI 的彈出視窗非同步環境下，若觸發互動通常需要特別處理，此處預設讓它自動抓取第一筆
         threading.Thread(
             target=save_worker_logic, 
-            args=(*args, self.gui_success, self.gui_error),
+            args=(*args, self.gui_success, self.gui_error, None),
             daemon=True
         ).start()
 
@@ -337,7 +400,7 @@ def run_terminal():
             print("程式已結束。")
             break
         elif choice not in ["1", "2", "3"]:
-            print("輸入錯誤，請重新選擇。")
+            print("輸入錯誤，請重新選擇. ")
             continue
 
         title = input("\n請輸入標題名稱: ").strip()
@@ -377,6 +440,50 @@ def run_terminal():
                 args = ("series", "animeList", title, None, note, tier, tags)
                 mode_str = "影集模式"
 
+        # 實作終端機底下的 TMDB 智慧互動選擇邏輯
+        def terminal_interactive_choice(t_title, t_note, results):
+            print("\n" + "="*60)
+            print(f"🎬 我的電影：【{t_title}】")
+            print(f"📝 我的心得：{t_note}")
+            print("-"*60)
+            
+            if not results:
+                print("❌ TMDB 找不到任何相關電影。")
+            else:
+                print("🤖 TMDB 智慧候選清單：")
+                for i, res in enumerate(results, 1):
+                    t_name = res.get("title", "未知")
+                    o_name = res.get("original_title", "未知")
+                    r_date = res.get("release_date", "未知年份")
+                    year = r_date.split("-")[0] if "-" in r_date else r_date
+                    overview = res.get("overview", "無簡介內容。")
+                    if len(overview) > 60:
+                        overview = overview[:60] + "..."
+                    print(f"  [{i}] {t_name} ({o_name}) - 📅 {year}")
+                    print(f"      📄 簡介: {overview}")
+            
+            print("-"*60)
+            while True:
+                user_input = input(f"請選擇正確的項目 (1-{len(results)})，或直接輸入 4 位數年份，或按 Enter 跳過: ").strip()
+                if not user_input:
+                    print(f"➡️ 已選擇跳過 【{t_title}】")
+                    return None, None
+                if user_input.isdigit() and len(user_input) == 4:
+                    print(f"✍️ 已手動設定年份：{user_input}")
+                    return None, user_input
+                if user_input.isdigit() and 1 <= int(user_input) <= len(results):
+                    idx = int(user_input) - 1
+                    res_item = results[idx]
+                    r_date = res_item.get("release_date")
+                    if r_date and "-" in r_date:
+                        year = r_date.split("-")[0]
+                        print(f"✅ 已選擇 [{user_input}] -> {year}")
+                        return res_item, year
+                    else:
+                        print("⚠️ 該選項在 TMDB 上沒有對應年份，請手動輸入或跳過。")
+                        continue
+                print("❌ 輸入格式不正確，請重新輸入。")
+
         print("\n資料下載與寫入中，請稍候...")
         
         def term_success(t):
@@ -386,7 +493,7 @@ def run_terminal():
         def term_error(msg):
             print(f"\n>> 錯誤：{msg}")
 
-        save_worker_logic(*args, term_success, term_error)
+        save_worker_logic(*args, term_success, term_error, interactive_choice_func=terminal_interactive_choice)
         print("-" * 40)
 
 # ==========================================

@@ -60,7 +60,7 @@ export default function MovieListApp({ initialFilter = 'all', hideFilterBar = fa
     if (filter === 'all') {
       result = yearSortedMovies; // 全部的排名改成年份排序
     } else if (filter === 'top100') {
-      result = scoreSortedMovies.slice(0, 100); // TOP100 改成電影榜單（評分排序）
+      result = scoreSortedMovies.slice(0, 5000); // TOP100 改成電影榜單（評分排序）
     } else {
       result = scoreSortedMovies.filter(m => m.category === filter);
     }
@@ -113,7 +113,7 @@ export default function MovieListApp({ initialFilter = 'all', hideFilterBar = fa
 
   const filterOptions = [
     { value: 'all', label: '📅 年份排序' },
-    { value: 'top100', label: '🎬 排名榜單' },
+    { value: 'top100', label: '🎬 評分排序' },
     { value: 'western', label: '🌎 歐美電影' },
     { value: 'asia', label: '🥢 華語日韓' },
     { value: 'hongkong', label: '🎞️ 童年港片' },    
