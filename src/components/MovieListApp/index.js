@@ -16,26 +16,53 @@ export default function MovieListApp({ initialFilter = 'all', hideFilterBar = fa
   const [filter, setFilter] = useState(initialFilter);
   const [visibleCount, setVisibleCount] = useState(100); 
 
-  // 合併並排序原始資料
-  const sortedMovies = useMemo(() => {
-    const combined = [
+  // 合併原始資料
+  const combinedMovies = useMemo(() => {
+    return [
       ...westernMovies.map(m => ({ ...m, category: 'western' })),
       ...asiaMovies.map(m => ({ ...m, category: 'asia' })),
       ...animeMovies.map(m => ({ ...m, category: 'anime' })),
       ...hongkongMovies.map(m => ({ ...m, category: 'hongkong' }))
     ];
-    return combined.sort((a, b) => (b.score || 0) - (a.score || 0));
   }, []);
 
-  // 核心篩選邏輯（分類 + 搜尋）
-  const filteredMovies = useMemo(() => {
-    let result = sortedMovies;
+  // 依照評分排序的資料（供電影榜單與各分類使用）
+  const scoreSortedMovies = useMemo(() => {
+    return [...combinedMovies].sort((a, b) => (b.score || 0) - (a.score || 0));
+  }, [combinedMovies]);
 
-    // 1. 處理分類篩選
-    if (filter === 'top100') {
-      result = sortedMovies.slice(0, 100);
-    } else if (filter !== 'all') {
-      result = sortedMovies.filter(m => m.category === filter);
+  // 依照年份排序的資料（供年份排序使用，新到舊；若年份相同則依評分排序）
+  const yearSortedMovies = useMemo(() => {
+    const getYear = (m) => {
+      if (!m.tags) return 0;
+      const tagsArray = Array.isArray(m.tags) 
+        ? m.tags 
+        : m.tags.split(',').map(t => t.trim());
+      const yearTag = tagsArray.find(tag => /^\d{4}$/.test(tag));
+      return yearTag ? parseInt(yearTag, 10) : 0;
+    };
+
+    return [...combinedMovies].sort((a, b) => {
+      const yearA = getYear(a);
+      const yearB = getYear(b);
+      if (yearB !== yearA) {
+        return yearB - yearA;
+      }
+      return (b.score || 0) - (a.score || 0);
+    });
+  }, [combinedMovies]);
+
+  // 核心篩選與排序邏輯（分類 + 搜尋）
+  const filteredMovies = useMemo(() => {
+    let result = [];
+
+    // 1. 處理分類與排序篩選
+    if (filter === 'all') {
+      result = yearSortedMovies; // 全部的排名改成年份排序
+    } else if (filter === 'top100') {
+      result = scoreSortedMovies.slice(0, 100); // TOP100 改成電影榜單（評分排序）
+    } else {
+      result = scoreSortedMovies.filter(m => m.category === filter);
     }
 
     // 2. 處理搜尋關鍵字篩選
@@ -53,7 +80,7 @@ export default function MovieListApp({ initialFilter = 'all', hideFilterBar = fa
     }
 
     return result;
-  }, [sortedMovies, filter, searchTerm]);
+  }, [yearSortedMovies, scoreSortedMovies, filter, searchTerm]);
 
   const displayedMovies = filteredMovies.slice(0, visibleCount);
 
@@ -85,8 +112,8 @@ export default function MovieListApp({ initialFilter = 'all', hideFilterBar = fa
   };
 
   const filterOptions = [
-    { value: 'all', label: '🏆 全部排名' },
-    { value: 'top100', label: '💯 Top 100' },
+    { value: 'all', label: '📅 年份排序' },
+    { value: 'top100', label: '🎬 排名榜單' },
     { value: 'western', label: '🌎 歐美電影' },
     { value: 'asia', label: '🥢 華語日韓' },
     { value: 'hongkong', label: '🎞️ 童年港片' },    
@@ -111,7 +138,7 @@ export default function MovieListApp({ initialFilter = 'all', hideFilterBar = fa
           )}
         </div>
         <div className="movie-count-badge">
-          收錄電影：{sortedMovies.length} 部
+          收錄電影：{combinedMovies.length} 部
         </div>
       </div>
 

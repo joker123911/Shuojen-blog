@@ -5,7 +5,7 @@ sidebar_position: 2
 
 import MovieListApp from '@site/src/components/MovieListApp';
 
-*最後更新：2026-06-07*
+*最後更新：2026-06-14*
 
 這是一份我自己專屬的 TOP RANKING 電影排名！
 

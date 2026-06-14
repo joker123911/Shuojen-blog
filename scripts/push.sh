@@ -20,6 +20,14 @@ if [ -z "$commitMessage" ]; then
 fi
 
 echo ""
+echo "--- Configuring Git to be case-sensitive ---"
+git config core.ignorecase false
+
+echo ""
+echo "--- Refreshing Git cache for case sensitivity ---"
+git rm -r --cached . >/dev/null 2>&1
+
+echo ""
 echo "--- Staging all changes (git add .) ---"
 git add .
 

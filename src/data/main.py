@@ -51,14 +51,12 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, tags, suc
         tags_list = tags
     else:
         tags_list = []
-    tags_json = json.dumps(tags_list, ensure_ascii=False)
 
     # 路徑與格式設定
     if data_type == "movie":
         js_file = MOVIE_JS_PATH
         js_poster_path = f"./img/movie/{base_title}.jpg"
         save_dir = "../../docs/img/movie"
-        new_entry = f'  {{ title: "{title}", score: {score}, note: "{note}", poster: "{js_poster_path}", tags: {tags_json} }},'
         target_line = f"export const {target_var} = ["
         search_type = "movie"
         poster_langs = "zh-TW,en,null"
@@ -66,7 +64,6 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, tags, suc
         js_file = ANIME_JS_PATH
         js_poster_path = f"./img/anime/{base_title}.jpg"
         save_dir = "../../docs/img/anime"
-        new_entry = f'  {{ title: "{title}", note: "{note}", poster: "{js_poster_path}", tier: "{tier}", tags: {tags_json} }}'
         target_line = "export const animeList = ["
         search_type = "multi"
         poster_langs = "ja,zh,en,null"
@@ -74,7 +71,6 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, tags, suc
         js_file = SERIES_JS_PATH
         js_poster_path = f"./img/series/{base_title}.jpg"
         save_dir = "../../docs/img/series"
-        new_entry = f'  {{ title: "{title}", note: "{note}", poster: "{js_poster_path}", tier: "{tier}", tags: {tags_json} }}'
         target_line = "export const animeList = ["
         search_type = "tv"
         poster_langs = "zh-TW,en,null"
@@ -95,6 +91,14 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, tags, suc
                 m_id = res["id"]
                 m_type = res.get("media_type", search_type) if search_type == "multi" else search_type
                 
+                # 如果是電影模式，順便讀取上映年份並加入標籤列表
+                if data_type == "movie":
+                    release_date = res.get("release_date")
+                    if release_date and "-" in release_date:
+                        year = release_date.split("-")[0]
+                        if year and year not in tags_list:
+                            tags_list.append(year)
+                
                 img_api_url = f"https://api.themoviedb.org/3/{m_type}/{m_id}/images"
                 img_params = {"api_key": TMDB_API_KEY, "include_image_language": poster_langs}
                 img_data = requests.get(img_api_url, params=img_params).json()
@@ -111,6 +115,15 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, tags, suc
                         f.write(img_bytes)
         except Exception as e:
             print(f"Poster Error: {e}")
+
+    # 確定最終標籤後轉換為 JSON 字串並設定新條目內容
+    tags_json = json.dumps(tags_list, ensure_ascii=False)
+    if data_type == "movie":
+        new_entry = f'  {{ title: "{title}", score: {score}, note: "{note}", poster: "{js_poster_path}", tags: {tags_json} }},'
+    elif data_type == "anime":
+        new_entry = f'  {{ title: "{title}", note: "{note}", poster: "{js_poster_path}", tier: "{tier}", tags: {tags_json} }}'
+    else:  # series
+        new_entry = f'  {{ title: "{title}", note: "{note}", poster: "{js_poster_path}", tier: "{tier}", tags: {tags_json} }}'
 
     # 寫入檔案邏輯
     try:
