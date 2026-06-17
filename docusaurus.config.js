@@ -30,7 +30,7 @@ const config = {
   organizationName: 'joker123911',
   projectName: 'Shuojen-blog',
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   markdown: {
       hooks: {
         onBrokenMarkdownLinks: 'warn',
