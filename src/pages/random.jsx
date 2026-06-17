@@ -25,16 +25,28 @@ export default function RandomPost() {
         const xmlDoc = parser.parseFromString(text, 'text/xml');
         
         const urls = Array.from(xmlDoc.querySelectorAll('loc'))
-          .map(loc => loc.textContent)
-          .filter(url => 
-            url.includes('/blog/') && 
-            !url.includes('/blog/tags') && 
-            !url.includes('/blog/archive') && 
-            !url.includes('/blog/authors') && 
-            !url.includes('/blog/page') &&
-            !url.endsWith('/blog') &&
-            !url.endsWith('/blog/')
-          );
+          .map(loc => loc.textContent || '')
+          .filter(url => {
+            // 處理一般部落格貼文
+            const isBlog = url.includes('/blog/') && 
+              !url.includes('/blog/tags') && 
+              !url.includes('/blog/archive') && 
+              !url.includes('/blog/authors') && 
+              !url.includes('/blog/page') &&
+              !url.endsWith('/blog') &&
+              !url.endsWith('/blog/');
+
+            // 處理攝影集作品頁面
+            const isPhotoBlog = url.includes('/photoblog/') &&
+              !url.includes('/photoblog/tags') &&
+              !url.includes('/photoblog/photo-archive') &&
+              !url.includes('/photoblog/authors') &&
+              !url.includes('/photoblog/page') &&
+              !url.endsWith('/photoblog') &&
+              !url.endsWith('/photoblog/');
+
+            return isBlog || isPhotoBlog;
+          });
 
         if (urls.length > 0) {
           const randomIndex = Math.floor(Math.random() * urls.length);

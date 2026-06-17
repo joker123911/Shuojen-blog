@@ -13,7 +13,7 @@ import MovieListApp from '@site/src/components/MovieListApp';
 
 有什麼電影想要補充的話，也歡迎到留言版或寫信大力推薦我。
 
-:::info 評分標準（參考即可）
+:::info[評分標準（參考即可）]
 9 分 -> 神作趕快收藏起來
 
 8 分 -> 人生必看的佳作

@@ -4,7 +4,7 @@ title: 留言板
 # 留言板 `/guestbook`
 import Guestbook from '@site/src/components/Guestbook';
 
-:::info **支援簡單的 Markdown 語法！** 
+:::info[**支援簡單的 Markdown 語法！**]
 - 超連結：`[顯示的文字](網址)`
 - 內嵌程式碼：`` `code` ``
 - 粗體：`**bold**`
