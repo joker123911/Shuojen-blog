@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>線上圖片自由裁切工具 - Clean Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+        /* 細窄、灰色直角滾動條 */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 0px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 0px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        /* 微動畫 */
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 覆蓋 Cropper.js 預設樣式，使其符合 Clean Dashboard UI 規範且全面改為「直角」 */
+        .cropper-view-box {
+            outline: 2px solid #4f46e5 !important;
+            outline-color: #4f46e5 !important;
+        }
+        .cropper-line {
+            background-color: #4f46e5 !important;
+        }
+        /* 將控制點改成精緻的 Indigo 方形控制塊 */
+        .cropper-point {
+            background-color: #4f46e5 !important;
+            width: 10px !important;
+            height: 10px !important;
+            border-radius: 0px !important; /* 徹底移除圓角 */
+            border: 2px solid #ffffff !important;
+        }
+        /* 放大四個角的控制塊，更好點擊與拖拉 */
+        .cropper-point.point-se, .cropper-point.point-sw, .cropper-point.point-ne, .cropper-point.point-nw {
+            width: 14px !important;
+            height: 14px !important;
+        }
+        .cropper-bg {
+            background-image: repeating-linear-gradient(45deg, #f8fafc 25%, transparent 25%, transparent 75%, #f8fafc 75%, #f8fafc), 
+                              repeating-linear-gradient(45deg, #f8fafc 25%, #ffffff 25%, #ffffff 75%, #f8fafc 75%, #f8fafc) !important;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col justify-between p-2 sm:p-4 md:p-10 text-slate-800">
+
+    <div class="max-w-5xl w-full mx-auto bg-white rounded-none shadow-2xl border border-slate-100 p-6 md:p-10 fade-in flex-grow flex flex-col justify-between">
+        
+        <header class="flex flex-col sm:flex-row items-center justify-between border-b border-slate-100 pb-6 mb-8 gap-4">
+            <div class="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+                <div class="w-12 h-12 bg-indigo-600 text-white rounded-none flex items-center justify-center shadow-lg shadow-indigo-200 text-xl">
+                    <i class="fa-solid fa-crop"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold text-slate-800 tracking-wide">線上圖片裁切工具</h1>
+                    <p class="text-sm text-slate-400 mt-0.5">拖拉四角與邊界，自由定義畫面範圍</p>
+                </div>
+            </div>
+            
+            <button id="btn-reset" class="text-sm px-4 py-2 text-slate-500 hover:text-indigo-600 bg-slate-50 hover:bg-indigo-50 border border-slate-200 hover:border-indigo-100 rounded-none transition-all flex items-center gap-2">
+                <i class="fa-solid fa-rotate-left"></i> 重設圖片
+            </button>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start flex-grow">
+            
+            <section class="md:col-span-1 flex flex-col gap-6">
+                
+                <div class="bg-white border border-slate-200 rounded-none p-5 hover:border-indigo-300 transition-all shadow-sm">
+                    <label class="block text-sm font-semibold text-slate-500 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-cloud-arrow-up text-indigo-500"></i> 1. 上傳來源圖片
+                    </label>
+                    <div class="relative group border-2 border-dashed border-slate-200 group-hover:border-indigo-300 rounded-none p-4 text-center cursor-pointer transition-all bg-slate-50/50 hover:bg-indigo-50/30">
+                        <input type="file" id="image-input" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                        <div class="space-y-2">
+                            <i class="fa-solid fa-image text-3xl text-slate-300 group-hover:text-indigo-400 transition-all"></i>
+                            <p class="text-xs text-slate-500">點擊或拖曳圖片至此處</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="control-card" class="bg-white border border-slate-200 rounded-none p-5 hover:border-indigo-300 transition-all shadow-sm hidden space-y-5">
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-500 mb-2.5 flex items-center gap-2">
+                            <i class="fa-solid fa-vector-square text-orange-500"></i> 2. 常用比例固定
+                        </label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button class="ratio-btn text-xs py-2 px-3 bg-indigo-50 text-indigo-600 border border-indigo-100 font-medium rounded-none transition-all" data-ratio="NaN">自由裁切</button>
+                            <button class="ratio-btn text-xs py-2 px-3 bg-slate-50 text-slate-600 border border-slate-200 hover:border-indigo-300 rounded-none transition-all" data-ratio="1">1 : 1 (正方形)</button>
+                            <button class="ratio-btn text-xs py-2 px-3 bg-slate-50 text-slate-600 border border-slate-200 hover:border-indigo-300 rounded-none transition-all" data-ratio="1.77777777778">16 : 9 (寬螢幕)</button>
+                            <button class="ratio-btn text-xs py-2 px-3 bg-slate-50 text-slate-600 border border-slate-200 hover:border-indigo-300 rounded-none transition-all" data-ratio="1.33333333333">4 : 3 (傳統)</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-500 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-chart-simple text-emerald-500"></i> 3. 當前裁切尺寸
+                        </label>
+                        <div id="info-box" class="bg-slate-50 rounded-none p-4 text-xs text-slate-600 space-y-2 border border-slate-100">
+                            <div class="flex justify-between"><span>原始圖片尺寸:</span> <span id="info-ori" class="font-bold text-slate-700">-</span></div>
+                            <div class="flex justify-between"><span>目標裁切尺寸:</span> <span id="info-new" class="font-bold text-emerald-600">-</span></div>
+                        </div>
+                    </div>
+
+                    <button id="btn-download" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-none shadow-lg shadow-indigo-100 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-download"></i> 下載輸出裁剪圖片
+                    </button>
+                </div>
+            </section>
+
+            <section class="md:col-span-2 flex flex-col h-full min-h-[350px]">
+                <div class="border border-slate-100 bg-slate-50 rounded-none p-4 flex flex-col justify-center items-center flex-grow relative overflow-hidden min-h-[400px]">
+                    
+                    <div id="preview-placeholder" class="text-center space-y-3">
+                        <div class="w-16 h-16 bg-slate-100 text-slate-400 rounded-none flex items-center justify-center mx-auto">
+                            <i class="fa-regular fa-images text-2xl"></i>
+                        </div>
+                        <p class="text-sm text-slate-400">尚未載入圖片，請從左側上傳</p>
+                    </div>
+
+                    <div id="preview-container" class="hidden w-full h-full flex flex-col items-center justify-center">
+                        <p class="text-xs text-slate-400 mb-3 flex items-center gap-1">
+                            <i class="fa-solid fa-up-down-left-right text-indigo-500"></i> 提示：可直接拖曳四周邊框與方形錨點改變範圍，亦可按住框內任意平移。
+                        </p>
+                        <div class="max-w-full max-h-[450px] border border-slate-200 rounded-none overflow-hidden bg-white shadow-sm">
+                            <img id="preview-img" src="" alt="Preview Workspace" class="max-w-full block">
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="max-w-5xl w-full mx-auto mt-6 px-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-400">
+        <div>
+            © Shuojen.com 
+        </div>
+        <div class="flex items-center gap-4">
+            <span>Clean Dashboard UI</span>
+        </div>
+    </footer>
+
+    <script>
+        const imageInput = document.getElementById('image-input');
+        const btnDownload = document.getElementById('btn-download');
+        const btnReset = document.getElementById('btn-reset');
+        
+        const controlCard = document.getElementById('control-card');
+        const previewPlaceholder = document.getElementById('preview-placeholder');
+        const previewContainer = document.getElementById('preview-container');
+        const previewImg = document.getElementById('preview-img');
+
+        const infoOri = document.getElementById('info-ori');
+        const infoNew = document.getElementById('info-new');
+        const ratioBtns = document.querySelectorAll('.ratio-btn');
+
+        let cropper = null;
+        let originalWidth = 0;
+        let originalHeight = 0;
+
+        // 監聽圖片上傳
+        imageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                if (cropper) {
+                    cropper.destroy();
+                }
+
+                previewImg.src = event.target.result;
+
+                controlCard.classList.remove('hidden');
+                previewContainer.classList.remove('hidden');
+                previewPlaceholder.classList.add('hidden');
+
+                // 初始化 Cropper.js 全功能自由裁切
+                cropper = new Cropper(previewImg, {
+                    viewMode: 1,         // 限制裁剪框不能超出圖片範圍
+                    autoCropArea: 0.9,   // 初始選取區佔 90%
+                    responsive: true,
+                    restore: false,
+                    modal: true,         // 顯示陰影背景
+                    guides: true,        // 顯示虛線輔助線
+                    highlight: true,
+                    crop(event) {
+                        const width = Math.round(event.detail.width);
+                        const height = Math.round(event.detail.height);
+                        infoNew.textContent = `${width} × ${height} px`;
+                    },
+                    ready() {
+                        const imageData = cropper.getImageData();
+                        originalWidth = imageData.naturalWidth;
+                        originalHeight = imageData.naturalHeight;
+                        infoOri.textContent = `${originalWidth} × ${originalHeight} px`;
+                    }
+                });
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // 比例切換按鈕邏輯
+        ratioBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                if (!cropper) return;
+
+                ratioBtns.forEach(b => {
+                    b.classList.remove('bg-indigo-50', 'text-indigo-600', 'border-indigo-100');
+                    b.classList.add('bg-slate-50', 'text-slate-600', 'border-slate-200');
+                });
+                btn.classList.remove('bg-slate-50', 'text-slate-600', 'border-slate-200');
+                btn.classList.add('bg-indigo-50', 'text-indigo-600', 'border-indigo-100');
+
+                const targetRatio = parseFloat(btn.getAttribute('data-ratio'));
+                cropper.setAspectRatio(targetRatio);
+            });
+        });
+
+        // 執行下載 (完美保留原圖最高畫質裁切輸出)
+        btnDownload.addEventListener('click', () => {
+            if (!cropper) return;
+
+            const croppedCanvas = cropper.getCroppedCanvas({
+                imageSmoothingEnabled: true,
+                imageSmoothingQuality: 'high'
+            });
+
+            const link = document.createElement('a');
+            link.download = `cropped_free_${Date.now()}.png`;
+            link.href = croppedCanvas.toDataURL('image/png');
+            link.click();
+        });
+
+        // 重設按鈕
+        btnReset.addEventListener('click', () => {
+            if (cropper) {
+                cropper.reset();
+            }
+        });
+    </script>
+</body>
+</html>

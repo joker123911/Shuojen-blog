@@ -130,6 +130,11 @@ description: 乾淨自由又無廣告的網頁小工具和小遊戲
     <p>活動抽獎或日常決策都適用的自訂轉盤工具</p>
   </a>
 
+  <a href="/crop.html" class="interest-card">
+  <h3>圖片裁切工具</h3>
+  <p>線上快速圖片裁切小工具</p>
+  </a>
+
   <a href="/boshiamy.html" class="interest-card">
     <h3>嘸蝦米兩碼字練習器</h3>
     <p>專為嘸蝦米輸入法設計，強化兩碼字肌肉記憶的打字練習器</p>

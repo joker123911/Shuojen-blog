@@ -11,7 +11,7 @@ const config = {
   favicon: 'img/favicon.ico',
   future: {
     v4: true,
-    experimental_faster: true,
+    faster: true,
   },
 
   scripts: [
@@ -210,14 +210,21 @@ const config = {
           {to: '/use', label: '愛用', position: 'left'},
           {to: '/now', label: '近況', position: 'left'},
           {to: '/blog', label: '貼文', position: 'left'},
-          {to: '/blog/archive',label: '貼文列表',position: 'left'},
-          {to: '/random',label: '隨機貼文',position: 'left'},
-          {to: '/photography',label: '攝影集',position: 'left'},
-          {to: '/photoblog/photo-archive',label: '攝影列表',position: 'left'},
-          {to: '/about',label: '關於',position: 'left'},
-          {to: '/tool',label: '小工具',position: 'left'},
-          {to: '/blogroll',label: '部落卷',position: 'left'},
-          {to: '/guestbook',label: '留言板',position: 'left'},
+          {to: '/random', label: '隨機貼文', position: 'left'},
+          {to: '/photography', label: '攝影集', position: 'left'},
+          {
+            type: 'dropdown',
+            label: '列表',
+            position: 'left',
+            items: [
+              {to: '/blog/archive', label: '貼文列表'},
+              {to: '/photoblog/photo-archive', label: '攝影列表'},
+            ],
+          },
+          {to: '/about', label: '關於', position: 'left'},
+          {to: '/tool', label: '小工具', position: 'left'},
+          {to: '/blogroll', label: '部落卷', position: 'left'},
+          {to: '/guestbook', label: '留言板', position: 'left'},
         ],
       },
       footer: {
