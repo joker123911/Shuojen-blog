@@ -79,17 +79,17 @@ description: 乾淨自由又無廣告的網頁小工具和小遊戲
 
 <div class="interest-grid">
 
-  <a href="/game.html" class="interest-card">
+  <a href="https://shuojen.com/game.html" class="interest-card">
     <h3>成語迷宮</h3>
     <p>考驗成語敏感度的文字遊戲</p>
   </a>
 
-  <a href="/guestname.html" class="interest-card">
+  <a href="https://shuojen.com/guestname.html" class="interest-card">
     <h3>猜人名遊戲</h3>
     <p>看完《惡棍特工》就會想玩的派對小遊戲，兩人以上進行</p>
   </a>
 
-  <a href="/sticker.html" class="interest-card">
+  <a href="https://shuojen.com/sticker.html" class="interest-card">
     <h3>貼紙模擬器</h3>
     <p>使用 Shuyu 創作的可愛 icon，在畫布上自由拼貼的療癒小玩具</p>
   </a>
@@ -100,37 +100,37 @@ description: 乾淨自由又無廣告的網頁小工具和小遊戲
 
 <div class="interest-grid">
 
-  <a href="/calculator.html" class="interest-card">
+  <a href="https://shuojen.com/calculator" class="interest-card">
     <h3>投資報酬試算表</h3>
     <p>快速計算投資報酬率與複利成長，理財規劃的好幫手</p>
   </a>
 
-  <a href="/calories.html" class="interest-card">
+  <a href="https://shuojen.com/calories" class="interest-card">
     <h3>營養攝取終結者</h3>
     <p>計算每日營養素攝取量，輕鬆管理飲食目標</p>
   </a>
 
-  <a href="/food.html" class="interest-card">
+  <a href="https://shuojen.com/food" class="interest-card">
     <h3>吃什麼都可以終結者</h3>
     <p>選擇困難症救星！隨機決定下一餐的落腳處</p>
   </a>
 
-  <a href="/resize.html" class="interest-card">
+  <a href="https://shuojen.com/resize.html" class="interest-card">
     <h3>圖片批次處理工具</h3>
     <p>在瀏覽器內快速完成圖片的壓縮與格式轉換</p>
   </a>
 
-  <a href="/color_picker.html" class="interest-card">
+  <a href="https://shuojen.com/color_picker.html" class="interest-card">
     <h3>網頁取色器</h3>
     <p>快速吸取並複製螢幕上的十六進位色碼</p>
   </a>
 
-  <a href="/option.html" class="interest-card">
+  <a href="https://shuojen.com/option.html" class="interest-card">
     <h3>隨機轉盤</h3>
     <p>活動抽獎或日常決策都適用的自訂轉盤工具</p>
   </a>
 
-  <a href="/boshiamy.html" class="interest-card">
+  <a href="https://shuojen.com/boshiamy" class="interest-card">
     <h3>嘸蝦米兩碼字練習器</h3>
     <p>專為嘸蝦米輸入法設計，強化兩碼字肌肉記憶的打字練習器</p>
   </a>

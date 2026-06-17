@@ -330,7 +330,10 @@ allMarkdownFiles.forEach(file => {
       if (!url) return;
       if (url.startsWith('#') || url.startsWith('mailto:') || url.startsWith('tel:') || url.startsWith('javascript:')) return;
       
-      const cleanUrl = url.split('#')[0].split('?')[0];
+      let cleanUrl = url.split('#')[0].split('?')[0];
+      if (cleanUrl.startsWith('pathname://')) {
+        cleanUrl = cleanUrl.replace(/^pathname:\/\/?/, '/');
+      }
       if (!cleanUrl) return;
       
       const lineNumber = findLineNumber(url);
