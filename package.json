@@ -10,7 +10,7 @@
     "start": "npm run prepare-data && docusaurus start",
     "build": "npm run prepare-data && docusaurus build",
     "deploy": "npm run prepare-data && docusaurus deploy",
-    "push": "npm run prepare-data && node scripts/push.js",
+    "push": "npm run check && npm run prepare-data && node scripts/push.js",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
