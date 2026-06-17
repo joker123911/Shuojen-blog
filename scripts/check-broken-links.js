@@ -362,14 +362,22 @@ allMarkdownFiles.forEach(file => {
           return; // Valid route!
         }
         
-        // If not in routeRegistry, check static assets
+        // If not in routeRegistry, check static assets (with optional .html fallback)
         let assetFound = false;
+        const checkPaths = [cleanUrl];
+        if (!cleanUrl.endsWith('.html') && !cleanUrl.includes('.')) {
+          checkPaths.push(cleanUrl + '.html');
+        }
+        
         for (const staticDir of STATIC_DIRS) {
-          const assetPath = path.join(WORKSPACE, staticDir, cleanUrl);
-          if (fs.existsSync(assetPath) && fs.statSync(assetPath).isFile()) {
-            assetFound = true;
-            break;
+          for (const p of checkPaths) {
+            const assetPath = path.join(WORKSPACE, staticDir, p);
+            if (fs.existsSync(assetPath) && fs.statSync(assetPath).isFile()) {
+              assetFound = true;
+              break;
+            }
           }
+          if (assetFound) break;
         }
         
         if (!assetFound) {
