@@ -130,6 +130,17 @@
                         </div>
                     </div>
 
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-500 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-file-export text-blue-500"></i> 4. 輸出檔案格式
+                        </label>
+                        <select id="format-select" class="w-full text-xs bg-slate-50 text-slate-600 border border-slate-200 rounded-none p-2.5 focus:outline-none focus:border-indigo-500 transition-all cursor-pointer">
+                            <option value="image/png">PNG 格式 (.png)</option>
+                            <option value="image/jpeg">JPG 格式 (.jpg)</option>
+                            <option value="image/webp">WebP 格式 (.webp)</option>
+                        </select>
+                    </div>
+
                     <button id="btn-download" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-none shadow-lg shadow-indigo-100 transition-all flex items-center justify-center gap-2">
                         <i class="fa-solid fa-download"></i> 下載輸出裁剪圖片
                     </button>
@@ -182,6 +193,7 @@
         const infoOri = document.getElementById('info-ori');
         const infoNew = document.getElementById('info-new');
         const ratioBtns = document.querySelectorAll('.ratio-btn');
+        const formatSelect = document.getElementById('format-select');
 
         let cropper = null;
         let originalWidth = 0;
@@ -246,9 +258,14 @@
             });
         });
 
-        // 執行下載 (完美保留原圖最高畫質裁切輸出)
+        // 執行下載 (根據使用者選擇的格式進行匯出)
         btnDownload.addEventListener('click', () => {
             if (!cropper) return;
+
+            const selectedFormat = formatSelect.value;
+            let ext = 'png';
+            if (selectedFormat === 'image/jpeg') ext = 'jpg';
+            if (selectedFormat === 'image/webp') ext = 'webp';
 
             const croppedCanvas = cropper.getCroppedCanvas({
                 imageSmoothingEnabled: true,
@@ -256,8 +273,9 @@
             });
 
             const link = document.createElement('a');
-            link.download = `cropped_free_${Date.now()}.png`;
-            link.href = croppedCanvas.toDataURL('image/png');
+            link.download = `cropped_free_${Date.now()}.${ext}`;
+            // 如果是 jpg 格式，給予 0.92 的優質壓縮率
+            link.href = croppedCanvas.toDataURL(selectedFormat, selectedFormat === 'image/jpeg' ? 0.92 : undefined);
             link.click();
         });
 

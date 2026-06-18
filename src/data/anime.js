@@ -23,6 +23,8 @@ export const animeList = [
   { title: "棒球大聯盟", note: "童年回憶，應該是我最愛的王道運動作品", poster: "./img/anime/棒球大聯盟.jpg", tier: "SS" , tags: ["運動", "經典", "熱血"]},
   { title: "未聞花名", note: "最愛這種短篇就把故事好好交待完整的作品，感人的神作推推", poster: "./img/anime/未聞花名.jpg", tier: "SS" , tags: ["戀愛", "治癒", "經典"]},
   { title: "本田小狼與我", note: "超級喜歡這個平淡的騎車日常", poster: "./img/anime/本田小狼與我.jpg", tier: "SS" , tags: ["校園","日常", "治癒"]},
+  { title: "躲在超市後門抽菸的兩人", note: "完全對到我喜好的一部小日常作品，好喜歡", poster: "./img/anime/躲在超市後門抽菸的兩人.jpg", tier: "SS", tags: ["日常", "戀愛"] },
+  { title: "我內心的糟糕念頭", note: "跟高木同學很像的作品，單純可愛，山田這個角色真的太討喜", poster: "./img/anime/我內心的糟糕念頭.jpg", tier: "SS", tags: ["校園","戀愛"] },
   { title: "迷宮飯", note: "角色太可愛，冒險料理作品好讚", poster: "./img/anime/迷宮飯.jpg", tier: "S" , tags: ["戰鬥","奇幻"]},
   { title: "擅長捉弄人的高木同學", note: "每話都是短短的小品，很輕鬆的戀愛作品，《爆擊》這一話至今印象深刻", poster: "./img/anime/擅長捉弄人的高木同學.jpg", tier: "S" , tags: ["校園","戀愛", "日常"]},
   { title: "海賊王", note: "到魚人島之前都很好看，最愛救羅賓的篇章", poster: "./img/anime/海賊王.jpg", tier: "S" , tags: ["戰鬥","熱血", "經典"]},

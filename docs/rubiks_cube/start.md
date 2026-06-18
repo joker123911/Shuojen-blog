@@ -42,7 +42,7 @@ sidebar_position: 1
 ![img](./img/002.jpg)
 
 :::note
-，大雁騰雲 v1 是我的最愛主力，沒有之一，[看看我的所有方塊](https://shuojen.site/use)。
+，大雁騰雲 v1 是我的最愛主力，沒有之一，[看看我的所有方塊](/use)。
 :::
 
 ## 學習資源

@@ -36,6 +36,34 @@ function getAllMarkdownFiles(dirPath, arrayOfFiles = []) {
   return arrayOfFiles;
 }
 
+/**
+ * 計算字數（中文字元數 + 英文單字數），過濾掉代碼與標籤
+ */
+function getWordCount(content) {
+  let cleanContent = content || '';
+  
+  // 移除 Markdown 圖片: ![alt](url)
+  cleanContent = cleanContent.replace(/!\[.*?\]\(.*?\)/g, '');
+  // 移除 HTML/JSX 標籤: <img ... />
+  cleanContent = cleanContent.replace(/<[^>]+>/g, '');
+  // 將 Markdown 連結轉為純文字: [文字](連結) -> 文字
+  cleanContent = cleanContent.replace(/\[(.*?)\]\(.*?\)/g, '$1');
+  // 移除程式碼區塊: ```js ... ```
+  cleanContent = cleanContent.replace(/```[\s\S]*?```/g, '');
+  // 移除行內程式碼: `code`
+  cleanContent = cleanContent.replace(/`([^`]+)`/g, '$1');
+  // 移除水平分割線: ---
+  cleanContent = cleanContent.replace(/^[ \t]*[-*_]{3,}[ \t]*$/gm, '');
+  
+  // 中文字數:
+  const chineseChars = cleanContent.match(/[\u4e00-\u9fa5]/g) || [];
+  // 英文單字數:
+  const noChinese = cleanContent.replace(/[\u4e00-\u9fa5]/g, ' ');
+  const englishWords = noChinese.match(/[a-zA-Z0-9_-]+/g) || [];
+  
+  return chineseChars.length + englishWords.length;
+}
+
 try {
   // --- 1. 計算貼文區 (Blog) 統計 ---
   const allFiles = getAllMarkdownFiles(BLOG_DIR);
@@ -46,8 +74,7 @@ try {
     let content = fs.readFileSync(filePath, 'utf8');
     content = content.replace(/\r\n/g, '\n');
     content = content.replace(/^---[\s\S]*?---/, '');
-    const cleanContent = content.replace(/\s+/g, '');
-    totalWords += cleanContent.length;
+    totalWords += getWordCount(content);
   });
 
   // --- 2. 計算攝影區 (Photoblog) 統計 ---

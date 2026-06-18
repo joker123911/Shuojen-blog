@@ -32,6 +32,8 @@ title: 興趣
     height: 100%;
     animation: fadeInUp 0.6s ease forwards;
     opacity: 0;
+    /* 一行搞定：自動根據卡片傳入的 index 計算延遲時間 */
+    animation-delay: calc(var(--index, 1) * 0.1s);
   }
 
   .interest-card:hover {
@@ -65,74 +67,67 @@ title: 興趣
       transform: translateY(0);
     }
   }
-
-  /* 設定依序出現的延遲時間 */
-  .interest-card:nth-child(1) { animation-delay: 0.1s; }
-  .interest-card:nth-child(2) { animation-delay: 0.2s; }
-  .interest-card:nth-child(3) { animation-delay: 0.3s; }
-  .interest-card:nth-child(4) { animation-delay: 0.4s; }
-  .interest-card:nth-child(5) { animation-delay: 0.5s; }
-  .interest-card:nth-child(6) { animation-delay: 0.6s; }
-  .interest-card:nth-child(7) { animation-delay: 0.7s; }
-  .interest-card:nth-child(8) { animation-delay: 0.8s; }
-  .interest-card:nth-child(9) { animation-delay: 0.9s; }
-  .interest-card:nth-child(10) { animation-delay: 1.0s; }
 `}</style>
 
 <div class="interest-grid">
 
-  <a href="/docs/movie_list" class="interest-card">
+  <a href="/docs/movie_list" class="interest-card" style={{'--index': 1}}>
     <h3>🎬 電影清單</h3>
     <p>記錄我的專屬 IMDb 電影列表，持續更新中。</p>
   </a>
 
-  <a href="/docs/anime/" class="interest-card">
+  <a href="/docs/anime/" class="interest-card" style={{'--index': 2}}>
     <h3>🍿 動漫清單</h3>
     <p>記錄我的動漫 Tier 列表，持續更新中。</p>
   </a>
 
-    <a href="/docs/series/" class="interest-card">
+  <a href="/docs/series/" class="interest-card" style={{'--index': 3}}>
     <h3>📽️ 劇集清單</h3>
     <p>記錄我的劇集 Tier 列表，持續更新中。</p>
   </a>
 
-  <a href="/docs/aqua" class="interest-card">
+  <a href="/docs/aqua" class="interest-card" style={{'--index': 4}}>
     <h3>🐠 水族造景</h3>
     <p>記錄我的一些水草造景，之後再補充一些個人的水族筆記。</p>
   </a>
 
-  <a href="/docs/chess/introduce" class="interest-card">
+  <a href="/docs/chess/introduce" class="interest-card" style={{'--index': 5}}>
     <h3>♟️ 西洋棋</h3>
-    <p>記錄玩西洋棋的啟蒙還有一些分數成長史，之後想要詳細記錄我使用的開局系統。</p>
+    <p>記錄玩西洋棋的啟盟還有一些分數成長史，之後想要詳細記錄我使用的開局系統。</p>
   </a>
 
-  <a href="/docs/music/guitar" class="interest-card">
+  <a href="/docs/music/guitar" class="interest-card" style={{'--index': 6}}>
     <h3>🎸 吉他</h3>
     <p>記錄一些吉他演奏，之後再補充一些吉他啟蒙故事。</p>
   </a>
 
-  <a href="/docs/music/piano" class="interest-card">
+  <a href="/docs/music/piano" class="interest-card" style={{'--index': 7}}>
     <h3>🎹 鋼琴</h3>
     <p>記錄一些學鋼琴故事，有認真練好的曲子再放上來。</p>
   </a>
 
-  <a href="/docs/rubiks_cube/start" class="interest-card">
+  <a href="/docs/rubiks_cube/start" class="interest-card" style={{'--index': 8}}>
     <h3>🧊 魔術方塊</h3>
     <p>記錄玩魔術方塊的故事還有 WCA 比賽，盲解學習停滯中。</p>
   </a>
 
-  <a href="/docs/keyboard" class="interest-card">
+  <a href="/docs/keyboard" class="interest-card" style={{'--index': 9}}>
     <h3>⌨️ 機械鍵盤</h3>
     <p>記錄一些機械鍵盤指南，還有跟大隊長、王胖一起玩鍵盤的過程。</p>
   </a>
 
-  <a href="/docs/concert/" class="interest-card">
+  <a href="/docs/concert/" class="interest-card" style={{'--index': 10}}>
     <h3>🎙️ 演唱會</h3>
     <p>記錄參加過的各種演唱會。</p>
   </a>
 
-  <a href="/docs/draw/" class="interest-card">
-    <h3> 🖌️塗鴉</h3>
+  <a href="/docs/draw/" class="interest-card" style={{'--index': 11}}>
+    <h3>🖌️ 塗鴉</h3>
     <p>記錄一些隨筆塗鴉。</p>
+  </a>
+
+  <a href="/docs/motorcycle/" class="interest-card" style={{'--index': 12}}>
+    <h3>🏍️ 檔車故事</h3>
+    <p>記錄一些檔車小故事。</p>
   </a>
 </div>

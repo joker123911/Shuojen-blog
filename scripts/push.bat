@@ -23,9 +23,8 @@ echo.
 echo --- Configuring Git to be case-sensitive ---
 git config core.ignorecase false
 
-echo.
-echo --- Refreshing Git cache for case sensitivity ---
-git rm -r --cached . >nul 2>&1
+
+:: If you ever need to reset cache for case sensitivity, run: git rm -r --cached . && git add . manually.
 
 echo.
 echo --- Staging all changes (git add .) ---
