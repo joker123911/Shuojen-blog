@@ -20,8 +20,9 @@ if [ -z "$commitMessage" ]; then
 fi
 
 echo ""
-echo "--- Configuring Git to be case-sensitive ---"
+echo "--- Configuring Git settings ---"
 git config core.ignorecase false
+git config core.safecrlf false
 
 
 # If you ever need to reset cache for case sensitivity, run: git rm -r --cached . && git add . manually.
