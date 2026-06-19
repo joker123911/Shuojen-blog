@@ -128,7 +128,7 @@ blogFiles.forEach(file => {
     let route;
     if (postSlug) {
       postSlug = postSlug.trim();
-      route = postSlug.startsWith('/') ? postSlug : `/blog/${postSlug}`;
+      route = postSlug.startsWith('/') ? (postSlug.startsWith('/blog/') ? postSlug : `/blog${postSlug}`) : `/blog/${postSlug}`;
     } else {
       const dateMatch = nameToParse.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)$/);
       if (dateMatch) {
@@ -175,7 +175,7 @@ photoblogFiles.forEach(file => {
     let route;
     if (postSlug) {
       postSlug = postSlug.trim();
-      route = postSlug.startsWith('/') ? postSlug : `/photoblog/${postSlug}`;
+      route = postSlug.startsWith('/') ? (postSlug.startsWith('/photoblog/') ? postSlug : `/photoblog${postSlug}`) : `/photoblog/${postSlug}`;
     } else {
       const dateMatch = nameToParse.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)$/);
       if (dateMatch) {
@@ -213,7 +213,7 @@ docsFiles.forEach(file => {
     let route;
     if (data.slug) {
       const slug = data.slug.trim();
-      route = slug.startsWith('/') ? slug : `/docs/${slug}`;
+      route = slug.startsWith('/') ? (slug.startsWith('/docs/') ? slug : `/docs${slug}`) : `/docs/${slug}`;
     } else {
       const relativePath = path.relative(DOCS_DIR, file);
       const ext = path.extname(relativePath);

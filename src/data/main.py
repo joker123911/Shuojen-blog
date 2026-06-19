@@ -239,7 +239,7 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, tags, suc
             target_file = md_map.get(data_type)
             
             if target_file:
-                f_path = os.path.join(docs_dir, target_file)
+                f_path = os.path.join(docs_dir, "ranking", target_file)
                 if os.path.exists(f_path):
                     with open(f_path, 'r', encoding='utf-8') as f:
                         doc_content = f.read()

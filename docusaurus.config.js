@@ -236,8 +236,14 @@ const config = {
             label: '興趣',
           },          
           {to: '/blog', label: '貼文', position: 'left'},
-          {to: '/random', label: '隨機', position: 'left'},
-          {to: '/photography', label: '攝影集', position: 'left'},
+          {to: '/photography', label: '攝影集', position:'left'},
+          {to: '/random', label: '隨機', position: 'left'}, 
+          {
+            type: 'docSidebar',
+            sidebarId: 'rankingSidebar',
+            position: 'left',
+            label: '排名',
+          },                     
           {
             type: 'dropdown',
             label: '歷年',

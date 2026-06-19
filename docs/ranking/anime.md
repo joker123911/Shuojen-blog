@@ -1,6 +1,7 @@
 ---
 title: '動漫清單'
-sidebar_position: 3
+sidebar_position: 2
+slug: /anime
 ---
 
 import AnimeTier from '@site/src/components/AnimeTier';

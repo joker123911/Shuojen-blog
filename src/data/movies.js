@@ -243,6 +243,7 @@ export const westernMovies = [
 ];
 
 export const asiaMovies = [
+  { title: "火遮眼", score: 6.8, note: "武打場面佔七成，打架畫面與鏡頭調度滿精采的，但是劇情很爛，配角的演技跟口條更爛", poster: "./img/movie/火遮眼.jpg", tags: ["2026", "犯罪", "動作"] },
   { title: "哥吉拉-1.0", score: 8.0, note: "超好看，畫面很棒，劇情也可圈可點的一部，很愛", poster: "./img/movie/哥吉拉-1.0.jpg", tags: ["2023", "災難"] },
   { title: "愛上變身情人", score: 7.7, note: "有新意的一部戀愛電影，滿喜歡的，好喜歡韓孝周", poster: "./img/movie/愛上變身情人.jpg", tags: ["2015", "戀愛", "奇幻"] },
   { title: "運轉手之戀", score: 7.4, note: "計程車司機的戀愛故事，有趣的老電影", poster: "./img/movie/運轉手之戀.jpg" , tags: ["2000", "愛情"]},

@@ -1,6 +1,7 @@
 ---
 title: '劇集清單'
-sidebar_position: 4
+sidebar_position: 3
+slug: /series
 ---
 
 import SeriesTier from '@site/src/components/SeriesTier';

@@ -3,9 +3,9 @@ sidebar_position: 1
 title: 興趣
 ---
 
-# 📚 興趣首頁
+# 📚 興趣
 
-這個區塊是我個人興趣的索引，將我所有感興趣的事物分門別類地記錄。
+這個區塊匯集了我個人覺得有趣的事物，分門別類地記錄在這裡。
 
 :::info
 可以利用左側的選單（手機用戶請按左上角的 ≡ 圖示）選取章節
@@ -71,62 +71,47 @@ title: 興趣
 
 <div class="interest-grid">
 
-  <a href="/docs/movie_list" class="interest-card" style={{'--index': 1}}>
-    <h3>🎬 電影清單</h3>
-    <p>記錄我的專屬 IMDb 電影列表，持續更新中。</p>
-  </a>
-
-  <a href="/docs/anime/" class="interest-card" style={{'--index': 2}}>
-    <h3>🍿 動漫清單</h3>
-    <p>記錄我的動漫 Tier 列表，持續更新中。</p>
-  </a>
-
-  <a href="/docs/series/" class="interest-card" style={{'--index': 3}}>
-    <h3>📽️ 劇集清單</h3>
-    <p>記錄我的劇集 Tier 列表，持續更新中。</p>
-  </a>
-
-  <a href="/docs/aqua" class="interest-card" style={{'--index': 4}}>
+  <a href="/docs/aqua" class="interest-card" style={{'--index': 1}}>
     <h3>🐠 水族造景</h3>
     <p>記錄我的一些水草造景，之後再補充一些個人的水族筆記。</p>
   </a>
 
-  <a href="/docs/chess/introduce" class="interest-card" style={{'--index': 5}}>
+  <a href="/docs/chess/introduce" class="interest-card" style={{'--index': 2}}>
     <h3>♟️ 西洋棋</h3>
     <p>記錄玩西洋棋的啟盟還有一些分數成長史，之後想要詳細記錄我使用的開局系統。</p>
   </a>
 
-  <a href="/docs/music/guitar" class="interest-card" style={{'--index': 6}}>
+  <a href="/docs/music/guitar" class="interest-card" style={{'--index': 3}}>
     <h3>🎸 吉他</h3>
-    <p>記錄一些吉他演奏，之後再補充一些吉他啟蒙故事。</p>
+    <p>記錄一些吉他演奏，之後再補充一些吉他啟盟故事。</p>
   </a>
 
-  <a href="/docs/music/piano" class="interest-card" style={{'--index': 7}}>
+  <a href="/docs/music/piano" class="interest-card" style={{'--index': 4}}>
     <h3>🎹 鋼琴</h3>
     <p>記錄一些學鋼琴故事，有認真練好的曲子再放上來。</p>
   </a>
 
-  <a href="/docs/rubiks_cube/start" class="interest-card" style={{'--index': 8}}>
+  <a href="/docs/rubiks_cube/start" class="interest-card" style={{'--index': 5}}>
     <h3>🧊 魔術方塊</h3>
     <p>記錄玩魔術方塊的故事還有 WCA 比賽，盲解學習停滯中。</p>
   </a>
 
-  <a href="/docs/keyboard" class="interest-card" style={{'--index': 9}}>
+  <a href="/docs/keyboard" class="interest-card" style={{'--index': 6}}>
     <h3>⌨️ 機械鍵盤</h3>
     <p>記錄一些機械鍵盤指南，還有跟大隊長、王胖一起玩鍵盤的過程。</p>
   </a>
 
-  <a href="/docs/concert/" class="interest-card" style={{'--index': 10}}>
+  <a href="/docs/concert/" class="interest-card" style={{'--index': 7}}>
     <h3>🎙️ 演唱會</h3>
     <p>記錄參加過的各種演唱會。</p>
   </a>
 
-  <a href="/docs/draw/" class="interest-card" style={{'--index': 11}}>
+  <a href="/docs/draw/" class="interest-card" style={{'--index': 8}}>
     <h3>🖌️ 塗鴉</h3>
     <p>記錄一些隨筆塗鴉。</p>
   </a>
 
-  <a href="/docs/motorcycle/" class="interest-card" style={{'--index': 12}}>
+  <a href="/docs/motorcycle/" class="interest-card" style={{'--index': 9}}>
     <h3>🏍️ 檔車故事</h3>
     <p>記錄一些檔車小故事。</p>
   </a>
