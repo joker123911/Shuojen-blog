@@ -193,7 +193,7 @@ import ContributionCalendar from '@site/src/components/ContributionCalendar/Cont
   <a href="/docs/intro" className="custom-card">
     <div className="card-icon">🧩</div>
     <h3 style={{margin: 0, color: 'var(--ifm-color-primary)'}}>興趣分享</h3>
-    <p style={{marginTop: '10px', fontSize: '0.95rem', opacity: 0.8}}>常駐的興趣分享區塊，包含西洋棋、魔術方塊等。電影選片請看：**電影推薦清單**。</p>
+    <p style={{marginTop: '10px', fontSize: '0.95rem', opacity: 0.8}}>常駐的興趣分享區塊，包含西洋棋、魔術方塊等。</p>
   </a>
 
   <a href="/blog" className="custom-card">

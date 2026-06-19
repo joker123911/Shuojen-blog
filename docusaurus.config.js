@@ -237,13 +237,7 @@ const config = {
           },          
           {to: '/blog', label: '貼文', position: 'left'},
           {to: '/photography', label: '攝影集', position:'left'},
-          {to: '/random', label: '隨機', position: 'left'}, 
-          {
-            type: 'docSidebar',
-            sidebarId: 'rankingSidebar',
-            position: 'left',
-            label: '排名',
-          },                     
+          {to: '/random', label: '隨機', position: 'left'},                     
           {
             type: 'dropdown',
             label: '歷年',
@@ -252,7 +246,18 @@ const config = {
               {to: '/blog/archive', label: '貼文列表'},
               {to: '/photoblog/photo-archive', label: '攝影列表'},
             ],
-          },                    
+          },  
+          {
+            type: 'dropdown',
+            label: '排名',
+            position: 'left',
+            items: [
+              {to: '/docs/movie_list', label: '電影清單'},
+              {to: '/docs/anime', label: '動漫清單'},
+              {to: '/docs/series', label: '劇集清單'},         
+              {to: '/docs/ramen', label: '拉麵清單'},                   
+            ],
+          },                             
           {
             type: 'dropdown',
             label: '關於',

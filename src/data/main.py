@@ -27,6 +27,7 @@ except Exception:
 MOVIE_JS_PATH = "movies.js" 
 ANIME_JS_PATH = "anime.js"
 SERIES_JS_PATH = "series.js"
+RAMEN_JS_PATH = "ramen.js"
 
 # ==========================================
 # TMDB API Key
@@ -63,7 +64,7 @@ def search_tmdb_movies_candidates(title):
 # ==========================================
 # 核心邏輯處理函數（兩種模式共用）
 # ==========================================
-def save_worker_logic(data_type, target_var, title, score, note, tier, tags, success_callback, error_callback, interactive_choice_func=None):
+def save_worker_logic(data_type, target_var, title, score, note, tier, tags, link, success_callback, error_callback, interactive_choice_func=None):
     # 處理分季後綴（如 S1、S2 等），擷取主劇名進行搜尋與圖片命名
     base_title = re.sub(r'\s*[Ss]\d+$', '', title)
     if not base_title:
@@ -94,18 +95,25 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, tags, suc
         target_line = "export const animeList = ["
         search_type = "multi"
         poster_langs = "ja,zh,en,null"
-    else:  # series
+    elif data_type == "series":
         js_file = SERIES_JS_PATH
         js_poster_path = f"./img/series/{base_title}.jpg"
         save_dir = "../../docs/img/series"
         target_line = "export const animeList = ["
         search_type = "tv"
         poster_langs = "zh-TW,en,null"
+    else:  # ramen
+        js_file = RAMEN_JS_PATH
+        js_poster_path = ""
+        save_dir = ""
+        target_line = "export const ramenList = ["
+        search_type = ""
+        poster_langs = ""
 
     save_poster_path = os.path.join(save_dir, f"{base_title}.jpg")
 
     # TMDB 下載邏輯
-    if TMDB_API_KEY:
+    if TMDB_API_KEY and data_type != "ramen":
         try:
             os.makedirs(save_dir, exist_ok=True)
             
@@ -184,8 +192,12 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, tags, suc
         new_entry = f'  {{ title: "{title}", score: {score}, note: "{note}", poster: "{js_poster_path}", tags: {tags_json} }},'
     elif data_type == "anime":
         new_entry = f'  {{ title: "{title}", note: "{note}", poster: "{js_poster_path}", tier: "{tier}", tags: {tags_json} }}'
-    else:  # series
+    elif data_type == "series":
         new_entry = f'  {{ title: "{title}", note: "{note}", poster: "{js_poster_path}", tier: "{tier}", tags: {tags_json} }}'
+    else:  # ramen
+        if not link:
+            link = f"https://www.google.com/maps/search/?api=1&query={title} 拉麵"
+        new_entry = f'  {{ title: "{title}", note: "{note}", tier: "{tier}", tags: {tags_json}, link: "{link}" }}'
 
     # 寫入檔案邏輯
     try:
@@ -199,11 +211,16 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, tags, suc
             new_content = content.replace(target_line, f"{target_line}\n{new_entry}")
         else:
             tier_priority = {"SSS": 0, "SS": 1, "S": 2, "A": 3, "B": 4}
-            pattern = r"(export const animeList = \[)(.*?)(\];)"
+            if data_type == "ramen":
+                pattern = r"(export const ramenList = \[)(.*?)(\];)"
+                err_msg = "找不到 'export const ramenList = [];' 格式"
+            else:
+                pattern = r"(export const animeList = \[)(.*?)(\];)"
+                err_msg = "找不到 'export const animeList = [];' 格式"
+
             match = re.search(pattern, content, re.DOTALL)
-            
             if not match:
-                error_callback("找不到 'export const animeList = [];' 格式")
+                error_callback(err_msg)
                 return
             
             header, body, footer = match.groups()
@@ -234,7 +251,8 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, tags, suc
             md_map = {
                 "movie": "movie_list.md",
                 "anime": "anime.md",
-                "series": "series.md"
+                "series": "series.md",
+                "ramen": "ramen.md"
             }
             target_file = md_map.get(data_type)
             
@@ -272,7 +290,7 @@ class AppGUI:
 
         # 模式切換
         ttk.Label(self.root, text="操作模式：").place(x=30, y=20)
-        self.mode_combobox = ttk.Combobox(self.root, values=["電影模式 (Movie)", "動漫模式 (Anime)", "影集模式 (Series)"], state="readonly", width=25)
+        self.mode_combobox = ttk.Combobox(self.root, values=["電影模式 (Movie)", "動漫模式 (Anime)", "影集模式 (Series)", "拉麵模式 (Ramen)"], state="readonly", width=25)
         self.mode_combobox.place(x=120, y=20)
         self.mode_combobox.current(0)
         self.mode_combobox.bind("<<ComboboxSelected>>", self.on_mode_change)
@@ -318,6 +336,14 @@ class AppGUI:
                 "歐美電影 (westernMovies)", "亞洲電影 (asiaMovies)", "童年港片 (hongkongMovies)", "動畫電影 (animeMovies)"
             ])
             self.category_combobox.current(0)
+            self.lbl_score.config(text="評分(數字)：")
+            self.lbl_score.place(x=30, y=150)
+            self.entry_score.place(x=120, y=150)
+        elif mode == "拉麵模式 (Ramen)":
+            self.lbl_category.config(text="選擇等級：")
+            self.category_combobox.config(values=["SSS", "SS", "S", "A", "B"])
+            self.category_combobox.current(0)
+            self.lbl_score.config(text="Google 連結：")
             self.lbl_score.place(x=30, y=150)
             self.entry_score.place(x=120, y=150)
         else:
@@ -339,6 +365,7 @@ class AppGUI:
         self.btn_submit.config(text="下載處理中...", state=tk.DISABLED)
 
         tags = self.entry_tags.get().strip()
+        link_val = None
 
         if mode == "電影模式 (Movie)":
             category_map = {
@@ -351,14 +378,18 @@ class AppGUI:
         elif mode == "動漫模式 (Anime)":
             tier = self.category_combobox.get()
             args = ("anime", "animeList", title, None, note, tier, tags)
-        else:
+        elif mode == "影集模式 (Series)":
             tier = self.category_combobox.get()
             args = ("series", "animeList", title, None, note, tier, tags)
+        else:  # 拉麵模式 (Ramen)
+            tier = self.category_combobox.get()
+            link_val = self.entry_score.get().strip()
+            args = ("ramen", "ramenList", title, None, note, tier, tags)
 
         # GUI 的彈出視窗非同步環境下，若觸發互動通常需要特別處理，此處預設讓它自動抓取第一筆
         threading.Thread(
             target=save_worker_logic, 
-            args=(*args, self.gui_success, self.gui_error, None),
+            args=(*args, link_val, self.gui_success, self.gui_error, None),
             daemon=True
         ).start()
 
@@ -393,13 +424,14 @@ def run_terminal():
         print("1. 電影模式 (Movie)")
         print("2. 動漫模式 (Anime)")
         print("3. 影集模式 (Series)")
+        print("4. 拉麵模式 (Ramen)")
         print("0. 離開程式")
-        choice = input("請輸入數字 (0-3): ").strip()
+        choice = input("請輸入數字 (0-4): ").strip()
 
         if choice == "0":
             print("程式已結束。")
             break
-        elif choice not in ["1", "2", "3"]:
+        elif choice not in ["1", "2", "3", "4"]:
             print("輸入錯誤，請重新選擇. ")
             continue
 
@@ -415,6 +447,7 @@ def run_terminal():
 
         tags = input("請輸入標籤 (多個請用英文逗號隔開，可為空): ").strip()
 
+        link_val = None
         if choice == "1": # 電影
             print("\n[選擇電影類別]")
             print("1. 歐美電影 (westernMovies)")
@@ -429,6 +462,13 @@ def run_terminal():
             score = input("請輸入評分 (預設 7.0): ").strip() or "7.0"
             args = ("movie", cat_map[cat_choice], title, score, note, None, tags)
             mode_str = "電影模式"
+        elif choice == "4": # 拉麵
+            tier = input("\n請輸入等級分區 (SSS/SS/S/A/B，預設 B): ").strip().upper()
+            if tier not in ["SSS", "SS", "S", "A", "B"]:
+                tier = "B"
+            link_val = input("請輸入 Google 地圖/自訂連結 (可留空，自動生成): ").strip()
+            args = ("ramen", "ramenList", title, None, note, tier, tags)
+            mode_str = "拉麵模式"
         else: # 動漫 或 影集
             tier = input("\n請輸入等級分區 (SSS/SS/S/A/B，預設 B): ").strip().upper()
             if tier not in ["SSS", "SS", "S", "A", "B"]:
@@ -493,7 +533,7 @@ def run_terminal():
         def term_error(msg):
             print(f"\n>> 錯誤：{msg}")
 
-        save_worker_logic(*args, term_success, term_error, interactive_choice_func=terminal_interactive_choice)
+        save_worker_logic(*args, link_val, term_success, term_error, interactive_choice_func=terminal_interactive_choice)
         print("-" * 40)
 
 # ==========================================
