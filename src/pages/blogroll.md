@@ -3,7 +3,7 @@ title: 部落卷
 description: 個人網頁名冊
 ---
 import React, { useState, useMemo } from 'react';
-import { blogrollLinks } from './blogrollData.js';
+import { blogrollLinks } from '../data/blogrollData.js';
 
 export const BlogrollSearch = () => {
   const [search, setSearch] = useState('');
