@@ -75,17 +75,17 @@ title: 興趣
 
   <a href="/docs/aqua" class="interest-card" style={{'--index': 1}}>
     <h3>🐠 水族造景</h3>
-    <p>記錄我的一些水草造景，之後再補充一些個人的水族筆記。</p>
+    <p>記錄我的一些水草造景，未來再補充一些水族筆記。</p>
   </a>
 
   <a href="/docs/chess/introduce" class="interest-card" style={{'--index': 2}}>
     <h3>♟️ 西洋棋</h3>
-    <p>記錄玩西洋棋的啟盟還有一些分數成長史，之後想要詳細記錄我使用的開局系統。</p>
+    <p>記錄玩西洋棋的啟蒙還有一些分數成長史，未來想要詳細記錄我使用的開局系統。</p>
   </a>
 
   <a href="/docs/music/guitar" class="interest-card" style={{'--index': 3}}>
     <h3>🎸 吉他</h3>
-    <p>記錄一些吉他演奏，之後再補充一些吉他啟盟故事。</p>
+    <p>記錄一些吉他演奏，未來再補充一些吉他故事。</p>
   </a>
 
   <a href="/docs/music/piano" class="interest-card" style={{'--index': 4}}>
