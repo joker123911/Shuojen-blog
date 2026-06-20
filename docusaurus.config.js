@@ -255,7 +255,8 @@ const config = {
               {to: '/docs/movie_list', label: '電影清單'},
               {to: '/docs/anime', label: '動漫清單'},
               {to: '/docs/series', label: '劇集清單'},         
-              {to: '/docs/ramen', label: '拉麵清單'},                   
+              {to: '/docs/ramen', label: '拉麵清單'},   
+              {to: '/docs/jinyung', label: '金庸清單'},                              
             ],
           },                             
           {
