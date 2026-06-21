@@ -1,4 +1,7 @@
 export const westernMovies = [
+  { title: "花月殺手", score: 8.6, note: "超級好看，1920 年代奧塞奇人為背景的故事，馬丁．史柯西斯我最愛的作品", poster: "./img/movie/花月殺手.jpg", tags: ["2023", "劇情", "犯罪"] },
+  { title: "恐怖角", score: 6.3, note: "滿詭異的復仇片，但是我不太喜歡，馬丁．史柯西斯真的很不對我的胃口", poster: "./img/movie/恐怖角.jpg", tags: ["1991", "驚悚"] },
+  { title: "明天過後", score: 7.5, note: "超級經典的災難片，畫面特效很棒", poster: "./img/movie/明天過後.jpg", tags: ["2004", "災難"] },
   { title: "遊戲夜殺必死", score: 7.5, note: "很有意思的推理喜劇，還有反轉也有點意思", poster: "./img/movie/遊戲夜殺必死.jpg", tags: ["2018", "喜劇"] },
   { title: "環太平洋", score: 6.9, note: "音樂跟機器人畫面很讚，但劇情真的很不行", poster: "./img/movie/環太平洋.jpg", tags: ["2013", "動作"] },
   { title: "揭密日", score: 7.2, note: "概念不錯，但劇本不太好，愛蜜莉布朗演得超好", poster: "./img/movie/揭密日.jpg", tags: ["2026", "懸疑", "動作"] },
@@ -203,7 +206,7 @@ export const westernMovies = [
   { title: "蜘蛛人（加菲版） 1~2", score: 6.8, note: "這個系列看點在 Emma stone, 1>2 ", poster: "./img/movie/蜘蛛人（加菲）.webp" , tags: ["2012", "英雄"]},
   { title: "神鬼玩家", score: 6.7, note: "人物傳記電影，中規中矩，看完沒什麼驚豔之處", poster: "./img/movie/神鬼玩家.webp" , tags: ["2004", "傳記"]},
   { title: "蟻人", score: 6.7, note: "中規中矩吧，沒什麼特別的，1>2", poster: "./img/movie/蟻人.jpg" , tags: ["2015", "英雄"]},
-  { title: "華爾街之狼", score: 6.7, note: "瘋狂黑色傳記片，不過我個人對馬丁史柯西斯一直電波都沒有很合", poster: "./img/movie/華爾街之狼.webp" , tags: ["2013", "傳記"]},
+  { title: "華爾街之狼", score: 6.7, note: "瘋狂黑色傳記片，不過我個人對馬丁．史柯西斯一直電波都沒有很合", poster: "./img/movie/華爾街之狼.webp" , tags: ["2013", "傳記"]},
   { title: "手札情緣", score: 6.7, note: "浪漫愛情片，不會不好看但吐槽點實在超多", poster: "./img/movie/手札情緣.webp" , tags: ["2004", "愛情"]},
   { title: "戰爭遊戲", score: 6.7, note: "中規中矩的鬥智片，反轉普通，還算OK", poster: "./img/movie/戰爭遊戲.jpg" , tags: ["2013", "戰爭", "懸疑"]},
   { title: "偷拐搶騙", score: 6.7, note: "小布演吉普賽人口音很好笑，滿白痴的一部黑色幽默黑幫片", poster: "./img/movie/偷拐搶騙.webp" , tags: ["2000", "喜劇"]},
