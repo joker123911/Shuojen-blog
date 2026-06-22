@@ -30,7 +30,7 @@
 
     .calculator-container {
         width: 100%;
-        max-width: 600px;
+        max-width: 650px; /* 稍微加寬以容納新欄位 */
         background-color: var(--card-bg);
         padding: 40px;
         border-radius: var(--radius-lg);
@@ -183,7 +183,7 @@
         letter-spacing: 0.05em;
     }
 
-    /* 新增：手機版響應式設計 */
+    /* 手機版響應式設計 */
     @media (max-width: 600px) {
         body {
             padding: 20px 10px; /* 縮小螢幕邊緣留白 */
@@ -251,6 +251,7 @@
                     <th>年存</th>
                     <th>報酬</th>
                     <th>總金額</th>
+                    <th>總損益</th>
                 </tr>
             </thead>
             <tbody id="results-body">
@@ -262,7 +263,6 @@
 </div>
 
 <script>
-    /* 核心邏輯完全保留不變 */
     document.addEventListener('DOMContentLoaded', generateInitialTable);
 
     function generateInitialTable() {
@@ -287,6 +287,7 @@
                 <td><input type="number" id="savings-${age}" value="${annualSavings.toFixed(1)}" step="0.1" onchange="handleSavingsChange(${age})"></td>
                 <td id="return-${age}" style="color: #10b981; font-weight: 600;">0.0</td>
                 <td><input type="number" id="total-${age}" value="0.0" data-full-value="0.0" step="0.1" onchange="handleTotalChange(${age})" style="font-weight: 600;"></td>
+                <td id="profit-percent-${age}" style="color: #3b82f6; font-weight: 600;">0.0%</td>
             `;
             resultsBody.appendChild(row);
         }
@@ -304,6 +305,9 @@
 
         if (age < endAge) {
             updateFromRow(age + 1);
+        } else {
+            // 如果是最後一年被手動修改，也重新計算當年度的損益%
+            updateProfitPercentRow(age);
         }
     }
 
@@ -325,6 +329,43 @@
 
             totalInput.value = newTotal.toFixed(1);
             totalInput.dataset.fullValue = newTotal.toFixed(5);
+
+            // 計算並更新該年齡的總損益%
+            updateProfitPercentRow(age);
+        }
+    }
+
+    function updateProfitPercentRow(age) {
+        const startAge = parseInt(document.getElementById('startAge').value);
+        let totalPrincipal = 0;
+
+        // 累計從起始年齡到當前年齡的總投入本金
+        for (let i = startAge; i <= age; i++) {
+            const savingsInput = document.getElementById(`savings-${i}`);
+            if (savingsInput) {
+                totalPrincipal += parseFloat(savingsInput.value || 0);
+            }
+        }
+
+        const totalInput = document.getElementById(`total-${age}`);
+        const currentTotal = parseFloat(totalInput.dataset.fullValue || totalInput.value || 0);
+
+        let profitPercent = 0;
+        if (totalPrincipal > 0) {
+            profitPercent = ((currentTotal - totalPrincipal) / totalPrincipal) * 100;
+        }
+
+        const profitPercentElement = document.getElementById(`profit-percent-${age}`);
+        if (profitPercentElement) {
+            profitPercentElement.textContent = profitPercent.toFixed(1) + '%';
+            // 依據正負值調整顏色 (正數藍色/綠色，負數紅色)
+            if (profitPercent > 0) {
+                profitPercentElement.style.color = '#3b82f6';
+            } else if (profitPercent < 0) {
+                profitPercentElement.style.color = '#ef4444';
+            } else {
+                profitPercentElement.style.color = 'var(--text-main)';
+            }
         }
     }
 </script>
