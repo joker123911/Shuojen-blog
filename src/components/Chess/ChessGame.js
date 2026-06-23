@@ -61,6 +61,14 @@ function ChessGameLogic({ pgn, orientation = "w" }) {
           responsive: true,
         });
 
+        // 避免 HMR (熱更新) 或組件卸載時，ResizeObserver 的 setTimeout 延遲執行 handleResize 導致 invokeExtensionPoints 報錯
+        const originalHandleResize = board.view.handleResize;
+        board.view.handleResize = function (...args) {
+          if (board.state) {
+            originalHandleResize.apply(board.view, args);
+          }
+        };
+
         if (isMounted) {
           chessboardInstance.current = board;
           setIsBoardReady(true);
