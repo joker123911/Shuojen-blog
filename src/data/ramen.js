@@ -1,10 +1,10 @@
 export const ramenList = [
-  { title: "麵屋雞金", note: "我吃過的拉麵店中最好的麵條（我都選最硬），完美的扒住濃濃的雞白湯頭，加一堆蒜泥超讚。離家近還不用排隊，營業到很晚隨時想吃都可以，老闆人很好，實在是完美的一間店。", tier: "SSS", tags: ["台北"], link: "https://maps.app.goo.gl/1AcSJGq1eRKX5HJq6" },
+  { title: "麵屋雞金", note: "我吃過的拉麵店中最好的麵條（我都選最硬），完美的扒住濃濃的雞白湯頭，加一堆蒜泥超讚的還不用排隊，營業到很晚隨時想吃都可以，老闆人很好，實在是完美的一間店。", tier: "SSS", tags: ["台北"], link: "https://maps.app.goo.gl/1AcSJGq1eRKX5HJq6" },
   { title: "你回來了", note: "店面改版前後都非常美味，味道絕對可以彌補需要排隊的缺點，早營業時間 10 分鐘到就可以不用等很久了，叉燒湯頭麵條各方面都很頂尖，加點一份高麗菜也很讚。", tier: "SSS", tags: ["台北"], link: "https://www.google.com/maps/search/?api=1&query=你回來了 拉麵" },
   { title: "柑橘Shinn", note: "多年前吃到一次就很愛，清新淡雅的風味，可是又不會覺得淡，快吃完時留個三成份量，再加一次高湯，會有兩種不同的享受！但這間要排挺久，所以越來越少去了。", tier: "SSS", tags: ["台北"], link: "https://maps.app.goo.gl/mCqtrT8z5P2MjwWm8" },
   { title: "麒麟創作拉麵坊", note: "抽號碼牌後還逛了一個多小時的街才吃到，所以人生只吃過一次。但是真的滿驚豔的，很美味，加麵的時候更驚喜了，竟然還有肉塊，小確幸真的必須讚。", tier: "SSS", tags: ["台北"], link: "https://www.google.com/maps/search/?api=1&query=麒麟創作拉麵坊 拉麵" },
   { title: "らぁ麺Pete", note: "超級驚豔的一間清湯拉麵，肉品、湯頭都非常用心，層次非常豐富，而且還不太需要排隊，真的要低調的一間店。", tier: "SSS", tags: ["台北"], link: "https://www.google.com/maps/search/?api=1&query=らぁ麺Pete 拉麵" },
-  { title: "麵屋壹の穴", note: "離家近所以常吃，改版前後都不錯，以前有 99 元的無印版醬油拉麵超讚，可惜之後都沒看到了，雞白湯、煮干系、二郎系都有，我喜歡雞白湯 = 二郎系 > 煮干系。", tier: "SS", tags: ["台北"], link: "https://www.google.com/maps/search/?api=1&query=麵屋壹の穴 拉麵" },
+  { title: "麵屋壹の穴", note: "常吃，改版前後都不錯，以前有 99 元的無印版醬油拉麵超讚，可惜之後都沒看到了，雞白湯、煮干系、二郎系都有，我喜歡雞白湯 = 二郎系 > 煮干系。", tier: "SS", tags: ["台北"], link: "https://www.google.com/maps/search/?api=1&query=麵屋壹の穴 拉麵" },
   { title: "雞二拉麵", note: "雞白湯版本的二郎系，可以點份量超多也有一般份量，可惜要排隊，如果不用的話我會將這間升級到 SSS Tier。", tier: "SS", tags: ["台北"], link: "https://www.google.com/maps/search/?api=1&query=雞二拉麵 拉麵" },
   { title: "拉麵魚堺", note: "表現很好的一間清淡系拉麵，醬油或鹽味都不錯，但也是要排隊，就不會想特別跑一趟去吃了。", tier: "SS", tags: ["台北"], link: "https://www.google.com/maps/search/?api=1&query=拉麵魚堺 拉麵" },
   { title: "豚人拉麵", note: "好吃，有很酷的天龍麵，特別限定的二郎系也很讚，吃起來很過癮，人不會很多。", tier: "SS", tags: ["台北"], link: "https://maps.app.goo.gl/wgMqSQSaSnUU3uVAA" },
