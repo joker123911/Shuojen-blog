@@ -11,7 +11,7 @@ const config = {
   favicon: 'img/favicon.ico',
   future: {
     v4: true,
-    faster: true,
+    experimental_faster: true, // 已修正此處的欄位名稱
   },
 
   scripts: [
@@ -237,7 +237,7 @@ const config = {
           },          
           {to: '/blog', label: '貼文', position: 'left'},
           {to: '/photography', label: '攝影集', position:'left'},
-          {to: '/random', label: '隨機', position: 'left'},                     
+          {to: '/random', label: '隨機', position: 'left'},                    
           {
             type: 'dropdown',
             label: '歷年',
@@ -256,9 +256,9 @@ const config = {
               {to: '/docs/anime', label: '動漫清單'},
               {to: '/docs/series', label: '劇集清單'},         
               {to: '/docs/ramen', label: '拉麵清單'},   
-              {to: '/docs/jinyung', label: '金庸清單'},                              
+              {to: '/docs/jinyung', label: '金庸清單'},                               
             ],
-          },                             
+          },                                            
           {
             type: 'dropdown',
             label: '關於',
@@ -267,7 +267,7 @@ const config = {
               {to: '/about', label: '網站'},
               {to: '/now', label: '近況'},
               {to: '/use', label: '愛用'}, 
-              {to: '/tool', label: '小工具'},                           
+              {to: '/tool', label: '小工具'},                          
             ],
           }, 
           {to: '/blogroll', label: '部落卷', position: 'left'},

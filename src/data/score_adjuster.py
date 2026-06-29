@@ -223,7 +223,18 @@ class MovieSorterApp:
                 f.write(f"export const {cat} = [\n")
                 # 匯出時按分數由高到低排序，保持檔案整潔
                 for m in sorted(m_list, key=lambda x: x['elo'], reverse=True):
-                    f.write(f'  {{ title: "{m["title"]}", score: {m["score"]}, note: "{m["note"]}", poster: "{m["poster"]}" }},\n')
+                    parts = []
+                    # 指定順序：title, score, note, poster
+                    for key in ['title', 'score', 'note', 'poster']:
+                        if key in m:
+                            parts.append(f'{key}: {json.dumps(m[key], ensure_ascii=False)}')
+                    # 其他動態欄位（排除已被特別處理與內部欄位）
+                    for key, val in m.items():
+                        if key not in ['title', 'score', 'note', 'poster', 'category', 'elo']:
+                            parts.append(f'{key}: {json.dumps(val, ensure_ascii=False)}')
+                    
+                    item_str = ", ".join(parts)
+                    f.write(f'  {{ {item_str} }},\n')
                 f.write("];\n\n")
         
         messagebox.showinfo("儲存成功", f"分數已更新至 {OUTPUT_JS}\n已偵測並保留類別：{', '.join(self.categories)}")
