@@ -11,7 +11,7 @@ const config = {
   favicon: 'img/favicon.ico',
   future: {
     v4: true,
-    experimental_faster: true, // 已修正此處的欄位名稱
+    faster: true, 
   },
 
   scripts: [
