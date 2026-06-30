@@ -6,6 +6,7 @@ export const ramenList = [
   { title: "らぁ麺Pete", note: "超級驚豔的一間清湯拉麵，肉品、湯頭都非常用心，層次非常豐富，而且還不太需要排隊，真的要低調的一間店。", tier: "SSS", tags: ["台北"], link: "https://www.google.com/maps/search/?api=1&query=らぁ麺Pete 拉麵" },
   { title: "麵屋壹の穴", note: "常吃，改版前後都不錯，以前有 99 元的無印版醬油拉麵超讚，可惜之後都沒看到了，雞白湯、煮干系、二郎系都有，我喜歡雞白湯 = 二郎系 > 煮干系。", tier: "SS", tags: ["台北"], link: "https://www.google.com/maps/search/?api=1&query=麵屋壹の穴 拉麵" },
   { title: "雞二拉麵", note: "雞白湯版本的二郎系，可以點份量超多也有一般份量，可惜要排隊，如果不用的話我會將這間升級到 SSS Tier。", tier: "SS", tags: ["台北"], link: "https://www.google.com/maps/search/?api=1&query=雞二拉麵 拉麵" },
+  { title: "湮鯱", note: "很鮮美的螃蟹底，清湯拉麵味道就非常濃郁了，很推薦來試一次，不過排隊人潮不少。", tier: "SS", tags: ["台北"], link: "https://maps.app.goo.gl/JdB2aQ4U5uCJ9STF7" },  
   { title: "拉麵魚堺", note: "表現很好的一間清淡系拉麵，醬油或鹽味都不錯，但也是要排隊，就不會想特別跑一趟去吃了。", tier: "SS", tags: ["台北"], link: "https://www.google.com/maps/search/?api=1&query=拉麵魚堺 拉麵" },
   { title: "豚人拉麵", note: "好吃，有很酷的天龍麵，特別限定的二郎系也很讚，吃起來很過癮，人不會很多。", tier: "SS", tags: ["台北"], link: "https://maps.app.goo.gl/wgMqSQSaSnUU3uVAA" },
   { title: "赤坂拉麵", note: "已經消失的一間店，小學時的美好記憶，算是我對日式拉麵的啟蒙。", tier: "SS", tags: ["台北"], link: "https://maps.app.goo.gl/bDbTm32WpbT5pMh18" },

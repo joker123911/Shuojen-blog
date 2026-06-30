@@ -24,7 +24,7 @@ COLOR_VS = "#ADB5BD"
 class MovieSorterApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("電影二選一評分系統 - 快速收斂版")
+        self.root.title("電影二選一評分系統")
         self.root.geometry("600x450")
         self.root.configure(bg=COLOR_BG)
         
