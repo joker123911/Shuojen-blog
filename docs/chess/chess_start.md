@@ -19,7 +19,15 @@ import { White, Black } from '/src/components/Chess/ChessGame';
 
 研究所時期，我常常跟我的研究室同學兼室友一起下棋，兩個人都不會下，就覺得特別有趣，這是我的第一盤真人對局，當時覺得自己棄堡攻殺成功太帥了，下了四十分鐘，有完整的棋譜，現在擺出來應該會覺得這個對局很好笑。
 
+
 ![img](./img/001.webp)
+
+:::note
+現在擺出來真的覺得下超爛 XD
+:::
+
+
+<White pgn="1. e4 e5 2. Nf3 Nc6 3. Bc4 Na5 4. d3 Bc5 5. Bg5 Ne7 6. Nxe5 Rf8 7. b4 Bd4 8. Qf3 Bxe5 9. bxa5 Bxa1 10. c3 f6 11. Bh4 d5 12. exd5 b6 13. O-O Ng6 14. Bb5+ Bd7 15. Re1+ Ne5 16. Rxe5+ fxe5 17. Qh5+ g6 18. Qxh7 Rf7 19. Qg8+ Rf8 20. Qxg6+ Rf7 21. Qg8+ Rf8 22. Qe6+ Qe7 23. Bxe7 Bxb5 24. Bb4+ Kd8 25. Bxf8 Bxd3 26. Qe7+ Kc8 27. Qd7+ Kb8 28. Qe7 Kc8 29. Qxe5 Kb7 30. d6 Rxf8 31. dxc7 Bxb1 32. Qe7 Rc8 33. Qb4 Rxc7 34. Qxb1 Bxc3 35. axb6 axb6 36. g3 Bd4 37. Kg2 Rf7 38. Qe4+ Ka7 39. Qxd4 Rb7 40. h4 Ka8 41. h5 b5 42. h6 b4 43. Qg7 Rxg7 44. hxg7 b3 45. axb3 Kb7 46. g8=Q Kb6 47. Qc4 Ka5 48. Kf3 Kb6 49. Ke3 Kb7 50. Qd5+ Ka7 51. Qd6 Ka8 52. Qd7 Kb8 53. Kd4 Ka8 54. Kd5 Kb8 55. Kc6 Ka8 56. Qb7#" />
 
 比起跟電腦死板的下，我跟推薦初學者找個好朋友，或是情侶夫妻一起玩，搜尋[Chess.com](https://www.chess.com/home)[^1]或是[Lichess.org](https://lichess.org/)[^2]就可以馬上開始戰鬥了，下久了就會愈來愈上癮。
 

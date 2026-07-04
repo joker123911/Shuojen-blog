@@ -54,6 +54,7 @@ export const animeList = [
   { title: "我可能不會愛你", note: "小學時看的經典台劇，忘記劇情了，但是角色滿有印象的", poster: "./img/series/我可能不會愛你.jpg", tier: "A", tags: ["台劇", "戀愛"] },
   { title: "浪漫滿屋", note: "從小跟著我媽看，家裡以前還有一整套，宋慧喬真的都不會老", poster: "./img/series/浪漫滿屋.jpg", tier: "A", tags: ["韓劇","戀愛"] },
   { title: "大老婆的反擊", note: "完全忘記在演什麼，也是小學的時候跟著媽媽看，婆媽劇經典作", poster: "./img/series/大老婆的反擊.jpg", tier: "A", tags: ["韓劇","戀愛"] },
+  { title: "全國死刑公投", note: "前面覺得滿好看的，後面越來越爛，虎頭蛇尾", poster: "./img/series/全國死刑公投.jpg", tier: "A", tags: ["韓劇", "犯罪"] },
   { title: "紙房子S1", note: "非常無言，原本期待的是高智慧犯罪，結果整團都超級不專業，果斷棄了", poster: "./img/series/紙房子.jpg", tier: "B", tags: ["歐美", "犯罪","棄坑"] },
   { title: "W－兩個世界", note: "前面不錯，後面越來越爛，看韓孝周撐過去", poster: "./img/series/W－兩個世界.jpg", tier: "B", tags: ["韓劇", "戀愛", "奇幻"] },
   { title: "暴君的廚師", note: "劇情超爛又老梗，食物看起來滿好吃的", poster: "./img/series/暴君的廚師.jpg", tier: "B", tags: ["韓劇", "戀愛","棄坑"] },
