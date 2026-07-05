@@ -247,6 +247,7 @@ export const westernMovies = [
 ];
 
 export const asiaMovies = [
+  { title: "我的棋王爺爺", score: 8.1, note: "溫暖好看的一部電影，很喜歡導演利用象棋作為文本的一部份，融入象徵劇中的三位角色，也很喜歡導演隱隱想傳達，不同立場背景也能相互理解的意涵。劇本完整、演員表現很到位，台灣電影中很厲害的一部。", poster: "./img/movie/我的棋王爺爺.jpg", tags: ["2026", "溫馨"] },
   { title: "寄生上流", score: 9.3, note: "奉導集大成神作，商業與藝術完美結合", poster: "./img/movie/寄生上流.jpg", tags: ["2019", "劇情"] },
   { title: "大佛普拉斯", score: 9.2, note: "我最喜歡的臺灣電影，黑白畫面的荒謬感極佳", poster: "./img/movie/大佛普拉斯.jpg", tags: ["2017", "劇情"] },
   { title: "盲探", score: 9.2, note: "心中最佳的劉德華電影，人物塑造劇情都滿分", poster: "./img/movie/盲探.jpg", tags: ["2013", "劇情"] },

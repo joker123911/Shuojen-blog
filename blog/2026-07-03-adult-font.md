@@ -7,7 +7,7 @@ rss_date: '2026-07-03T14:31:21+08:00'
 
 <img src={require('./img202607/002.jpg').default} width="800" alt="img" />
 
-看到 ikuka 發的[《大人字體》](https://blog.ikukaroom.com/adult-font/)時，還沒有產生想跟風[^1]的興致，但[皮皮](https://trashposts.com/blog/adult-font/)丶[侃侃而談](https://microblog.ttheng.com/grown-up-handwriting/)跟 [It's 小白](https://itsxiaobai.github.io/blog/adult-font/)都跟上後，讓我有點急了.jpg。
+看到 ikuka 發的[〈大人字體〉](https://blog.ikukaroom.com/adult-font/)時，還沒有產生想跟風[^1]的興致，但[皮皮](https://trashposts.com/blog/adult-font/)丶[侃侃而談](https://microblog.ttheng.com/grown-up-handwriting/)跟 [It's 小白](https://itsxiaobai.github.io/blog/adult-font/)都跟上後，讓我有點急了.jpg。
 
 ## 被遺忘的興趣
 
