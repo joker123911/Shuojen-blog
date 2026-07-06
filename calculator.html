@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>投資報酬試算表 - Shuojen.com</title>
+<style>
+    /* 完全對齊 Food App 的紫色系現代風格 */
+    :root {
+        --primary-purple: #6366f1; /* 擷取自圖片的紫色按鈕 */
+        --bg-color: #f8fafc;
+        --card-bg: #ffffff;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --border-color: #f1f5f9;
+        --radius-lg: 24px; /* 更大的圓角 */
+        --radius-md: 12px;
+        --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        display: flex;
+        justify-content: center;
+        padding: 40px 20px;
+        margin: 0;
+    }
+
+    .calculator-container {
+        width: 100%;
+        max-width: 650px; /* 稍微加寬以容納新欄位 */
+        background-color: var(--card-bg);
+        padding: 40px;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow);
+    }
+
+    h2 {
+        text-align: center;
+        color: var(--text-main);
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 8px;
+    }
+
+    .subtitle {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 14px;
+        margin-bottom: 30px;
+    }
+
+    .input-group {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .input-field {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .input-field label {
+        margin-bottom: 6px;
+        color: var(--text-main);
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .input-field input {
+        padding: 12px 16px;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        font-size: 16px;
+        background-color: #fcfcfc;
+        transition: all 0.2s;
+    }
+
+    .input-field input:focus {
+        outline: none;
+        border-color: var(--primary-purple);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .unit-info {
+        font-size: 12px;
+        color: var(--text-muted);
+        text-align: right;
+        margin-bottom: 12px;
+    }
+
+    /* 擲骰子決定風格的按鈕 */
+    .calculate-btn {
+        display: block;
+        width: 100%;
+        padding: 16px;
+        background-color: var(--primary-purple);
+        color: white;
+        border: none;
+        border-radius: var(--radius-md);
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.1s, background-color 0.2s;
+        margin-bottom: 20px;
+    }
+
+    .calculate-btn:hover {
+        background-color: #4f46e5;
+    }
+
+    .calculate-btn:active {
+        transform: scale(0.98);
+    }
+
+    /* 表格設計 */
+    .table-wrapper {
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+    }
+
+    .results-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .results-table th {
+        background-color: #f8fafc;
+        color: var(--text-muted);
+        font-size: 13px;
+        font-weight: 600;
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .results-table td {
+        padding: 8px;
+        border-bottom: 1px solid var(--border-color);
+        text-align: center;
+    }
+
+    .results-table input {
+        width: 80%;
+        padding: 6px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        text-align: center;
+        font-size: 14px;
+        background-color: transparent;
+    }
+
+    .results-table input:hover {
+        background-color: #f1f5f9;
+    }
+
+    .results-table input:focus {
+        outline: none;
+        background-color: #fff;
+        border-color: var(--border-color);
+    }
+
+    #error-message {
+        color: #ef4444;
+        text-align: center;
+        font-size: 14px;
+        margin-top: 10px;
+        display: none;
+    }
+
+    .footer-note {
+        text-align: center;
+        font-size: 12px;
+        color: #94a3b8;
+        margin-top: 32px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-weight: 400;
+        letter-spacing: 0.05em;
+    }
+
+    /* 手機版響應式設計 */
+    @media (max-width: 600px) {
+        body {
+            padding: 20px 10px; /* 縮小螢幕邊緣留白 */
+        }
+
+        .calculator-container {
+            padding: 24px 16px; /* 縮小內部間距保留空間給內容 */
+            border-radius: var(--radius-md);
+        }
+
+        .input-group {
+            grid-template-columns: 1fr; /* 將輸入框改為上下排列 */
+            gap: 12px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto; /* 讓表格在手機上可以左右滑動，避免跑版 */
+        }
+        
+        .results-table th, 
+        .results-table td {
+            padding: 8px 4px; /* 稍微縮小表格內距 */
+        }
+
+        .results-table input {
+            width: 90%;
+            font-size: 14px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="calculator-container">
+    <h2>📈 複利試算表</h2>
+
+    <div class="input-group">
+        <div class="input-field">
+            <label for="startAge">起始年齡</label>
+            <input type="number" id="startAge" value="27">
+        </div>
+        <div class="input-field">
+            <label for="endAge">結束年齡</label>
+            <input type="number" id="endAge" value="67">
+        </div>
+        <div class="input-field">
+            <label for="annualSavings">每年存入金額</label>
+            <input type="number" id="annualSavings" value="12">
+        </div>
+        <div class="input-field">
+            <label for="rateOfReturn">年報酬率 (%)</label>
+            <input type="number" id="rateOfReturn" value="5">
+        </div>
+    </div>
+    <div class="unit-info">金額單位：萬元</div>
+
+    <button class="calculate-btn" onclick="generateInitialTable()">產生 / 重設表格</button>
+    <p id="error-message"></p>
+
+    <div class="table-wrapper">
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>年齡</th>
+                    <th>年存</th>
+                    <th>報酬</th>
+                    <th>總金額</th>
+                    <th>總損益</th>
+                </tr>
+            </thead>
+            <tbody id="results-body">
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer-note">© Shuojen.com Financial Tool</div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', generateInitialTable);
+
+    function generateInitialTable() {
+        const startAge = parseInt(document.getElementById('startAge').value);
+        const endAge = parseInt(document.getElementById('endAge').value);
+        const annualSavings = parseFloat(document.getElementById('annualSavings').value);
+        const resultsBody = document.getElementById('results-body');
+        const errorMessage = document.getElementById('error-message');
+        resultsBody.innerHTML = '';
+        errorMessage.style.display = 'none';
+
+        if (isNaN(startAge) || isNaN(endAge) || isNaN(annualSavings) || startAge >= endAge) {
+            errorMessage.textContent = '請輸入有效數字，起始年齡須小於結束年齡。';
+            errorMessage.style.display = 'block';
+            return;
+        }
+
+        for (let age = startAge; age <= endAge; age++) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${age}</td>
+                <td><input type="number" id="savings-${age}" value="${annualSavings.toFixed(1)}" step="0.1" onchange="handleSavingsChange(${age})"></td>
+                <td id="return-${age}" style="color: #10b981; font-weight: 600;">0.0</td>
+                <td><input type="number" id="total-${age}" value="0.0" data-full-value="0.0" step="0.1" onchange="handleTotalChange(${age})" style="font-weight: 600;"></td>
+                <td id="profit-percent-${age}" style="color: #3b82f6; font-weight: 600;">0.0%</td>
+            `;
+            resultsBody.appendChild(row);
+        }
+        updateFromRow(startAge);
+    }
+
+    function handleSavingsChange(age) {
+        updateFromRow(age);
+    }
+
+    function handleTotalChange(age) {
+        const endAge = parseInt(document.getElementById('endAge').value);
+        const changedTotalInput = document.getElementById(`total-${age}`);
+        changedTotalInput.dataset.fullValue = parseFloat(changedTotalInput.value);
+
+        if (age < endAge) {
+            updateFromRow(age + 1);
+        } else {
+            // 如果是最後一年被手動修改，也重新計算當年度的損益%
+            updateProfitPercentRow(age);
+        }
+    }
+
+    function updateFromRow(startUpdateAge) {
+        const startAge = parseInt(document.getElementById('startAge').value);
+        const endAge = parseInt(document.getElementById('endAge').value);
+        const rateOfReturn = parseFloat(document.getElementById('rateOfReturn').value) / 100;
+
+        for (let age = startUpdateAge; age <= endAge; age++) {
+            const prevTotalElement = document.getElementById(`total-${age - 1}`);
+            const previousTotal = (age === startAge) ? 0 : parseFloat(prevTotalElement.dataset.fullValue || prevTotalElement.value);
+
+            const currentSavings = parseFloat(document.getElementById(`savings-${age}`).value);
+            const currentReturn = previousTotal * rateOfReturn;
+            const newTotal = previousTotal + currentReturn + currentSavings;
+
+            const totalInput = document.getElementById(`total-${age}`);
+            document.getElementById(`return-${age}`).textContent = currentReturn.toFixed(1);
+
+            totalInput.value = newTotal.toFixed(1);
+            totalInput.dataset.fullValue = newTotal.toFixed(5);
+
+            // 計算並更新該年齡的總損益%
+            updateProfitPercentRow(age);
+        }
+    }
+
+    function updateProfitPercentRow(age) {
+        const startAge = parseInt(document.getElementById('startAge').value);
+        let totalPrincipal = 0;
+
+        // 累計從起始年齡到當前年齡的總投入本金
+        for (let i = startAge; i <= age; i++) {
+            const savingsInput = document.getElementById(`savings-${i}`);
+            if (savingsInput) {
+                totalPrincipal += parseFloat(savingsInput.value || 0);
+            }
+        }
+
+        const totalInput = document.getElementById(`total-${age}`);
+        const currentTotal = parseFloat(totalInput.dataset.fullValue || totalInput.value || 0);
+
+        let profitPercent = 0;
+        if (totalPrincipal > 0) {
+            profitPercent = ((currentTotal - totalPrincipal) / totalPrincipal) * 100;
+        }
+
+        const profitPercentElement = document.getElementById(`profit-percent-${age}`);
+        if (profitPercentElement) {
+            profitPercentElement.textContent = profitPercent.toFixed(1) + '%';
+            // 依據正負值調整顏色 (正數藍色/綠色，負數紅色)
+            if (profitPercent > 0) {
+                profitPercentElement.style.color = '#3b82f6';
+            } else if (profitPercent < 0) {
+                profitPercentElement.style.color = '#ef4444';
+            } else {
+                profitPercentElement.style.color = 'var(--text-main)';
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

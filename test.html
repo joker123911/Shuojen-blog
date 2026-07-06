@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>成語迷宮 - 完整版</title>
+    <script src="puzzle.js"></script>
+    <script src="dictionary.js"></script>
+    <style>
+        /* =========================================
+           1. 載入線上饅頭字體 (Subsetting)
+           ========================================= */
+        @import url("https://font.emtech.cc/css/MantouSans");
+
+        :root { --bg: #fdf5e6; --primary: #8b4513; --highlight: #fff3cd; --border: #f39c12; --key: #e74c3c; --locked-bg: #f0f0f0; --locked-text: #bbb; --accent: #27ae60; }
+        
+        body { 
+            font-family: sans-serif; 
+            background: var(--bg); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 10px 20px; 
+            margin: 0; 
+            height: 100vh; 
+            box-sizing: border-box;
+            overflow: hidden; 
+        }
+        
+        .game-header { text-align: center; margin-bottom: 5px; }
+        .game-title { 
+            font-family: 'MantouSans', sans-serif; 
+            font-size: 120px; 
+            color: var(--primary); 
+            margin: 0; 
+            letter-spacing: 0px;
+            text-shadow: 2px 2px 0px rgba(243, 156, 18, 0.5);
+            font-weight: normal;
+        }
+
+        .top-bar { 
+            display: flex; 
+            gap: 10px; 
+            margin-bottom: 10px; 
+            align-items: center; 
+            justify-content: center; 
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .btn, select { 
+            width: 140px; 
+            height: 42px; 
+            font-family: inherit; 
+            font-size: 15px; 
+            font-weight: bold;
+            border-radius: 8px; 
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: 0.2s;
+            cursor: pointer;
+            border: 2px solid var(--primary); 
+        }
+
+        .btn { background: var(--primary); color: white; padding: 0; }
+        .btn:hover { opacity: 0.9; }
+        .btn-hint { background: var(--accent); border-color: #1e8449; }
+        .btn-nav { width: 80px; }
+
+        select { 
+            background: #fff;
+            color: #000000;
+            outline: none;
+            padding: 0 25px 0 15px; 
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b4513' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+        }
+
+        /* 彈窗樣式 */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100; justify-content: center; align-items: center; }
+        .modal-content { background: var(--bg); padding: 30px; border-radius: 12px; max-width: 450px; width: 90%; border: 4px solid var(--primary); position: relative; line-height: 1.8; overflow-y: auto; max-height: 90vh; }
+        .modal-content h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
+        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: var(--primary); font-weight: bold; }
+
+        /* 廣告彈窗專屬 */
+        #ad-modal .modal-content { text-align: center; background: #fff; }
+        .ad-placeholder { width: 100%; height: 250px; background: #eee; display: flex; align-items: center; justify-content: center; margin: 15px 0; border: 1px dashed #bbb; color: #888; }
+        #ad-timer { color: var(--key); font-weight: bold; }
+
+        .game-wrapper { position: relative; padding: 3px; background: #fff; border: 2px solid var(--primary); border-radius: 8px; width: 100%; max-width: 490px; }
+        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; background: #999; }
+        .cell { aspect-ratio: 1 / 1; background: white; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; cursor: pointer; user-select: none; position: relative; z-index: 1; transition: all 0.2s; color: black; }
+        
+        @media (max-width: 450px) { 
+            .cell { font-size: 4vw; } 
+            .game-title { font-size: 45px; } 
+            .btn, select { width: 100px; height: 38px; font-size: 13px; }
+            .btn-nav { width: 65px; }
+        }
+
+        .cell.selected { background: var(--highlight) !important; box-shadow: inset 0 0 0 2px var(--border); }
+        .cell.is-key { cursor: grab; z-index: 5; background: white !important; color: var(--primary) !important; }
+        .cell.is-key::after { 
+            content: ''; position: absolute; width: 88%; height: 88%; 
+            border: 4px solid var(--key); border-radius: 50%; z-index: 2; 
+            pointer-events: none; animation: pulse 1s infinite; 
+        }
+        .cell.is-key.active-key { background: #ffdad6 !important; outline: 2px solid var(--key); z-index: 6; }
+
+        @keyframes pulse { 0% { transform: scale(0.9); opacity: 0.7; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(0.9); opacity: 0.7; } }
+
+        #svg-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; }
+        .red-line { stroke: rgba(231, 76, 60, 0.6); stroke-width: 6; stroke-linecap: round; }
+        .black-line { stroke: rgba(0, 0, 0, 0.8); stroke-width: 6; stroke-linecap: round; }
+
+        .answer-section { margin-top: 10px; text-align: center; width: 100%; }
+        .slots { display: flex; gap: 8px; margin-top: 10px; justify-content: center; flex-wrap: wrap; }
+        .slot { 
+            width: 45px; 
+            height: 45px; 
+            border: 2px solid var(--primary); 
+            background: #fff; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            font-size: 22px; 
+            font-weight: bold; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            color: #d35400; 
+            transition: background 0.2s; 
+        }
+        .slot:empty { cursor: default; background: rgba(255,255,255,0.5); border-style: dashed; }
+        .slot.drag-over { background: #eee; border-color: var(--key); }
+        #win-msg { display: none; margin-top: 15px; color: #27ae60; font-size: 20px; font-weight: bold; }
+        
+        .footer { margin-top: 10px; padding-bottom: 10px; font-size: 12px; color: var(--primary); opacity: 0.8; }
+    </style>
+</head>
+<body ondragover="event.preventDefault()" ondrop="handleBodyDrop(event)">
+
+    <div class="game-header">
+        <h1 class="game-title">成語迷宮</h1>
+    </div>
+
+    <div class="top-bar">
+        <button class="btn btn-nav" onclick="prevLevel()">上一關</button>
+        <select id="level-select" onchange="checkAdAndLoad(this.value)"></select>
+        <button class="btn btn-nav" onclick="nextLevel()">下一關</button>
+        <button class="btn btn-hint" onclick="giveHint()">💡 提示</button>
+        <button class="btn" style="width: 90px;" onclick="toggleModal('info-modal', true)">說明</button>
+    </div>
+
+    <div id="info-modal" class="modal" onclick="toggleModal('info-modal', false)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="toggleModal('info-modal', false)">&times;</span>
+            <h3>📜 遊戲規則說明</h3>
+            <ul>
+                <li>表格中藏有數個<b>四字成語</b>，方向可能是上下、左右或對角線。</li>
+                <li>每兩個成語的交叉處可得到一個<b>關鍵字</b>。</li>
+                <li>收集所有關鍵字並拖曳至下方，組成正確的<b>俚語</b>即可過關。</li>
+                <li>若卡關了，可以使用<b>💡 提示</b>功能。</li>
+            </ul>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn" style="width: 120px; display: inline-block;" onclick="toggleModal('info-modal', false)">開始遊戲</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="ad-modal" class="modal">
+        <div class="modal-content">
+            <h3>📺 贊助商廣告</h3>
+            <div class="ad-placeholder">
+                這裡是廣告區域<br>(每 5 關出現一次)
+            </div>
+            <p>廣告剩餘時間：<span id="ad-timer">3</span> 秒</p>
+            <button id="ad-close-btn" class="btn" style="width: 150px; margin: 0 auto; display: none;" onclick="closeAd()">關閉廣告</button>
+        </div>
+    </div>
+    
+    <div class="game-wrapper">
+        <div class="grid" id="grid"></div>
+        <svg id="svg-overlay"></svg>
+    </div>
+
+    <div class="answer-section">
+        <div class="slots" id="slots"></div>
+        <div id="win-msg">🎉 正確答案，恭喜！</div>
+        <div class="footer">
+            Original by Ching-huan,Huang（黃慶桓） , Developed by shuojen.com
+        </div>
+    </div>
+
+    <script>
+        const gridEl = document.getElementById('grid');
+        const svgEl = document.getElementById('svg-overlay');
+        const slotsEl = document.getElementById('slots');
+        const levelSelect = document.getElementById('level-select');
+        const size = 12;
+
+        let selectedIndices = new Set(); 
+        let manualKeys = new Map(); 
+        let lockedCells = new Set(); 
+        let mobileSelectedChar = null; 
+        let activeKeyIdx = null; 
+        let pendingLevelIndex = null;
+
+        function toggleModal(id, show) {
+            document.getElementById(id).style.display = show ? 'flex' : 'none';
+        }
+
+        // =========================================
+        // 廣告邏輯
+        // =========================================
+        function checkAdAndLoad(index) {
+            const levelNum = parseInt(index) + 1;
+            // 每 5 關顯示一次廣告 (5, 10, 15...)
+            if (levelNum > 1 && levelNum % 5 === 0) {
+                pendingLevelIndex = index;
+                showAd();
+            } else {
+                loadLevel(index);
+            }
+        }
+
+        function showAd() {
+            toggleModal('ad-modal', true);
+            const timerEl = document.getElementById('ad-timer');
+            const closeBtn = document.getElementById('ad-close-btn');
+            let timeLeft = 3;
+            
+            closeBtn.style.display = 'none';
+            timerEl.parentElement.style.display = 'block';
+            timerEl.textContent = timeLeft;
+
+            const countdown = setInterval(() => {
+                timeLeft--;
+                timerEl.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    timerEl.parentElement.style.display = 'none';
+                    closeBtn.style.display = 'flex';
+                }
+            }, 1000);
+        }
+
+        function closeAd() {
+            toggleModal('ad-modal', false);
+            if (pendingLevelIndex !== null) {
+                loadLevel(pendingLevelIndex);
+                pendingLevelIndex = null;
+            }
+        }
+
+        // =========================================
+        // 提示邏輯
+        // =========================================
+        function giveHint() {
+            const currentPuzzle = puzzles[levelSelect.value];
+            const answerChars = currentPuzzle.answer.split('');
+            const currentSlots = Array.from(slotsEl.children);
+            
+            // 尋找第一個不正確或空的格子
+            for (let i = 0; i < answerChars.length; i++) {
+                if (currentSlots[i].textContent !== answerChars[i]) {
+                    currentSlots[i].textContent = answerChars[i];
+                    // 提示完後閃爍一下
+                    currentSlots[i].style.background = '#d5f5e3';
+                    setTimeout(() => currentSlots[i].style.background = '#fff', 500);
+                    checkWin();
+                    break;
+                }
+            }
+        }
+
+        // =========================================
+        // 核心遊戲邏輯 (保留原功能並優化)
+        // =========================================
+        function setupLevelSelect() {
+            if (typeof puzzles === 'undefined') {
+                alert("找不到題目檔 (puzzle.js)");
+                return;
+            }
+            puzzles.forEach((p, index) => {
+                const opt = document.createElement('option');
+                opt.value = index;
+                opt.textContent = `第 ${p.id} 關`;
+                levelSelect.appendChild(opt);
+            });
+            loadLevel(0);
+        }
+
+        function prevLevel() {
+            let currentIndex = parseInt(levelSelect.value);
+            if (currentIndex > 0) {
+                levelSelect.value = currentIndex - 1;
+                checkAdAndLoad(levelSelect.value);
+            }
+        }
+
+        function nextLevel() {
+            let currentIndex = parseInt(levelSelect.value);
+            if (currentIndex < puzzles.length - 1) {
+                levelSelect.value = currentIndex + 1;
+                checkAdAndLoad(levelSelect.value);
+            }
+        }
+
+        function loadLevel(index) {
+            const p = puzzles[index];
+            levelSelect.value = index; // 確保 Select 同步
+            selectedIndices.clear(); manualKeys.clear(); lockedCells.clear();
+            mobileSelectedChar = null; activeKeyIdx = null;
+            document.getElementById('win-msg').style.display = 'none';
+            initBoard(p);
+            updateVisuals();
+        }
+
+        function initBoard(puzzle) {
+            gridEl.innerHTML = '';
+            slotsEl.innerHTML = '';
+            puzzle.grid.split('').forEach((char, i) => {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.textContent = char;
+                cell.dataset.idx = i;
+                cell.onclick = () => handleCellClick(i, cell);
+                cell.ondragstart = (e) => {
+                    if (!cell.classList.contains('is-key')) return e.preventDefault();
+                    e.dataTransfer.setData('text', cell.textContent);
+                    e.dataTransfer.setData('sourceType', 'grid');
+                };
+                gridEl.appendChild(cell);
+            });
+
+            puzzle.answer.split('').forEach((_, i) => {
+                const slot = document.createElement('div');
+                slot.className = 'slot';
+                slot.dataset.slotIdx = i;
+                slot.draggable = true;
+                slot.onclick = () => { 
+                    if(mobileSelectedChar) {
+                        slot.textContent = mobileSelectedChar;
+                        mobileSelectedChar = null; activeKeyIdx = null;
+                        updateVisuals();
+                    } else {
+                        slot.textContent = ""; 
+                    }
+                    checkWin(); 
+                };
+                slot.ondragstart = (e) => {
+                    if (!slot.textContent) return e.preventDefault();
+                    e.dataTransfer.setData('text', slot.textContent);
+                    e.dataTransfer.setData('sourceType', 'slot');
+                    e.dataTransfer.setData('sourceIdx', i);
+                };
+                slot.ondragover = e => { e.preventDefault(); slot.classList.add('drag-over'); };
+                slot.ondragleave = () => slot.classList.remove('drag-over');
+                slot.ondrop = handleSlotDrop;
+                slotsEl.appendChild(slot);
+            });
+        }
+
+        function handleCellClick(idx, el) {
+            if (manualKeys.has(idx)) {
+                if (activeKeyIdx === idx) {
+                    manualKeys.get(idx).forEach(line => line.forEach(id => {
+                        lockedCells.delete(id); selectedIndices.add(id); 
+                    }));
+                    manualKeys.delete(idx); mobileSelectedChar = null; activeKeyIdx = null;
+                } else {
+                    mobileSelectedChar = el.textContent; activeKeyIdx = idx;
+                }
+                updateVisuals(); return;
+            }
+
+            if (selectedIndices.has(idx)) {
+                const combined = new Set([...selectedIndices, ...lockedCells]);
+                const validLines = getValidIdiomsAtPoint(idx, combined);
+                
+                if (validLines.length >= 2 && puzzles[levelSelect.value].answer.includes(el.textContent)) {
+                    manualKeys.set(idx, validLines);
+                    validLines.forEach(line => line.forEach(id => { 
+                        lockedCells.add(id); 
+                        selectedIndices.delete(id); 
+                    }));
+                } else {
+                    selectedIndices.delete(idx);
+                }
+            } else {
+                selectedIndices.add(idx);
+            }
+            updateVisuals();
+        }
+
+        function getValidIdiomsAtPoint(idx, set) {
+            const lines = []; const dirs = [[0,1],[1,0],[1,1],[1,-1]];
+            const r = Math.floor(idx / size), c = idx % size;
+            dirs.forEach(([dr, dc]) => {
+                for (let offset = 0; offset < 4; offset++) {
+                    let path = [];
+                    for (let i = -offset; i < 4 - offset; i++) {
+                        const nr = r + dr * i, nc = c + dc * i; const nIdx = nr * size + nc;
+                        if (nr >= 0 && nr < size && nc >= 0 && nc < size && set.has(nIdx)) path.push(nIdx); else break;
+                    }
+                    if (path.length === 4) {
+                        const word = path.map(i => gridEl.children[i].textContent).join('');
+                        if (ALL_IDIOMS.has(word) || ALL_IDIOMS.has(word.split('').reverse().join(''))) lines.push([...path]);
+                    }
+                }
+            });
+            const unique = []; const seen = new Set();
+            lines.forEach(l => { const k = [...l].sort((a,b)=>a-b).join(','); if(!seen.has(k)){ unique.push(l); seen.add(k); }});
+            return unique;
+        }
+
+        function updateVisuals() {
+            svgEl.innerHTML = '';
+            Array.from(gridEl.children).forEach((c, i) => {
+                c.classList.toggle('selected', selectedIndices.has(i));
+                c.classList.toggle('locked', lockedCells.has(i));
+                c.classList.remove('is-key', 'active-key');
+                c.draggable = manualKeys.has(i);
+                if (manualKeys.has(i)) {
+                    c.classList.add('is-key');
+                    if (activeKeyIdx === i) c.classList.add('active-key');
+                }
+            });
+            findAllValid4CharLines(selectedIndices).forEach(line => {
+                const ends = getEnds(line); drawSvgLine(ends.start, ends.end, 'red-line');
+            });
+            manualKeys.forEach(lines => lines.forEach(line => {
+                const ends = getEnds(line); drawSvgLine(ends.start, ends.end, 'black-line');
+            }));
+        }
+
+        function findAllValid4CharLines(set) {
+            const paths = []; const dirs = [[0,1],[1,0],[1,1],[1,-1]]; const seen = new Set();
+            set.forEach(idx => {
+                dirs.forEach(([dr, dc]) => {
+                    let path = [idx];
+                    for(let k=1; k<4; k++) {
+                        const nr = Math.floor(idx/size) + dr*k, nc = (idx%size) + dc*k; const nIdx = nr*size + nc;
+                        if(nr>=0 && nr<size && nc>=0 && nc<size && set.has(nIdx)) path.push(nIdx); else break;
+                    }
+                    if(path.length === 4) {
+                        const k = [...path].sort((a,b)=>a-b).join(',');
+                        if(!seen.has(k)) { paths.push(path); seen.add(k); }
+                    }
+                });
+            });
+            return paths;
+        }
+
+        function getEnds(path) {
+            const s = [...path].sort((a, b) => (Math.floor(a/size) - Math.floor(b/size)) || (a%size - b%size));
+            return { start: s[0], end: s[s.length-1] };
+        }
+
+        function drawSvgLine(sIdx, eIdx, cls) {
+            const s = gridEl.children[sIdx], e = gridEl.children[eIdx];
+            if (!s || !e) return;
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            const off = s.offsetWidth / 2;
+            line.setAttribute("x1", s.offsetLeft + off); line.setAttribute("y1", s.offsetTop + off);
+            line.setAttribute("x2", e.offsetLeft + off); line.setAttribute("y2", e.offsetTop + off);
+            line.setAttribute("class", cls); svgEl.appendChild(line);
+        }
+
+        function handleSlotDrop(e) {
+            e.preventDefault(); this.classList.remove('drag-over');
+            const char = e.dataTransfer.getData('text');
+            const type = e.dataTransfer.getData('sourceType');
+            
+            if (type === 'slot') {
+                const srcIdx = e.dataTransfer.getData('sourceIdx');
+                slotsEl.children[srcIdx].textContent = '';
+            }
+            this.textContent = char;
+            checkWin();
+        }
+
+        function handleBodyDrop(e) {
+            const type = e.dataTransfer.getData('sourceType');
+            if (type === 'slot') {
+                const srcIdx = e.dataTransfer.getData('sourceIdx');
+                if (srcIdx !== "") {
+                    slotsEl.children[srcIdx].textContent = '';
+                    checkWin();
+                }
+            }
+        }
+
+        function checkWin() {
+            const current = Array.from(document.querySelectorAll('.slot')).map(s => s.textContent).join('');
+            const isCorrect = (current === puzzles[levelSelect.value].answer);
+            document.getElementById('win-msg').style.display = isCorrect ? 'block' : 'none';
+        }
+
+        window.addEventListener('resize', updateVisuals);
+        setupLevelSelect();
+    </script>
+</body>
+</html>

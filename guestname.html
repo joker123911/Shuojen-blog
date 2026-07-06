@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猜人名遊戲 - Guess Who - Shuojen.com</title>
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-sub: #7f8c8d;
+            --btn-gray: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 20px;
+            background: var(--btn-gray);
+            color: var(--text-main);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .divider {
+            height: 4px;
+            background-color: #e2e8f0;
+            width: 100%;
+            margin-bottom: 30px;
+            border-radius: 2px;
+        }
+
+        #rules-box {
+            background: #f8fafc;
+            border: 1px solid var(--btn-gray);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-sub);
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--btn-gray);
+            border-radius: 12px;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+            text-align: center;
+        }
+
+        input:focus {
+            border-color: var(--primary-color);
+        }
+
+        button {
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover {
+            background-color: #4f46e5;
+        }
+
+        .btn-secondary {
+            background-color: var(--btn-gray);
+            color: var(--text-main);
+            margin-top: 10px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #cbd5e1;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .game-status {
+            font-size: 14px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .others-list {
+            text-align: left;
+            margin: 20px 0;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .player-item {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            font-size: 16px;
+        }
+        .player-item:last-child { border-bottom: none; }
+
+        .player-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .pass-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 32px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1 id="title-text">⌨️ 猜人名遊戲</h1>
+        <div class="top-nav">
+            <button class="btn-small" onclick="toggleRules()" id="rules-btn">遊戲規則</button>
+            <button class="btn-small" onclick="switchLang()" id="lang-btn">English</button>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="card">
+        <div id="rules-box" class="hidden">
+            <strong id="rule-title">遊戲玩法：</strong><br>
+            <span id="rule-content">
+                1. 出一個題目：大家都知道的名人。<br>
+                2. 看完別人的題目後手機傳給下一位。<br>
+                3. 每回合可以提問（是非題）或猜自己是誰。<br>
+                4. 最快猜出獲勝！
+            </span>
+        </div>
+
+        <div id="step-1">
+            <div class="game-status" id="status-1">遊戲設定</div>
+            <p id="label-player-count">請輸入總共幾個人要玩：</p>
+            <input type="number" id="player-count" value="3" min="2">
+            <button class="btn-primary" onclick="setupPlayers()" id="btn-start">開始設定</button>
+        </div>
+
+        <div id="step-2" class="hidden">
+            <div class="game-status" id="input-status"></div>
+            <div class="input-group">
+                <label id="label-name">你的名字：</label>
+                <input type="text" id="p-name" placeholder="輸入你的暱稱">
+            </div>
+            <div class="input-group">
+                <label id="label-target">你要出的題目：</label>
+                <input type="text" id="p-target" placeholder="想一個人物名字">
+            </div>
+            <button class="btn-primary" id="next-btn" onclick="savePlayerInfo()">下一位玩家</button>
+        </div>
+
+        <div id="step-3" class="hidden">
+            <div class="pass-icon">📱</div>
+            <div class="game-status" id="status-3">隱私確認</div>
+            <p id="pass-message"></p>
+            <button class="btn-primary" id="check-btn" onclick="showPlayerView()">查看資訊</button>
+        </div>
+
+        <div id="step-4" class="hidden">
+            <div class="game-status" id="view-player-name"></div>
+            <p id="label-other-targets">除了你以外，其他人的題目：</p>
+            <div class="others-list" id="others-list"></div>
+            <button class="btn-primary" onclick="handleDoneViewing()" id="btn-done">我看完了</button>
+        </div>
+
+        <div id="step-5" class="hidden">
+            <div class="pass-icon">🎉</div>
+            <div class="game-status" id="status-5">遊戲進行中</div>
+            <p id="label-recheck">有人忘記了嗎？點名字重新查看：</p>
+            <div id="recheck-grid" class="player-grid"></div>
+            <button class="btn-secondary" style="margin-top:30px" onclick="location.reload()" id="btn-restart">結束並重新開局</button>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        © Shuojen.com Guest Game
+    </div>
+</div>
+
+<script>
+    let totalPlayers = 0;
+    let playersData = [];
+    let currentInputIdx = 0;
+    let currentViewIdx = 0;
+    let currentLang = 'zh';
+    let isRechecking = false; // 追蹤是否為遊戲中重新查看
+
+    const langData = {
+        zh: {
+            title: "⌨️ 猜人名遊戲",
+            rulesBtn: "遊戲規則",
+            langBtn: "English",
+            ruleTitle: "遊戲玩法：",
+            ruleContent: "1. 出一個題目：大家都知道的名人。<br>2. 看完別人的題目後手機傳給下一位。<br>3. 每回合可以提問（是非題）或猜自己是誰。<br>4. 最快猜出獲勝！",
+            status1: "遊戲設定",
+            labelCount: "請輸入總共幾個人要玩：",
+            btnStart: "開始設定",
+            labelName: "你的名字：",
+            labelTarget: "你要出的題目：",
+            placeholderName: "輸入你的暱稱",
+            placeholderTarget: "想一個人物名字",
+            nextPlayer: "下一位玩家",
+            startGame: "開始遊戲",
+            status3: "隱私確認",
+            checkBtn: "我是 {name}，查看資訊",
+            labelOthers: "除了你以外，其他人的題目：",
+            btnDone: "我看完了",
+            status5: "遊戲進行中",
+            labelRecheck: "有人忘記了嗎？點名字重新查看：",
+            btnRestart: "結束並重新開局",
+            passTo: "請將手機傳給<br><b style='font-size:24px; color:var(--primary-color)'>{name}</b>",
+            alertFill: "請填寫完整資訊！",
+            alertMin: "至少要2個人喔！",
+            viewOf: "{name} 的視角",
+            isLabel: " 是："
+        },
+        en: {
+            title: "⌨️ Guess Who",
+            rulesBtn: "Rules",
+            langBtn: "中文",
+            ruleTitle: "How to Play:",
+            ruleContent: "1. Create a topic: A famous person everyone knows.<br>2. Check others' targets and pass the phone.<br>3. Each turn, ask a Yes/No question or guess who you are.<br>4. The first to guess correctly wins!",
+            status1: "Settings",
+            labelCount: "Enter total number of players:",
+            btnStart: "Start Setup",
+            labelName: "Your Name:",
+            labelTarget: "Your Topic:",
+            placeholderName: "Enter nickname",
+            placeholderTarget: "Think of a person",
+            nextPlayer: "Next Player",
+            startGame: "Start Game",
+            status3: "Privacy Check",
+            checkBtn: "I am {name}, view info",
+            labelOthers: "Other players' targets:",
+            btnDone: "I'm done",
+            status5: "Game in Progress",
+            labelRecheck: "Forgot? Click to re-check:",
+            btnRestart: "End & Restart",
+            passTo: "Pass the phone to<br><b style='font-size:24px; color:var(--primary-color)'>{name}</b>",
+            alertFill: "Please fill in all info!",
+            alertMin: "At least 2 players required!",
+            viewOf: "{name}'s View",
+            isLabel: " is: "
+        }
+    };
+
+    function switchLang() {
+        currentLang = currentLang === 'zh' ? 'en' : 'zh';
+        updateTexts();
+    }
+
+    function updateTexts() {
+        const d = langData[currentLang];
+        document.getElementById('title-text').innerText = d.title;
+        document.getElementById('rules-btn').innerText = d.rulesBtn;
+        document.getElementById('lang-btn').innerText = d.langBtn;
+        document.getElementById('rule-title').innerText = d.ruleTitle;
+        document.getElementById('rule-content').innerHTML = d.ruleContent;
+        document.getElementById('status-1').innerText = d.status1;
+        document.getElementById('label-player-count').innerText = d.labelCount;
+        document.getElementById('btn-start').innerText = d.btnStart;
+        document.getElementById('label-name').innerText = d.labelName;
+        document.getElementById('label-target').innerText = d.labelTarget;
+        document.getElementById('p-name').placeholder = d.placeholderName;
+        document.getElementById('p-target').placeholder = d.placeholderTarget;
+        document.getElementById('status-3').innerText = d.status3;
+        document.getElementById('label-other-targets').innerText = d.labelOthers;
+        document.getElementById('btn-done').innerText = d.btnDone;
+        document.getElementById('status-5').innerText = d.status5;
+        document.getElementById('label-recheck').innerText = d.labelRecheck;
+        document.getElementById('btn-restart').innerText = d.btnRestart;
+
+        if (playersData.length > 0) {
+            updateInputUI();
+        }
+    }
+
+    function toggleRules() {
+        document.getElementById('rules-box').classList.toggle('hidden');
+    }
+
+    function setupPlayers() {
+        totalPlayers = parseInt(document.getElementById('player-count').value);
+        if (totalPlayers < 2) return alert(langData[currentLang].alertMin);
+        document.getElementById('step-1').classList.add('hidden');
+        document.getElementById('step-2').classList.remove('hidden');
+        document.getElementById('rules-box').classList.add('hidden');
+        updateInputUI();
+    }
+
+    function updateInputUI() {
+        const d = langData[currentLang];
+        document.getElementById('input-status').innerText = `${currentInputIdx + 1} / ${totalPlayers}`;
+        document.getElementById('next-btn').innerText = (currentInputIdx === totalPlayers - 1) ? d.startGame : d.nextPlayer;
+    }
+
+    function savePlayerInfo() {
+        const name = document.getElementById('p-name').value.trim();
+        const target = document.getElementById('p-target').value.trim();
+        if (!name || !target) return alert(langData[currentLang].alertFill);
+
+        playersData.push({ name, submitted: target });
+        currentInputIdx++;
+
+        if (currentInputIdx < totalPlayers) {
+            document.getElementById('p-name').value = '';
+            document.getElementById('p-target').value = '';
+            updateInputUI();
+        } else {
+            assignTargets();
+            startViewingProcess();
+        }
+    }
+
+    function assignTargets() {
+        const allSubmitted = playersData.map(p => p.submitted);
+        for (let i = 0; i < playersData.length; i++) {
+            playersData[i].viewTarget = allSubmitted[(i + 1) % totalPlayers];
+        }
+    }
+
+    function startViewingProcess() {
+        document.getElementById('step-2').classList.add('hidden');
+        isRechecking = false;
+        showPassScreen();
+    }
+
+    function showPassScreen() {
+        const p = playersData[currentViewIdx];
+        const d = langData[currentLang];
+        document.getElementById('step-4').classList.add('hidden');
+        document.getElementById('step-5').classList.add('hidden');
+        document.getElementById('step-3').classList.remove('hidden');
+        document.getElementById('pass-message').innerHTML = d.passTo.replace('{name}', p.name);
+        document.getElementById('check-btn').innerText = d.checkBtn.replace('{name}', p.name);
+    }
+
+    function showPlayerView() {
+        const p = playersData[currentViewIdx];
+        const d = langData[currentLang];
+        document.getElementById('step-3').classList.add('hidden');
+        document.getElementById('step-4').classList.remove('hidden');
+        document.getElementById('view-player-name').innerText = d.viewOf.replace('{name}', p.name);
+
+        const list = document.getElementById('others-list');
+        list.innerHTML = '';
+        playersData.forEach((player, idx) => {
+            if (idx !== currentViewIdx) {
+                const item = document.createElement('div');
+                item.className = 'player-item';
+                item.innerHTML = `<b>${player.name}</b>${d.isLabel}<span style="color:var(--primary-color)">${player.viewTarget}</span>`;
+                list.appendChild(item);
+            }
+        });
+    }
+
+    function handleDoneViewing() {
+        if (isRechecking) {
+            showLobby();
+        } else {
+            currentViewIdx++;
+            if (currentViewIdx < totalPlayers) {
+                showPassScreen();
+            } else {
+                showLobby();
+            }
+        }
+    }
+
+    function showLobby() {
+        document.getElementById('step-4').classList.add('hidden');
+        document.getElementById('step-5').classList.remove('hidden');
+
+        const grid = document.getElementById('recheck-grid');
+        grid.innerHTML = '';
+        playersData.forEach((p, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-secondary';
+            btn.style.fontSize = '14px';
+            btn.innerText = p.name;
+            btn.onclick = () => {
+                currentViewIdx = index;
+                isRechecking = true;
+                showPassScreen();
+            };
+            grid.appendChild(btn);
+        });
+    }
+</script>
+
+</body>
+</html>

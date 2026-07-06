@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>成語迷宮</title>
+    <script src="puzzle.js"></script>
+    <script src="dictionary.js"></script>
+    <style>
+        /* =========================================
+           1. 載入線上饅頭字體 (Subsetting)
+           ========================================= */
+        @import url("https://font.emtech.cc/css/MantouSans");
+
+        :root { --bg: #fdf5e6; --primary: #8b4513; --highlight: #fff3cd; --border: #f39c12; --key: #e74c3c; --locked-bg: #f0f0f0; --locked-text: #bbb; }
+        body { font-family: sans-serif; background: var(--bg); display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; }
+        
+        /* 標題樣式 */
+        .game-header { text-align: center; margin-bottom: 20px; }
+        .game-title { 
+            font-family: 'MantouSans', sans-serif; 
+            font-size: 80px; 
+            color: var(--primary); 
+            margin: 0; 
+            letter-spacing: 0px;
+            text-shadow: 2px 2px 0px rgba(243, 156, 18, 0.5);
+            font-weight: normal;
+        }
+
+        /* 置中對齊容器 */
+        .top-bar { 
+            display: flex; 
+            gap: 10px; 
+            margin-bottom: 20px; 
+            align-items: center; 
+            justify-content: center; 
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        /* 統一按鈕與選單的大小與外觀 */
+        .btn, select { 
+            width: 140px;          /* 統一寬度 */
+            height: 42px;         /* 統一高度 */
+            font-family: inherit;  /* 繼承 body 的字體 */
+            font-size: 15px; 
+            font-weight: bold;
+            border-radius: 8px; 
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: 0.2s;
+            cursor: pointer;
+            border: 2px solid var(--primary); /* 改回原先的邊框樣式 */
+        }
+
+        .btn { 
+            background: var(--primary); 
+            color: white; 
+            padding: 0; 
+        }
+        .btn:hover { opacity: 0.9; }
+
+        /* 上一關與下一關按鈕寬度微調 */
+        .btn-nav {
+            width: 80px;
+        }
+
+        select { 
+            background: #fff;
+            color: #000000;         /* 文字改為黑色 */
+            outline: none;
+            padding: 0 25px 0 15px; /* 留出右側箭頭空間 */
+            appearance: none;
+            -webkit-appearance: none;
+            /* 箭頭顏色改回深咖啡色以匹配原邊框 */
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b4513' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+        }
+        select:hover {
+            border-color: var(--key);
+        }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 100; justify-content: center; align-items: center; }
+        .modal-content { background: var(--bg); padding: 30px; border-radius: 12px; max-width: 450px; width: 90%; border: 4px solid var(--primary); position: relative; line-height: 1.8; overflow-y: auto; max-height: 90vh; }
+        .modal-content h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
+        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: var(--primary); font-weight: bold; }
+
+        .game-wrapper { position: relative; padding: 3px; background: #fff; border: 2px solid var(--primary); border-radius: 8px; width: 100%; max-width: 490px; }
+        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; background: #999; }
+        .cell { aspect-ratio: 1 / 1; background: white; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; cursor: pointer; user-select: none; position: relative; z-index: 1; transition: all 0.2s; color: black; }
+        
+        @media (max-width: 450px) { 
+            .cell { font-size: 4vw; } 
+            .game-title { font-size: 36px; }
+            .btn, select { width: 120px; height: 38px; font-size: 14px; }
+            .btn-nav { width: 70px; }
+        }
+
+        .cell.selected { background: var(--highlight) !important; box-shadow: inset 0 0 0 2px var(--border); }
+        .cell.is-key { cursor: grab; z-index: 5; background: white !important; color: var(--primary) !important; }
+        .cell.is-key::after { 
+            content: ''; position: absolute; width: 88%; height: 88%; 
+            border: 4px solid var(--key); border-radius: 50%; z-index: 2; 
+            pointer-events: none; animation: pulse 1s infinite; 
+        }
+        .cell.is-key.active-key { background: #ffdad6 !important; outline: 2px solid var(--key); z-index: 6; }
+
+        @keyframes pulse { 0% { transform: scale(0.9); opacity: 0.7; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(0.9); opacity: 0.7; } }
+
+        #svg-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; }
+        .red-line { stroke: rgba(231, 76, 60, 0.6); stroke-width: 6; stroke-linecap: round; }
+        .black-line { stroke: rgba(0, 0, 0, 0.8); stroke-width: 6; stroke-linecap: round; }
+
+        .answer-section { margin-top: 40px; text-align: center; width: 100%; }
+        .slots { display: flex; gap: 10px; margin-top: 15px; justify-content: center; flex-wrap: wrap; }
+        .slot { width: 55px; height: 55px; border: 2px solid var(--primary); background: #fff; display: flex; justify-content: center; align-items: center; font-size: 26px; font-weight: bold; border-radius: 8px; cursor: pointer; color: #d35400; transition: background 0.2s; }
+        .slot:empty { cursor: default; background: rgba(255,255,255,0.5); border-style: dashed; }
+        .slot.drag-over { background: #eee; border-color: var(--key); }
+        #win-msg { display: none; margin-top: 25px; color: #27ae60; font-size: 24px; font-weight: bold; }
+        
+        .footer { margin-top: 40px; padding-bottom: 20px; font-size: 14px; color: var(--primary); opacity: 0.8; }
+    </style>
+</head>
+<body ondragover="event.preventDefault()" ondrop="handleBodyDrop(event)">
+
+    <div class="game-header">
+        <h1 class="game-title">成語迷宮</h1>
+    </div>
+
+    <div class="top-bar">
+        <button class="btn btn-nav" onclick="prevLevel()">上一關</button>
+        <select id="level-select" onchange="loadLevel(this.value)"></select>
+        <button class="btn btn-nav" onclick="nextLevel()">下一關</button>
+        <button class="btn" onclick="toggleModal(true)">遊戲說明</button>
+    </div>
+
+    <div id="info-modal" class="modal" onclick="toggleModal(false)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="toggleModal(false)">&times;</span>
+            <h3>📜 遊戲規則說明</h3>
+            <ul>
+                <li>表格中藏有數個<b>四字成語</b>，排列順序可能是由上而下，由左而右、由右而左，或是呈對角線，請先找出表格裡的成語。</li>
+                <li>每兩個成語的交叉處可得到一個<b>關鍵字</b>，關鍵字有可能會重複。</li>
+                <li>找到的關鍵字可組成一個<b>俚語</b>，即為最後答案。</li>
+            </ul>
+
+            <h3>🎮 遊戲操作說明</h3>
+            <ul>
+                <li><b>選取成語：</b>點擊網格中的文字，選取構成成語的四個字，四個字以上會以紅線標示。</li>
+                <li><b>取得關鍵字：</b>當兩個正確成語交叉時，點擊該交叉點會變為帶紅圈的<b>「關鍵字」</b>。</li>
+                <li><b>填寫答案：</b>
+                    <ul>
+                        <li><b>電腦：</b>將「關鍵字」直接拖曳到下方的答案空格中。</li>
+                        <li><b>手機：</b>點擊一次「關鍵字」（會變為粉紅色背景），再點擊下方的答案空格即可填入。</li>
+                    </ul>
+                </li>
+                <li><b>修改答案：</b>點擊已填入文字的空格可清除該字。</li>
+            </ul>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn" style="width: 120px; display: inline-block;" onclick="toggleModal(false)">開始遊戲</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="game-wrapper">
+        <div class="grid" id="grid"></div>
+        <svg id="svg-overlay"></svg>
+    </div>
+
+    <div class="answer-section">
+        <div class="slots" id="slots"></div>
+        <div id="win-msg">🎉 正確答案，恭喜！</div>
+        <div class="footer">
+            Original by Ching-huan,Huang（黃慶桓） , Developed by shuojen.com
+        </div>
+    </div>
+
+    <script>
+        const gridEl = document.getElementById('grid');
+        const svgEl = document.getElementById('svg-overlay');
+        const slotsEl = document.getElementById('slots');
+        const levelSelect = document.getElementById('level-select');
+        const size = 12;
+
+        let selectedIndices = new Set(); 
+        let manualKeys = new Map(); 
+        let lockedCells = new Set(); 
+        let mobileSelectedChar = null; 
+        let activeKeyIdx = null; 
+
+        function toggleModal(show) {
+            document.getElementById('info-modal').style.display = show ? 'flex' : 'none';
+        }
+
+        function setupLevelSelect() {
+            if (typeof puzzles === 'undefined') {
+                alert("找不到題目檔 (puzzle.js)");
+                return;
+            }
+            puzzles.forEach((p, index) => {
+                const opt = document.createElement('option');
+                opt.value = index;
+                opt.textContent = `第 ${p.id} 關`;
+                levelSelect.appendChild(opt);
+            });
+            loadLevel(0);
+        }
+
+        function prevLevel() {
+            let currentIndex = parseInt(levelSelect.value);
+            if (currentIndex > 0) {
+                levelSelect.value = currentIndex - 1;
+                loadLevel(levelSelect.value);
+            }
+        }
+
+        function nextLevel() {
+            let currentIndex = parseInt(levelSelect.value);
+            if (currentIndex < puzzles.length - 1) {
+                levelSelect.value = currentIndex + 1;
+                loadLevel(levelSelect.value);
+            }
+        }
+
+        function loadLevel(index) {
+            const p = puzzles[index];
+            selectedIndices.clear(); manualKeys.clear(); lockedCells.clear();
+            mobileSelectedChar = null; activeKeyIdx = null;
+            document.getElementById('win-msg').style.display = 'none';
+            initBoard(p);
+            updateVisuals();
+        }
+
+        function initBoard(puzzle) {
+            gridEl.innerHTML = '';
+            slotsEl.innerHTML = '';
+            puzzle.grid.split('').forEach((char, i) => {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.textContent = char;
+                cell.dataset.idx = i;
+                cell.onclick = () => handleCellClick(i, cell);
+                cell.ondragstart = (e) => {
+                    if (!cell.classList.contains('is-key')) return e.preventDefault();
+                    e.dataTransfer.setData('text', cell.textContent);
+                    e.dataTransfer.setData('sourceType', 'grid');
+                };
+                gridEl.appendChild(cell);
+            });
+
+            puzzle.answer.split('').forEach((_, i) => {
+                const slot = document.createElement('div');
+                slot.className = 'slot';
+                slot.dataset.slotIdx = i;
+                slot.draggable = true;
+                slot.onclick = () => { 
+                    if(mobileSelectedChar) {
+                        slot.textContent = mobileSelectedChar;
+                        mobileSelectedChar = null; activeKeyIdx = null;
+                        updateVisuals();
+                    } else {
+                        slot.textContent = ""; 
+                    }
+                    checkWin(); 
+                };
+                slot.ondragstart = (e) => {
+                    if (!slot.textContent) return e.preventDefault();
+                    e.dataTransfer.setData('text', slot.textContent);
+                    e.dataTransfer.setData('sourceType', 'slot');
+                    e.dataTransfer.setData('sourceIdx', i);
+                };
+                slot.ondragover = e => { e.preventDefault(); slot.classList.add('drag-over'); };
+                slot.ondragleave = () => slot.classList.remove('drag-over');
+                slot.ondrop = handleSlotDrop;
+                slotsEl.appendChild(slot);
+            });
+        }
+
+        function handleCellClick(idx, el) {
+            if (manualKeys.has(idx)) {
+                if (activeKeyIdx === idx) {
+                    manualKeys.get(idx).forEach(line => line.forEach(id => {
+                        lockedCells.delete(id); selectedIndices.add(id); 
+                    }));
+                    manualKeys.delete(idx); mobileSelectedChar = null; activeKeyIdx = null;
+                } else {
+                    mobileSelectedChar = el.textContent; activeKeyIdx = idx;
+                }
+                updateVisuals(); return;
+            }
+
+            if (selectedIndices.has(idx)) {
+                const combined = new Set([...selectedIndices, ...lockedCells]);
+                const validLines = getValidIdiomsAtPoint(idx, combined);
+                
+                if (validLines.length >= 2 && puzzles[levelSelect.value].answer.includes(el.textContent)) {
+                    manualKeys.set(idx, validLines);
+                    validLines.forEach(line => line.forEach(id => { 
+                        lockedCells.add(id); 
+                        selectedIndices.delete(id); 
+                    }));
+                } else {
+                    selectedIndices.delete(idx);
+                }
+            } else {
+                selectedIndices.add(idx);
+            }
+            updateVisuals();
+        }
+
+        function getValidIdiomsAtPoint(idx, set) {
+            const lines = []; const dirs = [[0,1],[1,0],[1,1],[1,-1]];
+            const r = Math.floor(idx / size), c = idx % size;
+            dirs.forEach(([dr, dc]) => {
+                for (let offset = 0; offset < 4; offset++) {
+                    let path = [];
+                    for (let i = -offset; i < 4 - offset; i++) {
+                        const nr = r + dr * i, nc = c + dc * i; const nIdx = nr * size + nc;
+                        if (nr >= 0 && nr < size && nc >= 0 && nc < size && set.has(nIdx)) path.push(nIdx); else break;
+                    }
+                    if (path.length === 4) {
+                        const word = path.map(i => gridEl.children[i].textContent).join('');
+                        if (ALL_IDIOMS.has(word) || ALL_IDIOMS.has(word.split('').reverse().join(''))) lines.push([...path]);
+                    }
+                }
+            });
+            const unique = []; const seen = new Set();
+            lines.forEach(l => { const k = [...l].sort((a,b)=>a-b).join(','); if(!seen.has(k)){ unique.push(l); seen.add(k); }});
+            return unique;
+        }
+
+        function updateVisuals() {
+            svgEl.innerHTML = '';
+            Array.from(gridEl.children).forEach((c, i) => {
+                c.classList.toggle('selected', selectedIndices.has(i));
+                c.classList.toggle('locked', lockedCells.has(i));
+                c.classList.remove('is-key', 'active-key');
+                c.draggable = manualKeys.has(i);
+                if (manualKeys.has(i)) {
+                    c.classList.add('is-key');
+                    if (activeKeyIdx === i) c.classList.add('active-key');
+                }
+            });
+            findAllValid4CharLines(selectedIndices).forEach(line => {
+                const ends = getEnds(line); drawSvgLine(ends.start, ends.end, 'red-line');
+            });
+            manualKeys.forEach(lines => lines.forEach(line => {
+                const ends = getEnds(line); drawSvgLine(ends.start, ends.end, 'black-line');
+            }));
+        }
+
+        function findAllValid4CharLines(set) {
+            const paths = []; const dirs = [[0,1],[1,0],[1,1],[1,-1]]; const seen = new Set();
+            set.forEach(idx => {
+                dirs.forEach(([dr, dc]) => {
+                    let path = [idx];
+                    for(let k=1; k<4; k++) {
+                        const nr = Math.floor(idx/size) + dr*k, nc = (idx%size) + dc*k; const nIdx = nr*size + nc;
+                        if(nr>=0 && nr<size && nc>=0 && nc<size && set.has(nIdx)) path.push(nIdx); else break;
+                    }
+                    if(path.length === 4) {
+                        const k = [...path].sort((a,b)=>a-b).join(',');
+                        if(!seen.has(k)) { paths.push(path); seen.add(k); }
+                    }
+                });
+            });
+            return paths;
+        }
+
+        function getEnds(path) {
+            const s = [...path].sort((a, b) => (Math.floor(a/size) - Math.floor(b/size)) || (a%size - b%size));
+            return { start: s[0], end: s[s.length-1] };
+        }
+
+        function drawSvgLine(sIdx, eIdx, cls) {
+            const s = gridEl.children[sIdx], e = gridEl.children[eIdx];
+            if (!s || !e) return;
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            const off = s.offsetWidth / 2;
+            line.setAttribute("x1", s.offsetLeft + off); line.setAttribute("y1", s.offsetTop + off);
+            line.setAttribute("x2", e.offsetLeft + off); line.setAttribute("y2", e.offsetTop + off);
+            line.setAttribute("class", cls); svgEl.appendChild(line);
+        }
+
+        function handleSlotDrop(e) {
+            e.preventDefault(); this.classList.remove('drag-over');
+            const char = e.dataTransfer.getData('text');
+            const type = e.dataTransfer.getData('sourceType');
+            
+            if (type === 'slot') {
+                const srcIdx = e.dataTransfer.getData('sourceIdx');
+                slotsEl.children[srcIdx].textContent = '';
+            }
+            this.textContent = char;
+            checkWin();
+        }
+
+        function handleBodyDrop(e) {
+            const type = e.dataTransfer.getData('sourceType');
+            if (type === 'slot') {
+                const srcIdx = e.dataTransfer.getData('sourceIdx');
+                if (srcIdx !== "") {
+                    slotsEl.children[srcIdx].textContent = '';
+                    checkWin();
+                }
+            }
+        }
+
+        function checkWin() {
+            const current = Array.from(document.querySelectorAll('.slot')).map(s => s.textContent).join('');
+            document.getElementById('win-msg').style.display = (current === puzzles[levelSelect.value].answer) ? 'block' : 'none';
+        }
+
+        window.addEventListener('resize', updateVisuals);
+        setupLevelSelect();
+    </script>
+</body>
+</html>
