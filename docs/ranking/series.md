@@ -6,7 +6,7 @@ slug: /series
 
 import SeriesTier from '@site/src/components/SeriesTier';
 
-*最後更新：2026-07-04*
+*最後更新：2026-07-07*
 
 我的劇集 Tier 清單！包括了歐美、日韓、台劇，有想到更多曾經看過的劇會再陸續補進來。
 

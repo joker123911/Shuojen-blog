@@ -6,7 +6,7 @@ slug: /movie_list
 
 import MovieListApp from '@site/src/components/MovieListApp';
 
-*最後更新：2026-07-06*
+*最後更新：2026-07-07*
 
 這是一份我自己專屬的 TOP RANKING 電影排名！
 

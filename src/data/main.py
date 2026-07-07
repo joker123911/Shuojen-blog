@@ -4,6 +4,8 @@ import threading
 import re
 import datetime
 import json
+import io
+from PIL import Image
 
 # ==========================================
 # 自動偵測環境：檢查是否有真實的圖形介面顯示器
@@ -83,21 +85,21 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, tags, lin
     # 路徑與格式設定
     if data_type == "movie":
         js_file = MOVIE_JS_PATH
-        js_poster_path = f"./img/movie/{base_title}.jpg"
+        js_poster_path = f"./img/movie/{base_title}.webp"
         save_dir = "../../docs/img/movie"
         target_line = f"export const {target_var} = ["
         search_type = "movie"
         poster_langs = "zh-TW,en,null"
     elif data_type == "anime":
         js_file = ANIME_JS_PATH
-        js_poster_path = f"./img/anime/{base_title}.jpg"
+        js_poster_path = f"./img/anime/{base_title}.webp"
         save_dir = "../../docs/img/anime"
         target_line = "export const animeList = ["
         search_type = "multi"
         poster_langs = "ja,zh,en,null"
     elif data_type == "series":
         js_file = SERIES_JS_PATH
-        js_poster_path = f"./img/series/{base_title}.jpg"
+        js_poster_path = f"./img/series/{base_title}.webp"
         save_dir = "../../docs/img/series"
         target_line = "export const animeList = ["
         search_type = "tv"
@@ -110,7 +112,7 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, tags, lin
         search_type = ""
         poster_langs = ""
 
-    save_poster_path = os.path.join(save_dir, f"{base_title}.jpg")
+    save_poster_path = os.path.join(save_dir, f"{base_title}.webp")
 
     # TMDB 下載邏輯
     if TMDB_API_KEY and data_type != "ramen":
@@ -165,7 +167,6 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, tags, lin
                 else:
                     m_id = None
 
-            # 抓取並儲存海報圖片
             if m_id:
                 img_api_url = f"https://api.themoviedb.org/3/{m_type}/{m_id}/images"
                 img_params = {"api_key": TMDB_API_KEY, "include_image_language": poster_langs}
@@ -181,8 +182,13 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, tags, lin
 
                 if poster_path:
                     img_bytes = requests.get(f"https://image.tmdb.org/t/p/w780{poster_path}").content
-                    with open(save_poster_path, "wb") as f:
-                        f.write(img_bytes)
+                    try:
+                        img = Image.open(io.BytesIO(img_bytes))
+                        img.save(save_poster_path, format="WEBP", quality=80)
+                    except Exception as img_err:
+                        print(f"Image conversion to WebP failed: {img_err}")
+                        with open(save_poster_path, "wb") as f:
+                            f.write(img_bytes)
         except Exception as e:
             print(f"Poster Error: {e}")
 
