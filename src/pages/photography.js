@@ -18,6 +18,20 @@ function shuffleArray(array) {
 
 // --- 1. 定義靜態樣式 (移至組件外部避免重複創建) ---
 const galleryTheme = {
+  flexContainer: {
+    maxWidth: '1600px',
+    margin: '40px auto',
+    padding: '0 10px',
+    display: 'flex',
+    gap: '15px',
+    alignItems: 'flex-start',
+  },
+  column: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '15px',
+  },
   headerTitle: {
     fontSize: '3.5rem',
     fontWeight: '400',
@@ -57,6 +71,18 @@ export default function PhotoGallery() {
   const visiblePhotos = useMemo(() => {
     return shuffledPhotos.slice(0, visibleCount);
   }, [shuffledPhotos, visibleCount]);
+
+  // 將照片分配到 3 個欄位 (還原原本的手機版顯示邏輯)
+  const columns = useMemo(() => {
+    const cols = [[], [], []];
+    visiblePhotos.forEach((photo, index) => {
+      cols[index % 3].push({
+        ...photo,
+        originalIndex: index
+      });
+    });
+    return cols;
+  }, [visiblePhotos]);
 
   const handleLoadMore = () => {
     setVisibleCount((prev) => prev + 12);
@@ -133,28 +159,32 @@ export default function PhotoGallery() {
           <p style={galleryTheme.headerSub}>Since 2019 • by Shuo Jen</p>
         </div>
 
-        {/* 這裡改用純 CSS 欄位佈局 */}
-        <div className="masonry-grid-container">
-          {visiblePhotos.map((photo, index) => {
-            const photoSrc = getFullPath(photo.src);
-            return (
-              <div key={photo.stableId} className="photo-card-wrapper">
-                <button
-                  className="photo-card"
-                  onClick={() => openLightbox(index)}
-                  aria-label={`放大觀看照片：${photo.title || '無標題'}`}
-                >
-                  <img
-                    src={photoSrc}
-                    alt={photo.title || 'Photo'}
-                    className="photo-card-img"
-                    loading={index < 4 ? "eager" : "lazy"}
-                    onLoad={(e) => e.currentTarget.classList.add('is-loaded')}
-                  />
-                </button>
-              </div>
-            );
-          })}
+        {/* 還原最一開始的 flex container 與 masonry-column 的結構 */}
+        <div className="masonry-flex-container" style={galleryTheme.flexContainer}>
+          {columns.map((colPhotos, colIdx) => (
+            <div key={`col-${colIdx}`} className={`masonry-column col-${colIdx}`} style={galleryTheme.column}>
+              {colPhotos.map((photo) => {
+                const photoSrc = getFullPath(photo.src);
+                return (
+                  <div key={photo.stableId} className="photo-card-wrapper">
+                    <button
+                      className="photo-card"
+                      onClick={() => openLightbox(photo.originalIndex)}
+                      aria-label={`放大觀看照片：${photo.title || '無標題'}`}
+                    >
+                      <img
+                        src={photoSrc}
+                        alt={photo.title || 'Photo'}
+                        className="photo-card-img"
+                        loading={photo.originalIndex < 4 ? "eager" : "lazy"}
+                        onLoad={(e) => e.currentTarget.classList.add('is-loaded')}
+                      />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          ))}
         </div>
 
         {visibleCount < shuffledPhotos.length && (
@@ -209,13 +239,10 @@ export default function PhotoGallery() {
       </main>
 
       <style>{`
-        /* --- CSS Masonry Grid 佈局優化 --- */
-        .masonry-grid-container {
-          max-width: 1600px;
-          margin: 40px auto;
-          padding: 0 20px;
-          column-count: 3;
-          column-gap: 15px;
+        /* --- 原有樣式與動態效果 --- */
+        .photo-card-wrapper {
+          width: 100%;
+          animation: cardEntrance 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
 
         /* 漸入與上滑入場動畫 */
@@ -228,12 +255,6 @@ export default function PhotoGallery() {
             opacity: 1;
             transform: translateY(0);
           }
-        }
-
-        .photo-card-wrapper {
-          break-inside: avoid; /* 防止在列中間截斷 */
-          margin-bottom: 15px;
-          animation: cardEntrance 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
 
         .photo-card {
@@ -391,11 +412,9 @@ export default function PhotoGallery() {
         @keyframes fadeIn { to { opacity: 1; } }
         @keyframes zoomIn { to { transform: scale(1); } }
 
-        /* RWD 調整 */
-        @media (max-width: 1024px) {
-          .masonry-grid-container {
-            column-count: 2;
-          }
+        /* 還原最一開始的 RWD 欄位隱藏機制 */
+        @media (max-width: 1024px) { 
+          .col-2 { display: none !important; }
           .lightbox-nav-btn {
             font-size: 3rem;
             width: 50px;
@@ -405,13 +424,12 @@ export default function PhotoGallery() {
           .next-btn { right: 15px; }
         }
         @media (max-width: 640px) {
-          .masonry-grid-container {
-            column-count: 1;
-            padding: 0 15px;
-          }
+          .col-1 { display: none !important; }
+          .masonry-flex-container { padding: 0 20px !important; }
+          h1 { font-size: 1.8rem !important; letter-spacing: 1px !important; }
           .lightbox-close-btn { top: 10px; right: 15px; font-size: 2.5rem; }
           .lightbox-nav-btn {
-            display: none; /* 手機版不顯示方向鍵，可以靠手勢或之後擴充滑動 */
+            display: none;
           }
         }
       `}</style>
