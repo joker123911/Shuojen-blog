@@ -59,6 +59,8 @@ export default function PhotoGallery() {
   const [visibleCount, setVisibleCount] = useState(12);
   const [selectedIdx, setSelectedIdx] = useState(null); // 改為記錄索引，方便左右導覽
 
+  const getFullPath = useCallback((src) => `${baseUrl}${src}`.replace(/\/+/g, '/'), [baseUrl]);
+
   // 初始化洗牌
   useEffect(() => {
     const randomized = shuffleArray(photosData).map((photo, idx) => ({
@@ -67,6 +69,16 @@ export default function PhotoGallery() {
     }));
     setShuffledPhotos(randomized);
   }, []);
+
+  // 自動預載下一批次的圖片（在點擊 Load More 之前就先由瀏覽器快取好）
+  useEffect(() => {
+    if (shuffledPhotos.length === 0) return;
+    const nextBatch = shuffledPhotos.slice(visibleCount, visibleCount + 12);
+    nextBatch.forEach((photo) => {
+      const img = new Image();
+      img.src = getFullPath(photo.src);
+    });
+  }, [visibleCount, shuffledPhotos, getFullPath]);
 
   const visiblePhotos = useMemo(() => {
     return shuffledPhotos.slice(0, visibleCount);
@@ -148,8 +160,6 @@ export default function PhotoGallery() {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [selectedPhoto, closeLightbox, showPrevPhoto, showNextPhoto]);
-
-  const getFullPath = (src) => `${baseUrl}${src}`.replace(/\/+/g, '/');
 
   return (
     <Layout title="攝影集" description="我的攝影作品展示">
@@ -242,14 +252,15 @@ export default function PhotoGallery() {
         /* --- 原有樣式與動態效果 --- */
         .photo-card-wrapper {
           width: 100%;
-          animation: cardEntrance 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+          /* 延長入場動畫時間至 1.4s，並優化緩動曲線讓上滑軌跡更流暢優雅 */
+          animation: cardEntrance 1.4s cubic-bezier(0.25, 1, 0.5, 1) both;
         }
 
         /* 漸入與上滑入場動畫 */
         @keyframes cardEntrance {
           from {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(30px);
           }
           to {
             opacity: 1;
@@ -267,7 +278,7 @@ export default function PhotoGallery() {
           overflow: hidden;
           cursor: pointer;
           box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-          transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+          transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .photo-card-img {
@@ -275,7 +286,8 @@ export default function PhotoGallery() {
           display: block;
           border-radius: 6px;
           opacity: 0;
-          transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s ease;
+          /* 將 opacity 的過渡拉長到 1.5s，使其展現極具電影感的滑順淡入，告別突兀閃爍 */
+          transition: opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), filter 0.8s ease;
         }
         
         /* 當圖片實際載入完成時，漸出顯示 */
@@ -327,7 +339,7 @@ export default function PhotoGallery() {
           align-items: center;
           z-index: 2000;
           opacity: 0;
-          animation: fadeIn 0.3s forwards;
+          animation: fadeIn 0.4s forwards;
         }
         .lightbox-content {
           position: relative;
@@ -337,7 +349,7 @@ export default function PhotoGallery() {
           flex-direction: column;
           align-items: center;
           transform: scale(0.95);
-          animation: zoomIn 0.3s forwards 0.1s;
+          animation: zoomIn 0.4s forwards 0.1s;
         }
         .lightbox-image {
           max-width: 100%;
