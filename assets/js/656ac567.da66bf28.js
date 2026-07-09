@@ -1,8 +1,17 @@
-"use strict";(self.webpackChunkmy_blog=self.webpackChunkmy_blog||[]).push([["42867"],{9959(t,i,o){o.r(i),o.d(i,{default:()=>c});var l=o(74848),p=o(96540),g=o(516),e=o(95310),r=o(10898),b=o(31731);let n={maxWidth:"1600px",margin:"40px auto",padding:"0 10px",display:"flex",gap:"15px",alignItems:"flex-start"},s={flex:1,display:"flex",flexDirection:"column",gap:"15px"},a={fontSize:"3.5rem",fontWeight:"400",fontFamily:'"Rock Salt", cursive',letterSpacing:"2px",marginBottom:"0.8rem",color:"var(--ifm-font-color-base)",whiteSpace:"nowrap"},m={fontFamily:'-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',fontSize:"0.9rem",textTransform:"uppercase",letterSpacing:"3px",fontWeight:"500",color:"var(--ifm-color-content-secondary)",opacity:.85};function c(){let{siteConfig:{baseUrl:t}}=(0,r.A)(),[i,o]=(0,p.useState)([]),[c,h]=(0,p.useState)(12),[k,u]=(0,p.useState)(null),w=(0,p.useCallback)(i=>`${t}${i}`.replace(/\/+/g,"/"),[t]);(0,p.useEffect)(()=>{o((function(t){let i=[...t];for(let t=i.length-1;t>0;t--){let o=Math.floor(Math.random()*(t+1));[i[t],i[o]]=[i[o],i[t]]}return i})(b).map((t,i)=>({...t,stableId:`photo-${i}-${t.src}`})))},[]),(0,p.useEffect)(()=>{0===i.length||i.slice(c,c+12).forEach(t=>{new Image().src=w(t.src)})},[c,i,w]);let d=(0,p.useMemo)(()=>i.slice(0,c),[i,c]),_=(0,p.useMemo)(()=>{let t=[[],[],[]];return d.forEach((i,o)=>{t[o%3].push({...i,originalIndex:o})}),t},[d]),x=(0,p.useCallback)(()=>{u(null)},[]),f=null!==k?i[k]:null,y=(0,p.useCallback)(()=>{k>0&&u(k-1)},[k]),z=(0,p.useCallback)(()=>{k<i.length-1&&(u(k+1),k+1>=c&&h(t=>t+12))},[k,i.length,c]);return(0,p.useEffect)(()=>(f?document.body.style.overflow="hidden":document.body.style.overflow="",()=>{document.body.style.overflow=""}),[f]),(0,p.useEffect)(()=>{let t=t=>{"Escape"===t.key?x():"ArrowLeft"===t.key?y():"ArrowRight"===t.key&&z()};return f&&window.addEventListener("keydown",t),()=>{window.removeEventListener("keydown",t)}},[f,x,y,z]),(0,l.jsxs)(g.A,{title:"\u651D\u5F71\u96C6",description:"\u6211\u7684\u651D\u5F71\u4F5C\u54C1\u5C55\u793A",children:[(0,l.jsxs)("main",{style:{padding:"3rem 0",minHeight:"80vh"},children:[(0,l.jsxs)("div",{style:{textAlign:"center",marginBottom:"4rem",marginTop:"2rem"},children:[(0,l.jsx)("h1",{style:a,children:"Photography"}),(0,l.jsx)("p",{style:m,children:"Since 2019 \u2022 by Shuo Jen"})]}),(0,l.jsx)("div",{className:"masonry-flex-container",style:n,children:_.map((t,i)=>(0,l.jsx)("div",{className:`masonry-column col-${i}`,style:s,children:t.map(t=>{let i=w(t.src);return(0,l.jsx)("div",{className:"photo-card-wrapper",children:(0,l.jsx)("button",{className:"photo-card",onClick:()=>{u(t.originalIndex)},"aria-label":`\u{653E}\u{5927}\u{89C0}\u{770B}\u{7167}\u{7247}\u{FF1A}${t.title||"\u7121\u6A19\u984C"}`,children:(0,l.jsx)("img",{src:i,alt:t.title||"Photo",className:"photo-card-img",loading:t.originalIndex<4?"eager":"lazy",onLoad:t=>t.currentTarget.classList.add("is-loaded")})})},t.stableId)})},`col-${i}`))}),c<i.length&&(0,l.jsx)("div",{style:{textAlign:"center",margin:"3rem 0"},children:(0,l.jsx)("button",{className:"load-more-btn",onClick:()=>{h(t=>t+12)},children:"Load More"})}),f&&(0,l.jsxs)("div",{className:"lightbox-overlay",onClick:x,children:[(0,l.jsx)("button",{className:"lightbox-close-btn",onClick:x,"aria-label":"Close",children:"\xd7"}),k>0&&(0,l.jsx)("button",{className:"lightbox-nav-btn prev-btn",onClick:t=>{t.stopPropagation(),y()},"aria-label":"\u4E0A\u4E00\u5F35",children:"\u2039"}),k<i.length-1&&(0,l.jsx)("button",{className:"lightbox-nav-btn next-btn",onClick:t=>{t.stopPropagation(),z()},"aria-label":"\u4E0B\u4E00\u5F35",children:"\u203A"}),(0,l.jsxs)("div",{className:"lightbox-content",onClick:t=>t.stopPropagation(),children:[(0,l.jsx)("img",{src:w(f.src),alt:f.title,className:"lightbox-image"}),(0,l.jsx)("div",{className:"lightbox-caption",children:(0,l.jsx)(e.A,{to:f.link,className:"lightbox-link-btn",children:"\u67E5\u770B\u539F\u6587\u8A18\u4E8B"})})]})]})]}),(0,l.jsx)("style",{children:`
-        /* --- \u{539F}\u{6709}\u{6A23}\u{5F0F}\u{8207}\u{52D5}\u{614B}\u{6548}\u{679C} --- */
+"use strict";(self.webpackChunkmy_blog=self.webpackChunkmy_blog||[]).push([["42867"],{9959(t,i,o){o.r(i),o.d(i,{default:()=>a});var l=o(74848),p=o(96540),g=o(516),e=o(95310),r=o(10898),b=o(31731);let n={fontSize:"3.5rem",fontWeight:"400",fontFamily:'"Rock Salt", cursive',letterSpacing:"2px",marginBottom:"0.8rem",color:"var(--ifm-font-color-base)",whiteSpace:"nowrap"},s={fontFamily:'-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',fontSize:"0.9rem",textTransform:"uppercase",letterSpacing:"3px",fontWeight:"500",color:"var(--ifm-color-content-secondary)",opacity:.85};function a(){let{siteConfig:{baseUrl:t}}=(0,r.A)(),[i,o]=(0,p.useState)([]),[a,m]=(0,p.useState)(12),[c,h]=(0,p.useState)(null),k=(0,p.useCallback)(i=>`${t}${i}`.replace(/\/+/g,"/"),[t]);(0,p.useEffect)(()=>{o((function(t){let i=[...t];for(let t=i.length-1;t>0;t--){let o=Math.floor(Math.random()*(t+1));[i[t],i[o]]=[i[o],i[t]]}return i})(b).map((t,i)=>({...t,stableId:`photo-${i}-${t.src}`})))},[]),(0,p.useEffect)(()=>{0===i.length||i.slice(a,a+12).forEach(t=>{new Image().src=k(t.src)})},[a,i,k]);let u=(0,p.useMemo)(()=>i.slice(0,a),[i,a]),w=(0,p.useCallback)(()=>{h(null)},[]),d=null!==c?i[c]:null,_=(0,p.useCallback)(()=>{c>0&&h(c-1)},[c]),x=(0,p.useCallback)(()=>{c<i.length-1&&(h(c+1),c+1>=a&&m(t=>t+12))},[c,i.length,a]);return(0,p.useEffect)(()=>(d?document.body.style.overflow="hidden":document.body.style.overflow="",()=>{document.body.style.overflow=""}),[d]),(0,p.useEffect)(()=>{let t=t=>{"Escape"===t.key?w():"ArrowLeft"===t.key?_():"ArrowRight"===t.key&&x()};return d&&window.addEventListener("keydown",t),()=>{window.removeEventListener("keydown",t)}},[d,w,_,x]),(0,l.jsxs)(g.A,{title:"\u651D\u5F71\u96C6",description:"\u6211\u7684\u651D\u5F71\u4F5C\u54C1\u5C55\u793A",children:[(0,l.jsxs)("main",{style:{padding:"3rem 0",minHeight:"80vh"},children:[(0,l.jsxs)("div",{style:{textAlign:"center",marginBottom:"4rem",marginTop:"2rem"},children:[(0,l.jsx)("h1",{style:n,children:"Photography"}),(0,l.jsx)("p",{style:s,children:"Since 2019 \u2022 by Shuo Jen"})]}),(0,l.jsx)("div",{className:"masonry-grid",children:u.map((t,i)=>{let o=k(t.src);return(0,l.jsx)("div",{className:"photo-card-wrapper",children:(0,l.jsx)("button",{className:"photo-card",onClick:()=>{h(i)},"aria-label":`\u{653E}\u{5927}\u{89C0}\u{770B}\u{7167}\u{7247}\u{FF1A}${t.title||"\u7121\u6A19\u984C"}`,children:(0,l.jsx)("img",{src:o,alt:t.title||"Photo",className:"photo-card-img",loading:i<4?"eager":"lazy",onLoad:t=>t.currentTarget.classList.add("is-loaded")})})},t.stableId)})}),a<i.length&&(0,l.jsx)("div",{style:{textAlign:"center",margin:"3rem 0"},children:(0,l.jsx)("button",{className:"load-more-btn",onClick:()=>{m(t=>t+12)},children:"Load More"})}),d&&(0,l.jsxs)("div",{className:"lightbox-overlay",onClick:w,children:[(0,l.jsx)("button",{className:"lightbox-close-btn",onClick:w,"aria-label":"Close",children:"\xd7"}),c>0&&(0,l.jsx)("button",{className:"lightbox-nav-btn prev-btn",onClick:t=>{t.stopPropagation(),_()},"aria-label":"\u4E0A\u4E00\u5F35",children:"\u2039"}),c<i.length-1&&(0,l.jsx)("button",{className:"lightbox-nav-btn next-btn",onClick:t=>{t.stopPropagation(),x()},"aria-label":"\u4E0B\u4E00\u5F35",children:"\u203A"}),(0,l.jsxs)("div",{className:"lightbox-content",onClick:t=>t.stopPropagation(),children:[(0,l.jsx)("img",{src:k(d.src),alt:d.title,className:"lightbox-image"}),(0,l.jsx)("div",{className:"lightbox-caption",children:(0,l.jsx)(e.A,{to:d.link,className:"lightbox-link-btn",children:"\u67E5\u770B\u539F\u6587\u8A18\u4E8B"})})]})]})]}),(0,l.jsx)("style",{children:`
+        /* --- \u{771F}\u{6B63}\u{7684} CSS Masonry Grid \u{4F48}\u{5C40} --- */
+        .masonry-grid {
+          column-count: 3;
+          column-gap: 15px;
+          max-width: 1600px;
+          margin: 40px auto;
+          padding: 0 10px;
+        }
+
         .photo-card-wrapper {
           width: 100%;
-          /* \u{5EF6}\u{9577}\u{5165}\u{5834}\u{52D5}\u{756B}\u{6642}\u{9593}\u{81F3} 1.4s\u{FF0C}\u{4E26}\u{512A}\u{5316}\u{7DE9}\u{52D5}\u{66F2}\u{7DDA}\u{8B93}\u{4E0A}\u{6ED1}\u{8ECC}\u{8DE1}\u{66F4}\u{6D41}\u{66A2}\u{512A}\u{96C5} */
+          break-inside: avoid; /* \u{9632}\u{6B62}\u{7011}\u{5E03}\u{6D41}\u{5361}\u{7247}\u{5167}\u{90E8}\u{65B7}\u{958B} */
+          margin-bottom: 15px;
           animation: cardEntrance 1.4s cubic-bezier(0.25, 1, 0.5, 1) both;
         }
 
@@ -36,7 +45,6 @@
           display: block;
           border-radius: 6px;
           opacity: 0;
-          /* \u{5C07} opacity \u{7684}\u{904E}\u{6E21}\u{62C9}\u{9577}\u{5230} 1.5s\u{FF0C}\u{4F7F}\u{5176}\u{5C55}\u{73FE}\u{6975}\u{5177}\u{96FB}\u{5F71}\u{611F}\u{7684}\u{6ED1}\u{9806}\u{6DE1}\u{5165}\u{FF0C}\u{544A}\u{5225}\u{7A81}\u{5140}\u{9583}\u{720D} */
           transition: opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), filter 0.8s ease;
         }
         
@@ -174,9 +182,11 @@
         @keyframes fadeIn { to { opacity: 1; } }
         @keyframes zoomIn { to { transform: scale(1); } }
 
-        /* \u{9084}\u{539F}\u{6700}\u{4E00}\u{958B}\u{59CB}\u{7684} RWD \u{6B04}\u{4F4D}\u{96B1}\u{85CF}\u{6A5F}\u{5236} */
+        /* --- \u{97FF}\u{61C9}\u{5F0F}\u{6B04}\u{4F4D}\u{63A7}\u{5236}\u{FF08}\u{8ABF}\u{6574}\u{6B04}\u{4F4D}\u{6578}\u{FF0C}\u{7D55}\u{4E0D}\u{96B1}\u{85CF}\u{7167}\u{7247}\u{FF09} --- */
         @media (max-width: 1024px) { 
-          .col-2 { display: none !important; }
+          .masonry-grid {
+            column-count: 2; /* \u{5E73}\u{677F}\u{986F}\u{793A}\u{96D9}\u{6B04}\u{FF0C}\u{7167}\u{7247}\u{81EA}\u{52D5}\u{91CD}\u{6392} */
+          }
           .lightbox-nav-btn {
             font-size: 3rem;
             width: 50px;
@@ -186,8 +196,10 @@
           .next-btn { right: 15px; }
         }
         @media (max-width: 640px) {
-          .col-1 { display: none !important; }
-          .masonry-flex-container { padding: 0 20px !important; }
+          .masonry-grid {
+            column-count: 1; /* \u{624B}\u{6A5F}\u{986F}\u{793A}\u{55AE}\u{6B04}\u{FF0C}\u{7167}\u{7247}\u{5B8C}\u{6574}\u{6392}\u{5217} */
+            padding: 0 20px !important;
+          }
           h1 { font-size: 1.8rem !important; letter-spacing: 1px !important; }
           .lightbox-close-btn { top: 10px; right: 15px; font-size: 2.5rem; }
           .lightbox-nav-btn {
