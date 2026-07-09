@@ -4,11 +4,27 @@
         <title>Shuo-jen Blog</title>
         <link>https://shuojen.com/blog</link>
         <description>訂閱最新的貼文！</description>
-        <lastBuildDate>Tue, 07 Jul 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 09 Jul 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>zh-TW</language>
         <copyright>Copyright © 2026 Shuo-jen Huang</copyright>
+        <item>
+            <title><![CDATA[Five album]]></title>
+            <link>https://shuojen.com/blog/2026/07/09/five_albums</link>
+            <guid>https://shuojen.com/blog/2026/07/09/five_albums</guid>
+            <pubDate>Thu, 09 Jul 2026 15:10:52 GMT</pubDate>
+            <description><![CDATA[Inspired by 皮皮.]]></description>
+            <content:encoded><![CDATA[<p>Inspired by <a href="https://trashposts.com/blog/five-albums/" target="_blank" rel="noopener noreferrer" class="">皮皮</a>.</p>
+<ol>
+<li class="">《Yo-Yo Ma Plays Bach》／馬友友</li>
+<li class="">《七里香》／周杰倫</li>
+<li class="">《The New Abnormal》／The Strokes</li>
+<li class="">《Legend》／Jannabi</li>
+<li class="">《奇蹟》／張宇</li>
+</ol>]]></content:encoded>
+            <category>music</category>
+        </item>
         <item>
             <title><![CDATA[樂透模擬器]]></title>
             <link>https://shuojen.com/blog/2026/07/07/lottery</link>
@@ -759,19 +775,6 @@
 <p>「勇敢突破自己，求新求變才會進步」，好像是個很正向的價值觀，而「知足常樂，珍惜自己擁有的會活得更富足」，似乎也很正確。</p>
 <p>我想，我還是先從鼓起勇氣改變髮型開始吧！雖然大概率會失敗，我能想像未來的我，坐在店內的鏡子前面，笑咪咪的一句話也說不出來那個場景。</p>]]></content:encoded>
             <category>life</category>
-        </item>
-        <item>
-            <title><![CDATA[貓]]></title>
-            <link>https://shuojen.com/blog/2026/06/05/cat</link>
-            <guid>https://shuojen.com/blog/2026/06/05/cat</guid>
-            <pubDate>Fri, 05 Jun 2026 01:04:30 GMT</pubDate>
-            <description><![CDATA[畫貓挑戰：解鎖一筆通關成就！]]></description>
-            <content:encoded><![CDATA[<p><a href="https://trashposts.com/blog/draw-a-cat/" target="_blank" rel="noopener noreferrer" class="">畫貓挑戰</a>：解鎖一筆通關成就！</p>
-<img src="https://shuojen.com/assets/images/001-6edfb849fa8078b5ede6800a3a4d1c6f.jpg" width="300" alt="img">
-<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>2026-06-07 更新</div><div class="admonitionContent_BuS1"><p>普通難度通關！感謝蝦波幫我代筆成功。</p><img src="https://shuojen.com/assets/images/002-dc04b56895f6474e74315759f63a817b.jpg" width="300" alt="img"></div></div>
-<p><img decoding="async" loading="lazy" alt="img" src="https://shuojen.com/assets/images/003-9cc6f48e3ae9a9487def78f7b30f635c.jpg" width="1066" height="800" class="img_ev3q">
-▲邪惡小貓路過</p>]]></content:encoded>
-            <category>fun</category>
         </item>
     </channel>
 </rss>

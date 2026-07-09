@@ -5,6 +5,17 @@
     "description": "訂閱最新的貼文！",
     "items": [
         {
+            "id": "https://shuojen.com/blog/2026/07/09/five_albums",
+            "content_html": "<p>Inspired by <a href=\"https://trashposts.com/blog/five-albums/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\">皮皮</a>.</p>\n<ol>\n<li class=\"\">《Yo-Yo Ma Plays Bach》／馬友友</li>\n<li class=\"\">《七里香》／周杰倫</li>\n<li class=\"\">《The New Abnormal》／The Strokes</li>\n<li class=\"\">《Legend》／Jannabi</li>\n<li class=\"\">《奇蹟》／張宇</li>\n</ol>",
+            "url": "https://shuojen.com/blog/2026/07/09/five_albums",
+            "title": "Five album",
+            "summary": "Inspired by 皮皮.",
+            "date_modified": "2026-07-09T15:10:52.000Z",
+            "tags": [
+                "music"
+            ]
+        },
+        {
             "id": "https://shuojen.com/blog/2026/07/07/lottery",
             "content_html": "<p>前幾天峻寶寶跟我提到一個同事都會固定買樂透。讓我想玩玩大樂透開獎模擬器！可以直接在下方輸入期望投入的預算，或直接輸入 0 開啟無限模式（直到中頭獎），體驗一下富豪的感覺。</p>\n<p>其實一直買直到中頭獎又剛好獨得的話，真的有機會賺錢的，可惜我沒有那麼多現金。想學《與龍共舞》的大陸雞買一張全餐也是可以，雖然穩賠，但是很帥。（可以請省港旗兵用打字機幫忙打一張就好）</p>\n<div class=\"theme-admonition theme-admonition-info admonition_xJq3 alert alert--info\"><div class=\"admonitionHeading_Gvgb\"><span class=\"admonitionIcon_Rf37\"><svg viewBox=\"0 0 14 16\"><path fill-rule=\"evenodd\" d=\"M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z\"></path></svg></span>資訊</div><div class=\"admonitionContent_BuS1\"><p>本模擬器獎金參考<a href=\"https://lotto.ctbcbank.com/result_all.htm#02\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\">(第 115000067 期大樂透)</a>, 並假設獎項皆為玩家獨得。單注中獎金額超過 5,000 元者，已自動扣除 20.4% 稅金（20% 扣繳稅額 + 0.4% 印花稅）。</p></div></div>\n<div style=\"font-family:var(--ifm-font-family-base);background-color:var(--ifm-card-background-color, var(--ifm-background-surface-color));border:1px solid var(--ifm-border-color);border-radius:var(--ifm-card-border-radius, 8px);padding:15px;max-width:100%;margin:20px auto;color:var(--ifm-font-color-base);box-sizing:border-box\"><h3 style=\"color:var(--ifm-color-danger);text-align:center;margin-top:0\">大樂透開獎模擬器</h3><div style=\"background-color:var(--ifm-alert-background-color, rgba(255, 186, 0, 0.1));border-left:4px solid var(--ifm-color-warning);padding:12px;margin-bottom:15px;font-size:0.9em;border-radius:0 4px 4px 0;color:var(--ifm-font-color-base)\"><strong>【本期開獎基準獎金】</strong><br>• 頭獎：4.90 億元 | 貳獎：126 萬元 | 參獎：6.1 萬元 <br>• 肆獎：1.4 萬元 | 伍獎：2,000 元 | 陸/柒/普獎：400~1,000 元</div><div style=\"margin-bottom:15px\"><label style=\"font-weight:bold;display:block;margin-bottom:5px\">請輸入模擬預算（元）：</label><input type=\"number\" style=\"width:100%;padding:8px;background-color:var(--ifm-background-color);color:var(--ifm-font-color-base);border:1px solid var(--ifm-border-color);border-radius:4px;box-sizing:border-box\" value=\"0\"><small style=\"display:block;margin-top:4px;color:var(--ifm-color-emphasis-600)\">* 每注金額為 50 元。輸入 0 代表無限模式，直到中頭獎為止。</small></div><div style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:20px\"><button style=\"background-color:var(--ifm-color-primary);color:#fff;border:none;padding:10px 16px;font-size:14px;font-weight:bold;border-radius:4px;cursor:pointer;flex:1 1 auto;max-width:150px;text-align:center\">開始模擬</button><button style=\"background-color:#e0a800;color:#fff;border:none;padding:10px 16px;font-size:14px;font-weight:bold;border-radius:4px;cursor:pointer;flex:1 1 auto;max-width:150px;text-align:center\">幫我打一張全餐</button><button style=\"background-color:var(--ifm-color-emphasis-600);color:#fff;border:none;padding:10px 16px;font-size:14px;font-weight:bold;border-radius:4px;cursor:pointer;flex:1 1 auto;max-width:100px;text-align:center\">重設</button></div></div>",
             "url": "https://shuojen.com/blog/2026/07/07/lottery",
@@ -219,17 +230,6 @@
             "date_modified": "2026-06-05T18:05:17.000Z",
             "tags": [
                 "life"
-            ]
-        },
-        {
-            "id": "https://shuojen.com/blog/2026/06/05/cat",
-            "content_html": "<p><a href=\"https://trashposts.com/blog/draw-a-cat/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\">畫貓挑戰</a>：解鎖一筆通關成就！</p>\n<img src=\"https://shuojen.com/assets/images/001-6edfb849fa8078b5ede6800a3a4d1c6f.jpg\" width=\"300\" alt=\"img\">\n<div class=\"theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary\"><div class=\"admonitionHeading_Gvgb\"><span class=\"admonitionIcon_Rf37\"><svg viewBox=\"0 0 14 16\"><path fill-rule=\"evenodd\" d=\"M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z\"></path></svg></span>2026-06-07 更新</div><div class=\"admonitionContent_BuS1\"><p>普通難度通關！感謝蝦波幫我代筆成功。</p><img src=\"https://shuojen.com/assets/images/002-dc04b56895f6474e74315759f63a817b.jpg\" width=\"300\" alt=\"img\"></div></div>\n<p><img decoding=\"async\" loading=\"lazy\" alt=\"img\" src=\"https://shuojen.com/assets/images/003-9cc6f48e3ae9a9487def78f7b30f635c.jpg\" width=\"1066\" height=\"800\" class=\"img_ev3q\">\n▲邪惡小貓路過</p>",
-            "url": "https://shuojen.com/blog/2026/06/05/cat",
-            "title": "貓",
-            "summary": "畫貓挑戰：解鎖一筆通關成就！",
-            "date_modified": "2026-06-05T01:04:30.000Z",
-            "tags": [
-                "fun"
             ]
         }
     ]
