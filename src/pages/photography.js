@@ -16,7 +16,7 @@ function shuffleArray(array) {
   return newArray;
 }
 
-// --- 1. 定義靜態樣式 (抽離耗費效能的排版樣式至下方 CSS) ---
+// --- 1. 定義靜態樣式 ---
 const galleryTheme = {
   headerTitle: {
     fontSize: '3.5rem',
@@ -139,12 +139,16 @@ export default function PhotoGallery() {
           <p style={galleryTheme.headerSub}>Since 2019 • by Shuo Jen</p>
         </div>
 
-        {/* 採用純 CSS Masonry Grid 結構，確保 RWD 時照片順暢補位不丟失 */}
-        <div className="masonry-grid">
+        {/* 改用穩定的 CSS Grid 結構，保證加載時上方照片位置絕不動搖 */}
+        <div className="gallery-grid">
           {visiblePhotos.map((photo, index) => {
             const photoSrc = getFullPath(photo.src);
             return (
-              <div key={photo.stableId} className="photo-card-wrapper">
+              <div 
+                key={photo.stableId} 
+                className="photo-card-wrapper"
+                style={{ animationDelay: `${(index % 12) * 80}ms` }} // 新批次照片享有每張 80ms 的優雅交錯登場延遲
+              >
                 <button
                   className="photo-card"
                   onClick={() => openLightbox(index)}
@@ -215,27 +219,27 @@ export default function PhotoGallery() {
       </main>
 
       <style>{`
-        /* --- 真正的 CSS Masonry Grid 佈局 --- */
-        .masonry-grid {
-          column-count: 3;
-          column-gap: 15px;
+        /* --- 穩定的 CSS Grid 佈局 --- */
+        .gallery-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr); /* 預設三欄 */
+          gap: 20px;
           max-width: 1600px;
           margin: 40px auto;
-          padding: 0 10px;
+          padding: 0 15px;
         }
 
         .photo-card-wrapper {
           width: 100%;
-          break-inside: avoid; /* 防止瀑布流卡片內部斷開 */
-          margin-bottom: 15px;
-          animation: cardEntrance 1.4s cubic-bezier(0.25, 1, 0.5, 1) both;
+          /* 採用平滑的 1 秒 ease-out 淡入向上動畫，配合動態延遲，打造高級感 */
+          animation: cardEntrance 1s ease-out both; 
         }
 
         /* 漸入與上滑入場動畫 */
         @keyframes cardEntrance {
           from {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(25px);
           }
           to {
             opacity: 1;
@@ -253,29 +257,32 @@ export default function PhotoGallery() {
           overflow: hidden;
           cursor: pointer;
           box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-          transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+          transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
         }
 
         .photo-card-img {
           width: 100%;
           display: block;
+          aspect-ratio: 3 / 2; /* 採用相機標準 3:2 比例，讓網格極度整齊且不跳動 */
+          object-fit: cover;
           border-radius: 6px;
           opacity: 0;
-          transition: opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), filter 0.8s ease;
+          /* 圖片載入完成後的流暢轉場設定 */
+          transition: opacity 1s ease-out, transform 0.4s ease-out, filter 0.4s ease;
         }
         
-        /* 當圖片實際載入完成時，漸出顯示 */
+        /* 當圖片實際載入完成時，緩緩浮現 */
         .photo-card-img.is-loaded {
           opacity: 1;
         }
 
         .photo-card:hover {
-          transform: translateY(-4px);
+          transform: translateY(-5px);
           box-shadow: 0 12px 24px rgba(0,0,0,0.2);
         }
         .photo-card:hover .photo-card-img {
           transform: scale(1.03);
-          filter: brightness(1.08);
+          filter: brightness(1.05);
         }
 
         .load-more-btn {
@@ -300,7 +307,7 @@ export default function PhotoGallery() {
           transform: translateY(-2px);
         }
 
-        /* --- Lightbox 樣式優化 --- */
+        /* --- Lightbox 樣式 --- */
         .lightbox-overlay {
           position: fixed;
           top: 0;
@@ -348,7 +355,6 @@ export default function PhotoGallery() {
         }
         .lightbox-close-btn:hover { opacity: 1; }
 
-        /* 導覽按鈕 */
         .lightbox-nav-btn {
           position: absolute;
           top: 50%;
@@ -394,14 +400,13 @@ export default function PhotoGallery() {
           background-color: rgba(255,255,255,0.4);
         }
 
-        /* 動畫定義 */
         @keyframes fadeIn { to { opacity: 1; } }
         @keyframes zoomIn { to { transform: scale(1); } }
 
-        /* --- 響應式欄位控制（調整欄位數，絕不隱藏照片） --- */
+        /* --- 響應式欄位控制 --- */
         @media (max-width: 1024px) { 
-          .masonry-grid {
-            column-count: 2; /* 平板顯示雙欄，照片自動重排 */
+          .gallery-grid {
+            grid-template-columns: repeat(2, 1fr); /* 平板雙欄 */
           }
           .lightbox-nav-btn {
             font-size: 3rem;
@@ -412,8 +417,8 @@ export default function PhotoGallery() {
           .next-btn { right: 15px; }
         }
         @media (max-width: 640px) {
-          .masonry-grid {
-            column-count: 1; /* 手機顯示單欄，照片完整排列 */
+          .gallery-grid {
+            grid-template-columns: 1fr; /* 手機單欄 */
             padding: 0 20px !important;
           }
           h1 { font-size: 1.8rem !important; letter-spacing: 1px !important; }
