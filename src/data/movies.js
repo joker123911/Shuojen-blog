@@ -1,4 +1,5 @@
 export const westernMovies = [
+  { title: "今天暫時停止", score: 7.5, note: "滿有趣的，老片版本的明日邊界", poster: "./img/movie/今天暫時停止.webp", tags: ["1993", "喜劇", "奇幻"] },
   { title: "追殺比爾", score: 7.6, note: "小時候跟爸爸在電視上看的，暴力美學真的是經典", poster: "./img/movie/追殺比爾.webp", tags: ["2003", "動作", "昆丁"] },
   { title: "從前，有個好萊塢", score: 7.3, note: "卡司超強所以期待很高，中間氣氛營造的不錯，但看完沒有到很驚豔", poster: "./img/movie/從前，有個好萊塢.webp", tags: ["2019", "劇情", "昆丁"] },
   { title: "黑暗騎士：黎明昇起", score: 7.1, note: "沒有什麼特別深刻的印象，跟第一集差不多，我倒是沒認出湯姆哈迪", poster: "./img/movie/黑暗騎士：黎明昇起.webp", tags: ["2012", "英雄", "諾蘭"] },
@@ -249,6 +250,7 @@ export const westernMovies = [
 ];
 
 export const asiaMovies = [
+  { title: "雙囍", score: 7.2, note: "寫實的各種亞洲長輩真的很恐怖，應該能引起很多人的共鳴", poster: "./img/movie/雙囍.webp", tags: ["2026", "劇情"] },
   { title: "我的棋王爺爺", score: 8.1, note: "溫暖好看的一部電影，很喜歡導演利用象棋作為文本的一部份，融入象徵劇中的三位角色，也很喜歡導演隱隱想傳達，不同立場背景也能相互理解的意涵。劇本完整、演員表現很到位，台灣電影中很厲害的一部。", poster: "./img/movie/我的棋王爺爺.webp", tags: ["2026", "溫馨"] },
   { title: "寄生上流", score: 9.3, note: "奉導集大成神作，商業與藝術完美結合", poster: "./img/movie/寄生上流.webp", tags: ["2019", "劇情"] },
   { title: "大佛普拉斯", score: 9.2, note: "我最喜歡的臺灣電影，黑白畫面的荒謬感極佳", poster: "./img/movie/大佛普拉斯.webp", tags: ["2017", "劇情"] },
