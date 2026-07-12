@@ -4,11 +4,41 @@
         <title>Shuo-jen Blog</title>
         <link>https://shuojen.com/blog</link>
         <description>訂閱最新的貼文！</description>
-        <lastBuildDate>Fri, 10 Jul 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 13 Jul 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>zh-TW</language>
         <copyright>Copyright © 2026 Shuo-jen Huang</copyright>
+        <item>
+            <title><![CDATA[淦源GAN V100]]></title>
+            <link>https://shuojen.com/blog/2026/07/12/gan100v</link>
+            <guid>https://shuojen.com/blog/2026/07/12/gan100v</guid>
+            <pubDate>Sun, 12 Jul 2026 16:08:55 GMT</pubDate>
+            <description><![CDATA[颱風天手滑買了一個新玩具，好幾年沒買新方塊了，來體驗一下科技的進步。]]></description>
+            <content:encoded><![CDATA[<p>颱風天手滑買了一個新玩具，好幾年沒買新方塊了，來體驗一下科技的進步。</p>
+<div style="display:flex;gap:10px;justify-content:center"><img src="https://shuojen.com/assets/images/001-1f30263e2d589868c05d52dbb781bd7c.webp" style="width:49%;height:auto"><img src="https://shuojen.com/assets/images/002-caba2c1a6a3126ebac8227f1d19d646d.webp" style="width:49%;height:auto"></div>
+<p>▲ 我的第一顆 UV 亮面方塊，好漂亮</p>
+<p>好久沒研究方塊，發現 GAN 竟然都出到 16 代了（手上那顆還是古早的 11 代），雖然看到魔域的威龍 v11 好像也很厲害，實力跟不上但至少能跟<a href="https://www.youtube.com/watch?v=uWAdswR7jD8" target="_blank" rel="noopener noreferrer" class="">世界冠軍</a>用同一顆方塊 XD，但最後發現 GAN 有顆 V100 很對我的胃口，掙扎過後選了這顆，最近練習起來，比較喜歡爽脆一點的手感，可能因為手太僵硬了，還有一點，魔域的白色中心塊的 LOGO 實在過不了我的審美。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="試玩個三轉">試玩個三轉<a href="https://shuojen.com/blog/2026/07/12/gan100v#%E8%A9%A6%E7%8E%A9%E5%80%8B%E4%B8%89%E8%BD%89" class="hash-link" aria-label="試玩個三轉的直接連結" title="試玩個三轉的直接連結" translate="no">​</a></h2>
+<p>在<a class="" href="https://shuojen.com/blog/2026/06/26/hobby">〈興趣需要花錢嗎〉</a>一文的留言， Hamon 提到</p>
+<blockquote>
+<p>不同的媒介工具如繪圖板甚至周邊小物，就如添加柴火一般幫助內心的熱情持續燃燒</p>
+</blockquote>
+<p>讓我覺得有點道理，希望這顆方塊的加入，能讓我更進一步在比賽中拿到平均 sub10，畢竟靠運氣在比賽中轉出一次<a class="" href="https://shuojen.com/docs/rubiks_cube/competition#2022%E5%8F%B0%E7%81%A3%E9%8C%A6%E6%A8%99%E8%B3%BD"> 8.81 </a>就退坑，也太遜了吧！</p>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>備註</div><div class="admonitionContent_BuS1"><p>完成/總計: 3/3</p><p>最佳單次
+最佳: 9.22
+最差: 11.75</p><p>3 次平均
+本次: 10.77 (σ = 1.36)
+最佳: 10.77 (σ = 1.36)</p><p>去頭尾平均:11.34(標準差=0.00)
+平均:10.77</p><p>時間列表:</p><ol>
+<li class="">11.75   D B R2 B2 F2 D2 L U2 R' D2 L F2 L2 U' B' D2 L' D' B' F</li>
+<li class="">11.34   F2 R2 B2 U2 F2 D F2 D F2 U' L2 B U R2 U' F U B' R U</li>
+<li class="">9.22   D' R2 D2 F2 L2 U2 B' D2 B L2 D2 U L2 R D F' U R' D2 B</li>
+</ol></div></div>
+<video controls="" width="320"><source src="/video/023.mp4" type="video/mp4"><p>抱歉，您的瀏覽器不支援內嵌影片。</p></video>]]></content:encoded>
+            <category>picks</category>
+            <category>toy</category>
+        </item>
         <item>
             <title><![CDATA[相聲瓦舍]]></title>
             <link>https://shuojen.com/blog/2026/07/10/comedy</link>
@@ -770,32 +800,6 @@
 </ol>
 </section>]]></content:encoded>
             <category>blog</category>
-        </item>
-        <item>
-            <title><![CDATA[傳說的洞窟]]></title>
-            <link>https://shuojen.com/blog/2026/06/07/old_game</link>
-            <guid>https://shuojen.com/blog/2026/06/07/old_game</guid>
-            <pubDate>Sun, 07 Jun 2026 08:09:47 GMT</pubDate>
-            <description><![CDATA[看到 Wiwi 的〈我的遊戲音樂記憶 ✦BBP6✦〉，讓我想起一個我的童年的遊戲，上網發現在 ptt 還找的到載點，這應該是我小時候最愛重複玩的一個遊戲了，每個職業都全破過。]]></description>
-            <content:encoded><![CDATA[<p>看到 Wiwi 的<a href="https://wiwi.blog/blog/game-music-memories" target="_blank" rel="noopener noreferrer" class="">〈我的遊戲音樂記憶 ✦BBP6✦〉</a>，讓我想起一個我的童年的遊戲，上網發現在<a href="https://www.ptt.cc/bbs/Little-Games/M.1461819549.A.152.html" target="_blank" rel="noopener noreferrer" class=""> ptt </a>還找的到載點，這應該是我小時候最愛重複玩的一個遊戲了，每個職業都全破過。</p>
-<p><img decoding="async" loading="lazy" alt="img" src="https://shuojen.com/assets/images/002-7bf3cd89299db8af9d3bdc85fa796871.png" width="640" height="480" class="img_ev3q"></p>
-<p>▲遊戲畫面</p>
-<p><img decoding="async" loading="lazy" alt="img" src="https://shuojen.com/assets/images/001-30261691490f3d4aacc383ff81b5fcb5.png" width="640" height="480" class="img_ev3q"></p>
-<p>▲職業選擇</p>
-<p>我喜歡盜賊 = 狩人 &gt; 戰士 &gt; 魔術師</p>
-<ul>
-<li class="">盜賊在骨頭裡會拿到比較多錢，可以在商店買東西，飛刀和鐵球傷害也比較高</li>
-<li class="">狩人弓箭很痛，還有一種高級弓可以穿透</li>
-<li class="">戰士普攻和盾牌防禦比較強，其實沒啥用</li>
-<li class="">魔術師用魔法書比較強一點</li>
-</ul>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="遊戲功略">遊戲功略<a href="https://shuojen.com/blog/2026/06/07/old_game#%E9%81%8A%E6%88%B2%E5%8A%9F%E7%95%A5" class="hash-link" aria-label="遊戲功略的直接連結" title="遊戲功略的直接連結" translate="no">​</a></h2>
-<p>基本上就是在各個區域探索，在藍區和綠區拿到兩種花的道具之後，走到紅區最深處跟 BOSS 單挑就結束了。</p>
-<p>有一些很有趣的設定，像是老鼠會偷你身上的東西，要去找一個貓的道具才能防老鼠，還有小時候意外拿到一個稀有道具叫「波斯的輪腕」很厲害，可以無限射出劍氣，但我只看過一兩次而已。</p>
-<p>遊戲的音樂也滿好聽的，玩這麼多次已經達到洗腦的程度了，小時候的遊戲樸實無華，但是卻可以玩的很開心，真的有點懷念，能體會 LQ7 玩到<a href="https://lq7.tw/mood/neutral-room-escape-games-elements/" target="_blank" rel="noopener noreferrer" class=""> ELEMENTS </a>有多感動了。</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="後記">後記<a href="https://shuojen.com/blog/2026/06/07/old_game#%E5%BE%8C%E8%A8%98" class="hash-link" aria-label="後記的直接連結" title="後記的直接連結" translate="no">​</a></h2>
-<p>突然又想起了<a href="https://www.youtube.com/watch?v=OLtCqI4PgAU&amp;t=2s" target="_blank" rel="noopener noreferrer" class="">小小 CS </a>這個懷舊小遊戲（原來啾啾鞋介紹過），還有蝦波跟我說《魔女之家》也很好玩，我也想玩看看，下次再來介紹吧。</p>]]></content:encoded>
-            <category>game</category>
         </item>
     </channel>
 </rss>
