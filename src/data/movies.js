@@ -1,4 +1,6 @@
 export const westernMovies = [
+  { title: "歌喉讚", score: 7.4, note: "第一集真的不錯看，輕鬆歡樂，Anna Kendrick 粉狂喜，但後面有點為出而出，1>2>3", poster: "./img/movie/歌喉讚.webp", tags: ["2012", "音樂", "喜劇"] },
+  { title: "會計師", score: 7.6, note: "會計師的角色很有魅力，Anna kendrick 很可愛加分，第二集就沒什麼興致看了", poster: "./img/movie/會計師.webp", tags: ["2016", "劇情", "犯罪"] },
   { title: "今天暫時停止", score: 7.5, note: "滿有趣的，老片版本的明日邊界", poster: "./img/movie/今天暫時停止.webp", tags: ["1993", "喜劇", "奇幻"] },
   { title: "追殺比爾", score: 7.6, note: "小時候跟爸爸在電視上看的，暴力美學真的是經典", poster: "./img/movie/追殺比爾.webp", tags: ["2003", "動作", "昆丁"] },
   { title: "從前，有個好萊塢", score: 7.3, note: "卡司超強所以期待很高，中間氣氛營造的不錯，但看完沒有到很驚豔", poster: "./img/movie/從前，有個好萊塢.webp", tags: ["2019", "劇情", "昆丁"] },

@@ -3,332 +3,455 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>魔術方塊白底十字最短路徑求解器</title>
+    <title>魔方底十字速解小幫手 - Clean Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
-        :root {
-            --bg-color: #121212;
-            --card-bg: #1e1e1e;
-            --accent-color: #00e676;
-            --text-color: #ffffff;
-            --text-muted: #aaaaaa;
-            --border-color: #333333;
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            box-sizing: border-box;
+            font-family: 'Noto Sans TC', sans-serif;
         }
-
-        .container {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-            width: 100%;
-            max-width: 600px;
-            border: 1px solid var(--border-color);
+        .mono-font {
+            font-family: 'Roboto Mono', monospace;
         }
-
-        h2 {
-            margin-top: 0;
-            text-align: center;
-            color: var(--text-color);
-            font-weight: 600;
-            letter-spacing: 0.5px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        p.description {
-            color: var(--text-muted);
-            font-size: 14px;
-            text-align: center;
-            margin-bottom: 25px;
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
         }
-
-        .input-group {
-            margin-bottom: 20px;
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
         }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-muted);
-            font-size: 14px;
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
         }
-
-        textarea {
-            width: 100%;
-            height: 80px;
-            background-color: #151515;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: #fff;
-            padding: 12px;
-            font-size: 16px;
-            font-family: monospace;
-            box-sizing: border-box;
-            resize: none;
-            transition: border-color 0.3s;
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
         }
-
-        textarea:focus {
-            border-color: var(--accent-color);
-            outline: none;
-        }
-
-        .btn-container {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        button {
-            flex: 1;
-            background-color: var(--accent-color);
-            color: #000;
-            border: none;
-            padding: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: opacity 0.2s, transform 0.1s;
-        }
-
-        button:active {
-            transform: scale(0.98);
-        }
-
-        button.secondary {
-            background-color: #333;
-            color: #fff;
-        }
-
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .result-box {
-            background-color: #151515;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-            min-height: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-sizing: border-box;
-        }
-
-        .result-title {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            align-self: flex-start;
-        }
-
-        .solution {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--accent-color);
-            text-align: center;
-            word-spacing: 6px;
-            letter-spacing: 0.5px;
-        }
-
-        .info-notes {
-            margin-top: 20px;
-            font-size: 12px;
-            color: var(--text-muted);
-            line-height: 1.6;
-            background: rgba(255,255,255,0.02);
-            padding: 12px;
-            border-radius: 8px;
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 min-h-screen flex flex-col justify-between antialiased">
 
-<div class="container">
-    <h2>魔術方塊白底十字求解器</h2>
-    <p class="description">輸入打亂代號（Scramble），快速計算出最少步數的底面白色十字解法。</p>
-    
-    <div class="input-group">
-        <label for="scrambleInput">請輸入打亂代號 (例如圖片中的範例)：</label>
-        <textarea id="scrambleInput" placeholder="例如: R2 B2 D2 B' L' U' D L2 D' R' D L2 B2 D2 L2 F L2 F R2 U2"></textarea>
+    <main class="w-full max-w-5xl mx-auto my-4 sm:my-12 p-3 sm:p-10 fade-in">
+        <div class="bg-white rounded-[2rem] shadow-2xl border border-slate-100 p-5 sm:p-10">
+            
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 pb-6 border-b border-slate-100 text-center sm:text-left">
+                <div class="flex flex-col sm:flex-row items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-xl shadow-lg shadow-indigo-200">
+                        <i class="fa-solid fa-cube"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-slate-800 tracking-tight">魔術方塊底十字練習器</h1>
+                    </div>
+                </div>
+                <span class="bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full text-sm font-bold tracking-wide shadow-sm">
+                    黃上綠前解白底
+                </span>
+            </div>
+
+            <div class="mb-8">
+                
+                <div id="scramble-display-panel" class="bg-slate-50 border border-slate-100 rounded-2xl p-5 sm:p-8 mb-4 min-h-[90px] flex items-center justify-center">
+                    <p id="scramble-text-display" class="mono-font text-lg sm:text-xl font-bold text-slate-700 tracking-wide text-center break-words w-full leading-relaxed">
+                        </p>
+                </div>
+
+                <div id="scramble-input-panel" class="bg-slate-50 border border-indigo-200 rounded-2xl p-4 sm:p-6 mb-4 hidden">
+                    <label for="scramble-textarea" class="block text-slate-700 font-medium text-sm mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-keyboard text-indigo-500"></i> 請輸入自訂打亂公式
+                    </label>
+                    <div class="flex flex-col gap-3">
+                        <textarea id="scramble-textarea" rows="2" 
+                                  class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all mono-font text-base resize-none"
+                                  placeholder="貼上打亂公式..."></textarea>
+                        <div class="flex justify-end gap-2">
+                            <button onclick="toggleInputMode(false)" class="bg-white hover:bg-slate-100 text-slate-500 border border-slate-200 font-medium px-4 py-2 rounded-xl transition-all text-sm cursor-pointer">
+                                取消
+                            </button>
+                            <button onclick="handleCustomSolve()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-5 py-2 rounded-xl transition-all text-sm shadow-md shadow-indigo-100 cursor-pointer">
+                                確認並計算
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-3">
+                    <span class="text-xs text-slate-400 flex items-center gap-1">
+                        <i class="fa-solid fa-circle-info text-slate-300"></i> 點擊下方解法右側圖標可直接複製
+                    </span>
+                    <div class="flex gap-2 w-full sm:w-auto">
+                        <button onclick="handleRandomScramble()" id="btn-random" class="flex-1 sm:flex-none bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 font-medium px-6 py-3 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm">
+                            <i class="fa-solid fa-shuffle"></i> 隨機打亂
+                        </button>
+                        <button onclick="toggleInputMode(true)" id="btn-input-trigger" class="flex-1 sm:flex-none bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-3 rounded-xl transition-all shadow-md shadow-indigo-100 flex items-center justify-center gap-2 cursor-pointer">
+                            <i class="fa-solid fa-pen-to-square"></i> 輸入打亂
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="results-container">
+                    <script>
+                        const facesInfo = [
+                            { key: 'D', label: '下底面' },
+                            { key: 'U', label: '上頂面' },
+                            { key: 'L', label: '左側面' },
+                            { key: 'R', label: '右側面' },
+                            { key: 'F', label: '前側面' },
+                            { key: 'B', label: '後側面' }
+                        ];
+                        facesInfo.forEach(f => {
+                            document.write(`
+                                <div class="bg-white border border-slate-100 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-300 transition-all shadow-sm group">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-slate-800 font-bold mono-font text-base flex items-center gap-2">
+                                            <span>${f.key}<span class="text-xs text-indigo-500 font-normal tracking-wide">(ec)</span></span>
+                                            <span class="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-normal">${f.label}</span>
+                                        </span>
+                                        <button onclick="copySolution('sol-${f.key}')" class="text-slate-400 hover:text-indigo-600 transition-colors p-1 cursor-pointer" title="複製完整解法步驟">
+                                            <i class="fa-regular fa-copy"></i>
+                                        </button>
+                                    </div>
+                                    <div id="sol-${f.key}" class="mono-font text-lg font-bold text-slate-700 bg-slate-50/50 p-3 rounded-lg border border-dashed border-slate-100 min-h-[52px] flex items-center custom-scrollbar overflow-x-auto whitespace-nowrap">
+                                        -
+                                    </div>
+                                </div>
+                            `);
+                        });
+                    </script>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="w-full max-w-5xl mx-auto px-6 mb-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-400">
+        <div>
+            © Shuojen.com 魔方底十字速解小幫手
+        </div>
+        <button onclick="resetToDefault()" class="hover:text-indigo-600 transition-colors flex items-center gap-1 cursor-pointer">
+            <i class="fa-solid fa-arrow-rotate-left"></i> 恢復預設值
+        </button>
+    </footer>
+
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-800 text-white text-sm px-4 py-2.5 rounded-xl shadow-xl transition-all opacity-0 pointer-events-none transform translate-y-2 flex items-center gap-2">
+        <i class="fa-solid fa-circle-check text-emerald-400"></i> <span id="toast-text">已複製到剪貼簿</span>
     </div>
 
-    <div class="btn-container">
-        <button class="secondary" onclick="loadExample()">載入圖片範例</button>
-        <button id="solveBtn" onclick="startSolve()">計算最少步數解</button>
-    </div>
+    <script>
+        const $ = { noop: function() {}, isArray: Array.isArray };
+        const isaac = { seed: function() {}, random: function() { return Math.random(); } };
+        const DEBUG = false;
+    </script>
 
-    <div class="result-box">
-        <div class="result-title">白底十字最短路徑解法：</div>
-        <div id="solutionOutput" class="solution">等待輸入...</div>
-    </div>
+    <script>
+var mathlib = (function() {
+	var Cnk = [], fact = [1];
+	for (var i = 0; i < 32; ++i) { Cnk[i] = []; for (var j = 0; j < 32; ++j) { Cnk[i][j] = 0; } }
+	for (var i = 0; i < 32; ++i) {
+		Cnk[i][0] = Cnk[i][i] = 1; fact[i + 1] = fact[i] * (i + 1);
+		for (var j = 1; j < i; ++j) { Cnk[i][j] = Cnk[i - 1][j - 1] + Cnk[i - 1][j]; }
+	}
+	var permMul4 = [];
+	for (var i = 0; i < 24; i++) {
+		var perm1 = []; var perm2 = []; var perm3 = []; permMul4[i] = [];
+		setNPerm(perm1, i, 4);
+		for (var j = 0; j < 24; j++) {
+			setNPerm(perm2, j, 4); for (var k = 0; k < 4; k++) { perm3[k] = perm1[perm2[k]]; }
+			permMul4[i][j] = getNPerm(perm3, 4);
+		}
+	}
+	function circleOri(arr, a, b, c, d, ori) { var temp = arr[a]; arr[a] = arr[d] ^ ori; arr[d] = arr[c] ^ ori; arr[c] = arr[b] ^ ori; arr[b] = temp ^ ori; }
+	function circle(arr) { var length = arguments.length - 1, temp = arr[arguments[length]]; for (var i = length; i > 1; i--) { arr[arguments[i]] = arr[arguments[i - 1]]; } arr[arguments[1]] = temp; return circle; }
+	function getPruning(table, index) { return table[index >> 3] >> ((index & 7) << 2) & 15; }
+	function setNPerm(arr, idx, n, even) {
+		var prt = 0; if (even < 0) { idx <<= 1; }
+		if (n >= 16) {
+			arr[n - 1] = 0;
+			for (var i = n - 2; i >= 0; i--) { arr[i] = idx % (n - i); prt ^= arr[i]; idx = ~~(idx / (n - i)); for (var j = i + 1; j < n; j--) { arr[j] >= arr[i] && arr[j]++; } }
+			if (even < 0 && (prt & 1) != 0) { var tmp = arr[n - 1]; arr[n - 1] = arr[n - 2]; arr[n - 2] = tmp; }
+			return arr;
+		}
+		var vall = 0x76543210; var valh = 0xfedcba98;
+		for (var i = 0; i < n - 1; i++) {
+			var p = fact[n - 1 - i]; var v = idx / p; idx = idx % p; prt ^= v; v <<= 2;
+			if (v >= 32) { v = v - 32; arr[i] = valh >> v & 0xf; var m = (1 << v) - 1; valh = (valh & m) + ((valh >> 4) & ~m); } 
+            else { arr[i] = vall >> v & 0xf; var m = (1 << v) - 1; vall = (vall & m) + ((vall >>> 4) & ~m) + (valh << 28); valh = valh >> 4; }
+		}
+		if (even < 0 && (prt & 1) != 0) { arr[n - 1] = arr[n - 2]; arr[n - 2] = vall & 0xf; } else { arr[n - 1] = vall & 0xf; }
+		return arr;
+	}
+	var _ = Searcher.prototype;
+	function getNPerm(arr, n, even) {
+		n = n || arr.length; var idx = 0;
+		if (n >= 16) { for (var i = 0; i < n - 1; i++) { idx *= n - i; for (var j = i + 1; j < n; j++) { arr[j] < arr[i] && idx++; } } return even < 0 ? (idx >> 1) : idx; }
+		var vall = 0x76543210; var valh = 0xfedcba98;
+		for (var i = 0; i < n - 1; i++) {
+			var v = arr[i] << 2; idx *= n - i;
+			if (v >= 32) { idx += (valh >> (v - 32)) & 0xf; valh -= 0x11111110 << (v - 32); } else { idx += (vall >> v) & 0xf; valh -= 0x11111111; vall -= 0x11111110 << v; }
+		}
+		return even < 0 ? (idx >> 1) : idx;
+	}
+	function getNParity(idx, n) { var i, p; p = 0; for (i = n - 2; i >= 0; --i) { p ^= idx % (n - i); idx = ~~(idx / (n - i)); } return p & 1; }
+	function createMove(moveTable, size, doMove, N_MOVES) { N_MOVES = N_MOVES || 6; for (var j = 0; j < N_MOVES; j++) { moveTable[j] = []; for (var i = 0; i < size; i++) { moveTable[j][i] = doMove(i, j); } } }
+	function edgeMove(arr, m) {
+		if (m == 0) { circleOri(arr, 0, 7, 8, 4, 1); } else if (m == 1) { circleOri(arr, 3, 6, 11, 7, 0); } else if (m == 2) { circleOri(arr, 0, 1, 2, 3, 0); } 
+        else if (m == 3) { circleOri(arr, 2, 5, 10, 6, 1); } else if (m == 4) { circleOri(arr, 1, 4, 9, 5, 0); } else if (m == 5) { circleOri(arr, 11, 10, 9, 8, 0); }
+	}
+	function createPrun(prun, init, size, maxd, doMove, N_MOVES, N_POWER, N_INV) {
+		var isMoveTable = $.isArray(doMove); N_MOVES = N_MOVES || 6; N_POWER = N_POWER || 3; N_INV = N_INV || 256; maxd = maxd || 256;
+		for (var i = 0, len = (size + 7) >>> 3; i < len; i++) { prun[i] = -1; }
+		if (!$.isArray(init)) { init = [init]; }
+		for (var i = 0; i < init.length; i++) { prun[init[i] >> 3] ^= 15 << ((init[i] & 7) << 2); }
+		var val = 0;
+		for (var l = 0; l <= maxd; l++) {
+			var done = 0; var inv = l >= N_INV; var fill = (l + 1) ^ 15; var find = inv ? 0xf : l; var check = inv ? l : 0xf;
+			out: for (var p = 0; p < size; p++, val >>= 4) {
+				if ((p & 7) == 0) { val = prun[p >> 3]; if (!inv && val == -1) { p += 7; continue; } }
+				if ((val & 0xf) != find) { continue; }
+				for (var m = 0; m < N_MOVES; m++) {
+					var q = p;
+					for (var c = 0; c < N_POWER; c++) {
+						q = isMoveTable ? doMove[m][q] : doMove(q, m); if (q < 0) { break; }
+						if (getPruning(prun, q) != check) { continue; }
+						++done; if (inv) { prun[p >> 3] ^= fill << ((p & 7) << 2); continue out; }
+						prun[q >> 3] ^= fill << ((q & 7) << 2);
+					}
+				}
+			}
+			if (done == 0) { break; }
+		}
+	}
+	function Searcher(isSolved, getPrun, doMove, N_AXIS, N_POWER, ckmv) {
+		this.isSolved = isSolved || function() { return true; }; this.getPrun = getPrun; this.doMove = doMove; this.N_AXIS = N_AXIS; this.N_POWER = N_POWER;
+		this.ckmv = ckmv || valedArray(N_AXIS, function(i) { return 1 << i; } );
+	}
+	_.solve = function(idx, minl, MAXL, callback, cost) { var sols = this.solveMulti([idx], minl, MAXL, callback, cost); return sols == null ? null : sols[0]; };
+	_.solveMulti = function(idxs, minl, MAXL, callback, cost) { this.sidx = 0; this.sol = []; this.length = minl; this.idxs = idxs; return this.nextMulti(MAXL, callback, cost); };
+	_.nextMulti = function(MAXL, callback, cost) {
+		this.cost = (cost || 1e9) + 1; this.callback = callback || function() { return true; };
+		for (; this.length <= MAXL; this.length++) {
+			for (; this.sidx < this.idxs.length; this.sidx++) { if (this.idaSearch(this.idxs[this.sidx], this.length, 0, -1, this.sol) == 0) { return this.cost <= 0 ? null : [this.sol, this.sidx]; } }
+			this.sidx = 0;
+		}
+		return null;
+	}
+	_.idaSearch = function(idx, maxl, depth, lm, sol) {
+		if (--this.cost <= 0) { return 0; } var prun = this.getPrun(idx); if (prun > maxl) { return prun > maxl + 1 ? 2 : 1; } 
+        else if (maxl == 0) { return this.isSolved(idx) && this.callback(sol, this.sidx) ? 0 : 1; } else if (prun == 0 && maxl == 1 && this.isSolved(idx)) { return 1; }
+		var axis = sol.length > depth ? sol[depth][0] : 0;
+		for (; axis < this.N_AXIS; axis++) {
+			if (this.ckmv[lm] >> axis & 1) { continue; }
+			var idx1 = $.isArray(idx) ? idx.slice() : idx; var pow = sol.length > depth ? sol[depth][1] : 0;
+			for (; pow < this.N_POWER; pow++) {
+				idx1 = this.doMove(idx1, axis, pow); if (idx1 == null) { break; }
+				sol[depth] = [axis, pow]; var ret = this.idaSearch(idx1, maxl - 1, depth + 1, axis, sol); if (ret == 0) { return 0; }
+				sol.pop(); if (ret == 2) { break; }
+			}
+		}
+		return 1;
+	};
+	function valedArray(len, val) { var ret = []; var isFun = typeof val == 'function'; for (var i = 0; i < len; i++) { ret[i] = isFun ? val(i) : val; } return ret; }
+	return { Cnk: Cnk, getPruning: getPruning, setNPerm: setNPerm, getNPerm: getNPerm, getNParity: getNParity, createMove: createMove, edgeMove: edgeMove, createPrun: createPrun, Searcher: Searcher };
+})();
+    </script>
 
-    <div class="info-notes">
-        <strong>使用說明與設定：</strong><br>
-        1. 預設打亂基準（WCA標準）：白頂 (U)、綠前 (F)。<br>
-        2. 計算目標：將 4 個白邊（白綠、白紅、白藍、白橘）歸位到<strong>底部 (D面)</strong>，並與四周中心塊顏色對齊。<br>
-        3. 本工具採用 BFS 演算法，保證輸出絕對是最短路徑（通常在 0 到 8 步之內）。
-    </div>
-</div>
+    <script>
+var cross = (function(createMove, edgeMove, createPrun, setNPerm, getNPerm, Cnk, getPruning) {
+	var permPrun, flipPrun;
+	var cmv = []; var pmul = []; var fmul = [];
+	function pmv(a, c) { var b = cmv[c][~~(a / 24)]; return 24 * ~~(b / 384) + pmul[a % 24][(b >> 4) % 24] }
+	function fmv(b, c) { var a = cmv[c][b >> 4]; return ~~(a / 384) << 4 | fmul[b & 15][(a >> 4) % 24] ^ a & 15 }
+	function i2f(a, c) { for (var b = 3; 0 <= b; b--) c[b] = a & 1, a >>= 1 }
+	function f2i(c) { for (var a = 0, b = 0; 4 > b; b++) a <<= 1, a |= c[b]; return a }
+	function init() {
+		init = $.noop;
+		for (var i = 0; i < 24; i++) { pmul[i] = []; } 
+		for (var i = 0; i < 16; i++) { fmul[i] = []; }
+		var pm1 = []; var pm2 = []; var pm3 = [];
+		for (var i = 0; i < 24; i++) {
+			for (var j = 0; j < 24; j++) {
+				setNPerm(pm1, i, 4); setNPerm(pm2, j, 4); for (var k = 0; k < 4; k++) { pm3[k] = pm1[pm2[k]]; } pmul[i][j] = getNPerm(pm3, 4);
+				if (i < 16) { i2f(i, pm1); for (var k = 0; k < 4; k++) { pm3[k] = pm1[pm2[k]]; } fmul[i][j] = f2i(pm3); }
+			}
+		}
+		createMove(cmv, 495, getmv); permPrun = []; flipPrun = [];
+		createPrun(permPrun, 0, 11880, 5, pmv); createPrun(flipPrun, 0, 7920, 6, fmv);
+		function getmv(comb, m) {
+			var arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; var r = 4;
+			for (var i = 0; i < 12; i++) { if (comb >= Cnk[11 - i][r]) { comb -= Cnk[11 - i][r--]; arr[i] = r << 1; } else { arr[i] = -1; } }
+			edgeMove(arr, m); comb = 0, r = 4; var t = 0; var pm = [];
+			for (var i = 0; i < 12; i++) { if (arr[i] >= 0) { comb += Cnk[11 - i][r--]; pm[r] = arr[i] >> 1; t |= (arr[i] & 1) << (3 - r); } }
+			return (comb * 24 + getNPerm(pm, 4)) << 4 | t;
+		}
+	}
+	var solvCross = new mathlib.Searcher(
+		(idx) => idx[0] + idx[1] == 0,
+		(idx) => Math.max(getPruning(permPrun, idx[0]), getPruning(flipPrun, idx[1])),
+		(idx, move) => [pmv(idx[0], move), fmv(idx[1], move)],
+		6, 3, [1, 2, 4, 9, 18, 36]
+	);
+	var moveIdx = ["FRUBLD", "FLDBRU", "FDRBUL", "FULBDR", "URBDLF", "DRFULB"];
+	function solve_cross(moves) {
+		init(); var ret = [];
+		for (var face = 0; face < 6; face++) {
+			var flip = 0; var perm = 0;
+			for (var i = 0; i < moves.length; i++) {
+				var m = moveIdx[face].indexOf("FRUBLD".charAt(moves[i][0])); var p = moves[i][2];
+				for (var j = 0; j < p; j++) { flip = fmv(flip, m); perm = pmv(perm, m); }
+			}
+			var sol = solvCross.solve([perm, flip], 0, 50);
+			for (var i = 0; i < sol.length; i++) { sol[i] = "FRUBLD".charAt(sol[i][0]) + " 2'".charAt(sol[i][1]) }
+			ret.push(sol);
+		}
+		return ret;
+	}
+	return { solve: solve_cross };
+})(mathlib.createMove, mathlib.edgeMove, mathlib.createPrun, mathlib.setNPerm, mathlib.getNPerm, mathlib.Cnk, mathlib.getPruning);
+    </script>
 
-<script>
-    // 定義 24 個邊塊面緣 (Facelets) 的索引位置
-    // 標準 WCA 狀態：U=白, D=黃, F=綠, B=藍, L=橘, R=紅
-    // 我們只追蹤 4 個白邊塊的原始面緣位置：
-    // UB(0=白, 1=藍), UL(2=白, 3=橘), UR(4=白, 5=紅), UF(6=白, 7=綠)
-    const moves = {
-        'U': [0, 2, 6, 4,   1, 3, 7, 5],
-        'D': [22, 20, 16, 18, 23, 21, 17, 19],
-        'R': [5, 11, 21, 15, 4, 10, 20, 14],
-        'L': [3, 13, 19, 9,  2, 12, 18, 8],
-        'F': [7, 14, 23, 12, 6, 15, 22, 13],
-        'B': [1, 8, 17, 10, 0, 9, 16, 11]
-    };
+    <script>
+        let currentActiveScramble = "";
 
-    const allMoves = [
-        "U", "U'", "U2", "D", "D'", "D2", 
-        "R", "R'", "R2", "L", "L'", "L2", 
-        "F", "F'", "F2", "B", "B'", "B2"
-    ];
-
-    // 載入圖片中的打亂範例
-    function loadExample() {
-        document.getElementById('scrambleInput').value = "R2 B2 D2 B' L' U' D L2 D' R' D L2 B2 D2 L2 F L2 F R2 U2";
-    }
-
-    // 執行一次基礎旋轉
-    function applyCycle(arr, cycle) {
-        let temp = arr[cycle[3]];
-        arr[cycle[3]] = arr[cycle[2]];
-        arr[cycle[2]] = arr[cycle[1]];
-        arr[cycle[1]] = arr[cycle[0]];
-        arr[cycle[0]] = temp;
-    }
-
-    function doMove(state, moveStr) {
-        let newState = [...state];
-        let base = moveStr[0];
-        let modifier = moveStr.slice(1);
-        let cycles = moves[base];
-        if (!cycles) return newState;
-
-        let count = 1;
-        if (modifier === "'") count = 3;
-        if (modifier === '2') count = 2;
-
-        for (let i = 0; i < count; i++) {
-            applyCycle(newState, cycles.slice(0, 4));
-            applyCycle(newState, cycles.slice(4, 8));
-        }
-        return newState;
-    }
-
-    // 檢查白底十字是否完成 (對齊 D 面的四個相應中心塊位置)
-    // 原始 UB邊(白=0) 應到 DB位置(16)
-    // 原始 UL邊(白=2) 應到 DL位置(18)
-    // 原始 UR邊(白=4) 應到 DR位置(20)
-    // 原始 UF邊(白=6) 應到 DF位置(22)
-    function isCrossSolved(state) {
-        return state[16] === 0 && state[18] === 2 && state[20] === 4 && state[22] === 6;
-    }
-
-    // 產生狀態特徵 Key，用來過濾重複狀態
-    function getStateKey(state) {
-        return `${state.indexOf(0)}-${state.indexOf(2)}-${state.indexOf(4)}-${state.indexOf(6)}`;
-    }
-
-    function startSolve() {
-        const scrambleText = document.getElementById('scrambleInput').value;
-        const solveBtn = document.getElementById('solveBtn');
-        const output = document.getElementById('solutionOutput');
-
-        if (!scrambleText.trim()) {
-            output.innerText = "請先輸入打亂代號";
-            return;
-        }
-
-        solveBtn.disabled = true;
-        output.innerText = "計算中...";
-
-        // 異步執行避免網頁畫面卡死
-        setTimeout(() => {
-            // 初始化方塊狀態 (0 到 23 代表 24 個邊塊面緣)
-            let state = Array.from({length: 24}, (_, i) => i);
-
-            // 解析並套用打亂代號
-            let scrambleMoves = scrambleText.trim().split(/\s+/);
-            for (let move of scrambleMoves) {
-                if (move) {
-                    state = doMove(state, move);
-                }
+        // 控制輸入框與顯示面板的翻轉切換
+        function toggleInputMode(showInput) {
+            const displayPanel = document.getElementById('scramble-display-panel');
+            const inputPanel = document.getElementById('scramble-input-panel');
+            const btnInputTrigger = document.getElementById('btn-input-trigger');
+            
+            if (showInput) {
+                displayPanel.classList.add('hidden');
+                inputPanel.classList.remove('hidden');
+                document.getElementById('scramble-textarea').value = '';
+                document.getElementById('scramble-textarea').focus();
+            } else {
+                displayPanel.classList.remove('hidden');
+                inputPanel.classList.add('hidden');
             }
+        }
 
-            // 如果已經好了
-            if (isCrossSolved(state)) {
-                output.innerText = "已是完成狀態 (0 步)";
-                solveBtn.disabled = false;
+        // 解析打亂公式數據結構
+        function parseScrambleToCstimer(scrambleStr) {
+            const faceMapping = "FRUBLD";
+            const tokens = scrambleStr.replace(/’/g, "'").replace(/`/g, "'").toUpperCase().split(/\s+/).filter(x => x.length > 0);
+            const parsedMoves = [];
+            
+            for (let token of tokens) {
+                let faceChar = token[0];
+                let faceIdx = faceMapping.indexOf(faceChar);
+                if (faceIdx === -1) continue;
+                
+                let power = 1;
+                if (token.includes("2")) { power = 2; } else if (token.includes("'")) { power = 3; }
+                parsedMoves.push([faceIdx, null, power]);
+            }
+            return parsedMoves;
+        }
+
+        // 核心解法渲染程序
+        function executeSolveEngine(scrambleText) {
+            currentActiveScramble = scrambleText;
+            document.getElementById('scramble-text-display').innerText = scrambleText;
+
+            const parsedMoves = parseScrambleToCstimer(scrambleText);
+            const solutions = cross.solve(parsedMoves); 
+
+            const faces = ['D', 'U', 'L', 'R', 'F', 'B'];
+            const rotPrefixes = ['', 'z2 ', "z' ", 'z ', "x' ", 'x '];
+
+            solutions.forEach((solArr, index) => {
+                const targetId = `sol-${faces[index]}`;
+                const displayEl = document.getElementById(targetId);
+                
+                if (solArr) {
+                    let processedSol = solArr.join(' ').replace(/\s+/g, ' ').trim();
+                    if (processedSol === '') {
+                        processedSol = "已完成十字 (0步)";
+                    }
+                    displayEl.innerText = rotPrefixes[index] + processedSol;
+                } else {
+                    displayEl.innerText = "無法解析公式";
+                }
+            });
+        }
+
+        // 處理手動輸入確認
+        function handleCustomSolve() {
+            const inputVal = document.getElementById('scramble-textarea').value.trim();
+            if (!inputVal) {
+                showToast("請輸入打亂公式", true);
                 return;
             }
+            executeSolveEngine(inputVal);
+            toggleInputMode(false); // 切換回顯示狀態
+            showToast("解法計算完成！");
+        }
 
-            // 開始 BFS 搜尋最短路徑
-            let queue = [{ state: state, path: [] }];
-            let visited = new Set();
-            visited.add(getStateKey(state));
-            let foundSolution = null;
-
-            while (queue.length > 0) {
-                let current = queue.shift();
-
-                if (isCrossSolved(current.state)) {
-                    foundSolution = current.path;
-                    break;
-                }
-
-                // 限制最大搜尋深度為 8 步 (十字通常不大於 8 步)
-                if (current.path.length >= 8) continue;
-
-                let lastMove = current.path[current.path.length - 1];
-
-                for (let move of allMoves) {
-                    // 剪枝優化：不連續轉動同一個面 (例如不連續做 U 後又做 U')
-                    if (lastMove && lastMove[0] === move[0]) continue;
-
-                    let nextState = doMove(current.state, move);
-                    let key = getStateKey(nextState);
-
-                    if (!visited.has(key)) {
-                        visited.add(key);
-                        queue.push({
-                            state: nextState,
-                            path: [...current.path, move]
-                        });
-                    }
-                }
+        // 隨機打亂公式生成
+        function handleRandomScramble() {
+            toggleInputMode(false); // 確保在顯示模式
+            const baseFaces = ['U', 'D', 'R', 'L', 'F', 'B'];
+            const modifiers = ['', '2', "'"];
+            let scramble = [];
+            let lastFace = -1;
+            
+            for (let i = 0; i < 22; i++) {
+                let f;
+                do { f = Math.floor(Math.random() * 6); } while (f === lastFace);
+                lastFace = f;
+                scramble.push(baseFaces[f] + modifiers[Math.floor(Math.random() * 3)]);
             }
+            
+            executeSolveEngine(scramble.join(' '));
+            showToast("已隨機生成全新打亂");
+        }
 
-            if (foundSolution) {
-                output.innerText = foundSolution.join(' ');
-            } else {
-                output.innerText = "未找到 8 步內的解法，請檢查打亂代號";
-            }
-            solveBtn.disabled = false;
-        }, 50);
-    }
-</script>
+        function resetToDefault() {
+            toggleInputMode(false);
+            handleRandomScramble();
+        }
 
+        function copySolution(elementId) {
+            let text = document.getElementById(elementId).innerText;
+            if (text === '-' || text === '無法解析公式') return;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("解法公式已成功複製到剪貼簿！");
+            }).catch(() => {
+                showToast("複製失敗，請手動複製", true);
+            });
+        }
+
+        function showToast(message, isError = false) {
+            let toast = document.getElementById('toast');
+            toast.innerHTML = isError 
+                ? `<i class="fa-solid fa-circle-exclamation text-orange-500"></i> <span>${message}</span>`
+                : `<i class="fa-solid fa-circle-check text-emerald-400"></i> <span>${message}</span>`;
+
+            toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+            }, 2500);
+        }
+
+        // 網頁載入時自動執行第一次初始化隨機打亂
+        window.addEventListener('DOMContentLoaded', () => {
+            handleRandomScramble();
+        });
+    </script>
 </body>
 </html>
