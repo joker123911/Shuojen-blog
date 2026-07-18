@@ -4,11 +4,28 @@
         <title>Shuo-jen Blog</title>
         <link>https://shuojen.com/blog</link>
         <description>訂閱最新的貼文！</description>
-        <lastBuildDate>Wed, 15 Jul 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 18 Jul 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>zh-TW</language>
         <copyright>Copyright © 2026 Shuo-jen Huang</copyright>
+        <item>
+            <title><![CDATA[FIMO]]></title>
+            <link>https://shuojen.com/blog/2026/07/18/fimo</link>
+            <guid>https://shuojen.com/blog/2026/07/18/fimo</guid>
+            <pubDate>Sat, 18 Jul 2026 13:16:48 GMT</pubDate>
+            <description><![CDATA[看到小米紀錄簿發的〈濾鏡相機APP〉，心動之下於是在我的安卓手機上下載了一個 FIMO 玩玩看。]]></description>
+            <content:encoded><![CDATA[<p>看到小米紀錄簿發的<a href="https://hjhmi89.bearblog.dev/cam-app/" target="_blank" rel="noopener noreferrer" class="">〈濾鏡相機APP〉</a>，心動之下於是在我的安卓手機上下載了一個<a href="https://fimo.app/" target="_blank" rel="noopener noreferrer" class=""> FIMO </a>玩玩看。</p>
+<p>雖然這個 APP 有點商業，但幾個免費的膠卷就滿好玩的了，相機介面也不錯，滿復古可愛的，拍起來會覺得有儀式感，我尤其喜歡這個老底片機會顯示的時間戳記。</p>
+<p>雖然濾鏡調色有一點點重，但是加上糊糊的顆粒看起來就對味了，隨意紀錄生活的話，調得重一點也無妨，以後連<a class="" href="https://shuojen.com/blog/2026/03/20/camera">老相機</a>都懶得帶的時候，我會多多打開這個 APP 用手機拍照的（開始用相機就不屑用手機怕照的我，在優越什麼阿！）</p>
+<img src="https://shuojen.com/assets/images/006-740f5100dd81b85d853522b36b8e6993.jpg" width="400" alt="img">
+<p>▲上班拍一張 Hi98 鍵盤</p>
+<img src="https://shuojen.com/assets/images/008-318bade1ef896031c08ced38f92cc817.jpg" width="400" alt="img">
+<p>▲嗶寶</p>
+<img src="https://shuojen.com/assets/images/009-652a46290485142278b45e2ec4cddc85.jpg" width="400" alt="img">
+<p>▲跟蝦波一起煮骨肉湯吃</p>]]></content:encoded>
+            <category>photo</category>
+        </item>
         <item>
             <title><![CDATA[Lovers in a Dangerous Spacetime]]></title>
             <link>https://shuojen.com/blog/2026/07/15/fun_game</link>
@@ -729,45 +746,6 @@
 </section>]]></content:encoded>
             <category>game</category>
             <category>chess</category>
-        </item>
-        <item>
-            <title><![CDATA[Video2X 畫質修復工具]]></title>
-            <link>https://shuojen.com/blog/2026/06/12/video2X</link>
-            <guid>https://shuojen.com/blog/2026/06/12/video2X</guid>
-            <pubDate>Thu, 11 Jun 2026 16:00:01 GMT</pubDate>
-            <description><![CDATA[看完 Ivon 的〈Linux版Anime4K使用教學，一鍵提昇動畫畫質〉後，讓我想修復之前用 yt-dlp 載下來的動漫，先看看效果！]]></description>
-            <content:encoded><![CDATA[<p>看完 Ivon 的<a href="https://ivonblog.com/posts/anime4k-linux/" target="_blank" rel="noopener noreferrer" class="">〈Linux版Anime4K使用教學，一鍵提昇動畫畫質〉</a>後，讓我想修復之前用 yt-dlp 載下來的動漫，先看看效果！</p>
-<div style="display:flex;gap:10px;justify-content:center"><img src="https://shuojen.com/assets/images/006-d8799c9c0352ec7df170090880f4756c.png" alt="對比圖1" style="width:49%;height:auto"><img src="https://shuojen.com/assets/images/007-dcb3b5cb7163fbed311d67dc1407bd08.png" alt="對比圖2" style="width:49%;height:auto"></div>
-<p>（在大螢幕上或者點擊放大來看更明顯）</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="video2x-操作">Video2x 操作<a href="https://shuojen.com/blog/2026/06/12/video2X#video2x-%E6%93%8D%E4%BD%9C" class="hash-link" aria-label="Video2x 操作的直接連結" title="Video2x 操作的直接連結" translate="no">​</a></h2>
-<p>我使用的工具是開源免費的<a href="https://github.com/k4yt3x/video2x" target="_blank" rel="noopener noreferrer" class=""> Video2x </a>，使用非常簡單，影片丟進去並選幾個選項，慢慢等它跑完就完成了。</p>
-<p><img decoding="async" loading="lazy" alt="img" src="https://shuojen.com/assets/images/005-35794d132803440ab5b1c8281d4f8f17.png" width="381" height="585" class="img_ev3q"></p>
-<ol>
-<li class="">
-<p>Vulkan Device Selection</p>
-<p>選擇自己的顯卡，基本上沒什麼好選的，有好顯卡的話，恭喜你！</p>
-</li>
-<li class="">
-<p>Processing Mode Selection</p>
-<p><code>Filter(Upscaling)</code> 是讓影片變清晰，而 <code>Frame Interpolation</code> 是讓影片畫面變流暢（補幀）</p>
-</li>
-<li class="">
-<p>Filter Selection</p>
-<p>我選擇用 <code>Real-ESRGAN</code> 這個演算法，吃顯示卡效能，處理速度最慢，但效果很好，其他的我還沒試過。</p>
-</li>
-<li class="">
-<p>Filter Options</p>
-<p>這裡如果原片是 480p 畫質就選 4 倍、 720p 畫質就選 3 倍、 1080p 畫質就選 2 倍，這樣轉完就都會是 4k 畫質了，但 480p 的話，由於原片細節太少，我覺得選 2 倍到 1080p 就好了。</p>
-</li>
-<li class="">
-<p>Real-ESRGAN Options</p>
-<p>真人電影選 <code>realesrgan-plus</code>、動漫選 <code>realesr-animevideov3</code>，年代很久遠需要強力修復的話，也許可以試試看 <code>realesrgan-plus-anime</code>。</p>
-</li>
-</ol>
-<p>雖然跑了滿久的，但最後的效果很滿意，快去試試看吧。</p>]]></content:encoded>
-            <category>tool</category>
-            <category>anime</category>
-            <category>movie</category>
         </item>
     </channel>
 </rss>
