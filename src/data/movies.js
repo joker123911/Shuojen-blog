@@ -1,4 +1,6 @@
 export const westernMovies = [
+  { title: "金牌特務", score: 7.9, note: "教堂打鬥戲一鏡到底很讚，劇情很順暢，喜歡", poster: "./img/movie/金牌特務.webp", tags: ["2015", "動作"] },
+  { title: "針鋒相對", score: 7.5, note: "滿有意思的警罪鬥智電影，讓我想到 seven 但沒那麼棒，諾導拍的最通俗的一部電影", poster: "./img/movie/針鋒相對.webp", tags: ["2002", "懸疑", "警匪", "諾蘭"] },
   { title: "歌喉讚", score: 7.4, note: "第一集真的不錯看，輕鬆歡樂，Anna Kendrick 粉狂喜，但後面有點為出而出，1>2>3", poster: "./img/movie/歌喉讚.webp", tags: ["2012", "音樂", "喜劇"] },
   { title: "會計師", score: 7.6, note: "會計師的角色很有魅力，Anna kendrick 很可愛加分，第二集就沒什麼興致看了", poster: "./img/movie/會計師.webp", tags: ["2016", "劇情", "犯罪"] },
   { title: "今天暫時停止", score: 7.5, note: "滿有趣的，老片版本的明日邊界", poster: "./img/movie/今天暫時停止.webp", tags: ["1993", "喜劇", "奇幻"] },
