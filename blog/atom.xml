@@ -2,12 +2,27 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shuojen.com/blog</id>
     <title>Shuo-jen Blog</title>
-    <updated>2026-07-18T00:00:00.000Z</updated>
+    <updated>2026-07-19T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shuojen.com/blog"/>
     <subtitle>訂閱最新的貼文！</subtitle>
     <icon>https://shuojen.com/img/favicon.ico</icon>
     <rights>Copyright © 2026 Shuo-jen Huang</rights>
+    <entry>
+        <title type="html"><![CDATA[寶可夢冷知識]]></title>
+        <id>https://shuojen.com/blog/2026/07/19/pokemon</id>
+        <link href="https://shuojen.com/blog/2026/07/19/pokemon"/>
+        <updated>2026-07-19T14:01:56.000Z</updated>
+        <summary type="html"><![CDATA[大谷翔平的身高體重跟烈咬陸鯊一樣（讓我晚上笑好久）]]></summary>
+        <content type="html"><![CDATA[<p>大谷翔平的身高體重跟烈咬陸鯊一樣（讓我晚上笑好久）</p>
+<img src="https://shuojen.com/assets/images/010-d9264386337a2b8747d2a0aebbec740f.jpg" width="600" alt="img">
+<img src="https://shuojen.com/assets/images/012-6b64349352eb55d85c5027fb0da9011d.jpeg" width="600" alt="img">
+<p>▲官方玩梗最為致命</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="pokefit">PokeFit<a href="https://shuojen.com/blog/2026/07/19/pokemon#pokefit" class="hash-link" aria-label="PokeFit的直接連結" title="PokeFit的直接連結" translate="no">​</a></h2>
+<p>我是叉字蝠耶，歡迎到這個網站<a href="https://pokefit.vercel.app/" target="_blank" rel="noopener noreferrer" class="">玩看看</a>。</p>
+<img src="https://shuojen.com/assets/images/011-a3aac4d5b872bdc9682b41eeaa92c12c.png" width="600" alt="img">]]></content>
+        <category label="fun" term="fun"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[FIMO]]></title>
         <id>https://shuojen.com/blog/2026/07/18/fimo</id>
@@ -689,61 +704,5 @@
 <img src="https://shuojen.com/assets/images/007-339d24fcf486f6e007c3a800a7211f9c.jpg" width="300" alt="img">]]></content>
         <category label="life" term="life"/>
         <category label="fun" term="fun"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Puzzle Storm]]></title>
-        <id>https://shuojen.com/blog/2026/06/12/puzzle_strom</id>
-        <link href="https://shuojen.com/blog/2026/06/12/puzzle_strom"/>
-        <updated>2026-06-12T12:16:52.000Z</updated>
-        <summary type="html"><![CDATA[這個部落格在第一期 blogblogclub 曾經推薦過西洋棋這個遊戲，最近我想到，可能有的玩家不想要跟別人競爭，只想享受解謎的樂趣，例如 LQ7 推薦的 Neutral 系列，享受那種解出題目的暢快。]]></summary>
-        <content type="html"><![CDATA[<p>這個部落格在第一期<a href="https://blogblog.club/" target="_blank" rel="noopener noreferrer" class=""> blogblogclub </a>曾經推薦過<a class="" href="https://shuojen.com/blog/2025/12/19/chess">西洋棋</a>這個遊戲，最近我想到，可能有的玩家不想要跟別人競爭，只想享受解謎的樂趣，例如 LQ7 推薦的<a href="https://lq7.tw/mood/neutral-room-escape-games/" target="_blank" rel="noopener noreferrer" class=""> Neutral </a>系列，享受那種解出題目的暢快。</p>
-<p>今天來介紹在 lichess 這個開源免費的平台上，一個西洋棋的競速解謎模式：<a href="https://lichess.org/storm" target="_blank" rel="noopener noreferrer" class="">Puzzle Storm</a>，無須登入就可以盡情玩到爽。</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="遊戲規則">遊戲規則<a href="https://shuojen.com/blog/2026/06/12/puzzle_strom#%E9%81%8A%E6%88%B2%E8%A6%8F%E5%89%87" class="hash-link" aria-label="遊戲規則的直接連結" title="遊戲規則的直接連結" translate="no">​</a></h2>
-<p><a href="https://lichess.org/page/storm" target="_blank" rel="noopener noreferrer" class="">官方介紹連結</a>，以下為中文的翻譯：</p>
-<blockquote>
-<p>每解對一個謎題可獲得 1 分。目標是在時間耗盡前獲得儘可能多的分數。
-在同一局暴風雨挑戰中，你執行的棋子顏色始終相同。</p>
-<p>連擊條 (Combo bar)：
-每走對一步棋都會填補連擊條。當連擊條全滿時，你將獲得時間獎勵，並提升下一次獎勵的價值。</p>
-<p>獎勵機制：</p>
-<p>連對 5 步：+3 秒</p>
-<p>連對 12 步：+5 秒</p>
-<p>連對 20 步：+7 秒</p>
-<p>連對 30 步：+10 秒，之後每再連對 10 步皆可 +10 秒。</p>
-<p>當你走錯一步棋時，連擊條將會歸零（扣空），且你會被扣除 10 秒。</p>
-</blockquote>
-<p>題外話，官方說明的 FAQ 這段超有趣：</p>
-<blockquote>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="is-there-a-leaderboard">Is there a leaderboard?<a href="https://shuojen.com/blog/2026/06/12/puzzle_strom#is-there-a-leaderboard" class="hash-link" aria-label="Is there a leaderboard?的直接連結" title="Is there a leaderboard?的直接連結" translate="no">​</a></h3>
-<p>No. At least not at the moment. Where there is a leaderboard, there is cheating. We don't think moderating this is a good use of our resources currently.</p>
-<p>However you can see your best scores for each day, and the best score of each player is displayed on their profile page.</p>
-<p><em>（翻譯：做一個讓大家作弊的譁眾取寵榜單幹嘛，自己去自己的頁面上看你的最佳成績就好）</em></p>
-</blockquote>
-<p>超．級．酷！</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="技巧解說">技巧解說<a href="https://shuojen.com/blog/2026/06/12/puzzle_strom#%E6%8A%80%E5%B7%A7%E8%A7%A3%E8%AA%AA" class="hash-link" aria-label="技巧解說的直接連結" title="技巧解說的直接連結" translate="no">​</a></h2>
-<p>規則簡單說就是<strong>答的越快越正確最好</strong><sup><a href="https://shuojen.com/blog/2026/06/12/puzzle_strom#user-content-fn-1-8c517c" id="user-content-fnref-1-8c517c" data-footnote-ref="true" aria-describedby="footnote-label" class="anchorTargetStickyNavbar_Vzrq">1</a></sup>，能夠一直累積 Combo 來加秒，一開始對西洋棋比較沒概念的話，可能會不知道「正確」的一步究竟指的是什麼？</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="將殺-checkmate">將殺 (Checkmate)<a href="https://shuojen.com/blog/2026/06/12/puzzle_strom#%E5%B0%87%E6%AE%BA-checkmate" class="hash-link" aria-label="將殺 (Checkmate)的直接連結" title="將殺 (Checkmate)的直接連結" translate="no">​</a></h3>
-<p>這是相對來說最簡單的一種，意指在當下的局面，有強迫將殺存在，把對方直接將死當然就是最正確的一步，隨著越做越後面，難度也會不斷提高，可能就從一步殺(Mate in 1)到五步殺(Mate in 5)以上都有可能。</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="得子-win-a-piece">得子 (Win a piece)<a href="https://shuojen.com/blog/2026/06/12/puzzle_strom#%E5%BE%97%E5%AD%90-win-a-piece" class="hash-link" aria-label="得子 (Win a piece)的直接連結" title="得子 (Win a piece)的直接連結" translate="no">​</a></h3>
-<p>在西洋棋中，如果得到對方的一個子力，不論是輕子（騎士丶主教）丶重子（城堡丶皇后），絕大部份情況都是勝勢的局面。</p>
-<p>這裡先提一下西洋棋中每個棋子的價值，兵的價值為一分、騎士與主教為三分、城堡為五分、皇后為九分、國王為無限分（國王死了你就輸了）。</p>
-<p>當我們提到子力價值時，底層意義是「<strong>那顆棋子控制棋盤的格子數</strong>」，所以當你有一隻非常暢通的強力主教，可能隱藏的價值是高過城堡的，但絕大部份下，謎題只要掌握優勢交換的大原則就可以了，優勢交換就是說，用低價值的子力換到高價值的子力（例如用騎士換到皇后）。</p>
-<p>接著講到戰術運用，這是謎題最根本的訓練核心，得子過程通常不會是對方白白送子，而是以戰術的方式取得，例如常見的：捉雙、閃擊、牽制、消除保護、引離等等。</p>
-<p>透過謎題的訓練，能夠幫助我們建立圖像記憶，培養對戰術的敏銳度。對實戰沒興趣的話，當作益智遊戲也是非常有趣的。</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="純謎題">純謎題<a href="https://shuojen.com/blog/2026/06/12/puzzle_strom#%E7%B4%94%E8%AC%8E%E9%A1%8C" class="hash-link" aria-label="純謎題的直接連結" title="純謎題的直接連結" translate="no">​</a></h2>
-<p>最後，如果連時間壓力也不想要有，可以玩<a href="https://lichess.org/streak" target="_blank" rel="noopener noreferrer" class="">一般的不限時謎題</a>，慢慢想到天荒地老都沒問題，其實追求答題的正確性才是培養解題實力的最好方式，只是我比較喜歡 Puzzle Storm 的緊張感就是了。</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="示範">示範<a href="https://shuojen.com/blog/2026/06/12/puzzle_strom#%E7%A4%BA%E7%AF%84" class="hash-link" aria-label="示範的直接連結" title="示範的直接連結" translate="no">​</a></h2>
-<p>隨意錄了一場範例，其實我也不厲害，最高紀錄才 37 而已（喂，還不好好一題一題慢慢做謎題）。</p>
-<video controls="" width="300"><source src="/video/020.mp4" type="video/mp4"><p>抱歉，您的瀏覽器不支援內嵌影片。</p></video>
-<!-- -->
-<section data-footnotes="true" class="footnotes"><h2 class="anchor anchorTargetStickyNavbar_Vzrq sr-only" id="footnote-label">Footnotes<a href="https://shuojen.com/blog/2026/06/12/puzzle_strom#footnote-label" class="hash-link" aria-label="Footnotes的直接連結" title="Footnotes的直接連結" translate="no">​</a></h2>
-<ol>
-<li class="anchorTargetStickyNavbar_Vzrq" id="user-content-fn-1-8c517c">
-<p>滿廢話的一句，跟「股票有什麼難的，低買高賣就好了」有八成像 <a href="https://shuojen.com/blog/2026/06/12/puzzle_strom#user-content-fnref-1-8c517c" data-footnote-backref="" aria-label="Back to reference 1" class="data-footnote-backref">↩</a></p>
-</li>
-</ol>
-</section>]]></content>
-        <category label="game" term="game"/>
-        <category label="chess" term="chess"/>
     </entry>
 </feed>
