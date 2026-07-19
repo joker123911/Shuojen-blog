@@ -10,18 +10,28 @@ from PIL import Image
 # ==========================================
 # 自動偵測環境：檢查是否有真實的圖形介面顯示器
 # ==========================================
+def check_gui_support():
+    """安全地檢查當前環境是否支援 GUI 顯示，僅在 Windows 下啟用 GUI 視窗模式"""
+    import sys
+    
+    # 由於 macOS 的 Tcl/Tk 庫與 Python 系統版本相容問題，呼叫 tk.Tk() 常會直接觸發 Tcl_Panic 崩潰（Abort trap），
+    # 且此工具的視窗模式原先即為「Windows 視窗模式」，因此非 Windows 平台直接返回 False，走終端機模式。
+    if sys.platform != "win32":
+        return False
+            
+    try:
+        import tkinter as tk
+        from tkinter import ttk, messagebox
+        # 嘗試初始化一個隱藏的 root 來測試環境是否真的支援 GUI 顯示
+        test_root = tk.Tk()
+        test_root.withdraw()
+        test_root.destroy()
+        return True
+    except Exception:
+        return False
+
+# 預設為 False，我們在 __main__ 中才進行偵測
 HAS_GUI = False
-try:
-    import tkinter as tk
-    from tkinter import ttk, messagebox
-    # 嘗試初始化一個隱藏的 root 來測試環境是否真的支援 GUI 顯示
-    test_root = tk.Tk()
-    test_root.withdraw()
-    test_root.destroy()
-    HAS_GUI = True
-except Exception:
-    # 只要初始化失敗（不論是沒裝 tkinter 還是沒有 $DISPLAY 變數），都判定為純終端機環境
-    HAS_GUI = False
 
 # ==========================================
 # 檔案路徑設定
@@ -546,6 +556,8 @@ def run_terminal():
 # 程式進入點
 # ==========================================
 if __name__ == "__main__":
+    # 在進入點才進行 GUI 偵測，避免其他工具（如 IDE Language Server）在 import 此檔案時崩潰
+    HAS_GUI = check_gui_support()
     if HAS_GUI:
         # 只有在真正擁有視窗顯示器的 Windows 環境，才會彈出模式選擇視窗
         selector = tk.Tk()

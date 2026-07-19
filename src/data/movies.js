@@ -1,4 +1,5 @@
 export const westernMovies = [
+  { title: "奧德賽", score: 8.5, note: "史詩大作，三個小時到最後把情緒堆疊的很滿，滿喜歡", poster: "./img/movie/奧德賽.webp", tags: ["2026", "奇幻", "戰爭", "諾蘭"] },
   { title: "金牌特務", score: 7.9, note: "教堂打鬥戲一鏡到底很讚，劇情很順暢，喜歡", poster: "./img/movie/金牌特務.webp", tags: ["2015", "動作"] },
   { title: "針鋒相對", score: 7.5, note: "滿有意思的警罪鬥智電影，讓我想到 seven 但沒那麼棒，諾導拍的最通俗的一部電影", poster: "./img/movie/針鋒相對.webp", tags: ["2002", "懸疑", "警匪", "諾蘭"] },
   { title: "歌喉讚", score: 7.4, note: "第一集真的不錯看，輕鬆歡樂，Anna Kendrick 粉狂喜，但後面有點為出而出，1>2>3", poster: "./img/movie/歌喉讚.webp", tags: ["2012", "音樂", "喜劇"] },

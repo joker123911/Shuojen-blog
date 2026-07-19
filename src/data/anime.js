@@ -70,6 +70,7 @@ export const animeList = [
   { title: "天竺鼠車車", note: "滿可愛的一個泡麵小作品", poster: "./img/anime/天竺鼠車車.webp", tier: "A" , tags: ["泡麵","治癒"]},
   { title: "肌肉魔法使", note: "不錯的搞笑作品，不過沒看完", poster: "./img/anime/肌肉魔法使.webp", tier: "A" , tags: ["搞笑","棄坑"]},
   { title: "杖與劍的魔劍譚", note: "音樂和戰鬥畫面不錯，但劇情就像超大縫合怪，嘈點超多", poster: "./img/anime/杖與劍的魔劍譚.webp", tier: "A", tags: ["戰鬥", "奇幻"] },
+  { title: "關於我在無意間被隔壁的天使變成廢柴這件事", note: "很甜的純愛，但是有點太超現人的性格也太扁平，有點無趣的一部", poster: "./img/anime/關於我在無意間被隔壁的天使變成廢柴這件事.webp", tier: "A", tags: ["戀愛", "校園"] },
   { title: "路人超能100", note: "雖然感覺是我會喜歡的設定跟類型，但不知為何沒對到電波", poster: "./img/anime/路人超能100.webp", tier: "B" , tags: ["搞笑","戰鬥","棄坑"]},
   { title: "鬼滅之刃", note: "真的電波不太合，沒有看下去的動力", poster: "./img/anime/鬼滅之刃.webp", tier: "B" , tags: ["奇幻","戰鬥","棄坑"]},
   { title: "新世紀福音戰士", note: "雖然是貴為經典的神作，但我真的不知道在演什麼，歐美爹豆", poster: "./img/anime/新世紀福音戰士.webp", tier: "B" , tags: ["經典", "科幻"]},
