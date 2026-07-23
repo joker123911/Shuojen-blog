@@ -4,7 +4,7 @@ import { westernMovies, asiaMovies, animeMovies, hongkongMovies } from '@site/sr
 import './styles.css';
 
 // 這裡加入了 initialFilter 和 hideFilterBar 兩個參數
-export default function MovieListApp({ initialFilter = 'all', hideFilterBar = false }) {
+export default function MovieListApp({ initialFilter = 'top100', hideFilterBar = false }) {
   const [activePoster, setActivePoster] = useState(null);
   const [activeTitle, setActiveTitle] = useState('');
   const [isImgLoaded, setIsImgLoaded] = useState(false);
@@ -112,8 +112,8 @@ export default function MovieListApp({ initialFilter = 'all', hideFilterBar = fa
   };
 
   const filterOptions = [
-    { value: 'all', label: '📅 年份排序' },
     { value: 'top100', label: '🎬 評分排序' },
+	{ value: 'all', label: '📅 年份排序' },
     { value: 'western', label: '🌎 歐美電影' },
     { value: 'asia', label: '🥢 華語日韓' },
     { value: 'hongkong', label: '🎞️ 童年港片' },    
