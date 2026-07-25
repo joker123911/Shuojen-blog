@@ -7,6 +7,14 @@ import json
 import io
 from PIL import Image
 
+try:
+    import tkinter as tk
+    from tkinter import ttk, messagebox
+except ImportError:
+    tk = None
+    ttk = None
+    messagebox = None
+
 # ==========================================
 # 自動偵測環境：檢查是否有真實的圖形介面顯示器
 # ==========================================
@@ -16,12 +24,10 @@ def check_gui_support():
     
     # 由於 macOS 的 Tcl/Tk 庫與 Python 系統版本相容問題，呼叫 tk.Tk() 常會直接觸發 Tcl_Panic 崩潰（Abort trap），
     # 且此工具的視窗模式原先即為「Windows 視窗模式」，因此非 Windows 平台直接返回 False，走終端機模式。
-    if sys.platform != "win32":
+    if sys.platform != "win32" or tk is None:
         return False
             
     try:
-        import tkinter as tk
-        from tkinter import ttk, messagebox
         # 嘗試初始化一個隱藏的 root 來測試環境是否真的支援 GUI 顯示
         test_root = tk.Tk()
         test_root.withdraw()

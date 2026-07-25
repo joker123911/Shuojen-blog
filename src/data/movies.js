@@ -255,6 +255,7 @@ export const westernMovies = [
 ];
 
 export const asiaMovies = [
+  { title: "緊急迫降", score: 8.0, note: "超級喜歡這部的設定，很精彩，有點飛機版屍速列車的感覺，可惜後半段稍稍矯情了一點，但整體還是非常喜歡", poster: "./img/movie/緊急迫降.webp", tags: ["2022", "災難"] },
   { title: "雙囍", score: 7.2, note: "寫實的各種亞洲長輩真的很恐怖，應該能引起很多人的共鳴", poster: "./img/movie/雙囍.webp", tags: ["2026", "劇情"] },
   { title: "我的棋王爺爺", score: 8.1, note: "溫暖好看的一部電影，很喜歡導演利用象棋作為文本的一部份，融入象徵劇中的三位角色，也很喜歡導演隱隱想傳達，不同立場背景也能相互理解的意涵。劇本完整、演員表現很到位，台灣電影中很厲害的一部。", poster: "./img/movie/我的棋王爺爺.webp", tags: ["2026", "溫馨"] },
   { title: "寄生上流", score: 9.3, note: "奉導集大成神作，商業與藝術完美結合", poster: "./img/movie/寄生上流.webp", tags: ["2019", "劇情"] },
