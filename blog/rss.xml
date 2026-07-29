@@ -4,11 +4,26 @@
         <title>Shuo-jen Blog</title>
         <link>https://shuojen.com/blog</link>
         <description>訂閱最新的貼文！</description>
-        <lastBuildDate>Sat, 25 Jul 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 29 Jul 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>zh-TW</language>
         <copyright>Copyright © 2026 Shuo-jen Huang</copyright>
+        <item>
+            <title><![CDATA[穹廬下的魔女]]></title>
+            <link>https://shuojen.com/blog/2026/07/29/Witch_in_Mongolia</link>
+            <guid>https://shuojen.com/blog/2026/07/29/Witch_in_Mongolia</guid>
+            <pubDate>Wed, 29 Jul 2026 14:21:40 GMT</pubDate>
+            <description><![CDATA[強推這部動漫作品《穹廬下的魔女》！]]></description>
+            <content:encoded><![CDATA[<p>強推這部動漫作品<a href="https://zh.wikipedia.org/zh-tw/%E7%A9%B9%E5%BB%AC%E4%B8%8B%E7%9A%84%E9%AD%94%E5%A5%B3" target="_blank" rel="noopener noreferrer" class="">《穹廬下的魔女》</a>！</p>
+<img src="https://shuojen.com/assets/images/011-e45630dbced7f4beeab385253fec2232.jpg" width="300" alt="img">
+<ol>
+<li class="">畫風獨特，很漂亮，我很喜歡。</li>
+<li class="">以真實人物為背景的歷史題材非常特別，是一部復仇的作品。</li>
+<li class="">看過金庸《射鵰英雄傳》的話會很有熟悉感，看到真人馬上就知道是丘處機，從不同的視角看這個時代背景，別有一番樂趣。</li>
+</ol>]]></content:encoded>
+            <category>anime</category>
+        </item>
         <item>
             <title><![CDATA[格友見面會]]></title>
             <link>https://shuojen.com/blog/2026/07/25/meetup</link>
@@ -694,20 +709,6 @@
 </ol>
 </section>]]></content:encoded>
             <category>life</category>
-        </item>
-        <item>
-            <title><![CDATA[Retroarch]]></title>
-            <link>https://shuojen.com/blog/2026/06/17/retroarch</link>
-            <guid>https://shuojen.com/blog/2026/06/17/retroarch</guid>
-            <pubDate>Wed, 17 Jun 2026 14:37:29 GMT</pubDate>
-            <description><![CDATA[昨天蝦波跟我說，她小時候會跟表姐玩一個主機遊戲，是米老鼠跟唐老鴨一起冒險的遊戲，可是後來大人不給她們玩了，所以最後面幾關沒破完。]]></description>
-            <content:encoded><![CDATA[<p>昨天蝦波跟我說，她小時候會跟表姐玩一個主機遊戲，是米老鼠跟唐老鴨一起冒險的遊戲，可是後來大人不給她們玩了，所以最後面幾關沒破完。</p>
-<p>根據她的描述我找了一下，應該是 Sega 主機上的<a href="https://en.wikipedia.org/wiki/World_of_Illusion" target="_blank" rel="noopener noreferrer" class="">《World of Illusion Starring Mickey Mouse and Donald Duck》</a>這個遊戲。</p>
-<p><img decoding="async" loading="lazy" alt="img" src="https://shuojen.com/assets/images/008-0b8a66b0ee6efa0196c8b2fec6acc6db.jpg" width="1280" height="853" class="img_ev3q">
-▲蝦波看了我找的圖片說應該就是這個要插卡的主機</p>
-<p>剛剛好前幾天看到 Wiwi 在<a href="https://wiwi.blog/blog/desert-island-laptop#-%E8%BB%9F%E9%AB%94%E9%A1%9E" target="_blank" rel="noopener noreferrer" class="">〈荒島筆電〉</a>介紹到<a href="https://www.retroarch.com/" target="_blank" rel="noopener noreferrer" class=""> RetroArch </a>，可以馬上準備給她玩實在好幸運，連假可以一起來玩老遊戲了！</p>
-<p><img decoding="async" loading="lazy" alt="img" src="https://shuojen.com/assets/images/008-e64f24b60947b6a27af59474608b65de.png" width="959" height="757" class="img_ev3q"></p>]]></content:encoded>
-            <category>game</category>
         </item>
     </channel>
 </rss>
