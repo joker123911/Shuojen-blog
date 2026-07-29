@@ -5,7 +5,7 @@ description: 近況更新
 
 # 我在做什麼 `/now`
 
-*最後更新：2026-07-23*
+*最後更新：2026-07-29*
 
 :::note
 靈感來自[Derek Sivers /now](https://sive.rs/now)。
@@ -31,8 +31,10 @@ description: 近況更新
 ## 最近正在看/玩的作品
 * [六人行](https://zh.wikipedia.org/zh-tw/%E8%80%81%E5%8F%8B%E8%AE%B0)：Netflix 又重上了，來補一下這個經典，前面覺得很無聊，看到S1E18開始喜歡了。
 * [活俠傳](https://store.steampowered.com/app/1859910/_/?l=tchinese)：文本寫的好讚，完成四周目了，期待九月的更新，想玩小梅線。
+* [臺灣漫遊錄](https://zh.wikipedia.org/zh-tw/%E8%87%BA%E7%81%A3%E6%BC%AB%E9%81%8A%E9%8C%84)：Erik 推薦我看的作品，讀完再來分享心得。
 
 
 ## 最近喜歡的店 
 * [茶山謎路](https://maps.app.goo.gl/bencE94VpDQSL2Vt9)：寶藏飲料店，茶行轉型的一間小店，基底是用真正的好茶葉做的冷泡茶，桑葚紅烏是我一生喝過最好的手搖，真心不騙。
-* [河內河粉](https://maps.app.goo.gl/6QByEx8Mx1ywqw5BA)：看到 RSS 上有人推薦，好吃耶！第一口真的有臺南牛肉湯的錯覺。
+* [岑林綠豆沙](https://maps.app.goo.gl/pcbXizM3EpU7D33o9)：超級好喝耶，便宜又實在，推爆！
+* [正騰和脆皮炸雞](https://maps.app.goo.gl/hfxXQqXiSZ3hjTRS7)：炸物都好香，價格也佛，放涼也好吃，點幾隻雞翅跟綠豆沙牛奶配著吃，太罪惡了。
