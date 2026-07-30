@@ -21,6 +21,7 @@
     "@docusaurus/preset-classic": "^3.10.1",
     "@easyops-cn/docusaurus-search-local": "^0.52.1",
     "@mdx-js/react": "^3.0.0",
+    "canvas-confetti": "^1.9.4",
     "chess.js": "^1.4.0",
     "clsx": "^2.0.0",
     "cm-chessboard": "^8.11.0",
