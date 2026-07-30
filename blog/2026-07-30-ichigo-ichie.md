@@ -37,7 +37,7 @@ import BirthdayAnimation from '@site/src/components/BirthdayAnimation/BirthdayAn
 
 同時間我又意識到，能夠這樣藉由各個網址間的連結遇到，就已經算是一種相會了吧，在去年九月開始寫[第一篇部落格文章](/blog/First_blog)前的我絕對想不到，我會在 2026/07/30 這天，因為看了「陌生人」 YangBear 的[投稿文章](https://yangbear.bearblog.dev/ichigo-ichie/)，也臨時決定要來幫「陌生人」 [ ikuka ](https://blog.ikukaroom.com/) 慶生，就只因為
 
->沒有比這個令人開心的投稿日了！
+>沒有比這個更令人開心的投稿日了！
 
 <BirthdayAnimation name="ikuka" />
 
