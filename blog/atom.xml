@@ -2,12 +2,62 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shuojen.com/blog</id>
     <title>Shuo-jen Blog</title>
-    <updated>2026-07-30T00:00:00.000Z</updated>
+    <updated>2026-08-01T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shuojen.com/blog"/>
     <subtitle>訂閱最新的貼文！</subtitle>
     <icon>https://shuojen.com/img/favicon.ico</icon>
     <rights>Copyright © 2026 Shuo-jen Huang</rights>
+    <entry>
+        <title type="html"><![CDATA[不吝嗇展現自己的低品味]]></title>
+        <id>https://shuojen.com/blog/2026/08/01/taste</id>
+        <link href="https://shuojen.com/blog/2026/08/01/taste"/>
+        <updated>2026-08-01T08:17:16.000Z</updated>
+        <summary type="html"><![CDATA[SO!AZY 的這篇《承认吧，你其实根本不爱看书》真的太有意思了。]]></summary>
+        <content type="html"><![CDATA[<p>SO!AZY 的這篇<a href="https://blog.solazy.me/20260729/" target="_blank" rel="noopener noreferrer" class="">《承认吧，你其实根本不爱看书》</a>真的太有意思了。</p>
+<p>想起大學時，我曾經到圖書館找了許多經典文學來啃，像是村上春樹的《挪威的森林》、川端康成的《雪國》，坦白說我完全看不出一個所以然，內容也完全不記得了，只覺得相當乏味，或許大學時的我，智慧還不足以看懂這些名著，我相信現在的我八成也看不下去，雖然也有例外，像是當時看了馬奎斯的《百年孤寂》，我就很喜歡。</p>
+<p>跟風某些時事的作品當然也是必要的（不然怎麼維持「喜歡看書」這個人設），像是《房思琪的初戀樂園》，確實挺好看的，但現實的故事似乎更加撲朔迷離，最近楊雙子的《臺灣漫遊錄》也是跟風，除了 Erik 推薦的原因，也是因為布克獎加持才讓我想買來看看，雖然還沒開始看。</p>
+<blockquote>
+<p>很多人并不是喜欢「看书」带来的智识挑战，他们只是喜欢「自己是一个喜欢看书的人」这种设定。他们害怕暴露真实的自己，害怕在主流的评价体系里显得不够高级，于是宁可表演忙碌，也不敢展示真实的偏好。</p>
+</blockquote>
+<p>不只是「看書」這樣的人設，人們對於作品的「品味」，我覺得也常常是營造出來的。</p>
+<ul>
+<li class="">
+<p>獨立樂團當然就是要越聽越小眾才酷，變主流後都已經忘記初衷了！</p>
+</li>
+<li class="">
+<p>電影看什麼諾蘭，過譽，DEI 就是下去！</p>
+</li>
+<li class="">
+<p>笑死，黃山料的書超沒料！</p>
+</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="低品味運動">低品味運動<a href="https://shuojen.com/blog/2026/08/01/taste#%E4%BD%8E%E5%93%81%E5%91%B3%E9%81%8B%E5%8B%95" class="hash-link" aria-label="低品味運動的直接連結" title="低品味運動的直接連結" translate="no">​</a></h2>
+<p>「品味」歧視鏈大概永遠都戰不完吧，比起在社群媒體營造品味人設表演，我決定不如吝嗇展示自己會感到有點耻但其實滿喜歡的「低品味」，好像更有意思。</p>
+<ol>
+<li class="">
+<p>很喜歡九把刀的小說，我從小看到大，我喜歡《樓下的房客》、《功夫》、《後青春期的詩》</p>
+</li>
+<li class="">
+<p>最喜歡的輕小說系列是《吾命騎士》</p>
+</li>
+<li class="">
+<p>我很喜歡看主流的 YT 影片，像是呱吉、joeman 的影片，最近也很喜歡看尊的影片，他跟女朋友有互動的題材我都滿喜歡的，對了，我以前也很喜歡看蔡阿嗄的影片（藏鏡人時期）</p>
+</li>
+<li class="">
+<p>我覺得 Google map 對我來說還是比較好用</p>
+</li>
+<li class="">
+<p>國高中的時候很喜歡五月天的歌</p>
+</li>
+<li class="">
+<p>我覺得雙響泡的泡麵不會很難吃，雖然也不會特別去買</p>
+</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="後記">後記<a href="https://shuojen.com/blog/2026/08/01/taste#%E5%BE%8C%E8%A8%98" class="hash-link" aria-label="後記的直接連結" title="後記的直接連結" translate="no">​</a></h2>
+<p>展現出「營造自己的品味很優越」這件事很好笑的我，優越的發了這篇低品味文章，我就知道，「品味」歧視鏈真的永遠都戰不完。</p>]]></content>
+        <category label="blogparty" term="blogparty"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[一期一會]]></title>
         <id>https://shuojen.com/blog/2026/07/30/ichigo-ichie</id>
@@ -553,28 +603,5 @@
 </section>]]></content>
         <category label="fun" term="fun"/>
         <category label="blogparty" term="blogparty"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[魔女之家]]></title>
-        <id>https://shuojen.com/blog/2026/06/19/the_witchs_house</id>
-        <link href="https://shuojen.com/blog/2026/06/19/the_witchs_house"/>
-        <updated>2026-06-19T14:42:57.000Z</updated>
-        <summary type="html"><![CDATA[今天晚上跟蝦波一起玩她之前推薦過的魔女之家，這個 2012 年出品的經典 2D 恐怖遊戲，大概國高中的時候就有聽過，但是從來沒有玩過。]]></summary>
-        <content type="html"><![CDATA[<p>今天晚上跟蝦波一起玩她之前<a class="" href="https://shuojen.com/blog/2026/06/07/old_game">推薦</a>過的魔女之家，這個 2012 年出品的經典 2D 恐怖遊戲，大概國高中的時候就有聽過，但是從來沒有玩過。</p>
-<p>我這次玩的是 2018 年在 Steam 上的<a href="https://store.steampowered.com/app/885810/The_Witchs_House_MV/?l=tchinese" target="_blank" rel="noopener noreferrer" class="">重製版</a><sup><a href="https://shuojen.com/blog/2026/06/19/the_witchs_house#user-content-fn-1-98a2a1" id="user-content-fnref-1-98a2a1" data-footnote-ref="true" aria-describedby="footnote-label" class="anchorTargetStickyNavbar_Vzrq">1</a></sup>，超級推薦，恐怖程度我覺得一般人應該也接受的了。</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="遊戲體驗">遊戲體驗<a href="https://shuojen.com/blog/2026/06/19/the_witchs_house#%E9%81%8A%E6%88%B2%E9%AB%94%E9%A9%97" class="hash-link" aria-label="遊戲體驗的直接連結" title="遊戲體驗的直接連結" translate="no">​</a></h2>
-<p>操作很簡單，解謎的難度非常剛好，不會難到解不出來，又同時保有思考的樂趣。Jump Scare 的次數控制的還 OK，我個人覺得非常剛好，不會廉價到令人煩躁的程度，氣氛掌握的也很恰當，微微讓人發毛的感覺。</p>
-<p>我最後玩出了兩種結局，Wiki 上面還有一種最完整的黑貓結局，這裡防雷就不附上連結了。</p>
-<p>總之非常推薦這款，遊戲時長也很剛好，我最後花了 106 分鐘通關，沒有體驗過的朋友可以花一杯手搖飲的錢試試看，我相信不會失望的。</p>
-<p><img decoding="async" loading="lazy" alt="img" src="https://shuojen.com/assets/images/009-759c924358819b566fbd9d8eca506618.png" width="813" height="653" class="img_ev3q"></p>
-<!-- -->
-<section data-footnotes="true" class="footnotes"><h2 class="anchor anchorTargetStickyNavbar_Vzrq sr-only" id="footnote-label">Footnotes<a href="https://shuojen.com/blog/2026/06/19/the_witchs_house#footnote-label" class="hash-link" aria-label="Footnotes的直接連結" title="Footnotes的直接連結" translate="no">​</a></h2>
-<ol>
-<li class="anchorTargetStickyNavbar_Vzrq" id="user-content-fn-1-98a2a1">
-<p>現在剛好在 Steam 上打三折，特價到 06-25，是史低喔！ <a href="https://shuojen.com/blog/2026/06/19/the_witchs_house#user-content-fnref-1-98a2a1" data-footnote-backref="" aria-label="Back to reference 1" class="data-footnote-backref">↩</a></p>
-</li>
-</ol>
-</section>]]></content>
-        <category label="game" term="game"/>
     </entry>
 </feed>
