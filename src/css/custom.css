@@ -9,7 +9,7 @@
    ========================================= */
 
 /* 注意：@import 必須位於檔案最上方，否則瀏覽器會忽略 */
-@import url("https://font.emtech.cc/css/jfOpenHuninn?display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Huninn&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css');
@@ -21,8 +21,8 @@
   /* 設定基礎字體大小 */
   --ifm-font-size-base: 18px;
 
-  /* 根據 Setup 規範，字體名稱應為 "jfOpenHuninn" */
-  --ifm-font-family-base: "jfOpenHuninn", system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif;
+  /* 根據 Setup 規範，字體名稱為 "Huninn" / "jfOpenHuninn" */
+  --ifm-font-family-base: "Huninn", "jfOpenHuninn", system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif;
 
   /* 增加行高，提升閱讀舒適度 */  
   --ifm-line-height-base: 1.6;
@@ -54,7 +54,7 @@
 
 /* 強制確保標題套用粉圓體 */
 h1, h2, h3, h4, h5, h6 {
-  font-family: "jfOpenHuninn", var(--ifm-font-family-base);
+  font-family: "Huninn", "jfOpenHuninn", var(--ifm-font-family-base);
   font-weight: 500;
 }
 

@@ -54,7 +54,7 @@ export default function Home() {
           .gallery-title {
             font-size: clamp(1.2rem, 2.5vw, 1.6rem);
             font-weight: 500;
-            font-family: "jfOpenHuninn", var(--ifm-font-family-base); 
+            font-family: "Huninn", "jfOpenHuninn", var(--ifm-font-family-base); 
             line-height: 1.5;
             color: var(--ifm-font-color-base);
             margin: 0;
