@@ -6,7 +6,7 @@ slug: /ramen
 
 import RamenTier from '@site/src/components/RamenTier';
 
-*最後更新：2026-06-19*
+*最後更新：2026-08-04*
 
 這是我個人的拉麵店 Tier 清單！評價為 100% 個人主觀意見。
 
