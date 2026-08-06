@@ -32,7 +32,7 @@ sidebar_position: 1
 **少數有成功的盲解練習紀錄**
 
 <video controls width="320">
-    <source src="/video/015.mp4" type="video/mp4" />
+    <source src="https://media.shuojen.com/video/015.mp4" type="video/mp4" />
 
     抱歉，您的瀏覽器不支援內嵌影片。
 </video>

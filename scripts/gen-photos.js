@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const matter = require('gray-matter');
 
-// 設定路徑 (移除了不需要的靜態資料夾路徑)
 const BLOG_DIR = path.join(__dirname, '../photoblog');
 const OUTPUT_FILE = path.join(__dirname, '../src/data/photosData.json');
 
@@ -12,33 +11,39 @@ function generatePhotosData() {
     return;
   }
 
-  const files = fs.readdirSync(BLOG_DIR);
+  const items = fs.readdirSync(BLOG_DIR);
   let allPhotos = [];
 
-  files.forEach((file) => {
-    // 確保只處理 .md 或 .mdx
-    if (file.endsWith('.md') || file.endsWith('.mdx')) {
-      const filePath = path.join(BLOG_DIR, file);
-      const fileContent = fs.readFileSync(filePath, 'utf8');
+  items.forEach((item) => {
+    const itemPath = path.join(BLOG_DIR, item);
+    const stat = fs.statSync(itemPath);
 
-      // 解析 Frontmatter 與內容
+    let mdPath = null;
+    let rawSlug = item;
+
+    if (stat.isDirectory()) {
+      const indexPath = path.join(itemPath, 'index.md');
+      const indexMdxPath = path.join(itemPath, 'index.mdx');
+      if (fs.existsSync(indexPath)) mdPath = indexPath;
+      else if (fs.existsSync(indexMdxPath)) mdPath = indexMdxPath;
+    } else if (item.endsWith('.md') || item.endsWith('.mdx')) {
+      mdPath = itemPath;
+      rawSlug = item.replace(/\.mdx?$/, '');
+    }
+
+    if (mdPath) {
+      const fileContent = fs.readFileSync(mdPath, 'utf8');
       const { data, content } = matter(fileContent);
 
-      // 1. 處理 Slug 並轉換格式 (2019-05-21-trip -> 2019/05/21/trip)
-      const rawSlug = data.slug || file.replace(/\.mdx?$/, '');
       const formattedSlug = rawSlug.replace(/^(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/');
-
       const link = `/photoblog/${formattedSlug}`;
 
-      // 2. 準備此文章的圖片清單
       const currentPostImages = new Set();
 
-      // 優先加入 Frontmatter 中的主圖 (data.image)
       if (data.image) {
         currentPostImages.add(data.image);
       }
 
-      // 3. 使用正則表達式抓取內文所有圖片 ![](/path/to/img)
       const imgRegex = /!\[.*?\]\((.*?)\)/g;
       const matches = content.matchAll(imgRegex);
 
@@ -46,10 +51,13 @@ function generatePhotosData() {
         currentPostImages.add(match[1]);
       }
 
-      // 4. 將抓到的所有圖片轉換為物件格式並推入總清單
       currentPostImages.forEach((imgSrc) => {
+        // Clean leading ./ or /
+        const cleanName = path.basename(imgSrc);
+        const webSrc = `photoblog/${rawSlug}/${cleanName}`;
+
         allPhotos.push({
-          src: imgSrc,
+          src: webSrc,
           link: link,
           title: data.title || rawSlug
         });
@@ -57,7 +65,6 @@ function generatePhotosData() {
     }
   });
 
-  // 寫入 JSON 檔案
   const dir = path.dirname(OUTPUT_FILE);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
@@ -70,5 +77,4 @@ function generatePhotosData() {
   console.log('--------------------------------------------------');
 }
 
-// 執行流程 (只需產生 JSON，不再複製圖片)
 generatePhotosData();

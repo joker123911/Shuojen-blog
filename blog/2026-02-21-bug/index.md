@@ -1,0 +1,18 @@
+---
+title: '企鵝卡 bug'
+tags: [date, fun, trip]
+---
+
+分享一下國立海洋生物博物館的企鵝卡 bug（說好 You jump I jump 呢？）。
+
+<video controls width="320">
+    <source src="https://media.shuojen.com/video/016.mp4" type="video/mp4" />
+
+    抱歉，您的瀏覽器不支援內嵌影片。
+</video>
+
+## 邪惡的 google
+
+竟然連我吃東港華僑市場裡哪一家生魚片都知道，真的太邪惡了。
+
+![img](./006.webp)

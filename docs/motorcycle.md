@@ -32,7 +32,7 @@ sidebar_position: 10
 當時有件很白痴的事讓我印象深刻。兩人交換後，換我載咩咩，我太久沒騎檔車不留神，一檔時油門摧太大力直接兩個人在台九線上「翹孤輪」（真的很危險），奇蹟般的最後完全沒事，只是兩個人都驚魂未定，當時在旁邊等紅燈的大學長，一定心想這兩個到底在幹嘛吧？
 
 <video controls width="300">
-    <source src="/video/021.mp4" type="video/mp4" />
+    <source src="https://media.shuojen.com/video/021.mp4" type="video/mp4" />
 
     抱歉，您的瀏覽器不支援內嵌影片。
 </video>
@@ -148,7 +148,7 @@ sidebar_position: 10
 薄薄的一層一層上漆，最後上透明保護漆，阿簡噴漆功力不錯，都沒流鼻涕。
 
 <video controls width="300">
-    <source src="/video/022.mp4" type="video/mp4" />
+    <source src="https://media.shuojen.com/video/022.mp4" type="video/mp4" />
 
     抱歉，您的瀏覽器不支援內嵌影片。
 </video>
@@ -215,7 +215,7 @@ sidebar_position: 10
 >
 >謝謝你帶我去很多地方， 蒜頭會帶你去更多地方玩， 再等你告訴我許多旅行的故事。
 
-![img](../photoblog/img/instagram_output/202009/001.webp)
+![img](../photoblog/2020-09-25-wolf/001.webp)
 
 
 最後我把車交給一個我從高中一路認識到現在的好朋友，聽說他拿到車後，很快就騎著車去環島，真是太棒了。

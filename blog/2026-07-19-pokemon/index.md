@@ -1,0 +1,16 @@
+---
+title: '寶可夢冷知識'
+tags: ['fun']
+date: 2026-07-19
+rss_date: '2026-07-19T22:01:56+08:00'
+---
+大谷翔平的身高體重跟烈咬陸鯊一樣（讓我晚上笑好久）
+<img src={require('./010.jpg').default} width="600" alt="img" />
+
+<img src={require('./012.jpeg').default} width="600" alt="img" />
+▲官方玩梗最為致命
+
+## PokeFit
+
+我是叉字蝠耶，歡迎到這個網站[玩看看](https://pokefit.vercel.app/)。
+<img src={require('./011.png').default} width="600" alt="img" />

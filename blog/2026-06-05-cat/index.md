@@ -1,0 +1,19 @@
+---
+title: '貓'
+tags: ['fun']
+date: 2026-06-05
+rss_date: '2026-06-05T09:04:30+08:00'
+---
+[畫貓挑戰](https://trashposts.com/blog/draw-a-cat/)：解鎖一筆通關成就！
+
+<img src={require('./001.jpg').default} width="300" alt="img" />
+
+
+:::note[2026-06-07 更新]
+普通難度通關！感謝蝦波幫我代筆成功。
+<img src={require('./002.jpg').default} width="300" alt="img" />
+:::
+
+
+![img](./003.jpg)
+▲邪惡小貓路過

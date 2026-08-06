@@ -1,0 +1,14 @@
+---
+title: '實習大叔'
+tags: [friend, movie]
+---
+
+Pretty girl in "The Internship"
+
+![img](./001.jpg)
+
+![img](./002.jpg)
+
+:::note[來自 2025 的感想]
+跟林沅翰看電影意外包場，這是不是京華城的喜滿客呀，現在已經拆掉了。
+:::

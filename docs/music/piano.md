@@ -27,7 +27,7 @@ sidebar_position: 2
 高中音樂課跟馬朗文一起四手聯彈（國中的時候也跟大隊長一起彈過）
 
 <video controls width="320">
-    <source src="/video/005.mp4" type="video/mp4" />
+    <source src="https://media.shuojen.com/video/005.mp4" type="video/mp4" />
 
     抱歉，您的瀏覽器不支援內嵌影片。
 </video>
@@ -39,7 +39,7 @@ sidebar_position: 2
 看完[演唱會](/docs/concert/#2024-%E5%91%A8%E6%9D%B0%E5%80%AB%E5%98%89%E5%B9%B4%E8%8F%AF)出一題，周杰倫鐵粉猜一下是哪首。
 
 <video controls width="320">
-    <source src="/video/014.mp4" type="video/mp4" />
+    <source src="https://media.shuojen.com/video/014.mp4" type="video/mp4" />
 
     抱歉，您的瀏覽器不支援內嵌影片。
 </video>
@@ -48,7 +48,7 @@ sidebar_position: 2
 *2025-10-24*
 
 <video controls width="320">
-    <source src="/video/009.mp4" type="video/mp4" />
+    <source src="https://media.shuojen.com/video/009.mp4" type="video/mp4" />
 
     抱歉，您的瀏覽器不支援內嵌影片。
 </video>
@@ -57,7 +57,7 @@ sidebar_position: 2
 *2026-03-24*
 
 <video controls width="320">
-    <source src="/video/017.mp4" type="video/mp4" />
+    <source src="https://media.shuojen.com/video/017.mp4" type="video/mp4" />
 
     抱歉，您的瀏覽器不支援內嵌影片。
 </video>

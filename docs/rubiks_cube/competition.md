@@ -72,7 +72,7 @@ sidebar_position: 2
 *官方記錄三階單次 8.81*
 
 <video controls width="320">
-    <source src="/video/881.mp4" type="video/mp4" />
+    <source src="https://media.shuojen.com/video/881.mp4" type="video/mp4" />
 
     抱歉，您的瀏覽器不支援內嵌影片。
 </video>

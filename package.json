@@ -11,6 +11,7 @@
     "build": "npm run prepare-data && docusaurus build",
     "deploy": "npm run prepare-data && docusaurus deploy",
     "push": "npm run check && npm run prepare-data && node scripts/push.js",
+    "new": "node scripts/new-post.js",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",

@@ -8,7 +8,7 @@ sidebar_position: 1
 *2026-04-26*
 
 <video controls width="320">
-    <source src="/video/019.mp4" type="video/mp4" />
+    <source src="https://media.shuojen.com/video/019.mp4" type="video/mp4" />
 
     抱歉，您的瀏覽器不支援內嵌影片。
 </video>
@@ -172,7 +172,7 @@ MV 很讚。
 *2019-01-07*
 
 <video controls width="320">
-    <source src="/video/007.mp4" type="video/mp4" />
+    <source src="https://media.shuojen.com/video/007.mp4" type="video/mp4" />
 
     抱歉，您的瀏覽器不支援內嵌影片。
 </video>
@@ -184,7 +184,7 @@ MV 很讚。
 *2017-01-10*
 
 <video controls width="320">
-    <source src="/video/004.mp4" type="video/mp4" />
+    <source src="https://media.shuojen.com/video/004.mp4" type="video/mp4" />
 
     抱歉，您的瀏覽器不支援內嵌影片。
 </video>
