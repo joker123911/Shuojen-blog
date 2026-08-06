@@ -1,0 +1,31 @@
+---
+title: 'Xpark'
+tags: ['Fujifilm-XT20','xf1855mmf2.8','台灣','桃園']
+---
+
+ 
+第一次去Xpark。
+
+[20211218 Taiwan Taoyuan Xpark](https://www.youtube.com/watch?v=IxmGLBir8EA&list=PL0OXdBIpu2-y089dJTpA3LBZACBOaCnBW&index=3)
+
+<div className="video-container">
+  <iframe 
+    width="320" 
+    height="180"
+    src="https://www.youtube.com/embed/IxmGLBir8EA?si=fKHmuy_JKTv0l5uy"
+    title="YouTube video player" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen>
+  </iframe>
+</div>
+
+![001](./004.webp)
+
+![002](./005.webp)
+
+![003](./006.webp)
+
+![004](./002.webp)
+
+![005](./003.webp)
