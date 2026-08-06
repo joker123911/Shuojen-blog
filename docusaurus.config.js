@@ -112,7 +112,7 @@ const config = {
         feedOptions: {
           type: 'all',
           title: 'Shuo-jen Blog',
-          description: '訂閱最新的貼文！',
+          description: '我專屬的人生博物館與編年史',
           copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen Huang`,
           language: 'zh-TW',
           /** @param {any} params */
@@ -161,7 +161,7 @@ const config = {
         feedOptions: {
           type: 'all',
           title: 'Shuo-jen Photography',
-          description: '訂閱攝影紀錄。',
+          description: '我專屬的人生影像紀錄',
           copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen Huang`,
           language: 'zh-TW',
           /** @param {any} params */
