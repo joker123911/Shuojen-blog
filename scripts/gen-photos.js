@@ -54,7 +54,7 @@ function generatePhotosData() {
       currentPostImages.forEach((imgSrc) => {
         // Clean leading ./ or /
         const cleanName = path.basename(imgSrc);
-        const webSrc = `photoblog/${rawSlug}/${cleanName}`;
+        const webSrc = `${rawSlug}/${cleanName}`;
 
         allPhotos.push({
           src: webSrc,

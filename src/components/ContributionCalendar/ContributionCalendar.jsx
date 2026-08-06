@@ -54,12 +54,14 @@ export default function ContributionCalendar() {
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+    const todayEnd = new Date();
+    todayEnd.setHours(23, 59, 59, 999);
     const oneYearAgo = new Date(today);
     oneYearAgo.setDate(today.getDate() - 364);
 
     const yearPosts = dates.reduce((sum, date) => {
       const d = new Date(date);
-      if (d >= oneYearAgo && d <= today) return sum + (data[date]?.length || 0);
+      if (d >= oneYearAgo && d <= todayEnd) return sum + (data[date]?.length || 0);
       return sum;
     }, 0);
 

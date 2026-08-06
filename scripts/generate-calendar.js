@@ -29,9 +29,14 @@ function extractPostData(filePath, baseRoute) {
     dateStr = dateMatch[1];
   } else {
     const fileName = path.basename(filePath);
+    const parentDir = path.basename(path.dirname(filePath));
     const fileDateMatch = fileName.match(/^(\d{4}-\d{2}-\d{2})/);
+    const parentDateMatch = parentDir.match(/^(\d{4}-\d{2}-\d{2})/);
+
     if (fileDateMatch) {
       dateStr = fileDateMatch[1];
+    } else if (parentDateMatch) {
+      dateStr = parentDateMatch[1];
     } else {
       const stats = fs.statSync(filePath);
       const d = new Date(stats.birthtime);
