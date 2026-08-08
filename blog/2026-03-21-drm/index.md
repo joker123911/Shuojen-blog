@@ -62,7 +62,7 @@ python kobo-book-downloader list --all
 
 下載所有書籍：
 ```
-python kobo-book-downloader list --all
+python kobo-book-downloader get --all .
 ```
 
 下載特定書籍：
