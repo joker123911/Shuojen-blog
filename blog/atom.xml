@@ -2,12 +2,37 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shuojen.com/blog</id>
     <title>Shuo-jen Blog</title>
-    <updated>2026-08-06T00:00:00.000Z</updated>
+    <updated>2026-08-08T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shuojen.com/blog"/>
-    <subtitle>訂閱最新的貼文！</subtitle>
+    <subtitle>我專屬的人生博物館與編年史</subtitle>
     <icon>https://shuojen.com/img/favicon.ico</icon>
     <rights>Copyright © 2026 Shuo-jen Huang</rights>
+    <entry>
+        <title type="html"><![CDATA[超美味貝果]]></title>
+        <id>https://shuojen.com/blog/2026/08/08/bagel</id>
+        <link href="https://shuojen.com/blog/2026/08/08/bagel"/>
+        <updated>2026-08-08T09:17:40.000Z</updated>
+        <summary type="html"><![CDATA[1. 購買這個 PHILADELPHIA 菲力奶油乳酪（全聯就找得到了）]]></summary>
+        <content type="html"><![CDATA[<ol>
+<li class="">購買這個 PHILADELPHIA 菲力奶油乳酪（全聯就找得到了）</li>
+</ol>
+<img src="https://shuojen.com/assets/images/001-ea4beef0a0aeda85883a46d035a6e870.webp" width="600" alt="img">
+<ol start="2">
+<li class="">
+<p>再到麵包店買一個貝果，烤箱烤 3 分鐘對半切</p>
+</li>
+<li class="">
+<p>切一小塊抹上去</p>
+</li>
+</ol>
+<img src="https://shuojen.com/assets/images/002-a436724f41eb3ca3fa301a1a53fab6fb.webp" width="600" alt="img">
+<ol start="4">
+<li class="">夾起來就完成了</li>
+</ol>
+<img src="https://shuojen.com/assets/images/003-e7ab533ce93ae6d6dcad41cd79b9d337.webp" width="600" alt="img">]]></content>
+        <category label="recipe" term="recipe"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[報名日]]></title>
         <id>https://shuojen.com/blog/2026/08/06/sign_up</id>
@@ -534,35 +559,6 @@
 <ol>
 <li class="anchorTargetStickyNavbar_Vzrq" id="user-content-fn-1-093fe1">
 <p>油飯香 Q，加爆蒜汁跟一點點甜辣醬之後真的很讚，雙管四神湯我個人覺得還好，下次會點蚵仔湯，蚵仔很新鮮超好吃。 <a href="https://shuojen.com/blog/2026/06/29/myday#user-content-fnref-1-093fe1" data-footnote-backref="" aria-label="Back to reference 1" class="data-footnote-backref">↩</a></p>
-</li>
-</ol>
-</section>]]></content>
-        <category label="life" term="life"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[興趣需要花錢嗎]]></title>
-        <id>https://shuojen.com/blog/2026/06/26/hobby</id>
-        <link href="https://shuojen.com/blog/2026/06/26/hobby"/>
-        <updated>2026-06-26T00:50:20.000Z</updated>
-        <summary type="html"><![CDATA[連假的時候去朋友翁伯伯家玩，他說他媽媽最近都在練習書法，簡直是超棒的興趣，根本幾乎花不到什麼錢。讓我覺得這件事很有趣，我仔細想了想，雖然有的興趣真的在設備上會比較花錢一點，但是比起單純胡亂消費帶來的短暫快樂，大部份興趣那種統粹的快樂，好像真的不需要花什麼錢。]]></summary>
-        <content type="html"><![CDATA[<p>連假的時候去朋友翁伯伯家玩，他說他媽媽最近都在練習書法，簡直是超棒的興趣，根本幾乎花不到什麼錢。讓我覺得這件事很有趣，我仔細想了想，雖然有的興趣真的在設備上會比較花錢一點，但是比起單純胡亂消費帶來的短暫快樂，大部份興趣那種統粹的快樂，好像真的不需要花什麼錢<sup><a href="https://shuojen.com/blog/2026/06/26/hobby#user-content-fn-1-d0b83f" id="user-content-fnref-1-d0b83f" data-footnote-ref="true" aria-describedby="footnote-label" class="anchorTargetStickyNavbar_Vzrq">1</a></sup>。</p>
-<p>雖然自己還是偶爾會陷入一種裝備的軍備競賽，覺得買了更多更好的器材會更棒，但大多數這類型的消費都屬於一時的快樂這種類型而已。</p>
-<ul>
-<li class="">鋼琴：或許算是高消費的興趣了，不過假如花了十萬台幣買了一台琴，可以用三十年，一天只要十元，似乎又是一個非常划算的興趣了。</li>
-<li class="">吉他：我覺得非常讚，買完琴後只要保養換弦的費用，就可以彈很久很久，易學難精，很快就能有成就感。</li>
-<li class="">西洋棋：當作一般消遣不必花任何多餘的金錢，只要手機或電腦就可以玩了，不過我還是買了好幾個漂亮精緻的實體棋盤但其實很少用。</li>
-<li class="">水族：要體驗養魚的樂趣，簡單的一尺缸，一支 27 公分的高演色小燈還有小鋁瓶二氧化碳，就可以很好的入門水草的魅力了，造景完一步步看它成景的過程，真的是非常有趣。</li>
-<li class="">魔術方塊：只要一顆 100 元的方塊，基本上性能就足夠任何業餘玩家使用了，也是易學難精的類型，光是三階的方塊玩法就超級多變，單手解丶盲解丶CFOP 解丶橋式解，足夠鑽研一輩子了。</li>
-<li class="">畫畫：粗爆一點說，只要一支筆跟一張紙，就能擁有全世界了。</li>
-<li class="">攝影：其實一台普通的二手相機，效果就非常足夠拍攝了。</li>
-</ul>
-<p>其實所有興趣都是一樣的，入門不要太差的設備，就足夠一直用到這個領域中相當進階的程度了，等到技巧高深後，就能感覺到哪些地方少了什麼，需要再增加什麼設備，但是也可能只是<strong>想要</strong>，真的需要的比例又會再少一點。</p>
-<p>當然也是有需要花錢的興趣，如果收集跑車丶物色房地產，在路上玩實體大富翁就是你的興趣的話，有何不可呢。</p>
-<!-- -->
-<section data-footnotes="true" class="footnotes"><h2 class="anchor anchorTargetStickyNavbar_Vzrq sr-only" id="footnote-label">Footnotes<a href="https://shuojen.com/blog/2026/06/26/hobby#footnote-label" class="hash-link" aria-label="Footnotes的直接連結" title="Footnotes的直接連結" translate="no">​</a></h2>
-<ol>
-<li class="anchorTargetStickyNavbar_Vzrq" id="user-content-fn-1-d0b83f">
-<p>非常認真學習一種技藝，請教練等等花費就是真的非常花錢了，這篇文章針對單純帶來快樂的小嗜好 <a href="https://shuojen.com/blog/2026/06/26/hobby#user-content-fnref-1-d0b83f" data-footnote-backref="" aria-label="Back to reference 1" class="data-footnote-backref">↩</a></p>
 </li>
 </ol>
 </section>]]></content>

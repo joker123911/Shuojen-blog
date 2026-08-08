@@ -2,8 +2,19 @@
     "version": "https://jsonfeed.org/version/1",
     "title": "Shuo-jen Blog",
     "home_page_url": "https://shuojen.com/blog",
-    "description": "訂閱最新的貼文！",
+    "description": "我專屬的人生博物館與編年史",
     "items": [
+        {
+            "id": "https://shuojen.com/blog/2026/08/08/bagel",
+            "content_html": "<ol>\n<li class=\"\">購買這個 PHILADELPHIA 菲力奶油乳酪（全聯就找得到了）</li>\n</ol>\n<img src=\"https://shuojen.com/assets/images/001-ea4beef0a0aeda85883a46d035a6e870.webp\" width=\"600\" alt=\"img\">\n<ol start=\"2\">\n<li class=\"\">\n<p>再到麵包店買一個貝果，烤箱烤 3 分鐘對半切</p>\n</li>\n<li class=\"\">\n<p>切一小塊抹上去</p>\n</li>\n</ol>\n<img src=\"https://shuojen.com/assets/images/002-a436724f41eb3ca3fa301a1a53fab6fb.webp\" width=\"600\" alt=\"img\">\n<ol start=\"4\">\n<li class=\"\">夾起來就完成了</li>\n</ol>\n<img src=\"https://shuojen.com/assets/images/003-e7ab533ce93ae6d6dcad41cd79b9d337.webp\" width=\"600\" alt=\"img\">",
+            "url": "https://shuojen.com/blog/2026/08/08/bagel",
+            "title": "超美味貝果",
+            "summary": "1. 購買這個 PHILADELPHIA 菲力奶油乳酪（全聯就找得到了）",
+            "date_modified": "2026-08-08T09:17:40.000Z",
+            "tags": [
+                "recipe"
+            ]
+        },
         {
             "id": "https://shuojen.com/blog/2026/08/06/sign_up",
             "content_html": "<p>每年一度報名技師的日子又到了，被同事說服後，還是乖乖按下報名按鈕，即使今年都還沒開始讀書。</p>\n<p>去年考試的那個週末，因為馬太鞍溪的案子，結果連考場都沒有去，其實當時心裡的想法是：都浪費報名費了，不能連兩天 16 小時也浪費掉。今天還笑著跟同事說，每年這樣報名根本是在繳年費，而且還漲價變成 2300 塊了，感覺好像什麼坑人的 disney+ 方案似的。</p>\n<p>對於現在的生活，有沒有考到技師牌有很大的差別嗎，其實也還好，就每個月薪水多一萬塊而已。最大的差別是自我滿足吧，記得 2022 年的時候，許過無聊的新年新希望是魔術方塊在 WCA 比賽上單次 10 秒內還有考到技師牌，想當然魔術方塊很快就達到目標了，然而考牌如浮雲一般，在夢境與現實之間載浮載沉著。俗話說：時間花在哪，成就就在哪裡果然一點也不錯。</p>\n<p>沒考到牌也有一個讓我渾身不舒服的感覺，我想要學日文、學游泳、學桌球、寫部落格、看電影、玩遊戲，但卻好像有個聲音一直告訴我，考完牌這些都可以盡情去做了，雖然讓自己放寬心，直接去做自己想做的事就好了，但這個念頭總是像一根魚刺一樣，時時札在我的腦海中，一直讓我想到「逃」（不對吧你又不是奇犽，別抄獵人阿），不過話說回來，今年到現在都已經八月了，還沒有開始讀書的我，似乎也沒資格說自己沒有任性的做自己想做的事，明明在部落格玩得那麼開心。</p>\n<p>總之，有了部落格之後，有地方留下證據給自己壓力，未嘗不是一件好事。寫完這篇文章時間也晚了，不宜讀書，繼續看《臺灣漫遊錄》吧。</p>\n<p>明年放榜當天的我 be like：</p>\n<p><img decoding=\"async\" loading=\"lazy\" src=\"https://shuojen.com/assets/images/meme-4f1f7f4dfc52fe2a9e79a50fcf54e844.jpg\" width=\"583\" height=\"343\" class=\"img_ev3q\"></p>",
@@ -214,17 +225,6 @@
             "title": "週末雜記",
             "summary": "1. 週五下班家豪和夏琳夫妻檔臨時約在台北吃晚餐，帶他們吃雙園火鍋（推他們的溫體牛），聊得很開心。",
             "date_modified": "2026-06-28T17:10:07.000Z",
-            "tags": [
-                "life"
-            ]
-        },
-        {
-            "id": "https://shuojen.com/blog/2026/06/26/hobby",
-            "content_html": "<p>連假的時候去朋友翁伯伯家玩，他說他媽媽最近都在練習書法，簡直是超棒的興趣，根本幾乎花不到什麼錢。讓我覺得這件事很有趣，我仔細想了想，雖然有的興趣真的在設備上會比較花錢一點，但是比起單純胡亂消費帶來的短暫快樂，大部份興趣那種統粹的快樂，好像真的不需要花什麼錢<sup><a href=\"https://shuojen.com/blog/2026/06/26/hobby#user-content-fn-1-d0b83f\" id=\"user-content-fnref-1-d0b83f\" data-footnote-ref=\"true\" aria-describedby=\"footnote-label\" class=\"anchorTargetStickyNavbar_Vzrq\">1</a></sup>。</p>\n<p>雖然自己還是偶爾會陷入一種裝備的軍備競賽，覺得買了更多更好的器材會更棒，但大多數這類型的消費都屬於一時的快樂這種類型而已。</p>\n<ul>\n<li class=\"\">鋼琴：或許算是高消費的興趣了，不過假如花了十萬台幣買了一台琴，可以用三十年，一天只要十元，似乎又是一個非常划算的興趣了。</li>\n<li class=\"\">吉他：我覺得非常讚，買完琴後只要保養換弦的費用，就可以彈很久很久，易學難精，很快就能有成就感。</li>\n<li class=\"\">西洋棋：當作一般消遣不必花任何多餘的金錢，只要手機或電腦就可以玩了，不過我還是買了好幾個漂亮精緻的實體棋盤但其實很少用。</li>\n<li class=\"\">水族：要體驗養魚的樂趣，簡單的一尺缸，一支 27 公分的高演色小燈還有小鋁瓶二氧化碳，就可以很好的入門水草的魅力了，造景完一步步看它成景的過程，真的是非常有趣。</li>\n<li class=\"\">魔術方塊：只要一顆 100 元的方塊，基本上性能就足夠任何業餘玩家使用了，也是易學難精的類型，光是三階的方塊玩法就超級多變，單手解丶盲解丶CFOP 解丶橋式解，足夠鑽研一輩子了。</li>\n<li class=\"\">畫畫：粗爆一點說，只要一支筆跟一張紙，就能擁有全世界了。</li>\n<li class=\"\">攝影：其實一台普通的二手相機，效果就非常足夠拍攝了。</li>\n</ul>\n<p>其實所有興趣都是一樣的，入門不要太差的設備，就足夠一直用到這個領域中相當進階的程度了，等到技巧高深後，就能感覺到哪些地方少了什麼，需要再增加什麼設備，但是也可能只是<strong>想要</strong>，真的需要的比例又會再少一點。</p>\n<p>當然也是有需要花錢的興趣，如果收集跑車丶物色房地產，在路上玩實體大富翁就是你的興趣的話，有何不可呢。</p>\n<!-- -->\n<section data-footnotes=\"true\" class=\"footnotes\"><h2 class=\"anchor anchorTargetStickyNavbar_Vzrq sr-only\" id=\"footnote-label\">Footnotes<a href=\"https://shuojen.com/blog/2026/06/26/hobby#footnote-label\" class=\"hash-link\" aria-label=\"Footnotes的直接連結\" title=\"Footnotes的直接連結\" translate=\"no\">​</a></h2>\n<ol>\n<li class=\"anchorTargetStickyNavbar_Vzrq\" id=\"user-content-fn-1-d0b83f\">\n<p>非常認真學習一種技藝，請教練等等花費就是真的非常花錢了，這篇文章針對單純帶來快樂的小嗜好 <a href=\"https://shuojen.com/blog/2026/06/26/hobby#user-content-fnref-1-d0b83f\" data-footnote-backref=\"\" aria-label=\"Back to reference 1\" class=\"data-footnote-backref\">↩</a></p>\n</li>\n</ol>\n</section>",
-            "url": "https://shuojen.com/blog/2026/06/26/hobby",
-            "title": "興趣需要花錢嗎",
-            "summary": "連假的時候去朋友翁伯伯家玩，他說他媽媽最近都在練習書法，簡直是超棒的興趣，根本幾乎花不到什麼錢。讓我覺得這件事很有趣，我仔細想了想，雖然有的興趣真的在設備上會比較花錢一點，但是比起單純胡亂消費帶來的短暫快樂，大部份興趣那種統粹的快樂，好像真的不需要花什麼錢。",
-            "date_modified": "2026-06-26T00:50:20.000Z",
             "tags": [
                 "life"
             ]
