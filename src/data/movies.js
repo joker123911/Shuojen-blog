@@ -1,4 +1,5 @@
 export const westernMovies = [
+  { title: "愛你致死不渝", score: 8.8, note: "超棒的低成本驚悚電影，保證從頭到尾如坐針氈", poster: "./img/movie/愛你致死不渝.webp", tags: ["2026", "驚悚"] },
   { title: "臥底", score: 8.4, note: "非常精采的搶銀行警匪片，我心中的第一名。完全呈現出我之前看紙房子腦海中的期待，結果紙房子給了我無語", poster: "./img/movie/臥底.webp", tags: ["2006", "警匪"] },
   { title: "頂尖對決", score: 9.5, note: "心中最佳的諾蘭神片，絕對不能被劇透，看第二次體驗更佳", poster: "./img/movie/頂尖對決.webp", tags: ["2006", "懸疑", "劇情", "諾蘭"] },
   { title: "火線追緝令", score: 9.5, note: "心中最佳的大衛芬奇，百看不厭凱文史貝西的神演技", poster: "./img/movie/火線追緝令.webp", tags: ["1995", "驚悚", "犯罪"] },
@@ -418,6 +419,7 @@ export const hongkongMovies = [
 ];
 
 export const animeMovies = [
+  { title: "吉伊卡哇人魚島的秘密", score: 7.3, note: "還可以，微微黑暗一如既往的維持吉伊卡哇的基調，但我覺得不夠好", poster: "./img/movie/吉伊卡哇人魚島的秘密.webp", tags: ["2026", "獵奇"] },
   { title: "鏈鋸人-蕾潔篇", score: 9.2, note: "文藝電影感丶戰鬥畫面跟音樂都超級棒，整部當成完整的作品看也完全沒問題", poster: "./img/movie/鏈鋸人-蕾潔篇.webp", tags: ["2025", "戰鬥", "戀愛"] },
   { title: "玩具總動員", score: 9.0, note: "我最愛的皮克斯電影，純真又可愛的童年回憶，3>1>2>4", poster: "./img/movie/玩具總動員 1～3.webp", tags: ["1995","經典","奇幻"] },
   { title: "神隱少女", score: 8.9, note: "最喜歡的宮崎駿作品，音樂劇情都無敵", poster: "./img/movie/神隱少女.webp", tags: ["2001","奇幻"] },
