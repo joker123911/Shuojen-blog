@@ -146,7 +146,7 @@ export const blogrollLinks = [
   },
   {
     "title": "Eddie‘s Blog",
-    "url": "https://blog.gtisland.studio/",
+    "url": "https://eddielv.com",
     "xmlUrl": "https://eddielv.com/index.xml",
     "description": "Recent content on EddieLv.com"
   },
@@ -272,8 +272,8 @@ export const blogrollLinks = [
   },
   {
     "title": "It's小白不是小白 – It's小白不是小白",
-    "url": "https://itsxiaobai.github.io/",
-    "xmlUrl": "https://itsxiaobai.github.io/index.xml",
+    "url": "https://itsxiaobai.codeberg.page/pages/",
+    "xmlUrl": "https://itsxiaobai.codeberg.page/pages/index.xml",
     "description": "Recent content on It's小白不是小白"
   },
   {
@@ -719,6 +719,12 @@ export const blogrollLinks = [
     "url": "https://igouist.github.io/",
     "xmlUrl": "https://igouist.github.io/index.xml",
     "description": "Recent content on 伊果的沒人看筆記本"
+  },
+  {
+    "title": "冰室花园",
+    "url": "https://blog.mattuy.top/blog/",
+    "xmlUrl": "https://blog.mattuy.top/blog/rss.xml",
+    "description": "冰室花园 - Haven Mattuy"
   },
   {
     "title": "安娜的自我探索與成長筆記",
