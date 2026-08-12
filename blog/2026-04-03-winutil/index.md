@@ -42,7 +42,7 @@ irm christitus.com/win | iex
 
 ## 我的 Tweaks 設定
 
-## Essential Tweaks中
+### Essential Tweaks中
 
 我選擇使用**Standard**，關掉沒用的後台監控，但不破壞系統功能（其中每一項都可以看到程式碼和作用）。
 
@@ -54,7 +54,7 @@ irm christitus.com/win | iex
 
 * Enable End Task With Right Click：軟體當掉，直接在工作列圖示按右鍵選「結束工作」就好，不用再開工作管理員。
 
-## Advanced Tweaks 中
+### Advanced Tweaks 中
 
 * Remove OneDrive：如果沒有在用微軟的雲端硬碟，把它刪掉會讓檔案總管乾淨很多，也不會在後台佔資源。
 
@@ -62,7 +62,7 @@ irm christitus.com/win | iex
 
 * Disable Microsoft Copilot：這 AI 按鈕到底想幹嘛，趕快把它完整停用。
 
-## Customize Preferences 中
+### Customize Preferences 中
 
 * 建議開啟：
 
