@@ -16,6 +16,8 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   const [activeTab, setActiveTab] = useState('current');
   const [formData, setFormData] = useState({ name: '', content: '', website: '' });
   const [replyData, setReplyData] = useState({ name: '', content: '', website: '' });
+  const [formTab, setFormTab] = useState('write');
+  const [replyTab, setReplyTab] = useState('write');
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(10);
@@ -300,6 +302,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       });
       alert('留言已送出！');
       setFormData({ name: '', content: '', website: '' });
+      setFormTab('write');
       setTimeout(fetchComments, 500); 
     } catch (error) {
       console.error("送出錯誤:", error);
@@ -342,6 +345,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       setExpandedComments(prev => ({ ...prev, [parentComment.id]: true }));
       
       setReplyData({ name: '', content: '', website: '' });
+      setReplyTab('write');
       setReplyingTo(null);
       setTimeout(fetchComments, 500);
     } catch (error) {
@@ -355,10 +359,12 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   const startReply = (id) => {
     setReplyingTo(id);
     setReplyData({ name: '', content: '', website: '' });
+    setReplyTab('write');
   };
 
   const cancelReply = () => {
     setReplyingTo(null);
+    setReplyTab('write');
   };
 
   const startEdit = (id, content) => {
@@ -499,11 +505,37 @@ export default function Guestbook({ readOnly = false, postSlug }) {
                     />
                   </div>
                 )}
+                <div className={styles.formTabHeader}>
+                  <button
+                    type="button"
+                    className={`${styles.formTabBtn} ${replyTab === 'write' ? styles.formTabBtnActive : ''}`}
+                    onClick={() => setReplyTab('write')}
+                  >
+                    ✏️ 編輯
+                  </button>
+                  <button
+                    type="button"
+                    className={`${styles.formTabBtn} ${replyTab === 'preview' ? styles.formTabBtnActive : ''}`}
+                    onClick={() => setReplyTab('preview')}
+                  >
+                    👁️ 預覽
+                  </button>
+                </div>
                 <textarea
                   placeholder="輸入回覆內容（必填）支援 Markdown..." required
                   value={replyData.content} onChange={e => setReplyData({...replyData, content: e.target.value})}
                   rows={3}
+                  style={{ display: replyTab === 'write' ? 'block' : 'none' }}
                 />
+                {replyTab === 'preview' && (
+                  <div className={styles.previewContainer}>
+                    {replyData.content.trim() ? (
+                      renderMarkdown(replyData.content)
+                    ) : (
+                      <span className={styles.previewPlaceholder}>（尚無輸入內容，請在編輯區輸入 Markdown 文字）</span>
+                    )}
+                  </div>
+                )}
                 <div style={{ textAlign: 'right' }}>
                   <button type="button" onClick={cancelReply} style={{ marginRight: '8px', padding: '6px 16px', cursor: 'pointer', borderRadius: '4px', border: '1px solid var(--ifm-color-emphasis-500)', background: 'transparent', color: 'var(--ifm-font-color-base)' }}>取消</button>
                   <button type="submit" className={styles.submitBtn} style={{ display: 'inline-flex', padding: '6px 20px' }} disabled={loading}>
@@ -556,10 +588,36 @@ export default function Guestbook({ readOnly = false, postSlug }) {
                 value={formData.website} onChange={e => setFormData({...formData, website: e.target.value})}
               />
             </div>
+            <div className={styles.formTabHeader}>
+              <button
+                type="button"
+                className={`${styles.formTabBtn} ${formTab === 'write' ? styles.formTabBtnActive : ''}`}
+                onClick={() => setFormTab('write')}
+              >
+                ✏️ 編輯
+              </button>
+              <button
+                type="button"
+                className={`${styles.formTabBtn} ${formTab === 'preview' ? styles.formTabBtnActive : ''}`}
+                onClick={() => setFormTab('preview')}
+              >
+                👁️ 預覽
+              </button>
+            </div>
             <textarea
-              placeholder="輸入內容（必填）" required
+              placeholder="輸入內容（必填）支援 Markdown..." required
               value={formData.content} onChange={e => setFormData({...formData, content: e.target.value})}
+              style={{ display: formTab === 'write' ? 'block' : 'none' }}
             />
+            {formTab === 'preview' && (
+              <div className={styles.previewContainer}>
+                {formData.content.trim() ? (
+                  renderMarkdown(formData.content)
+                ) : (
+                  <span className={styles.previewPlaceholder}>（尚無輸入內容，請在編輯區輸入 Markdown 文字）</span>
+                )}
+              </div>
+            )}
             <button type="submit" className={styles.submitBtn} disabled={loading}>
               {loading ? '傳送中...' : '送出留言'}
             </button>
