@@ -15,7 +15,7 @@ import { White, Black } from '/src/components/Chess/ChessGame';
 
 ## 研究所時期
 
-看完美劇後，我上網學習了西洋棋的規則，最有趣的規則就是["國王入堡(Castling)"](https://zh.wikipedia.org/zh-tw/%E7%8E%8B%E8%BB%8A%E6%98%93%E4%BD%8D)，只要用出來就會覺得自己很帥。
+看完美劇後，我上網學習了西洋棋的規則，最有趣的規則就是[「國王入堡(Castling)」](https://zh.wikipedia.org/zh-tw/%E7%8E%8B%E8%BB%8A%E6%98%93%E4%BD%8D)，只要用出來就會覺得自己很帥。
 
 研究所時期，我常常跟我的研究室同學兼室友一起下棋，兩個人都不會下，就覺得特別有趣，這是我的第一盤真人對局，當時覺得自己棄堡攻殺成功太帥了，下了四十分鐘，有完整的棋譜，現在擺出來應該會覺得這個對局很好笑。
 
