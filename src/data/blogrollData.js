@@ -1,4 +1,4 @@
-// 本檔案由 parse-opml.js 自動生成，請勿手動修改
+// 本檔案由 prepare-data.js 自動生成，請勿手動修改
 export const blogrollLinks = [
   {
     "title": "【The Last Child】",
