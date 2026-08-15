@@ -5,6 +5,18 @@
     "description": "我專屬的人生博物館與編年史",
     "items": [
         {
+            "id": "https://shuojen.com/blog/2026/08/16/minesweeperonline",
+            "content_html": "<p>無聊來練一下<a href=\"https://minesweeperonline.com/#intermediate\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\">踩地雷</a><sup><a href=\"https://shuojen.com/blog/2026/08/16/minesweeperonline#user-content-fn-1-df1853\" id=\"user-content-fnref-1-df1853\" data-footnote-ref=\"true\" aria-describedby=\"footnote-label\" class=\"anchorTargetStickyNavbar_Vzrq\">1</a></sup>（Expert 模式等定石練熟一點再來玩）。</p>\n<video controls=\"\" width=\"320\"><source src=\"https://media.shuojen.com/video/minesweeper_80.mp4\" type=\"video/mp4\"><p>抱歉，您的瀏覽器不支援內嵌影片。</p></video>\n<!-- -->\n<section data-footnotes=\"true\" class=\"footnotes\"><h2 class=\"anchor anchorTargetStickyNavbar_Vzrq sr-only\" id=\"footnote-label\">Footnotes<a href=\"https://shuojen.com/blog/2026/08/16/minesweeperonline#footnote-label\" class=\"hash-link\" aria-label=\"Footnotes的直接連結\" title=\"Footnotes的直接連結\" translate=\"no\">​</a></h2>\n<ol>\n<li class=\"anchorTargetStickyNavbar_Vzrq\" id=\"user-content-fn-1-df1853\">\n<p>啾啾鞋做過一個<a href=\"https://www.youtube.com/watch?v=ZOoXpoHpFHo\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\">踩地雷介紹影片</a>，非常有趣 <a href=\"https://shuojen.com/blog/2026/08/16/minesweeperonline#user-content-fnref-1-df1853\" data-footnote-backref=\"\" aria-label=\"Back to reference 1\" class=\"data-footnote-backref\">↩</a></p>\n</li>\n</ol>\n</section>",
+            "url": "https://shuojen.com/blog/2026/08/16/minesweeperonline",
+            "title": "踩地雷",
+            "summary": "無聊來練一下踩地雷（Expert 模式等定石練熟一點再來玩）。",
+            "date_modified": "2026-08-15T16:41:27.000Z",
+            "tags": [
+                "game",
+                "fun"
+            ]
+        },
+        {
             "id": "https://shuojen.com/blog/2026/08/14/chess_titan",
             "content_html": "<p>我在<a class=\"\" href=\"https://shuojen.com/docs/chess/chess_start\">〈西洋棋與我〉</a>中提到過，人生第一次接觸西洋棋這個遊戲，是小時候家裡的 Windows Vista 上內建的遊戲《Chess Titans》，小時候覺得 Vista 的遊戲也太漂亮了吧，遊戲畫面好有質感，尤其是接龍的畫面也比 XP 系統進步好多，真的漂亮，但後來 Vista 被評為數一數二差的版本就是後話了。</p>\n<p>今天意外發現一個可以把 Windows 老遊戲裝回來的網站：<a href=\"https://win7games.com/#games\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\"> Windows 7 Games for Windows 11 and Windows 10</a>，好有回憶阿，除了<a href=\"https://zh.wikipedia.org/zh-tw/Chess_Titans\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\">《Chess Titans》</a>，還有這個<a href=\"https://zh.wikipedia.org/zh-tw/Purble_Place\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\">《Purble Place》</a>也很有回憶。</p>\n<h2 class=\"anchor anchorTargetStickyNavbar_Vzrq\" id=\"chess-titans-revenge\">Chess Titans Revenge<a href=\"https://shuojen.com/blog/2026/08/14/chess_titan#chess-titans-revenge\" class=\"hash-link\" aria-label=\"Chess Titans Revenge的直接連結\" title=\"Chess Titans Revenge的直接連結\" translate=\"no\">​</a></h2>\n<p>小時候不懂規則，只能看哪裡格子有發光就亂下，以前最讓我搞不懂的，就是兵為什麼老是卡住（原來因為兵的走法是直著走斜著吃！）所以連最菜的電腦也贏不了，現在就是復仇時刻啦，直接挑戰最高難度的電腦！</p>\n<img src=\"https://shuojen.com/assets/images/difficulty-53a557be0cee13b16c07312f114b57bb.png\" width=\"600\" alt=\"img\">\n<p>其實最高難度的電腦還不弱，估計在 Chess.com 的 Rapid 可能有 1800 的實力，但據我無根據的猜測，這個電腦應該被設定成算棋的時間與深度有一定的限制，所以還是會有明顯失誤，對局面的理解也不太足夠，畢竟不是 <a href=\"https://zh.wikipedia.org/zh-tw/Stockfish\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\">Stockfish</a>，休閒導向已經很厲害了，一般沒訓練過的玩家，我覺得應該不太可能贏的了最高難度的電腦。</p>\n<img src=\"https://shuojen.com/assets/images/chess-9ae94cff02f83ba96461415db4459f65.png\" width=\"600\" alt=\"img\">\n<p>下完棋來玩接龍收尾！這個春夏秋冬的撲克牌圖案真的很漂亮耶，回憶滿滿。</p>\n<img src=\"https://shuojen.com/assets/images/solitaire-b584c77104a3c1ef70c408a998dfd486.png\" width=\"600\" alt=\"img\">",
             "url": "https://shuojen.com/blog/2026/08/14/chess_titan",
@@ -216,17 +228,6 @@
             "date_modified": "2026-07-07T09:44:43.000Z",
             "tags": [
                 "fun",
-                "game"
-            ]
-        },
-        {
-            "id": "https://shuojen.com/blog/2026/07/04/steam",
-            "content_html": "<p>每次夏特或冬特就迎來了steam最好玩的遊戲──「買遊戲」。挑選完一堆評價超高又精心製作的高品質遊戲結帳後，<del>就可以安心關電腦了</del>，就可以好好享受它們了！</p>\n<h2 class=\"anchor anchorTargetStickyNavbar_Vzrq\" id=\"本次購物車品項\">本次購物車品項<a href=\"https://shuojen.com/blog/2026/07/04/steam#%E6%9C%AC%E6%AC%A1%E8%B3%BC%E7%89%A9%E8%BB%8A%E5%93%81%E9%A0%85\" class=\"hash-link\" aria-label=\"本次購物車品項的直接連結\" title=\"本次購物車品項的直接連結\" translate=\"no\">​</a></h2>\n<ol>\n<li class=\"\"><a href=\"https://store.steampowered.com/app/1062090/_Timberborn/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\">Timberborn</a></li>\n</ol>\n<p>沙盒城市類型的建造生存類遊戲，很有趣，以河狸為主角建造發展城市度過末日。</p>\n<ol start=\"2\">\n<li class=\"\"><a href=\"https://store.steampowered.com/app/246620/Plague_Inc_Evolved/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\">Plague Inc: Evolved</a></li>\n</ol>\n<p>小時候在手機上玩過的經典遊戲，特價 39 塊！買來回味一下。</p>\n<ol start=\"3\">\n<li class=\"\"><a href=\"https://store.steampowered.com/app/1948980/_/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\">大俠立志傳：碧血丹心</a></li>\n</ol>\n<p>小時候玩的經典 flash 金庸群俠傳的作者，半瓶神仙醋，竟然還有新作品，考慮買來玩看看。</p>\n<ol start=\"4\">\n<li class=\"\"><a href=\"https://store.steampowered.com/app/1749860/Lushfoil_Photography_Sim/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\">Lushfoil Photography Sim</a></li>\n</ol>\n<p>存了很久的拍照遊戲，愛攝影也不用出門了（？），畫面真的看起來很美。</p>\n<ol start=\"5\">\n<li class=\"\"><a href=\"https://store.steampowered.com/app/2001120/_/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\">Split Fiction</a></li>\n</ol>\n<p>跟蝦波玩完<a class=\"\" href=\"https://shuojen.com/blog/2026/05/10/it_takes_two\">雙人成行</a>之後，對這款很有興趣。</p>\n<ol start=\"6\">\n<li class=\"\"><a href=\"https://store.steampowered.com/app/2951770/Leap_Year/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\">Leap Year</a></li>\n</ol>\n<p>格友 Alex 推薦，畫風很可愛，又很便宜想玩看看。</p>\n<ol start=\"7\">\n<li class=\"\"><a href=\"https://store.steampowered.com/app/3894790/_/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\">Professor Simulator</a></li>\n</ol>\n<p>主題很好笑，適合讀過研究所的同學玩。</p>\n<ol start=\"8\">\n<li class=\"\"><a href=\"https://store.steampowered.com/app/4704690/MECCHA_CHAMELEON/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\">MECCHA CHAMELEON</a></li>\n</ol>\n<p>最近很紅的躲貓貓派對遊戲，很好笑，很適合多人一起同樂的感覺。</p>\n<ol start=\"9\">\n<li class=\"\"><a href=\"https://store.steampowered.com/app/1349230/5D_Chess_With_Multiverse_Time_Travel/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\">5D Chess With Multiverse Time Travel</a></li>\n</ol>\n<p>格友 LQ7 推薦，特價了想買來玩看看，感覺就很有趣！</p>",
-            "url": "https://shuojen.com/blog/2026/07/04/steam",
-            "title": "夏季特賣",
-            "summary": "每次夏特或冬特就迎來了steam最好玩的遊戲──「買遊戲」。挑選完一堆評價超高又精心製作的高品質遊戲結帳後，就可以安心關電腦了，就可以好好享受它們了！",
-            "date_modified": "2026-07-04T08:26:14.000Z",
-            "tags": [
                 "game"
             ]
         }

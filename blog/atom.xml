@@ -2,12 +2,31 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shuojen.com/blog</id>
     <title>Shuo-jen Blog</title>
-    <updated>2026-08-14T00:00:00.000Z</updated>
+    <updated>2026-08-16T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shuojen.com/blog"/>
     <subtitle>我專屬的人生博物館與編年史</subtitle>
     <icon>https://shuojen.com/img/favicon.ico</icon>
     <rights>Copyright © 2026 Shuo-jen Huang</rights>
+    <entry>
+        <title type="html"><![CDATA[踩地雷]]></title>
+        <id>https://shuojen.com/blog/2026/08/16/minesweeperonline</id>
+        <link href="https://shuojen.com/blog/2026/08/16/minesweeperonline"/>
+        <updated>2026-08-15T16:41:27.000Z</updated>
+        <summary type="html"><![CDATA[無聊來練一下踩地雷（Expert 模式等定石練熟一點再來玩）。]]></summary>
+        <content type="html"><![CDATA[<p>無聊來練一下<a href="https://minesweeperonline.com/#intermediate" target="_blank" rel="noopener noreferrer" class="">踩地雷</a><sup><a href="https://shuojen.com/blog/2026/08/16/minesweeperonline#user-content-fn-1-df1853" id="user-content-fnref-1-df1853" data-footnote-ref="true" aria-describedby="footnote-label" class="anchorTargetStickyNavbar_Vzrq">1</a></sup>（Expert 模式等定石練熟一點再來玩）。</p>
+<video controls="" width="320"><source src="https://media.shuojen.com/video/minesweeper_80.mp4" type="video/mp4"><p>抱歉，您的瀏覽器不支援內嵌影片。</p></video>
+<!-- -->
+<section data-footnotes="true" class="footnotes"><h2 class="anchor anchorTargetStickyNavbar_Vzrq sr-only" id="footnote-label">Footnotes<a href="https://shuojen.com/blog/2026/08/16/minesweeperonline#footnote-label" class="hash-link" aria-label="Footnotes的直接連結" title="Footnotes的直接連結" translate="no">​</a></h2>
+<ol>
+<li class="anchorTargetStickyNavbar_Vzrq" id="user-content-fn-1-df1853">
+<p>啾啾鞋做過一個<a href="https://www.youtube.com/watch?v=ZOoXpoHpFHo" target="_blank" rel="noopener noreferrer" class="">踩地雷介紹影片</a>，非常有趣 <a href="https://shuojen.com/blog/2026/08/16/minesweeperonline#user-content-fnref-1-df1853" data-footnote-backref="" aria-label="Back to reference 1" class="data-footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>]]></content>
+        <category label="game" term="game"/>
+        <category label="fun" term="fun"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Chess Titans]]></title>
         <id>https://shuojen.com/blog/2026/08/14/chess_titan</id>
@@ -493,52 +512,6 @@
 <div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>資訊</div><div class="admonitionContent_BuS1"><p>本模擬器獎金參考<a href="https://lotto.ctbcbank.com/result_all.htm#02" target="_blank" rel="noopener noreferrer" class="">(第 115000067 期大樂透)</a>, 並假設獎項皆為玩家獨得。單注中獎金額超過 5,000 元者，已自動扣除 20.4% 稅金（20% 扣繳稅額 + 0.4% 印花稅）。</p></div></div>
 <div style="font-family:var(--ifm-font-family-base);background-color:var(--ifm-card-background-color, var(--ifm-background-surface-color));border:1px solid var(--ifm-border-color);border-radius:var(--ifm-card-border-radius, 8px);padding:15px;max-width:100%;margin:20px auto;color:var(--ifm-font-color-base);box-sizing:border-box"><h3 style="color:var(--ifm-color-danger);text-align:center;margin-top:0">大樂透開獎模擬器</h3><div style="background-color:var(--ifm-alert-background-color, rgba(255, 186, 0, 0.1));border-left:4px solid var(--ifm-color-warning);padding:12px;margin-bottom:15px;font-size:0.9em;border-radius:0 4px 4px 0;color:var(--ifm-font-color-base)"><strong>【本期開獎基準獎金】</strong><br>• 頭獎：4.90 億元 | 貳獎：126 萬元 | 參獎：6.1 萬元 <br>• 肆獎：1.4 萬元 | 伍獎：2,000 元 | 陸/柒/普獎：400~1,000 元</div><div style="margin-bottom:15px"><label style="font-weight:bold;display:block;margin-bottom:5px">請輸入模擬預算（元）：</label><input type="number" style="width:100%;padding:8px;background-color:var(--ifm-background-color);color:var(--ifm-font-color-base);border:1px solid var(--ifm-border-color);border-radius:4px;box-sizing:border-box" value="0"><small style="display:block;margin-top:4px;color:var(--ifm-color-emphasis-600)">* 每注金額為 50 元。輸入 0 代表無限模式，直到中頭獎為止。</small></div><div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:20px"><button style="background-color:var(--ifm-color-primary);color:#fff;border:none;padding:10px 16px;font-size:14px;font-weight:bold;border-radius:4px;cursor:pointer;flex:1 1 auto;max-width:150px;text-align:center">開始模擬</button><button style="background-color:#e0a800;color:#fff;border:none;padding:10px 16px;font-size:14px;font-weight:bold;border-radius:4px;cursor:pointer;flex:1 1 auto;max-width:150px;text-align:center">幫我打一張全餐</button><button style="background-color:var(--ifm-color-emphasis-600);color:#fff;border:none;padding:10px 16px;font-size:14px;font-weight:bold;border-radius:4px;cursor:pointer;flex:1 1 auto;max-width:100px;text-align:center">重設</button></div></div>]]></content>
         <category label="fun" term="fun"/>
-        <category label="game" term="game"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[夏季特賣]]></title>
-        <id>https://shuojen.com/blog/2026/07/04/steam</id>
-        <link href="https://shuojen.com/blog/2026/07/04/steam"/>
-        <updated>2026-07-04T08:26:14.000Z</updated>
-        <summary type="html"><![CDATA[每次夏特或冬特就迎來了steam最好玩的遊戲──「買遊戲」。挑選完一堆評價超高又精心製作的高品質遊戲結帳後，就可以安心關電腦了，就可以好好享受它們了！]]></summary>
-        <content type="html"><![CDATA[<p>每次夏特或冬特就迎來了steam最好玩的遊戲──「買遊戲」。挑選完一堆評價超高又精心製作的高品質遊戲結帳後，<del>就可以安心關電腦了</del>，就可以好好享受它們了！</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="本次購物車品項">本次購物車品項<a href="https://shuojen.com/blog/2026/07/04/steam#%E6%9C%AC%E6%AC%A1%E8%B3%BC%E7%89%A9%E8%BB%8A%E5%93%81%E9%A0%85" class="hash-link" aria-label="本次購物車品項的直接連結" title="本次購物車品項的直接連結" translate="no">​</a></h2>
-<ol>
-<li class=""><a href="https://store.steampowered.com/app/1062090/_Timberborn/" target="_blank" rel="noopener noreferrer" class="">Timberborn</a></li>
-</ol>
-<p>沙盒城市類型的建造生存類遊戲，很有趣，以河狸為主角建造發展城市度過末日。</p>
-<ol start="2">
-<li class=""><a href="https://store.steampowered.com/app/246620/Plague_Inc_Evolved/" target="_blank" rel="noopener noreferrer" class="">Plague Inc: Evolved</a></li>
-</ol>
-<p>小時候在手機上玩過的經典遊戲，特價 39 塊！買來回味一下。</p>
-<ol start="3">
-<li class=""><a href="https://store.steampowered.com/app/1948980/_/" target="_blank" rel="noopener noreferrer" class="">大俠立志傳：碧血丹心</a></li>
-</ol>
-<p>小時候玩的經典 flash 金庸群俠傳的作者，半瓶神仙醋，竟然還有新作品，考慮買來玩看看。</p>
-<ol start="4">
-<li class=""><a href="https://store.steampowered.com/app/1749860/Lushfoil_Photography_Sim/" target="_blank" rel="noopener noreferrer" class="">Lushfoil Photography Sim</a></li>
-</ol>
-<p>存了很久的拍照遊戲，愛攝影也不用出門了（？），畫面真的看起來很美。</p>
-<ol start="5">
-<li class=""><a href="https://store.steampowered.com/app/2001120/_/" target="_blank" rel="noopener noreferrer" class="">Split Fiction</a></li>
-</ol>
-<p>跟蝦波玩完<a class="" href="https://shuojen.com/blog/2026/05/10/it_takes_two">雙人成行</a>之後，對這款很有興趣。</p>
-<ol start="6">
-<li class=""><a href="https://store.steampowered.com/app/2951770/Leap_Year/" target="_blank" rel="noopener noreferrer" class="">Leap Year</a></li>
-</ol>
-<p>格友 Alex 推薦，畫風很可愛，又很便宜想玩看看。</p>
-<ol start="7">
-<li class=""><a href="https://store.steampowered.com/app/3894790/_/" target="_blank" rel="noopener noreferrer" class="">Professor Simulator</a></li>
-</ol>
-<p>主題很好笑，適合讀過研究所的同學玩。</p>
-<ol start="8">
-<li class=""><a href="https://store.steampowered.com/app/4704690/MECCHA_CHAMELEON/" target="_blank" rel="noopener noreferrer" class="">MECCHA CHAMELEON</a></li>
-</ol>
-<p>最近很紅的躲貓貓派對遊戲，很好笑，很適合多人一起同樂的感覺。</p>
-<ol start="9">
-<li class=""><a href="https://store.steampowered.com/app/1349230/5D_Chess_With_Multiverse_Time_Travel/" target="_blank" rel="noopener noreferrer" class="">5D Chess With Multiverse Time Travel</a></li>
-</ol>
-<p>格友 LQ7 推薦，特價了想買來玩看看，感覺就很有趣！</p>]]></content>
         <category label="game" term="game"/>
     </entry>
 </feed>
