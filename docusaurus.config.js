@@ -11,7 +11,17 @@ const config = {
   favicon: 'img/favicon.ico',
   future: {
     v4: true,
-    faster: true, 
+    faster: {
+      swcJsLoader: true,
+      swcJsMinimizer: true,
+      swcHtmlMinimizer: true,
+      lightningCssMinimizer: true,
+      mdxCrossCompilerCache: true,
+      ssgWorkerThreads: true,
+      gitEagerVcs: true,
+      rspackBundler: false,
+      rspackPersistentCache: false,
+    },
   },
 
   scripts: [

@@ -1503,6 +1503,7 @@
       "url": "/blog/2026/08/12/mechanical_pencil"
     }
   ],
+<<<<<<< HEAD
   "2026-08-14": [
     {
       "title": "Chess Titans",
@@ -1513,6 +1514,12 @@
     {
       "title": "踩地雷",
       "url": "/blog/2026/08/16/minesweeperonline"
+=======
+  "2026-08-18": [
+    {
+      "title": "閱星瞳 x4",
+      "url": "/blog/2026/08/18/x4"
+>>>>>>> 5a6b6e849 (update)
     }
   ],
   "2019-05-21": [
