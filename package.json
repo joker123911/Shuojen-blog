@@ -5,12 +5,9 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "check": "node scripts/check-broken-links.js",
-<<<<<<< HEAD
     "pull": "git pull",
     "prepare-data": "node scripts/prepare-data.js",
-=======
     "prepare-data": "node scripts/parse-opml.js && node scripts/sync-build-time.js && node scripts/update-stats.js && node scripts/gen-photos.js && node scripts/generate-calendar.js",
->>>>>>> 5a6b6e849 (update)
     "start": "npm run prepare-data && docusaurus start",
     "start:fast": "docusaurus start",
     "build": "npm run prepare-data && docusaurus build",
