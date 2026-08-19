@@ -61,5 +61,6 @@ export const animeList = [
   { title: "暴君的廚師", note: "劇情超爛又老梗，食物看起來滿好吃的", poster: "./img/series/暴君的廚師.webp", tier: "B", tags: ["韓劇", "戀愛","棄坑"] },
   { title: "黑話律師", note: "前面滿引起興趣的，後面越看越爛", poster: "./img/series/黑話律師.webp", tier: "B", tags: ["韓劇", "犯罪"] },
   { title: "大搜查線", note: "老警察職場劇， 經典但是以現在的角度來說，節奏稍嫌太慢了", poster: "./img/series/大搜查線.webp", tier: "B", tags: ["日劇", "刑偵"] },
-  { title: "陽光先生", note: "好冗長，沒耐心看下去了，但前幾集還不錯看", poster: "./img/series/陽光先生.webp", tier: "B", tags: ["韓劇", "戀愛","棄坑"] }
+  { title: "陽光先生", note: "好冗長，沒耐心看下去了，但前幾集還不錯看", poster: "./img/series/陽光先生.webp", tier: "B", tags: ["韓劇", "戀愛","棄坑"] },
+  { title: "毛骨悚然的戀愛", note: "喜歡朴恩斌所以看了兩集，但是劇情實在有點瞎，看不太下去", poster: "./img/series/毛骨悚然的戀愛.webp", tier: "B", tags: ["戀愛", "驚悚", "棄坑"] }
 ];

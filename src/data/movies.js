@@ -1,4 +1,5 @@
 export const westernMovies = [
+  { title: "露西", score: 6.8, note: "真的很複雜的一部，有很好看的底子，但卻拍的很難看，可以只看預告就好的一部", poster: "./img/movie/露西.webp", tags: ["2014", "動作"] },
   { title: "愛你致死不渝", score: 8.8, note: "超棒的低成本驚悚電影，保證從頭到尾如坐針氈", poster: "./img/movie/愛你致死不渝.webp", tags: ["2026", "驚悚"] },
   { title: "臥底", score: 8.4, note: "非常精采的搶銀行警匪片，我心中的第一名。完全呈現出我之前看紙房子腦海中的期待，結果紙房子給了我無語", poster: "./img/movie/臥底.webp", tags: ["2006", "警匪"] },
   { title: "頂尖對決", score: 9.5, note: "心中最佳的諾蘭神片，絕對不能被劇透，看第二次體驗更佳", poster: "./img/movie/頂尖對決.webp", tags: ["2006", "懸疑", "劇情", "諾蘭"] },
@@ -257,6 +258,7 @@ export const westernMovies = [
 ];
 
 export const asiaMovies = [
+  { title: "台北追緝令", score: 6.4, note: "滿尷尬的一部，真的滿難看的，露西的再更劣化版", poster: "./img/movie/台北追緝令.webp", tags: ["2024", "動作"] },
   { title: "寄生上流", score: 9.2, note: "奉導集大成神作，商業與藝術完美結合", poster: "./img/movie/寄生上流.webp", tags: ["2019", "劇情"] },
   { title: "盲探", score: 9.2, note: "心中最佳的劉德華電影，人物塑造劇情都滿分", poster: "./img/movie/盲探.webp", tags: ["2013", "劇情"] },
   { title: "大佛普拉斯", score: 9.1, note: "我最喜歡的臺灣電影，黑白畫面的荒謬感極佳", poster: "./img/movie/大佛普拉斯.webp", tags: ["2017", "劇情"] },

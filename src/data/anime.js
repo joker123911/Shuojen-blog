@@ -26,6 +26,7 @@ export const animeList = [
   { title: "躲在超市後門抽菸的兩人", note: "完全對到我喜好的一部小日常作品，好喜歡", poster: "./img/anime/躲在超市後門抽菸的兩人.webp", tier: "SS", tags: ["日常", "戀愛"] },
   { title: "我內心的糟糕念頭", note: "跟高木同學很像的作品，單純可愛，山田這個角色真的太討喜", poster: "./img/anime/我內心的糟糕念頭.webp", tier: "SS", tags: ["校園","戀愛"] },
   { title: "穹廬下的魔女", note: "真實歷史人物改編的作品，劇情、作畫都超級有趣，非常強", poster: "./img/anime/穹廬下的魔女.webp", tier: "SS", tags: ["歷史", "復仇"] },
+  { title: "殭屍100～在成為殭屍前要做的100件事～", note: "很喜歡這種公路調性，社畜設定也很好笑", poster: "./img/anime/殭屍100～在成為殭屍前要做的100件事～.webp", tier: "SS", tags: ["搞笑"] },
   { title: "迷宮飯", note: "角色太可愛，冒險料理作品好讚", poster: "./img/anime/迷宮飯.webp", tier: "S" , tags: ["戰鬥","奇幻"]},
   { title: "擅長捉弄人的高木同學", note: "每話都是短短的小品，很輕鬆的戀愛作品，《爆擊》這一話至今印象深刻", poster: "./img/anime/擅長捉弄人的高木同學.webp", tier: "S" , tags: ["校園","戀愛", "日常"]},
   { title: "海賊王", note: "到魚人島之前都很好看，最愛救羅賓的篇章", poster: "./img/anime/海賊王.webp", tier: "S" , tags: ["戰鬥","熱血", "經典"]},
