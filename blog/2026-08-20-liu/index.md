@@ -46,6 +46,6 @@ rss_date: '2026-08-20T22:21:37+08:00'
 
 另外我使用的 [ryanwuson / rime-liur](https://github.com/ryanwuson/rime-liur) 也有很多好用的附加功能，快速簡繁轉換等等，輸入 `` ` ``，叫出符號清單也很方便。
 
-最後放一下[小工具](/tool)裡面的[「嘸蝦米兩碼字練習器」](/boshiamy.html)，偶爾無聊我會玩一下，希望下次更新文章，我的小王子速度就能破百了。
+最後放一下[小工具](/tool)裡面的[「嘸蝦米兩碼字練習器」](pathname:///boshiamy.html)，偶爾無聊我會玩一下，希望下次更新文章，我的小王子速度就能破百了。
 
 [^1]:其實我不知道我打的是 Wiwi 提到的哪種[破折號](https://wiwi.blog/blog/broken-em-dash/)
