@@ -3,15 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>嘸蝦米兩碼字練習 - Shuojen.com</title>
+<title>嘸蝦米兩碼字練習器 - Shuojen.com</title>
 <style>
     :root {
         --primary-purple: #6366f1;
+        --primary-hover: #4f46e5;
         --bg-color: #f8fafc;
         --card-bg: #ffffff;
         --text-main: #1e293b;
         --text-muted: #64748b;
         --correct-green: #10b981;
+        --warning-amber: #f59e0b;
+        --danger-red: #ef4444;
         --radius-lg: 24px;
         --radius-md: 12px;
         --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
@@ -28,36 +31,98 @@
         min-height: 100vh;
         margin: 0;
         padding: 20px;
+        box-sizing: border-box;
     }
 
     .container {
         width: 100%;
-        max-width: 500px;
+        max-width: 520px;
     }
 
     header {
         text-align: center;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
 
     h1 {
-        font-size: 28px;
+        font-size: 26px;
         font-weight: 800;
-        margin: 0 0 8px 0;
+        margin: 0 0 6px 0;
     }
 
     .subtitle {
         color: var(--text-muted);
-        font-size: 14px;
+        font-size: 13px;
+    }
+
+    /* 模式切換標籤 */
+    .mode-tabs {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        background-color: #e2e8f0;
+        padding: 4px;
+        border-radius: var(--radius-md);
+        margin-bottom: 20px;
+    }
+
+    .mode-tab {
+        padding: 8px 4px;
+        font-size: 13px;
+        font-weight: 600;
+        border: none;
+        background: transparent;
+        color: var(--text-muted);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-align: center;
+    }
+
+    .mode-tab.active {
+        background-color: var(--card-bg);
+        color: var(--primary-purple);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    /* 統計與停頓反饋狀態欄 */
+    .status-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        font-size: 12px;
+        color: var(--text-muted);
+    }
+
+    .speed-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-weight: 700;
+        background: #e2e8f0;
+        color: var(--text-muted);
+    }
+
+    .speed-badge.fast {
+        background-color: #d1fae5;
+        color: #065f46;
+    }
+
+    .speed-badge.stuck {
+        background-color: #fee2e2;
+        color: #991b1b;
     }
 
     /* 進度條 */
     .progress-container {
         width: 100%;
-        height: 8px;
+        height: 6px;
         background-color: #e2e8f0;
-        border-radius: 4px;
-        margin-bottom: 30px;
+        border-radius: 3px;
+        margin-bottom: 20px;
         overflow: hidden;
     }
 
@@ -72,8 +137,8 @@
     .flashcard-wrapper {
         perspective: 1000px;
         width: 100%;
-        height: 300px;
-        margin-bottom: 30px;
+        height: 260px;
+        margin-bottom: 20px;
     }
 
     .flashcard {
@@ -81,7 +146,7 @@
         height: 100%;
         position: relative;
         transform-style: preserve-3d;
-        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: pointer;
     }
 
@@ -101,55 +166,53 @@
         background-color: var(--card-bg);
         border-radius: var(--radius-lg);
         box-shadow: var(--shadow);
-    }
-
-    .card-front {
-        /* 正面：漢字 */
+        box-sizing: border-box;
     }
 
     .card-back {
-        /* 反面：答案 */
         transform: rotateY(180deg);
         background-color: #f1f5f9;
     }
 
     .char-display {
-        font-size: 100px;
+        font-size: 88px;
         font-weight: 800;
         color: var(--primary-purple);
+        line-height: 1.1;
     }
 
     .code-display {
-        font-size: 80px;
+        font-size: 72px;
         font-weight: 900;
         color: var(--text-main);
-        letter-spacing: 5px;
+        letter-spacing: 4px;
+        line-height: 1.1;
     }
 
     .hint-text {
-        font-size: 14px;
+        font-size: 13px;
         color: var(--text-muted);
-        margin-top: 10px;
+        margin-top: 8px;
     }
 
     /* 輸入區 */
     .input-area {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 12px;
     }
 
     #user-input {
         width: 100%;
-        padding: 16px;
-        border: 2px solid var(--border-color);
+        padding: 14px;
+        border: 2px solid #e2e8f0;
         border-radius: var(--radius-md);
-        font-size: 24px;
+        font-size: 22px;
         text-align: center;
         text-transform: uppercase;
         box-sizing: border-box;
         transition: all 0.2s;
-        border: 2px solid #e2e8f0;
+        background-color: var(--card-bg);
     }
 
     #user-input:focus {
@@ -163,17 +226,22 @@
         background-color: #ecfdf5;
     }
 
+    #user-input.error {
+        border-color: var(--danger-red);
+        background-color: #fef2f2;
+    }
+
     .btn-group {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 12px;
+        gap: 10px;
     }
 
     button {
         padding: 12px;
         border: none;
         border-radius: var(--radius-md);
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.2s;
@@ -189,17 +257,71 @@
         color: white;
     }
 
+    .btn-primary:hover {
+        background-color: var(--primary-hover);
+    }
+
     button:active {
-        transform: scale(0.95);
+        transform: scale(0.97);
+    }
+
+    /* 文章語料設定面板 */
+    .article-panel {
+        display: none;
+        margin-top: 15px;
+        background-color: var(--card-bg);
+        padding: 16px;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow);
+    }
+
+    .article-panel textarea {
+        width: 100%;
+        height: 90px;
+        padding: 10px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font-size: 14px;
+        box-sizing: border-box;
+        resize: vertical;
+        font-family: inherit;
+    }
+
+    .article-panel .panel-btn {
+        margin-top: 8px;
+        width: 100%;
+        background-color: var(--primary-purple);
+        color: white;
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    /* 弱點字本管理 */
+    .weak-manage-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        font-size: 12px;
+        color: var(--text-muted);
+    }
+
+    .text-btn {
+        background: none;
+        border: none;
+        color: var(--danger-red);
+        padding: 0;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: underline;
     }
 
     .footer-note {
         text-align: center;
         font-size: 12px;
         color: #94a3b8;
-        margin-top: 32px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        font-weight: 400;
+        margin-top: 24px;
         letter-spacing: 0.05em;
     }
 </style>
@@ -208,41 +330,66 @@
 
 <div class="container">
     <header>
-        <h1>⌨️ 蝦米兩碼練習</h1>
-        <div class="subtitle">根據嘸蝦米字根表整理</div>
+        <h1>⌨️ 嘸蝦米兩碼字練習器</h1>
+        <div class="subtitle">阻斷式停頓收錄 • 簡碼強化 • 文章實戰</div>
     </header>
+
+    <!-- 練習模式切換 -->
+    <div class="mode-tabs">
+        <button class="mode-tab active" id="tab-twocode" onclick="switchMode('twocode')">⚡ 兩碼簡碼</button>
+        <button class="mode-tab" id="tab-weak" onclick="switchMode('weak')">🎯 停頓收錄本 (<span id="weak-count">0</span>)</button>
+        <button class="mode-tab" id="tab-article" onclick="switchMode('article')">📰 文章實戰拆解</button>
+    </div>
+
+    <!-- 狀態反饋欄 -->
+    <div class="status-bar">
+        <div id="mode-desc">兩碼專項抽考</div>
+        <div class="speed-badge" id="speed-indicator">⏱️ 準備中</div>
+    </div>
 
     <div class="progress-container">
         <div id="progress-bar"></div>
     </div>
 
+    <!-- 閃卡卡片 -->
     <div class="flashcard-wrapper">
         <div class="flashcard" id="card" onclick="toggleFlip()">
             <div class="card-face card-front">
-                <div class="char-display" id="char-target">的</div>
-                <div class="hint-text">請輸入兩碼代碼</div>
+                <div class="char-display" id="char-target">...</div>
+                <div class="hint-text" id="front-hint">請直接敲入代碼（停頓 > 1.5s 自動收錄）</div>
             </div>
             <div class="card-face card-back">
-                <div class="code-display" id="code-answer">D</div>
-                <div class="hint-text">正確答案</div>
+                <div class="code-display" id="code-answer">..</div>
+                <div class="hint-text">標準拆碼</div>
             </div>
         </div>
     </div>
 
+    <!-- 輸入操作區 -->
     <div class="input-area">
-        <input type="text" id="user-input" placeholder="在此輸入..." autocomplete="off">
+        <input type="text" id="user-input" placeholder="在此輸入碼位..." autocomplete="off" autofocus>
         <div class="btn-group">
-            <button class="btn-secondary" onclick="toggleFlip()">翻看答案</button>
-            <button class="btn-primary" onclick="nextCard()">下一題</button>
+            <button class="btn-secondary" onclick="toggleFlip()">翻看答案 (空白鍵)</button>
+            <button class="btn-primary" onclick="nextCard()">下一題 (Enter)</button>
         </div>
+    </div>
+
+    <!-- 停頓弱點庫操作 -->
+    <div class="weak-manage-bar" id="weak-bar" style="display: none;">
+        <span>單字達速 3 次自動移出弱點庫</span>
+        <button class="text-btn" onclick="clearWeakBank()">清空停頓本</button>
+    </div>
+
+    <!-- 自訂文章輸入面板 -->
+    <div class="article-panel" id="article-panel">
+        <textarea id="article-input" placeholder="貼上新聞社論、專業文章或測速文章段落..."></textarea>
+        <button class="panel-btn" onclick="loadArticleText()">開始萃取字庫進行練習</button>
     </div>
 
     <div class="footer-note">© Shuojen.com Boshiamy Training Tool</div>
 </div>
 
 <script>
-    /**
-     */
     const correctedBank = [
     { char: '寸', code: 'AA' },
     { char: '鎮', code: 'AB' },
@@ -922,33 +1069,172 @@
     { char: '乙', code: 'ZZ' }
     ];
 
+    // 建立快速字符查詢表
+    const codeLookup = {};
+    correctedBank.forEach(item => {
+        if (!codeLookup[item.char]) {
+            codeLookup[item.char] = item.code;
+        }
+    });
+
+    let currentMode = 'twocode'; // 'twocode' | 'weak' | 'article'
     let currentList = [];
     let currentIndex = 0;
     let isFlipped = false;
 
+    // 刻意練習計時與停頓監控
+    let cardStartTime = 0;
+    let mistakeCount = 0;
+    const HESITATION_THRESHOLD_SEC = 1.5; // 停頓超過 1.5 秒視為卡手，自動收錄
+
+    // DOM 元素
     const charTarget = document.getElementById('char-target');
     const codeAnswer = document.getElementById('code-answer');
     const userInput = document.getElementById('user-input');
     const card = document.getElementById('card');
     const progressBar = document.getElementById('progress-bar');
+    const speedIndicator = document.getElementById('speed-indicator');
+    const modeDesc = document.getElementById('mode-desc');
+    const weakCountBadge = document.getElementById('weak-count');
+    const weakBar = document.getElementById('weak-bar');
+    const articlePanel = document.getElementById('article-panel');
 
-    function init() {
-        currentList = [...correctedBank].sort(() => Math.random() - 0.5);
+    // 取得/更新弱點本 (localStorage)
+    function getWeakBank() {
+        try {
+            return JSON.parse(localStorage.getItem('boshiamy_weak_bank') || '[]');
+        } catch {
+            return [];
+        }
+    }
+
+    function saveWeakBank(bank) {
+        localStorage.setItem('boshiamy_weak_bank', JSON.stringify(bank));
+        updateWeakBadge();
+    }
+
+    function updateWeakBadge() {
+        const bank = getWeakBank();
+        weakCountBadge.textContent = bank.length;
+    }
+
+    function recordStuckWord(char, code, timeTaken) {
+        let bank = getWeakBank();
+        const existing = bank.find(item => item.char === char);
+        if (existing) {
+            existing.stuckCount = (existing.stuckCount || 1) + 1;
+            existing.lastTime = timeTaken;
+            existing.masteredStreak = 0;
+        } else {
+            bank.push({
+                char: char,
+                code: code,
+                stuckCount: 1,
+                lastTime: timeTaken,
+                masteredStreak: 0
+            });
+        }
+        saveWeakBank(bank);
+    }
+
+    function recordSuccessWord(char) {
+        let bank = getWeakBank();
+        const itemIndex = bank.findIndex(item => item.char === char);
+        if (itemIndex !== -1) {
+            bank[itemIndex].masteredStreak = (bank[itemIndex].masteredStreak || 0) + 1;
+            // 連續 3 次秒答，移出停頓本
+            if (bank[itemIndex].masteredStreak >= 3) {
+                bank.splice(itemIndex, 1);
+            }
+            saveWeakBank(bank);
+        }
+    }
+
+    function clearWeakBank() {
+        if (confirm('確定要清空所有停頓卡手字紀錄嗎？')) {
+            saveWeakBank([]);
+            if (currentMode === 'weak') {
+                switchMode('twocode');
+            }
+        }
+    }
+
+    // 模式切換邏輯
+    function switchMode(mode) {
+        currentMode = mode;
+        document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(`tab-${mode}`).classList.add('active');
+
+        weakBar.style.display = (mode === 'weak') ? 'flex' : 'none';
+        articlePanel.style.display = (mode === 'article') ? 'block' : 'none';
+
+        if (mode === 'twocode') {
+            modeDesc.textContent = '兩碼專項抽考 (全庫隨機)';
+            currentList = [...correctedBank].sort(() => Math.random() - 0.5);
+            startPractice();
+        } else if (mode === 'weak') {
+            modeDesc.textContent = '停頓卡手專項本 (阻斷式連打)';
+            const weakBank = getWeakBank();
+            if (weakBank.length === 0) {
+                alert('目前沒有停頓字！平時練習若停頓 > 1.5s 會自動收錄進來。');
+                switchMode('twocode');
+                return;
+            }
+            currentList = [...weakBank].sort(() => Math.random() - 0.5);
+            startPractice();
+        } else if (mode === 'article') {
+            modeDesc.textContent = '文章語料實戰 (非聊天常見字解析)';
+        }
+    }
+
+    function loadArticleText() {
+        const text = document.getElementById('article-input').value.trim();
+        if (!text) {
+            alert('請先貼上文章段落！');
+            return;
+        }
+
+        const chars = Array.from(text);
+        const filtered = [];
+        const seen = new Set();
+
+        chars.forEach(ch => {
+            if (codeLookup[ch] && !seen.has(ch)) {
+                seen.add(ch);
+                filtered.push({ char: ch, code: codeLookup[ch] });
+            }
+        });
+
+        if (filtered.length === 0) {
+            alert('文章中未找到對應的字庫項目，請嘗試其他段落。');
+            return;
+        }
+
+        currentList = filtered;
+        modeDesc.textContent = `文章拆解中 (${currentList.length} 個獨立字詞)`;
+        articlePanel.style.display = 'none';
+        startPractice();
+    }
+
+    function startPractice() {
         currentIndex = 0;
-        showCard(true); // 首次載入直接顯示
+        showCard(true);
         updateProgress();
     }
 
-    // 更新卡片內容
-    // isImmediate: 是否立即更新（不考慮翻轉動畫）
     function showCard(isImmediate = false) {
         const updateContent = () => {
+            if (currentList.length === 0) return;
             const item = currentList[currentIndex];
             charTarget.textContent = item.char;
             codeAnswer.textContent = item.code;
             userInput.value = '';
-            userInput.classList.remove('success');
+            userInput.classList.remove('success', 'error');
             userInput.focus();
+            cardStartTime = performance.now();
+            mistakeCount = 0;
+            speedIndicator.className = 'speed-badge';
+            speedIndicator.textContent = '⏱️ 計時中...';
         };
 
         if (isImmediate) {
@@ -956,12 +1242,10 @@
             card.classList.remove('flipped');
             updateContent();
         } else {
-            // 如果目前是翻開的，先翻回去
             if (isFlipped) {
                 isFlipped = false;
                 card.classList.remove('flipped');
-                // 等待翻轉動畫進行到一半（看不到背面時）再換字
-                setTimeout(updateContent, 300);
+                setTimeout(updateContent, 280);
             } else {
                 updateContent();
             }
@@ -972,16 +1256,28 @@
         isFlipped = !isFlipped;
         if (isFlipped) {
             card.classList.add('flipped');
+            mistakeCount++;
         } else {
             card.classList.remove('flipped');
         }
     }
 
     function nextCard() {
+        if (currentList.length === 0) return;
         currentIndex++;
         if (currentIndex >= currentList.length) {
-            alert('練習結束！做得好！');
-            init();
+            alert('本輪練習完成！繼續保持等速手感！');
+            if (currentMode === 'weak') {
+                const weakBank = getWeakBank();
+                if (weakBank.length > 0) {
+                    currentList = [...weakBank].sort(() => Math.random() - 0.5);
+                    startPractice();
+                } else {
+                    switchMode('twocode');
+                }
+            } else {
+                startPractice();
+            }
         } else {
             showCard(false);
             updateProgress();
@@ -989,36 +1285,64 @@
     }
 
     function updateProgress() {
+        if (currentList.length === 0) {
+            progressBar.style.width = '0%';
+            return;
+        }
         const progress = (currentIndex / currentList.length) * 100;
         progressBar.style.width = `${progress}%`;
     }
 
     userInput.addEventListener('input', (e) => {
         const value = e.target.value.toUpperCase().trim();
-        const correctCode = currentList[currentIndex].code;
+        if (!currentList[currentIndex]) return;
+        const currentItem = currentList[currentIndex];
+        const correctCode = currentItem.code;
 
-        if (value === correctCode) {
-            userInput.classList.add('success');
-            // 如果還沒翻開，翻開給使用者看答案
-            if (!isFlipped) {
-                isFlipped = true;
-                card.classList.add('flipped');
+        if (value.length >= correctCode.length) {
+            if (value === correctCode) {
+                const elapsedSec = (performance.now() - cardStartTime) / 1000;
+                userInput.classList.add('success');
+
+                if (elapsedSec > HESITATION_THRESHOLD_SEC || mistakeCount > 0) {
+                    speedIndicator.className = 'speed-badge stuck';
+                    speedIndicator.textContent = `🐢 ${elapsedSec.toFixed(2)}s (停頓已收錄)`;
+                    recordStuckWord(currentItem.char, currentItem.code, elapsedSec);
+                } else {
+                    speedIndicator.className = 'speed-badge fast';
+                    speedIndicator.textContent = `⚡ ${elapsedSec.toFixed(2)}s (秒殺)`;
+                    recordSuccessWord(currentItem.char);
+                }
+
+                if (!isFlipped) {
+                    isFlipped = true;
+                    card.classList.add('flipped');
+                }
+
+                setTimeout(() => {
+                    nextCard();
+                }, 500);
+            } else {
+                mistakeCount++;
+                userInput.classList.add('error');
+                setTimeout(() => userInput.classList.remove('error'), 300);
             }
-
-            // 延遲一段時間後自動跳下一題
-            setTimeout(() => {
-                nextCard();
-            }, 800);
         }
     });
 
-    userInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter' && isFlipped) {
+    userInput.addEventListener('keydown', (e) => {
+        if (e.key === ' ' && userInput.value.trim() === '') {
+            e.preventDefault();
+            toggleFlip();
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
             nextCard();
         }
     });
 
-    init();
+    // 初始化
+    updateWeakBadge();
+    switchMode('twocode');
 </script>
 
 </body>
