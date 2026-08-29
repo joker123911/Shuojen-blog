@@ -5,7 +5,7 @@ description: 記錄我愛用的工具
 
 # 我在用什麼 `/use`
 
-*最後更新：2026-05-17*
+*最後更新：2026-08-29*
 
 :::note
 靈感參考來自[Derek Sivers /uses](https://sive.rs/uses)。
@@ -19,6 +19,7 @@ description: 記錄我愛用的工具
 
 ### 電腦相關
 * Intel i5-12400 - 大二組的電腦用 i5-8400，但器官移植多次到記不得什麼時候換 CPU 了。
+* AsRock B660M PG Riptide - 主機板，有時候會忘記所以記錄在這裡，方便查規格。
 * NVIDIA GeForce RTX 3060 Ti - 朋友送的，感謝大恩大德。
 * Seasonic SYNCRO-Q7 - 另一個朋友送的機殼，感謝大恩大德。
 * MacBook Air（M1，2020 年）- 平時用筆電，讀研究所時購入，還是頭好壯壯。
@@ -30,6 +31,7 @@ description: 記錄我愛用的工具
 * Leobog Hi75 - 搭漢白玉軸，CP 值超高的鍵盤，手感一級棒。
 * Logitech G102 - 簡單好用的滑鼠，微動自己換又是一尾活龍。
 * Crucial X6 - 1TB SSD 行動硬碟。
+* Ugreen DXP4800 NAS - 搭配開源系統 TrueNAS 使用。
 
 ### 音樂相關
 
@@ -95,6 +97,8 @@ description: 記錄我愛用的工具
 * 永駿 MGC 四階。
 
 三階
+* 淦源 V100 - 新主力，時代又進步了，好好轉，偶爾小卡有點討厭。
+* 魔域 RS3M V5 派魔方版 - 非常不錯的一顆，尤其是 LOGO 能接受了。
 * 大雁 騰雲 M 一代 x2 - 我的最愛，三階盲解和速解主力。
 * 奇藝 Valk 3M - 被我改成練底十字專用。
 * 淦源 356 i carry - 智能魔方。
@@ -127,6 +131,7 @@ description: 記錄我愛用的工具
 ### 交通相關
 
 * Honda MSX（2017）- 二手購入，上班通勤小檔車。
+* MUFU M4 - 行車記錄器，還不錯，連線有一點點慢而已。
 * SYM GT125 - 家裡的方便騎速可達。
 
 ### 運動相關
@@ -158,20 +163,24 @@ description: 記錄我愛用的工具
 * Lightroom Classic - 現在都不修圖了，懶人直出。
 * Oracle Cloud - 免費自架主機。
 * Navidrome - 免費自架音樂串流。
-* tailscale - 所有的裝置互相連線的私人 VPN。
+* Jellyfin - 免費自架電影串流。
+* Tailscale - 所有的裝置互相連線的私人 VPN。
+
 
 Apps
 * 天天記帳 - 直覺的記帳軟體。
 * Aniyomi - 閱讀漫畫。
 * Pitt - 習慣用的 Ptt 閱讀器。
 * FreshRSS - 自架的 RSS 閱讀器，手機上搭配 Feedflow 使用。
-* ReVanced - 無廣告 Youtube 好用。
-* KKBOX - 無損串流音樂平台。
-* USB Audio Player PRO - 本地無損音樂播放器，可 Bit Perfect。
+* ~ReVanced~ - 沒在用了，現在直接用 brave 看 YT，也很直覺。
+* ~KKBOX~ - 有了 Navidrome 之後，完全沒開過了。
+* ~USB Audio Player PRO~ - 很少用了。
 * AntennaPod - 習慣用的 Podcast 播放器。
 * Twisty Timer - 最好的魔術方塊計時器。
 * CalcES - 隨身 Casio 991。
 * KWGT - 自訂桌面工具。
 * 臺北市立圖書館 - 預約借書用。
 * Simplenote - 在手機電腦都可以同步記錄文字靈感。
-* symfonirm - 連上 Navidrome 聽自架音樂串流。
+* Symfonirm - 連上 Navidrome 聽自架音樂串流。
+* Termux - 手機終端機，改一些簡單的部落格筆誤很方便。
+* FIMO - 復古濾鏡相機。
