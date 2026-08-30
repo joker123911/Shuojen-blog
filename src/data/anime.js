@@ -79,5 +79,6 @@ export const animeList = [
   { title: "新世紀福音戰士", note: "雖然是貴為經典的神作，但我真的不知道在演什麼，歐美爹豆", poster: "./img/anime/新世紀福音戰士.webp", tier: "B" , tags: ["經典", "科幻"]},
   { title: "來自深淵", note: "跟蝦波看了十集左右就棄了，角色不太喜歡", poster: "./img/anime/來自深淵.webp", tier: "B" , tags: ["奇幻","棄坑"]},
   { title: "天元突破 紅蓮螺巖", note: "覺得不是很適合我的一部，對故事沒有很喜歡，看一半棄坑", poster: "./img/anime/天元突破 紅蓮螺巖.webp", tier: "B" , tags: ["奇幻","戰鬥","棄坑"]},
-  { title: "夜晚的水母不會游泳", note: "前面還不錯，後半就棄坑了，有點沒記憶點", poster: "./img/anime/夜晚的水母不會游泳.webp", tier: "B" , tags: ["樂團","棄坑"]}
+  { title: "夜晚的水母不會游泳", note: "前面還不錯，後半就棄坑了，有點沒記憶點", poster: "./img/anime/夜晚的水母不會游泳.webp", tier: "B" , tags: ["樂團","棄坑"]},
+  { title: "尼古喵喵", note: "雖然覺得應該是個諷刺點滿的好作品，但我跟蝦波看完第一集，實在看不下去，太明顯的惡意了", poster: "./img/anime/尼古喵喵.webp", tier: "B", tags: ["棄坑"] }
 ];

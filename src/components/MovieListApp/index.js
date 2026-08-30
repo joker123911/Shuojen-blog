@@ -3,14 +3,14 @@ import React, { useState, useMemo } from 'react';
 import { westernMovies, asiaMovies, animeMovies, hongkongMovies } from '@site/src/data/movies';
 import './styles.css';
 
-// 這裡加入了 initialFilter 和 hideFilterBar 兩個參數
-export default function MovieListApp({ initialFilter = 'top100', hideFilterBar = false }) {
+// 這裡加入了 initialFilter、hideFilterBar 和 initialSearch 參數
+export default function MovieListApp({ initialFilter = 'top100', hideFilterBar = false, initialSearch = '' }) {
   const [activePoster, setActivePoster] = useState(null);
   const [activeTitle, setActiveTitle] = useState('');
   const [isImgLoaded, setIsImgLoaded] = useState(false);
   
-  // 新增：搜尋關鍵字狀態
-  const [searchTerm, setSearchTerm] = useState('');
+  // 新增：搜尋關鍵字狀態（可由外部傳入預設搜尋/標籤）
+  const [searchTerm, setSearchTerm] = useState(initialSearch);
   
   // 初始分類由外部傳入
   const [filter, setFilter] = useState(initialFilter);
