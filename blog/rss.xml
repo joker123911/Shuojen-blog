@@ -4,11 +4,21 @@
         <title>Shuo-jen Blog</title>
         <link>https://shuojen.com/blog</link>
         <description>我專屬的人生博物館與編年史</description>
-        <lastBuildDate>Sun, 30 Aug 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 31 Aug 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>zh-TW</language>
         <copyright>Copyright © 2026 Shuo-jen Huang</copyright>
+        <item>
+            <title><![CDATA[Brave 無聊小發現]]></title>
+            <link>https://shuojen.com/blog/2026/08/31/brave</link>
+            <guid>https://shuojen.com/blog/2026/08/31/brave</guid>
+            <pubDate>Mon, 31 Aug 2026 15:20:55 GMT</pubDate>
+            <description><![CDATA[超過 99 個分頁數的話會變成笑臉耶！]]></description>
+            <content:encoded><![CDATA[<p>超過 99 個分頁數的話會變成笑臉耶！</p>
+<img src="https://shuojen.com/assets/images/brave-a6b20a7f0f65296e0e88684eb619be0e.jpg" width="300" alt="img">]]></content:encoded>
+            <category>fun</category>
+        </item>
         <item>
             <title><![CDATA[野生狂廚]]></title>
             <link>https://shuojen.com/blog/2026/08/30/tony</link>
@@ -650,21 +660,6 @@
 <p>曾經在山路上遇到他們的人說，兩個人走得很慢，好像很捨不得把路一下就走完的樣子。</p>
 <p>女孩回家了。男孩四天後才被人家找到，他在離山路稍遠的雜木林裡用樹藤結束自己十九年的生命。</p>]]></content:encoded>
             <category>story</category>
-        </item>
-        <item>
-            <title><![CDATA[寶可夢冷知識]]></title>
-            <link>https://shuojen.com/blog/2026/07/19/pokemon</link>
-            <guid>https://shuojen.com/blog/2026/07/19/pokemon</guid>
-            <pubDate>Sun, 19 Jul 2026 14:01:56 GMT</pubDate>
-            <description><![CDATA[大谷翔平的身高體重跟烈咬陸鯊一樣（讓我晚上笑好久）]]></description>
-            <content:encoded><![CDATA[<p>大谷翔平的身高體重跟烈咬陸鯊一樣（讓我晚上笑好久）</p>
-<img src="https://shuojen.com/assets/images/010-d9264386337a2b8747d2a0aebbec740f.jpg" width="600" alt="img">
-<img src="https://shuojen.com/assets/images/012-6b64349352eb55d85c5027fb0da9011d.jpeg" width="600" alt="img">
-<p>▲官方玩梗最為致命</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="pokefit">PokeFit<a href="https://shuojen.com/blog/2026/07/19/pokemon#pokefit" class="hash-link" aria-label="PokeFit的直接連結" title="PokeFit的直接連結" translate="no">​</a></h2>
-<p>我是叉字蝠耶，歡迎到這個網站<a href="https://pokefit.vercel.app/" target="_blank" rel="noopener noreferrer" class="">玩看看</a>。</p>
-<img src="https://shuojen.com/assets/images/011-a3aac4d5b872bdc9682b41eeaa92c12c.png" width="600" alt="img">]]></content:encoded>
-            <category>fun</category>
         </item>
     </channel>
 </rss>

@@ -2,12 +2,22 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shuojen.com/blog</id>
     <title>Shuo-jen Blog</title>
-    <updated>2026-08-30T00:00:00.000Z</updated>
+    <updated>2026-08-31T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shuojen.com/blog"/>
     <subtitle>我專屬的人生博物館與編年史</subtitle>
     <icon>https://shuojen.com/img/favicon.ico</icon>
     <rights>Copyright © 2026 Shuo-jen Huang</rights>
+    <entry>
+        <title type="html"><![CDATA[Brave 無聊小發現]]></title>
+        <id>https://shuojen.com/blog/2026/08/31/brave</id>
+        <link href="https://shuojen.com/blog/2026/08/31/brave"/>
+        <updated>2026-08-31T15:20:55.000Z</updated>
+        <summary type="html"><![CDATA[超過 99 個分頁數的話會變成笑臉耶！]]></summary>
+        <content type="html"><![CDATA[<p>超過 99 個分頁數的話會變成笑臉耶！</p>
+<img src="https://shuojen.com/assets/images/brave-a6b20a7f0f65296e0e88684eb619be0e.jpg" width="300" alt="img">]]></content>
+        <category label="fun" term="fun"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[野生狂廚]]></title>
         <id>https://shuojen.com/blog/2026/08/30/tony</id>
@@ -649,20 +659,5 @@
 <p>曾經在山路上遇到他們的人說，兩個人走得很慢，好像很捨不得把路一下就走完的樣子。</p>
 <p>女孩回家了。男孩四天後才被人家找到，他在離山路稍遠的雜木林裡用樹藤結束自己十九年的生命。</p>]]></content>
         <category label="story" term="story"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[寶可夢冷知識]]></title>
-        <id>https://shuojen.com/blog/2026/07/19/pokemon</id>
-        <link href="https://shuojen.com/blog/2026/07/19/pokemon"/>
-        <updated>2026-07-19T14:01:56.000Z</updated>
-        <summary type="html"><![CDATA[大谷翔平的身高體重跟烈咬陸鯊一樣（讓我晚上笑好久）]]></summary>
-        <content type="html"><![CDATA[<p>大谷翔平的身高體重跟烈咬陸鯊一樣（讓我晚上笑好久）</p>
-<img src="https://shuojen.com/assets/images/010-d9264386337a2b8747d2a0aebbec740f.jpg" width="600" alt="img">
-<img src="https://shuojen.com/assets/images/012-6b64349352eb55d85c5027fb0da9011d.jpeg" width="600" alt="img">
-<p>▲官方玩梗最為致命</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="pokefit">PokeFit<a href="https://shuojen.com/blog/2026/07/19/pokemon#pokefit" class="hash-link" aria-label="PokeFit的直接連結" title="PokeFit的直接連結" translate="no">​</a></h2>
-<p>我是叉字蝠耶，歡迎到這個網站<a href="https://pokefit.vercel.app/" target="_blank" rel="noopener noreferrer" class="">玩看看</a>。</p>
-<img src="https://shuojen.com/assets/images/011-a3aac4d5b872bdc9682b41eeaa92c12c.png" width="600" alt="img">]]></content>
-        <category label="fun" term="fun"/>
     </entry>
 </feed>
