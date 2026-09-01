@@ -4,6 +4,9 @@ node_modules/
 .cache-loader/
 build/
 dist/
+__pycache__/
+*.py[cod]
+*$py.class
 
 # --- 環境變數 (最重要) ---
 .env

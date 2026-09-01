@@ -1,4 +1,5 @@
 import os
+import sys
 import requests
 import threading
 import re
@@ -6,6 +7,16 @@ import datetime
 import json
 import io
 from PIL import Image
+
+# 確保 Windows 終端機正常輸出 UTF-8 字元
+if sys.platform == "win32":
+    try:
+        if hasattr(sys.stdout, "reconfigure"):
+            sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        if hasattr(sys.stderr, "reconfigure"):
+            sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
 
 try:
     import tkinter as tk
@@ -48,9 +59,37 @@ SERIES_JS_PATH = "series.js"
 RAMEN_JS_PATH = "ramen.js"
 
 # ==========================================
-# TMDB API Key
+# TMDB API Key (由 .env 或環境變數載入)
 # ==========================================
-TMDB_API_KEY = "728ef67fd1e7160cbe667eed11549e19"
+def load_env_file():
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    candidate_paths = [
+        os.path.join(current_dir, ".env"),
+        os.path.join(current_dir, "..", "..", ".env"),
+        os.path.join(os.getcwd(), ".env"),
+    ]
+    for env_path in candidate_paths:
+        if os.path.exists(env_path):
+            try:
+                with open(env_path, "r", encoding="utf-8") as f:
+                    for line in f:
+                        line = line.strip()
+                        if line and not line.startswith("#") and "=" in line:
+                            k, v = line.split("=", 1)
+                            os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
+                break
+            except Exception:
+                pass
+
+load_env_file()
+TMDB_API_KEY = os.environ.get("TMDB_API_KEY", "").strip()
+
+if not TMDB_API_KEY:
+    print("\n⚠️ [警告] 未偵測到 TMDB_API_KEY！")
+    print("👉 請在專案根目錄建立 .env 檔案，並寫入：TMDB_API_KEY=您的金鑰")
+    print("👉 否則將無法自動搜尋電影年份與下載海報。\n")
+else:
+    print("✅ 已成功載入 TMDB_API_KEY")
 
 # ==========================================
 # 電影標題清理與候選清單搜尋（整合自 year 邏輯）
@@ -64,6 +103,8 @@ def clean_title(title):
 
 def search_tmdb_movies_candidates(title):
     """從 TMDB 抓取前 4 筆候選電影資料"""
+    if not TMDB_API_KEY:
+        return []
     search_title = clean_title(title)
     url = "https://api.themoviedb.org/3/search/movie"
     params = {
@@ -75,6 +116,10 @@ def search_tmdb_movies_candidates(title):
         resp = requests.get(url, params=params, timeout=10)
         if resp.status_code == 200:
             return resp.json().get("results", [])[:4]
+        elif resp.status_code == 401:
+            print(f"\n❌ [TMDB API 認證失敗] API Key 無效或未被授權 (HTTP 401)。請檢查 .env 中的金鑰。")
+        else:
+            print(f"\n⚠️ [TMDB API 回傳狀態異常] HTTP {resp.status_code}: {resp.text}")
     except Exception as e:
         print(f"\n[TMDB 連線錯誤] ({search_title}): {e}")
     return []
@@ -105,21 +150,21 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, tags, lin
         save_dir = "../../docs/img/movie"
         target_line = f"export const {target_var} = ["
         search_type = "movie"
-        poster_langs = "zh-TW,en,null"
+        poster_langs = "en,null,zh-TW"
     elif data_type == "anime":
         js_file = ANIME_JS_PATH
         js_poster_path = f"./img/anime/{base_title}.webp"
         save_dir = "../../docs/img/anime"
         target_line = "export const animeList = ["
         search_type = "multi"
-        poster_langs = "ja,zh,en,null"
+        poster_langs = "en,ja,null,zh"
     elif data_type == "series":
         js_file = SERIES_JS_PATH
         js_poster_path = f"./img/series/{base_title}.webp"
         save_dir = "../../docs/img/series"
         target_line = "export const animeList = ["
         search_type = "tv"
-        poster_langs = "zh-TW,en,null"
+        poster_langs = "en,null,zh-TW"
     else:  # ramen
         js_file = RAMEN_JS_PATH
         js_poster_path = ""
@@ -189,8 +234,19 @@ def save_worker_logic(data_type, target_var, title, score, note, tier, tags, lin
                 img_data = requests.get(img_api_url, params=img_params).json()
                 
                 poster_path = None
-                if img_data.get("posters"):
-                    poster_path = img_data["posters"][0]["file_path"]
+                posters = img_data.get("posters", [])
+                if posters:
+                    # 優先挑選英文 (en) 海報
+                    en_posters = [p for p in posters if p.get("iso_639_1") == "en"]
+                    if en_posters:
+                        poster_path = en_posters[0]["file_path"]
+                    else:
+                        # 若無英文海報，挑選無文字 (null) 海報
+                        null_posters = [p for p in posters if p.get("iso_639_1") is None]
+                        if null_posters:
+                            poster_path = null_posters[0]["file_path"]
+                        else:
+                            poster_path = posters[0]["file_path"]
                 elif data_type == "movie" and chosen_res:
                     poster_path = chosen_res.get("poster_path")
                 elif data_type != "movie" and search_data.get("results"):

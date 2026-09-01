@@ -186,104 +186,136 @@ function runDataPreparation() {
   let totalWords = 0;
   const dateData = {};
 
+  const formatWarnings = [];
+
   // Process Blog Files
   blogFiles.forEach((filePath) => {
-    const file = path.basename(filePath);
-    const rawContent = fs.readFileSync(filePath, 'utf8');
-    const parsed = matter(rawContent);
-    const data = parsed.data;
-
-    // 1. Sync build time / rss_date
-    let targetDate = data.date;
-    if (!targetDate) {
-      const dateMatch = file.match(/^(\d{4}-\d{2}-\d{2})/);
-      if (dateMatch) targetDate = dateMatch[1];
-    }
-
-    if (targetDate) {
-      let datePart = '';
-      let hasSpecificTime = false;
-
-      if (targetDate instanceof Date) {
-        const twDate = new Date(targetDate.getTime() + offset * 3600 * 1000);
-        datePart = twDate.toISOString().slice(0, 10);
-        hasSpecificTime = targetDate.getUTCHours() !== 0 || targetDate.getUTCMinutes() !== 0;
-      } else {
-        const dateStr = String(targetDate);
-        datePart = dateStr.slice(0, 10);
-        hasSpecificTime = dateStr.includes('T') || dateStr.includes(' ') || dateStr.length > 10;
+    const relPath = path.relative(ROOT_DIR, filePath);
+    try {
+      const file = path.basename(filePath);
+      const rawContent = fs.readFileSync(filePath, 'utf8');
+      
+      let parsed;
+      try {
+        parsed = matter(rawContent);
+      } catch (yamlErr) {
+        formatWarnings.push({
+          file: relPath,
+          message: `YAML Frontmatter 語法解析失敗: ${yamlErr.message}`,
+          suggestion: '請檢查文章頂部 --- 之間的 YAML 縮排或單雙引號是否閉合。'
+        });
+        return;
       }
 
-      if (data.rss_date) {
-        hasSpecificTime = true;
+      const data = parsed.data || {};
+
+      // 檢查必填項目
+      if (!data.title && !file.replace(/\.mdx?$/, '')) {
+        formatWarnings.push({
+          file: relPath,
+          message: '未設定文章標題 (title)',
+          suggestion: '建議在 Frontmatter 中加入 title: "文章標題"'
+        });
       }
 
-      if (hasSpecificTime && !data.rss_date) {
-        let originalDateStr = '';
-        if (data.date instanceof Date) {
-          const twDate = new Date(data.date.getTime() + offset * 3600 * 1000);
-          originalDateStr = twDate.toISOString().split('.')[0] + '+08:00';
+      // 1. Sync build time / rss_date
+      let targetDate = data.date;
+      if (!targetDate) {
+        const dateMatch = file.match(/^(\d{4}-\d{2}-\d{2})/);
+        if (dateMatch) targetDate = dateMatch[1];
+      }
+
+      if (targetDate) {
+        let datePart = '';
+        let hasSpecificTime = false;
+
+        if (targetDate instanceof Date) {
+          const twDate = new Date(targetDate.getTime() + offset * 3600 * 1000);
+          datePart = twDate.toISOString().slice(0, 10);
+          hasSpecificTime = targetDate.getUTCHours() !== 0 || targetDate.getUTCMinutes() !== 0;
         } else {
-          originalDateStr = String(data.date).replace(' ', 'T');
+          const dateStr = String(targetDate);
+          datePart = dateStr.slice(0, 10);
+          hasSpecificTime = dateStr.includes('T') || dateStr.includes(' ') || dateStr.length > 10;
         }
-        data.rss_date = originalDateStr;
-        data.date = datePart;
-        saveFileWithYaml(filePath, parsed.content, data);
-      } else if (datePart === todayStr && !hasSpecificTime) {
-        data.date = datePart;
-        data.rss_date = currentFullTime;
-        saveFileWithYaml(filePath, parsed.content, data);
-      } else if (datePart > todayStr && !hasSpecificTime) {
-        data.date = datePart;
-        data.rss_date = `${datePart}T00:00:01+08:00`;
-        saveFileWithYaml(filePath, parsed.content, data);
+
+        if (data.rss_date) {
+          hasSpecificTime = true;
+        }
+
+        if (hasSpecificTime && !data.rss_date) {
+          let originalDateStr = '';
+          if (data.date instanceof Date) {
+            const twDate = new Date(data.date.getTime() + offset * 3600 * 1000);
+            originalDateStr = twDate.toISOString().split('.')[0] + '+08:00';
+          } else {
+            originalDateStr = String(data.date).replace(' ', 'T');
+          }
+          data.rss_date = originalDateStr;
+          data.date = datePart;
+          saveFileWithYaml(filePath, parsed.content, data);
+        } else if (datePart === todayStr && !hasSpecificTime) {
+          data.date = datePart;
+          data.rss_date = currentFullTime;
+          saveFileWithYaml(filePath, parsed.content, data);
+        } else if (datePart > todayStr && !hasSpecificTime) {
+          data.date = datePart;
+          data.rss_date = `${datePart}T00:00:01+08:00`;
+          saveFileWithYaml(filePath, parsed.content, data);
+        }
       }
-    }
 
-    // 2. Count words
-    let contentWithoutFrontmatter = rawContent.replace(/\r\n/g, '\n').replace(/^---[\s\S]*?---/, '');
-    totalWords += getWordCount(contentWithoutFrontmatter);
+      // 2. Count words
+      let contentWithoutFrontmatter = rawContent.replace(/\r\n/g, '\n').replace(/^---[\s\S]*?---/, '');
+      totalWords += getWordCount(contentWithoutFrontmatter);
 
-    // 3. Calendar Data
-    let calDate = '';
-    const dateMatch = rawContent.match(/^date:\s*['"]?(\d{4}-\d{2}-\d{2})/m);
-    if (dateMatch) {
-      calDate = dateMatch[1];
-    } else {
-      const fileName = path.basename(filePath);
-      const parentDir = path.basename(path.dirname(filePath));
-      const fileDateMatch = fileName.match(/^(\d{4}-\d{2}-\d{2})/);
-      const parentDateMatch = parentDir.match(/^(\d{4}-\d{2}-\d{2})/);
-      if (fileDateMatch) calDate = fileDateMatch[1];
-      else if (parentDateMatch) calDate = parentDateMatch[1];
-      else {
-        const stats = fs.statSync(filePath);
-        const d = new Date(stats.birthtime);
-        calDate = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().split('T')[0];
-      }
-    }
-
-    let title = data.title || path.basename(filePath, path.extname(filePath));
-    let url = '';
-    if (data.slug) {
-      let customSlug = String(data.slug).trim();
-      url = customSlug.startsWith('/') ? `/blog${customSlug}` : `/blog/${customSlug}`;
-    } else {
-      const fileName = path.basename(filePath, path.extname(filePath));
-      let nameWithoutDate = fileName;
-      if (/^\d{4}-\d{2}-\d{2}-/.test(fileName)) {
-        nameWithoutDate = fileName.replace(/^\d{4}-\d{2}-\d{2}-/, '');
-      } else if (fileName === 'index') {
+      // 3. Calendar Data
+      let calDate = '';
+      const dateMatch = rawContent.match(/^date:\s*['"]?(\d{4}-\d{2}-\d{2})/m);
+      if (dateMatch) {
+        calDate = dateMatch[1];
+      } else {
+        const fileName = path.basename(filePath);
         const parentDir = path.basename(path.dirname(filePath));
-        nameWithoutDate = parentDir.replace(/^\d{4}-\d{2}-\d{2}-/, '');
+        const fileDateMatch = fileName.match(/^(\d{4}-\d{2}-\d{2})/);
+        const parentDateMatch = parentDir.match(/^(\d{4}-\d{2}-\d{2})/);
+        if (fileDateMatch) calDate = fileDateMatch[1];
+        else if (parentDateMatch) calDate = parentDateMatch[1];
+        else {
+          const stats = fs.statSync(filePath);
+          const d = new Date(stats.birthtime);
+          calDate = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().split('T')[0];
+        }
       }
-      const datePath = calDate.replace(/-/g, '/');
-      url = `/blog/${datePath}/${nameWithoutDate}`;
-    }
-    url = url.replace(/\/\/+/g, '/');
 
-    if (!dateData[calDate]) dateData[calDate] = [];
-    dateData[calDate].push({ title, url });
+      let title = data.title || path.basename(filePath, path.extname(filePath));
+      let url = '';
+      if (data.slug) {
+        let customSlug = String(data.slug).trim();
+        url = customSlug.startsWith('/') ? `/blog${customSlug}` : `/blog/${customSlug}`;
+      } else {
+        const fileName = path.basename(filePath, path.extname(filePath));
+        let nameWithoutDate = fileName;
+        if (/^\d{4}-\d{2}-\d{2}-/.test(fileName)) {
+          nameWithoutDate = fileName.replace(/^\d{4}-\d{2}-\d{2}-/, '');
+        } else if (fileName === 'index') {
+          const parentDir = path.basename(path.dirname(filePath));
+          nameWithoutDate = parentDir.replace(/^\d{4}-\d{2}-\d{2}-/, '');
+        }
+        const datePath = calDate.replace(/-/g, '/');
+        url = `/blog/${datePath}/${nameWithoutDate}`;
+      }
+      url = url.replace(/\/\/+/g, '/');
+
+      if (!dateData[calDate]) dateData[calDate] = [];
+      dateData[calDate].push({ title, url });
+    } catch (err) {
+      formatWarnings.push({
+        file: relPath,
+        message: err.message,
+        suggestion: '請檢查檔案是否損毀或存在不相容字元。'
+      });
+    }
   });
 
   // Process Photoblog Files
@@ -294,110 +326,131 @@ function runDataPreparation() {
   if (fs.existsSync(PHOTOBLOG_DIR)) {
     const items = fs.readdirSync(PHOTOBLOG_DIR);
     items.forEach((item) => {
-      const itemPath = path.join(PHOTOBLOG_DIR, item);
-      const stat = fs.statSync(itemPath);
+      const relItemPath = path.relative(ROOT_DIR, path.join(PHOTOBLOG_DIR, item));
+      try {
+        const itemPath = path.join(PHOTOBLOG_DIR, item);
+        const stat = fs.statSync(itemPath);
 
-      let mdPath = null;
-      let rawSlug = item;
+        let mdPath = null;
+        let rawSlug = item;
 
-      if (stat.isDirectory()) {
-        const indexPath = path.join(itemPath, 'index.md');
-        const indexMdxPath = path.join(itemPath, 'index.mdx');
-        if (fs.existsSync(indexPath)) mdPath = indexPath;
-        else if (fs.existsSync(indexMdxPath)) mdPath = indexMdxPath;
-      } else if (item.endsWith('.md') || item.endsWith('.mdx')) {
-        mdPath = itemPath;
-        rawSlug = item.replace(/\.mdx?$/, '');
-      }
-
-      if (mdPath) {
-        const fileContent = fs.readFileSync(mdPath, 'utf8');
-        const { data, content } = matter(fileContent);
-        const formattedSlug = rawSlug.replace(/^(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/');
-        const link = `/photoblog/${formattedSlug}`;
-        const currentPostImages = new Set();
-
-        if (data.image) {
-          currentPostImages.add(data.image);
+        if (stat.isDirectory()) {
+          const indexPath = path.join(itemPath, 'index.md');
+          const indexMdxPath = path.join(itemPath, 'index.mdx');
+          if (fs.existsSync(indexPath)) mdPath = indexPath;
+          else if (fs.existsSync(indexMdxPath)) mdPath = indexMdxPath;
+        } else if (item.endsWith('.md') || item.endsWith('.mdx')) {
+          mdPath = itemPath;
+          rawSlug = item.replace(/\.mdx?$/, '');
         }
 
-        const imgRegex = /!\[.*?\]\((.*?)\)/g;
-        const matches = content.matchAll(imgRegex);
-        for (const match of matches) {
-          currentPostImages.add(match[1]);
-        }
+        if (mdPath) {
+          const fileContent = fs.readFileSync(mdPath, 'utf8');
+          let parsed;
+          try {
+            parsed = matter(fileContent);
+          } catch (yamlErr) {
+            formatWarnings.push({
+              file: path.relative(ROOT_DIR, mdPath),
+              message: `攝影集 YAML 解析失敗: ${yamlErr.message}`,
+              suggestion: '請檢查 Frontmatter 格式'
+            });
+            return;
+          }
 
-        totalPhotos += currentPostImages.size;
+          const { data, content } = parsed;
+          const formattedSlug = rawSlug.replace(/^(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/');
+          const link = `/photoblog/${formattedSlug}`;
+          const currentPostImages = new Set();
 
-        currentPostImages.forEach((imgSrc) => {
-          const cleanName = path.basename(imgSrc);
-          const webSrc = `${rawSlug}/${cleanName}`;
-          allPhotos.push({
-            src: webSrc,
-            link: link,
-            title: data.title || rawSlug,
+          if (data.image) {
+            currentPostImages.add(data.image);
+          }
+
+          const imgRegex = /!\[.*?\]\((.*?)\)/g;
+          const matches = content.matchAll(imgRegex);
+          for (const match of matches) {
+            currentPostImages.add(match[1]);
+          }
+
+          totalPhotos += currentPostImages.size;
+
+          currentPostImages.forEach((imgSrc) => {
+            const cleanName = path.basename(imgSrc);
+            const webSrc = `${rawSlug}/${cleanName}`;
+            allPhotos.push({
+              src: webSrc,
+              link: link,
+              title: data.title || rawSlug,
+            });
           });
-        });
 
-        // Sync build time for photoblog if needed
-        let targetDate = data.date;
-        if (!targetDate) {
-          const dateMatch = path.basename(mdPath).match(/^(\d{4}-\d{2}-\d{2})/);
-          if (dateMatch) targetDate = dateMatch[1];
-        }
-        if (targetDate) {
-          let datePart = '';
-          let hasSpecificTime = false;
-          if (targetDate instanceof Date) {
-            const twDate = new Date(targetDate.getTime() + offset * 3600 * 1000);
-            datePart = twDate.toISOString().slice(0, 10);
-            hasSpecificTime = targetDate.getUTCHours() !== 0 || targetDate.getUTCMinutes() !== 0;
-          } else {
-            const dateStr = String(targetDate);
-            datePart = dateStr.slice(0, 10);
-            hasSpecificTime = dateStr.includes('T') || dateStr.includes(' ') || dateStr.length > 10;
+          // Sync build time for photoblog if needed
+          let targetDate = data.date;
+          if (!targetDate) {
+            const dateMatch = path.basename(mdPath).match(/^(\d{4}-\d{2}-\d{2})/);
+            if (dateMatch) targetDate = dateMatch[1];
           }
-          if (data.rss_date) hasSpecificTime = true;
+          if (targetDate) {
+            let datePart = '';
+            let hasSpecificTime = false;
+            if (targetDate instanceof Date) {
+              const twDate = new Date(targetDate.getTime() + offset * 3600 * 1000);
+              datePart = twDate.toISOString().slice(0, 10);
+              hasSpecificTime = targetDate.getUTCHours() !== 0 || targetDate.getUTCMinutes() !== 0;
+            } else {
+              const dateStr = String(targetDate);
+              datePart = dateStr.slice(0, 10);
+              hasSpecificTime = dateStr.includes('T') || dateStr.includes(' ') || dateStr.length > 10;
+            }
+            if (data.rss_date) hasSpecificTime = true;
 
-          if (hasSpecificTime && !data.rss_date) {
-            let originalDateStr = data.date instanceof Date 
-              ? new Date(data.date.getTime() + offset * 3600 * 1000).toISOString().split('.')[0] + '+08:00'
-              : String(data.date).replace(' ', 'T');
-            data.rss_date = originalDateStr;
-            data.date = datePart;
-            saveFileWithYaml(mdPath, content, data);
-          } else if (datePart === todayStr && !hasSpecificTime) {
-            data.date = datePart;
-            data.rss_date = currentFullTime;
-            saveFileWithYaml(mdPath, content, data);
-          } else if (datePart > todayStr && !hasSpecificTime) {
-            data.date = datePart;
-            data.rss_date = `${datePart}T00:00:01+08:00`;
-            saveFileWithYaml(mdPath, content, data);
+            if (hasSpecificTime && !data.rss_date) {
+              let originalDateStr = data.date instanceof Date 
+                ? new Date(data.date.getTime() + offset * 3600 * 1000).toISOString().split('.')[0] + '+08:00'
+                : String(data.date).replace(' ', 'T');
+              data.rss_date = originalDateStr;
+              data.date = datePart;
+              saveFileWithYaml(mdPath, content, data);
+            } else if (datePart === todayStr && !hasSpecificTime) {
+              data.date = datePart;
+              data.rss_date = currentFullTime;
+              saveFileWithYaml(mdPath, content, data);
+            } else if (datePart > todayStr && !hasSpecificTime) {
+              data.date = datePart;
+              data.rss_date = `${datePart}T00:00:01+08:00`;
+              saveFileWithYaml(mdPath, content, data);
+            }
           }
-        }
 
-        // Calendar for photoblog
-        let calDate = '';
-        const dateMatch = fileContent.match(/^date:\s*['"]?(\d{4}-\d{2}-\d{2})/m);
-        if (dateMatch) calDate = dateMatch[1];
-        else {
-          const fileName = path.basename(mdPath);
-          const parentDir = path.basename(path.dirname(mdPath));
-          const fileDateMatch = fileName.match(/^(\d{4}-\d{2}-\d{2})/);
-          const parentDateMatch = parentDir.match(/^(\d{4}-\d{2}-\d{2})/);
-          if (fileDateMatch) calDate = fileDateMatch[1];
-          else if (parentDateMatch) calDate = parentDateMatch[1];
+          // Calendar for photoblog
+          let calDate = '';
+          const dateMatch = fileContent.match(/^date:\s*['"]?(\d{4}-\d{2}-\d{2})/m);
+          if (dateMatch) calDate = dateMatch[1];
           else {
-            const stats = fs.statSync(mdPath);
-            const d = new Date(stats.birthtime);
-            calDate = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().split('T')[0];
+            const fileName = path.basename(mdPath);
+            const parentDir = path.basename(path.dirname(mdPath));
+            const fileDateMatch = fileName.match(/^(\d{4}-\d{2}-\d{2})/);
+            const parentDateMatch = parentDir.match(/^(\d{4}-\d{2}-\d{2})/);
+            if (fileDateMatch) calDate = fileDateMatch[1];
+            else if (parentDateMatch) calDate = parentDateMatch[1];
+            else {
+              const stats = fs.statSync(mdPath);
+              const d = new Date(stats.birthtime);
+              calDate = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().split('T')[0];
+            }
           }
-        }
 
-        let photoblogTitle = data.title || path.basename(mdPath, path.extname(mdPath));
-        if (!dateData[calDate]) dateData[calDate] = [];
-        dateData[calDate].push({ title: photoblogTitle, url: link });
+          let photoblogTitle = data.title || path.basename(mdPath, path.extname(mdPath));
+          if (!dateData[calDate]) dateData[calDate] = [];
+          dateData[calDate].push({ title: photoblogTitle, url: link });
+        }
+      } catch (err) {
+        formatWarnings.push({
+          file: relItemPath,
+          message: err.message,
+          suggestion: '請檢查攝影集資料夾或檔案內容'
+        });
       }
     });
   }
@@ -440,7 +493,22 @@ function runDataPreparation() {
   }
 
   const elapsed = Date.now() - startTime;
-  console.log(`⚡ [prepare-data] 資料準備完成，耗時 ${elapsed}ms！`);
+  
+  if (formatWarnings.length > 0) {
+    console.log('\n' + '='.repeat(75));
+    console.log(`🚨 \x1b[31m\x1b[1m【Localhost 文章格式異常警報】共發現 ${formatWarnings.length} 篇檔案有異常！\x1b[0m`);
+    console.log('='.repeat(75));
+    formatWarnings.forEach((w, i) => {
+      console.log(`\n\x1b[33m[${i + 1}] 📄 檔案：\x1b[0m \x1b[1m${w.file}\x1b[0m`);
+      console.log(`    \x1b[31m⚠️ 原因：\x1b[0m ${w.message}`);
+      if (w.suggestion) {
+        console.log(`    \x1b[36m💡 建議：\x1b[0m ${w.suggestion}`);
+      }
+    });
+    console.log('\n' + '='.repeat(75) + '\n');
+  } else {
+    console.log(`⚡ [prepare-data] 資料準備完成，全站格式檢查無誤，耗時 ${elapsed}ms！`);
+  }
 }
 
 runDataPreparation();

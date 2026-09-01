@@ -20,6 +20,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   const [replyTab, setReplyTab] = useState('write');
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(false);
   const [visibleCount, setVisibleCount] = useState(10);
 
   // --- 管理員狀態 ---
@@ -90,6 +91,22 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     return artLineCount >= 5;
   };
 
+  // --- URL 安全協定檢查（杜絕 javascript: / data: 等 XSS 攻擊） ---
+  const getSafeHttpUrl = (rawUrl) => {
+    if (!rawUrl) return null;
+    const trimmed = String(rawUrl).trim();
+    if (/^https?:\/\//i.test(trimmed)) {
+      return trimmed;
+    }
+    if (trimmed.startsWith('/') || trimmed.startsWith('#')) {
+      return trimmed;
+    }
+    if (!trimmed.includes(':') && /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/.test(trimmed)) {
+      return `https://${trimmed}`;
+    }
+    return null;
+  };
+
   const renderMarkdown = (text) => {
     if (!text) return text;
 
@@ -113,15 +130,15 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     return parts.map((part, index) => {
       const match = part.match(/\[([^\]]+)\]\(([^)]+)\)/);
       if (match) {
-        let url = match[2].trim();
-        if (!/^https?:\/\//i.test(url) && !url.startsWith('/') && !url.startsWith('#')) {
-          url = `https://${url}`;
+        const safeUrl = getSafeHttpUrl(match[2]);
+        if (safeUrl) {
+          return (
+            <a key={index} href={safeUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--ifm-color-primary)', textDecoration: 'underline' }}>
+              {match[1]}
+            </a>
+          );
         }
-        return (
-          <a key={index} href={url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--ifm-color-primary)', textDecoration: 'underline' }}>
-            {match[1]}
-          </a>
-        );
+        return <span key={index}>{match[1]}</span>;
       }
 
       const splitRegex = /(`[^`]+`|\*\*[^*]+\*\*|\*[^*]+\*|~~[^~]+~~)/g;
@@ -168,14 +185,17 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   };
 
   const fetchComments = async () => {
+    setFetchError(false);
     try {
       const res = await fetch(WORKER_URL);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       if (Array.isArray(data)) {
         setAllComments(data);
       }
     } catch (err) {
-      console.error("載入錯誤:", err);
+      console.error("載入留言錯誤:", err);
+      setFetchError(true);
     } finally {
       setFetchLoading(false);
     }
@@ -423,7 +443,14 @@ export default function Guestbook({ readOnly = false, postSlug }) {
         <div className={styles.commentItemInner}>
           <div className={styles.commentHeader}>
             <span className={styles.commentName}>
-              {c.website ? <a href={c.website} target="_blank" rel="noopener noreferrer">{c.name}</a> : c.name}
+              {(() => {
+                const safeUrl = getSafeHttpUrl(c.website);
+                return safeUrl ? (
+                  <a href={safeUrl} target="_blank" rel="noopener noreferrer">{c.name}</a>
+                ) : (
+                  c.name
+                );
+              })()}
               {c.isAdmin === 1 && <span className={styles.masterBadge}>站長</span>}
               {activeTab === 'all_posts' && isGuestbookPage && (
                  <Link 
@@ -663,6 +690,10 @@ export default function Guestbook({ readOnly = false, postSlug }) {
 
         {fetchLoading ? (
           <p className={styles.statusText}>載入中...</p>
+        ) : fetchError ? (
+          <p className={styles.statusText} style={{ color: 'var(--ifm-color-warning)' }}>
+            ⚠️ 留言伺服器連線異常，請稍後再試。
+          </p>
         ) : commentTree.length === 0 ? (
           <p className={styles.statusText}>目前尚無留言</p>
         ) : (

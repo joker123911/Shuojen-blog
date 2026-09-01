@@ -3,10 +3,12 @@ import re
 import tkinter as tk
 from tkinter import messagebox, ttk
 
-# 設定目標資料夾路徑選單
+# 設定目標資料夾路徑選單（由腳本所在目錄動態計算專案根目錄）
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, "..", ".."))
 DIRECTORIES = {
-    "Blog": r"C:\Users\shuojen\Desktop\Shuojen-blog\blog",
-    "PhotoBlog": r"C:\Users\shuojen\Desktop\Shuojen-blog\photoblog"
+    "Blog": os.path.join(PROJECT_ROOT, "blog"),
+    "PhotoBlog": os.path.join(PROJECT_ROOT, "photoblog")
 }
 
 class TagManagerApp:

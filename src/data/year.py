@@ -1,8 +1,40 @@
 import os
+import sys
 import re
 import requests
 
-TMDB_API_KEY = "728ef67fd1e7160cbe667eed11549e19"
+# 確保 Windows 終端機正常輸出 UTF-8 字元
+if sys.platform == "win32":
+    try:
+        if hasattr(sys.stdout, "reconfigure"):
+            sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        if hasattr(sys.stderr, "reconfigure"):
+            sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
+def load_env_file():
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    candidate_paths = [
+        os.path.join(current_dir, ".env"),
+        os.path.join(current_dir, "..", "..", ".env"),
+        os.path.join(os.getcwd(), ".env"),
+    ]
+    for env_path in candidate_paths:
+        if os.path.exists(env_path):
+            try:
+                with open(env_path, "r", encoding="utf-8") as f:
+                    for line in f:
+                        line = line.strip()
+                        if line and not line.startswith("#") and "=" in line:
+                            k, v = line.split("=", 1)
+                            os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
+                break
+            except Exception:
+                pass
+
+load_env_file()
+TMDB_API_KEY = os.environ.get("TMDB_API_KEY", "")
 JS_FILE_PATH = "movies.js"
 
 def clean_title(title):
