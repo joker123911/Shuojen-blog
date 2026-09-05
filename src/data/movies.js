@@ -266,6 +266,7 @@ export const westernMovies = [
 ];
 
 export const asiaMovies = [
+  { title: "藍色監獄", score: 7.1, note: "還不錯的真人版，潔世一跟繪心演得很不錯", poster: "./img/movie/藍色監獄.webp", tags: ["2026", "動漫", "運動"] },
   { title: "失眠", score: 6.7, note: "有點為了噁心而噁心的一部電影，只是想讓黃秋生演這個角色而已吧，總之喜歡獵奇的話可以看", poster: "./img/movie/失眠.webp", tags: ["2017", "驚悚"] },
   { title: "殺人犯", score: 6.8, note: "劇情有點弱，劣化版的孤兒怨", poster: "./img/movie/殺人犯.webp", tags: ["2009", "驚悚", "犯罪"] },
   { title: "台北追緝令", score: 6.4, note: "滿尷尬的一部，真的滿難看的，露西的再更劣化版", poster: "./img/movie/台北追緝令.webp", tags: ["2024", "動作"] },
