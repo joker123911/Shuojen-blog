@@ -7,12 +7,6 @@ export const blogrollLinks = [
     "description": "追漫　/　創作　/　紀錄　/　音樂"
   },
   {
-    "title": "| 首頁 | on Cheuk 的部落格 :p",
-    "url": "https://cheuk.blog/home/",
-    "xmlUrl": "https://cheuk.blog/home/index.xml",
-    "description": "Recent content in | 首頁 | on Cheuk 的部落格 :p"
-  },
-  {
     "title": "13 的部落格",
     "url": "http://www.yishantsai.com/",
     "xmlUrl": "https://www.yishantsai.com/index.xml",
@@ -283,6 +277,12 @@ export const blogrollLinks = [
     "description": "Recent content on Ivon的部落格"
   },
   {
+    "title": "Jabee's Blog | Jabee姜 - 人生不只寫code",
+    "url": "https://jabee.net/",
+    "xmlUrl": "https://jabee.net/rss.xml",
+    "description": "Jabee 的個人部落格 - 分享科技、攝影、旅遊、重機生活與日常隨筆。Jabee姜，中正資工碩士生在讀生，業餘攝影"
+  },
+  {
     "title": "Jaron Writes. Blog",
     "url": "https://www.jaron.tw/blog/",
     "xmlUrl": "https://jaron.tw/blog/rss.xml",
@@ -315,7 +315,7 @@ export const blogrollLinks = [
   {
     "title": "Leaftechblog",
     "url": "https://www.leaftechblog.cloudns.biz/",
-    "xmlUrl": "https://www.leaftechblog.cloudns.biz/rss.xml",
+    "xmlUrl": "https://blog.xn--i2rt58ao7w.com/rss.xml",
     "description": "Leaftechblog"
   },
   {
@@ -385,6 +385,12 @@ export const blogrollLinks = [
     "description": "Hello mate. 我是 Neo.   這裏是我發佈各種碎碎念的地方。不定期更新。  去看看吧。  或使用 RSS 訂閲我。  關於我。 最新文章：  {{ posts|limit:3 }}  “有緣千里來相會，無緣對面不相識”..."
   },
   {
+    "title": "Niugnep 的部落格",
+    "url": "https://niugnep.idv.tw/index.html",
+    "xmlUrl": "https://niugnep.idv.tw/index.xml",
+    "description": "Recent content on Niugnep 的部落格"
+  },
+  {
     "title": "Noa's Blog",
     "url": "https://noa.bearblog.dev/",
     "xmlUrl": "https://noa.bearblog.dev/feed/",
@@ -413,6 +419,12 @@ export const blogrollLinks = [
     "url": "https://www.opasschang.com/blog",
     "xmlUrl": "https://www.opasschang.com/blog/rss.xml",
     "description": "Opass: A Life Well Lived Blog"
+  },
+  {
+    "title": "ordinarykuma的blog",
+    "url": "https://ordinarykuma.bearblog.dev/",
+    "xmlUrl": "https://ordinarykuma.bearblog.dev/feed/",
+    "description": "這裡是ordinarykuma的天地，主要是發表電腦、個人想法相關的文章，通常的性質是作爲自己的筆記，有時也會發表其他類型的文章以及我的小小拙見。  　　我是站長XJD，很高興大家可以看我的部落格（首頁就當作是自我介紹好了），我是一個喜歡用電腦的物理系學生（應該畢得了也業吧？我不知道大一上普物就上傅里葉轉..."
   },
   {
     "title": "Pan's Random Note",
@@ -523,12 +535,6 @@ export const blogrollLinks = [
     "description": "Just a Lazy Sol..."
   },
   {
-    "title": "Stories on Jabee's Blog",
-    "url": "https://jabee.net/stories/",
-    "xmlUrl": "https://jabee.net/stories/index.xml",
-    "description": "Recent content in Stories on Jabee's Blog"
-  },
-  {
     "title": "StoryinSpirit - 遊樂靈的和平發源地",
     "url": "https://storyinspirit.com/blog",
     "xmlUrl": "https://storyinspirit.com/blog/rss.xml",
@@ -557,6 +563,12 @@ export const blogrollLinks = [
     "url": "https://asai.bearblog.dev/",
     "xmlUrl": "https://asai.bearblog.dev/feed/",
     "description": "歡迎來到Tobi Asai的部落格，這裡是我發廢文的地方。..."
+  },
+  {
+    "title": "Tommy's blog｜Tommy 的部落格",
+    "url": "https://calke.bearblog.dev/",
+    "xmlUrl": "https://calke.bearblog.dev/feed/",
+    "description": "哈囉我是 Tommy，歡迎來到我的部落格！  你可以去看看我的YT頻道  一個國中生(國一)創的簡單部落格。  目前的目標在這裡，隨時更新  目前階段：日更(盡量啦)  🛜RSS  ..."
   },
   {
     "title": "tux24 的個人網站",
@@ -647,12 +659,6 @@ export const blogrollLinks = [
     "url": "https://yoon.club/",
     "xmlUrl": "https://yoon.club/feed/",
     "description": "這是我的部落格。  有想說的人生故事嗎？寫信給我吧～  ✉️ yoonverse.diary@gmail.com   <br>  📡 訂閱 RSS    ..."
-  },
-  {
-    "title": "九把刀官方網站",
-    "url": "https://giddens.idv.tw/",
-    "xmlUrl": "https://giddens.idv.tw/feed/",
-    "description": "網路文學經典製造機"
   },
   {
     "title": "土石流防災－陳振宇的公職記事",
@@ -817,6 +823,12 @@ export const blogrollLinks = [
     "description": "Recent content on 家醫科 陳文學醫師"
   },
   {
+    "title": "烏龜漫遊 2.0",
+    "url": "https://lankudot.airfishlab.com/",
+    "xmlUrl": "https://lankudot.airfishlab.com/feed.xml",
+    "description": "記錄分享在 Unity 上製作遊戲的筆記與心得"
+  },
+  {
     "title": "粉红路",
     "url": "https://pinkway.mataroa.blog/",
     "xmlUrl": "https://pinkway.mataroa.blog/rss/",
@@ -857,6 +869,24 @@ export const blogrollLinks = [
     "url": "https://squidspirit.com/",
     "xmlUrl": "https://squidspirit.com/feed.xml",
     "description": "大家好，我是 Squid 魷魚，身為一位軟體工程師，平常最喜歡埋首於程式碼的世界，鑽研各種新奇有趣的技術，在這裡，我會分享我的技術筆記、開發心得，還有各式各樣實用工具的評測與介紹，一起探索數位世界的無限可能吧！"
+  },
+  {
+    "title": "無糧殿",
+    "url": "https://wuliang.netlify.app/",
+    "xmlUrl": "https://wuliang.netlify.app/index.xml",
+    "description": "無糧殿"
+  },
+  {
+    "title": "結構論壇電子報 - 人物專訪",
+    "url": "https://sites.google.com/tsea.com.tw/structuralforum/Expert",
+    "xmlUrl": "https://rss.app/feeds/RoU9IKrUlrEiPmQX.xml",
+    "description": "人物專訪"
+  },
+  {
+    "title": "結構論壇電子報 - 結構專業",
+    "url": "https://sites.google.com/tsea.com.tw/structuralforum/Professional",
+    "xmlUrl": "https://rss.app/feeds/c7yD5NFnPlXQAwdl.xml",
+    "description": "結構專業"
   },
   {
     "title": "愷開的部落格",

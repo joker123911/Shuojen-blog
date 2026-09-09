@@ -15,6 +15,7 @@ tags: ['Fujifilm-xt20','xf35mmf2','台灣','花蓮','台東']
     title="YouTube video player" 
     frameborder="0" 
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    referrerpolicy="strict-origin-when-cross-origin"
     allowfullscreen>
   </iframe>
 </div>

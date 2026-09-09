@@ -32,6 +32,16 @@ const config = {
     },
   ],
 
+  headTags: [
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'referrer',
+        content: 'strict-origin-when-cross-origin',
+      },
+    },
+  ],
+
   url: 'https://shuojen.com',
   baseUrl: '/',
   // 建議將 trailingSlash 設定為 false，避免產生帶有結尾斜線的重複 URL 或導致 RSS 解析路徑問題
