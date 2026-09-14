@@ -266,6 +266,8 @@ export const westernMovies = [
 ];
 
 export const asiaMovies = [
+  { title: "名偵探麻里子最悲慘的一天", score: 6.8, note: "該怎麼說呢，我不覺得它真的超級難看，但好看在哪也說不上來，就是一部不知道嗑了什麼的電影，相當莫名奇妙", poster: "./img/movie/名偵探麻里子最悲慘的一天.webp", tags: ["2023", "奇幻"] },
+  { title: "人孔", score: 7.4, note: "很特別的一部懸疑電影，雖然有點小說不通，但是瑕不掩瑜，也是一部低成本的好片，值得一看", poster: "./img/movie/人孔.webp", tags: ["1958", "懸疑"] },
   { title: "藍色監獄", score: 7.1, note: "還不錯的真人版，潔世一跟繪心演得很不錯", poster: "./img/movie/藍色監獄.webp", tags: ["2026", "動漫", "運動"] },
   { title: "失眠", score: 6.7, note: "有點為了噁心而噁心的一部電影，只是想讓黃秋生演這個角色而已吧，總之喜歡獵奇的話可以看", poster: "./img/movie/失眠.webp", tags: ["2017", "驚悚"] },
   { title: "殺人犯", score: 6.8, note: "劇情有點弱，劣化版的孤兒怨", poster: "./img/movie/殺人犯.webp", tags: ["2009", "驚悚", "犯罪"] },
