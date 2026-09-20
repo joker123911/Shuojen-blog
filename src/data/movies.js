@@ -1,4 +1,6 @@
 export const westernMovies = [
+  { title: "微笑2", score: 7.1, note: "中規中矩的恐怖片，鬼的設定上有點太強，可以製造很多幻覺太無恥了，jump scare 稍微有點多", poster: "./img/movie/微笑2.webp", tags: ["2024", "恐怖"] },
+  { title: "惡靈古堡爆發夜", score: 7.3, note: "還不錯的喪屍電影，惡靈古堡起源故事，劇情直線簡單", poster: "./img/movie/惡靈古堡爆發夜.webp", tags: ["2026", "恐怖"] },
   { title: "十二怒漢", score: 7.7, note: "畫面調度以及劇本都很厲害的一部低成本思辨電影，不愧是經典", poster: "./img/movie/十二怒漢.webp", tags: ["1957", "劇情", "法律"] },
   { title: "怒海潛將", score: 7.9, note: "美國非裔海軍 Carl 的故事改編，勵志感人", poster: "./img/movie/怒海潛將.webp", tags: ["2000", "傳記"] },
   { title: "天菜大廚", score: 7.2, note: "布萊德利·庫柏的一部關於廚房生活的電影，還不錯不過稍微沒記憶點。", poster: "./img/movie/天菜大廚.webp", tags: ["2015", "劇情", "喜劇"] },
