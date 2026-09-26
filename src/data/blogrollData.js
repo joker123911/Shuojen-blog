@@ -195,14 +195,20 @@ export const blogrollLinks = [
   {
     "title": "Harry Chung",
     "url": "https://harrychung.com/",
-    "xmlUrl": "https://harrychung.com/atom.xml",
-    "description": ""
+    "xmlUrl": "https://harrychung.com/rss.xml",
+    "description": "Stories without an expiration date."
   },
   {
     "title": "Hellen Murmur",
     "url": "https://hellenmurmur.bearblog.dev/",
     "xmlUrl": "https://hellenmurmur.bearblog.dev/feed/",
     "description": "This is Hellen's space where she can shout out loud...."
+  },
+  {
+    "title": "Herman's blog",
+    "url": "https://herman.bearblog.dev/",
+    "xmlUrl": "https://herman.bearblog.dev/feed/",
+    "description": "Hi I'm Herman Martinus. I'm a maker of things, rider of bikes, and hiker of mountains."
   },
   {
     "title": "Hi 我劉昕",
@@ -565,6 +571,12 @@ export const blogrollLinks = [
     "description": "歡迎來到Tobi Asai的部落格，這裡是我發廢文的地方。..."
   },
   {
+    "title": "Today I Learned Blog",
+    "url": "https://til.trashposts.com/blog",
+    "xmlUrl": "https://til.trashposts.com/blog/rss.xml",
+    "description": "Today I Learned Blog"
+  },
+  {
     "title": "Tommy's blog｜Tommy 的部落格",
     "url": "https://calke.bearblog.dev/",
     "xmlUrl": "https://calke.bearblog.dev/feed/",
@@ -659,6 +671,12 @@ export const blogrollLinks = [
     "url": "https://yoon.club/",
     "xmlUrl": "https://yoon.club/feed/",
     "description": "這是我的部落格。  有想說的人生故事嗎？寫信給我吧～  ✉️ yoonverse.diary@gmail.com   <br>  📡 訂閱 RSS    ..."
+  },
+  {
+    "title": "九把刀官方網站",
+    "url": "https://giddens.idv.tw/",
+    "xmlUrl": "https://giddens.idv.tw/feed/",
+    "description": "網路文學經典製造機"
   },
   {
     "title": "土石流防災－陳振宇的公職記事",
@@ -775,6 +793,12 @@ export const blogrollLinks = [
     "description": "Recent content on 侃侃而談。"
   },
   {
+    "title": "刷比小廢報 Scrubby Scraps",
+    "url": "https://scrubbyinabox.substack.com/",
+    "xmlUrl": "https://scrubbyinabox.substack.com/feed",
+    "description": "雖然廢廢，但我很喜歡。"
+  },
+  {
     "title": "阿標 ilovemovie",
     "url": "https://ilovemovie.pika.page/",
     "xmlUrl": "https://ilovemovie.pika.page/posts_feed",
@@ -877,18 +901,6 @@ export const blogrollLinks = [
     "description": "無糧殿"
   },
   {
-    "title": "結構論壇電子報 - 人物專訪",
-    "url": "https://sites.google.com/tsea.com.tw/structuralforum/Expert",
-    "xmlUrl": "https://rss.app/feeds/RoU9IKrUlrEiPmQX.xml",
-    "description": "人物專訪"
-  },
-  {
-    "title": "結構論壇電子報 - 結構專業",
-    "url": "https://sites.google.com/tsea.com.tw/structuralforum/Professional",
-    "xmlUrl": "https://rss.app/feeds/c7yD5NFnPlXQAwdl.xml",
-    "description": "結構專業"
-  },
-  {
     "title": "愷開的部落格",
     "url": "https://blog.kalan.dev/",
     "xmlUrl": "https://blog.kalan.dev/rss.xml",
@@ -929,6 +941,12 @@ export const blogrollLinks = [
     "url": "https://trashposts.com/",
     "xmlUrl": "https://trashposts.com/rss.xml",
     "description": "最新文章更新"
+  },
+  {
+    "title": "閱讀前哨站",
+    "url": "https://readingoutpost.com/",
+    "xmlUrl": "https://readingoutpost.com/feed/",
+    "description": "Reading Outpost"
   },
   {
     "title": "樹懶得小天地",

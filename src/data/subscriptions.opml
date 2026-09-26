@@ -2,7 +2,7 @@
 <opml xmlns:frss="https://freshrss.org/opml" version="2.0">
   <head>
     <title>FreshRSS</title>
-    <dateCreated>Wed, 09 Sep 2026 23:22:03 +0800</dateCreated>
+    <dateCreated>Sat, 26 Sep 2026 16:38:34 +0800</dateCreated>
   </head>
   <body>
     <outline text="Blogger">
@@ -25,7 +25,7 @@
       <outline text="Feed Me, Haruo" type="rss" xmlUrl="https://haruowang.vercel.app/rss.xml" htmlUrl="https://haruowang.vercel.app/" description="Digital Garden of Haruo Wang"/>
       <outline text="Gou's Blog Blog" type="rss" xmlUrl="https://gou935.com/blog/rss.xml" htmlUrl="https://gou935.com/blog" description="Gou's Blog Blog"/>
       <outline text="HachiZen Blog" type="rss" xmlUrl="https://hachizen.blog/blog/rss.xml" htmlUrl="https://hachizen-blog.vercel.app/blog" description="HachiZen Blog"/>
-      <outline text="Harry Chung" type="rss" xmlUrl="https://harrychung.com/atom.xml" htmlUrl="https://harrychung.com/"/>
+      <outline text="Harry Chung" type="rss" xmlUrl="https://harrychung.com/rss.xml" htmlUrl="https://harrychung.com/" description="Stories without an expiration date."/>
       <outline text="Hellen Murmur" type="rss" xmlUrl="https://hellenmurmur.bearblog.dev/feed/" htmlUrl="https://hellenmurmur.bearblog.dev/" description="This is Hellen's space where she can shout out loud...."/>
       <outline text="Hong-Sheng Huang's Blog" type="rss" xmlUrl="https://hshuang.com/index.xml" htmlUrl="https://hshuang.blog/" description="Recent content on 黃宏勝的部落格 | hshuang.blog"/>
       <outline text="I'm j2hongming" type="rss" xmlUrl="https://j2hongming.com/atom.xml" htmlUrl="https://j2hongming.github.io/" description="Appreciate, respect and accept it, don't take it for granted"/>
@@ -41,6 +41,7 @@
       <outline text="Moongazer.net / Blog" type="rss" xmlUrl="https://blog.moongazer.net/index.xml" htmlUrl="https://blog.moongazer.net/" description="Recent content on Moongazer.net / Blog"/>
       <outline text="Neil Blog" type="rss" xmlUrl="https://blog.neil-lin.com/rss.xml" htmlUrl="https://blog.neil-lin.com/" description="A blog written by someone who loves coffee and software"/>
       <outline text="Neo's Blog" type="rss" xmlUrl="https://neoisone.bearblog.dev/feed/" htmlUrl="https://neoisone.bearblog.dev/" description="Hello mate. 我是 Neo. &#13;&#10;&#13;&#10;這裏是我發佈各種碎碎念的地方。不定期更新。&#13;&#10;&#13;&#10;去看看吧。&#13;&#10;&#13;&#10;或使用 RSS 訂閲我。&#13;&#10;&#13;&#10;關於我。&#13;&#10;最新文章：&#13;&#10;&#13;&#10;{{ posts|limit:3 }}&#13;&#10;&#13;&#10;“有緣千里來相會，無緣對面不相識”..."/>
+      <outline text="Niugnep 的部落格" type="rss" xmlUrl="https://niugnep.idv.tw/index.xml" htmlUrl="https://niugnep.idv.tw/index.html" description="Recent content on Niugnep 的部落格"/>
       <outline text="NovaDNG Studio" type="rss" xmlUrl="https://novadng.studio/atom.xml" htmlUrl="https://novadng.studio/" description="thoughts.dng"/>
       <outline text="O'Oh 麵麵 – Blog" type="rss" xmlUrl="https://oohmemen.com/blog/index.xml" htmlUrl="https://oohmemen.com/blog/" description="Recent content in Blog on O'Oh 麵麵"/>
       <outline text="Opass: A Life Well Lived Blog" type="rss" xmlUrl="https://www.opasschang.com/blog/rss.xml" htmlUrl="https://www.opasschang.com/blog" description="Opass: A Life Well Lived Blog"/>
@@ -72,8 +73,10 @@
       <outline text="yunColorBlog.com" type="rss" xmlUrl="https://yuncolorblog.com/index.xml" htmlUrl="https://yuncolorblog.com/" description="Recent content on yunColorBlog.com"/>
       <outline text="【The Last Child】" type="rss" xmlUrl="https://zuzuthink.blogspot.com/feeds/posts/default" htmlUrl="https://zuzuthink.blogspot.com/" description="追漫　/　創作　/　紀錄　/　音樂"/>
       <outline text="一起和 Yoon 聊心事" type="rss" xmlUrl="https://yoon.club/feed/" htmlUrl="https://yoon.club/" description="這是我的部落格。&#13;&#10;&#13;&#10;有想說的人生故事嗎？寫信給我吧～&#13;&#10;&#13;&#10;✉️ yoonverse.diary@gmail.com &#13;&#10;&#13;&#10;&lt;br&gt;&#13;&#10;&#13;&#10;📡 訂閱 RSS&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;..."/>
+      <outline text="九把刀官方網站" type="rss" xmlUrl="https://giddens.idv.tw/feed/" htmlUrl="https://giddens.idv.tw/" description="網路文學經典製造機"/>
       <outline text="伊果的沒人看筆記本" type="rss" xmlUrl="https://igouist.github.io/index.xml" htmlUrl="https://igouist.github.io/" description="Recent content on 伊果的沒人看筆記本"/>
       <outline text="冰室花园" type="rss" xmlUrl="https://blog.mattuy.top/blog/rss.xml" htmlUrl="https://blog.mattuy.top/blog/" description="冰室花园 - Haven Mattuy"/>
+      <outline text="刷比小廢報 Scrubby Scraps" type="rss" xmlUrl="https://scrubbyinabox.substack.com/feed" htmlUrl="https://scrubbyinabox.substack.com/" description="雖然廢廢，但我很喜歡。"/>
       <outline text="右衣" type="rss" xmlUrl="https://yoe1.bearblog.dev/feed/" htmlUrl="https://yoe1.bearblog.dev/" description="如果歸屬是人性所需，那麼，追求智識是我的必須；因此，達爾文這位上帝，靠著演化之手，把我隨機拋在沒有靈魂的世界，賦予了我使命，把熟悉事物，變得陌生。&#13;&#10;&#13;&#10;我的詩歌已經寫了 20 首以上，如果你不知道該看哪個，可以先入手這些：&#13;&#10;&#13;&#10;〈他死了，但她活了〉&#13;&#10;&#13;&#10;〈那雙在夜晚星空下的眼睛〉&#13;&#10;&#13;&#10;〈我感到疑惑〉&#13;&#10;&#13;..."/>
       <outline text="安娜的自我探索與成長筆記" type="rss" xmlUrl="https://blog.anna-yufeng.com/rss.xml" htmlUrl="https://blog.anna-yufeng.com/" description="這裡會紀錄我復原自律神經、探索日常、偶爾回顧職場經驗和心情的過程。如果你偶爾想知道怎麼慢慢恢復生活，也歡迎一起來這裡晃晃。"/>
       <outline text="家醫科 陳文學醫師" type="rss" xmlUrl="https://fm-chen.tw/index.xml" htmlUrl="https://fm-chen.tw/" description="Recent content on 家醫科 陳文學醫師"/>
@@ -96,6 +99,7 @@
       <outline text="西瓜生長日記 🍉" type="rss" xmlUrl="https://watermelon.bearblog.dev/feed/" htmlUrl="https://watermelon.bearblog.dev/" description="Melon’s blog..."/>
       <outline text="鍵盤美食家週記" type="rss" xmlUrl="https://roakuo.com/feed" htmlUrl="https://roakuo.com/" description="關於Hi-Fi音響、美食、旅行與攝影"/>
       <outline text="鏡想的頭腦反射" type="rss" xmlUrl="https://johnworker.bearblog.dev/feed/" htmlUrl="https://johnworker.bearblog.dev/" description="&lt;marquee&gt;這裡是鏡想的部落格  歡迎你的到來&lt;/marquee&gt;&#13;&#10;關於我的部落格：&#13;&#10;嗨，我是鏡想，平時在國營事業上班做職安衛管理，下班時則是一名業餘小說家，另外也喜歡讀書、玩魔術與花式切牌以及研究心理學。&#13;&#10;&#13;&#10;這裡是本人發布小說和故事以外的讀書筆記、靈感發想或隨言隨語的地方。如果這裡有甚麼內容，能讓..."/>
+      <outline text="閱讀前哨站" type="rss" xmlUrl="https://readingoutpost.com/feed/" htmlUrl="https://readingoutpost.com/" description="Reading Outpost"/>
       <outline text="關於我 on 亖亖的部落格" type="rss" xmlUrl="https://blog.nufneb.com/about/index.xml" htmlUrl="https://blog.nufneb.com/about/" description="Recent content in 關於我 on 亖亖的部落格"/>
       <outline text="阿標 ilovemovie" type="rss" xmlUrl="https://ilovemovie.pika.page/posts_feed" htmlUrl="https://ilovemovie.pika.page/"/>
       <outline text="陳依琳 YI-LIN CHEN" type="rss" xmlUrl="https://im1010ioio.dev/rss.xml" htmlUrl="https://im1010ioio.dev/" description="A simple theme for personal blog sites, created for Astro framework"/>
@@ -105,6 +109,7 @@
     <outline text="English Blog">
       <outline text="Derek Sivers" type="rss" xmlUrl="https://sive.rs/podcast.rss" htmlUrl="https://sivers.org/" description="me reading my best work"/>
       <outline text="Emma Goto" type="rss" xmlUrl="https://www.emgoto.com/rss.xml" htmlUrl="https://www.emgoto.com/" description="Japanese-Australian software engineer in Tokyo. Writing about hiking in Japan, coffee, birding, books and anything else that piques my interest."/>
+      <outline text="Herman's blog" type="rss" xmlUrl="https://herman.bearblog.dev/feed/" htmlUrl="https://herman.bearblog.dev/" description="Hi I'm Herman Martinus. I'm a maker of things, rider of bikes, and hiker of mountains."/>
       <outline text="Leo's Blog" type="rss" xmlUrl="https://leo3391.github.io/blog/index.xml" htmlUrl="https://leo3391.github.io/blog/" description="Recent content on Leo's Blog"/>
       <outline text="Seth's Blog" type="rss" xmlUrl="https://seths.blog/feed/" htmlUrl="https://seths.blog/" description="Seth Godin's Blog on marketing, tribes and respect"/>
     </outline>
@@ -170,13 +175,11 @@
       <outline text="Home on ClixTW's Blog" type="rss" xmlUrl="https://clixtw.github.io/index.xml" htmlUrl="https://clixtw.github.io/" description="Recent content in 首頁 on ClixTW's Blog"/>
       <outline text="Ivon的部落格" type="rss" xmlUrl="https://ivonblog.com/index.xml" htmlUrl="https://ivonblog.com/" description="Recent content on Ivon的部落格"/>
       <outline text="Linux on 范剛哲的部落格" type="rss" xmlUrl="https://fgzblog.com/zh-tw/categories/linux/index.xml" htmlUrl="https://fgzblog.com/zh-tw/categories/linux/" description="Recent content in Linux on 范剛哲的部落格"/>
-      <outline text="Niugnep 的部落格" type="rss" xmlUrl="https://niugnep.idv.tw/index.xml" htmlUrl="https://niugnep.idv.tw/index.html" description="Recent content on Niugnep 的部落格"/>
+      <outline text="Today I Learned Blog" type="rss" xmlUrl="https://til.trashposts.com/blog/rss.xml" htmlUrl="https://til.trashposts.com/blog" description="Today I Learned Blog"/>
       <outline text="Zeroplex 生活隨筆" type="rss" xmlUrl="https://blog.zeroplex.tw/feed/" htmlUrl="https://blog.zeroplex.tw/" description="軟體開發和生活瑣事"/>
       <outline text="土石流防災－陳振宇的公職記事" type="rss" xmlUrl="https://cychen59.blogspot.com/feeds/posts/default" htmlUrl="https://cychen59.blogspot.com/" description="如果我的公務生涯上半場可以用「土石流防災」總結&lt;br&gt;&#10;那麼下半場我希望是「資料治理」"/>
       <outline text="愷開的部落格" type="rss" xmlUrl="https://blog.kalan.dev/rss.xml" htmlUrl="https://blog.kalan.dev/" description="好的技術文章不只傳遞知識，也傳遞觀點。這裡是我思考與書寫的地方。"/>
       <outline text="毛哥EM資訊密技" type="rss" xmlUrl="https://emtech.cc/rss.xml" htmlUrl="https://emtech.cc/" description="分享各種程式及軟體"/>
-      <outline text="結構論壇電子報 - 人物專訪" type="rss" xmlUrl="https://rss.app/feeds/RoU9IKrUlrEiPmQX.xml" htmlUrl="https://sites.google.com/tsea.com.tw/structuralforum/Expert" description="人物專訪"/>
-      <outline text="結構論壇電子報 - 結構專業" type="rss" xmlUrl="https://rss.app/feeds/c7yD5NFnPlXQAwdl.xml" htmlUrl="https://sites.google.com/tsea.com.tw/structuralforum/Professional" description="結構專業"/>
       <outline text="綠角財經筆記" type="rss" xmlUrl="https://greenhornfinancefootnote.blogspot.com/feeds/2873928536745730786/comments/default" htmlUrl="http://greenhornfinancefootnote.blogspot.com/"/>
       <outline text="魚之魷魂 SquidSpirit" type="rss" xmlUrl="https://squidspirit.com/feed.xml" htmlUrl="https://squidspirit.com/" description="大家好，我是 Squid 魷魚，身為一位軟體工程師，平常最喜歡埋首於程式碼的世界，鑽研各種新奇有趣的技術，在這裡，我會分享我的技術筆記、開發心得，還有各式各樣實用工具的評測與介紹，一起探索數位世界的無限可能吧！"/>
     </outline>

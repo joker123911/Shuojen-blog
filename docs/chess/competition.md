@@ -2,16 +2,16 @@
 title: '西洋棋紀錄'
 sidebar_position: 3
 ---
-*最後更新：2026-05-11*
+*最後更新：2026-09-26*
 
 ![img](./img/019.webp)
 ## 積分(Rating)
 
 ### 最高積分(Highest Rating)
 #### [Chess.com](https://www.chess.com/member/fubaba123911)
-* 中速棋(Rapid)：1801分
-* 閃電棋(Blitz)：1665分
-* 子彈棋(Bullet)：1504分
+* 中速棋(Rapid)：1849分
+* 閃電棋(Blitz)：1713分
+* 子彈棋(Bullet)：1605分
 #### [Lichess](https://lichess.org/@/fubaba)
 * 中速棋(Rapid)：2016分
 * 閃電棋(Blitz)：1824分
