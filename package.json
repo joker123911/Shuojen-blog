@@ -6,8 +6,7 @@
     "docusaurus": "docusaurus",
     "check": "node scripts/check-broken-links.js",
     "pull": "git pull",
-    "prepare-data": "node scripts/prepare-data.js",
-    "prepare-data": "node scripts/parse-opml.js && node scripts/sync-build-time.js && node scripts/update-stats.js && node scripts/gen-photos.js && node scripts/generate-calendar.js",
+    "prepare-data": "node scripts/parse-opml.js && node scripts/sync-build-time.js && node scripts/update-stats.js && node scripts/gen-photos.js && node scripts/generate-calendar.js && node scripts/gen-search-index.js",
     "start": "npm run prepare-data && docusaurus start",
     "start:fast": "docusaurus start",
     "build": "npm run prepare-data && docusaurus build",
@@ -22,7 +21,6 @@
   "dependencies": {
     "@docusaurus/core": "^3.10.1",
     "@docusaurus/preset-classic": "^3.10.1",
-    "@easyops-cn/docusaurus-search-local": "^0.52.1",
     "@mdx-js/react": "^3.0.0",
     "canvas-confetti": "^1.9.4",
     "chess.js": "^1.4.0",

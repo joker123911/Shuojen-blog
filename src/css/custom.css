@@ -238,3 +238,15 @@ div[class*='codeBlockContainer_'] {
 div[class*='codeBlockLines_'] {
   color: #6272a4 !important;
 }
+
+/* =========================================
+   隱藏瀏覽器原生搜尋取消按鈕（避免與自訂清除按鈕重複出現兩個叉叉）
+   ========================================= */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none !important;
+}

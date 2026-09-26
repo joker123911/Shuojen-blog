@@ -210,17 +210,6 @@ const config = {
         onUntruncatedBlogPosts: 'ignore',
       },
     ],
-    [
-      require.resolve("@easyops-cn/docusaurus-search-local"),
-      {
-        hashed: true,
-        language: ["en", "zh"],
-        explicitSearchResultPath: true,
-        searchResultLimits: 8,
-        blogRouteBasePath: ["blog", "photoblog"],
-        docsRouteBasePath: ["docs"],
-      },
-    ],
     'docusaurus-plugin-image-zoom',
   ],
 
