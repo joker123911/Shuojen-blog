@@ -24,6 +24,7 @@
     "@mdx-js/react": "^3.0.0",
     "canvas-confetti": "^1.9.4",
     "chess.js": "^1.4.0",
+    "chessground": "^9.2.1",
     "clsx": "^2.0.0",
     "cm-chessboard": "^8.11.0",
     "docusaurus-plugin-image-zoom": "^3.0.1",
