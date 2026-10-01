@@ -1,5 +1,5 @@
 ---
-title: 'Five album'
+title: 'Five albums'
 tags: ['music']
 date: 2026-07-09
 rss_date: '2026-07-09T23:10:52+08:00'

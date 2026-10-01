@@ -249,6 +249,7 @@ const config = {
           },          
           {to: '/blog', label: '貼文', position: 'left'},
           {to: '/photography', label: '攝影集', position:'left'},
+          {to: '/albums', label: '專輯牆', position: 'left'},
           {to: '/random', label: '隨機', position: 'left'},                    
           {
             type: 'dropdown',
