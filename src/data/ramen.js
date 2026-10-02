@@ -30,6 +30,7 @@ export const ramenList = [
   { title: "太陽番茄拉麵", note: "好吃也特別的一間店，很多連鎖店，在美食街偶爾會看到，請選擇這間，美食街很多東西都不太能吃，番茄味很濃厚，很香。", tier: "A", tags: ["台北"], link: "https://maps.app.goo.gl/vq6MQKY5DR8nCLRz8" },
   { title: "初原麵場", note: "在新竹吃過一次，印象還不錯，以新竹的食物可以算表現極佳了。", tier: "A", tags: ["新竹"], link: "https://maps.app.goo.gl/6de8Ff2tcagy8ctB8" },
   { title: "麵屋千雲", note: "口味還不錯， 考量到排隊有點可惜，就不會特別想來吃了。", tier: "A", tags: ["台北"], link: "https://maps.app.goo.gl/uzqyhkpUzwreSnU66" },
+  { title: "北海道札幌拉麵羽畠食堂", note: "有小時候吃綠窗這間店的感覺，湯頭有些死鹹，只能說中規中矩，炸雞滿好吃的", tier: "A", tags: ["台北"], link: "https://maps.app.goo.gl/rMCasWsBsXRiH2s8A" },
   { title: "凪Nagi", note: "可能是我的問題，但是我選到一個奇怪顏色的拉麵，排了很久但實在沒有覺得好吃。", tier: "B", tags: ["台北"], link: "https://maps.app.goo.gl/wq26wSCR7AXJrEKW9" },
   { title: "長生塩人", note: "清爽的鹽味拉麵，沒什麼問題，但是對我來說太平淡了。", tier: "B", tags: ["台北"], link: "https://maps.app.goo.gl/TSp86hZr9ur2rCFG9" },
   { title: "一風堂拉麵", note: "分店很多的一間老店，價格不低但是沒什麼記憶點，不會特別想來吃，剛好經過可以吃，沒什麼問題。", tier: "B", tags: ["台北"], link: "https://www.google.com/maps/search/?api=1&query=一風堂拉麵" },
