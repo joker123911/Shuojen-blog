@@ -1,10 +1,15 @@
 ---
 title: '劇集清單'
+hide_title: true
 sidebar_position: 3
 slug: /series
 ---
 
 import SeriesTier from '@site/src/components/SeriesTier';
+
+<div className="site-hero-wrapper">
+  <h1 className="site-hero-title">Series</h1>
+</div>
 
 *最後更新：2026-10-02*
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from '@docusaurus/router';
 import Link from '@docusaurus/Link'; 
 import styles from './styles.module.css';
@@ -278,6 +278,37 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   };
 
   const commentTree = buildCommentTree(displayComments);
+
+  const observerTarget = useRef(null);
+
+  // 無限滾動監聽（IntersectionObserver）
+  useEffect(() => {
+    if (visibleCount >= commentTree.length || commentTree.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setVisibleCount((prev) => Math.min(prev + 10, commentTree.length));
+        }
+      },
+      {
+        rootMargin: '400px', // 提早 400px 預載，滑動體驗無縫流暢
+        threshold: 0.1,
+      }
+    );
+
+    const currentTarget = observerTarget.current;
+    if (currentTarget) {
+      observer.observe(currentTarget);
+    }
+
+    return () => {
+      if (currentTarget) {
+        observer.unobserve(currentTarget);
+      }
+      observer.disconnect();
+    };
+  }, [visibleCount, commentTree.length]);
 
   // --- 精準計算所有留言與回覆的總和（包含舊版站長回覆欄位） ---
   const totalCommentCount = displayComments.reduce((acc, c) => {
@@ -702,12 +733,17 @@ export default function Guestbook({ readOnly = false, postSlug }) {
               {commentTree.slice(0, visibleCount).map(c => renderCommentNode(c, false))}
             </div>
 
+            {/* 無限滾動觸發目標 */}
             {visibleCount < commentTree.length && (
-              <div className={styles.loadMoreContainer}>
-                <button onClick={() => setVisibleCount(v => v + 10)} className={styles.loadMoreBtn}>
-                  LOAD MORE
-                </button>
-              </div>
+              <div 
+                ref={observerTarget} 
+                style={{ 
+                  height: '40px', 
+                  margin: '1.5rem 0',
+                  pointerEvents: 'none',
+                  visibility: 'hidden'
+                }} 
+              />
             )}
           </>
         )}

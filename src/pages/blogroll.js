@@ -1,6 +1,28 @@
 import React from 'react';
 import Layout from '@theme/Layout';
 import BlogrollGrid from '@site/src/components/Blogroll/BlogrollGrid';
+import { blogrollLinks } from '@site/src/data/blogrollData.js';
+
+const blogrollTheme = {
+  headerTitle: {
+    fontSize: '3.5rem',
+    fontWeight: '400',
+    fontFamily: '"Rock Salt", cursive',
+    letterSpacing: '2px',
+    marginBottom: '0.8rem',
+    color: 'var(--ifm-font-color-base)',
+    whiteSpace: 'nowrap',
+  },
+  headerSub: {
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+    fontSize: '0.9rem',
+    textTransform: 'uppercase',
+    letterSpacing: '3px',
+    fontWeight: '500',
+    color: 'var(--ifm-color-content-secondary)',
+    opacity: 0.85,
+  }
+};
 
 export default function BlogrollPage() {
   return (
@@ -8,11 +30,8 @@ export default function BlogrollPage() {
       <main className="container margin-vert--lg" style={{ maxWidth: '1200px', paddingLeft: '16px', paddingRight: '16px' }}>
         <style>{`
           @media (max-width: 600px) {
-            .blogroll-header-title {
-              font-size: 1.8rem !important;
-            }
-            .blogroll-header-title code {
-              font-size: 1.2rem !important;
+            .blogroll-hero-title {
+              font-size: 2.3rem !important;
             }
             .blogroll-code-block {
               max-width: 100%;
@@ -22,12 +41,15 @@ export default function BlogrollPage() {
             }
           }
         `}</style>
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <h1 className="blogroll-header-title" style={{ fontSize: '2.5rem', fontWeight: '700', marginBottom: '1.5rem' }}>
-            部落卷 <code style={{ fontSize: '1.8rem', verticalAlign: 'middle' }}>/blogroll</code>
+        <div style={{ textAlign: 'center', marginBottom: '2.5rem', marginTop: '1rem' }}>
+          <h1 className="blogroll-hero-title" style={blogrollTheme.headerTitle}>
+            Blogroll
           </h1>
+          <p style={blogrollTheme.headerSub}>
+            {blogrollLinks.length} Feeds • Oh My Web
+          </p>
 
-          <div style={{ display: 'inline-block', textAlign: 'center', margin: '1rem 0', maxWidth: '100%' }}>
+          <div style={{ display: 'inline-block', textAlign: 'center', margin: '1.5rem 0 0.5rem 0', maxWidth: '100%' }}>
             <img src="/img/blogroll_logo.png" style={{ borderRadius: '0', maxWidth: '100%', height: 'auto' }} alt="logo" />
             <div style={{ marginTop: '0.8rem' }}>
               <pre className="blogroll-code-block" style={{ display: 'inline-block', padding: '6px 16px', margin: 0, fontSize: '0.85rem' }}>

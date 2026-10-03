@@ -130,6 +130,11 @@
     "filename": "Don McLean - The Best of Don McLean.jpg"
   },
   {
+    "artist": "E.SO",
+    "album": "Outta Body",
+    "filename": "E.SO - Outta Body.jpg"
+  },
+  {
     "artist": "Earth, Wind & Fire",
     "album": "The Eternal Dance Vol. III",
     "filename": "Earth, Wind & Fire - The Eternal Dance Vol. III.jpg"
@@ -158,6 +163,11 @@
     "artist": "Hans Zimmer",
     "album": "Interstellar: Original Motion Picture Soundtrack",
     "filename": "Hans Zimmer - Interstellar_ Original Motion Picture Soundtrack.jpg"
+  },
+  {
+    "artist": "Harry Styles",
+    "album": "Harry's House",
+    "filename": "Harry Styles - Harry's House.jpg"
   },
   {
     "artist": "Hikaru Utada",
@@ -218,6 +228,21 @@
     "artist": "Maria João Pires",
     "album": "Artist Portrait",
     "filename": "Maria João Pires - Artist Portrait.jpg"
+  },
+  {
+    "artist": "Maroon 5",
+    "album": "Overexposed",
+    "filename": "Maroon 5 - Overexposed.jpg"
+  },
+  {
+    "artist": "Maroon 5",
+    "album": "Songs About Jane",
+    "filename": "Maroon 5 - Songs About Jane.jpg"
+  },
+  {
+    "artist": "Maroon 5",
+    "album": "V",
+    "filename": "Maroon 5 - V.jpg"
   },
   {
     "artist": "Matthew Lien",
@@ -928,6 +953,11 @@
     "artist": "蛋堡",
     "album": "收斂水",
     "filename": "蛋堡 - 收斂水.jpg"
+  },
+  {
+    "artist": "蛋堡",
+    "album": "月光",
+    "filename": "蛋堡 - 月光.jpg"
   },
   {
     "artist": "許光漢",

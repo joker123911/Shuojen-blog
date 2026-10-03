@@ -269,6 +269,7 @@ export const westernMovies = [
 ];
 
 export const asiaMovies = [
+  { title: "雙瞳", score: 7.6, note: "結合科學真的很特別，大戰那段超級精采，印象深刻", poster: "./img/movie/雙瞳.webp", tags: ["2002", "驚悚"] },
   { title: "人潮洶湧", score: 6.3, note: "跟獵金遊戲的問題差不多，劇情笑點都尷尬，配樂來營造的笑點更是俗不可耐，幾個致敬港片的畫面和音樂，大概是唯一亮點", poster: "./img/movie/人潮洶湧.webp", tags: ["2021", "喜劇", "犯罪"] },
   { title: "獵金遊戲", score: 6.6, note: "只靠劉德華魅力的一部，中國片真的很容易劇本尷尬，充滿幹片感", poster: "./img/movie/獵金遊戲.webp", tags: ["2025", "犯罪", "劇情"] },
   { title: "名偵探麻里子最悲慘的一天", score: 6.8, note: "該怎麼說呢，我不覺得它真的超級難看，但好看在哪也說不上來，就是一部不知道嗑了什麼的電影，相當莫名奇妙", poster: "./img/movie/名偵探麻里子最悲慘的一天.webp", tags: ["2023", "奇幻"] },

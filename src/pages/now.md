@@ -3,7 +3,9 @@ title: 近況
 description: 近況更新
 ---
 
-# 我在做什麼 `/now`
+<div className="site-hero-wrapper">
+  <h1 className="site-hero-title">Now</h1>
+</div>
 
 *最後更新：2026-07-29*
 

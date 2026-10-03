@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const matter = require('gray-matter');
 const yaml = require('js-yaml');
+const { generateAlbumsData } = require('./gen-albums');
 
 const ROOT_DIR = path.join(__dirname, '..');
 const BLOG_DIR = path.join(ROOT_DIR, 'blog');
@@ -178,6 +179,7 @@ function saveFileWithYaml(filePath, content, data) {
 function runDataPreparation() {
   const startTime = Date.now();
   processOpml();
+  generateAlbumsData();
 
   // Single-pass scan for blog and photoblog
   const blogFiles = getAllMarkdownFiles(BLOG_DIR);

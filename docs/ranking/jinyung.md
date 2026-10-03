@@ -1,10 +1,15 @@
 ---
 title: '金庸小說清單'
+hide_title: true
 sidebar_position: 5
 slug: /jinyung
 ---
 
 import JinYungTier from '@site/src/components/JinYungTier';
+
+<div className="site-hero-wrapper">
+  <h1 className="site-hero-title">Jinyung</h1>
+</div>
 
 *最後更新：2026-06-21*
 

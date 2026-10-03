@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect, useCallback } from 'react';
+import React, { useMemo, useState, useEffect, useCallback, useRef } from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
@@ -71,9 +71,36 @@ export default function PhotoGallery() {
     return shuffledPhotos.slice(0, visibleCount);
   }, [shuffledPhotos, visibleCount]);
 
-  const handleLoadMore = () => {
-    setVisibleCount((prev) => prev + 12);
-  };
+  const observerTarget = useRef(null);
+
+  // 無限滾動監聽（IntersectionObserver）
+  useEffect(() => {
+    if (visibleCount >= shuffledPhotos.length || shuffledPhotos.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setVisibleCount((prev) => Math.min(prev + 12, shuffledPhotos.length));
+        }
+      },
+      {
+        rootMargin: '400px', // 提早 400px 預載，滑動體驗無縫流暢
+        threshold: 0.1,
+      }
+    );
+
+    const currentTarget = observerTarget.current;
+    if (currentTarget) {
+      observer.observe(currentTarget);
+    }
+
+    return () => {
+      if (currentTarget) {
+        observer.unobserve(currentTarget);
+      }
+      observer.disconnect();
+    };
+  }, [visibleCount, shuffledPhotos.length]);
 
   const closeLightbox = useCallback(() => {
     setSelectedIdx(null);
@@ -167,12 +194,17 @@ export default function PhotoGallery() {
           })}
         </div>
 
+        {/* 無限滾動觸發目標 */}
         {visibleCount < shuffledPhotos.length && (
-          <div style={{ textAlign: 'center', margin: '3rem 0' }}>
-            <button className="load-more-btn" onClick={handleLoadMore}>
-              Load More
-            </button>
-          </div>
+          <div 
+            ref={observerTarget} 
+            style={{ 
+              height: '60px', 
+              margin: '2rem 0',
+              pointerEvents: 'none',
+              visibility: 'hidden'
+            }} 
+          />
         )}
 
         {/* Lightbox 模態框 */}

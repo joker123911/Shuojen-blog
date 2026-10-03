@@ -3,7 +3,9 @@ title: 愛用
 description: 記錄我愛用的工具
 ---
 
-# 我在用什麼 `/use`
+<div className="site-hero-wrapper">
+  <h1 className="site-hero-title">Use</h1>
+</div>
 
 *最後更新：2026-08-29*
 

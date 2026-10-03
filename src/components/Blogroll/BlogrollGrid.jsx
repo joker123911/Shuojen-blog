@@ -283,11 +283,12 @@ export default function BlogrollGrid() {
         </div>
       </div>
 
-      {/* 收錄統計標籤 */}
-      <div className="blogroll-stats">
-        共收錄 {blogrollLinks.length} 個部落格
-        {filteredLinks.length !== blogrollLinks.length && `（目前顯示 ${filteredLinks.length} 個）`}
-      </div>
+      {/* 搜尋結果提示（僅在有過濾時顯示） */}
+      {filteredLinks.length !== blogrollLinks.length && (
+        <div className="blogroll-stats">
+          找到 {filteredLinks.length} 個符合的部落格
+        </div>
+      )}
 
       {/* 卡片網格 */}
       <div className="blogroll-grid">

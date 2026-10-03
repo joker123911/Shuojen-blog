@@ -3,7 +3,9 @@ title: 小工具
 description: 乾淨自由又無廣告的網頁小工具和小遊戲
 ---
 
-# 小工具&小遊戲 `/tool`
+<div className="site-hero-wrapper">
+  <h1 className="site-hero-title">Tool</h1>
+</div>
 
 這個區塊整理了一些自用的小工具與網頁小遊戲，特色是介面乾淨且完全無廣告。
 

@@ -1,13 +1,16 @@
 ---
 sidebar_position: 1
 title: 興趣
+hide_title: true
 ---
 
-# 📚 興趣
+<div className="site-hero-wrapper">
+  <h1 className="site-hero-title">Hobby</h1>
+</div>
 
 這個區塊匯集了各種我覺得有趣的事物。
 
-另外還有一些興趣像是拿相機亂晃，[攝影集](/photography)裡看到的都是為了拍照 > 想出去玩，另外我也整理了自己的[電影](/docs/movie_list)、[動漫](/docs/anime)、[劇集](/docs/series)或是[拉麵](/docs/ramen)的清單，分別獨立出來在排名這個區域，歡迎[留言](/guestbook)推薦更多給我。
+另外還有一些興趣像是[拿相機亂晃](/photography)、[電影](/docs/movie_list)、[動漫](/docs/anime)、[劇集](/docs/series)或是[拉麵](/docs/ramen)的清單，分別獨立出來在排名這個區塊，也歡迎[留言](/guestbook)推薦更多給我。
 
 :::info
 可以利用左側的選單（手機用戶請按左上角的 ≡ 圖示）選取章節

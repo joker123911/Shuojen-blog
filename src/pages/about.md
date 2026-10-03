@@ -174,7 +174,9 @@ import ContributionCalendar from '@site/src/components/ContributionCalendar/Cont
   }
 `}</style>
 
-#  關於 `/about` /ᐠ .ᆺ. ᐟ\ﾉ
+<div className="site-hero-wrapper">
+  <h1 className="site-hero-title">About</h1>
+</div>
 
 這裡是我記錄生活和興趣的地方，我支持開放自由的數位世界，大家應該享受沒有**商業廣告**、沒有**演算法**、沒有**登入限制**的社群自由，而不是限縮在大公司的框架下，等著它們隨時對你予取予求。
 
@@ -230,7 +232,7 @@ https://shuojen.com/photoblog/rss.xml
 ```
 
 # 即時數據
-貼文區目前共有 **274** 篇文章，共累積了 **117,195** 個字；<br />
+貼文區目前共有 **275** 篇文章，共累積了 **117,295** 個字；<br />
 攝影區目前共有 **66** 篇文章，共累積了 **842** 張照片。
 
 <ContributionCalendar />

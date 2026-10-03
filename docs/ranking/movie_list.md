@@ -1,12 +1,17 @@
 ---
 title: '電影清單'
+hide_title: true
 sidebar_position: 1
 slug: /movie_list
 ---
 
 import MovieListApp from '@site/src/components/MovieListApp';
 
-*最後更新：2026-09-26*
+<div className="site-hero-wrapper">
+  <h1 className="site-hero-title">Movie</h1>
+</div>
+
+*最後更新：2026-10-03*
 
 這是一份我自己專屬的 TOP RANKING 電影排名！
 
