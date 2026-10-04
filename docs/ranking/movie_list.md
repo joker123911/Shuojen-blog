@@ -11,7 +11,7 @@ import MovieListApp from '@site/src/components/MovieListApp';
   <h1 className="site-hero-title">Movie</h1>
 </div>
 
-*最後更新：2026-10-03*
+*最後更新：2026-10-04*
 
 這是一份我自己專屬的 TOP RANKING 電影排名！
 

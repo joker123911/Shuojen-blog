@@ -269,6 +269,7 @@ export const westernMovies = [
 ];
 
 export const asiaMovies = [
+  { title: "復活男", score: 6.4, note: "劇本狗屁不通，特效也滿爛的，不過演員表現還不錯，不用特別看", poster: "./img/movie/復活男.webp", tags: ["2026", "動作"] },
   { title: "雙瞳", score: 7.6, note: "結合科學真的很特別，大戰那段超級精采，印象深刻", poster: "./img/movie/雙瞳.webp", tags: ["2002", "驚悚"] },
   { title: "人潮洶湧", score: 6.3, note: "跟獵金遊戲的問題差不多，劇情笑點都尷尬，配樂來營造的笑點更是俗不可耐，幾個致敬港片的畫面和音樂，大概是唯一亮點", poster: "./img/movie/人潮洶湧.webp", tags: ["2021", "喜劇", "犯罪"] },
   { title: "獵金遊戲", score: 6.6, note: "只靠劉德華魅力的一部，中國片真的很容易劇本尷尬，充滿幹片感", poster: "./img/movie/獵金遊戲.webp", tags: ["2025", "犯罪", "劇情"] },
