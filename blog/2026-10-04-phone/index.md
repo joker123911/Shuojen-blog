@@ -77,11 +77,11 @@ Nokia 這個神仙品牌在我懂事之後就漸漸沒落，消失在智慧型�
 
 ## Samsung
 
-<div style={{ display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center', overflowX: 'auto' }}>
-  <img src={require('./note9+.png').default} width="110" alt="Samsung Note9+" />
-  <img src={require('./note10+.png').default} width="150" alt="Samsung Note10+" />
-  <img src={require('./s22u.png').default} width="150" alt="Samsung S22 Ultra" />
-  <img src={require('./s25.png').default} width="150" alt="Samsung S25" />
+<div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center', width: '100%', margin: '0 auto' }}>
+  <img src={require('./note9+.png').default} style={{ width: '19%', maxWidth: '110px', height: 'auto' }} alt="Samsung Note9+" />
+  <img src={require('./note10+.png').default} style={{ width: '25%', maxWidth: '150px', height: 'auto' }} alt="Samsung Note10+" />
+  <img src={require('./s22u.png').default} style={{ width: '25%', maxWidth: '150px', height: 'auto' }} alt="Samsung S22 Ultra" />
+  <img src={require('./s25.png').default} style={{ width: '25%', maxWidth: '150px', height: 'auto' }} alt="Samsung S25" />
 </div>
 
 一樣是因緣際會，我常常拿到退役的舊旗艦機，由於都是免費的，就一直順順的用，直到 S22U 是最後一隻。
