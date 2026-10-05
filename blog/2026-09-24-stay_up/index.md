@@ -61,28 +61,19 @@ rss_date: '2026-09-24T17:32:15+08:00'
 
 ### 1. 喇叭詹之大學生了沒（LeBron James 問老師要不要上大學）
 
-<div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '2rem' }}>
-  <iframe
-    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
-    src="https://www.dailymotion.com/embed/video/x5sdm0h?autoplay=0"
-    title="喇叭詹之大學生了沒"
-    allow="fullscreen; picture-in-picture"
-    allowFullScreen
-  />
-</div>
+<video controls width="300">
+    <source src="https://media.shuojen.com/video/%E5%96%87%E5%8F%AD%E8%A9%B9%E4%B9%8B%E5%A4%A7%E5%AD%B8%E7%94%9F%E4%BA%86%E6%B2%92.mp4" type="video/mp4" />
+
+    抱歉，您的瀏覽器不支援內嵌影片。
+</video>
 
 ### 2. 火星人布魯諾-潘朵拉電台（Bruno Mars 模仿秀）
 
-<div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '2rem' }}>
-  <iframe
-    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
-    src="https://www.dailymotion.com/embed/video/xxjybq?autoplay=0"
-    title="Bruno 模仿秀"
-    allow="fullscreen; picture-in-picture"
-    allowFullScreen
-  />
-</div>
+<video controls width="300">
+    <source src="https://media.shuojen.com/video/%E7%81%AB%E6%98%9F%E6%95%91%E5%9C%B0%E7%90%83.mp4" type="video/mp4" />
 
+    抱歉，您的瀏覽器不支援內嵌影片。
+</video>
 
 ## 胡思亂想
 
