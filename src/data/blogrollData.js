@@ -667,6 +667,12 @@ export const blogrollLinks = [
     "description": "軟體開發和生活瑣事"
   },
   {
+    "title": "ローズ",
+    "url": "https://note.com/rosenonote",
+    "xmlUrl": "https://note.com/rosenonote/rss",
+    "description": "日本文化が大好きな台湾人"
+  },
+  {
     "title": "一起和 Yoon 聊心事",
     "url": "https://yoon.club/",
     "xmlUrl": "https://yoon.club/feed/",
@@ -815,12 +821,6 @@ export const blogrollLinks = [
     "url": "https://israynotarray.com/",
     "xmlUrl": "https://israynotarray.com/atom.xml",
     "description": "I'm a Software Engineer, and blogger."
-  },
-  {
-    "title": "派的心情抒發室",
-    "url": "https://pie-ye.org/",
-    "xmlUrl": "https://pie-ye.org/index.xml",
-    "description": "Recent content on 一派胡言"
   },
   {
     "title": "皆米的記事本",

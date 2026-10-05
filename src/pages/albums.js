@@ -165,7 +165,7 @@ export default function AlbumsPage() {
   }, [selectedAlbum, closeLightbox, showPrevAlbum, showNextAlbum]);
 
   return (
-    <Layout title="專輯" description="我的個人專輯封面牆與音樂收藏">
+    <Layout title="專輯牆" description="我的個人專輯封面牆">
       <main style={{ padding: '3rem 0', minHeight: '80vh' }}>
         <div style={{ textAlign: 'center', marginBottom: '3.5rem', marginTop: '2rem' }}>
           <h1 style={albumsTheme.headerTitle}>Albums</h1>
