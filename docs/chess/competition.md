@@ -89,24 +89,3 @@ sidebar_position: 3
   </iframe>
 </div>
 
-## 內湖棋聚
-棋友蕭大主辦
-
-地點：GO GO GEESAA COFFEE
-
-![img](./img/010.webp)
-
-## 景美棋聚
-棋友張老師主辦
-
-地點：i99 COFFEE
-
-![img](./img/011.webp)
-
-地點：景行區民活動中心
-
-![img](./img/013.webp)
-
-與目前台灣[FIDE台灣排名](https://ratings.fide.com/rankings.phtml?continent=0&country=TPE&rating=standard&gender=&age1=0&age2=0&period=2025-09-01&period2=1)第 11 的 Tapani 前輩下了一場精彩的斯堪地那維亞開局，持白獲勝，可惜沒有記錄棋譜。
-
-![img](./img/012.webp)
