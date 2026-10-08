@@ -14,6 +14,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css');
 
+/* 修正：jfOpenHuninn 的反引號 ` (U+0060) 字寬為 0，會與相鄰文字重疊。
+   僅針對這個字元改用系統字型顯示，其餘文字仍使用粉圓體。 */
+@font-face {
+  font-family: "BacktickFix";
+  src: local("Segoe UI"), local("SegoeUI"), local("Helvetica Neue"), local("Roboto"),
+       local("Noto Sans"), local("Arial"), local("ArialMT");
+  unicode-range: U+0060;
+}
+
 /* =========================================
    2. 全域變數與基礎設定 (Global Variables)
    ========================================= */
@@ -21,8 +30,8 @@
   /* 設定基礎字體大小 */
   --ifm-font-size-base: 18px;
 
-  /* 使用 emfont 的 jfOpenHuninn，後備為 Huninn 與系統預設字體 */
-  --ifm-font-family-base: "jfOpenHuninn", "Huninn", system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif;
+  /* 使用 emfont 的 jfOpenHuninn，後備為 Huninn 與系統預設字體（BacktickFix 只負責反引號） */
+  --ifm-font-family-base: "BacktickFix", "jfOpenHuninn", "Huninn", system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif;
 
   /* 增加行高，提升閱讀舒適度 */  
   --ifm-line-height-base: 1.6;
