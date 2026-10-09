@@ -21,6 +21,7 @@ export const animeList = [
   { title: "王牌大律師", note: "兩季都很不錯，看古美門顛倒黑白實在很有意思，新垣結衣表現也很好", poster: "./img/series/王牌大律師.webp", tier: "SS", tags: ["日劇", "律政"] },
   { title: "他們在畢業的前一天爆炸", note: "高中回憶，真的很好看，我個人心目中的台劇頂點", poster: "./img/series/他們在畢業的前一天爆炸.webp", tier: "SS", tags: ["台劇", "校園", "沉重"] },
   { title: "六人行", note: "好喜歡，非常好笑，溫暖的陪伴感", poster: "./img/series/六人行.webp", tier: "SS", tags: ["喜劇"] },
+  { title: "黑暗智宅", note: "科幻結合人性，劇情步調掌握的非常好，很棒的驚悚作品", poster: "./img/series/黑暗智宅.webp", tier: "SS", tags: ["科幻", "驚悚"] },
   { title: "閃亮的西瓜", note: "感動有趣，很不錯的校園感", poster: "./img/series/閃亮的西瓜.webp", tier: "S", tags: ["韓劇", "戀愛"] },
   { title: "馴鹿寶貝", note: "讓人很不舒服，很優秀的一部迷你劇集", poster: "./img/series/馴鹿寶貝.webp", tier: "S", tags: ["歐美", "驚悚"] },
   { title: "山茶花開時", note: "結合懸疑劇情我覺得很不錯，氣氛也滿好的", poster: "./img/series/山茶花開時.webp", tier: "S", tags: ["韓劇", "戀愛", "懸疑"] },

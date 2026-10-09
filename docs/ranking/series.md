@@ -11,7 +11,7 @@ import SeriesTier from '@site/src/components/SeriesTier';
   <h1 className="site-hero-title">Series</h1>
 </div>
 
-*最後更新：2026-10-02*
+*最後更新：2026-10-09*
 
 我的劇集 Tier 清單！包括了歐美、日韓、台劇，有想到更多曾經看過的劇會再陸續補進來。
 
