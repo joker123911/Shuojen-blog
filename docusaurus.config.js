@@ -5,7 +5,7 @@ import rehypeKatex from 'rehype-katex';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Shuo-jen Blog',
+  title: 'Shuo-Jen's Blog',
   staticDirectories: ['static', 'photoblog'],
   tagline: 'Hello',
   favicon: 'img/favicon.ico',

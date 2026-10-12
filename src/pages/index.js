@@ -8,7 +8,7 @@ export default function Home() {
   
   // 打字機動畫 State
   const [typedTitle, setTypedTitle] = useState('');
-  const fullTitle = " ▼・ᴥ・▼ 歡迎來到 shuo-jen 的部落格 ▼・ᴥ・▼ ";
+  const fullTitle = " ▼・ᴥ・▼ 歡迎來到 Shuo-Jen 的部落格 ▼・ᴥ・▼ ";
 
   useEffect(() => {
     let i = 0;
