@@ -46,7 +46,7 @@ export const westernMovies = [
   { title: "一級玩家", score: 8.4, note: "中規中矩的科幻爽片，值得一看", poster: "./img/movie/一級玩家.webp", tags: ["2018", "科幻"] },
   { title: "金剛 ", score: 8.4, note: "經典動作怪物電影，要看 2005 年版", poster: "./img/movie/金剛.webp", tags: ["2005", "動作", "怪物"] },
   { title: "科洛弗10號地窖", score: 8.3, note: "小成本的懸疑作品，女主角好漂亮", poster: "./img/movie/科洛弗10號地窖.webp", tags: ["2016", "懸疑", "科幻"] },
-  { title: "野獸之心", score: 8.3, note: "神鬼獵人+我是傳奇的感覺，雖然重頭到尾都小布自己在搞，但還是很好看", poster: "./img/movie/野獸之心.webp", tags: ["2026", "冒險", "溫馨"] },
+  { title: "野獸之心", score: 8.1, note: "神鬼獵人+我是傳奇的感覺，雖然從頭到尾都小布自己在搞，但還是很好看", poster: "./img/movie/野獸之心.webp", tags: ["2026", "冒險", "溫馨"] },
   { title: "帝國浩劫：美國內戰", score: 8.3, note: "由記者視角演繹的戰爭片，很特別", poster: "./img/movie/帝國浩劫：美國內戰.webp", tags: ["2024", "戰爭"] },
   { title: "醉後大丈夫", score: 8.3, note: "續集公式化但第一集真的有趣的搞笑片", poster: "./img/movie/醉後大丈夫.webp", tags: ["2009", "喜劇"] },
   { title: "誰偷了垃圾桶？", score: 8.3, note: "畫風突變，反轉很令人驚豔的好作品", poster: "./img/movie/誰偷了垃圾桶？.webp", tags: ["2024", "懸疑"] },
