@@ -100,7 +100,8 @@
             .btn-nav { width: 70px; }
         }
 
-        .cell.selected { background: var(--highlight) !important; box-shadow: inset 0 0 0 2px var(--border); }
+        .cell.locked { background: var(--locked-bg); color: var(--locked-text); }
+        .cell.selected { background: var(--highlight) !important; color: black; box-shadow: inset 0 0 0 2px var(--border); }
         .cell.is-key { cursor: grab; z-index: 5; background: white !important; color: var(--primary) !important; }
         .cell.is-key::after { 
             content: ''; position: absolute; width: 88%; height: 88%; 
@@ -117,7 +118,7 @@
 
         .answer-section { margin-top: 40px; text-align: center; width: 100%; }
         .slots { display: flex; gap: 10px; margin-top: 15px; justify-content: center; flex-wrap: wrap; }
-        .slot { width: 55px; height: 55px; border: 2px solid var(--primary); background: #fff; display: flex; justify-content: center; align-items: center; font-size: 26px; font-weight: bold; border-radius: 8px; cursor: pointer; color: #d35400; transition: background 0.2s; }
+        .slot { width: 55px; height: 55px; border: 2px solid var(--primary); background: #fff; display: flex; justify-content: center; align-items: center; font-size: 26px; font-weight: bold; border-radius: 8px; cursor: pointer; color: #d35400; transition: background 0.2s; user-select: none; }
         .slot:empty { cursor: default; background: rgba(255,255,255,0.5); border-style: dashed; }
         .slot.drag-over { background: #eee; border-color: var(--key); }
         #win-msg { display: none; margin-top: 25px; color: #27ae60; font-size: 24px; font-weight: bold; }
@@ -193,6 +194,11 @@
         let mobileSelectedChar = null; 
         let activeKeyIdx = null; 
 
+        function isValidIdiomWord(word) {
+            if (typeof ALL_IDIOMS === 'undefined') return false;
+            return ALL_IDIOMS.has(word) || ALL_IDIOMS.has(word.split('').reverse().join(''));
+        }
+
         function toggleModal(show) {
             document.getElementById('info-modal').style.display = show ? 'flex' : 'none';
         }
@@ -200,6 +206,10 @@
         function setupLevelSelect() {
             if (typeof puzzles === 'undefined') {
                 alert("找不到題目檔 (puzzle.js)");
+                return;
+            }
+            if (typeof ALL_IDIOMS === 'undefined') {
+                alert("找不到字典檔 (dictionary.js)");
                 return;
             }
             puzzles.forEach((p, index) => {
@@ -212,7 +222,7 @@
         }
 
         function prevLevel() {
-            let currentIndex = parseInt(levelSelect.value);
+            let currentIndex = parseInt(levelSelect.value, 10);
             if (currentIndex > 0) {
                 levelSelect.value = currentIndex - 1;
                 loadLevel(levelSelect.value);
@@ -220,7 +230,7 @@
         }
 
         function nextLevel() {
-            let currentIndex = parseInt(levelSelect.value);
+            let currentIndex = parseInt(levelSelect.value, 10);
             if (currentIndex < puzzles.length - 1) {
                 levelSelect.value = currentIndex + 1;
                 loadLevel(levelSelect.value);
@@ -229,8 +239,12 @@
 
         function loadLevel(index) {
             const p = puzzles[index];
-            selectedIndices.clear(); manualKeys.clear(); lockedCells.clear();
-            mobileSelectedChar = null; activeKeyIdx = null;
+            if (!p) return;
+            selectedIndices.clear();
+            manualKeys.clear();
+            lockedCells.clear();
+            mobileSelectedChar = null;
+            activeKeyIdx = null;
             document.getElementById('win-msg').style.display = 'none';
             initBoard(p);
             updateVisuals();
@@ -239,7 +253,7 @@
         function initBoard(puzzle) {
             gridEl.innerHTML = '';
             slotsEl.innerHTML = '';
-            puzzle.grid.split('').forEach((char, i) => {
+            Array.from(puzzle.grid).forEach((char, i) => {
                 const cell = document.createElement('div');
                 cell.className = 'cell';
                 cell.textContent = char;
@@ -253,15 +267,16 @@
                 gridEl.appendChild(cell);
             });
 
-            puzzle.answer.split('').forEach((_, i) => {
+            Array.from(puzzle.answer).forEach((_, i) => {
                 const slot = document.createElement('div');
                 slot.className = 'slot';
                 slot.dataset.slotIdx = i;
                 slot.draggable = true;
                 slot.onclick = () => { 
-                    if(mobileSelectedChar) {
+                    if (mobileSelectedChar) {
                         slot.textContent = mobileSelectedChar;
-                        mobileSelectedChar = null; activeKeyIdx = null;
+                        mobileSelectedChar = null;
+                        activeKeyIdx = null;
                         updateVisuals();
                     } else {
                         slot.textContent = ""; 
@@ -272,7 +287,7 @@
                     if (!slot.textContent) return e.preventDefault();
                     e.dataTransfer.setData('text', slot.textContent);
                     e.dataTransfer.setData('sourceType', 'slot');
-                    e.dataTransfer.setData('sourceIdx', i);
+                    e.dataTransfer.setData('sourceIdx', String(i));
                 };
                 slot.ondragover = e => { e.preventDefault(); slot.classList.add('drag-over'); };
                 slot.ondragleave = () => slot.classList.remove('drag-over');
@@ -281,17 +296,34 @@
             });
         }
 
+        function rebuildLockedCells() {
+            lockedCells.clear();
+            manualKeys.forEach(lines => {
+                lines.forEach(line => {
+                    line.forEach(id => lockedCells.add(id));
+                });
+            });
+        }
+
         function handleCellClick(idx, el) {
             if (manualKeys.has(idx)) {
                 if (activeKeyIdx === idx) {
-                    manualKeys.get(idx).forEach(line => line.forEach(id => {
-                        lockedCells.delete(id); selectedIndices.add(id); 
+                    const unlockedLines = manualKeys.get(idx);
+                    manualKeys.delete(idx);
+                    rebuildLockedCells();
+                    unlockedLines.forEach(line => line.forEach(id => {
+                        if (!lockedCells.has(id) && !manualKeys.has(id)) {
+                            selectedIndices.add(id);
+                        }
                     }));
-                    manualKeys.delete(idx); mobileSelectedChar = null; activeKeyIdx = null;
+                    mobileSelectedChar = null;
+                    activeKeyIdx = null;
                 } else {
-                    mobileSelectedChar = el.textContent; activeKeyIdx = idx;
+                    mobileSelectedChar = el.textContent;
+                    activeKeyIdx = idx;
                 }
-                updateVisuals(); return;
+                updateVisuals();
+                return;
             }
 
             if (selectedIndices.has(idx)) {
@@ -314,23 +346,36 @@
         }
 
         function getValidIdiomsAtPoint(idx, set) {
-            const lines = []; const dirs = [[0,1],[1,0],[1,1],[1,-1]];
+            const lines = [];
+            const dirs = [[0,1],[1,0],[1,1],[1,-1]];
             const r = Math.floor(idx / size), c = idx % size;
             dirs.forEach(([dr, dc]) => {
                 for (let offset = 0; offset < 4; offset++) {
                     let path = [];
                     for (let i = -offset; i < 4 - offset; i++) {
-                        const nr = r + dr * i, nc = c + dc * i; const nIdx = nr * size + nc;
-                        if (nr >= 0 && nr < size && nc >= 0 && nc < size && set.has(nIdx)) path.push(nIdx); else break;
+                        const nr = r + dr * i, nc = c + dc * i;
+                        const nIdx = nr * size + nc;
+                        if (nr >= 0 && nr < size && nc >= 0 && nc < size && set.has(nIdx)) {
+                            path.push(nIdx);
+                        } else {
+                            break;
+                        }
                     }
                     if (path.length === 4) {
                         const word = path.map(i => gridEl.children[i].textContent).join('');
-                        if (ALL_IDIOMS.has(word) || ALL_IDIOMS.has(word.split('').reverse().join(''))) lines.push([...path]);
+                        if (isValidIdiomWord(word)) lines.push([...path]);
                     }
                 }
             });
-            const unique = []; const seen = new Set();
-            lines.forEach(l => { const k = [...l].sort((a,b)=>a-b).join(','); if(!seen.has(k)){ unique.push(l); seen.add(k); }});
+            const unique = [];
+            const seen = new Set();
+            lines.forEach(l => {
+                const k = [...l].sort((a, b) => a - b).join(',');
+                if (!seen.has(k)) {
+                    unique.push(l);
+                    seen.add(k);
+                }
+            });
             return unique;
         }
 
@@ -347,25 +392,41 @@
                 }
             });
             findAllValid4CharLines(selectedIndices).forEach(line => {
-                const ends = getEnds(line); drawSvgLine(ends.start, ends.end, 'red-line');
+                const ends = getEnds(line);
+                drawSvgLine(ends.start, ends.end, 'red-line');
             });
             manualKeys.forEach(lines => lines.forEach(line => {
-                const ends = getEnds(line); drawSvgLine(ends.start, ends.end, 'black-line');
+                const ends = getEnds(line);
+                drawSvgLine(ends.start, ends.end, 'black-line');
             }));
         }
 
         function findAllValid4CharLines(set) {
-            const paths = []; const dirs = [[0,1],[1,0],[1,1],[1,-1]]; const seen = new Set();
+            const paths = [];
+            const dirs = [[0,1],[1,0],[1,1],[1,-1]];
+            const seen = new Set();
             set.forEach(idx => {
                 dirs.forEach(([dr, dc]) => {
                     let path = [idx];
-                    for(let k=1; k<4; k++) {
-                        const nr = Math.floor(idx/size) + dr*k, nc = (idx%size) + dc*k; const nIdx = nr*size + nc;
-                        if(nr>=0 && nr<size && nc>=0 && nc<size && set.has(nIdx)) path.push(nIdx); else break;
+                    for (let k = 1; k < 4; k++) {
+                        const nr = Math.floor(idx / size) + dr * k;
+                        const nc = (idx % size) + dc * k;
+                        const nIdx = nr * size + nc;
+                        if (nr >= 0 && nr < size && nc >= 0 && nc < size && set.has(nIdx)) {
+                            path.push(nIdx);
+                        } else {
+                            break;
+                        }
                     }
-                    if(path.length === 4) {
-                        const k = [...path].sort((a,b)=>a-b).join(',');
-                        if(!seen.has(k)) { paths.push(path); seen.add(k); }
+                    if (path.length === 4) {
+                        const word = path.map(i => gridEl.children[i].textContent).join('');
+                        if (isValidIdiomWord(word)) {
+                            const k = [...path].sort((a, b) => a - b).join(',');
+                            if (!seen.has(k)) {
+                                paths.push(path);
+                                seen.add(k);
+                            }
+                        }
                     }
                 });
             });
@@ -373,8 +434,8 @@
         }
 
         function getEnds(path) {
-            const s = [...path].sort((a, b) => (Math.floor(a/size) - Math.floor(b/size)) || (a%size - b%size));
-            return { start: s[0], end: s[s.length-1] };
+            const s = [...path].sort((a, b) => (Math.floor(a / size) - Math.floor(b / size)) || (a % size - b % size));
+            return { start: s[0], end: s[s.length - 1] };
         }
 
         function drawSvgLine(sIdx, eIdx, cls) {
@@ -382,19 +443,31 @@
             if (!s || !e) return;
             const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
             const off = s.offsetWidth / 2;
-            line.setAttribute("x1", s.offsetLeft + off); line.setAttribute("y1", s.offsetTop + off);
-            line.setAttribute("x2", e.offsetLeft + off); line.setAttribute("y2", e.offsetTop + off);
-            line.setAttribute("class", cls); svgEl.appendChild(line);
+            line.setAttribute("x1", s.offsetLeft + off);
+            line.setAttribute("y1", s.offsetTop + off);
+            line.setAttribute("x2", e.offsetLeft + off);
+            line.setAttribute("y2", e.offsetTop + off);
+            line.setAttribute("class", cls);
+            svgEl.appendChild(line);
         }
 
         function handleSlotDrop(e) {
-            e.preventDefault(); this.classList.remove('drag-over');
+            e.preventDefault();
+            e.stopPropagation(); // 防止冒泡至 body 觸發 handleBodyDrop 誤刪文字
+            this.classList.remove('drag-over');
             const char = e.dataTransfer.getData('text');
+            if (!char) return;
+
             const type = e.dataTransfer.getData('sourceType');
-            
+            const targetIdx = this.dataset.slotIdx;
+
             if (type === 'slot') {
                 const srcIdx = e.dataTransfer.getData('sourceIdx');
-                slotsEl.children[srcIdx].textContent = '';
+                if (srcIdx === targetIdx) return; // 拖放回同一格時不做變動
+                if (srcIdx !== "" && slotsEl.children[srcIdx]) {
+                    // 若目標格已有字，與來源格交換文字；否則清空來源格
+                    slotsEl.children[srcIdx].textContent = this.textContent;
+                }
             }
             this.textContent = char;
             checkWin();
@@ -404,7 +477,7 @@
             const type = e.dataTransfer.getData('sourceType');
             if (type === 'slot') {
                 const srcIdx = e.dataTransfer.getData('sourceIdx');
-                if (srcIdx !== "") {
+                if (srcIdx !== "" && slotsEl.children[srcIdx]) {
                     slotsEl.children[srcIdx].textContent = '';
                     checkWin();
                 }
@@ -417,6 +490,12 @@
         }
 
         window.addEventListener('resize', updateVisuals);
+        if (window.ResizeObserver) {
+            new ResizeObserver(() => updateVisuals()).observe(gridEl);
+        }
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => updateVisuals());
+        }
         setupLevelSelect();
     </script>
 </body>

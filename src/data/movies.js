@@ -1,4 +1,5 @@
 export const westernMovies = [
+  { title: "逍遙上路", score: 7.0, note: "滿可愛的狗狗公路電影，但稍微老套，平平順順的", poster: "./img/movie/逍遙上路.webp", tags: ["2022", "公路", "溫馨"] },
   { title: "頂尖對決", score: 9.5, note: "心中最佳的諾蘭神片，絕對不能被劇透，看第二次體驗更佳", poster: "./img/movie/頂尖對決.webp", tags: ["2006", "懸疑", "劇情", "諾蘭"] },
   { title: "火線追緝令", score: 9.5, note: "心中最佳的大衛芬奇，百看不厭凱文史貝西的神演技", poster: "./img/movie/火線追緝令.webp", tags: ["1995", "驚悚", "犯罪"] },
   { title: "阿甘正傳", score: 9.5, note: "不管從頭從中間從哪裡都可以超順的看完", poster: "./img/movie/阿甘正傳.webp", tags: ["1994", "劇情", "溫馨"] },
@@ -46,7 +47,6 @@ export const westernMovies = [
   { title: "一級玩家", score: 8.4, note: "中規中矩的科幻爽片，值得一看", poster: "./img/movie/一級玩家.webp", tags: ["2018", "科幻"] },
   { title: "金剛 ", score: 8.4, note: "經典動作怪物電影，要看 2005 年版", poster: "./img/movie/金剛.webp", tags: ["2005", "動作", "怪物"] },
   { title: "科洛弗10號地窖", score: 8.3, note: "小成本的懸疑作品，女主角好漂亮", poster: "./img/movie/科洛弗10號地窖.webp", tags: ["2016", "懸疑", "科幻"] },
-  { title: "野獸之心", score: 8.1, note: "神鬼獵人+我是傳奇的感覺，雖然從頭到尾都小布自己在搞，但還是很好看", poster: "./img/movie/野獸之心.webp", tags: ["2026", "冒險", "溫馨"] },
   { title: "帝國浩劫：美國內戰", score: 8.3, note: "由記者視角演繹的戰爭片，很特別", poster: "./img/movie/帝國浩劫：美國內戰.webp", tags: ["2024", "戰爭"] },
   { title: "醉後大丈夫", score: 8.3, note: "續集公式化但第一集真的有趣的搞笑片", poster: "./img/movie/醉後大丈夫.webp", tags: ["2009", "喜劇"] },
   { title: "誰偷了垃圾桶？", score: 8.3, note: "畫風突變，反轉很令人驚豔的好作品", poster: "./img/movie/誰偷了垃圾桶？.webp", tags: ["2024", "懸疑"] },
@@ -68,6 +68,7 @@ export const westernMovies = [
   { title: "模仿遊戲", score: 8.2, note: "天才傳記類型的戰爭片，看完也是淡淡的惆悵", poster: "./img/movie/模仿遊戲.webp", tags: ["2014", "戰爭", "傳記"] },
   { title: "噤界：入侵日", score: 8.2, note: "三部裡面我最喜歡的一部，喜歡這種單純的主線就把故事完整講好的電影，3>1>2", poster: "./img/movie/噤界：入侵日.webp", tags: ["2024", "驚悚", "劇情", "科幻"] },
   { title: "滯留生", score: 8.2, note: "互相治癒的師生電影，輕鬆溫暖", poster: "./img/movie/滯留生.webp", tags: ["2023", "溫馨"] },
+  { title: "野獸之心", score: 8.2, note: "神鬼獵人+我是傳奇的感覺，雖然從頭到尾都小布自己在搞，但還是很好看", poster: "./img/movie/野獸之心.webp", tags: ["2026", "冒險", "溫馨"] },
   { title: "何處是我朋友的家", score: 8.1, note: "很童趣的一部可愛電影，描繪孩子內心的天真", poster: "./img/movie/何處是我朋友的家.webp", tags: ["1987", "劇情"] },
   { title: "F1", score: 8.1, note: "小布的賽車爽片，畫面美，流暢過癮", poster: "./img/movie/F1.webp", tags: ["2025", "動作"] },
   { title: "沒問題先生", score: 8.1, note: "很好看又經典的愛情電影，聽說有人真的有實驗過", poster: "./img/movie/沒問題先生.webp", tags: ["2008", "愛情", "經典"] },
@@ -270,6 +271,7 @@ export const westernMovies = [
 ];
 
 export const asiaMovies = [
+  { title: "花樣年華", score: 7.5, note: "畫面非常美，遺憾又有韻味的一部電影", poster: "./img/movie/花樣年華.webp", tags: ["2000", "愛情"] },
   { title: "寄生上流", score: 9.2, note: "奉導集大成神作，商業與藝術完美結合", poster: "./img/movie/寄生上流.webp", tags: ["2019", "劇情"] },
   { title: "盲探", score: 9.2, note: "心中最佳的劉德華電影，人物塑造劇情都滿分", poster: "./img/movie/盲探.webp", tags: ["2013", "劇情"] },
   { title: "大佛普拉斯", score: 9.1, note: "我最喜歡的臺灣電影，黑白畫面的荒謬感極佳", poster: "./img/movie/大佛普拉斯.webp", tags: ["2017", "劇情"] },
@@ -288,13 +290,13 @@ export const asiaMovies = [
   { title: "投名狀", score: 8.4, note: "對戰爭片無感的我都覺得很棒，李連杰演技巔峰", poster: "./img/movie/投名狀.webp", tags: ["2007", "戰爭"] },
   { title: "情書", score: 8.3, note: "經典愛情日片，劇情設計滿有巧思", poster: "./img/movie/情書.webp", tags: ["1995", "愛情", "經典"] },
   { title: "目擊者", score: 8.2, note: "我覺得臺灣最好的懸疑電影", poster: "./img/movie/目擊者.webp", tags: ["2017", "懸疑"] },
-  { title: "咒", score: 8.1, note: "我覺得臺灣最厲害的恐怖片，很值得一看", poster: "./img/movie/咒.webp", tags: ["2022", "恐怖"] },
+  { title: "咒", score: 8.2, note: "我覺得臺灣最厲害的恐怖片，很值得一看", poster: "./img/movie/咒.webp", tags: ["2022", "恐怖"] },
   { title: "花束般的戀愛", score: 8.1, note: "寫實好看的日本愛情片，不撒狗血", poster: "./img/movie/花束般的戀愛.webp", tags: ["2021", "愛情"] },
   { title: "新宿事件", score: 8.0, note: "認真演戲的成龍黑道片", poster: "./img/movie/新宿事件.webp", tags: ["2009", "劇情"] },
   { title: "我的棋王爺爺", score: 8.0, note: "溫暖好看的一部電影，很喜歡導演利用象棋作為文本的一部份，融入象徵劇中的三位角色，也很喜歡導演隱隱想傳達，不同立場背景也能相互理解的意涵。劇本完整、演員表現很到位，台灣電影中很厲害的一部。", poster: "./img/movie/我的棋王爺爺.webp", tags: ["2026", "溫馨"] },
   { title: "墊底辣妹", score: 8.0, note: "類似《東大特訓班》的勵志電影，這部看完會有滿滿的力量，推薦", poster: "./img/movie/墊底辣妹.webp", tags: ["2015", "勵志", "溫馨"] },
-  { title: "哥吉拉-1.0", score: 8.0, note: "超好看，畫面很棒，劇情也可圈可點的一部，很愛", poster: "./img/movie/哥吉拉-1.0.webp", tags: ["2023", "災難"] },
   { title: "報告老師！怪怪怪怪物！", score: 8.0, note: "我覺得九把刀最好的一部電影，臺灣電影中非常少有的題材，但拍得完整性很高", poster: "./img/movie/報告老師！怪怪怪怪物！.webp", tags: ["2017", "劇情"] },
+  { title: "哥吉拉-1.0", score: 8.0, note: "超好看，畫面很棒，劇情也可圈可點的一部，很愛", poster: "./img/movie/哥吉拉-1.0.webp", tags: ["2023", "災難"] },
   { title: "桃姐", score: 8.0, note: "許鞍華的感人作品，很值得看", poster: "./img/movie/桃姐.webp", tags: ["2012", "溫馨"] },
   { title: "緊急迫降", score: 7.9, note: "超級喜歡這部的設定，很精彩，有點飛機版屍速列車的感覺，可惜後半段稍稍矯情了一點，但整體還是非常喜歡", poster: "./img/movie/緊急迫降.webp", tags: ["2022", "災難"] },
   { title: "霍元甲", score: 7.9, note: "人物成長刻劃極佳，有深度的武打片", poster: "./img/movie/霍元甲.webp", tags: ["2006", "劇情"] },

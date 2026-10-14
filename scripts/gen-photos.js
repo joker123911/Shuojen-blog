@@ -5,13 +5,22 @@ const matter = require('gray-matter');
 const BLOG_DIR = path.join(__dirname, '../photoblog');
 const OUTPUT_FILE = path.join(__dirname, '../src/data/photosData.json');
 
+function normalizeImgPath(rawPath) {
+  if (!rawPath) return '';
+  // 移除前後空白，若帶有 Markdown title (如: pic.jpg "title") 則只取前半部路徑
+  let cleaned = String(rawPath).trim().replace(/^<|>$/g, '').split(/\s+/)[0];
+  // 移除開頭的 ./ 或 /
+  cleaned = cleaned.replace(/^(\.\/|\/)+/, '');
+  return cleaned;
+}
+
 function generatePhotosData() {
   if (!fs.existsSync(BLOG_DIR)) {
     console.error(`❌ 找不到目錄: ${BLOG_DIR}`);
     return;
   }
 
-  const items = fs.readdirSync(BLOG_DIR);
+  const items = fs.readdirSync(BLOG_DIR).sort();
   let allPhotos = [];
 
   items.forEach((item) => {
@@ -35,26 +44,45 @@ function generatePhotosData() {
       const fileContent = fs.readFileSync(mdPath, 'utf8');
       const { data, content } = matter(fileContent);
 
-      const formattedSlug = rawSlug.replace(/^(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/');
-      const link = `/photoblog/${formattedSlug}`;
+      // 過濾草稿與隱藏文章
+      if (data.draft === true || data.unlisted === true) return;
+
+      // 處理文章連結（優先支援 frontmatter 的 slug）
+      let link;
+      if (data.slug) {
+        const slug = String(data.slug).trim();
+        link = slug.startsWith('/')
+          ? (slug.startsWith('/photoblog/') || slug === '/photoblog' ? slug : `/photoblog${slug}`)
+          : `/photoblog/${slug}`;
+      } else {
+        const formattedSlug = rawSlug.replace(/^(\d{4})-(\d{2})-(\d{2})-/, '$1/$2/$3/');
+        link = `/photoblog/${formattedSlug}`;
+      }
 
       const currentPostImages = new Set();
 
       if (data.image) {
-        currentPostImages.add(data.image);
+        const normCover = normalizeImgPath(data.image);
+        if (normCover) currentPostImages.add(normCover);
       }
+
+      // 先移除 HTML/MDX 註解與程式碼區塊，避免抓到註解掉的圖片
+      const cleanContent = content
+        .replace(/```[\s\S]*?```/g, '')
+        .replace(/<!--[\s\S]*?-->/g, '')
+        .replace(/\{\/\*[\s\S]*?\*\/\}/g, '');
 
       const imgRegex = /!\[.*?\]\((.*?)\)/g;
-      const matches = content.matchAll(imgRegex);
+      const matches = cleanContent.matchAll(imgRegex);
 
       for (const match of matches) {
-        currentPostImages.add(match[1]);
+        const normImg = normalizeImgPath(match[1]);
+        if (normImg) currentPostImages.add(normImg);
       }
 
-      currentPostImages.forEach((imgSrc) => {
-        // Clean leading ./ or /
-        const cleanName = path.basename(imgSrc);
-        const webSrc = `${rawSlug}/${cleanName}`;
+      currentPostImages.forEach((cleanName) => {
+        const isExternal = /^https?:\/\//i.test(cleanName);
+        const webSrc = isExternal ? cleanName : `${rawSlug}/${cleanName}`;
 
         allPhotos.push({
           src: webSrc,

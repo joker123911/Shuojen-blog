@@ -26,29 +26,38 @@ function getMarkdownFiles(dir) {
 
 function cleanMarkdown(content) {
   return content
-    .replace(/^---[\s\S]*?---/g, '') // Frontmatter
+    .replace(/^import\s+[\s\S]*?from\s+['"].*?['"];?\s*$/gm, '') // 移除 MDX import
+    .replace(/^export\s+(?:default\s+)?(?:const|let|var|function)\s+[\s\S]*?$/gm, '') // 移除 MDX export
     .replace(/```[\s\S]*?```/g, '')    // 代碼塊
+    .replace(/\{\/\*[\s\S]*?\*\/\}/g, '') // MDX 註解
     .replace(/!\[.*?\]\(.*?\)/g, '')   // 圖片
     .replace(/\[(.*?)\]\(.*?\)/g, '$1')// 連結文字
-    .replace(/:::[\s\S]*?:::/g, '')    // Docusaurus Admonition
-    .replace(/<[^>]+>/g, '')           // HTML tags
+    .replace(/^:::.*$/gm, '')          // Docusaurus Admonition 標記（保留內文）
+    .replace(/<[^>]+>/g, '')           // HTML / JSX tags
     .replace(/[#*`~_>-]/g, ' ')        // Markdown 語法標記
     .replace(/\s+/g, ' ')              // 多餘空白合併
     .trim();
 }
 
-function formatCommentDate(dateStr) {
-  if (!dateStr) return '';
-  const date = new Date(dateStr);
+function formatDateSafe(dateInput) {
+  if (!dateInput) return '';
+  if (typeof dateInput === 'string') {
+    const match = dateInput.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
+    if (match) {
+      const [_, y, m, d] = match;
+      return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
+    }
+  }
+  const date = new Date(dateInput);
   if (!isNaN(date.getTime())) {
-    return date.toISOString().split('T')[0];
+    // 若為 gray-matter 解析出的 Date 物件（預設為 UTC 00:00），直接取 ISO 日期；否則轉為台灣時區日期避免少一天
+    if (dateInput instanceof Date) {
+      return date.toISOString().split('T')[0];
+    }
+    const twDate = new Date(date.getTime() + 8 * 60 * 60 * 1000);
+    return twDate.toISOString().split('T')[0];
   }
-  const match = dateStr.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
-  if (match) {
-    const [_, y, m, d] = match;
-    return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
-  }
-  return dateStr;
+  return String(dateInput);
 }
 
 async function fetchComments() {
@@ -65,7 +74,7 @@ async function fetchComments() {
         return {
           id: `comment-${c.id}`,
           title: `💬 ${c.name} 於《${postName}》`,
-          date: formatCommentDate(c.time),
+          date: formatDateSafe(c.time),
           url: c.slug || '/guestbook',
           type: '留言',
           content: `${c.content || ''}${replyPart}`,
@@ -78,102 +87,69 @@ async function fetchComments() {
   return [];
 }
 
+function parseBlogDirectory(dirPath, routePrefix, typeLabel) {
+  const items = [];
+  const dirBaseName = path.basename(dirPath);
+
+  getMarkdownFiles(dirPath).forEach((file) => {
+    try {
+      const raw = fs.readFileSync(file, 'utf8');
+      const { data, content } = matter(raw);
+
+      if (data.draft === true || data.unlisted === true) return;
+
+      let baseName = path.basename(file, path.extname(file));
+      let parentDirName = path.basename(path.dirname(file));
+      let nameToParse = (baseName.toLowerCase() === 'index' && parentDirName !== dirBaseName) ? parentDirName : baseName;
+
+      let url;
+      if (data.slug) {
+        const slug = String(data.slug).trim();
+        url = slug.startsWith('/')
+          ? (slug.startsWith(`/${routePrefix}/`) || slug === `/${routePrefix}` ? slug : `/${routePrefix}${slug}`)
+          : `/${routePrefix}/${slug}`;
+      } else {
+        const dateMatch = nameToParse.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)$/);
+        if (dateMatch) {
+          const [_, year, month, day, title] = dateMatch;
+          url = `/${routePrefix}/${year}/${month}/${day}/${title}`;
+        } else {
+          url = `/${routePrefix}/${nameToParse}`;
+        }
+      }
+
+      let date = '';
+      if (data.date) {
+        date = formatDateSafe(data.date);
+      } else {
+        const dateMatch = nameToParse.match(/^(\d{4}-\d{2}-\d{2})/);
+        if (dateMatch) date = dateMatch[1];
+      }
+
+      items.push({
+        id: url,
+        title: data.title || nameToParse,
+        date,
+        url,
+        type: typeLabel,
+        content: cleanMarkdown(content),
+      });
+    } catch (err) {
+      console.error(`[gen-search-index] Error parsing ${routePrefix} file ${file}:`, err);
+    }
+  });
+
+  return items;
+}
+
 async function main() {
   const articles = [];
 
   // 1. 處理 Blog (貼文)
-  getMarkdownFiles(BLOG_DIR).forEach((file) => {
-    try {
-      const raw = fs.readFileSync(file, 'utf8');
-      const { data, content } = matter(raw);
-
-      if (data.draft === true) return;
-
-      let baseName = path.basename(file, path.extname(file));
-      let parentDirName = path.basename(path.dirname(file));
-      let nameToParse = (baseName.toLowerCase() === 'index' && parentDirName !== 'blog') ? parentDirName : baseName;
-
-      let url;
-      if (data.slug) {
-        const slug = data.slug.trim();
-        url = slug.startsWith('/') ? (slug.startsWith('/blog/') ? slug : `/blog${slug}`) : `/blog/${slug}`;
-      } else {
-        const dateMatch = nameToParse.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)$/);
-        if (dateMatch) {
-          const [_, year, month, day, title] = dateMatch;
-          url = `/blog/${year}/${month}/${day}/${title}`;
-        } else {
-          url = `/blog/${nameToParse}`;
-        }
-      }
-
-      let date = '';
-      if (data.date) {
-        date = new Date(data.date).toISOString().split('T')[0];
-      } else {
-        const dateMatch = nameToParse.match(/^(\d{4}-\d{2}-\d{2})/);
-        if (dateMatch) date = dateMatch[1];
-      }
-
-      articles.push({
-        id: url,
-        title: data.title || nameToParse,
-        date,
-        url,
-        type: '貼文',
-        content: cleanMarkdown(content),
-      });
-    } catch (err) {
-      console.error(`[gen-search-index] Error parsing blog file ${file}:`, err);
-    }
-  });
+  articles.push(...parseBlogDirectory(BLOG_DIR, 'blog', '貼文'));
 
   // 2. 處理 Photoblog (攝影集)
-  getMarkdownFiles(PHOTOBLOG_DIR).forEach((file) => {
-    try {
-      const raw = fs.readFileSync(file, 'utf8');
-      const { data, content } = matter(raw);
-
-      if (data.draft === true) return;
-
-      let baseName = path.basename(file, path.extname(file));
-      let parentDirName = path.basename(path.dirname(file));
-      let nameToParse = (baseName.toLowerCase() === 'index' && parentDirName !== 'photoblog') ? parentDirName : baseName;
-
-      let url;
-      if (data.slug) {
-        const slug = data.slug.trim();
-        url = slug.startsWith('/') ? (slug.startsWith('/photoblog/') ? slug : `/photoblog${slug}`) : `/photoblog/${slug}`;
-      } else {
-        const dateMatch = nameToParse.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)$/);
-        if (dateMatch) {
-          const [_, year, month, day, title] = dateMatch;
-          url = `/photoblog/${year}/${month}/${day}/${title}`;
-        } else {
-          url = `/photoblog/${nameToParse}`;
-        }
-      }
-
-      let date = '';
-      if (data.date) {
-        date = new Date(data.date).toISOString().split('T')[0];
-      } else {
-        const dateMatch = nameToParse.match(/^(\d{4}-\d{2}-\d{2})/);
-        if (dateMatch) date = dateMatch[1];
-      }
-
-      articles.push({
-        id: url,
-        title: data.title || nameToParse,
-        date,
-        url,
-        type: '攝影',
-        content: cleanMarkdown(content),
-      });
-    } catch (err) {
-      console.error(`[gen-search-index] Error parsing photoblog file ${file}:`, err);
-    }
-  });
+  articles.push(...parseBlogDirectory(PHOTOBLOG_DIR, 'photoblog', '攝影'));
 
   // 3. 處理 Docs (興趣清單與筆記)
   getMarkdownFiles(DOCS_DIR).forEach((file) => {
@@ -181,20 +157,24 @@ async function main() {
       const raw = fs.readFileSync(file, 'utf8');
       const { data, content } = matter(raw);
 
-      if (data.draft === true) return;
+      if (data.draft === true || data.unlisted === true) return;
 
       let url;
       if (data.slug) {
-        const slug = data.slug.trim();
-        url = slug.startsWith('/') ? (slug.startsWith('/docs/') ? slug : `/docs${slug}`) : `/docs/${slug}`;
+        const slug = String(data.slug).trim();
+        if (slug === '/') {
+          url = '/docs';
+        } else {
+          url = slug.startsWith('/') ? (slug.startsWith('/docs/') ? slug : `/docs${slug}`) : `/docs/${slug}`;
+        }
       } else {
         const relativePath = path.relative(DOCS_DIR, file);
         const ext = path.extname(relativePath);
         let pagePath = relativePath.slice(0, -ext.length).replace(/\\/g, '/');
-        if (pagePath.toLowerCase() === 'index' || pagePath.toLowerCase() === 'readme') {
+        if (/^(index|readme)$/i.test(pagePath)) {
           pagePath = '';
-        } else if (pagePath.toLowerCase().endsWith('/index') || pagePath.toLowerCase().endsWith('/readme')) {
-          pagePath = pagePath.slice(0, -6);
+        } else {
+          pagePath = pagePath.replace(/\/(index|readme)$/i, '');
         }
         url = pagePath ? `/docs/${pagePath}` : '/docs';
       }

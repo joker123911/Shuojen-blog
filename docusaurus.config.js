@@ -131,7 +131,7 @@ const config = {
         feedOptions: {
           type: 'all',
           title: 'Shuo-jen Blog',
-          description: '我專屬的人生博物館與編年史',
+          description: '我專屬的人生博物館',
           copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen Huang`,
           language: 'zh-TW',
           /** @param {any} params */

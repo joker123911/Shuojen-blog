@@ -23,5 +23,4 @@ rss_date: '2026-10-05T18:18:57+08:00'
 
 [^1]:[從 YangBear 那聽說](https://yangbear.bearblog.dev/n1-goukaku-suru-niwa/)來自[ LQ7 大大](https://lq7.tw/mood/chat-2026-07-29/#:~:text=ikuka%20%E4%BB%A5%E5%8F%8A%E9%82%A3%E4%BA%9B-,%E4%BA%BA%E5%9D%87%20N1%20%E7%9A%84%E6%A0%BC%E5%8F%8B,-%E7%9C%8B%EF%BC%9A)
 
-{/* 圖片引用範例（將圖片放在同一個資料夾內）： */}
-{/* <img src={require('./001.webp').default} width="600" alt="img" /> */}
+
