@@ -211,9 +211,9 @@ function evaluateGameLocal(game) {
         const base = PIECE_VALUES[cell.type] || 0;
         const pstRow = cell.color === "w" ? r : 7 - r;
         let positional = 0;
-        if (cell.type === "p") positional = PAWN_PST[pstRow][c];
+        if (cell.type === "p") positional = PAWN_PST[pstRow][c] * 0.25;
         else if (cell.type === "n" || cell.type === "b") {
-          positional = KNIGHT_PST[pstRow][c] * 0.5;
+          positional = KNIGHT_PST[pstRow][c] * 0.25;
         }
         score += (cell.color === "w" ? 1 : -1) * (base + positional);
       }

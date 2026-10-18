@@ -10,67 +10,108 @@ const SF_CDN_URL = 'https://cdnjs.cloudflare.com/ajax/libs/stockfish.js/10.0.2/s
 const OUTPUT_JSON_PATH = path.join(ROOT_DIR, 'src', 'data', 'chessEvals.json');
 
 const START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
-const DEFAULT_DEPTH = 18;
+const DEFAULT_DEPTH = 16;
 
 /**
- * 優先向 Lichess 官方 Cloud Eval API 查詢（即 Lichess 介面上的「深度 50~75 CLOUD」）
- * 回傳值已固定為白方視角（正數白優、負數黑優）；若雲端未收錄該中後盤局面則回傳 null
+ * 第一優先：向 Lichess 官方 Cloud Eval API 查詢（即 Lichess 介面上的「深度 50~75 CLOUD」）
+ * 回傳值已固定為白方視角（正數白優、負數黑優）
  */
-function fetchLichessCloudEval(fen) {
-  return new Promise((resolve) => {
-    const url = `https://lichess.org/api/cloud-eval?fen=${encodeURIComponent(fen)}`;
-    const req = https.get(
-      url,
-      { headers: { Accept: 'application/json', 'User-Agent': 'ShuojenBlog-ChessEval/1.0' } },
-      (res) => {
-        if (res.statusCode !== 200) {
-          res.resume();
-          resolve(null);
-          return;
-        }
-        let body = '';
-        res.on('data', (chunk) => (body += chunk));
-        res.on('end', () => {
-          try {
-            const data = JSON.parse(body);
-            const pv = data && data.pvs && data.pvs[0];
-            if (!pv) {
-              resolve(null);
-              return;
-            }
-            if (typeof pv.mate === 'number') {
-              resolve({
-                cp: pv.mate > 0 ? 10000 : -10000,
-                mate: pv.mate,
-                winner: null,
-                depth: data.depth,
-                source: 'lichess-cloud',
-                evalStr: `#${pv.mate}`,
-              });
-            } else if (typeof pv.cp === 'number') {
-              resolve({
-                cp: pv.cp,
-                mate: null,
-                winner: null,
-                depth: data.depth,
-                source: 'lichess-cloud',
-                evalStr: (pv.cp / 100).toFixed(2),
-              });
-            } else {
-              resolve(null);
-            }
-          } catch {
-            resolve(null);
-          }
-        });
-      }
-    );
-    req.on('error', () => resolve(null));
-    req.setTimeout(3000, () => {
-      req.destroy();
-      resolve(null);
+async function fetchLichessCloudEval(fen) {
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 3000);
+    const res = await fetch(`https://lichess.org/api/cloud-eval?fen=${encodeURIComponent(fen)}`, {
+      headers: { Accept: 'application/json', 'User-Agent': 'ShuojenBlog-ChessEval/1.0' },
+      signal: controller.signal,
     });
-  });
+    clearTimeout(timer);
+    if (!res.ok) return null;
+    const data = await res.json();
+    const pv = data && data.pvs && data.pvs[0];
+    if (!pv) return null;
+
+    if (typeof pv.mate === 'number') {
+      return {
+        cp: pv.mate > 0 ? 10000 : -10000,
+        mate: pv.mate,
+        winner: null,
+        evalStr: `#${pv.mate}`,
+      };
+    }
+    if (typeof pv.cp === 'number') {
+      return {
+        cp: pv.cp,
+        mate: null,
+        winner: null,
+        evalStr: (pv.cp / 100).toFixed(2),
+      };
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * 第二優先：使用 Stockfish 17 NNUE 引擎 API 計算（與 Lichess 現代 NNUE 評估標準一致，回傳值固定為白方視角）
+ */
+async function fetchStockfish17NnueEval(fen, depth = DEFAULT_DEPTH) {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      if (attempt > 0) {
+        await new Promise((r) => setTimeout(r, 300 * attempt));
+      }
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 6000);
+      const res = await fetch('https://chess-api.com/v1', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fen, depth: Math.min(depth, 18) }),
+        signal: controller.signal,
+      });
+      clearTimeout(timer);
+      if (!res.ok) continue;
+      const data = await res.json();
+      if (!data || data.error) return null;
+
+      if (data.mate !== null && data.mate !== undefined && data.mate !== '') {
+        const mateVal = parseInt(data.mate, 10);
+        if (!isNaN(mateVal)) {
+          return {
+            cp: mateVal > 0 ? 10000 : -10000,
+            mate: mateVal,
+            winner: null,
+            evalStr: `#${mateVal}`,
+          };
+        }
+      }
+
+      if (data.centipawns !== undefined && data.centipawns !== null) {
+        const cpVal = parseInt(data.centipawns, 10);
+        if (!isNaN(cpVal)) {
+          return {
+            cp: cpVal,
+            mate: null,
+            winner: null,
+            evalStr: (cpVal / 100).toFixed(2),
+          };
+        }
+      }
+
+      if (typeof data.eval === 'number') {
+        const cpVal = Math.round(data.eval * 100);
+        return {
+          cp: cpVal,
+          mate: null,
+          winner: null,
+          evalStr: data.eval.toFixed(2),
+        };
+      }
+    } catch {
+      // retry on transient network error
+    }
+  }
+  return null;
 }
 
 function downloadFile(url, dest) {
@@ -96,45 +137,100 @@ function downloadFile(url, dest) {
 }
 
 let currentLineHandler = null;
+let localSfInitPromise = null;
+let localSfQueue = Promise.resolve();
 
-async function loadStockfishEngine() {
-  if (!fs.existsSync(SF_CACHE_PATH)) {
-    console.log('⬇️  首次下載 Stockfish 引擎至本地快取...');
-    await downloadFile(SF_CDN_URL, SF_CACHE_PATH);
-  }
-
-  global.postMessage = (line) => {
-    if (currentLineHandler) {
-      currentLineHandler(String(line));
+function ensureLocalStockfish() {
+  if (localSfInitPromise) return localSfInitPromise;
+  localSfInitPromise = (async () => {
+    if (!fs.existsSync(SF_CACHE_PATH)) {
+      console.log('⬇️  首次下載本地離線備援 Stockfish 引擎...');
+      await downloadFile(SF_CDN_URL, SF_CACHE_PATH);
     }
-  };
-  global.close = () => {};
 
-  // 避免 Emscripten 將 CLI 參數當作 Stockfish 啟動參數而直接結束
-  const savedArgv = process.argv;
-  process.argv = savedArgv.slice(0, 2);
-  require(SF_CACHE_PATH);
-  process.argv = savedArgv;
-
-  const send = (cmd) => {
-    if (typeof global.onmessage === 'function') {
-      global.onmessage({ data: cmd });
-    }
-  };
-
-  await new Promise((resolve) => {
-    currentLineHandler = (line) => {
-      if (line.includes('uciok')) {
-        resolve();
+    global.postMessage = (line) => {
+      if (currentLineHandler) {
+        currentLineHandler(String(line));
       }
     };
-    send('uci');
-  });
+    global.close = () => {};
 
-  return { send };
+    const savedArgv = process.argv;
+    process.argv = savedArgv.slice(0, 2);
+    require(SF_CACHE_PATH);
+    process.argv = savedArgv;
+
+    const send = (cmd) => {
+      if (typeof global.onmessage === 'function') {
+        global.onmessage({ data: cmd });
+      }
+    };
+
+    await new Promise((resolve) => {
+      currentLineHandler = (line) => {
+        if (line.includes('uciok')) {
+          resolve();
+        }
+      };
+      send('uci');
+    });
+
+    // 關閉舊版 Stockfish 預設的 Contempt=24，消除輪走方的波動偏差
+    send('setoption name Contempt value 0');
+
+    return { send };
+  })();
+  return localSfInitPromise;
 }
 
-async function evaluateFenWithEngine({ send }, fen, depth = DEFAULT_DEPTH) {
+function evaluateWithLocalStockfish(fen, depth, turn) {
+  const run = async () => {
+    const { send } = await ensureLocalStockfish();
+    const sign = turn === 'w' ? 1 : -1;
+
+    return new Promise((resolve) => {
+      let lastResult = { cp: 0, mate: null, winner: null, evalStr: '0.00' };
+
+      currentLineHandler = (text) => {
+        if (text.startsWith('info ')) {
+          const scoreMatch = text.match(/\bscore\s+(cp|mate)\s+(-?\d+)/);
+          if (scoreMatch) {
+            const type = scoreMatch[1];
+            const rawVal = parseInt(scoreMatch[2], 10);
+            if (type === 'mate') {
+              const whiteMate = rawVal * sign;
+              lastResult = {
+                cp: whiteMate > 0 ? 10000 : -10000,
+                mate: whiteMate,
+                winner: null,
+                evalStr: `#${whiteMate}`,
+              };
+            } else {
+              // 將舊版 Classical 評估比例換算至現代 NNUE 標準百兵比例
+              const whiteCp = Math.round(rawVal * sign * 0.55);
+              lastResult = {
+                cp: whiteCp,
+                mate: null,
+                winner: null,
+                evalStr: (whiteCp / 100).toFixed(2),
+              };
+            }
+          }
+        } else if (text.startsWith('bestmove')) {
+          resolve(lastResult);
+        }
+      };
+
+      send(`position fen ${fen}`);
+      send(`go depth ${depth} movetime 600`);
+    });
+  };
+
+  localSfQueue = localSfQueue.then(run, run);
+  return localSfQueue;
+}
+
+async function evaluateFen(fen, depth = DEFAULT_DEPTH) {
   const game = new Chess(fen);
   if (game.isCheckmate()) {
     const winner = game.turn() === 'w' ? 'b' : 'w';
@@ -154,51 +250,19 @@ async function evaluateFenWithEngine({ send }, fen, depth = DEFAULT_DEPTH) {
     };
   }
 
-  // 1. 優先向 Lichess Cloud Eval 查詢（取得跟 Lichess 一模一樣的深度 50~75 CLOUD 評估）
-  const cloudRes = await fetchLichessCloudEval(fen);
-  if (cloudRes) {
-    return cloudRes;
+  // 1. 前 12 回合優先查 Lichess Cloud（深度 50~75 CLOUD）
+  const fullMoveNumber = parseInt(fen.split(' ')[5] || '1', 10);
+  if (fullMoveNumber <= 12) {
+    const cloudRes = await fetchLichessCloudEval(fen);
+    if (cloudRes) return cloudRes;
   }
 
-  // 2. 若該中後盤局面不在 Lichess Cloud 庫中，使用本地 Stockfish 深度 18 計算
-  const turn = game.turn();
-  const sign = turn === 'w' ? 1 : -1;
+  // 2. 使用現代 Stockfish 17 NNUE 評估
+  const nnueRes = await fetchStockfish17NnueEval(fen, depth);
+  if (nnueRes) return nnueRes;
 
-  return new Promise((resolve) => {
-    let lastResult = { cp: 0, mate: null, winner: null, evalStr: '0.00' };
-
-    currentLineHandler = (text) => {
-      if (text.startsWith('info ')) {
-        const scoreMatch = text.match(/\bscore\s+(cp|mate)\s+(-?\d+)/);
-        if (scoreMatch) {
-          const type = scoreMatch[1];
-          const rawVal = parseInt(scoreMatch[2], 10);
-          if (type === 'mate') {
-            const whiteMate = rawVal * sign;
-            lastResult = {
-              cp: whiteMate > 0 ? 10000 : -10000,
-              mate: whiteMate,
-              winner: null,
-              evalStr: `#${whiteMate}`,
-            };
-          } else {
-            const whiteCp = rawVal * sign;
-            lastResult = {
-              cp: whiteCp,
-              mate: null,
-              winner: null,
-              evalStr: (whiteCp / 100).toFixed(2),
-            };
-          }
-        }
-      } else if (text.startsWith('bestmove')) {
-        resolve(lastResult);
-      }
-    };
-
-    send(`position fen ${fen}`);
-    send(`go depth ${depth} movetime 1200`);
-  });
+  // 3. 離線備援：本地 Stockfish（已關閉 Contempt 並正規化百兵值，透過佇列避免並發衝突）
+  return evaluateWithLocalStockfish(fen, depth, game.turn());
 }
 
 function normalizePgnToMoves(rawPgn) {
@@ -322,13 +386,14 @@ async function main() {
     targetFiles = [
       ...getAllMarkdownFiles(path.join(ROOT_DIR, 'blog')),
       ...getAllMarkdownFiles(path.join(ROOT_DIR, 'docs')),
+      ...getAllMarkdownFiles(path.join(ROOT_DIR, 'src', 'pages')),
     ];
   }
 
   let evalDb = {
-    [START_FEN]: { cp: 20, mate: null, winner: null },
+    [START_FEN]: { cp: 19, mate: null, winner: null },
   };
-  if (fs.existsSync(OUTPUT_JSON_PATH)) {
+  if (!forceRefresh && fs.existsSync(OUTPUT_JSON_PATH)) {
     try {
       evalDb = { ...evalDb, ...JSON.parse(fs.readFileSync(OUTPUT_JSON_PATH, 'utf8')) };
     } catch {
@@ -338,7 +403,6 @@ async function main() {
 
   const pgnTagRegex = /(<(?:White|Black|ChessGame)\b[^>]*?\bpgn=")([^"]*)("[^>]*?>)/g;
   const fensToCompute = new Set();
-  const filePgns = [];
 
   for (const filePath of targetFiles) {
     if (!fs.existsSync(filePath)) continue;
@@ -348,7 +412,6 @@ async function main() {
     while ((match = pgnTagRegex.exec(content)) !== null) {
       const pgnText = match[2];
       const { moves } = normalizePgnToMoves(pgnText);
-      filePgns.push({ filePath, pgnText, moves });
       for (const m of moves) {
         if (forceRefresh || !evalDb[m.fen]) {
           fensToCompute.add(m.fen);
@@ -357,34 +420,28 @@ async function main() {
     }
   }
 
-  // 額外確保第 1 局（持黑對歐忞侖）的 38 回合棋譜也預先算好存入快取
-  const game1Pgn =
-    '1. d4 Nf6 2. Bf4 c5 3. d5 b5 4. e3 Bb7 5. c4 g6 6. Nf3 Qa5+ 7. Nbd2 bxc4 8. Bxc4 Nxd5 { [%csl Ge5] } 9. Be2 (9. Be5 Nf6 10. Bc3 Qc7 11. O-O Bg7 12. Qb3 O-O 13. Rfe1 { [%csl Gc6] } 13... Nc6 14. Bxf7+ Rxf7 15. Ng5 Rf8 16. Nxf7 Rxf7 17. Nf3 e6 18. Rad1 Nd5 19. Bxg7 Kxg7 20. Rd2 { [%csl Ge5] } 20... Ne5 (20... Ncb4) 21. Nxe5 Rf8 22. Red1 Qxe5 23. Qxb7 Rf7 24. Qxa7 Nxe3 25. Rxd7 Nxd1 26. Rxf7+ Kh6 27. Rxh7+ Kg5 28. h4+ Kg4 29. Qa4+ Qd4 30. Qxd4+ cxd4 31. b4 Nc3 32. Re7 Kf5 33. a3 { [%csl Gf6] } 33... Kf6 34. Rd7 e5 35. Kf1 Ke6 36. Rd8 Kf5 37. Ke1 Ke4 38. f3+ Kf5) *';
-  const { moves: game1Moves } = normalizePgnToMoves(game1Pgn);
-  for (const m of game1Moves) {
-    if (!evalDb[m.fen]) {
-      fensToCompute.add(m.fen);
-    }
-  }
-
-  let sf = null;
   if (fensToCompute.size > 0) {
-    console.log(`♟️  發現 ${fensToCompute.size} 個新局面，啟動 Stockfish 進行深度分析 (depth=${DEFAULT_DEPTH})...`);
-    sf = await loadStockfishEngine();
-    let count = 0;
-    for (const fen of fensToCompute) {
-      count++;
-      const res = await evaluateFenWithEngine(sf, fen, DEFAULT_DEPTH);
-      evalDb[fen] = {
-        cp: res.cp,
-        mate: res.mate,
-        winner: res.winner,
-      };
-      if (count % 10 === 0 || count === fensToCompute.size) {
-        process.stdout.write(`\r   進度：${count} / ${fensToCompute.size}`);
-      }
+    const fenArray = [...fensToCompute];
+    console.log(`♟️  發現 ${fenArray.length} 個新局面，啟動 Lichess Cloud + Stockfish 17 NNUE 深度分析...`);
+
+    const CONCURRENCY = 4;
+    let completed = 0;
+
+    for (let i = 0; i < fenArray.length; i += CONCURRENCY) {
+      const batch = fenArray.slice(i, i + CONCURRENCY);
+      const results = await Promise.all(batch.map((fen) => evaluateFen(fen, DEFAULT_DEPTH)));
+      batch.forEach((fen, idx) => {
+        const res = results[idx];
+        evalDb[fen] = {
+          cp: res.cp,
+          mate: res.mate,
+          winner: res.winner,
+        };
+      });
+      completed += batch.length;
+      process.stdout.write(`\r   進度：${completed} / ${fenArray.length}`);
     }
-    console.log('\n✅ Stockfish 深度計算完成！');
+    console.log('\n✅ Lichess Cloud + Stockfish 17 NNUE 深度計算完成！');
   } else {
     console.log('⚡ 所有棋步局面皆已在預先計算快取中！');
   }
@@ -436,8 +493,9 @@ async function main() {
     }
   }
 
-  if (sf) {
-    sf.send('quit');
+  if (localSfInitPromise) {
+    const { send } = await localSfInitPromise;
+    send('quit');
   }
   process.exit(0);
 }
