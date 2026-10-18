@@ -1,6 +1,6 @@
 ---
 title: '淡水騎車'
-tags: ['trip','friend']
+tags: [bike, friend, trip]
 ---
 鄭博文 PO 文
 >補假一天玩好爽（≧∇≦）

@@ -1,6 +1,6 @@
 ---
 title: '野生狂廚'
-tags: ['movie', '傳記']
+tags: [movie]
 date: 2026-08-30
 rss_date: '2026-08-30T18:28:14+08:00'
 ---

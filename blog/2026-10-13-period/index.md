@@ -1,6 +1,6 @@
 ---
 title: '文字雜想'
-tags: ['life']
+tags: [life, read]
 date: 2026-10-13
 rss_date: '2026-10-13T23:16:46+08:00'
 ---

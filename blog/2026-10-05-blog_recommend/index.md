@@ -1,6 +1,6 @@
 ---
 title: '我推的部落格（二）'
-tags: ['blog']
+tags: [blog, friend]
 date: 2026-10-05
 rss_date: '2026-10-05T18:18:57+08:00'
 ---
