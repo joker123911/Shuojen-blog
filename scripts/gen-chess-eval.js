@@ -10,7 +10,68 @@ const SF_CDN_URL = 'https://cdnjs.cloudflare.com/ajax/libs/stockfish.js/10.0.2/s
 const OUTPUT_JSON_PATH = path.join(ROOT_DIR, 'src', 'data', 'chessEvals.json');
 
 const START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
-const DEFAULT_DEPTH = 15;
+const DEFAULT_DEPTH = 18;
+
+/**
+ * 優先向 Lichess 官方 Cloud Eval API 查詢（即 Lichess 介面上的「深度 50~75 CLOUD」）
+ * 回傳值已固定為白方視角（正數白優、負數黑優）；若雲端未收錄該中後盤局面則回傳 null
+ */
+function fetchLichessCloudEval(fen) {
+  return new Promise((resolve) => {
+    const url = `https://lichess.org/api/cloud-eval?fen=${encodeURIComponent(fen)}`;
+    const req = https.get(
+      url,
+      { headers: { Accept: 'application/json', 'User-Agent': 'ShuojenBlog-ChessEval/1.0' } },
+      (res) => {
+        if (res.statusCode !== 200) {
+          res.resume();
+          resolve(null);
+          return;
+        }
+        let body = '';
+        res.on('data', (chunk) => (body += chunk));
+        res.on('end', () => {
+          try {
+            const data = JSON.parse(body);
+            const pv = data && data.pvs && data.pvs[0];
+            if (!pv) {
+              resolve(null);
+              return;
+            }
+            if (typeof pv.mate === 'number') {
+              resolve({
+                cp: pv.mate > 0 ? 10000 : -10000,
+                mate: pv.mate,
+                winner: null,
+                depth: data.depth,
+                source: 'lichess-cloud',
+                evalStr: `#${pv.mate}`,
+              });
+            } else if (typeof pv.cp === 'number') {
+              resolve({
+                cp: pv.cp,
+                mate: null,
+                winner: null,
+                depth: data.depth,
+                source: 'lichess-cloud',
+                evalStr: (pv.cp / 100).toFixed(2),
+              });
+            } else {
+              resolve(null);
+            }
+          } catch {
+            resolve(null);
+          }
+        });
+      }
+    );
+    req.on('error', () => resolve(null));
+    req.setTimeout(3000, () => {
+      req.destroy();
+      resolve(null);
+    });
+  });
+}
 
 function downloadFile(url, dest) {
   return new Promise((resolve, reject) => {
@@ -73,26 +134,33 @@ async function loadStockfishEngine() {
   return { send };
 }
 
-function evaluateFenWithEngine({ send }, fen, depth = DEFAULT_DEPTH) {
+async function evaluateFenWithEngine({ send }, fen, depth = DEFAULT_DEPTH) {
   const game = new Chess(fen);
   if (game.isCheckmate()) {
     const winner = game.turn() === 'w' ? 'b' : 'w';
-    return Promise.resolve({
+    return {
       cp: winner === 'w' ? 10000 : -10000,
       mate: 0,
       winner,
       evalStr: winner === 'w' ? '1-0' : '0-1',
-    });
+    };
   }
   if (game.isDraw()) {
-    return Promise.resolve({
+    return {
       cp: 0,
       mate: null,
       winner: null,
       evalStr: '0.00',
-    });
+    };
   }
 
+  // 1. 優先向 Lichess Cloud Eval 查詢（取得跟 Lichess 一模一樣的深度 50~75 CLOUD 評估）
+  const cloudRes = await fetchLichessCloudEval(fen);
+  if (cloudRes) {
+    return cloudRes;
+  }
+
+  // 2. 若該中後盤局面不在 Lichess Cloud 庫中，使用本地 Stockfish 深度 18 計算
   const turn = game.turn();
   const sign = turn === 'w' ? 1 : -1;
 
@@ -129,7 +197,7 @@ function evaluateFenWithEngine({ send }, fen, depth = DEFAULT_DEPTH) {
     };
 
     send(`position fen ${fen}`);
-    send(`go depth ${depth}`);
+    send(`go depth ${depth} movetime 1200`);
   });
 }
 
@@ -244,6 +312,7 @@ function getAllMarkdownFiles(dirPath, arrayOfFiles = []) {
 async function main() {
   const args = process.argv.slice(2);
   const writePgn = args.includes('--write-pgn');
+  const forceRefresh = args.includes('--refresh');
   const fileArgs = args.filter((a) => !a.startsWith('--'));
 
   let targetFiles = [];
@@ -281,7 +350,7 @@ async function main() {
       const { moves } = normalizePgnToMoves(pgnText);
       filePgns.push({ filePath, pgnText, moves });
       for (const m of moves) {
-        if (!evalDb[m.fen]) {
+        if (forceRefresh || !evalDb[m.fen]) {
           fensToCompute.add(m.fen);
         }
       }

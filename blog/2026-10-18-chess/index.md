@@ -23,7 +23,7 @@ import { White, Black } from '/src/components/Chess/ChessGame';
 
 這次比賽前三名可以取得段位，下次就只能參賽段位組了（我大概要墊底）。
 
-<Details summary="standings">
+<Details summary="Standings">
 <img src={require('./001.png').default} width="600" alt="img" />
 </Details>
 
@@ -35,6 +35,8 @@ import { White, Black } from '/src/components/Chess/ChessGame';
 
 :::note
 第 20 步非常可惜，touch move 後手放開的那一瞬間我就知道錯了，雖然歐哥說不介意，但我還是照規則落子，不然這盤局勢很好。學了個經驗，以後一定要想好再摸子（一方面也是邊下邊記棋譜實在很干擾思緒），最後棋鐘倒數就沒記錄了。
+
+題外話，剛到賽場跟歐哥友誼賽就下這個倫敦開局。第一場實戰又對到，第三步他就換招了。其實他應該走原本那步，反而換招落入我的準備。
 :::
 
 <Black pgn="1. d4 Nf6 2. Bf4 c5 3. d5 b5 4. e3 Bb7 5. c4 g6 6. Nf3 Qa5+ 7. Nbd2 bxc4 8. Bxc4 Nxd5 9. Be5 Nf6 10. Bc3 Qc7 11. O-O Bg7 12. Qb3 O-O 13. Rfe1 Nc6 14. Bxf7+ Rxf7 15. Ng5 Rf8 16. Nxf7 Rxf7 17. Nf3 e6 18. Rad1 Nd5 19. Bxg7 Kxg7 20. Rd2 Ne5 21. Nxe5 Rf8 22. Red1 Qxe5 23. Qxb7 Rf7 24. Qxa7 Nxe3 25. Rxd7 Nxd1 26. Rxf7+ Kh6 27. Rxh7+ Kg5 28. h4+ Kg4 29. Qa4+ Qd4 30. Qxd4+ cxd4 31. b4 Nc3 32. Re7 Kf5 33. a3 e5 34. Kf1 d3 35. Ke1 Ke4 36. f3+ Kf5" />
