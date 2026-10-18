@@ -59,7 +59,8 @@ function normalizePgn(rawPgn) {
 
   // 將大括號註解內的 [%eval ...] 轉為 __EVAL_xxx__ 標記保留，其餘註解內容移除
   text = text.replace(/\{([^}]*)\}?/g, (_, commentBody) => {
-    const evalMatch = commentBody.match(/\[%eval\s+([#+-]?\d+(?:\.\d+)?)\]/i);
+    // 支援 0.35 / -1.2 / +0.5 / #3 / #-2，以及部分工具附帶深度的 [%eval 0.35,22]
+    const evalMatch = commentBody.match(/\[%eval\s+(#?[+-]?\d+(?:\.\d+)?)(?:\s*,\s*\d+)?\s*\]/i);
     return evalMatch ? ` __EVAL_${evalMatch[1]}__ ` : " ";
   });
   text = text.replace(/;[^\r\n]*/g, " ");
@@ -356,7 +357,8 @@ function ChessGameLogic({ pgn, orientation = "w", showEval = true }) {
       const game = new Chess(startFen);
 
       const fenList = [startFen];
-      const evalList = [{ cp: 20, mate: null, winner: null, source: "init" }];
+      // 起始局面同樣讀取預先計算值（自訂 FEN 的殘局 / 題目才不會固定顯示 +0.2）
+      const evalList = [evaluateGameLocal(game)];
       const simpleMoveList = [];
 
       for (const token of cleanedTokens) {
@@ -397,6 +399,15 @@ function ChessGameLogic({ pgn, orientation = "w", showEval = true }) {
           }
         } catch {
           // 忽略非棋步 token
+        }
+      }
+
+      if (process.env.NODE_ENV !== "production") {
+        const missing = evalList.filter((e) => e.source === "local").length;
+        if (missing > 0) {
+          console.warn(
+            `[ChessGame] ${missing} 個局面不在 chessEvals.json，暫以子力粗估顯示。請執行 npm run gen-chess 產生精確分數。`
+          );
         }
       }
 

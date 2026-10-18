@@ -422,7 +422,7 @@ def save_worker_logic(
     tier_js = json.dumps(tier, ensure_ascii=False) if tier else '""'
 
     if data_type == "movie":
-        new_entry = f"  {{ title: {title_js}, score: {score_num}, note: {note_js}, poster: {poster_js}, tags: {tags_js} }},"
+        new_entry = f"{{ title: {title_js}, score: {score_num}, note: {note_js}, poster: {poster_js}, tags: {tags_js} }}"
     elif data_type in ("anime", "series"):
         new_entry = f"{{ title: {title_js}, note: {note_js}, poster: {poster_js}, tier: {tier_js}, tags: {tags_js} }}"
     else:  # ramen
@@ -446,15 +446,20 @@ def save_worker_logic(
             error_callback(f"在 {os.path.basename(js_file)} 中找不到 '{target_var}' 的完整陣列 '[...]'")
             return
 
+        body = content[open_bracket + 1 : close_bracket]
+        existing_items = extract_top_level_objects(body)
+        existing_items.append(new_entry)
+
         if data_type == "movie":
-            # 插入在該類別陣列開頭 '[' 之後的第一行
-            insert_pos = open_bracket + 1
-            new_content = content[:insert_pos] + f"\n{new_entry}" + content[insert_pos:]
+            def sort_key(item_str):
+                m = re.search(r'["\']?\bscore\b["\']?\s*:\s*(-?\d+(?:\.\d+)?)', item_str)
+                return -float(m.group(1)) if m else 0.0
+
+            existing_items.sort(key=sort_key)
+            new_body_content = "\n  " + ",\n  ".join(existing_items) + ",\n"
+            new_content = content[: open_bracket + 1] + new_body_content + content[close_bracket:]
         else:
             tier_priority = {"SSS": 0, "SS": 1, "S": 2, "A": 3, "B": 4}
-            body = content[open_bracket + 1 : close_bracket]
-            existing_items = extract_top_level_objects(body)
-            existing_items.append(new_entry)
 
             def sort_key(item_str):
                 m = re.search(r'["\']?\btier\b["\']?\s*:\s*["\'](SSS|SS|S|A|B)["\']', item_str)
