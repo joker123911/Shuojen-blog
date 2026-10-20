@@ -12,6 +12,7 @@
 @import url("https://font.emtech.cc/css/jfOpenHuninn?display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&display=swap');
 @import url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css');
 
 /* 修正：jfOpenHuninn 的反引號 ` (U+0060) 字寬為 0，會與相鄰文字重疊。

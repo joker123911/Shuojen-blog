@@ -1,0 +1,47 @@
+/* ==========================================================
+   NowEvaPoster - 純粹滿版 EVA 極粗明朝體拼貼樣式
+   100% 呈現部落格與興趣清單真實內容
+   淺色模式：白底黑字；深色模式：#1B1B1D 底色 + 純白字
+   ========================================================== */
+
+.posterContainer {
+  --eva-bg: #ffffff;
+  --eva-text: #000000;
+  margin: 24px 0 36px 0;
+  width: 100%;
+  background: var(--eva-bg) !important;
+  color: var(--eva-text) !important;
+  border-radius: 4px;
+  overflow: hidden;
+  user-select: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+:global([data-theme='dark']) .posterContainer {
+  --eva-bg: #1B1B1D;
+  --eva-text: #ffffff;
+  box-shadow: none;
+}
+
+.posterSvg {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: var(--eva-bg);
+  color: var(--eva-text);
+  font-family: 'Noto Serif TC', 'Source Han Serif TC', 'Songti TC', 'PMingLiU', serif;
+  font-weight: 900;
+  transition: background 0.25s ease;
+}
+
+.posterSvg text {
+  font-family: 'Noto Serif TC', 'Source Han Serif TC', 'Songti TC', 'PMingLiU', serif;
+  font-weight: 900;
+  fill: var(--eva-text) !important;
+  paint-order: stroke fill;
+  stroke: var(--eva-text) !important;
+  stroke-width: 0.7px;
+  stroke-linejoin: round;
+  transition: fill 0.25s ease, stroke 0.25s ease;
+}

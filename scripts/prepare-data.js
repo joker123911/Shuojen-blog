@@ -3,6 +3,7 @@ const path = require('path');
 const matter = require('gray-matter');
 const yaml = require('js-yaml');
 const { generateAlbumsData } = require('./gen-albums');
+const { generateNowPosterData } = require('./gen-now-poster');
 
 const ROOT_DIR = path.join(__dirname, '..');
 const BLOG_DIR = path.join(ROOT_DIR, 'blog');
@@ -180,6 +181,7 @@ function runDataPreparation() {
   const startTime = Date.now();
   processOpml();
   generateAlbumsData();
+  generateNowPosterData();
 
   // Single-pass scan for blog and photoblog
   const blogFiles = getAllMarkdownFiles(BLOG_DIR);

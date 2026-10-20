@@ -45,6 +45,7 @@ export const westernMovies = [
   { title: "雨人", score: 8.4, note: "天才傳記片，溫暖類型", poster: "./img/movie/雨人.webp", tags: ["1988", "溫馨", "傳記"] },
   { title: "一級玩家", score: 8.4, note: "中規中矩的科幻爽片，值得一看", poster: "./img/movie/一級玩家.webp", tags: ["2018", "科幻"] },
   { title: "金剛 ", score: 8.4, note: "經典動作怪物電影，要看 2005 年版", poster: "./img/movie/金剛.webp", tags: ["2005", "動作", "怪物"] },
+  { title: "宿劫", score: 8.4, note: "很喜歡這個導演的劇情切角，又有他獨特的幽默風格。作品非常完整漂亮，不落俗套", poster: "./img/movie/宿劫.webp", tags: ["2022", "恐怖", "驚悚", "喜劇"] },
   { title: "滿血復活", score: 8.3, note: "超級喜歡的恐怖片，覺得切入角度很好，也不依靠 jump scare，預告比正片恐怖很多，真的值得一看", poster: "./img/movie/滿血復活.webp", tags: ["2025", "恐怖"] },
   { title: "科洛弗10號地窖", score: 8.3, note: "小成本的懸疑作品，女主角好漂亮", poster: "./img/movie/科洛弗10號地窖.webp", tags: ["2016", "懸疑", "科幻"] },
   { title: "帝國浩劫：美國內戰", score: 8.3, note: "由記者視角演繹的戰爭片，很特別", poster: "./img/movie/帝國浩劫：美國內戰.webp", tags: ["2024", "戰爭"] },
