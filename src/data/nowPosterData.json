@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-21",
+  "generatedAt": "2026-10-22",
   "latestPostDate": "2026-10-20",
   "windowDays": 90,
-  "cutoffDate": "2026-07-23",
+  "cutoffDate": "2026-07-24",
   "stats": {
     "blogCount": 42,
     "photoCount": 1,
@@ -365,7 +365,7 @@
       "rank": 29
     },
     {
-      "text": "大魚吃小魚",
+      "text": "彌敦道",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -373,7 +373,7 @@
       "rank": 30
     },
     {
-      "text": "彌敦道",
+      "text": "專輯牆",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -381,7 +381,7 @@
       "rank": 31
     },
     {
-      "text": "專輯牆",
+      "text": "執著光譜",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -389,7 +389,7 @@
       "rank": 32
     },
     {
-      "text": "執著光譜",
+      "text": "手機進化史",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -397,7 +397,7 @@
       "rank": 33
     },
     {
-      "text": "手機進化史",
+      "text": "我推的部落格",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -405,7 +405,7 @@
       "rank": 34
     },
     {
-      "text": "我推的部落格",
+      "text": "新記錄",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -413,7 +413,7 @@
       "rank": 35
     },
     {
-      "text": "新記錄",
+      "text": "飲料大小",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -421,7 +421,7 @@
       "rank": 36
     },
     {
-      "text": "飲料大小",
+      "text": "文字雜想",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -429,7 +429,7 @@
       "rank": 37
     },
     {
-      "text": "文字雜想",
+      "text": "檔車推發記",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -437,7 +437,7 @@
       "rank": 38
     },
     {
-      "text": "檔車推發記",
+      "text": "全國棋藝競賽",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -445,20 +445,12 @@
       "rank": 39
     },
     {
-      "text": "全國棋藝競賽",
-      "weight": 16,
-      "count": 1,
-      "category": "post",
-      "sourceType": "title",
-      "rank": 40
-    },
-    {
       "text": "仲夏魘",
       "weight": 14.8,
       "count": 2,
       "category": "media",
       "sourceType": "work",
-      "rank": 41
+      "rank": 40
     },
     {
       "text": "後室",
@@ -466,7 +458,7 @@
       "count": 2,
       "category": "media",
       "sourceType": "work",
-      "rank": 42
+      "rank": 41
     },
     {
       "text": "奇諾之旅",
@@ -474,7 +466,7 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-動畫",
-      "rank": 43
+      "rank": 42
     },
     {
       "text": "道楽製麵所",
@@ -482,7 +474,7 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-拉麵",
-      "rank": 44
+      "rank": 43
     },
     {
       "text": "吉伊卡哇",
@@ -490,7 +482,7 @@
       "count": 2,
       "category": "entity",
       "sourceType": "entity",
-      "rank": 45
+      "rank": 44
     },
     {
       "text": "艾德蓋恩的故事",
@@ -498,7 +490,7 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-影集",
-      "rank": 46
+      "rank": 45
     },
     {
       "text": "羽畠食堂拉麵",
@@ -506,7 +498,7 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-拉麵",
-      "rank": 47
+      "rank": 46
     },
     {
       "text": "尼古喵喵",
@@ -514,7 +506,7 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-動畫",
-      "rank": 48
+      "rank": 47
     },
     {
       "text": "毛骨悚然的戀愛",
@@ -522,7 +514,7 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-影集",
-      "rank": 49
+      "rank": 48
     },
     {
       "text": "野獸之心",
@@ -530,7 +522,7 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-電影",
-      "rank": 50
+      "rank": 49
     },
     {
       "text": "蠟筆小新劇場版",
@@ -538,7 +530,7 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-電影",
-      "rank": 51
+      "rank": 50
     },
     {
       "text": "冷氣清洗",
@@ -546,7 +538,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 52
+      "rank": 51
     },
     {
       "text": "DXP4800",
@@ -554,7 +546,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 53
+      "rank": 52
     },
     {
       "text": "用筷子吃東西",
@@ -562,7 +554,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 54
+      "rank": 53
     },
     {
       "text": "人生也是一個遊戲",
@@ -570,10 +562,18 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 55
+      "rank": 54
     },
     {
       "text": "自己做生日蛋糕",
+      "weight": 11.5,
+      "count": 1,
+      "category": "post",
+      "sourceType": "title",
+      "rank": 55
+    },
+    {
+      "text": "大魚吃小魚",
       "weight": 11.5,
       "count": 1,
       "category": "post",

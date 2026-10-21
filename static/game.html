@@ -127,26 +127,30 @@
 
         /* 統一按鈕與選單的大小與外觀 */
         .btn, select { 
-            width: 100px;          /* 統一寬度 */
-            height: 38px;         /* 統一高度 */
             font-family: inherit;  /* 繼承 body 的字體 */
             font-size: 14.5px; 
             font-weight: bold;
             border-radius: 8px; 
             box-sizing: border-box;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             transition: 0.2s;
             cursor: pointer;
             border: 2px solid var(--primary);
+            height: 38px;
+            padding: 0 12px;
+        }
+
+        .top-bar .btn, select {
+            width: 100px;
+            padding: 0;
         }
 
         .btn { 
             background: var(--primary); 
             color: white; 
-            padding: 0; 
         }
         .btn:hover { opacity: 0.9; }
 
@@ -184,7 +188,7 @@
             .game-header { margin-bottom: 4px; }
             .game-title { font-size: clamp(28px, 4.4vh, 38px); }
             .top-bar { margin-bottom: 6px; gap: 6px; }
-            .date-badge, .btn { height: 32px; font-size: 13px; }
+            .date-badge, .top-bar .btn { height: 32px; font-size: 13px; }
             .stats-bar { padding: 4px 10px; font-size: 12.5px; }
             .answer-section { margin-top: 8px; }
             .slots { margin-top: 4px; gap: 5px; }
@@ -199,7 +203,7 @@
             .board-card { background: transparent; border: none; box-shadow: none; padding: 0; border-radius: 0; }
             .cell { font-size: clamp(12px, 3.8vw, 16px); } 
             .game-title { font-size: 32px; }
-            .btn { width: 88px !important; height: 34px; font-size: 13px; }
+            .top-bar .btn { width: 88px; height: 34px; font-size: 13px; }
             .date-badge { height: 34px; font-size: 13px; padding: 0 10px; }
             .stats-bar { font-size: 12.5px; padding: 4px 10px; }
             .daily-status { font-size: 11px; padding: 2px 6px; }
@@ -366,21 +370,28 @@
             margin-top: 6px;
         }
         .btn-share-action {
-            width: 100%;
-            max-width: 320px;
-            height: 46px;
+            width: 100% !important;
+            max-width: 320px !important;
+            min-height: 44px !important;
+            height: auto !important;
+            padding: 10px 14px !important;
             background: #27ae60;
-            border: none;
-            color: white;
+            border: none !important;
+            color: white !important;
             border-radius: 8px;
-            font-size: 15px;
+            font-size: 14.5px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
+            text-align: center;
+            line-height: 1.4;
             box-shadow: 0 3px 8px rgba(39, 174, 96, 0.3);
+            white-space: normal;
+            word-break: break-word;
+            box-sizing: border-box;
         }
         .btn-share-action:hover {
             background: #219653;
@@ -554,17 +565,17 @@
                 <div class="victory-blocks" id="victory-blocks">🟩🟩🟩🟩</div>
             </div>
 
-            <div style="margin-top: 18px; display: flex; flex-direction: column; gap: 10px; align-items: center;">
+            <div style="margin-top: 18px; display: flex; flex-direction: column; gap: 10px; align-items: center; width: 100%;">
                 <button id="copy-share-btn" class="btn btn-share-action" onclick="copyShareCard()">
                     📋 複製戰績卡（分享到社群網站）
                 </button>
                 <div id="copy-toast" class="copy-toast"></div>
                 
-                <div style="display: flex; gap: 10px; width: 100%; max-width: 320px;">
-                    <button class="btn" style="flex: 1; height: 40px; font-size: 14px; background: #fff; color: var(--primary); border: 2px solid var(--primary);" onclick="toggleVictoryModal(false)">
+                <div style="display: flex; gap: 10px; width: 100%; max-width: 320px; box-sizing: border-box;">
+                    <button class="btn" style="flex: 1; width: 100%; height: 40px; font-size: 14px; background: #fff; color: var(--primary); border: 2px solid var(--primary);" onclick="toggleVictoryModal(false)">
                         關閉
                     </button>
-                    <button class="btn btn-donate" style="flex: 1; height: 40px; font-size: 14px;" onclick="toggleDonateModal(true); toggleVictoryModal(false);">
+                    <button class="btn btn-donate" style="flex: 1; width: 100%; height: 40px; font-size: 14px;" onclick="toggleDonateModal(true); toggleVictoryModal(false);">
                         ☕ 隨喜贊助
                     </button>
                 </div>
@@ -720,7 +731,7 @@
             if (toast) toast.textContent = '';
             const shareBtn = document.getElementById('copy-share-btn');
             if (shareBtn) {
-                shareBtn.innerHTML = '📋 複製戰績卡（分享到 Threads / LINE）';
+                shareBtn.innerHTML = '📋 複製戰績卡（分享到社群網站）';
                 shareBtn.style.background = '#27ae60';
             }
         }
@@ -867,9 +878,9 @@ https://shuojen.com/game`;
             copyTextToClipboard(text).then(() => {
                 shareBtn.innerHTML = '✅ 已複製！快去發文分享吧！';
                 shareBtn.style.background = '#1e8449';
-                if (toast) toast.textContent = '戰績已複製至剪貼簿，可直接貼到 Threads / LINE！';
+                if (toast) toast.textContent = '戰績已複製至剪貼簿，可直接貼到社群網站！';
                 setTimeout(() => {
-                    shareBtn.innerHTML = '📋 複製戰績卡（分享到 Threads / LINE）';
+                    shareBtn.innerHTML = '📋 複製戰績卡（分享到社群網站）';
                     shareBtn.style.background = '#27ae60';
                 }, 3500);
             }).catch(err => {
