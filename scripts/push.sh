@@ -14,7 +14,6 @@ if [ -z "$commitMessage" ]; then
     echo ""
     echo "Error: Commit message cannot be empty!"
     echo "Operation cancelled."
-    read -n 1 -s -r -p "Press any key to continue..."
     echo ""
     exit 1
 fi
@@ -43,7 +42,4 @@ echo ""
 echo "==================================="
 echo "      Operation complete!"
 echo "==================================="
-echo ""
-
-read -n 1 -s -r -p "Press any key to continue..."
 echo ""

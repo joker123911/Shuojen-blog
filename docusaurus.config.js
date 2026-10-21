@@ -316,10 +316,6 @@ const config = {
             title: '更多',
             items: [
               {
-                label: 'GitHub',
-                href: 'https://github.com/joker123911/Shuojen-blog',
-              },
-              {
                 label: '貼文 RSS',
                 href: 'https://shuojen.com/blog/rss.xml',
               },

@@ -12,17 +12,53 @@
            ========================================= */
         @import url("https://font.emtech.cc/css/MantouSans");
 
-        :root { --bg: #fdf5e6; --primary: #8b4513; --highlight: #fff3cd; --border: #f39c12; --key: #e74c3c; --locked-bg: #f0f0f0; --locked-text: #bbb; }
-        body { font-family: sans-serif; background: var(--bg); display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; }
+        :root { 
+            --bg: #fdf5e6; 
+            --primary: #8b4513; 
+            --highlight: #fff3cd; 
+            --border: #f39c12; 
+            --key: #e74c3c; 
+            --locked-bg: #f0f0f0; 
+            --locked-text: #bbb; 
+            --board-size: min(520px, 92vw, calc(100dvh - 255px));
+        }
+        body { 
+            font-family: sans-serif; 
+            background: radial-gradient(circle at center, #fff9ee 0%, #f0ddc0 100%); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+            padding: 12px 16px; 
+            margin: 0; 
+            min-height: 100vh;
+            min-height: 100dvh;
+            box-sizing: border-box;
+        }
+
+        /* 典雅桌遊盤卡片外框 */
+        .board-card {
+            background: linear-gradient(180deg, #fffdf9 0%, #fdf5e6 100%);
+            border: 2px solid #d4b287;
+            box-shadow: 0 16px 40px rgba(139, 69, 19, 0.14), 0 3px 10px rgba(139, 69, 19, 0.06), inset 0 0 0 4px #fffdf9;
+            border-radius: 20px;
+            padding: 20px 36px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            max-width: 98vw;
+        }
         
         /* 標題樣式 */
-        .game-header { text-align: center; margin-bottom: 20px; }
+        .game-header { text-align: center; margin-bottom: 8px; }
         .game-title { 
             font-family: 'MantouSans', sans-serif; 
-            font-size: 80px; 
+            font-size: clamp(34px, 5.2vh, 56px); 
             color: var(--primary); 
             margin: 0; 
-            letter-spacing: 0px;
+            line-height: 1.1;
+            letter-spacing: 1px;
             text-shadow: 2px 2px 0px rgba(243, 156, 18, 0.5);
             font-weight: normal;
         }
@@ -31,7 +67,7 @@
         .top-bar { 
             display: flex; 
             gap: 10px; 
-            margin-bottom: 20px; 
+            margin-bottom: 10px; 
             align-items: center; 
             justify-content: center; 
             width: 100%;
@@ -42,14 +78,14 @@
             background: #fffdf9;
             border: 2px solid var(--primary);
             color: var(--primary);
-            padding: 0 16px;
-            height: 42px;
+            padding: 0 14px;
+            height: 38px;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 15px;
+            font-size: 14.5px;
             box-sizing: border-box;
             letter-spacing: 0.5px;
         }
@@ -59,31 +95,31 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 100%;
-            max-width: 490px;
+            width: var(--board-size);
+            max-width: var(--board-size);
             background: #fffdf9;
             border: 2px solid var(--primary);
             border-bottom: 1px dashed #e0c8a8;
             border-radius: 8px 8px 0 0;
-            padding: 8px 14px;
+            padding: 6px 14px;
             box-sizing: border-box;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: bold;
             color: var(--primary);
         }
         .stat-item {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
         .stat-icon {
-            font-size: 16px;
+            font-size: 15px;
         }
         .daily-status {
-            font-size: 13px;
+            font-size: 12.5px;
             background: #fff3cd;
             color: #856404;
-            padding: 3px 10px;
+            padding: 2px 9px;
             border-radius: 12px;
             border: 1px solid #ffeeba;
             font-weight: normal;
@@ -91,10 +127,10 @@
 
         /* 統一按鈕與選單的大小與外觀 */
         .btn, select { 
-            width: 140px;          /* 統一寬度 */
-            height: 42px;         /* 統一高度 */
+            width: 100px;          /* 統一寬度 */
+            height: 38px;         /* 統一高度 */
             font-family: inherit;  /* 繼承 body 的字體 */
-            font-size: 15px; 
+            font-size: 14.5px; 
             font-weight: bold;
             border-radius: 8px; 
             box-sizing: border-box;
@@ -104,7 +140,7 @@
             text-align: center;
             transition: 0.2s;
             cursor: pointer;
-            border: 2px solid var(--primary); /* 改回原先的邊框樣式 */
+            border: 2px solid var(--primary);
         }
 
         .btn { 
@@ -114,11 +150,6 @@
         }
         .btn:hover { opacity: 0.9; }
 
-        /* 上一關與下一關按鈕寬度微調 */
-        .btn-nav {
-            width: 80px;
-        }
-
         .btn-donate {
             background: #b85c1e;
             border-color: #8b4513;
@@ -127,38 +158,53 @@
             background: #d35400;
         }
 
-        select { 
-            background: #fff;
-            color: #000000;         /* 文字改為黑色 */
-            outline: none;
-            padding: 0 25px 0 15px; /* 留出右側箭頭空間 */
-            appearance: none;
-            -webkit-appearance: none;
-            /* 箭頭顏色改回深咖啡色以匹配原邊框 */
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b4513' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-        }
-        select:hover {
-            border-color: var(--key);
-        }
-
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 100; justify-content: center; align-items: center; }
-        .modal-content { background: var(--bg); padding: 30px; border-radius: 12px; max-width: 450px; width: 90%; border: 4px solid var(--primary); position: relative; line-height: 1.8; overflow-y: auto; max-height: 90vh; }
-        .modal-content h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
+        .modal-content { background: var(--bg); padding: 24px; border-radius: 12px; max-width: 450px; width: 90%; border: 4px solid var(--primary); position: relative; line-height: 1.8; overflow-y: auto; max-height: 90vh; }
+        .modal-content h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 8px; font-size: 18px; }
         .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: var(--primary); font-weight: bold; }
 
-        .game-wrapper { position: relative; padding: 3px; background: #fff; border: 2px solid var(--primary); border-radius: 0 0 8px 8px; width: 100%; max-width: 490px; }
-        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; background: #999; }
-        .cell { aspect-ratio: 1 / 1; background: white; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; cursor: pointer; user-select: none; position: relative; z-index: 1; transition: all 0.2s; color: black; }
+        .game-wrapper { 
+            position: relative; 
+            padding: 3px; 
+            background: #fff; 
+            border: 2px solid var(--primary); 
+            border-radius: 0 0 8px 8px; 
+            width: var(--board-size); 
+            max-width: var(--board-size); 
+            box-sizing: border-box;
+        }
+        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2.5px; background: #999; }
+        .cell { aspect-ratio: 1 / 1; background: white; display: flex; justify-content: center; align-items: center; font-size: clamp(13px, 2.5vh, 20px); font-weight: bold; cursor: pointer; user-select: none; position: relative; z-index: 1; transition: all 0.2s; color: black; }
         
-        @media (max-width: 450px) { 
-            .cell { font-size: 4vw; } 
-            .game-title { font-size: 36px; }
-            .btn { width: 95px; height: 38px; font-size: 13px; }
-            .date-badge { height: 38px; font-size: 13px; padding: 0 10px; }
-            .stats-bar { font-size: 13px; padding: 6px 10px; }
+        /* 針對矮螢幕（如 13 吋小筆電或開啟多行書籤列）自適應縮緊 */
+        @media (max-height: 750px) {
+            :root { --board-size: min(460px, 92vw, calc(100dvh - 205px)); }
+            body { padding: 6px 10px; }
+            .board-card { padding: 12px 24px 10px; border-radius: 16px; }
+            .game-header { margin-bottom: 4px; }
+            .game-title { font-size: clamp(28px, 4.4vh, 38px); }
+            .top-bar { margin-bottom: 6px; gap: 6px; }
+            .date-badge, .btn { height: 32px; font-size: 13px; }
+            .stats-bar { padding: 4px 10px; font-size: 12.5px; }
+            .answer-section { margin-top: 8px; }
+            .slots { margin-top: 4px; gap: 5px; }
+            .slot { width: 38px; height: 38px; font-size: 19px; }
+            .footer { margin-top: 6px; padding-bottom: 2px; font-size: 11px; }
+        }
+
+        /* 手機端滿版流暢模式 */
+        @media (max-width: 560px) { 
+            :root { --board-size: min(440px, 94vw, calc(100dvh - 200px)); }
+            body { background: var(--bg); padding: 8px 8px 6px; }
+            .board-card { background: transparent; border: none; box-shadow: none; padding: 0; border-radius: 0; }
+            .cell { font-size: clamp(12px, 3.8vw, 16px); } 
+            .game-title { font-size: 32px; }
+            .btn { width: 88px !important; height: 34px; font-size: 13px; }
+            .date-badge { height: 34px; font-size: 13px; padding: 0 10px; }
+            .stats-bar { font-size: 12.5px; padding: 4px 10px; }
             .daily-status { font-size: 11px; padding: 2px 6px; }
+            .slot { width: 38px; height: 38px; font-size: 20px; }
+            .footer { font-size: 11px; margin-top: 8px; }
         }
 
         .cell.locked { background: var(--locked-bg); color: var(--locked-text); }
@@ -177,19 +223,19 @@
         .red-line { stroke: rgba(231, 76, 60, 0.6); stroke-width: 6; stroke-linecap: round; }
         .black-line { stroke: rgba(0, 0, 0, 0.8); stroke-width: 6; stroke-linecap: round; }
 
-        .answer-section { margin-top: 40px; text-align: center; width: 100%; }
-        .slots { display: flex; gap: 10px; margin-top: 15px; justify-content: center; flex-wrap: wrap; }
-        .slot { width: 55px; height: 55px; border: 2px solid var(--primary); background: #fff; display: flex; justify-content: center; align-items: center; font-size: 26px; font-weight: bold; border-radius: 8px; cursor: pointer; color: #d35400; transition: background 0.2s; user-select: none; }
+        .answer-section { margin-top: 12px; text-align: center; width: var(--board-size); max-width: var(--board-size); }
+        .slots { display: flex; gap: 8px; margin-top: 6px; justify-content: center; flex-wrap: wrap; }
+        .slot { width: clamp(38px, 5.6vh, 50px); height: clamp(38px, 5.6vh, 50px); border: 2px solid var(--primary); background: #fff; display: flex; justify-content: center; align-items: center; font-size: clamp(20px, 3.2vh, 26px); font-weight: bold; border-radius: 8px; cursor: pointer; color: #d35400; transition: background 0.2s; user-select: none; }
         .slot:empty { cursor: default; background: rgba(255,255,255,0.5); border-style: dashed; }
         .slot.drag-over { background: #eee; border-color: var(--key); }
-        #win-msg { display: none; margin-top: 25px; color: #27ae60; font-size: 24px; font-weight: bold; }
+        #win-msg { display: none; margin-top: 8px; color: #27ae60; font-size: 18px; font-weight: bold; }
         .win-donate-prompt { 
-            margin-top: 12px; 
-            font-size: 15px; 
+            margin-top: 8px; 
+            font-size: 13px; 
             color: #8b4513; 
             background: #fff8e7; 
             border: 1px dashed #f39c12; 
-            padding: 8px 16px; 
+            padding: 6px 14px; 
             border-radius: 20px; 
             display: inline-block; 
             cursor: pointer; 
@@ -201,7 +247,7 @@
             transform: scale(1.03); 
         }
         
-        .footer { margin-top: 40px; padding-bottom: 20px; font-size: 14px; color: var(--primary); opacity: 0.8; }
+        .footer { margin-top: 10px; padding-bottom: 2px; font-size: 12px; color: var(--primary); opacity: 0.8; }
         .footer-donate-link {
             color: var(--primary);
             text-decoration: underline;
@@ -352,6 +398,7 @@
 </head>
 <body ondragover="event.preventDefault()" ondrop="handleBodyDrop(event)">
 
+    <div class="board-card">
     <div class="game-header">
         <h1 class="game-title">成語迷宮</h1>
     </div>
@@ -474,6 +521,9 @@
                 <div style="font-size: 12px; color: #888; margin-top: 8px;">
                     💳 支援 信用卡 / LINE Pay / 街口 / ATM / 超商代碼
                 </div>
+                <div style="font-size: 12.5px; color: #8d6e63; margin-top: 14px;">
+                    連絡作者：<a href="mailto:me@shuojen.com" style="color: #8b4513; text-decoration: underline;">me@shuojen.com</a>
+                </div>
             </div>
         </div>
     </div>
@@ -506,7 +556,7 @@
 
             <div style="margin-top: 18px; display: flex; flex-direction: column; gap: 10px; align-items: center;">
                 <button id="copy-share-btn" class="btn btn-share-action" onclick="copyShareCard()">
-                    📋 複製戰績卡（分享到 Threads / LINE）
+                    📋 複製戰績卡（分享到社群網站）
                 </button>
                 <div id="copy-toast" class="copy-toast"></div>
                 
@@ -534,17 +584,18 @@
         <div class="slots" id="slots"></div>
         <div id="win-msg">
             <div>🎉 正確答案，恭喜！</div>
-            <div id="win-action-btns" style="display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap;">
-                <button class="btn" style="width: auto; padding: 0 18px; height: 40px; font-size: 14px; background: #27ae60; border-color: #219653;" onclick="showVictoryModal()">📊 查看戰績卡</button>
-                <button class="btn btn-donate" style="width: auto; padding: 0 18px; height: 40px; font-size: 14px; background: #b85c1e; border-color: #8b4513;" onclick="toggleDonateModal(true)">☕ 隨喜贊助</button>
+            <div id="win-action-btns" style="display: flex; gap: 8px; justify-content: center; margin-top: 8px; flex-wrap: wrap;">
+                <button class="btn" style="width: auto; padding: 0 16px; height: 36px; font-size: 13.5px; background: #27ae60; border-color: #219653;" onclick="showVictoryModal()">📊 查看戰績卡</button>
+                <button class="btn btn-donate" style="width: auto; padding: 0 16px; height: 36px; font-size: 13.5px; background: #b85c1e; border-color: #8b4513;" onclick="toggleDonateModal(true)">☕ 隨喜贊助</button>
             </div>
-            <div style="font-size: 13.5px; color: #7f8c8d; margin-top: 10px; font-weight: normal;">
+            <div style="font-size: 12.5px; color: #7f8c8d; margin-top: 6px; font-weight: normal;">
                 ⏳ 今日挑戰已完成！明天 00:00 準時解鎖新迷宮
             </div>
         </div>
         <div class="footer">
             Original by Ching-huan,Huang（黃慶桓） , Developed by shuojen.com · <a href="javascript:void(0)" onclick="toggleDonateModal(true)" class="footer-donate-link">☕ 隨喜贊助</a>
         </div>
+    </div>
     </div>
 
     <script>

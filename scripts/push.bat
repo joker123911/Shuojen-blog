@@ -1,4 +1,4 @@
-:: deploy.bat (Recommended Interactive Version)
+:: deploy.bat (Interactive Version)
 
 @echo off
 echo.
@@ -15,8 +15,7 @@ if "%commitMessage%"=="" (
     echo.
     echo Error: Commit message cannot be empty!
     echo Operation cancelled.
-    pause
-    exit /b
+    exit /b 1
 )
 
 echo.
@@ -44,4 +43,3 @@ echo ===================================
 echo      Operation complete!
 echo ===================================
 echo.
-pause
