@@ -38,6 +38,57 @@
             flex-wrap: wrap;
         }
 
+        .date-badge {
+            background: #fffdf9;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 0 16px;
+            height: 42px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 15px;
+            box-sizing: border-box;
+            letter-spacing: 0.5px;
+        }
+
+        /* 即時數據列（計時與步數） */
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 490px;
+            background: #fffdf9;
+            border: 2px solid var(--primary);
+            border-bottom: 1px dashed #e0c8a8;
+            border-radius: 8px 8px 0 0;
+            padding: 8px 14px;
+            box-sizing: border-box;
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .stat-icon {
+            font-size: 16px;
+        }
+        .daily-status {
+            font-size: 13px;
+            background: #fff3cd;
+            color: #856404;
+            padding: 3px 10px;
+            border-radius: 12px;
+            border: 1px solid #ffeeba;
+            font-weight: normal;
+        }
+
         /* 統一按鈕與選單的大小與外觀 */
         .btn, select { 
             width: 140px;          /* 統一寬度 */
@@ -68,6 +119,14 @@
             width: 80px;
         }
 
+        .btn-donate {
+            background: #b85c1e;
+            border-color: #8b4513;
+        }
+        .btn-donate:hover {
+            background: #d35400;
+        }
+
         select { 
             background: #fff;
             color: #000000;         /* 文字改為黑色 */
@@ -89,15 +148,17 @@
         .modal-content h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
         .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: var(--primary); font-weight: bold; }
 
-        .game-wrapper { position: relative; padding: 3px; background: #fff; border: 2px solid var(--primary); border-radius: 8px; width: 100%; max-width: 490px; }
+        .game-wrapper { position: relative; padding: 3px; background: #fff; border: 2px solid var(--primary); border-radius: 0 0 8px 8px; width: 100%; max-width: 490px; }
         .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; background: #999; }
         .cell { aspect-ratio: 1 / 1; background: white; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; cursor: pointer; user-select: none; position: relative; z-index: 1; transition: all 0.2s; color: black; }
         
         @media (max-width: 450px) { 
             .cell { font-size: 4vw; } 
             .game-title { font-size: 36px; }
-            .btn, select { width: 120px; height: 38px; font-size: 14px; }
-            .btn-nav { width: 70px; }
+            .btn { width: 95px; height: 38px; font-size: 13px; }
+            .date-badge { height: 38px; font-size: 13px; padding: 0 10px; }
+            .stats-bar { font-size: 13px; padding: 6px 10px; }
+            .daily-status { font-size: 11px; padding: 2px 6px; }
         }
 
         .cell.locked { background: var(--locked-bg); color: var(--locked-text); }
@@ -122,8 +183,171 @@
         .slot:empty { cursor: default; background: rgba(255,255,255,0.5); border-style: dashed; }
         .slot.drag-over { background: #eee; border-color: var(--key); }
         #win-msg { display: none; margin-top: 25px; color: #27ae60; font-size: 24px; font-weight: bold; }
+        .win-donate-prompt { 
+            margin-top: 12px; 
+            font-size: 15px; 
+            color: #8b4513; 
+            background: #fff8e7; 
+            border: 1px dashed #f39c12; 
+            padding: 8px 16px; 
+            border-radius: 20px; 
+            display: inline-block; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+            font-weight: normal; 
+        }
+        .win-donate-prompt:hover { 
+            background: #ffecb3; 
+            transform: scale(1.03); 
+        }
         
         .footer { margin-top: 40px; padding-bottom: 20px; font-size: 14px; color: var(--primary); opacity: 0.8; }
+        .footer-donate-link {
+            color: var(--primary);
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 6px;
+        }
+        .footer-donate-link:hover {
+            color: #d35400;
+        }
+
+        /* 贊助彈窗與方案卡片樣式 */
+        .tier-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: #fff;
+            border: 1.5px solid #ecd8be;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+            text-align: left;
+        }
+        .tier-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 3px 8px rgba(139, 69, 19, 0.12);
+            transform: translateY(-2px);
+        }
+        .tier-icon {
+            font-size: 30px;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .tier-info {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.4;
+        }
+        .tier-info strong {
+            font-size: 15px;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+        .tier-info span {
+            font-size: 13px;
+            color: #666;
+        }
+        .btn-donate-action {
+            display: inline-flex;
+            text-decoration: none;
+            width: 260px;
+            height: 46px;
+            font-size: 16px;
+            background: #b85c1e;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(184, 92, 30, 0.3);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .btn-donate-action:hover {
+            background: #d35400;
+            transform: scale(1.02);
+            color: white;
+        }
+
+        /* 戰績結算視窗 */
+        .victory-card {
+            background: #fff;
+            border: 2px dashed #e0c8a8;
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .victory-rank-badge {
+            font-size: 24px;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 4px;
+        }
+        .victory-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+        .victory-stats-row {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #f0e0d0;
+            border-bottom: 1px solid #f0e0d0;
+            margin-bottom: 10px;
+        }
+        .v-stat {
+            display: flex;
+            flex-direction: column;
+        }
+        .v-stat-val {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .v-stat-lbl {
+            font-size: 12px;
+            color: #888;
+        }
+        .victory-blocks {
+            font-size: 22px;
+            letter-spacing: 4px;
+            margin-top: 6px;
+        }
+        .btn-share-action {
+            width: 100%;
+            max-width: 320px;
+            height: 46px;
+            background: #27ae60;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 8px rgba(39, 174, 96, 0.3);
+        }
+        .btn-share-action:hover {
+            background: #219653;
+            transform: scale(1.02);
+            color: white;
+        }
+        .copy-toast {
+            font-size: 13px;
+            color: #27ae60;
+            font-weight: bold;
+            min-height: 18px;
+            text-align: center;
+        }
     </style>
 </head>
 <body ondragover="event.preventDefault()" ondrop="handleBodyDrop(event)">
@@ -132,11 +356,20 @@
         <h1 class="game-title">成語迷宮</h1>
     </div>
 
+    <!-- 頂部操作列 -->
     <div class="top-bar">
-        <button class="btn btn-nav" onclick="prevLevel()">上一關</button>
-        <select id="level-select" onchange="loadLevel(this.value)"></select>
-        <button class="btn btn-nav" onclick="nextLevel()">下一關</button>
-        <button class="btn" onclick="toggleModal(true)">遊戲說明</button>
+        <div id="daily-badge" class="date-badge">
+            📅 <span id="daily-date-text">2026-10-21</span>
+        </div>
+        <button class="btn" style="width: 100px;" onclick="toggleModal(true)">遊戲說明</button>
+        <button class="btn" style="width: 100px;" onclick="toggleAboutModal(true)">關於遊戲</button>
+    </div>
+
+    <!-- 即時數據列（計時與步數） -->
+    <div class="stats-bar">
+        <div class="stat-item"><span class="stat-icon">⏱️</span><span id="timer-display">00:00</span></div>
+        <div class="stat-item"><span id="mode-status-indicator" class="daily-status">🔥 每日一題</span></div>
+        <div class="stat-item"><span class="stat-icon">🚶</span><span id="step-display">0 步</span></div>
     </div>
 
     <div id="info-modal" class="modal" onclick="toggleModal(false)">
@@ -167,6 +400,130 @@
             </div>
         </div>
     </div>
+
+    <div id="about-modal" class="modal" onclick="toggleAboutModal(false)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="toggleAboutModal(false)">&times;</span>
+            <div style="text-align: center; margin-bottom: 16px;">
+                <span style="font-size: 38px;">📖</span>
+                <h3 style="margin: 8px 0 6px 0; border: none; padding: 0;">關於「成語迷宮」</h3>
+            </div>
+
+            <div style="font-size: 14.5px; line-height: 1.85; color: #4e342e; text-align: justify;">
+                <p style="margin-bottom: 14px; text-indent: 2em;">
+                    大約在 2006 年，我哥在自由時報上的週末專欄連載一個文字遊戲，名叫「成語迷宮」。這是他在國高中時期設計的，大約連載了三年，後來在 2009 年集結成冊，出了一本實體書，在當時那個手機不普及的年代，受到還滿多家裡有訂報紙的讀者喜歡。
+                </p>
+                <p style="margin-bottom: 14px; text-indent: 2em;">
+                    印象很深，在我國小的時候，當時報社需要庫存，要一次交好幾份稿，我哥找我幫他一起做。兩個人就窩在電腦前，上教育部的網站查成語，用 Word 表格慢慢刻，再一個字一個字填上去，一口氣趕出好幾份（原來我不到十歲就當下包接案了，<del style="color: #888;">但我似乎沒拿到報酬</del>）。
+                </p>
+                <p style="margin-bottom: 14px; text-indent: 2em;">
+                    中間這十幾年，偶爾家人們聊天的時候，會提到要不要把這個遊戲出成 App 等等的想法，但大家總是隨口提提，沒有什麼實際作為。我哥也許有問過幾個朋友，但似乎也沒什麼下文。這個遊戲誕生至今已經二十年了，在我心中一直是個跟我哥的美好回憶，於是我利用週末和下班的閒暇時間，做了這個網頁版。想說今年回高雄過年時，再給他一個驚喜，就當做一個新年禮物吧。
+                </p>
+				<p style="margin-bottom: 14px; text-indent: 2em;">
+                     撰於 2026-01-28 
+                </p>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px; border-top: 1px dashed #e0c8a8; padding-top: 16px;">
+                <button class="btn" style="width: 120px; display: inline-block;" onclick="toggleAboutModal(false)">關閉</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="donate-modal" class="modal" onclick="toggleDonateModal(false)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="toggleDonateModal(false)">&times;</span>
+            <div style="text-align: center; margin-bottom: 15px;">
+                <span style="font-size: 38px;">☕</span>
+                <h3 style="margin: 8px 0 6px 0; border: none; padding: 0;">支持成語迷宮</h3>
+                <div style="color: #795548; font-size: 14px;">無廣告、純粹思考的角落，感謝有您的相伴</div>
+            </div>
+            
+            <div style="background: rgba(243, 156, 18, 0.12); border-left: 4px solid var(--border); padding: 12px 14px; border-radius: 6px; font-size: 14px; color: #5d4037; line-height: 1.6; margin-bottom: 18px;">
+                本遊戲完全免費且<b>絕無廣告</b>干擾思考。若您在解謎過程中獲得了樂趣，歡迎透過<b>綠界科技（ECPay）</b>請作者喝杯咖啡，支持網址與主機運作！
+            </div>
+
+            <div class="tier-card">
+                <div class="tier-icon">☕</div>
+                <div class="tier-info">
+                    <strong>NT$ 50 - 請杯美式咖啡</strong>
+                    <span>補充電力，為作者注入解謎題庫開發動能</span>
+                </div>
+            </div>
+
+            <div class="tier-card">
+                <div class="tier-icon">🍜</div>
+                <div class="tier-info">
+                    <strong>NT$ 150 - 贊助元氣晚餐</strong>
+                    <span>加滿油箱，加速新關卡、功能與詞庫優化</span>
+                </div>
+            </div>
+
+            <div class="tier-card">
+                <div class="tier-icon">🌐</div>
+                <div class="tier-info">
+                    <strong>NT$ 300+ - 伺服器守護神</strong>
+                    <span>支持遊戲專屬網址（Domain）與雲端主機運營</span>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 22px;">
+                <a id="ecpay-donate-link" href="#" target="_blank" rel="noopener noreferrer" class="btn-donate-action" onclick="handleDonateClick(event)">
+                    前往綠界贊助頁面 ☕
+                </a>
+                <div style="font-size: 12px; color: #888; margin-top: 8px;">
+                    💳 支援 信用卡 / LINE Pay / 街口 / ATM / 超商代碼
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 戰績結算與分享彈窗 -->
+    <div id="victory-modal" class="modal" onclick="toggleVictoryModal(false)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="toggleVictoryModal(false)">&times;</span>
+            <div style="text-align: center; margin-bottom: 10px;">
+                <div style="font-size: 42px; margin-bottom: 4px;">🎉</div>
+                <h2 style="margin: 0; color: var(--primary); font-family: 'MantouSans', sans-serif; font-size: 32px; font-weight: normal;">解謎大成功！</h2>
+                <div id="victory-mode-subtitle" style="font-size: 14px; color: #795548; margin-top: 4px;">成語迷宮 每日挑戰</div>
+            </div>
+
+            <div class="victory-card">
+                <div class="victory-rank-badge" id="victory-rank">【狀元及第】</div>
+                <div class="victory-desc" id="victory-desc">才思敏捷，出口成章！</div>
+                <div class="victory-stats-row">
+                    <div class="v-stat">
+                        <span class="v-stat-val" id="v-time">01:23</span>
+                        <span class="v-stat-lbl">⏱️ 通關時間</span>
+                    </div>
+                    <div class="v-stat">
+                        <span class="v-stat-val" id="v-steps">18 步</span>
+                        <span class="v-stat-lbl">🚶 操作步數</span>
+                    </div>
+                </div>
+                <div class="victory-blocks" id="victory-blocks">🟩🟩🟩🟩</div>
+            </div>
+
+            <div style="margin-top: 18px; display: flex; flex-direction: column; gap: 10px; align-items: center;">
+                <button id="copy-share-btn" class="btn btn-share-action" onclick="copyShareCard()">
+                    📋 複製戰績卡（分享到 Threads / LINE）
+                </button>
+                <div id="copy-toast" class="copy-toast"></div>
+                
+                <div style="display: flex; gap: 10px; width: 100%; max-width: 320px;">
+                    <button class="btn" style="flex: 1; height: 40px; font-size: 14px; background: #fff; color: var(--primary); border: 2px solid var(--primary);" onclick="toggleVictoryModal(false)">
+                        關閉
+                    </button>
+                    <button class="btn btn-donate" style="flex: 1; height: 40px; font-size: 14px;" onclick="toggleDonateModal(true); toggleVictoryModal(false);">
+                        ☕ 隨喜贊助
+                    </button>
+                </div>
+                <div style="font-size: 12.5px; color: #888; text-align: center; margin-top: 4px;">
+                    ⏳ 明天 00:00 準時解鎖新題目
+                </div>
+            </div>
+        </div>
+    </div>
     
     <div class="game-wrapper">
         <div class="grid" id="grid"></div>
@@ -175,24 +532,300 @@
 
     <div class="answer-section">
         <div class="slots" id="slots"></div>
-        <div id="win-msg">🎉 正確答案，恭喜！</div>
+        <div id="win-msg">
+            <div>🎉 正確答案，恭喜！</div>
+            <div id="win-action-btns" style="display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap;">
+                <button class="btn" style="width: auto; padding: 0 18px; height: 40px; font-size: 14px; background: #27ae60; border-color: #219653;" onclick="showVictoryModal()">📊 查看戰績卡</button>
+                <button class="btn btn-donate" style="width: auto; padding: 0 18px; height: 40px; font-size: 14px; background: #b85c1e; border-color: #8b4513;" onclick="toggleDonateModal(true)">☕ 隨喜贊助</button>
+            </div>
+            <div style="font-size: 13.5px; color: #7f8c8d; margin-top: 10px; font-weight: normal;">
+                ⏳ 今日挑戰已完成！明天 00:00 準時解鎖新迷宮
+            </div>
+        </div>
         <div class="footer">
-            Original by Ching-huan,Huang（黃慶桓） , Developed by shuojen.com
+            Original by Ching-huan,Huang（黃慶桓） , Developed by shuojen.com · <a href="javascript:void(0)" onclick="toggleDonateModal(true)" class="footer-donate-link">☕ 隨喜贊助</a>
         </div>
     </div>
 
     <script>
+        // ==========================================
+        // 綠界金流贊助設定 (ECPay Donation)
+        // 請將下方的網址替換為您的綠界個人收款/贊助專屬網址
+        // 例如：https://p.ecpay.com.tw/XXXXXX
+        // ==========================================
+        const ECPAY_DONATE_URL = "https://p.ecpay.com.tw/YOUR_ECPAY_ID";
+
+        function toggleDonateModal(show) {
+            document.getElementById('donate-modal').style.display = show ? 'flex' : 'none';
+        }
+
+        function handleDonateClick(e) {
+            if (!ECPAY_DONATE_URL || ECPAY_DONATE_URL.includes("YOUR_ECPAY_ID")) {
+                e.preventDefault();
+                alert("【不好意思】\n贊助功能目前還尚未開通，即將啟用，感謝您的支持");
+            }
+        }
+
+        function updateDonateLink() {
+            const donateLink = document.getElementById('ecpay-donate-link');
+            if (donateLink && ECPAY_DONATE_URL && !ECPAY_DONATE_URL.includes("YOUR_ECPAY_ID")) {
+                donateLink.href = ECPAY_DONATE_URL;
+            }
+        }
+
         const gridEl = document.getElementById('grid');
         const svgEl = document.getElementById('svg-overlay');
         const slotsEl = document.getElementById('slots');
-        const levelSelect = document.getElementById('level-select');
         const size = 12;
+
+        let currentLevelIndex = 0;
+        let timerSeconds = 0;
+        let timerInterval = null;
+        let timerStarted = false;
+        let stepCount = 0;
+        let gameFinished = false;
 
         let selectedIndices = new Set(); 
         let manualKeys = new Map(); 
         let lockedCells = new Set(); 
         let mobileSelectedChar = null; 
         let activeKeyIdx = null; 
+
+        // ==========================================
+        // 每日一題系統（一天一題，零劇透輪替）
+        // ==========================================
+        function getDailyInfo() {
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = now.getMonth();
+            const d = now.getDate();
+            const dateFormatted = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+            
+            // 基準日 2026-01-01
+            const baseDate = new Date(2026, 0, 1);
+            const todayMidnight = new Date(y, m, d);
+            const dayDiff = Math.floor((todayMidnight - baseDate) / (1000 * 60 * 60 * 24));
+            
+            const totalPuzzles = (typeof puzzles !== 'undefined' && puzzles.length) ? puzzles.length : 120;
+            // 線性互質排列 (37 與 120 互質)，保證每一關皆均勻輪替、不劇透題號
+            const dailyIndex = Math.abs((dayDiff * 37 + 11) % totalPuzzles);
+            
+            return {
+                dailyIndex,
+                dateFormatted
+            };
+        }
+
+        function checkDailyCompletion() {
+            const info = getDailyInfo();
+            const statusIndicator = document.getElementById('mode-status-indicator');
+            const saved = localStorage.getItem('idiom_daily_' + info.dateFormatted);
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    const m = Math.floor(data.time / 60);
+                    const s = data.time % 60;
+                    const tStr = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+                    statusIndicator.innerHTML = `✅ 今日已通關 (${tStr})`;
+                    statusIndicator.style.cursor = 'pointer';
+                    statusIndicator.title = '點擊回顧今日戰績卡';
+                    statusIndicator.onclick = () => showVictoryModal(data);
+                } catch(e) {
+                    statusIndicator.textContent = '🔥 每日一題';
+                    statusIndicator.onclick = null;
+                }
+            } else {
+                statusIndicator.textContent = '🔥 每日一題';
+                statusIndicator.style.cursor = 'default';
+                statusIndicator.onclick = null;
+            }
+        }
+
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerStarted = true;
+            timerInterval = setInterval(() => {
+                timerSeconds++;
+                updateTimerDisplay();
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        function resetStats() {
+            stopTimer();
+            timerSeconds = 0;
+            stepCount = 0;
+            timerStarted = false;
+            gameFinished = false;
+            updateTimerDisplay();
+            updateStepDisplay();
+            const toast = document.getElementById('copy-toast');
+            if (toast) toast.textContent = '';
+            const shareBtn = document.getElementById('copy-share-btn');
+            if (shareBtn) {
+                shareBtn.innerHTML = '📋 複製戰績卡（分享到 Threads / LINE）';
+                shareBtn.style.background = '#27ae60';
+            }
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timerSeconds / 60);
+            const s = timerSeconds % 60;
+            const str = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+            const el = document.getElementById('timer-display');
+            if (el) el.textContent = str;
+            return str;
+        }
+
+        function updateStepDisplay() {
+            const el = document.getElementById('step-display');
+            if (el) el.textContent = `${stepCount} 步`;
+        }
+
+        function recordStep() {
+            if (gameFinished) return;
+            if (!timerStarted) {
+                startTimer();
+            }
+            stepCount++;
+            updateStepDisplay();
+        }
+
+        function getEvaluation(seconds, steps) {
+            if (seconds <= 45) {
+                return { title: "文曲星轉世", desc: "秒殺迷宮，神乎其技！" };
+            } else if (seconds <= 90) {
+                return { title: "狀元及第", desc: "才思敏捷，出口成章！" };
+            } else if (seconds <= 150) {
+                return { title: "榜眼及第", desc: "文采斐然，行雲流水！" };
+            } else if (seconds <= 240) {
+                return { title: "探花及第", desc: "沉著應變，抽絲剝繭！" };
+            } else if (seconds <= 360) {
+                return { title: "飽學進士", desc: "博聞強記，步步為營！" };
+            } else {
+                return { title: "國文大師", desc: "鐵杵磨成針，毅力非凡！" };
+            }
+        }
+
+        function toggleVictoryModal(show) {
+            document.getElementById('victory-modal').style.display = show ? 'flex' : 'none';
+        }
+
+        function showVictoryModal(customData) {
+            const info = getDailyInfo();
+            const p = puzzles[currentLevelIndex];
+            if (!p) return;
+            
+            let sec = timerSeconds;
+            let steps = stepCount;
+
+            if (customData) {
+                sec = customData.time;
+                steps = customData.steps;
+            } else {
+                const saved = localStorage.getItem('idiom_daily_' + info.dateFormatted);
+                if (saved) {
+                    try {
+                        const parsed = JSON.parse(saved);
+                        sec = parsed.time;
+                        steps = parsed.steps;
+                    } catch(e) {}
+                }
+            }
+            
+            const m = Math.floor(sec / 60);
+            const s = sec % 60;
+            const timeFormatted = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+            const evalData = getEvaluation(sec, steps);
+
+            document.getElementById('victory-rank').textContent = `【${evalData.title}】`;
+            document.getElementById('victory-desc').textContent = evalData.desc;
+            document.getElementById('v-time').textContent = timeFormatted;
+            document.getElementById('v-steps').textContent = `${steps} 步`;
+            document.getElementById('victory-blocks').textContent = "🟩".repeat(p.answer.length);
+            document.getElementById('victory-mode-subtitle').textContent = `成語迷宮 每日挑戰 ${info.dateFormatted}`;
+
+            toggleVictoryModal(true);
+        }
+
+        function getShareText() {
+            const info = getDailyInfo();
+            const p = puzzles[currentLevelIndex];
+            if (!p) return "";
+            
+            let sec = timerSeconds;
+            let steps = stepCount;
+            const saved = localStorage.getItem('idiom_daily_' + info.dateFormatted);
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    sec = parsed.time;
+                    steps = parsed.steps;
+                } catch(e) {}
+            }
+
+            const m = Math.floor(sec / 60);
+            const s = sec % 60;
+            const timeFormatted = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+            const evalData = getEvaluation(sec, steps);
+            const idiomBlocks = "🟩".repeat(p.answer.length);
+
+            return `🧩 成語迷宮 ${info.dateFormatted}
+⏱️ ${timeFormatted} ｜ 🚶 ${steps} 步
+🏆 評價：【${evalData.title}】
+${idiomBlocks}
+
+👇 來挑戰今日成語迷宮：
+https://shuojen.com/game`;
+        }
+
+        function copyTextToClipboard(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+                return navigator.clipboard.writeText(text);
+            } else {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.left = '-9999px';
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+                return new Promise((resolve, reject) => {
+                    try {
+                        document.execCommand('copy') ? resolve() : reject();
+                    } catch (err) {
+                        reject(err);
+                    } finally {
+                        document.body.removeChild(textarea);
+                    }
+                });
+            }
+        }
+
+        function copyShareCard() {
+            const text = getShareText();
+            const toast = document.getElementById('copy-toast');
+            const shareBtn = document.getElementById('copy-share-btn');
+            
+            copyTextToClipboard(text).then(() => {
+                shareBtn.innerHTML = '✅ 已複製！快去發文分享吧！';
+                shareBtn.style.background = '#1e8449';
+                if (toast) toast.textContent = '戰績已複製至剪貼簿，可直接貼到 Threads / LINE！';
+                setTimeout(() => {
+                    shareBtn.innerHTML = '📋 複製戰績卡（分享到 Threads / LINE）';
+                    shareBtn.style.background = '#27ae60';
+                }, 3500);
+            }).catch(err => {
+                console.error('Copy failed:', err);
+                prompt("請手動複製以下戰績文字：", text);
+            });
+        }
 
         function isValidIdiomWord(word) {
             if (typeof ALL_IDIOMS === 'undefined') return false;
@@ -203,7 +836,11 @@
             document.getElementById('info-modal').style.display = show ? 'flex' : 'none';
         }
 
-        function setupLevelSelect() {
+        function toggleAboutModal(show) {
+            document.getElementById('about-modal').style.display = show ? 'flex' : 'none';
+        }
+
+        function initGame() {
             if (typeof puzzles === 'undefined') {
                 alert("找不到題目檔 (puzzle.js)");
                 return;
@@ -212,33 +849,16 @@
                 alert("找不到字典檔 (dictionary.js)");
                 return;
             }
-            puzzles.forEach((p, index) => {
-                const opt = document.createElement('option');
-                opt.value = index;
-                opt.textContent = `第 ${p.id} 關`;
-                levelSelect.appendChild(opt);
-            });
-            loadLevel(0);
-        }
-
-        function prevLevel() {
-            let currentIndex = parseInt(levelSelect.value, 10);
-            if (currentIndex > 0) {
-                levelSelect.value = currentIndex - 1;
-                loadLevel(levelSelect.value);
-            }
-        }
-
-        function nextLevel() {
-            let currentIndex = parseInt(levelSelect.value, 10);
-            if (currentIndex < puzzles.length - 1) {
-                levelSelect.value = currentIndex + 1;
-                loadLevel(levelSelect.value);
-            }
+            const info = getDailyInfo();
+            const dateEl = document.getElementById('daily-date-text');
+            if (dateEl) dateEl.textContent = info.dateFormatted;
+            checkDailyCompletion();
+            loadLevel(info.dailyIndex);
         }
 
         function loadLevel(index) {
-            const p = puzzles[index];
+            currentLevelIndex = parseInt(index, 10);
+            const p = puzzles[currentLevelIndex];
             if (!p) return;
             selectedIndices.clear();
             manualKeys.clear();
@@ -246,6 +866,7 @@
             mobileSelectedChar = null;
             activeKeyIdx = null;
             document.getElementById('win-msg').style.display = 'none';
+            resetStats();
             initBoard(p);
             updateVisuals();
         }
@@ -273,6 +894,7 @@
                 slot.dataset.slotIdx = i;
                 slot.draggable = true;
                 slot.onclick = () => { 
+                    recordStep();
                     if (mobileSelectedChar) {
                         slot.textContent = mobileSelectedChar;
                         mobileSelectedChar = null;
@@ -306,6 +928,7 @@
         }
 
         function handleCellClick(idx, el) {
+            recordStep();
             if (manualKeys.has(idx)) {
                 if (activeKeyIdx === idx) {
                     const unlockedLines = manualKeys.get(idx);
@@ -330,7 +953,7 @@
                 const combined = new Set([...selectedIndices, ...lockedCells]);
                 const validLines = getValidIdiomsAtPoint(idx, combined);
                 
-                if (validLines.length >= 2 && puzzles[levelSelect.value].answer.includes(el.textContent)) {
+                if (validLines.length >= 2 && puzzles[currentLevelIndex].answer.includes(el.textContent)) {
                     manualKeys.set(idx, validLines);
                     validLines.forEach(line => line.forEach(id => { 
                         lockedCells.add(id); 
@@ -454,6 +1077,7 @@
         function handleSlotDrop(e) {
             e.preventDefault();
             e.stopPropagation(); // 防止冒泡至 body 觸發 handleBodyDrop 誤刪文字
+            recordStep();
             this.classList.remove('drag-over');
             const char = e.dataTransfer.getData('text');
             if (!char) return;
@@ -479,6 +1103,7 @@
                 const srcIdx = e.dataTransfer.getData('sourceIdx');
                 if (srcIdx !== "" && slotsEl.children[srcIdx]) {
                     slotsEl.children[srcIdx].textContent = '';
+                    recordStep();
                     checkWin();
                 }
             }
@@ -486,7 +1111,33 @@
 
         function checkWin() {
             const current = Array.from(document.querySelectorAll('.slot')).map(s => s.textContent).join('');
-            document.getElementById('win-msg').style.display = (current === puzzles[levelSelect.value].answer) ? 'block' : 'none';
+            const won = (current === puzzles[currentLevelIndex].answer);
+            const winMsgEl = document.getElementById('win-msg');
+            
+            if (won) {
+                winMsgEl.style.display = 'block';
+                if (!gameFinished) {
+                    gameFinished = true;
+                    stopTimer();
+                    const info = getDailyInfo();
+                    
+                    const saved = localStorage.getItem('idiom_daily_' + info.dateFormatted);
+                    if (!saved) {
+                        localStorage.setItem('idiom_daily_' + info.dateFormatted, JSON.stringify({
+                            time: timerSeconds,
+                            steps: stepCount,
+                            completedAt: Date.now()
+                        }));
+                    }
+                    checkDailyCompletion();
+                    
+                    setTimeout(() => {
+                        showVictoryModal();
+                    }, 400);
+                }
+            } else {
+                winMsgEl.style.display = 'none';
+            }
         }
 
         window.addEventListener('resize', updateVisuals);
@@ -496,7 +1147,8 @@
         if (document.fonts && document.fonts.ready) {
             document.fonts.ready.then(() => updateVisuals());
         }
-        setupLevelSelect();
+        initGame();
+        updateDonateLink();
     </script>
 </body>
 </html>

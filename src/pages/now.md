@@ -10,7 +10,7 @@ import NowEvaPoster from '@site/src/components/NowEvaPoster';
 </div>
 
 
-*最後更新：2026-10-20*
+*最後更新：2026-10-21*
 
 :::note
 靈感來自[Derek Sivers /now](https://sive.rs/now)。
