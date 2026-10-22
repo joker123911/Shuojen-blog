@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from '@docusaurus/router';
 import Link from '@docusaurus/Link'; 
 import styles from './styles.module.css';
+import TurnstileWidget from './TurnstileWidget';
 
 // --- 1. 換成你專屬的 Cloudflare Worker 網址 ---
 const WORKER_URL = "https://blog-comments-api.joker123911.workers.dev";
@@ -22,6 +23,12 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   const [fetchLoading, setFetchLoading] = useState(true);
   const [fetchError, setFetchError] = useState(false);
   const [visibleCount, setVisibleCount] = useState(10);
+
+  // --- Turnstile 人機驗證狀態 ---
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [replyTurnstileToken, setReplyTurnstileToken] = useState('');
+  const turnstileRef = useRef(null);
+  const replyTurnstileRef = useRef(null);
 
   // --- 管理員狀態 ---
   const [adminKey, setAdminKey] = useState('');
@@ -328,6 +335,10 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.content.trim()) return;
+    if (!adminKey && !turnstileToken) {
+      alert('請先完成人機安全驗證！');
+      return;
+    }
     setLoading(true);
     let finalWebsite = formData.website.trim();
     if (finalWebsite && !/^https?:\/\//i.test(finalWebsite)) finalWebsite = `https://${finalWebsite}`;
@@ -339,11 +350,12 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       website: finalWebsite, 
       slug: currentSlug,
       title: pageTitle,
-      parentId: null
+      parentId: null,
+      turnstileToken: adminKey ? null : turnstileToken
     };
     
     try {
-      await fetch(WORKER_URL, {
+      const res = await fetch(WORKER_URL, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -351,13 +363,21 @@ export default function Guestbook({ readOnly = false, postSlug }) {
         },
         body: JSON.stringify(submitData),
       });
+      const resData = await res.json();
+      if (!res.ok || resData.error) {
+        throw new Error(resData.error || '送出失敗');
+      }
       alert('留言已送出！');
       setFormData({ name: '', content: '', website: '' });
+      setTurnstileToken('');
+      if (turnstileRef.current) turnstileRef.current.reset();
       setFormTab('write');
       setTimeout(fetchComments, 500); 
     } catch (error) {
       console.error("送出錯誤:", error);
-      alert('送出失敗');
+      alert(error.message || '送出失敗');
+      setTurnstileToken('');
+      if (turnstileRef.current) turnstileRef.current.reset();
     } finally {
       setLoading(false);
     }
@@ -368,6 +388,10 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     e.preventDefault();
     if (!adminKey && !replyData.name.trim()) return;
     if (!replyData.content.trim()) return;
+    if (!adminKey && !replyTurnstileToken) {
+      alert('請先完成人機安全驗證！');
+      return;
+    }
     setLoading(true);
 
     let finalWebsite = replyData.website.trim();
@@ -379,11 +403,12 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       content: replyData.content,
       slug: parentComment.slug,     
       title: parentComment.title,   
-      parentId: String(parentComment.id) 
+      parentId: String(parentComment.id),
+      turnstileToken: adminKey ? null : replyTurnstileToken
     };
 
     try {
-      await fetch(WORKER_URL, {
+      const res = await fetch(WORKER_URL, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -391,17 +416,25 @@ export default function Guestbook({ readOnly = false, postSlug }) {
         },
         body: JSON.stringify(submitData),
       });
+      const resData = await res.json();
+      if (!res.ok || resData.error) {
+        throw new Error(resData.error || '回覆失敗');
+      }
       alert('回覆已送出！');
       
       setExpandedComments(prev => ({ ...prev, [parentComment.id]: true }));
       
       setReplyData({ name: '', content: '', website: '' });
+      setReplyTurnstileToken('');
+      if (replyTurnstileRef.current) replyTurnstileRef.current.reset();
       setReplyTab('write');
       setReplyingTo(null);
       setTimeout(fetchComments, 500);
     } catch (error) {
       console.error("回覆錯誤:", error);
-      alert('回覆失敗');
+      alert(error.message || '回覆失敗');
+      setReplyTurnstileToken('');
+      if (replyTurnstileRef.current) replyTurnstileRef.current.reset();
     } finally {
       setLoading(false);
     }
@@ -410,11 +443,13 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   const startReply = (id) => {
     setReplyingTo(id);
     setReplyData({ name: '', content: '', website: '' });
+    setReplyTurnstileToken('');
     setReplyTab('write');
   };
 
   const cancelReply = () => {
     setReplyingTo(null);
+    setReplyTurnstileToken('');
     setReplyTab('write');
   };
 
@@ -594,6 +629,13 @@ export default function Guestbook({ readOnly = false, postSlug }) {
                     )}
                   </div>
                 )}
+                {!adminKey && (
+                  <TurnstileWidget 
+                    ref={replyTurnstileRef}
+                    onVerify={(token) => setReplyTurnstileToken(token)}
+                    onExpire={() => setReplyTurnstileToken('')}
+                  />
+                )}
                 <div style={{ textAlign: 'right' }}>
                   <button type="button" onClick={cancelReply} style={{ marginRight: '8px', padding: '6px 16px', cursor: 'pointer', borderRadius: '4px', border: '1px solid var(--ifm-color-emphasis-500)', background: 'transparent', color: 'var(--ifm-font-color-base)' }}>取消</button>
                   <button type="submit" className={styles.submitBtn} style={{ display: 'inline-flex', padding: '6px 20px' }} disabled={loading}>
@@ -675,6 +717,13 @@ export default function Guestbook({ readOnly = false, postSlug }) {
                   <span className={styles.previewPlaceholder}>（尚無輸入內容，請在編輯區輸入 Markdown 文字）</span>
                 )}
               </div>
+            )}
+            {!adminKey && (
+              <TurnstileWidget 
+                ref={turnstileRef}
+                onVerify={(token) => setTurnstileToken(token)}
+                onExpire={() => setTurnstileToken('')}
+              />
             )}
             <button type="submit" className={styles.submitBtn} disabled={loading}>
               {loading ? '傳送中...' : '送出留言'}
