@@ -4,6 +4,8 @@ node_modules/
 .cache-loader/
 build/
 dist/
+.venv/
+venv/
 __pycache__/
 *.py[cod]
 *$py.class
