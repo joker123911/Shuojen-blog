@@ -267,60 +267,93 @@
         .tier-card {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
             background: #fff;
             border: 1.5px solid #ecd8be;
-            border-radius: 10px;
-            padding: 12px 16px;
-            margin-bottom: 12px;
-            transition: all 0.2s;
+            border-radius: 12px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
             text-align: left;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            box-sizing: border-box;
         }
         .tier-card:hover {
             border-color: var(--primary);
-            box-shadow: 0 3px 8px rgba(139, 69, 19, 0.12);
+            box-shadow: 0 4px 12px rgba(139, 69, 19, 0.15);
             transform: translateY(-2px);
+            background: #fffdf9;
+        }
+        .tier-card.tier-recurring {
+            background: linear-gradient(135deg, #fffdf8 0%, #fdf8ee 100%);
+            border: 1.5px dashed #c89650;
+        }
+        .tier-card.tier-recurring:hover {
+            border-color: #b85c1e;
+            background: #fff7eb;
         }
         .tier-icon {
-            font-size: 30px;
+            font-size: 24px;
             line-height: 1;
             flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(184, 92, 30, 0.08);
+            border-radius: 50%;
         }
         .tier-info {
             display: flex;
             flex-direction: column;
-            line-height: 1.4;
+            line-height: 1.35;
+            flex: 1;
+            min-width: 0;
         }
         .tier-info strong {
-            font-size: 15px;
+            font-size: 14px;
             color: var(--primary);
-            margin-bottom: 3px;
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         .tier-info span {
-            font-size: 13px;
-            color: #666;
+            font-size: 12px;
+            color: #6d5b52;
+            word-break: break-word;
         }
-        .btn-donate-action {
-            display: inline-flex;
-            text-decoration: none;
-            width: 260px;
-            height: 46px;
-            font-size: 16px;
+        .tier-badge {
+            font-size: 10px;
+            background: #27ae60;
+            color: #fff;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .tier-action-btn {
+            flex-shrink: 0;
             background: #b85c1e;
-            border: none;
-            color: white;
-            border-radius: 8px;
-            align-items: center;
-            justify-content: center;
+            color: #ffffff;
+            font-size: 12px;
             font-weight: bold;
-            box-shadow: 0 4px 10px rgba(184, 92, 30, 0.3);
-            transition: all 0.2s;
-            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 6px;
+            transition: background 0.2s, transform 0.2s;
+            white-space: nowrap;
         }
-        .btn-donate-action:hover {
+        .tier-card:hover .tier-action-btn {
             background: #d35400;
-            transform: scale(1.02);
-            color: white;
+            transform: translateX(2px);
+        }
+        .tier-recurring .tier-action-btn {
+            background: #27ae60;
+        }
+        .tier-recurring:hover .tier-action-btn {
+            background: #219653;
         }
 
         /* 戰績結算視窗 */
@@ -491,49 +524,62 @@
     <div id="donate-modal" class="modal" onclick="toggleDonateModal(false)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-btn" onclick="toggleDonateModal(false)">&times;</span>
-            <div style="text-align: center; margin-bottom: 15px;">
+            <div style="text-align: center; margin-bottom: 14px;">
                 <span style="font-size: 38px;">☕</span>
-                <h3 style="margin: 8px 0 6px 0; border: none; padding: 0;">支持成語迷宮</h3>
-                <div style="color: #795548; font-size: 14px;">無廣告、純粹思考的角落，感謝有您的相伴</div>
+                <h3 style="margin: 6px 0 4px 0; border: none; padding: 0;">支持成語迷宮</h3>
+                <div style="color: #795548; font-size: 13.5px;">無廣告、純粹思考的角落，感謝有您的相伴</div>
             </div>
             
-            <div style="background: rgba(243, 156, 18, 0.12); border-left: 4px solid var(--border); padding: 12px 14px; border-radius: 6px; font-size: 14px; color: #5d4037; line-height: 1.6; margin-bottom: 18px;">
-                本遊戲完全免費且<b>絕無廣告</b>干擾思考。若您在解謎過程中獲得了樂趣，歡迎透過<b>綠界科技（ECPay）</b>請作者喝杯咖啡，支持網址與主機運作！
+            <div style="background: rgba(243, 156, 18, 0.12); border-left: 4px solid var(--border); padding: 10px 12px; border-radius: 6px; font-size: 13px; color: #5d4037; line-height: 1.55; margin-bottom: 14px;">
+                本遊戲完全免費且<b>絕無廣告</b>干擾思考。若您在解謎過程中獲得了樂趣，歡迎透過<b>綠界科技（ECPay）</b>贊助支持作者與主機營運！
             </div>
 
-            <div class="tier-card">
+            <!-- 方案 1: 50 元 -->
+            <a href="https://p.ecpay.com.tw/41BB174" target="_blank" rel="noopener noreferrer" class="tier-card" onclick="handleDonateClick(event)">
                 <div class="tier-icon">☕</div>
                 <div class="tier-info">
-                    <strong>NT$ 50 - 請杯美式咖啡</strong>
+                    <strong>NT$ 50 · 請杯美式咖啡</strong>
                     <span>補充電力，為作者注入解謎題庫開發動能</span>
                 </div>
-            </div>
+                <div class="tier-action-btn">贊助 $50 ➔</div>
+            </a>
 
-            <div class="tier-card">
+            <!-- 方案 2: 150 元 -->
+            <a href="https://p.ecpay.com.tw/52210C3" target="_blank" rel="noopener noreferrer" class="tier-card" onclick="handleDonateClick(event)">
                 <div class="tier-icon">🍜</div>
                 <div class="tier-info">
-                    <strong>NT$ 150 - 贊助元氣晚餐</strong>
+                    <strong>NT$ 150 · 贊助元氣晚餐</strong>
                     <span>加滿油箱，加速新關卡、功能與詞庫優化</span>
                 </div>
-            </div>
+                <div class="tier-action-btn">贊助 $150 ➔</div>
+            </a>
 
-            <div class="tier-card">
-                <div class="tier-icon">🌐</div>
+            <!-- 方案 3: 隨意填寫（單筆） -->
+            <a href="https://p.ecpay.com.tw/4C157A4" target="_blank" rel="noopener noreferrer" class="tier-card" onclick="handleDonateClick(event)">
+                <div class="tier-icon">💖</div>
                 <div class="tier-info">
-                    <strong>NT$ 300+ - 伺服器守護神</strong>
-                    <span>支持遊戲專屬網址（Domain）與雲端主機運營</span>
+                    <strong>自由心意 · 隨心自訂金額</strong>
+                    <span>金額由您填寫，隨喜打賞或給予大額守護</span>
                 </div>
-            </div>
+                <div class="tier-action-btn">自訂贊助 ➔</div>
+            </a>
 
-            <div style="text-align: center; margin-top: 22px;">
-                <a id="ecpay-donate-link" href="#" target="_blank" rel="noopener noreferrer" class="btn-donate-action" onclick="handleDonateClick(event)">
-                    前往綠界贊助頁面 ☕
-                </a>
-                <div style="font-size: 12px; color: #888; margin-top: 8px;">
-                    💳 支援 信用卡 / LINE Pay / 街口 / ATM / 超商代碼
+            <!-- 方案 4: 定期定額（每月） -->
+            <a href="https://p.ecpay.com.tw/90BC5B7" target="_blank" rel="noopener noreferrer" class="tier-card tier-recurring" onclick="handleDonateClick(event)">
+                <div class="tier-icon">🌱</div>
+                <div class="tier-info">
+                    <strong>每月相伴 · 定期定額 <span class="tier-badge">信用卡</span></strong>
+                    <span>金額由您自訂，每個月自動扣款支持（可隨時取消）</span>
                 </div>
-                <div style="font-size: 12.5px; color: #8d6e63; margin-top: 14px;">
-                    連絡作者：<a href="mailto:me@shuojen.com" style="color: #8b4513; text-decoration: underline;">me@shuojen.com</a>
+                <div class="tier-action-btn">每月支持 ➔</div>
+            </a>
+
+            <div style="text-align: center; margin-top: 14px;">
+                <div style="font-size: 12px; color: #888;">
+                    💳 支援 信用卡 / Apple Pay / ATM 櫃員機 / 網路 ATM / 超商代碼 / 超商條碼（定期定額限信用卡）
+                </div>
+                <div style="font-size: 12.5px; color: #8d6e63; margin-top: 8px;">
+                    聯絡作者：<a href="mailto:me@shuojen.com" style="color: #8b4513; text-decoration: underline;">me@shuojen.com</a>
                 </div>
             </div>
         </div>
@@ -612,27 +658,31 @@
     <script>
         // ==========================================
         // 綠界金流贊助設定 (ECPay Donation)
-        // 請將下方的網址替換為您的綠界個人收款/贊助專屬網址
-        // 例如：https://p.ecpay.com.tw/XXXXXX
+        // 包含單筆 50 / 150 / 自由填寫 與 定期定額
+        // 審核開關：綠界審核通過後，只需將 IS_DONATE_ACTIVE 改為 true 即可直接連至付款頁！
         // ==========================================
-        const ECPAY_DONATE_URL = "https://p.ecpay.com.tw/YOUR_ECPAY_ID";
+        const IS_DONATE_ACTIVE = false;
+
+        const DONATE_LINKS = {
+            coffee50: "https://p.ecpay.com.tw/41BB174",
+            meal150: "https://p.ecpay.com.tw/52210C3",
+            custom: "https://p.ecpay.com.tw/4C157A4",
+            recurring: "https://p.ecpay.com.tw/90BC5B7"
+        };
 
         function toggleDonateModal(show) {
             document.getElementById('donate-modal').style.display = show ? 'flex' : 'none';
         }
 
         function handleDonateClick(e) {
-            if (!ECPAY_DONATE_URL || ECPAY_DONATE_URL.includes("YOUR_ECPAY_ID")) {
-                e.preventDefault();
+            if (!IS_DONATE_ACTIVE) {
+                if (e) e.preventDefault();
                 alert("【不好意思】\n贊助功能目前還尚未開通，即將啟用，感謝您的支持");
             }
         }
 
         function updateDonateLink() {
-            const donateLink = document.getElementById('ecpay-donate-link');
-            if (donateLink && ECPAY_DONATE_URL && !ECPAY_DONATE_URL.includes("YOUR_ECPAY_ID")) {
-                donateLink.href = ECPAY_DONATE_URL;
-            }
+            // 保留空函式以相容初始化調用
         }
 
         const gridEl = document.getElementById('grid');
