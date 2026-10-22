@@ -1,14 +1,21 @@
 import React, { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 
-const SITE_KEY = '0x4AAAAAAAFgQmCGmOt6VpB4z';
+const SITE_KEY = '0x4AAAAAAFgQmCGmOt6VpB4z';
 
 const TurnstileWidget = forwardRef(({ onVerify, onExpire }, ref) => {
   const containerRef = useRef(null);
   const widgetIdRef = useRef(null);
+  const onVerifyRef = useRef(onVerify);
+  const onExpireRef = useRef(onExpire);
+
+  useEffect(() => {
+    onVerifyRef.current = onVerify;
+    onExpireRef.current = onExpire;
+  }, [onVerify, onExpire]);
 
   useImperativeHandle(ref, () => ({
     reset: () => {
-      if (widgetIdRef.current && typeof window !== 'undefined' && window.turnstile) {
+      if (widgetIdRef.current !== null && typeof window !== 'undefined' && window.turnstile) {
         try {
           window.turnstile.reset(widgetIdRef.current);
         } catch (e) {
@@ -23,19 +30,19 @@ const TurnstileWidget = forwardRef(({ onVerify, onExpire }, ref) => {
 
     const render = () => {
       if (typeof window === 'undefined' || !window.turnstile || !containerRef.current) return;
-      if (widgetIdRef.current) return;
+      if (widgetIdRef.current !== null) return;
 
       try {
         widgetIdRef.current = window.turnstile.render(containerRef.current, {
           sitekey: SITE_KEY,
           callback: (token) => {
-            if (isMounted && onVerify) onVerify(token);
+            if (isMounted && onVerifyRef.current) onVerifyRef.current(token);
           },
           'expired-callback': () => {
-            if (isMounted && onExpire) onExpire();
+            if (isMounted && onExpireRef.current) onExpireRef.current();
           },
           'error-callback': () => {
-            if (isMounted && onExpire) onExpire();
+            if (isMounted && onExpireRef.current) onExpireRef.current();
           },
         });
       } catch (err) {
@@ -75,14 +82,14 @@ const TurnstileWidget = forwardRef(({ onVerify, onExpire }, ref) => {
 
     return () => {
       isMounted = false;
-      if (widgetIdRef.current && typeof window !== 'undefined' && window.turnstile) {
+      if (widgetIdRef.current !== null && typeof window !== 'undefined' && window.turnstile) {
         try {
           window.turnstile.remove(widgetIdRef.current);
         } catch (e) {}
         widgetIdRef.current = null;
       }
     };
-  }, [onVerify, onExpire]);
+  }, []);
 
   return (
     <div style={{ margin: '10px 0', minHeight: '65px' }}>
