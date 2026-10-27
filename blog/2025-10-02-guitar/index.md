@@ -16,7 +16,7 @@ tags: [guitar, music, note, tool]
 
 ![img](./ASIO.png)
 
-如果想要練習電吉他 SOLO，利用 [yt-dlp](https://github.com/yt-dlp/yt-dlp) 工具，就能夠下載 mp3 檔案，基本的 mp3 下載指令非常簡單，在終端機中輸入`yt-dlp -x --audio-format mp3 "影片網址"`，就會下載到終端機當前所在的資料夾。
+如果想要練習電吉他 SOLO，利用 [yt-dlp](https://github.com/yt-dlp/yt-dlp) 工具，就能夠下載 mp3 檔案，基本的 mp3 下載指令非常簡單，在終端機中輸入 `yt-dlp -x --audio-format mp3 "影片網址"`，就會下載到終端機當前所在的資料夾。
 
 下載完成後將檔案拖曳進去 DAW，設定好 BPM，就可以盡情的練習啦。以下是我用普通電腦喇叭直出，並用手機直接錄影的模擬練習效果。
 
@@ -26,7 +26,7 @@ tags: [guitar, music, note, tool]
     抱歉，您的瀏覽器不支援內嵌影片。
 </video>
 
-如果想要最好的錄影效果，將相機架設好錄完影，利用剪輯軟體將 DAW 輸出的聲音檔案取代影像音檔，就完成一個只有音樂原聲的演奏影片啦。 ~~(缺點就是很麻煩)~~
+如果想要最好的錄影效果，將相機架設好錄完影，利用剪輯軟體將 DAW 輸出的聲音檔案取代影像音檔，就完成一個只有音樂原聲的演奏影片啦。~~(缺點就是很麻煩)~~
 
 
 
@@ -34,7 +34,7 @@ tags: [guitar, music, note, tool]
 
 * 吉他：Squier Affinity Telecaster 
 * 錄音介面：Universal Audio UA Volt 2 
-* 麥克風：鐵三角ATR2100x動圈麥克風
+* 麥克風：鐵三角 ATR2100x 動圈麥克風
 * 耳機：Sennheiser HD 599 SE
 * DAW：Ableton Live Lite
  

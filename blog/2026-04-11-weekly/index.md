@@ -5,12 +5,12 @@ date: 2026-04-11
 rss_date: '2026-04-11T12:06:32+08:00'
 ---
 :::note
-這篇文章受 [Marcus](https://immarcus.com/) 的〈博客閱讀周記〉啟發並效法。     
+這篇文章受 [Marcus](https://immarcus.com/) 的〈博客閱讀周記〉啟發並效法。
 :::
 
 這幾天在 RSS 上有好多部落格朋友的互動，產生了不少共鳴真的很開心，於是啟發了我寫一篇互動回應文。
 
-## Alex hsu：[〈你的RSS文章壽命可能只有別人的一半〉](https://alexhsu.com/publish-date)
+## Alex hsu：[〈你的 RSS 文章壽命可能只有別人的一半〉](https://alexhsu.com/publish-date)
 
 非常感謝 Alex 發現這個問題，真的完全沒有注意到，還特別提醒一樣有這個問題的大家，實在是太暖了！於是我趕緊的來寫這篇文章實際測試看看。
 
@@ -30,7 +30,7 @@ LQ7 大大發了一整篇專屬於我的介紹文章耶，原本看到第一個�
 
 我們在興趣上真的很多共通點耶，太神奇了，部落格就是這麼奇妙，能讓素昧平生的陌生人變成朋友，而且中間沒有透過任何演算法喔！
 
-## Alex hsu：[〈用CSS自動添加中英數字之間的空格〉](https://alexhsu.com/text-autospace)
+## Alex hsu：[〈用 CSS 自動添加中英數字之間的空格〉](https://alexhsu.com/text-autospace)
 
 看到這篇的我特別有共鳴！去年的我就寫了一篇[〈中文文案排版〉](/blog/2025/10/12/typestyle)，因為我覺得自己的文字格式很差[^1]，還花了好一番功夫最後養成了這個習慣，但思考過後，我還是沒有選擇跟進，原因有幾點。
 
@@ -48,7 +48,7 @@ LQ7 大大發了一整篇專屬於我的介紹文章耶，原本看到第一個�
 
 這裡我想來推坑大家都建立自己的音樂、電影等等排名機制，這樣才能最客製化的大推自己的偏好阿！看 IMDB 有什麼意思，這也只是全球觀眾的偏好而已，如果能找到一個跟自己品味相同的知己，直接看他的清單就更準了對吧。
 
-這裡推一個寶藏 Youtube 頻道 [* cari me around *](https://www.youtube.com/@carimearound)，裡面很多電影和書的推薦，當初一看就馬上知道她的電影口味跟我的電波很合了！
+這裡推一個寶藏 YouTube 頻道 [* cari me around *](https://www.youtube.com/@carimearound)，裡面很多電影和書的推薦，當初一看就馬上知道她的電影口味跟我的電波很合了！
 
 ## JN：[〈嘸蝦米使用七個月成果，要怎麼樣才能打快？簡碼要怎麼記？〉](https://blog.giveanornot.com/boshiamy-shorthands/)
 

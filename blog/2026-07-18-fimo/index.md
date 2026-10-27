@@ -4,7 +4,7 @@ tags: ['photo']
 date: 2026-07-18
 rss_date: '2026-07-18T21:16:48+08:00'
 ---
-看到小米紀錄簿發的[〈濾鏡相機APP〉](https://hjhmi89.bearblog.dev/cam-app/)，心動之下於是在我的安卓手機上下載了一個[ FIMO ](https://fimo.app/)玩玩看。
+看到小米紀錄簿發的[〈濾鏡相機 APP〉](https://hjhmi89.bearblog.dev/cam-app/)，心動之下於是在我的安卓手機上下載了一個[ FIMO ](https://fimo.app/)玩玩看。
 
 雖然這個 APP 有點商業，但幾個免費的膠卷就滿好玩的了，相機介面也不錯，滿復古可愛的，拍起來會覺得有儀式感，我尤其喜歡這個老底片機會顯示的時間戳記。
 

@@ -42,7 +42,7 @@ sidebar_position: 5
 
 <img src={require('./img/012.webp').default} width="400" alt="img" />
 
-與目前台灣[FIDE台灣排名](https://ratings.fide.com/rankings.phtml?continent=0&country=TPE&rating=standard&gender=&age1=0&age2=0&period=2025-09-01&period2=1)第 11 的 Tapani 前輩下了一場精彩的斯堪地那維亞開局，持白獲勝，可惜沒有記錄棋譜。
+與目前台灣[FIDE 台灣排名](https://ratings.fide.com/rankings.phtml?continent=0&country=TPE&rating=standard&gender=&age1=0&age2=0&period=2025-09-01&period2=1)第 11 的 Tapani 前輩下了一場精彩的斯堪地那維亞開局，持白獲勝，可惜沒有記錄棋譜。
 
 *2024-11-03*
 

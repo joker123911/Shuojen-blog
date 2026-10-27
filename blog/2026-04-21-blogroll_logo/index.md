@@ -17,7 +17,7 @@ rss_date: '2026-04-21T23:07:29+08:00'
 
 我超喜歡的兩個部落格主 Shuyu 和 廢文小天地 都有這個可愛的小徽章，慢慢擴充收集中～
 
-* [我的部落卷](/blogroll) ：![img](./shuojen-88x31.png) 
+* [我的部落卷](/blogroll)：![img](./shuojen-88x31.png) 
 
 * [Shuyu](https://shuyulin1127.com/blogroll/)：![img](./shuyupixelart_88x31.gif) 
 

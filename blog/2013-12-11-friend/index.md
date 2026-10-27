@@ -9,5 +9,5 @@ tags: [friend, shitpost]
 ![img](./001.jpg)
 
 :::note[來自 2025 的感想]
-靠杯耶 。
+靠杯耶。
 :::

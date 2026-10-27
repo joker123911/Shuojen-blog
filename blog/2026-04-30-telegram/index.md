@@ -5,7 +5,7 @@ date: 2026-04-30
 rss_date: '2026-04-30T17:23:44+08:00'
 ---
 
-最近在[廢文小天地](https://trashposts.com/about)的`/about`頁面看到一個子網站[「Today I Learnd」](https://til.trashposts.com/)，有好多實用的筆記，大推。
+最近在[廢文小天地](https://trashposts.com/about)的 `/about` 頁面看到一個子網站[「Today I Learnd」](https://til.trashposts.com/)，有好多實用的筆記，大推。
 
 最近很多人響應的「部落格問題挑戰」裡，廢文小天地整理了[很多人寫的文章](https://trashposts.com/blog/blog-questions-challenge/)。我自己寫的那篇沒有把所有人的文章連結放上去，第一個原因是廢文小天地大大已經有放過了，第二個原因是我懶 ~~（這是主因吧！）~~ 看到這個網站才知道，原來有一個很聰明的流程耶，不是全部都手動加的，歡迎大家去看[他的做法](https://til.trashposts.com/blog/collect-blog-rss-url-list)。
 

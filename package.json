@@ -4,7 +4,11 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "check": "node scripts/check-broken-links.js",
+    "check": "node scripts/check-broken-links.js && node scripts/check-typography.js --changed",
+    "fix": "node scripts/check-broken-links.js --fix && node scripts/check-typography.js --fix --changed",
+    "check:text": "node scripts/check-typography.js",
+    "check:text:list": "node scripts/check-typography.js --files-only",
+    "fix:all": "node scripts/check-typography.js --fix",
     "pull": "git pull",
     "prepare-data": "node scripts/prepare-data.js",
     "prepare-data:full": "node scripts/prepare-data.js && node scripts/gen-chess-eval.js && node scripts/gen-search-index.js",

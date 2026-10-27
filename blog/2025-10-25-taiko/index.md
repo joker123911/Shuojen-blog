@@ -9,7 +9,7 @@ tags: [date, game, tool]
 ![img](./taiko.webp)
 
 :::warning
-此連結非官方版本，PC 玩家建議可以由 steam 購買正版。 
+此連結非官方版本，PC 玩家建議可以由 Steam 購買正版。
 :::
 
 

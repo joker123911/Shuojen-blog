@@ -4,7 +4,7 @@ tags: ['Fujifilm-XT20','xf1855mmf2.8','台灣','桃園']
 ---
 
  
-第一次去Xpark。
+第一次去 Xpark。
 
 [20211218 Taiwan Taoyuan Xpark](https://www.youtube.com/watch?v=IxmGLBir8EA&list=PL0OXdBIpu2-y089dJTpA3LBZACBOaCnBW&index=3)
 

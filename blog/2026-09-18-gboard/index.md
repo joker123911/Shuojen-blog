@@ -5,7 +5,7 @@ date: 2026-09-18
 rss_date: '2026-09-18T21:54:31+08:00'
 ---
 
-由 jasonwu1994 大大開源的[「Gboard-patches」](https://github.com/jasonwu1994/Gboard-patches)是我最近發現[^1]的好用 android 輸入法。
+由 jasonwu1994 大大開源的[「Gboard-patches」](https://github.com/jasonwu1994/Gboard-patches)是我最近發現[^1]的好用 Android 輸入法。
 
 以往我都是使用下面這款，早已沒在更新的舊版注音輸入法，只為了注音上下滑動輸入英文的功能，直到我發現了這個專案，保留了過去好用的滑動輸入，並且有了更多新功能，它的安裝使用是基於 Morphe（類似 ReVanced 的應用修補框架）所開發的一組官方 Gboard 增強補丁。
 
@@ -59,7 +59,7 @@ rss_date: '2026-09-18T21:54:31+08:00'
 
 2. 下載官方 Gboard APK，為了使用語音輸入功能，我下載的版本是這個 [Gboard](https://www.apkmirror.com/apk/google-inc/gboard/gboard-the-google-keyboard-18-0-3-954559732-release/gboard-the-google-keyboard-18-0-3-954559732-release-arm64-v8a-2-android-apk-download/)，語音需要下載標記為 bundle 的 APKM，下載後先不要安裝。
 
-3. 打開 jasonwu 大大的[ github 專案 ](https://github.com/jasonwu1994/Gboard-patches)，點 README 裡的[ Open in Morphe](https://morphe.software/add-source?github=jasonwu1994/Gboard-patches)。
+3. 打開 jasonwu 大大的[ GitHub 專案 ](https://github.com/jasonwu1994/Gboard-patches)，點 README 裡的[ Open in Morphe](https://morphe.software/add-source?github=jasonwu1994/Gboard-patches)。
 
 4. 選擇剛才下載的 Gboard 開始修補
 

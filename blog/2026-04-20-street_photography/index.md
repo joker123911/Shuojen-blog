@@ -5,7 +5,7 @@ date: 2026-04-20
 rss_date: '2026-04-20T14:43:56+08:00'
 ---
 
-最近看到了好幾篇文章都有探討到街拍與隱私，例如小白的[〈關於街拍〉](https://itsxiaobai.github.io/blog/protrait/)和Eddie的[〈街拍與偷拍定義？社群媒體的人們都忽略了肖像權（我也是）〉](https://eddielv.com/musings/protrait-rights/)以及 LQ7 的[〈Actions speak louder than words〉](https://lq7.tw/thinking/actions-speak-louder-than-words/)，我仔細回想了一下，我自己好像從 2019 年開始拿相機東拍西拍到現在，從來沒有這樣子的想法。
+最近看到了好幾篇文章都有探討到街拍與隱私，例如小白的[〈關於街拍〉](https://itsxiaobai.github.io/blog/protrait/)和 Eddie 的[〈街拍與偷拍定義？社群媒體的人們都忽略了肖像權（我也是）〉](https://eddielv.com/musings/protrait-rights/)以及 LQ7 的[〈Actions speak louder than words〉](https://lq7.tw/thinking/actions-speak-louder-than-words/)，我仔細回想了一下，我自己好像從 2019 年開始拿相機東拍西拍到現在，從來沒有這樣子的想法。
 
 我很喜歡拍街上的陌生人，置身在身處的環境中，捕捉到當下人們流露出最真實的神情，對我來說是很吸引人的一件事，親子一同玩耍的笑顏、朋友情侶的互動、孩子們對世界好奇的目光，將這些瞬間凝結下來，彷彿把全世界的歡樂都保留了起來。
 

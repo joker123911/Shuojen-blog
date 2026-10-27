@@ -5,7 +5,7 @@ date: 2026-06-12
 rss_date: '2026-06-12T00:00:01+08:00'
 ---
 
-看完 Ivon 的[〈Linux版Anime4K使用教學，一鍵提昇動畫畫質〉](https://ivonblog.com/posts/anime4k-linux/)後，讓我想修復之前用 yt-dlp 載下來的動漫，先看看效果！
+看完 Ivon 的[〈Linux 版 Anime4K 使用教學，一鍵提昇動畫畫質〉](https://ivonblog.com/posts/anime4k-linux/)後，讓我想修復之前用 yt-dlp 載下來的動漫，先看看效果！
 
 <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
   <img src={require('./006.png').default} alt="對比圖1" style={{ width: '49%', height: 'auto' }} />
@@ -34,7 +34,7 @@ rss_date: '2026-06-12T00:00:01+08:00'
 
 4. Filter Options
 
-    這裡如果原片是 480p 畫質就選 4 倍、 720p 畫質就選 3 倍、 1080p 畫質就選 2 倍，這樣轉完就都會是 4k 畫質了，但 480p 的話，由於原片細節太少，我覺得選 2 倍到 1080p 就好了。
+    這裡如果原片是 480p 畫質就選 4 倍、720p 畫質就選 3 倍、1080p 畫質就選 2 倍，這樣轉完就都會是 4k 畫質了，但 480p 的話，由於原片細節太少，我覺得選 2 倍到 1080p 就好了。
 
 5. Real-ESRGAN Options
 

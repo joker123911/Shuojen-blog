@@ -41,11 +41,52 @@ function safeDecodeURI(url) {
 }
 
 /**
- * 正規化路由字串（轉小寫、解碼、去除結尾斜線）
+ * 正規化路由字串（解碼、去除結尾斜線，保留原始大小寫以檢測 Linux 部署環境的 404 問題）
  */
 function normalizeRoute(route) {
-  const decoded = safeDecodeURI(route).trim().toLowerCase().replace(/\/+$/, '');
+  const decoded = safeDecodeURI(route).trim().replace(/\/+$/, '');
   return decoded === '' ? '/' : decoded;
+}
+
+/**
+ * 檢查檔案是否存在，並驗證路徑大小寫是否與硬碟實際檔名完全一致（避免 Windows 通過但 Linux 部署 404）
+ */
+const dirEntriesCache = new Map();
+function getDirEntries(dirPath) {
+  if (!dirEntriesCache.has(dirPath)) {
+    try {
+      dirEntriesCache.set(dirPath, new Set(fs.readdirSync(dirPath)));
+    } catch (e) {
+      dirEntriesCache.set(dirPath, null);
+    }
+  }
+  return dirEntriesCache.get(dirPath);
+}
+
+function checkFileExistsCaseSensitive(absPath) {
+  if (!fs.existsSync(absPath)) return { exists: false, caseMismatch: false };
+  try {
+    if (!fs.statSync(absPath).isFile()) return { exists: false, caseMismatch: false };
+  } catch (e) {
+    return { exists: false, caseMismatch: false };
+  }
+
+  const rel = path.relative(WORKSPACE, absPath);
+  if (rel.startsWith('..') || path.isAbsolute(rel)) {
+    return { exists: true, caseMismatch: false };
+  }
+
+  const segments = rel.split(path.sep);
+  let currentDir = WORKSPACE;
+  for (const seg of segments) {
+    const entries = getDirEntries(currentDir);
+    if (!entries) return { exists: false, caseMismatch: false };
+    if (!entries.has(seg)) {
+      return { exists: true, caseMismatch: true };
+    }
+    currentDir = path.join(currentDir, seg);
+  }
+  return { exists: true, caseMismatch: false };
 }
 
 /**
@@ -162,9 +203,12 @@ function stripNumberPrefix(segment) {
 // 1. 建立全站有效路由表 (Route Registry)
 // ==========================================
 const routeRegistry = new Set();
+const routeLowerMap = new Map();
 
 function addRoute(route) {
-  routeRegistry.add(normalizeRoute(route));
+  const norm = normalizeRoute(route);
+  routeRegistry.add(norm);
+  routeLowerMap.set(norm.toLowerCase(), norm);
 }
 
 // 系統預設路由
@@ -261,14 +305,6 @@ docsFiles.forEach(file => {
     const content = fs.readFileSync(file, 'utf8');
     const { data } = parseFrontMatter(content);
 
-    if (data.slug) {
-      const slug = String(data.slug).trim();
-      const route = slug.startsWith('/')
-        ? (slug.startsWith('/docs/') || slug === '/docs' ? slug : `/docs${slug}`)
-        : `/docs/${slug}`;
-      addRoute(route);
-    }
-
     const relativePath = path.relative(DOCS_DIR, file);
     const ext = path.extname(relativePath);
     let pagePath = relativePath.slice(0, -ext.length).replace(/\\/g, '/');
@@ -279,18 +315,25 @@ docsFiles.forEach(file => {
       pagePath = pagePath.replace(/\/(index|readme)$/i, '');
     }
 
-    // 同時註冊原始路徑與去除數字前綴的 Docusaurus 預設路徑
-    const rawRoute = pagePath ? `/docs/${pagePath}` : '/docs';
-    const strippedPath = pagePath.split('/').map(stripNumberPrefix).join('/');
-    const strippedRoute = strippedPath ? `/docs/${strippedPath}` : '/docs';
+    const dirPart = path.dirname(relativePath).replace(/\\/g, '/');
+    const strippedDir = dirPart === '.' ? '' : dirPart.split('/').map(stripNumberPrefix).join('/');
+    const idPrefix = strippedDir ? `${strippedDir}/` : '';
 
-    addRoute(rawRoute);
-    addRoute(strippedRoute);
-
-    if (data.id) {
-      const dirPart = path.dirname(relativePath).replace(/\\/g, '/');
-      const idPrefix = dirPart === '.' ? '' : `${dirPart.split('/').map(stripNumberPrefix).join('/')}/`;
+    if (data.slug) {
+      const slug = String(data.slug).trim();
+      let route;
+      if (slug.startsWith('/')) {
+        route = slug.startsWith('/docs/') || slug === '/docs' ? slug : `/docs${slug}`;
+      } else {
+        route = path.posix.normalize(`/docs/${idPrefix}${slug}`);
+      }
+      addRoute(route);
+    } else if (data.id) {
       addRoute(`/docs/${idPrefix}${data.id}`);
+    } else {
+      const strippedPath = pagePath ? pagePath.split('/').map(stripNumberPrefix).join('/') : '';
+      const strippedRoute = strippedPath ? `/docs/${strippedPath}` : '/docs';
+      addRoute(strippedRoute);
     }
   } catch (e) {
     console.error(`Error building route for doc file ${file}:`, e.message);
@@ -356,24 +399,30 @@ function getPositionFromIndex(lineStarts, index) {
 }
 
 /**
- * 清理 Markdown 連結中的 title 屬性與尖括號，例如：
- * `/path/to/img.webp "圖片標題"` -> `/path/to/img.webp`
- * `</path with spaces/img.webp>` -> `/path with spaces/img.webp`
+ * 清理 Markdown 連結中的 title 屬性與尖括號，並回傳目標在原始片段中的偏移與長度
  */
-function extractCleanTarget(rawUrl) {
-  let u = rawUrl.trim();
+function extractCleanTargetWithSpan(rawSegment) {
+  const leadTrim = rawSegment.length - rawSegment.trimStart().length;
+  let u = rawSegment.trim();
+  let offset = leadTrim;
+
   if (u.startsWith('<') && u.endsWith('>')) {
-    return u.slice(1, -1).trim();
+    const inner = u.slice(1, -1);
+    const innerLead = inner.length - inner.trimStart().length;
+    const clean = inner.trim();
+    return { target: clean, offset: offset + 1 + innerLead, length: clean.length };
   }
+
   const titleMatch = u.match(/^(\S+)\s+(?:["'][\s\S]*["']|\([\s\S]*\))$/);
   if (titleMatch) {
-    return titleMatch[1];
+    return { target: titleMatch[1], offset, length: titleMatch[1].length };
   }
-  return u;
+
+  return { target: u, offset, length: u.length };
 }
 
 /**
- * 檢查靜態檔案是否存在
+ * 檢查靜態檔案是否存在（含大小寫比對）
  */
 function checkStaticAssetExists(urlPath) {
   const decodedPath = safeDecodeURI(urlPath);
@@ -384,21 +433,25 @@ function checkStaticAssetExists(urlPath) {
     checkPaths.push(path.join(decodedPath, 'index.html'));
   }
 
+  let foundCaseMismatch = false;
   for (const staticDir of STATIC_DIRS) {
     for (const p of checkPaths) {
       const assetPath = path.join(WORKSPACE, staticDir, p);
-      if (fs.existsSync(assetPath) && fs.statSync(assetPath).isFile()) {
-        return true;
+      const status = checkFileExistsCaseSensitive(assetPath);
+      if (status.exists) {
+        if (!status.caseMismatch) {
+          return { exists: true, caseMismatch: false };
+        }
+        foundCaseMismatch = true;
       }
     }
   }
-  return false;
+  return { exists: foundCaseMismatch, caseMismatch: foundCaseMismatch };
 }
 
 allMarkdownFiles.forEach(file => {
   try {
     let rawContent = fs.readFileSync(file, 'utf8');
-    let fileModified = false;
     const relativeFile = path.relative(WORKSPACE, file);
 
     // 建立每行起始 index 陣列，用於快速反查行號與欄號
@@ -411,13 +464,12 @@ allMarkdownFiles.forEach(file => {
 
     const { data: frontmatterData, rawFrontmatter } = parseFrontMatter(rawContent);
 
-    // 將 Frontmatter、Fenced Code Blocks、Inline Code 與 HTML 註解遮罩為空白（保留換行符號以維持精準座標）
+    // 將 Frontmatter、Fenced Code Blocks (3+ 反引號/波浪號)、Inline Code (支援多反引號) 與註解遮罩為空白
     const maskedContent = rawContent
-      .replace(/^---\r?\n[\s\S]*?\r?\n---/, maskKeepNewlines)
-      .replace(/```[\s\S]*?```/g, maskKeepNewlines)
-      .replace(/~~~[\s\S]*?~~~/g, maskKeepNewlines)
-      .replace(/`[^`\r\n]+`/g, maskKeepNewlines)
-      .replace(/<!--[\s\S]*?-->/g, maskKeepNewlines);
+      .replace(/^\uFEFF?---\r?\n[\s\S]*?\r?\n---/, maskKeepNewlines)
+      .replace(/(`{3,}|~{3,})[\s\S]*?\1/g, maskKeepNewlines)
+      .replace(/(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/g, (m) => (/\r?\n[ \t]*\r?\n/.test(m) ? m : maskKeepNewlines(m)))
+      .replace(/<!--[\s\S]*?-->|\{\/\*[\s\S]*?\*\/\}/g, maskKeepNewlines);
 
     const extractedLinks = [];
 
@@ -429,48 +481,100 @@ allMarkdownFiles.forEach(file => {
         extractedLinks.push({
           rawUrl: fmUrl,
           index: fmIdx !== -1 ? fmIdx : 0,
+          replaceLength: fmUrl.length,
           sourceType: `Frontmatter (${field})`,
         });
       }
     });
 
-    // 2. Markdown 連結與圖片: [Text](URL) 或 ![Alt](URL)
-    const markdownLinkRegex = /!?\[([^\]]*?)\]\(([^)\r\n]+)\)/g;
-    // 3. HTML / MDX 標籤: <a href="...">, <img src="...">, <Link to="...">
-    const jsxAttrRegex = /<(?:a|img|Link|source)\s+[^>]*?(?:href|src|to)=["']([^"']+)["']/gi;
-    // 4. MDX require 語法: require('@site/static/...') 或 require('./...')
-    const requireRegex = /require\(["']([^"']+)["']\)/g;
+    // 2. Markdown 連結與圖片: [Text](URL) 或 ![Alt](URL)，支援巢狀圖片連結與含平衡括號之 URL
+    const markdownLinkRegex = /!?\[((?:[^\[\]\r\n]|\[[^\]]*\])*)\]\(((?:[^()\r\n]|\([^()\r\n]*\))+)\)/g;
+    // 3. Markdown 參照式連結定義: [ref]: URL (排除註腳 [^1]: ...)
+    const refLinkRegex = /^[ ]{0,3}\[(?!\^)[^\]\r\n]+\]:[ \t]*(<[^>\r\n]+>|\S+)(?:[ \t]+(?:"[^"\r\n]*"|'[^'\r\n]*'|\([^)\r\n]*\)))?[ \t]*$/gm;
+    // 4. HTML / MDX 標籤: <a|img|Link|source|video|audio|iframe ... href/src/to="..."> (支援跨行標籤與多個屬性)
+    const jsxTagRegex = /<(?:a|img|Link|source|video|audio|iframe)\b[\s\S]*?>/gi;
+    // 5. MDX require 語法: require('@site/static/...') 或 require('./...')
+    const requireRegex = /require\(\s*["']([^"']+)["']\s*\)/g;
 
     let match;
     while ((match = markdownLinkRegex.exec(maskedContent)) !== null) {
-      const urlOffsetInMatch = match[0].lastIndexOf(match[2]);
+      const labelPart = match[1];
+      const rawUrlPart = match[2];
+      const urlStartInMatch = match[0].lastIndexOf(`(${rawUrlPart})`) + 1;
+      const { target, offset, length } = extractCleanTargetWithSpan(rawUrlPart);
       extractedLinks.push({
-        rawUrl: extractCleanTarget(match[2]),
-        index: match.index + (urlOffsetInMatch !== -1 ? urlOffsetInMatch : 0),
+        rawUrl: target,
+        index: match.index + urlStartInMatch + offset,
+        replaceLength: length,
         sourceType: 'Markdown',
+      });
+
+      // 若連結文字內嵌有圖片 [![alt](img)](url)，同步擷取內部圖片連結
+      const innerImgRegex = /!\[[^\]]*\]\(((?:[^()\r\n]|\([^()\r\n]*\))+)\)/g;
+      let innerMatch;
+      while ((innerMatch = innerImgRegex.exec(labelPart)) !== null) {
+        const innerUrlPart = innerMatch[1];
+        const innerStartInLabel = innerMatch.index + innerMatch[0].lastIndexOf(`(${innerUrlPart})`) + 1;
+        const labelStartInMatch = match[0].indexOf('[') + 1;
+        const innerSpan = extractCleanTargetWithSpan(innerUrlPart);
+        extractedLinks.push({
+          rawUrl: innerSpan.target,
+          index: match.index + labelStartInMatch + innerStartInLabel + innerSpan.offset,
+          replaceLength: innerSpan.length,
+          sourceType: 'Markdown (Nested Image)',
+        });
+      }
+    }
+
+    while ((match = refLinkRegex.exec(maskedContent)) !== null) {
+      const rawUrlPart = match[1];
+      const colonIdx = match[0].indexOf(']:');
+      const urlOffsetInMatch = match[0].indexOf(rawUrlPart, colonIdx + 2);
+      const { target, offset, length } = extractCleanTargetWithSpan(rawUrlPart);
+      extractedLinks.push({
+        rawUrl: target,
+        index: match.index + urlOffsetInMatch + offset,
+        replaceLength: length,
+        sourceType: 'Markdown (Ref)',
       });
     }
 
-    while ((match = jsxAttrRegex.exec(maskedContent)) !== null) {
-      const urlOffsetInMatch = match[0].lastIndexOf(match[1]);
-      extractedLinks.push({
-        rawUrl: match[1].trim(),
-        index: match.index + (urlOffsetInMatch !== -1 ? urlOffsetInMatch : 0),
-        sourceType: 'JSX/HTML',
-      });
+    while ((match = jsxTagRegex.exec(maskedContent)) !== null) {
+      const tagStr = match[0];
+      const attrRegex = /\b(?:href|src|to)\s*=\s*(?:\{\s*)?["']([^"']+)["']/gi;
+      let attrMatch;
+      while ((attrMatch = attrRegex.exec(tagStr)) !== null) {
+        const val = attrMatch[1];
+        const valOffsetInAttr = attrMatch[0].lastIndexOf(val);
+        const trimLead = val.length - val.trimStart().length;
+        const cleanVal = val.trim();
+        extractedLinks.push({
+          rawUrl: cleanVal,
+          index: match.index + attrMatch.index + valOffsetInAttr + trimLead,
+          replaceLength: cleanVal.length,
+          sourceType: 'JSX/HTML',
+        });
+      }
     }
 
     while ((match = requireRegex.exec(maskedContent)) !== null) {
-      const urlOffsetInMatch = match[0].lastIndexOf(match[1]);
+      const val = match[1];
+      const urlOffsetInMatch = match[0].lastIndexOf(val);
+      const trimLead = val.length - val.trimStart().length;
+      const cleanVal = val.trim();
       extractedLinks.push({
-        rawUrl: match[1].trim(),
-        index: match.index + (urlOffsetInMatch !== -1 ? urlOffsetInMatch : 0),
+        rawUrl: cleanVal,
+        index: match.index + urlOffsetInMatch + trimLead,
+        replaceLength: cleanVal.length,
         sourceType: 'require()',
       });
     }
 
+    // 記錄精準座標替換任務，避免使用 split().join() 破壞程式碼區塊或顯示文字
+    const pendingReplacements = [];
+
     // 逐一驗證擷取出的連結
-    extractedLinks.forEach(({ rawUrl, index }) => {
+    extractedLinks.forEach(({ rawUrl, index, replaceLength }) => {
       if (!rawUrl) return;
       if (/^(#|mailto:|tel:|javascript:|data:)/i.test(rawUrl)) return;
 
@@ -485,19 +589,18 @@ allMarkdownFiles.forEach(file => {
       }
       if (!cleanUrl) return;
 
-      // 1. 檢查是否誤用 localhost / 127.0.0.1
+      // 1. 檢查是否誤用 localhost / 127.0.0.1（處理後不直接 return，繼續向下驗證該站內路徑是否存在！）
       if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/i.test(cleanUrl)) {
         const expectedPath = rawUrl.replace(/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/i, '') || '/';
         if (AUTO_FIX) {
-          rawContent = rawContent.split(rawUrl).join(expectedPath);
-          fileModified = true;
+          pendingReplacements.push({ index, length: replaceLength, replacement: expectedPath });
           fixedCount++;
           console.log(`🔧 \x1b[32m已自動修正\x1b[0m ${locationTag} -> 將 '${rawUrl}' 替換為 '${expectedPath}'`);
         } else {
           console.error(`❌ \x1b[31m錯誤\x1b[0m ${locationTag} -> 連結包含本地測試網址 '${rawUrl}' (建議改為 '${expectedPath}')`);
           errorCount++;
         }
-        return;
+        cleanUrl = expectedPath.split('#')[0].split('?')[0].trim() || '/';
       }
 
       // 2. 檢查外部絕對網址 (http:// 或 https://)
@@ -507,28 +610,35 @@ allMarkdownFiles.forEach(file => {
           if (OWN_DOMAINS.includes(parsedUrl.hostname.toLowerCase())) {
             const expectedPath = `${parsedUrl.pathname}${parsedUrl.search}${parsedUrl.hash}` || '/';
             if (AUTO_FIX) {
-              rawContent = rawContent.split(rawUrl).join(expectedPath);
-              fileModified = true;
+              pendingReplacements.push({ index, length: replaceLength, replacement: expectedPath });
               fixedCount++;
               console.log(`🔧 \x1b[32m已自動修正\x1b[0m ${locationTag} -> 將自有網域 '${rawUrl}' 替換為 '${expectedPath}'`);
             } else {
               console.warn(`⚠️  \x1b[33m警告\x1b[0m ${locationTag} -> 建議使用相對根路徑 '${expectedPath}' 代替完整網址 '${rawUrl}' (可加 --fix 自動替換)`);
               warningCount++;
             }
+            // 繼續向下驗證自有網域指向的站內路徑是否真的存在
+            cleanUrl = parsedUrl.pathname || '/';
+          } else {
+            return; // 外部網站連結到此結束
           }
         } catch (e) {
           console.error(`❌ \x1b[31m錯誤\x1b[0m ${locationTag} -> 無效的 URL 格式 '${rawUrl}'`);
           errorCount++;
+          return;
         }
-        return;
       }
 
       // 3. 檢查 Docusaurus @site/ 別名路徑
       if (cleanUrl.startsWith('@site/')) {
         const siteRelPath = safeDecodeURI(cleanUrl.replace(/^@site\//, ''));
         const targetSitePath = path.join(WORKSPACE, siteRelPath);
-        if (!fs.existsSync(targetSitePath)) {
+        const status = checkFileExistsCaseSensitive(targetSitePath);
+        if (!status.exists) {
           console.error(`❌ \x1b[31m錯誤\x1b[0m ${locationTag} -> 找不到 @site 檔案 '${rawUrl}'`);
+          errorCount++;
+        } else if (status.caseMismatch) {
+          console.error(`❌ \x1b[31m錯誤\x1b[0m ${locationTag} -> @site 檔案路徑大小寫不符 '${rawUrl}' (Linux 部署將導致 404)`);
           errorCount++;
         }
         return;
@@ -541,8 +651,26 @@ allMarkdownFiles.forEach(file => {
           return; // 命中有效頁面路由
         }
 
-        if (checkStaticAssetExists(cleanUrl)) {
+        const assetStatus = checkStaticAssetExists(cleanUrl);
+        if (assetStatus.exists && !assetStatus.caseMismatch) {
           return; // 命中有效靜態資源
+        }
+
+        const caseMatchedRoute = routeLowerMap.get(searchRoute.toLowerCase());
+        if (caseMatchedRoute) {
+          console.error(
+            `❌ \x1b[31m錯誤\x1b[0m ${locationTag} -> 站內路由大小寫不符 '${rawUrl}' (正確大小寫應為 '${caseMatchedRoute}')`
+          );
+          errorCount++;
+          return;
+        }
+
+        if (assetStatus.caseMismatch) {
+          console.error(
+            `❌ \x1b[31m錯誤\x1b[0m ${locationTag} -> 靜態檔案大小寫不符 '${rawUrl}' (Linux 部署將導致 404)`
+          );
+          errorCount++;
+          return;
         }
 
         console.error(`❌ \x1b[31m錯誤\x1b[0m ${locationTag} -> 找不到站內路由或靜態檔案 '${rawUrl}'`);
@@ -555,15 +683,30 @@ allMarkdownFiles.forEach(file => {
       const decodedUrl = safeDecodeURI(cleanUrl);
       const targetFilePath = path.resolve(currentDir, decodedUrl);
 
-      if (fs.existsSync(targetFilePath) && fs.statSync(targetFilePath).isFile()) {
+      const directStatus = checkFileExistsCaseSensitive(targetFilePath);
+      if (directStatus.exists) {
+        if (directStatus.caseMismatch) {
+          console.error(
+            `❌ \x1b[31m錯誤\x1b[0m ${locationTag} -> 相對檔案大小寫與實際檔案不符 '${rawUrl}' (Linux 部署將導致 404)`
+          );
+          errorCount++;
+        }
         return;
       }
 
       // 支援省略 .md / .mdx 副檔名或目錄下 index.md / index.mdx 的相對連結
       const candidateExtensions = ['.md', '.mdx', '/index.md', '/index.mdx'];
-      const foundRelativeDoc = candidateExtensions.some(ext => fs.existsSync(targetFilePath + ext));
-      if (foundRelativeDoc) {
-        return;
+      for (const ext of candidateExtensions) {
+        const candStatus = checkFileExistsCaseSensitive(targetFilePath + ext);
+        if (candStatus.exists) {
+          if (candStatus.caseMismatch) {
+            console.error(
+              `❌ \x1b[31m錯誤\x1b[0m ${locationTag} -> 相對文檔路徑大小寫不符 '${rawUrl}' (Linux 部署將導致 404)`
+            );
+            errorCount++;
+          }
+          return;
+        }
       }
 
       console.error(
@@ -572,7 +715,13 @@ allMarkdownFiles.forEach(file => {
       errorCount++;
     });
 
-    if (fileModified) {
+    if (pendingReplacements.length > 0) {
+      // 由後往前依精準座標替換，絕不污染程式碼區塊或連結文字
+      pendingReplacements
+        .sort((a, b) => b.index - a.index)
+        .forEach(({ index, length, replacement }) => {
+          rawContent = rawContent.slice(0, index) + replacement + rawContent.slice(index + length);
+        });
       fs.writeFileSync(file, rawContent, 'utf8');
     }
   } catch (e) {

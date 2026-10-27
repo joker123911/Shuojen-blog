@@ -1,5 +1,5 @@
 ---
-title: 'Retroarch'
+title: 'RetroArch'
 tags: ['game']
 date: 2026-06-17
 rss_date: '2026-06-17T22:37:29+08:00'

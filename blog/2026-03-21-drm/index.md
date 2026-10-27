@@ -17,7 +17,7 @@ tags: [life, note, tool]
 
 在電影版看評價時，非常多人提到小說更好看，許多地方描寫的更完整，科學方面也著墨的更嚴謹，讓我非常想購入電子書來閱讀。
 
-我研究了許久如何能正版購買再移除 DRM，這樣我就可以用自己習慣的閱讀 APP 在手機上閱讀了！最後選擇了在 [kobo](https://www.kobo.com/tw/zh) 平台買書後，利用 github 的開源工具移除 DRM，非常簡單。 
+我研究了許久如何能正版購買再移除 DRM，這樣我就可以用自己習慣的閱讀 APP 在手機上閱讀了！最後選擇了在 [Kobo](https://www.kobo.com/tw/zh) 平台買書後，利用 GitHub 的開源工具移除 DRM，非常簡單。
 
 移除 DRM 工具：[kobo-book-downloader](https://github.com/TnS-hun/kobo-book-downloader)
 

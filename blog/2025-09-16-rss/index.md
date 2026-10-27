@@ -4,7 +4,7 @@ tags: [blog, note, tool]
 ---
 ## [認識 RSS](https://zh.wikipedia.org/zh-tw/RSS)
 
-簡單說，就是可以自己百分百設定自己想看內容的訂閱服務，包含網頁、youtube 等等，而社群媒體主要都是靠演算法推薦內容給你，自己訂閱的內容時常也不會出現。
+簡單說，就是可以自己百分百設定自己想看內容的訂閱服務，包含網頁、YouTube 等等，而社群媒體主要都是靠演算法推薦內容給你，自己訂閱的內容時常也不會出現。
 
 **算了，滑到什麼就看什麼吧，我希望只是個梗，不要變成現實阿！**
 
@@ -16,9 +16,9 @@ tags: [blog, note, tool]
 
 * [如何使用 RSS](https://www.jaron.tw/blog/rss-reader/) （王則倫 Jaron）
 
-* [RSS：AI時代的基本素養](https://www.wen-lab.tw/rss-as-literacy/)（Wen 的生產力實驗室）
+* [RSS：AI 時代的基本素養](https://www.wen-lab.tw/rss-as-literacy/)（Wen 的生產力實驗室）
 
-RSS 閱讀器的選擇 [wiwi.video](https://wiwi.video/w/o6Y681m26yoUUuYWcAnEsL) 中也有影片詳細的介紹，歡迎大家去參考看看，因為我目前是使用 Windows[^1] 與 Android 系統，就先選用了比較方便的 [feedly](https://feedly.com/homepage) 作為我的 RSS 閱讀器。
+RSS 閱讀器的選擇 [wiwi.video](https://wiwi.video/w/o6Y681m26yoUUuYWcAnEsL) 中也有影片詳細的介紹，歡迎大家去參考看看，因為我目前是使用 Windows[^1] 與 Android 系統，就先選用了比較方便的 [Feedly](https://feedly.com/homepage) 作為我的 RSS 閱讀器。
 
 :::note[*2025-12-27*]
 現在我改用 [inoreader](https://www.inoreader.com/)，免費版就可以建立多個資料夾，更好用。

@@ -1,0 +1,196 @@
+# 🛠️ 部落格維護腳本工具指南 (Scripts Manual)
+
+本目錄存放用於本部落格（Docusaurus）日常寫作、排版校對、資料索引生成與自動化發布的各項腳本工具。
+
+---
+
+## 📑 目錄
+
+1. [中文文案排版檢查與修復工具 (`check-typography.js`)](#1-中文文案排版檢查與修復工具-check-typographyjs)
+   * [只看有差異的檔案清單 (不印出大量細節)](#-只看有差異的檔案清單-不印出大量細節)
+   * [單篇新文章檢查與修復 (保留舊文原始風味)](#-單篇新文章檢查與修復-保留舊文原始風味)
+   * [依年份/月份篩選檢查](#-依年份月份篩選檢查)
+   * [全站檢查與總結](#-全站檢查與總結)
+   * [配合 Git 安全操作建議](#-配合-git-安全操作建議)
+2. [日常寫作與發布工具](#2-日常寫作與發布工具)
+   * [連結失效檢查 (`check-broken-links.js`)](#連結失效檢查-check-broken-linksjs)
+   * [新增文章範本 (`new-post.js`)](#新增文章範本-new-postjs)
+   * [全自動推送發布 (`push.js`)](#全自動推送發布-pushjs)
+3. [資料生成與靜態索引腳本](#3-資料生成與靜態索引腳本)
+
+---
+
+## 1. 中文文案排版檢查與修復工具 (`check-typography.js`)
+
+依據《[中文文案排版指北](https://github.com/sparanoid/chinese-copywriting-guidelines)》標準設計，支援完整的排版自動化檢查與修正：
+
+* **中英文空格**：中文與英文字母之間自動加空格（如 `在 LeanCloud 上`）。
+* **中數空格**：中文與數字之間自動加空格（如 `花了 5000 元`），並支援 `%` 與 `°C` 等單位例外。
+* **全形中文標點**：中文句中的半形逗號、問號、驚嘆號、冒號安全轉為全形（`，` `？` `！` `：`），並智慧保護表情符號（如 `:-D`、`:P`）與小數點/版號。
+* **全形數字轉半形**：將 `０-９` 自動轉為標準半形 `0-9`。
+* **全形標點不加多餘空格**：自動清除全形標點符號前後誤打的空格及行尾多餘空白。
+* **專有名詞標準大小寫**：自動校正常見名詞（如 `GitHub`、`YouTube`、`JavaScript`、`iOS`、`macOS` 等）。
+* **行內程式碼間隔**：在行內代碼 `` `code` `` 與中文之間保持適當空格。
+
+> 💡 **核心原則**：若您希望**保留早期歷史文章的原始格式**，請避免直接執行全站 `--fix`，而是利用**路徑篩選**或**只修復特定檔案**。
+
+---
+
+### 🚀 Push 前的自動檢查與 `--changed` 模式
+
+在執行 `npm run push` 時，系統會自動依序執行：
+1. **連結有效性檢查** (`check-broken-links.js`)
+2. **本次變動文章排版檢查** (`check-typography.js --changed`)
+
+> 🌟 **無痛發布設計**：
+> * 系統會自動檢查連結（死連結、localhost 測試網址、絕對網域）與本次新寫/變動文章的中文排版！
+> * 沒動到的歷史舊文章**完全不受影響**，絕不會中斷您的發布流程。
+> * 若檢查發現任何問題（例如誤留 localhost 測試連結、或新文章缺少空格），只需輸入極簡指令：
+>   ```bash
+>   npm run fix
+>   ```
+>   一秒自動完成**修正 localhost 連結**與**修復新文章中文排版**！
+
+---
+
+### 🔍 只看有差異的檔案清單 (不印出大量細節)
+
+若全站有許多舊文章有微小差異，但您只想快速知道「到底是哪些檔案不符規範」，可以使用 `--files-only`（簡寫 `-l`）：
+
+```bash
+# 方法 1：使用 npm script
+npm run check:text:list
+
+# 方法 2：直接執行 node
+node scripts/check-typography.js --files-only
+
+# 或簡寫
+node scripts/check-typography.js -l
+```
+
+**輸出範例：**
+```text
+🔍 開始檢查中文文案排版格式 (檢查模式)...
+目標檔案數量: 372
+
+  blog/2026-10-02-attachment-to-goodness/index.md (1 處待修正)
+  blog/2026-10-04-phone/index.md (2 處待修正)
+  blog/2026-10-09-meetup/index.md (1 處待修正)
+  ...
+```
+
+---
+
+### ✍️ 單篇新文章檢查與修復 (保留舊文原始風味)
+
+當您剛寫完一篇新文章，只想針對該篇進行檢查與排版修復時：
+
+#### 步驟 1：檢查該篇文章排版
+```bash
+# 指定文章資料夾或檔案路徑
+node scripts/check-typography.js blog/2026-10-18-chess
+```
+
+#### 步驟 2：只修復該篇文章（舊文完全不受影響）
+```bash
+node scripts/check-typography.js --fix blog/2026-10-18-chess
+```
+
+---
+
+### 📅 依年份/月份篩選檢查
+
+腳本支援智慧關鍵字過濾，可快速限定只掃描某一時期：
+
+```bash
+# 只掃描 2026 年的所有文章
+node scripts/check-typography.js 2026
+
+# 只掃描 2026 年 10 月份的文章
+node scripts/check-typography.js 2026-10
+
+# 搭配只列出檔案清單
+node scripts/check-typography.js 2026 -l
+
+# 僅自動修復 2026 年的文章（更早的歷史文章保持原樣）
+node scripts/check-typography.js --fix 2026
+```
+
+---
+
+### 📊 全站檢查與總結
+
+```bash
+# 檢查全站並印出彩色修改前後對照 (Diff)
+npm run check:text
+
+# 僅印出全站統計數據摘要（不印出任何文章內容）
+npm run check:text -- --summary
+```
+
+> ⚠️ **慎用指令**：
+> ```bash
+> npm run fix:all
+> ```
+> 此指令會**一次性修復全站所有 372 篇檔案**。若您確定想保留歷史舊文的原汁原味，請不要執行此指令。
+
+---
+
+### 🛡️ 配合 Git 安全操作建議
+
+如果您在測試時不小心更動到想要保留原狀的舊檔案：
+
+```bash
+# 1. 檢視目前有哪些檔案被修改
+git status -s
+
+# 2. 僅列出有變動的檔案名稱
+git diff --name-only
+
+# 3. 檢視某一篇文章具體被改了什麼
+git diff blog/2026-10-04-phone/index.md
+
+# 4. 若不小心誤改了早期文章，一秒還原它：
+git checkout -- blog/2012-05-20-friend/
+
+# 5. 還原整個資料夾（例如還原 2012~2024 年的所有文章）：
+git checkout -- blog/2012* blog/2013* blog/2014*
+```
+
+---
+
+## 2. 日常寫作與發布工具
+
+### 連結失效檢查 (`check-broken-links.js`)
+檢查全站內部相對連結、圖片參照、靜態資源路由是否存在，避免出現 404。
+```bash
+npm run check
+# 或自動修正 localhost 與內部絕對網域為相對路徑：
+node scripts/check-broken-links.js --fix
+```
+
+### 新增文章範本 (`new-post.js`)
+快速互動式建立符合規範的 Markdown 文章目錄與 Frontmatter 標頭。
+```bash
+npm run new
+```
+
+### 全自動推送發布 (`push.js`)
+依序執行檢查、資料索引重建，並自動提交 git commit 與 push 到遠端。
+```bash
+npm run push
+```
+
+---
+
+## 3. 資料生成與靜態索引腳本
+
+這些腳本通常在 `npm run build` 或 `npm run push` 時由管線自動調用，亦可手動單獨執行：
+
+| 指令 / 腳本 | 說明 |
+| :--- | :--- |
+| `npm run prepare-data` | 整合並產出最新文章清單與前台所需統計資料 (`scripts/prepare-data.js`) |
+| `npm run gen-chess` | 西洋棋局 evaluation 靜態分析計算 (`scripts/gen-chess-eval.js`) |
+| `npm run gen-albums` | 攝影相簿靜態資料產生 (`scripts/gen-albums.js`) |
+| `node scripts/gen-search-index.js` | 產生搜尋引擎靜態索引檔案 |
+| `node scripts/optimize-images.js` | 圖片批次無損壓縮最佳化 |

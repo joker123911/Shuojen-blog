@@ -1,5 +1,5 @@
 ---
-title: '606聚'
+title: '606 聚'
 tags: [friend, shitpost]
 ---
 ![img](./001.jpg)

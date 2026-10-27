@@ -6,7 +6,7 @@ rss_date: '2026-06-12T20:16:52+08:00'
 ---
 這個部落格在第一期[ blogblogclub ](https://blogblog.club/)曾經推薦過[西洋棋](/blog/2025/12/19/chess)這個遊戲，最近我想到，可能有的玩家不想要跟別人競爭，只想享受解謎的樂趣，例如 LQ7 推薦的[ Neutral ](https://lq7.tw/mood/neutral-room-escape-games/)系列，享受那種解出題目的暢快。
 
-今天來介紹在 lichess 這個開源免費的平台上，一個西洋棋的競速解謎模式：[Puzzle Storm](https://lichess.org/storm)，無須登入就可以盡情玩到爽。
+今天來介紹在 Lichess 這個開源免費的平台上，一個西洋棋的競速解謎模式：[Puzzle Storm](https://lichess.org/storm)，無須登入就可以盡情玩到爽。
 
 ## 遊戲規則
 

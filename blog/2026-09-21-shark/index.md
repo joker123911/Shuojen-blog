@@ -16,6 +16,6 @@ rss_date: '2026-09-21T01:04:39+08:00'
 
 不知道有沒有人也玩過這個遊戲，我要趕快來玩一場回味了！
 
-[^1]:在 Youtube 找到的影片：[【懷舊小遊戲】 大魚吃小魚 Shark](https://www.youtube.com/watch?v=4TO3fR4H_0I)（留言中有[遊戲連結](https://archive.org/details/Shark_1020)）
+[^1]:在 YouTube 找到的影片：[【懷舊小遊戲】 大魚吃小魚 Shark](https://www.youtube.com/watch?v=4TO3fR4H_0I)（留言中有[遊戲連結](https://archive.org/details/Shark_1020)）
 
 

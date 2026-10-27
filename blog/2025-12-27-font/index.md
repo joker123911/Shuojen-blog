@@ -10,8 +10,8 @@ tags: [note, tool]
 
 1. 準備好想更換的 `.ttf` 字體。
 2. 下載 zfont 3 App。
-3. 點擊右下方`+` 號，選擇字體。
-4. 點擊右下方`✓` 號，選擇字體。
+3. 點擊右下方 `+` 號，選擇字體。
+4. 點擊右下方 `✓` 號，選擇字體。
 5. 推薦選 Auto，點擊 Create 後，Install Package，安裝 zfile。
 6. 最後再選擇 Change Font Style 即可。
 

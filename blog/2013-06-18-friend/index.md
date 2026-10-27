@@ -11,7 +11,7 @@ tags: ['friend']
 話說快加老師好友~~
 
 戚家榕 PO 文
-> 呵呵大家long time no see
+> 呵呵大家 long time no see
 雖然我不太會搭話
 但看到大家真的很開心
 被偷拍ㄉ抱歉嚕:P
