@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-27",
-  "latestPostDate": "2026-10-20",
+  "generatedAt": "2026-10-28",
+  "latestPostDate": "2026-10-28",
   "windowDays": 90,
-  "cutoffDate": "2026-07-29",
+  "cutoffDate": "2026-07-30",
   "stats": {
     "blogCount": 41,
     "photoCount": 1,
     "totalPosts": 42,
-    "totalWords": 24014,
+    "totalWords": 24591,
     "rankingAdded": {
       "電影": 45,
       "動畫": 5,
@@ -293,20 +293,12 @@
       "rank": 20
     },
     {
-      "text": "穹廬下的魔女",
-      "weight": 27.2,
-      "count": 2,
-      "category": "post",
-      "sourceType": "title",
-      "rank": 21
-    },
-    {
       "text": "野生狂廚",
       "weight": 22.5,
       "count": 2,
       "category": "post",
       "sourceType": "title",
-      "rank": 22
+      "rank": 21
     },
     {
       "text": "鬼手鬼手請開口",
@@ -314,6 +306,14 @@
       "count": 3,
       "category": "media",
       "sourceType": "work",
+      "rank": 22
+    },
+    {
+      "text": "穹廬下的魔女",
+      "weight": 19.5,
+      "count": 1,
+      "category": "ranking",
+      "sourceType": "ranking-動畫",
       "rank": 23
     },
     {
