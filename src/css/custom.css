@@ -50,6 +50,14 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
+/* 淺色模式背景與文字調優（方案 C：一體化平光灰） */
+[data-theme='light'],
+:root:not([data-theme='dark']) {
+  --ifm-background-color: #f6f6f7;
+  --ifm-background-surface-color: #f6f6f7;
+  --ifm-font-color-base: #212124;
+}
+
 /* 深色模式變數覆寫 */
 [data-theme='dark'] {
   --ifm-color-primary: #888888;
@@ -145,19 +153,17 @@ article img {
 }
 
 /* =========================================
-   6. Markdown 標題樣式 - 版本二：側邊重音簡潔風
+   6. Markdown 標題樣式 - 經典底線劃分風 (Classic Underline)
    ========================================= */
 
 .markdown h2 {
-  /* 使用主題色作為左側邊框 */
-  border-left: 10px solid var(--ifm-color-primary);
-  /* 使用透明灰色作為背景，日夜模式皆能自然融合 */
-  background-color: rgba(136, 136, 136, 0.08); 
-  padding: 0.8rem 1.2rem;
   margin-top: 3.5rem;
   margin-bottom: 1.5rem;
-  border-bottom: none; /* 移除 Docusaurus 預設底線 */
-  border-radius: 0 8px 8px 0;
+  padding: 0 0 0.6rem 0;
+  border-bottom: 1px solid rgba(136, 136, 136, 0.25); /* 輕柔的灰階底線 */
+  border-left: none;
+  background-color: transparent;
+  border-radius: 0;
   color: var(--ifm-color-emphasis-900);
   font-weight: 600;
   display: block;
@@ -167,9 +173,8 @@ article img {
 @media screen and (max-width: 996px) {
   .markdown h2 {
     margin-top: 2.5rem;
-    border-left-width: 6px;
-    padding: 0.6rem 1rem;
     font-size: 1.4rem;
+    padding: 0 0 0.5rem 0;
   }
 }
 
@@ -284,4 +289,34 @@ input[type="search"]::-webkit-search-results-decoration {
   .site-hero-title {
     font-size: 2.3rem !important;
   }
+}
+
+/* =========================================
+   9. Markdown 引言樣式 (Classic Blockquote)
+   ========================================= */
+.markdown blockquote {
+  position: relative;
+  margin: 1.8rem 0;
+  padding: 1rem 1.4rem;
+  border-left: 4px solid var(--ifm-color-primary);
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  background-color: rgba(136, 136, 136, 0.08);
+  border-radius: 0 8px 8px 0;
+  color: var(--ifm-color-emphasis-800);
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+.markdown blockquote > :first-child {
+  margin-top: 0;
+}
+
+.markdown blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.markdown blockquote p {
+  margin-bottom: 0.6rem;
 }
