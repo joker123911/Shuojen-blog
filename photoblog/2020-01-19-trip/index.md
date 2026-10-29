@@ -13,12 +13,6 @@ tags: ['Panasonic-GF3','14mmf2.5','泰國','曼谷','芭達雅']
 
 ![img](./016.webp)
 
-![img](./006.webp)
-
-![img](./001.webp)
-
-![img](./007.webp)
-
 ![img](./009.webp)
 
 ![img](./008.webp)
