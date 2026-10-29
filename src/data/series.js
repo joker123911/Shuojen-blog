@@ -22,6 +22,7 @@ export const animeList = [
   { title: "他們在畢業的前一天爆炸", note: "高中回憶，真的很好看，我個人心目中的台劇頂點", poster: "./img/series/他們在畢業的前一天爆炸.webp", tier: "SS", tags: ["台劇", "校園", "沉重"] },
   { title: "六人行", note: "好喜歡，非常好笑，溫暖的陪伴感", poster: "./img/series/六人行.webp", tier: "SS", tags: ["喜劇"] },
   { title: "黑暗智宅", note: "科幻結合人性，劇情步調掌握的非常好，很棒的驚悚作品", poster: "./img/series/黑暗智宅.webp", tier: "SS", tags: ["科幻", "驚悚"] },
+  { title: "怪物：麗茲波頓的故事", note: "畫面非常美，視覺衝擊的饗宴，但最後兩集略顯拖沓，可以再精簡一點收尾就更棒了", poster: "./img/series/怪物：麗茲波頓的故事.webp", tier: "SS", tags: ["歐美","驚悚","犯罪"] },
   { title: "閃亮的西瓜", note: "感動有趣，很不錯的校園感", poster: "./img/series/閃亮的西瓜.webp", tier: "S", tags: ["韓劇", "戀愛"] },
   { title: "馴鹿寶貝", note: "讓人很不舒服，很優秀的一部迷你劇集", poster: "./img/series/馴鹿寶貝.webp", tier: "S", tags: ["歐美", "驚悚"] },
   { title: "山茶花開時", note: "結合懸疑劇情我覺得很不錯，氣氛也滿好的", poster: "./img/series/山茶花開時.webp", tier: "S", tags: ["韓劇", "戀愛", "懸疑"] },
@@ -40,7 +41,6 @@ export const animeList = [
   { title: "16個夏天", note: "小時候看的經典台劇，表現很棒的一部", poster: "./img/series/16個夏天.webp", tier: "S", tags: ["台劇", "戀愛"] },
   { title: "鐵拳教育", note: "原本覺得說教感有點重，但第三集女配角出現後太討喜，升級到 S Tier", poster: "./img/series/鐵拳教育.webp", tier: "S", tags: ["韓劇","犯罪", "單元"] },
   { title: "獵犬", note: "節奏很快，動作戲刺激精采，但後半劇情變得鬆散疲軟，可惜虎頭蛇尾，第二季不追了", poster: "./img/series/獵犬.webp", tier: "S", tags: ["韓劇", "動作", "犯罪"] },
-  { title: "怪物：麗茲波頓的故事", note: "畫面非常美，視覺衝擊的饗宴，但最後兩集略顯拖沓，可以再精簡一點收尾就更棒了", poster: "./img/series/怪物：麗茲波頓的故事.webp", tier: "SS", tags: ["歐美","驚悚","犯罪"] },
   { title: "魷魚遊戲", note: "雖然有拖沓的地方，但整體不錯，第二季喜歡的地方更少，拖沓的地方更多", poster: "./img/series/魷魚遊戲.webp", tier: "A", tags: ["韓劇", "驚悚", "劇情"] },
   { title: "安眠書店S3", note: "這季很一般，沒什麼特別的看點，看完就棄了", poster: "./img/series/安眠書店.webp", tier: "A", tags: ["歐美", "驚悚", "犯罪"] },
   { title: "怪奇物語S1", note: "對這種題材沒有特別感興趣，但聽說最終季很不錯", poster: "./img/series/怪奇物語.webp", tier: "A", tags: ["歐美", "奇幻"] },
@@ -59,12 +59,13 @@ export const animeList = [
   { title: "浪漫滿屋", note: "從小跟著我媽看，家裡以前還有一整套，宋慧喬真的都不會老", poster: "./img/series/浪漫滿屋.webp", tier: "A", tags: ["韓劇","戀愛"] },
   { title: "大老婆的反擊", note: "完全忘記在演什麼，也是小學的時候跟著媽媽看，婆媽劇經典作", poster: "./img/series/大老婆的反擊.webp", tier: "A", tags: ["韓劇","戀愛"] },
   { title: "全國死刑公投", note: "前面覺得滿好看的，後面越來越爛，虎頭蛇尾", poster: "./img/series/全國死刑公投.webp", tier: "A", tags: ["韓劇", "犯罪"] },
-  { title: "怪物：艾德蓋恩的故事", note: "畫面很棒，壓抑的不舒服感加上精神失常的呈現，讓我不太喜歡。覺得有點悶，看了三集棄坑，喜歡的人應該會很喜歡", poster: "./img/series/怪物：艾德蓋恩的故事.webp", tier: "A", tags: ["歐美","驚悚","犯罪"] },
+  { title: "怪物：艾德蓋恩的故事", note: "畫面很棒，壓抑的不舒服感加上精神失常的呈現，讓我不太喜歡。覺得有點悶，看了三集棄坑，喜歡的人應該會很喜歡", poster: "./img/series/怪物：艾德蓋恩的故事.webp", tier: "A", tags: ["歐美","驚悚", "傳記"] },
+  { title: "怪物：傑弗瑞·達默的故事", note: "拍得很不錯，但看了心情很糟，節奏也偏慢。滿喜歡第一集時間序上的安排，後半有點無力", poster: "./img/series/怪物：傑弗瑞·達默的故事.webp", tier: "A", tags: ["歐美","驚悚", "傳記"] },
   { title: "紙房子S1", note: "非常無言，原本期待的是高智慧犯罪，結果整團都超級不專業，果斷棄了", poster: "./img/series/紙房子.webp", tier: "B", tags: ["歐美", "犯罪","棄坑"] },
   { title: "W－兩個世界", note: "前面不錯，後面越來越爛，看韓孝周撐過去", poster: "./img/series/W－兩個世界.webp", tier: "B", tags: ["韓劇", "戀愛", "奇幻"] },
   { title: "暴君的廚師", note: "劇情超爛又老梗，食物看起來滿好吃的", poster: "./img/series/暴君的廚師.webp", tier: "B", tags: ["韓劇", "戀愛","棄坑"] },
   { title: "黑話律師", note: "前面滿引起興趣的，後面越看越爛", poster: "./img/series/黑話律師.webp", tier: "B", tags: ["韓劇", "犯罪"] },
   { title: "大搜查線", note: "老警察職場劇， 經典但是以現在的角度來說，節奏稍嫌太慢了", poster: "./img/series/大搜查線.webp", tier: "B", tags: ["日劇", "刑偵"] },
   { title: "陽光先生", note: "好冗長，沒耐心看下去了，但前幾集還不錯看", poster: "./img/series/陽光先生.webp", tier: "B", tags: ["韓劇", "戀愛","棄坑"] },
-  { title: "毛骨悚然的戀愛", note: "喜歡朴恩斌所以看了兩集，但是劇情實在有點瞎，看不太下去", poster: "./img/series/毛骨悚然的戀愛.webp", tier: "B", tags: ["戀愛", "驚悚", "棄坑"] }
+  { title: "毛骨悚然的戀愛", note: "喜歡朴恩斌所以看了兩集，但是劇情實在有點瞎，看不太下去", poster: "./img/series/毛骨悚然的戀愛.webp", tier: "B", tags: ["韓劇", "戀愛", "驚悚", "棄坑"] }
 ];
