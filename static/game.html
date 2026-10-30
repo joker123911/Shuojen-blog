@@ -18,8 +18,8 @@
             --highlight: #fff3cd; 
             --border: #f39c12; 
             --key: #e74c3c; 
-            --locked-bg: #f0f0f0; 
-            --locked-text: #bbb; 
+            --locked-bg: #f3ece2; 
+            --locked-text: #2c221e; 
             --board-size: min(520px, 92vw, calc(100dvh - 255px));
         }
         body { 
@@ -207,9 +207,9 @@
 
         @keyframes pulse { 0% { transform: scale(0.9); opacity: 0.7; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(0.9); opacity: 0.7; } }
 
-        #svg-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; }
-        .red-line { stroke: rgba(231, 76, 60, 0.6); stroke-width: 6; stroke-linecap: round; }
-        .black-line { stroke: rgba(0, 0, 0, 0.8); stroke-width: 6; stroke-linecap: round; }
+        #svg-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; mix-blend-mode: multiply; }
+        .red-line { stroke: rgba(231, 76, 60, 0.55); stroke-width: 6; stroke-linecap: round; }
+        .black-line { stroke: rgba(90, 75, 60, 0.38); stroke-width: 6; stroke-linecap: round; }
 
         .answer-section { margin-top: 12px; text-align: center; width: var(--board-size); max-width: var(--board-size); }
         /* 答案格：一律單行，答案較長（最多 10 字）時自動縮小格子而不換行 */
@@ -1107,11 +1107,26 @@ https://shuojen.com/game`;
                     const unlockedLines = manualKeys.get(idx);
                     manualKeys.delete(idx);
                     rebuildLockedCells();
-                    unlockedLines.forEach(line => line.forEach(id => {
-                        if (!lockedCells.has(id) && !manualKeys.has(id)) {
-                            selectedIndices.add(id);
+
+                    // 找出目前仍被其他關鍵字鎖定的成語線
+                    const remainingLockedLineKeys = new Set();
+                    manualKeys.forEach(lines => {
+                        lines.forEach(line => {
+                            remainingLockedLineKeys.add([...line].sort((a, b) => a - b).join(','));
+                        });
+                    });
+
+                    // 將不再被任何關鍵字鎖定的成語整條（4個字）退回選取狀態（黃底），維持完整 4 字紅線
+                    unlockedLines.forEach(line => {
+                        const lineKey = [...line].sort((a, b) => a - b).join(',');
+                        if (!remainingLockedLineKeys.has(lineKey)) {
+                            line.forEach(id => {
+                                if (!manualKeys.has(id)) {
+                                    selectedIndices.add(id);
+                                }
+                            });
                         }
-                    }));
+                    });
                     mobileSelectedChar = null;
                     activeKeyIdx = null;
                 } else {
@@ -1126,16 +1141,38 @@ https://shuojen.com/game`;
                 const combined = new Set([...selectedIndices, ...lockedCells]);
                 const validLines = getValidIdiomsAtPoint(idx, combined);
                 
-                if (validLines.length >= 2 && puzzles[currentLevelIndex].answer.includes(el.textContent)) {
-                    manualKeys.set(idx, validLines);
-                    validLines.forEach(line => line.forEach(id => { 
-                        lockedCells.add(id); 
-                        selectedIndices.delete(id); 
+                // 必須至少有 2 條有效成語交叉，且每條成語都必須是「4 字全選（黃底）」或「已鎖定黑線」
+                const activeValidLines = validLines.filter(line => {
+                    const isAllSelected = line.every(id => selectedIndices.has(id));
+                    const isAllLocked = line.every(id => lockedCells.has(id));
+                    return isAllSelected || isAllLocked;
+                });
+
+                if (activeValidLines.length >= 2 && puzzles[currentLevelIndex].answer.includes(el.textContent)) {
+                    // 鎖定前，檢查場上是否還有其他「已選滿 4 字」但不在本次鎖定範圍內的紅線成語
+                    // 若有共用字（例如「不」同時在「一毛不拔」與已選好的「不勞而獲」），保留該共用字的黃底選取狀態
+                    const lockingLineKeys = new Set(
+                        activeValidLines.map(line => [...line].sort((a, b) => a - b).join(','))
+                    );
+                    const otherSelectedLines = findAllValid4CharLines(selectedIndices).filter(line => {
+                        const k = [...line].sort((a, b) => a - b).join(',');
+                        return !lockingLineKeys.has(k);
+                    });
+                    const keepSelectedIds = new Set();
+                    otherSelectedLines.forEach(line => line.forEach(id => keepSelectedIds.add(id)));
+
+                    manualKeys.set(idx, activeValidLines);
+                    rebuildLockedCells();
+                    activeValidLines.forEach(line => line.forEach(id => { 
+                        if (!keepSelectedIds.has(id) || id === idx) {
+                            selectedIndices.delete(id); 
+                        }
                     }));
                 } else {
                     selectedIndices.delete(idx);
                 }
             } else {
+                // 即使是已鎖定黑線上的字（如「一毛不拔」的「不」），點擊時也能加入選取並亮起黃底
                 selectedIndices.add(idx);
             }
             updateVisuals();
@@ -1187,14 +1224,28 @@ https://shuojen.com/game`;
                     if (activeKeyIdx === i) c.classList.add('active-key');
                 }
             });
-            findAllValid4CharLines(selectedIndices).forEach(line => {
-                const ends = getEnds(line);
-                drawSvgLine(ends.start, ends.end, 'red-line');
+
+            // 1. 繪製所有已鎖定成語的黑線（去重複繪製，避免同成語被多個關鍵字重複疊線變深）
+            const lockedLineKeys = new Set();
+            manualKeys.forEach(lines => {
+                lines.forEach(line => {
+                    const lineKey = [...line].sort((a, b) => a - b).join(',');
+                    if (!lockedLineKeys.has(lineKey)) {
+                        lockedLineKeys.add(lineKey);
+                        const ends = getEnds(line);
+                        drawSvgLine(ends.start, ends.end, 'black-line');
+                    }
+                });
             });
-            manualKeys.forEach(lines => lines.forEach(line => {
-                const ends = getEnds(line);
-                drawSvgLine(ends.start, ends.end, 'black-line');
-            }));
+
+            // 2. 只有當 4 個字都處於選取狀態（4 格皆亮黃底）時，才繪製新成語紅線
+            findAllValid4CharLines(selectedIndices).forEach(line => {
+                const lineKey = [...line].sort((a, b) => a - b).join(',');
+                if (!lockedLineKeys.has(lineKey)) {
+                    const ends = getEnds(line);
+                    drawSvgLine(ends.start, ends.end, 'red-line');
+                }
+            });
         }
 
         function findAllValid4CharLines(set) {
