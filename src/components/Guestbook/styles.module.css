@@ -254,6 +254,37 @@
   overflow-wrap: break-word;
 }
 
+/* Markdown 引言區塊 (Blockquote) 樣式 */
+.commentBlockquote {
+  position: relative;
+  margin: 0.8rem 0;
+  padding: 0.6rem 1rem;
+  border-left: 4px solid var(--ifm-color-primary);
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  background-color: rgba(136, 136, 136, 0.08);
+  border-radius: 0 6px 6px 0;
+  color: var(--ifm-color-emphasis-800);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.commentBlockquote:first-child {
+  margin-top: 0.4rem;
+}
+
+.commentBlockquote:last-child {
+  margin-bottom: 0.4rem;
+}
+
+.commentBlockquote .commentBlockquote {
+  margin: 0.5rem 0;
+  background-color: rgba(136, 136, 136, 0.05);
+}
+
 /* 站長徽章防跑版核心修正 */
 .masterBadge {
   background-color: var(--ifm-color-primary-lightest);
@@ -310,6 +341,11 @@
 
 :global([data-theme='dark']) .slugTag {
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+:global([data-theme='dark']) .commentBlockquote {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--ifm-color-emphasis-800);
 }
 
 .readOnlyNote {

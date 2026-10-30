@@ -114,23 +114,8 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     return null;
   };
 
-  const renderMarkdown = (text) => {
+  const renderInlineMarkdown = (text) => {
     if (!text) return text;
-
-    if (isAsciiArt(text)) {
-      return (
-        <div style={{ 
-          fontFamily: '"Cascadia Code", Consolas, "Courier New", monospace', 
-          whiteSpace: 'pre', 
-          overflowX: 'auto', 
-          lineHeight: '1.25',
-          fontSize: '0.9em',
-          padding: '4px 0'
-        }}>
-          {text}
-        </div>
-      );
-    }
 
     const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
     
@@ -170,6 +155,94 @@ export default function Guestbook({ readOnly = false, postSlug }) {
             
             return subPart;
           })}
+        </span>
+      );
+    });
+  };
+
+  const isQuoteLine = (line) => /^\s{0,3}>(?: (.*)|$|(?![\s<_\.0-9\(\)\/\\~])(.*))$/.test(line);
+  const getQuoteContent = (line) => line.replace(/^\s{0,3}>\s?/, '');
+
+  const parseBlocks = (text) => {
+    const lines = text.split(/\r?\n/);
+    const blocks = [];
+    let currentBlock = null;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const isQuote = isQuoteLine(line);
+
+      if (currentBlock && currentBlock.type === 'quote') {
+        if (isQuote) {
+          currentBlock.lines.push(getQuoteContent(line));
+        } else if (line.trim() === '') {
+          blocks.push(currentBlock);
+          currentBlock = null;
+        } else {
+          currentBlock.lines.push(line);
+        }
+      } else if (currentBlock && currentBlock.type === 'text') {
+        if (isQuote) {
+          blocks.push(currentBlock);
+          currentBlock = { type: 'quote', lines: [getQuoteContent(line)] };
+        } else {
+          currentBlock.lines.push(line);
+        }
+      } else {
+        if (isQuote) {
+          currentBlock = { type: 'quote', lines: [getQuoteContent(line)] };
+        } else {
+          currentBlock = { type: 'text', lines: [line] };
+        }
+      }
+    }
+
+    if (currentBlock) {
+      blocks.push(currentBlock);
+    }
+
+    return blocks;
+  };
+
+  const renderMarkdown = (text, depth = 0) => {
+    if (!text) return text;
+
+    if (depth === 0 && isAsciiArt(text)) {
+      return (
+        <div style={{ 
+          fontFamily: '"Cascadia Code", Consolas, "Courier New", monospace', 
+          whiteSpace: 'pre', 
+          overflowX: 'auto', 
+          lineHeight: '1.25',
+          fontSize: '0.9em',
+          padding: '4px 0'
+        }}>
+          {text}
+        </div>
+      );
+    }
+
+    if (depth > 5) {
+      return renderInlineMarkdown(text);
+    }
+
+    const blocks = parseBlocks(text);
+
+    return blocks.map((block, idx) => {
+      const content = block.lines.join('\n').trim();
+      if (!content) return null;
+
+      if (block.type === 'quote') {
+        return (
+          <blockquote key={idx} className={styles.commentBlockquote}>
+            {renderMarkdown(content, depth + 1)}
+          </blockquote>
+        );
+      }
+
+      return (
+        <span key={idx}>
+          {renderInlineMarkdown(content)}
         </span>
       );
     });
@@ -615,7 +688,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
                   </button>
                 </div>
                 <textarea
-                  placeholder="輸入回覆內容（必填）支援 Markdown..." required
+                  placeholder="輸入回覆內容（必填）支援 Markdown、> 引用..." required
                   value={replyData.content} onChange={e => setReplyData({...replyData, content: e.target.value})}
                   rows={3}
                   style={{ display: replyTab === 'write' ? 'block' : 'none' }}
@@ -705,7 +778,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
               </button>
             </div>
             <textarea
-              placeholder="輸入內容（必填）支援 Markdown..." required
+              placeholder="輸入內容（必填）支援 Markdown、> 引用..." required
               value={formData.content} onChange={e => setFormData({...formData, content: e.target.value})}
               style={{ display: formTab === 'write' ? 'block' : 'none' }}
             />

@@ -40,6 +40,7 @@ import Guestbook from '@site/src/components/Guestbook';
 - 粗體：`**bold**`
 - 斜體：`*italic*`
 - 刪除線：`~~strike~~`
+- 引言：`> 引用的文字`
 
 :::
 
