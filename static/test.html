@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>成語迷宮 - 完整版</title>
+    <title>成語迷宮</title>
     <script src="puzzle.js"></script>
     <script src="dictionary.js"></script>
     <style>
@@ -12,33 +12,58 @@
            ========================================= */
         @import url("https://font.emtech.cc/css/MantouSans");
 
-        :root { --bg: #fdf5e6; --primary: #8b4513; --highlight: #fff3cd; --border: #f39c12; --key: #e74c3c; --locked-bg: #f0f0f0; --locked-text: #bbb; --accent: #27ae60; }
-        
+        :root { 
+            --bg: #fdf5e6; 
+            --primary: #8b4513; 
+            --highlight: #fff3cd; 
+            --border: #f39c12; 
+            --key: #e74c3c; 
+            --locked-bg: #f3ece2; 
+            --locked-text: #2c221e; 
+            --board-size: min(520px, 92vw, calc(100dvh - 255px));
+        }
         body { 
             font-family: sans-serif; 
-            background: var(--bg); 
+            background: radial-gradient(circle at center, #fff9ee 0%, #f0ddc0 100%); 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            justify-content: space-between; 
-            padding: 10px 20px; 
+            justify-content: center;
+            padding: 12px 16px; 
             margin: 0; 
-            height: 100vh; 
+            min-height: 100vh;
+            min-height: 100dvh;
             box-sizing: border-box;
-            overflow: hidden; 
+        }
+
+        /* 典雅桌遊盤卡片外框 */
+        .board-card {
+            background: linear-gradient(180deg, #fffdf9 0%, #fdf5e6 100%);
+            border: 2px solid #d4b287;
+            box-shadow: 0 16px 40px rgba(139, 69, 19, 0.14), 0 3px 10px rgba(139, 69, 19, 0.06), inset 0 0 0 4px #fffdf9;
+            border-radius: 20px;
+            padding: 20px 36px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            max-width: 98vw;
         }
         
-        .game-header { text-align: center; margin-bottom: 5px; }
+        /* 標題樣式 */
+        .game-header { text-align: center; margin-bottom: 8px; }
         .game-title { 
             font-family: 'MantouSans', sans-serif; 
-            font-size: 120px; 
+            font-size: clamp(34px, 5.2vh, 56px); 
             color: var(--primary); 
             margin: 0; 
-            letter-spacing: 0px;
+            line-height: 1.1;
+            letter-spacing: 1px;
             text-shadow: 2px 2px 0px rgba(243, 156, 18, 0.5);
             font-weight: normal;
         }
 
+        /* 置中對齊容器 */
         .top-bar { 
             display: flex; 
             gap: 10px; 
@@ -49,63 +74,129 @@
             flex-wrap: wrap;
         }
 
+        .date-badge {
+            background: #fffdf9;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 0 14px;
+            height: 38px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14.5px;
+            box-sizing: border-box;
+            letter-spacing: 0.5px;
+        }
+
+        /* 即時數據列（計時與步數） */
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: var(--board-size);
+            max-width: var(--board-size);
+            background: #fffdf9;
+            border: 2px solid var(--primary);
+            border-bottom: 1px dashed #e0c8a8;
+            border-radius: 8px 8px 0 0;
+            padding: 6px 14px;
+            box-sizing: border-box;
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .stat-icon {
+            font-size: 15px;
+        }
+        .daily-status {
+            font-size: 12.5px;
+            background: #fff3cd;
+            color: #856404;
+            padding: 2px 9px;
+            border-radius: 12px;
+            border: 1px solid #ffeeba;
+            font-weight: normal;
+        }
+
+        /* 統一按鈕與選單的大小與外觀 */
         .btn, select { 
-            width: 140px; 
-            height: 42px; 
-            font-family: inherit; 
-            font-size: 15px; 
+            font-family: inherit;  /* 繼承 body 的字體 */
+            font-size: 14.5px; 
             font-weight: bold;
             border-radius: 8px; 
             box-sizing: border-box;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             transition: 0.2s;
             cursor: pointer;
-            border: 2px solid var(--primary); 
+            border: 2px solid var(--primary);
+            height: 38px;
+            padding: 0 12px;
         }
 
-        .btn { background: var(--primary); color: white; padding: 0; }
+        .top-bar .btn, select {
+            width: 100px;
+            padding: 0;
+        }
+
+        .btn { 
+            background: var(--primary); 
+            color: white; 
+        }
         .btn:hover { opacity: 0.9; }
-        .btn-hint { background: var(--accent); border-color: #1e8449; }
-        .btn-nav { width: 80px; }
 
-        select { 
-            background: #fff;
-            color: #000000;
-            outline: none;
-            padding: 0 25px 0 15px; 
-            appearance: none;
-            -webkit-appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b4513' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
+        .btn-donate {
+            background: #b85c1e;
+            border-color: #8b4513;
+        }
+        .btn-donate:hover {
+            background: #d35400;
         }
 
-        /* 彈窗樣式 */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100; justify-content: center; align-items: center; }
-        .modal-content { background: var(--bg); padding: 30px; border-radius: 12px; max-width: 450px; width: 90%; border: 4px solid var(--primary); position: relative; line-height: 1.8; overflow-y: auto; max-height: 90vh; }
-        .modal-content h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 100; justify-content: center; align-items: center; }
+        .modal-content { background: var(--bg); padding: 24px; border-radius: 12px; max-width: 450px; width: 90%; border: 4px solid var(--primary); position: relative; line-height: 1.8; overflow-y: auto; max-height: 90vh; max-height: 90dvh; box-sizing: border-box; -webkit-overflow-scrolling: touch; }
+        .modal-content h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 8px; font-size: 18px; }
         .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: var(--primary); font-weight: bold; }
 
-        /* 廣告彈窗專屬 */
-        #ad-modal .modal-content { text-align: center; background: #fff; }
-        .ad-placeholder { width: 100%; height: 250px; background: #eee; display: flex; align-items: center; justify-content: center; margin: 15px 0; border: 1px dashed #bbb; color: #888; }
-        #ad-timer { color: var(--key); font-weight: bold; }
-
-        .game-wrapper { position: relative; padding: 3px; background: #fff; border: 2px solid var(--primary); border-radius: 8px; width: 100%; max-width: 490px; }
-        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; background: #999; }
-        .cell { aspect-ratio: 1 / 1; background: white; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; cursor: pointer; user-select: none; position: relative; z-index: 1; transition: all 0.2s; color: black; }
-        
-        @media (max-width: 450px) { 
-            .cell { font-size: 4vw; } 
-            .game-title { font-size: 45px; } 
-            .btn, select { width: 100px; height: 38px; font-size: 13px; }
-            .btn-nav { width: 65px; }
+        .game-wrapper { 
+            position: relative; 
+            padding: 3px; 
+            background: #fff; 
+            border: 2px solid var(--primary); 
+            border-radius: 0 0 8px 8px; 
+            width: var(--board-size); 
+            max-width: var(--board-size); 
+            box-sizing: border-box;
         }
+        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2.5px; background: #999; }
 
-        .cell.selected { background: var(--highlight) !important; box-shadow: inset 0 0 0 2px var(--border); }
+        /* 開始前遮住盤面，按下「開始挑戰」才顯示並開始計時 */
+        .start-overlay { display: none; }
+        .game-wrapper.not-started { overflow: hidden; }
+        .game-wrapper.not-started .grid { filter: blur(10px); opacity: 0.35; pointer-events: none; user-select: none; }
+        .game-wrapper.not-started .start-overlay {
+            position: absolute; inset: 0; z-index: 10;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px;
+            background: rgba(253, 245, 230, 0.75);
+            border-radius: 0 0 6px 6px;
+            text-align: center; padding: 16px; box-sizing: border-box;
+        }
+        .start-overlay-title { font-family: 'MantouSans', sans-serif; font-size: clamp(22px, 6vw, 30px); color: var(--primary); }
+        .start-overlay-desc { font-size: 13.5px; color: #795548; }
+        .btn-start { height: 46px; padding: 0 28px; font-size: 17px; margin-top: 4px; box-shadow: 0 4px 12px rgba(139, 69, 19, 0.25); }
+        .cell { aspect-ratio: 1 / 1; background: white; display: flex; justify-content: center; align-items: center; font-size: clamp(13px, 2.5vh, 20px); font-weight: bold; cursor: pointer; user-select: none; -webkit-user-select: none; position: relative; z-index: 1; transition: all 0.2s; color: black; touch-action: manipulation; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
+        
+        .cell.locked { background: var(--locked-bg); color: var(--locked-text); }
+        .cell.selected { background: var(--highlight) !important; color: black; box-shadow: inset 0 0 0 2px var(--border); }
         .cell.is-key { cursor: grab; z-index: 5; background: white !important; color: var(--primary) !important; }
         .cell.is-key::after { 
             content: ''; position: absolute; width: 88%; height: 88%; 
@@ -116,209 +207,845 @@
 
         @keyframes pulse { 0% { transform: scale(0.9); opacity: 0.7; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(0.9); opacity: 0.7; } }
 
-        #svg-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; }
-        .red-line { stroke: rgba(231, 76, 60, 0.6); stroke-width: 6; stroke-linecap: round; }
-        .black-line { stroke: rgba(0, 0, 0, 0.8); stroke-width: 6; stroke-linecap: round; }
+        #svg-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; mix-blend-mode: multiply; }
+        .red-line { stroke: rgba(231, 76, 60, 0.55); stroke-width: 6; stroke-linecap: round; }
+        .black-line { stroke: rgba(90, 75, 60, 0.38); stroke-width: 6; stroke-linecap: round; }
 
-        .answer-section { margin-top: 10px; text-align: center; width: 100%; }
-        .slots { display: flex; gap: 8px; margin-top: 10px; justify-content: center; flex-wrap: wrap; }
-        .slot { 
-            width: 45px; 
-            height: 45px; 
-            border: 2px solid var(--primary); 
-            background: #fff; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            font-size: 22px; 
-            font-weight: bold; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            color: #d35400; 
-            transition: background 0.2s; 
-        }
+        .answer-section { margin-top: 12px; text-align: center; width: var(--board-size); max-width: var(--board-size); }
+        /* 答案格：一律單行，答案較長（最多 10 字）時自動縮小格子而不換行 */
+        .slots { display: flex; gap: 8px; margin-top: 6px; justify-content: center; flex-wrap: nowrap; }
+        .slot { flex: 0 1 clamp(38px, 5.6vh, 50px); min-width: 0; aspect-ratio: 1 / 1; box-sizing: border-box; touch-action: manipulation; -webkit-tap-highlight-color: transparent; border: 2px solid var(--primary); background: #fff; display: flex; justify-content: center; align-items: center; font-size: clamp(20px, 3.2vh, 26px); font-weight: bold; border-radius: 8px; cursor: pointer; color: #d35400; transition: background 0.2s; user-select: none; }
         .slot:empty { cursor: default; background: rgba(255,255,255,0.5); border-style: dashed; }
         .slot.drag-over { background: #eee; border-color: var(--key); }
-        #win-msg { display: none; margin-top: 15px; color: #27ae60; font-size: 20px; font-weight: bold; }
+        #win-msg { display: none; margin-top: 8px; color: #27ae60; font-size: 18px; font-weight: bold; }
+        .win-donate-prompt { 
+            margin-top: 8px; 
+            font-size: 13px; 
+            color: #8b4513; 
+            background: #fff8e7; 
+            border: 1px dashed #f39c12; 
+            padding: 6px 14px; 
+            border-radius: 20px; 
+            display: inline-block; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+            font-weight: normal; 
+        }
+        .win-donate-prompt:hover { 
+            background: #ffecb3; 
+            transform: scale(1.03); 
+        }
         
-        .footer { margin-top: 10px; padding-bottom: 10px; font-size: 12px; color: var(--primary); opacity: 0.8; }
+        .footer { margin-top: 10px; padding-bottom: 2px; font-size: 12px; color: var(--primary); opacity: 0.8; }
+        .footer-donate-link {
+            color: var(--primary);
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 6px;
+        }
+        .footer-donate-link:hover {
+            color: #d35400;
+        }
+
+        /* 贊助彈窗與方案卡片樣式 */
+        .tier-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #fff;
+            border: 1.5px solid #ecd8be;
+            border-radius: 12px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+            text-align: left;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        .tier-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(139, 69, 19, 0.15);
+            transform: translateY(-2px);
+            background: #fffdf9;
+        }
+        .tier-card.tier-recurring {
+            background: linear-gradient(135deg, #fffdf8 0%, #fdf8ee 100%);
+            border: 1.5px dashed #c89650;
+        }
+        .tier-card.tier-recurring:hover {
+            border-color: #b85c1e;
+            background: #fff7eb;
+        }
+        .tier-icon {
+            font-size: 24px;
+            line-height: 1;
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(184, 92, 30, 0.08);
+            border-radius: 50%;
+        }
+        .tier-info {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.35;
+            flex: 1;
+            min-width: 0;
+        }
+        .tier-info strong {
+            font-size: 14px;
+            color: var(--primary);
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tier-info span {
+            font-size: 12px;
+            color: #6d5b52;
+            word-break: break-word;
+        }
+        .tier-badge {
+            font-size: 10px;
+            background: #27ae60;
+            color: #fff;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .tier-action-btn {
+            flex-shrink: 0;
+            background: #b85c1e;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 6px 10px;
+            border-radius: 6px;
+            transition: background 0.2s, transform 0.2s;
+            white-space: nowrap;
+        }
+        .tier-card:hover .tier-action-btn {
+            background: #d35400;
+            transform: translateX(2px);
+        }
+        .tier-recurring .tier-action-btn {
+            background: #27ae60;
+        }
+        .tier-recurring:hover .tier-action-btn {
+            background: #219653;
+        }
+
+        /* 戰績結算視窗 */
+        .victory-card {
+            background: #fff;
+            border: 2px dashed #e0c8a8;
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .victory-rank-badge {
+            font-size: 24px;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 4px;
+        }
+        .victory-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+        .victory-stats-row {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #f0e0d0;
+            border-bottom: 1px solid #f0e0d0;
+            margin-bottom: 10px;
+        }
+        .v-stat {
+            display: flex;
+            flex-direction: column;
+        }
+        .v-stat-val {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .v-stat-lbl {
+            font-size: 12px;
+            color: #888;
+        }
+        .victory-blocks {
+            font-size: 22px;
+            letter-spacing: 4px;
+            margin-top: 6px;
+        }
+        .btn-share-action {
+            width: 100% !important;
+            max-width: 320px !important;
+            min-height: 44px !important;
+            height: auto !important;
+            padding: 10px 14px !important;
+            background: #27ae60;
+            border: none !important;
+            color: white !important;
+            border-radius: 8px;
+            font-size: 14.5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            line-height: 1.4;
+            box-shadow: 0 3px 8px rgba(39, 174, 96, 0.3);
+            white-space: normal;
+            word-break: break-word;
+            box-sizing: border-box;
+        }
+        .btn-share-action:hover {
+            background: #219653;
+            transform: scale(1.02);
+            color: white;
+        }
+        .copy-toast {
+            font-size: 13px;
+            color: #27ae60;
+            font-weight: bold;
+            min-height: 18px;
+            text-align: center;
+        }
+
+        /* ===== 響應式設定：放在最後，才能正確覆蓋上方的基本樣式 ===== */
+        /* 針對矮螢幕（如 13 吋小筆電或開啟多行書籤列）自適應縮緊 */
+        @media (max-height: 750px) {
+            :root { --board-size: min(460px, 92vw, calc(100dvh - 205px)); }
+            body { padding: 6px 10px; }
+            .board-card { padding: 12px 24px 10px; border-radius: 16px; }
+            .game-header { margin-bottom: 4px; }
+            .game-title { font-size: clamp(28px, 4.4vh, 38px); }
+            .top-bar { margin-bottom: 6px; gap: 6px; }
+            .date-badge, .top-bar .btn { height: 32px; font-size: 13px; }
+            .stats-bar { padding: 4px 10px; font-size: 12.5px; }
+            .answer-section { margin-top: 8px; }
+            .slots { margin-top: 4px; gap: 5px; }
+            .slot { flex-basis: 38px; font-size: 19px; }
+            .footer { margin-top: 6px; padding-bottom: 2px; font-size: 11px; }
+        }
+
+        /* 手機端滿版流暢模式 */
+        @media (max-width: 560px) { 
+            :root { --board-size: min(440px, calc(100vw - 16px), calc(100dvh - 230px)); }
+            body { background: var(--bg); padding: 8px 8px 6px; }
+            .board-card { background: transparent; border: none; box-shadow: none; padding: 0; border-radius: 0; }
+            .cell { font-size: clamp(12px, 3.8vw, 16px); } 
+            .game-title { font-size: 32px; }
+            .top-bar .btn { width: 88px; height: 34px; font-size: 13px; }
+            .date-badge { height: 34px; font-size: 13px; padding: 0 10px; }
+            .stats-bar { font-size: 12.5px; padding: 4px 10px; }
+            .daily-status { font-size: 11px; padding: 2px 6px; }
+            .slots { gap: 5px; }
+            .slot { flex-basis: 38px; font-size: 20px; }
+            .footer { font-size: 11px; margin-top: 8px; }
+        }
     </style>
 </head>
 <body ondragover="event.preventDefault()" ondrop="handleBodyDrop(event)">
 
+    <div class="board-card">
     <div class="game-header">
         <h1 class="game-title">成語迷宮</h1>
     </div>
 
+    <!-- 頂部操作列 -->
     <div class="top-bar">
-        <button class="btn btn-nav" onclick="prevLevel()">上一關</button>
-        <select id="level-select" onchange="checkAdAndLoad(this.value)"></select>
-        <button class="btn btn-nav" onclick="nextLevel()">下一關</button>
-        <button class="btn btn-hint" onclick="giveHint()">💡 提示</button>
-        <button class="btn" style="width: 90px;" onclick="toggleModal('info-modal', true)">說明</button>
+        <div id="daily-badge" class="date-badge">
+            📅 <span id="daily-date-text">2026-10-21</span>
+        </div>
+        <button class="btn" onclick="toggleModal(true)">遊戲說明</button>
+        <button class="btn" onclick="toggleAboutModal(true)">關於遊戲</button>
     </div>
 
-    <div id="info-modal" class="modal" onclick="toggleModal('info-modal', false)">
+    <!-- 即時數據列（計時與步數） -->
+    <div class="stats-bar">
+        <div class="stat-item"><span class="stat-icon">⏱️</span><span id="timer-display">00:00</span></div>
+        <div class="stat-item"><span id="mode-status-indicator" class="daily-status">🔥 每日一題</span></div>
+        <div class="stat-item"><span class="stat-icon">🚶</span><span id="step-display">0 步</span></div>
+    </div>
+
+    <div id="info-modal" class="modal" onclick="toggleModal(false)">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="toggleModal('info-modal', false)">&times;</span>
+            <span class="close-btn" onclick="toggleModal(false)">&times;</span>
             <h3>📜 遊戲規則說明</h3>
             <ul>
-                <li>表格中藏有數個<b>四字成語</b>，方向可能是上下、左右或對角線。</li>
-                <li>每兩個成語的交叉處可得到一個<b>關鍵字</b>。</li>
-                <li>收集所有關鍵字並拖曳至下方，組成正確的<b>俚語</b>即可過關。</li>
-                <li>若卡關了，可以使用<b>💡 提示</b>功能。</li>
+                <li>表格中藏有數個<b>四字成語</b>，排列順序可能是由上而下，由左而右、由右而左，或是呈對角線，請先找出表格裡的成語。</li>
+                <li>每兩個成語的交叉處可得到一個<b>關鍵字</b>，關鍵字有可能會重複。</li>
+                <li>找到的關鍵字可組成一個<b>俚語</b>，即為最後答案。</li>
             </ul>
+
+            <h3>🎮 遊戲操作說明</h3>
+            <ul>
+                <li><b>選取成語：</b>點擊網格中的文字，選取構成成語的四個字，選擇正確會以紅線標示。</li>
+                <li><b>取得關鍵字：</b>當兩個正確成語交叉時，點擊該交叉點會變為帶紅圈的<b>「關鍵字」</b>。</li>
+                <li><b>填寫答案：</b>
+                    <ul>
+                        <li><b>電腦：</b>將「關鍵字」直接拖曳到下方的答案空格中。</li>
+                        <li><b>手機：</b>點擊一次「關鍵字」（會變為粉紅色背景），再點擊下方的答案空格即可填入。</li>
+                    </ul>
+                </li>
+                <li><b>修改答案：</b>點擊已填入文字的空格可清除該字。</li>
+                <li><b>計時方式：</b>按下「開始挑戰」才會顯示題目並開始計時，重新整理則會整局重來。</li>
+            </ul>
+
             <div style="text-align: center; margin-top: 20px;">
-                <button class="btn" style="width: 120px; display: inline-block;" onclick="toggleModal('info-modal', false)">開始遊戲</button>
+                <button class="btn" style="width: 120px; display: inline-block;" onclick="toggleModal(false)">開始遊戲</button>
             </div>
         </div>
     </div>
 
-    <div id="ad-modal" class="modal">
-        <div class="modal-content">
-            <h3>📺 贊助商廣告</h3>
-            <div class="ad-placeholder">
-                這裡是廣告區域<br>(每 5 關出現一次)
+    <div id="about-modal" class="modal" onclick="toggleAboutModal(false)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="toggleAboutModal(false)">&times;</span>
+            <div style="text-align: center; margin-bottom: 16px;">
+                <span style="font-size: 38px;">📖</span>
+                <h3 style="margin: 8px 0 6px 0; border: none; padding: 0;">關於「成語迷宮」</h3>
             </div>
-            <p>廣告剩餘時間：<span id="ad-timer">3</span> 秒</p>
-            <button id="ad-close-btn" class="btn" style="width: 150px; margin: 0 auto; display: none;" onclick="closeAd()">關閉廣告</button>
+
+            <div style="font-size: 14.5px; line-height: 1.85; color: #4e342e; text-align: justify;">
+                <p style="margin-bottom: 14px; text-indent: 2em;">
+                    大約在 2006 年，我哥在自由時報上的週末專欄連載一個文字遊戲，名叫「成語迷宮」。這是他在國高中時期設計的，大約連載了三年，後來在 2009 年集結成冊，出了一本實體書，在當時那個手機不普及的年代，受到還滿多家裡有訂報紙的讀者喜歡。
+                </p>
+                <p style="margin-bottom: 14px; text-indent: 2em;">
+                    印象很深，在我國小的時候，當時報社需要庫存，要一次交好幾份稿。我哥找我幫他一起做。兩個人就窩在電腦前，上教育部的網站查成語，用 Word 表格慢慢刻，再一個字一個字填上去，一口氣趕出好幾份（原來我不到十歲就當下包接案了，<del style="color: #888;">但我似乎沒拿到報酬</del>）。
+                </p>
+                <p style="margin-bottom: 14px; text-indent: 2em;">
+                    中間這十幾年，偶爾家人們聊天的時候，會提到要不要把這個遊戲出成 App 等等的想法，但大家總是隨口提提，沒有什麼實際作為。我哥也許有問過幾個朋友，但似乎也沒什麼下文。這個遊戲誕生至今已經二十年了，在我心中一直是個跟我哥的美好回憶，於是我利用週末和下班的閒暇時間，做了這個網頁版。想說今年回高雄過年時，再給他一個驚喜，就當做一個新年禮物吧。
+                </p>
+				<p style="margin-bottom: 14px; text-indent: 2em;">
+                     撰於 2026-01-28 
+                </p>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px; border-top: 1px dashed #e0c8a8; padding-top: 16px;">
+                <button class="btn" style="width: 120px; display: inline-block;" onclick="toggleAboutModal(false)">關閉</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="donate-modal" class="modal" onclick="toggleDonateModal(false)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="toggleDonateModal(false)">&times;</span>
+            <div style="text-align: center; margin-bottom: 14px;">
+                <span style="font-size: 38px;">☕</span>
+                <h3 style="margin: 6px 0 4px 0; border: none; padding: 0;">支持成語迷宮</h3>
+                <div style="color: #795548; font-size: 13.5px;">無廣告、純粹思考的角落，感謝有您的相伴</div>
+            </div>
+            
+            <div style="background: rgba(243, 156, 18, 0.12); border-left: 4px solid var(--border); padding: 10px 12px; border-radius: 6px; font-size: 13px; color: #5d4037; line-height: 1.55; margin-bottom: 14px;">
+                本遊戲完全免費且<b>絕無廣告</b>干擾思考。若您在解謎過程中獲得了樂趣，歡迎透過<b>綠界科技（ECPay）</b>贊助支持作者與主機營運！
+            </div>
+
+            <!-- 方案 1: 50 元 -->
+            <a href="https://p.ecpay.com.tw/41BB174" target="_blank" rel="noopener noreferrer" class="tier-card" onclick="handleDonateClick(event)">
+                <div class="tier-icon">☕</div>
+                <div class="tier-info">
+                    <strong>NT$ 50 · 請杯美式咖啡</strong>
+                    <span>補充電力，為作者注入解謎題庫開發動能</span>
+                </div>
+                <div class="tier-action-btn">贊助 $50 ➔</div>
+            </a>
+
+            <!-- 方案 2: 150 元 -->
+            <a href="https://p.ecpay.com.tw/52210C3" target="_blank" rel="noopener noreferrer" class="tier-card" onclick="handleDonateClick(event)">
+                <div class="tier-icon">🍜</div>
+                <div class="tier-info">
+                    <strong>NT$ 150 · 贊助元氣晚餐</strong>
+                    <span>加滿油箱，加速新關卡、功能與詞庫優化</span>
+                </div>
+                <div class="tier-action-btn">贊助 $150 ➔</div>
+            </a>
+
+            <!-- 方案 3: 隨意填寫（單筆） -->
+            <a href="https://p.ecpay.com.tw/4C157A4" target="_blank" rel="noopener noreferrer" class="tier-card" onclick="handleDonateClick(event)">
+                <div class="tier-icon">💖</div>
+                <div class="tier-info">
+                    <strong>自由心意 · 隨心自訂金額</strong>
+                    <span>金額由您填寫，隨喜打賞或給予大額守護</span>
+                </div>
+                <div class="tier-action-btn">自訂贊助 ➔</div>
+            </a>
+
+            <!-- 方案 4: 定期定額（每月） -->
+            <a href="https://p.ecpay.com.tw/90BC5B7" target="_blank" rel="noopener noreferrer" class="tier-card tier-recurring" onclick="handleDonateClick(event)">
+                <div class="tier-icon">🌱</div>
+                <div class="tier-info">
+                    <strong>每月相伴 · 定期定額 <span class="tier-badge">信用卡</span></strong>
+                    <span>金額由您自訂，每個月自動扣款支持（可隨時取消）</span>
+                </div>
+                <div class="tier-action-btn">每月支持 ➔</div>
+            </a>
+
+            <div style="text-align: center; margin-top: 14px;">
+                <div style="font-size: 12px; color: #888;">
+                    💳 支援 信用卡 / Apple Pay / ATM 櫃員機 / 網路 ATM / 超商代碼 / 超商條碼（定期定額限信用卡）
+                </div>
+                <div style="font-size: 12.5px; color: #8d6e63; margin-top: 8px;">
+                    聯絡作者：<a href="mailto:me@shuojen.com" style="color: #8b4513; text-decoration: underline;">me@shuojen.com</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 戰績結算與分享彈窗 -->
+    <div id="victory-modal" class="modal" onclick="toggleVictoryModal(false)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="toggleVictoryModal(false)">&times;</span>
+            <div style="text-align: center; margin-bottom: 10px;">
+                <div style="font-size: 42px; margin-bottom: 4px;">🎉</div>
+                <h2 style="margin: 0; color: var(--primary); font-family: 'MantouSans', sans-serif; font-size: 32px; font-weight: normal;">解謎大成功！</h2>
+                <div id="victory-mode-subtitle" style="font-size: 14px; color: #795548; margin-top: 4px;">成語迷宮 每日挑戰</div>
+            </div>
+
+            <div class="victory-card">
+                <div class="victory-rank-badge" id="victory-rank">【狀元及第】</div>
+                <div class="victory-desc" id="victory-desc">才思敏捷，出口成章！</div>
+                <div class="victory-stats-row">
+                    <div class="v-stat">
+                        <span class="v-stat-val" id="v-time">01:23</span>
+                        <span class="v-stat-lbl">⏱️ 通關時間</span>
+                    </div>
+                    <div class="v-stat">
+                        <span class="v-stat-val" id="v-steps">18 步</span>
+                        <span class="v-stat-lbl">🚶 操作步數</span>
+                    </div>
+                </div>
+                <div class="victory-blocks" id="victory-blocks">🟩🟩🟩🟩</div>
+            </div>
+
+            <div style="margin-top: 18px; display: flex; flex-direction: column; gap: 10px; align-items: center; width: 100%;">
+                <button id="copy-share-btn" class="btn btn-share-action" onclick="copyShareCard()">
+                    📋 複製戰績卡（分享到社群網站）
+                </button>
+                <div id="copy-toast" class="copy-toast"></div>
+                
+                <div style="display: flex; gap: 10px; width: 100%; max-width: 320px; box-sizing: border-box;">
+                    <button class="btn" style="flex: 1; width: 100%; height: 40px; font-size: 14px; background: #fff; color: var(--primary); border: 2px solid var(--primary);" onclick="toggleVictoryModal(false)">
+                        關閉
+                    </button>
+                    <button class="btn btn-donate" style="flex: 1; width: 100%; height: 40px; font-size: 14px;" onclick="toggleDonateModal(true); toggleVictoryModal(false);">
+                        ☕ 隨喜贊助
+                    </button>
+                </div>
+                <div style="font-size: 12.5px; color: #888; text-align: center; margin-top: 4px;">
+                    ⏳ 明天 00:00 準時解鎖新題目
+                </div>
+            </div>
         </div>
     </div>
     
-    <div class="game-wrapper">
+    <div class="game-wrapper not-started">
         <div class="grid" id="grid"></div>
         <svg id="svg-overlay"></svg>
+        <div class="start-overlay">
+            <div class="start-overlay-title">今日迷宮已就緒</div>
+            <div class="start-overlay-desc">按下開始後顯示題目並開始計時</div>
+            <button class="btn btn-start" onclick="startChallenge()">▶ 開始挑戰</button>
+        </div>
     </div>
 
     <div class="answer-section">
         <div class="slots" id="slots"></div>
-        <div id="win-msg">🎉 正確答案，恭喜！</div>
-        <div class="footer">
-            Original by Ching-huan,Huang（黃慶桓） , Developed by shuojen.com
+        <div id="win-msg">
+            <div>🎉 正確答案，恭喜！</div>
+            <div id="win-action-btns" style="display: flex; gap: 8px; justify-content: center; margin-top: 8px; flex-wrap: wrap;">
+                <button class="btn" style="width: auto; padding: 0 16px; height: 36px; font-size: 13.5px; background: #27ae60; border-color: #219653;" onclick="showVictoryModal()">📊 查看戰績卡</button>
+                <button class="btn btn-donate" style="width: auto; padding: 0 16px; height: 36px; font-size: 13.5px; background: #b85c1e; border-color: #8b4513;" onclick="toggleDonateModal(true)">☕ 隨喜贊助</button>
+            </div>
+            <div style="font-size: 12.5px; color: #7f8c8d; margin-top: 6px; font-weight: normal;">
+                ⏳ 今日挑戰已完成！明天 00:00 準時解鎖新迷宮
+            </div>
         </div>
+        <div class="footer">
+            Original by Ching-huan,Huang（黃慶桓） , Developed by shuojen.com · <a href="javascript:void(0)" onclick="toggleDonateModal(true)" class="footer-donate-link">☕ 隨喜贊助</a>
+        </div>
+    </div>
     </div>
 
     <script>
+        // ==========================================
+        // 綠界金流贊助設定 (ECPay Donation)
+        // 包含單筆 50 / 150 / 自由填寫 與 定期定額
+        // 審核開關：綠界審核通過後，只需將 IS_DONATE_ACTIVE 改為 true 即可直接連至付款頁！
+        // ==========================================
+        const IS_DONATE_ACTIVE = true;
+
+        const DONATE_LINKS = {
+            coffee50: "https://p.ecpay.com.tw/41BB174",
+            meal150: "https://p.ecpay.com.tw/52210C3",
+            custom: "https://p.ecpay.com.tw/4C157A4",
+            recurring: "https://p.ecpay.com.tw/90BC5B7"
+        };
+
+        function toggleDonateModal(show) {
+            document.getElementById('donate-modal').style.display = show ? 'flex' : 'none';
+        }
+
+        function handleDonateClick(e) {
+            if (!IS_DONATE_ACTIVE) {
+                if (e) e.preventDefault();
+                alert("【不好意思】\n贊助功能目前還尚未開通，即將啟用，感謝您的支持");
+            }
+        }
+
+        function updateDonateLink() {
+            // 保留空函式以相容初始化調用
+        }
+
         const gridEl = document.getElementById('grid');
         const svgEl = document.getElementById('svg-overlay');
         const slotsEl = document.getElementById('slots');
-        const levelSelect = document.getElementById('level-select');
         const size = 12;
+
+        let currentLevelIndex = 0;
+        let currentDaily = null; // 載入當下的日期與題號（避免頁面跨過午夜後日期錯亂）
+        let timerSeconds = 0;
+        let timerInterval = null;
+        let timerStarted = false;
+        let timerRunningSince = null; // 按下「開始挑戰」的時間 (Date.now())
+        let stepCount = 0;
+        let gameFinished = false;
 
         let selectedIndices = new Set(); 
         let manualKeys = new Map(); 
         let lockedCells = new Set(); 
         let mobileSelectedChar = null; 
         let activeKeyIdx = null; 
-        let pendingLevelIndex = null;
 
-        function toggleModal(id, show) {
-            document.getElementById(id).style.display = show ? 'flex' : 'none';
+        // ==========================================
+        // 每日一題系統（一天一題，零劇透輪替）
+        // ==========================================
+        function getDailyInfo() {
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = now.getMonth();
+            const d = now.getDate();
+            const dateFormatted = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+            
+            // 基準日 2026-01-01
+            const baseDate = new Date(2026, 0, 1);
+            const todayMidnight = new Date(y, m, d);
+            const dayDiff = Math.floor((todayMidnight - baseDate) / (1000 * 60 * 60 * 24));
+            
+            const totalPuzzles = (typeof puzzles !== 'undefined' && puzzles.length) ? puzzles.length : 120;
+            // 線性互質排列 (37 與 120 互質)，保證每一關皆均勻輪替、不劇透題號
+            const dailyIndex = Math.abs((dayDiff * 37 + 11) % totalPuzzles);
+            
+            return {
+                dailyIndex,
+                dateFormatted
+            };
         }
 
-        // =========================================
-        // 廣告邏輯
-        // =========================================
-        function checkAdAndLoad(index) {
-            const levelNum = parseInt(index) + 1;
-            // 每 5 關顯示一次廣告 (5, 10, 15...)
-            if (levelNum > 1 && levelNum % 5 === 0) {
-                pendingLevelIndex = index;
-                showAd();
+        function checkDailyCompletion() {
+            const info = currentDaily || getDailyInfo();
+            const statusIndicator = document.getElementById('mode-status-indicator');
+            const saved = localStorage.getItem('idiom_daily_' + info.dateFormatted);
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    const m = Math.floor(data.time / 60);
+                    const s = data.time % 60;
+                    const tStr = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+                    statusIndicator.innerHTML = `✅ 今日已通關 (${tStr})`;
+                    statusIndicator.style.cursor = 'pointer';
+                    statusIndicator.title = '點擊回顧今日戰績卡';
+                    statusIndicator.onclick = () => showVictoryModal(data);
+                } catch(e) {
+                    statusIndicator.textContent = '🔥 每日一題';
+                    statusIndicator.onclick = null;
+                }
             } else {
-                loadLevel(index);
+                statusIndicator.textContent = '🔥 每日一題';
+                statusIndicator.style.cursor = 'default';
+                statusIndicator.onclick = null;
             }
         }
 
-        function showAd() {
-            toggleModal('ad-modal', true);
-            const timerEl = document.getElementById('ad-timer');
-            const closeBtn = document.getElementById('ad-close-btn');
-            let timeLeft = 3;
+        // 計時器：按下「開始挑戰」才開始；以時間戳計算（不受手機背景節流影響），
+        // 切到背景時照常計時；重新整理則整局重來（只保存當天的通關紀錄）
+        function tickTimer() {
+            if (timerRunningSince === null) return;
+            timerSeconds = Math.max(0, Math.floor((Date.now() - timerRunningSince) / 1000));
+            updateTimerDisplay();
+        }
+
+        function startTimer(startAt) {
+            if (timerInterval) clearInterval(timerInterval);
+            timerStarted = true;
+            timerRunningSince = startAt || Date.now();
+            timerInterval = setInterval(tickTimer, 250);
+            tickTimer();
+        }
+
+        function stopTimer() {
+            tickTimer();
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            timerRunningSince = null;
+        }
+
+        // 切回頁面時立即更新顯示（背景期間計時照算）
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && timerStarted && !gameFinished) tickTimer();
+        });
+
+        function revealBoard() {
+            const wrapper = document.querySelector('.game-wrapper');
+            if (wrapper) wrapper.classList.remove('not-started');
+            requestAnimationFrame(updateVisuals);
+        }
+
+        function startChallenge() {
+            if (timerStarted) return;
+            startTimer();
+            revealBoard();
+        }
+
+        function resetStats() {
+            stopTimer();
+            timerSeconds = 0;
+            stepCount = 0;
+            timerStarted = false;
+            gameFinished = false;
+            updateTimerDisplay();
+            updateStepDisplay();
+            const toast = document.getElementById('copy-toast');
+            if (toast) toast.textContent = '';
+            const shareBtn = document.getElementById('copy-share-btn');
+            if (shareBtn) {
+                shareBtn.innerHTML = '📋 複製戰績卡（分享到社群網站）';
+                shareBtn.style.background = '#27ae60';
+            }
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timerSeconds / 60);
+            const s = timerSeconds % 60;
+            const str = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+            const el = document.getElementById('timer-display');
+            if (el) el.textContent = str;
+            return str;
+        }
+
+        function updateStepDisplay() {
+            const el = document.getElementById('step-display');
+            if (el) el.textContent = `${stepCount} 步`;
+        }
+
+        function recordStep() {
+            if (gameFinished || !timerStarted) return;
+            stepCount++;
+            updateStepDisplay();
+        }
+
+        function getEvaluation(seconds, steps) {
+            if (seconds <= 45) {
+                return { title: "文曲星轉世", desc: "秒殺迷宮，神乎其技！" };
+            } else if (seconds <= 90) {
+                return { title: "狀元及第", desc: "才思敏捷，出口成章！" };
+            } else if (seconds <= 150) {
+                return { title: "榜眼及第", desc: "文采斐然，行雲流水！" };
+            } else if (seconds <= 240) {
+                return { title: "探花及第", desc: "沉著應變，抽絲剝繭！" };
+            } else if (seconds <= 360) {
+                return { title: "飽學進士", desc: "博聞強記，步步為營！" };
+            } else {
+                return { title: "國文大師", desc: "鐵杵磨成針，毅力非凡！" };
+            }
+        }
+
+        function toggleVictoryModal(show) {
+            document.getElementById('victory-modal').style.display = show ? 'flex' : 'none';
+        }
+
+        function showVictoryModal(customData) {
+            const info = currentDaily || getDailyInfo();
+            const p = puzzles[currentLevelIndex];
+            if (!p) return;
             
-            closeBtn.style.display = 'none';
-            timerEl.parentElement.style.display = 'block';
-            timerEl.textContent = timeLeft;
+            let sec = timerSeconds;
+            let steps = stepCount;
 
-            const countdown = setInterval(() => {
-                timeLeft--;
-                timerEl.textContent = timeLeft;
-                if (timeLeft <= 0) {
-                    clearInterval(countdown);
-                    timerEl.parentElement.style.display = 'none';
-                    closeBtn.style.display = 'flex';
+            if (customData) {
+                sec = customData.time;
+                steps = customData.steps;
+            } else {
+                const saved = localStorage.getItem('idiom_daily_' + info.dateFormatted);
+                if (saved) {
+                    try {
+                        const parsed = JSON.parse(saved);
+                        sec = parsed.time;
+                        steps = parsed.steps;
+                    } catch(e) {}
                 }
-            }, 1000);
-        }
-
-        function closeAd() {
-            toggleModal('ad-modal', false);
-            if (pendingLevelIndex !== null) {
-                loadLevel(pendingLevelIndex);
-                pendingLevelIndex = null;
             }
-        }
-
-        // =========================================
-        // 提示邏輯
-        // =========================================
-        function giveHint() {
-            const currentPuzzle = puzzles[levelSelect.value];
-            const answerChars = currentPuzzle.answer.split('');
-            const currentSlots = Array.from(slotsEl.children);
             
-            // 尋找第一個不正確或空的格子
-            for (let i = 0; i < answerChars.length; i++) {
-                if (currentSlots[i].textContent !== answerChars[i]) {
-                    currentSlots[i].textContent = answerChars[i];
-                    // 提示完後閃爍一下
-                    currentSlots[i].style.background = '#d5f5e3';
-                    setTimeout(() => currentSlots[i].style.background = '#fff', 500);
-                    checkWin();
-                    break;
-                }
+            const m = Math.floor(sec / 60);
+            const s = sec % 60;
+            const timeFormatted = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+            const evalData = getEvaluation(sec, steps);
+
+            document.getElementById('victory-rank').textContent = `【${evalData.title}】`;
+            document.getElementById('victory-desc').textContent = evalData.desc;
+            document.getElementById('v-time').textContent = timeFormatted;
+            document.getElementById('v-steps').textContent = `${steps} 步`;
+            document.getElementById('victory-blocks').textContent = "🟩".repeat(p.answer.length);
+            document.getElementById('victory-mode-subtitle').textContent = `成語迷宮 每日挑戰 ${info.dateFormatted}`;
+
+            toggleVictoryModal(true);
+        }
+
+        function getShareText() {
+            const info = currentDaily || getDailyInfo();
+            const p = puzzles[currentLevelIndex];
+            if (!p) return "";
+            
+            let sec = timerSeconds;
+            let steps = stepCount;
+            const saved = localStorage.getItem('idiom_daily_' + info.dateFormatted);
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    sec = parsed.time;
+                    steps = parsed.steps;
+                } catch(e) {}
+            }
+
+            const m = Math.floor(sec / 60);
+            const s = sec % 60;
+            const timeFormatted = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+            const evalData = getEvaluation(sec, steps);
+            const idiomBlocks = "🟩".repeat(p.answer.length);
+
+            return `🧩 成語迷宮 ${info.dateFormatted}
+⏱️ ${timeFormatted} ｜ 🚶 ${steps} 步
+🏆 評價：【${evalData.title}】
+${idiomBlocks}
+
+👇 來挑戰今日成語迷宮：
+https://shuojen.com/game`;
+        }
+
+        function copyTextToClipboard(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+                return navigator.clipboard.writeText(text);
+            } else {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.left = '-9999px';
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+                return new Promise((resolve, reject) => {
+                    try {
+                        document.execCommand('copy') ? resolve() : reject();
+                    } catch (err) {
+                        reject(err);
+                    } finally {
+                        document.body.removeChild(textarea);
+                    }
+                });
             }
         }
 
-        // =========================================
-        // 核心遊戲邏輯 (保留原功能並優化)
-        // =========================================
-        function setupLevelSelect() {
+        function copyShareCard() {
+            const text = getShareText();
+            const toast = document.getElementById('copy-toast');
+            const shareBtn = document.getElementById('copy-share-btn');
+            
+            copyTextToClipboard(text).then(() => {
+                shareBtn.innerHTML = '✅ 已複製！快去發文分享吧！';
+                shareBtn.style.background = '#1e8449';
+                if (toast) toast.textContent = '戰績已複製至剪貼簿，可直接貼到社群網站！';
+                setTimeout(() => {
+                    shareBtn.innerHTML = '📋 複製戰績卡（分享到社群網站）';
+                    shareBtn.style.background = '#27ae60';
+                }, 3500);
+            }).catch(err => {
+                console.error('Copy failed:', err);
+                prompt("請手動複製以下戰績文字：", text);
+            });
+        }
+
+        function isValidIdiomWord(word) {
+            if (typeof ALL_IDIOMS === 'undefined') return false;
+            return ALL_IDIOMS.has(word) || ALL_IDIOMS.has(word.split('').reverse().join(''));
+        }
+
+        function toggleModal(show) {
+            document.getElementById('info-modal').style.display = show ? 'flex' : 'none';
+        }
+
+        function toggleAboutModal(show) {
+            document.getElementById('about-modal').style.display = show ? 'flex' : 'none';
+        }
+
+        function initGame() {
             if (typeof puzzles === 'undefined') {
                 alert("找不到題目檔 (puzzle.js)");
                 return;
             }
-            puzzles.forEach((p, index) => {
-                const opt = document.createElement('option');
-                opt.value = index;
-                opt.textContent = `第 ${p.id} 關`;
-                levelSelect.appendChild(opt);
-            });
-            loadLevel(0);
-        }
-
-        function prevLevel() {
-            let currentIndex = parseInt(levelSelect.value);
-            if (currentIndex > 0) {
-                levelSelect.value = currentIndex - 1;
-                checkAdAndLoad(levelSelect.value);
+            if (typeof ALL_IDIOMS === 'undefined') {
+                alert("找不到字典檔 (dictionary.js)");
+                return;
             }
-        }
+            const info = getDailyInfo();
+            currentDaily = info;
+            const dateEl = document.getElementById('daily-date-text');
+            if (dateEl) dateEl.textContent = info.dateFormatted;
+            checkDailyCompletion();
+            
+            // 測試指定關卡：「嘴上無毛辦事不牢」
+            const targetIdx = puzzles.findIndex(p => p.answer === "嘴上無毛辦事不牢");
+            loadLevel(targetIdx !== -1 ? targetIdx : 108);
 
-        function nextLevel() {
-            let currentIndex = parseInt(levelSelect.value);
-            if (currentIndex < puzzles.length - 1) {
-                levelSelect.value = currentIndex + 1;
-                checkAdAndLoad(levelSelect.value);
+            const statusIndicator = document.getElementById('mode-status-indicator');
+            if (statusIndicator) statusIndicator.textContent = '🧪 測試：嘴上無毛辦事不牢';
+
+            // 自動解鎖並顯示棋盤，方便直接測試連線與選字操作
+            startChallenge();
+
+            const completed = !!localStorage.getItem('idiom_daily_' + info.dateFormatted);
+            if (completed) {
+                // 今日已通關：可以再玩一次，但不會覆蓋原本的成績
+                document.querySelector('.start-overlay-title').textContent = '今日已通關 🎉';
+                document.querySelector('.start-overlay-desc').textContent = '可以再玩一次，不會影響已記錄的成績';
+                document.querySelector('.btn-start').textContent = '↻ 再玩一次';
             }
         }
 
         function loadLevel(index) {
-            const p = puzzles[index];
-            levelSelect.value = index; // 確保 Select 同步
-            selectedIndices.clear(); manualKeys.clear(); lockedCells.clear();
-            mobileSelectedChar = null; activeKeyIdx = null;
+            currentLevelIndex = parseInt(index, 10);
+            const p = puzzles[currentLevelIndex];
+            if (!p) return;
+            selectedIndices.clear();
+            manualKeys.clear();
+            lockedCells.clear();
+            mobileSelectedChar = null;
+            activeKeyIdx = null;
             document.getElementById('win-msg').style.display = 'none';
+            resetStats();
             initBoard(p);
             updateVisuals();
         }
@@ -326,7 +1053,7 @@
         function initBoard(puzzle) {
             gridEl.innerHTML = '';
             slotsEl.innerHTML = '';
-            puzzle.grid.split('').forEach((char, i) => {
+            Array.from(puzzle.grid).forEach((char, i) => {
                 const cell = document.createElement('div');
                 cell.className = 'cell';
                 cell.textContent = char;
@@ -340,18 +1067,23 @@
                 gridEl.appendChild(cell);
             });
 
-            puzzle.answer.split('').forEach((_, i) => {
+            Array.from(puzzle.answer).forEach((_, i) => {
                 const slot = document.createElement('div');
                 slot.className = 'slot';
                 slot.dataset.slotIdx = i;
                 slot.draggable = true;
                 slot.onclick = () => { 
-                    if(mobileSelectedChar) {
+                    if (mobileSelectedChar) {
+                        recordStep();
                         slot.textContent = mobileSelectedChar;
-                        mobileSelectedChar = null; activeKeyIdx = null;
+                        mobileSelectedChar = null;
+                        activeKeyIdx = null;
                         updateVisuals();
-                    } else {
+                    } else if (slot.textContent) {
+                        recordStep();
                         slot.textContent = ""; 
+                    } else {
+                        return; // 點空格且沒有選取關鍵字：不算步數、不啟動計時
                     }
                     checkWin(); 
                 };
@@ -359,7 +1091,7 @@
                     if (!slot.textContent) return e.preventDefault();
                     e.dataTransfer.setData('text', slot.textContent);
                     e.dataTransfer.setData('sourceType', 'slot');
-                    e.dataTransfer.setData('sourceIdx', i);
+                    e.dataTransfer.setData('sourceIdx', String(i));
                 };
                 slot.ondragover = e => { e.preventDefault(); slot.classList.add('drag-over'); };
                 slot.ondragleave = () => slot.classList.remove('drag-over');
@@ -368,56 +1100,124 @@
             });
         }
 
+        function rebuildLockedCells() {
+            lockedCells.clear();
+            manualKeys.forEach(lines => {
+                lines.forEach(line => {
+                    line.forEach(id => lockedCells.add(id));
+                });
+            });
+        }
+
         function handleCellClick(idx, el) {
+            recordStep();
             if (manualKeys.has(idx)) {
                 if (activeKeyIdx === idx) {
-                    manualKeys.get(idx).forEach(line => line.forEach(id => {
-                        lockedCells.delete(id); selectedIndices.add(id); 
-                    }));
-                    manualKeys.delete(idx); mobileSelectedChar = null; activeKeyIdx = null;
+                    const unlockedLines = manualKeys.get(idx);
+                    manualKeys.delete(idx);
+                    rebuildLockedCells();
+
+                    // 找出目前仍被其他關鍵字鎖定的成語線
+                    const remainingLockedLineKeys = new Set();
+                    manualKeys.forEach(lines => {
+                        lines.forEach(line => {
+                            remainingLockedLineKeys.add([...line].sort((a, b) => a - b).join(','));
+                        });
+                    });
+
+                    // 將不再被任何關鍵字鎖定的成語整條（4個字）退回選取狀態（黃底），維持完整 4 字紅線
+                    unlockedLines.forEach(line => {
+                        const lineKey = [...line].sort((a, b) => a - b).join(',');
+                        if (!remainingLockedLineKeys.has(lineKey)) {
+                            line.forEach(id => {
+                                if (!manualKeys.has(id)) {
+                                    selectedIndices.add(id);
+                                }
+                            });
+                        }
+                    });
+                    mobileSelectedChar = null;
+                    activeKeyIdx = null;
                 } else {
-                    mobileSelectedChar = el.textContent; activeKeyIdx = idx;
+                    mobileSelectedChar = el.textContent;
+                    activeKeyIdx = idx;
                 }
-                updateVisuals(); return;
+                updateVisuals();
+                return;
             }
 
             if (selectedIndices.has(idx)) {
                 const combined = new Set([...selectedIndices, ...lockedCells]);
                 const validLines = getValidIdiomsAtPoint(idx, combined);
                 
-                if (validLines.length >= 2 && puzzles[levelSelect.value].answer.includes(el.textContent)) {
-                    manualKeys.set(idx, validLines);
-                    validLines.forEach(line => line.forEach(id => { 
-                        lockedCells.add(id); 
-                        selectedIndices.delete(id); 
+                // 必須至少有 2 條有效成語交叉，且每條成語都必須是「4 字全選（黃底）」或「已鎖定黑線」
+                const activeValidLines = validLines.filter(line => {
+                    const isAllSelected = line.every(id => selectedIndices.has(id));
+                    const isAllLocked = line.every(id => lockedCells.has(id));
+                    return isAllSelected || isAllLocked;
+                });
+
+                if (activeValidLines.length >= 2 && puzzles[currentLevelIndex].answer.includes(el.textContent)) {
+                    // 鎖定前，檢查場上是否還有其他「已選滿 4 字」但不在本次鎖定範圍內的紅線成語
+                    // 若有共用字（例如「不」同時在「一毛不拔」與已選好的「不勞而獲」），保留該共用字的黃底選取狀態
+                    const lockingLineKeys = new Set(
+                        activeValidLines.map(line => [...line].sort((a, b) => a - b).join(','))
+                    );
+                    const otherSelectedLines = findAllValid4CharLines(selectedIndices).filter(line => {
+                        const k = [...line].sort((a, b) => a - b).join(',');
+                        return !lockingLineKeys.has(k);
+                    });
+                    const keepSelectedIds = new Set();
+                    otherSelectedLines.forEach(line => line.forEach(id => keepSelectedIds.add(id)));
+
+                    manualKeys.set(idx, activeValidLines);
+                    rebuildLockedCells();
+                    activeValidLines.forEach(line => line.forEach(id => { 
+                        if (!keepSelectedIds.has(id) || id === idx) {
+                            selectedIndices.delete(id); 
+                        }
                     }));
                 } else {
                     selectedIndices.delete(idx);
                 }
             } else {
+                // 即使是已鎖定黑線上的字（如「一毛不拔」的「不」），點擊時也能加入選取並亮起黃底
                 selectedIndices.add(idx);
             }
             updateVisuals();
         }
 
         function getValidIdiomsAtPoint(idx, set) {
-            const lines = []; const dirs = [[0,1],[1,0],[1,1],[1,-1]];
+            const lines = [];
+            const dirs = [[0,1],[1,0],[1,1],[1,-1]];
             const r = Math.floor(idx / size), c = idx % size;
             dirs.forEach(([dr, dc]) => {
                 for (let offset = 0; offset < 4; offset++) {
                     let path = [];
                     for (let i = -offset; i < 4 - offset; i++) {
-                        const nr = r + dr * i, nc = c + dc * i; const nIdx = nr * size + nc;
-                        if (nr >= 0 && nr < size && nc >= 0 && nc < size && set.has(nIdx)) path.push(nIdx); else break;
+                        const nr = r + dr * i, nc = c + dc * i;
+                        const nIdx = nr * size + nc;
+                        if (nr >= 0 && nr < size && nc >= 0 && nc < size && set.has(nIdx)) {
+                            path.push(nIdx);
+                        } else {
+                            break;
+                        }
                     }
                     if (path.length === 4) {
                         const word = path.map(i => gridEl.children[i].textContent).join('');
-                        if (ALL_IDIOMS.has(word) || ALL_IDIOMS.has(word.split('').reverse().join(''))) lines.push([...path]);
+                        if (isValidIdiomWord(word)) lines.push([...path]);
                     }
                 }
             });
-            const unique = []; const seen = new Set();
-            lines.forEach(l => { const k = [...l].sort((a,b)=>a-b).join(','); if(!seen.has(k)){ unique.push(l); seen.add(k); }});
+            const unique = [];
+            const seen = new Set();
+            lines.forEach(l => {
+                const k = [...l].sort((a, b) => a - b).join(',');
+                if (!seen.has(k)) {
+                    unique.push(l);
+                    seen.add(k);
+                }
+            });
             return unique;
         }
 
@@ -433,26 +1233,56 @@
                     if (activeKeyIdx === i) c.classList.add('active-key');
                 }
             });
-            findAllValid4CharLines(selectedIndices).forEach(line => {
-                const ends = getEnds(line); drawSvgLine(ends.start, ends.end, 'red-line');
+
+            // 1. 繪製所有已鎖定成語的黑線（去重複繪製，避免同成語被多個關鍵字重複疊線變深）
+            const lockedLineKeys = new Set();
+            manualKeys.forEach(lines => {
+                lines.forEach(line => {
+                    const lineKey = [...line].sort((a, b) => a - b).join(',');
+                    if (!lockedLineKeys.has(lineKey)) {
+                        lockedLineKeys.add(lineKey);
+                        const ends = getEnds(line);
+                        drawSvgLine(ends.start, ends.end, 'black-line');
+                    }
+                });
             });
-            manualKeys.forEach(lines => lines.forEach(line => {
-                const ends = getEnds(line); drawSvgLine(ends.start, ends.end, 'black-line');
-            }));
+
+            // 2. 只有當 4 個字都處於選取狀態（4 格皆亮黃底）時，才繪製新成語紅線
+            findAllValid4CharLines(selectedIndices).forEach(line => {
+                const lineKey = [...line].sort((a, b) => a - b).join(',');
+                if (!lockedLineKeys.has(lineKey)) {
+                    const ends = getEnds(line);
+                    drawSvgLine(ends.start, ends.end, 'red-line');
+                }
+            });
         }
 
         function findAllValid4CharLines(set) {
-            const paths = []; const dirs = [[0,1],[1,0],[1,1],[1,-1]]; const seen = new Set();
+            const paths = [];
+            const dirs = [[0,1],[1,0],[1,1],[1,-1]];
+            const seen = new Set();
             set.forEach(idx => {
                 dirs.forEach(([dr, dc]) => {
                     let path = [idx];
-                    for(let k=1; k<4; k++) {
-                        const nr = Math.floor(idx/size) + dr*k, nc = (idx%size) + dc*k; const nIdx = nr*size + nc;
-                        if(nr>=0 && nr<size && nc>=0 && nc<size && set.has(nIdx)) path.push(nIdx); else break;
+                    for (let k = 1; k < 4; k++) {
+                        const nr = Math.floor(idx / size) + dr * k;
+                        const nc = (idx % size) + dc * k;
+                        const nIdx = nr * size + nc;
+                        if (nr >= 0 && nr < size && nc >= 0 && nc < size && set.has(nIdx)) {
+                            path.push(nIdx);
+                        } else {
+                            break;
+                        }
                     }
-                    if(path.length === 4) {
-                        const k = [...path].sort((a,b)=>a-b).join(',');
-                        if(!seen.has(k)) { paths.push(path); seen.add(k); }
+                    if (path.length === 4) {
+                        const word = path.map(i => gridEl.children[i].textContent).join('');
+                        if (isValidIdiomWord(word)) {
+                            const k = [...path].sort((a, b) => a - b).join(',');
+                            if (!seen.has(k)) {
+                                paths.push(path);
+                                seen.add(k);
+                            }
+                        }
                     }
                 });
             });
@@ -460,8 +1290,8 @@
         }
 
         function getEnds(path) {
-            const s = [...path].sort((a, b) => (Math.floor(a/size) - Math.floor(b/size)) || (a%size - b%size));
-            return { start: s[0], end: s[s.length-1] };
+            const s = [...path].sort((a, b) => (Math.floor(a / size) - Math.floor(b / size)) || (a % size - b % size));
+            return { start: s[0], end: s[s.length - 1] };
         }
 
         function drawSvgLine(sIdx, eIdx, cls) {
@@ -469,19 +1299,32 @@
             if (!s || !e) return;
             const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
             const off = s.offsetWidth / 2;
-            line.setAttribute("x1", s.offsetLeft + off); line.setAttribute("y1", s.offsetTop + off);
-            line.setAttribute("x2", e.offsetLeft + off); line.setAttribute("y2", e.offsetTop + off);
-            line.setAttribute("class", cls); svgEl.appendChild(line);
+            line.setAttribute("x1", s.offsetLeft + off);
+            line.setAttribute("y1", s.offsetTop + off);
+            line.setAttribute("x2", e.offsetLeft + off);
+            line.setAttribute("y2", e.offsetTop + off);
+            line.setAttribute("class", cls);
+            svgEl.appendChild(line);
         }
 
         function handleSlotDrop(e) {
-            e.preventDefault(); this.classList.remove('drag-over');
+            e.preventDefault();
+            e.stopPropagation(); // 防止冒泡至 body 觸發 handleBodyDrop 誤刪文字
+            recordStep();
+            this.classList.remove('drag-over');
             const char = e.dataTransfer.getData('text');
+            if (!char) return;
+
             const type = e.dataTransfer.getData('sourceType');
-            
+            const targetIdx = this.dataset.slotIdx;
+
             if (type === 'slot') {
                 const srcIdx = e.dataTransfer.getData('sourceIdx');
-                slotsEl.children[srcIdx].textContent = '';
+                if (srcIdx === targetIdx) return; // 拖放回同一格時不做變動
+                if (srcIdx !== "" && slotsEl.children[srcIdx]) {
+                    // 若目標格已有字，與來源格交換文字；否則清空來源格
+                    slotsEl.children[srcIdx].textContent = this.textContent;
+                }
             }
             this.textContent = char;
             checkWin();
@@ -491,8 +1334,9 @@
             const type = e.dataTransfer.getData('sourceType');
             if (type === 'slot') {
                 const srcIdx = e.dataTransfer.getData('sourceIdx');
-                if (srcIdx !== "") {
+                if (srcIdx !== "" && slotsEl.children[srcIdx]) {
                     slotsEl.children[srcIdx].textContent = '';
+                    recordStep();
                     checkWin();
                 }
             }
@@ -500,12 +1344,44 @@
 
         function checkWin() {
             const current = Array.from(document.querySelectorAll('.slot')).map(s => s.textContent).join('');
-            const isCorrect = (current === puzzles[levelSelect.value].answer);
-            document.getElementById('win-msg').style.display = isCorrect ? 'block' : 'none';
+            const won = (current === puzzles[currentLevelIndex].answer);
+            const winMsgEl = document.getElementById('win-msg');
+            
+            if (won) {
+                winMsgEl.style.display = 'block';
+                if (!gameFinished) {
+                    gameFinished = true;
+                    stopTimer();
+                    const info = currentDaily || getDailyInfo();
+                    
+                    const saved = localStorage.getItem('idiom_daily_' + info.dateFormatted);
+                    if (!saved) {
+                        localStorage.setItem('idiom_daily_' + info.dateFormatted, JSON.stringify({
+                            time: timerSeconds,
+                            steps: stepCount,
+                            completedAt: Date.now()
+                        }));
+                    }
+                    checkDailyCompletion();
+                    
+                    setTimeout(() => {
+                        showVictoryModal();
+                    }, 400);
+                }
+            } else {
+                winMsgEl.style.display = 'none';
+            }
         }
 
         window.addEventListener('resize', updateVisuals);
-        setupLevelSelect();
+        if (window.ResizeObserver) {
+            new ResizeObserver(() => updateVisuals()).observe(gridEl);
+        }
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => updateVisuals());
+        }
+        initGame();
+        updateDonateLink();
     </script>
 </body>
 </html>

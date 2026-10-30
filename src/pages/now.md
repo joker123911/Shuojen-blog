@@ -9,7 +9,7 @@ import NowEvaPoster from '@site/src/components/NowEvaPoster';
   <h1 className="site-hero-title">Now</h1>
 </div>
 
-*最後更新：2026-10-29*
+*最後更新：2026-10-30*
 
 :::note
 靈感來自[Derek Sivers /now](https://sive.rs/now)。
