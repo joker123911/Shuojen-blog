@@ -162,6 +162,86 @@
             background: #d35400;
         }
 
+        /* 提示按鈕與動畫樣式 */
+        .top-bar .btn.btn-hint {
+            width: auto;
+            padding: 0 14px;
+            white-space: nowrap;
+            background: #e67e22;
+            border-color: #d35400;
+            color: #fff;
+        }
+        .top-bar .btn.btn-hint:hover {
+            background: #d35400;
+        }
+
+        .time-penalty-fly {
+            position: absolute;
+            left: 20px;
+            top: -12px;
+            color: #e74c3c;
+            font-weight: 900;
+            font-size: 14px;
+            pointer-events: none;
+            z-index: 10;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+            animation: penaltyFly 1.2s ease-out forwards;
+        }
+        @keyframes penaltyFly {
+            0% { transform: translateY(0) scale(0.9); opacity: 0; }
+            20% { transform: translateY(-4px) scale(1.15); opacity: 1; }
+            80% { transform: translateY(-16px) scale(1); opacity: 0.9; }
+            100% { transform: translateY(-24px) scale(0.9); opacity: 0; }
+        }
+
+        .hint-banner {
+            margin-top: 8px;
+            background: #fff8e1;
+            border: 1.5px solid #ffc107;
+            color: #7d5a00;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            font-weight: bold;
+            width: var(--board-size);
+            max-width: var(--board-size);
+            box-sizing: border-box;
+            box-shadow: 0 2px 6px rgba(243, 156, 18, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            animation: fadeInBanner 0.25s ease-out;
+        }
+        @keyframes fadeInBanner {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hint-banner-text {
+            flex: 1;
+            text-align: center;
+            line-height: 1.45;
+        }
+        .hint-banner-close {
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            color: #b78103;
+            padding: 0 4px;
+            line-height: 1;
+        }
+
+        .slot.hint-filled {
+            border-color: #27ae60 !important;
+            background: #eafaf1 !important;
+            animation: slotPulse 0.6s ease-out;
+        }
+        @keyframes slotPulse {
+            0% { transform: scale(0.9); }
+            50% { transform: scale(1.12); }
+            100% { transform: scale(1); }
+        }
+
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 100; justify-content: center; align-items: center; }
         .modal-content { background: var(--bg); padding: 24px; border-radius: 12px; max-width: 450px; width: 90%; border: 4px solid var(--primary); position: relative; line-height: 1.8; overflow-y: auto; max-height: 90vh; max-height: 90dvh; box-sizing: border-box; -webkit-overflow-scrolling: touch; }
         .modal-content h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 8px; font-size: 18px; }
@@ -449,9 +529,11 @@
             .cell { font-size: clamp(12px, 3.8vw, 16px); } 
             .game-title { font-size: 32px; }
             .top-bar .btn { width: 88px; height: 34px; font-size: 13px; }
+            .top-bar .btn.btn-hint { width: auto; min-width: 86px; padding: 0 10px; font-size: 12.5px; }
             .date-badge { height: 34px; font-size: 13px; padding: 0 10px; }
             .stats-bar { font-size: 12.5px; padding: 4px 10px; }
             .daily-status { font-size: 11px; padding: 2px 6px; }
+            .hint-banner { font-size: 12.5px; padding: 6px 10px; }
             .slots { gap: 5px; }
             .slot { flex-basis: 38px; font-size: 20px; }
             .footer { font-size: 11px; margin-top: 8px; }
@@ -472,11 +554,15 @@
         </div>
         <button class="btn" onclick="toggleModal(true)">遊戲說明</button>
         <button class="btn" onclick="toggleAboutModal(true)">關於遊戲</button>
+        <button id="btn-hint" class="btn btn-hint" onclick="handleHintClick()" title="使用提示（通關時間加30秒）">💡 提示 (+30s)</button>
     </div>
 
     <!-- 即時數據列（計時與步數） -->
     <div class="stats-bar">
-        <div class="stat-item"><span class="stat-icon">⏱️</span><span id="timer-display">00:00</span></div>
+        <div class="stat-item" style="position: relative;">
+            <span class="stat-icon">⏱️</span><span id="timer-display">00:00</span>
+            <span id="penalty-floater" class="time-penalty-fly" style="display: none;">+30s</span>
+        </div>
         <div class="stat-item"><span id="mode-status-indicator" class="daily-status">🔥 每日一題</span></div>
         <div class="stat-item"><span class="stat-icon">🚶</span><span id="step-display">0 步</span></div>
     </div>
@@ -502,11 +588,28 @@
                     </ul>
                 </li>
                 <li><b>修改答案：</b>點擊已填入文字的空格可清除該字。</li>
+                <li><b>提示功能：</b>卡關時可點擊「💡 提示」，每次使用將在通關時間上<b>增加 30 秒</b>；依進度依序提示「自動選取一條成語」、「圈出交叉處關鍵字」或「填入下方答案格位置」。</li>
                 <li><b>計時方式：</b>按下「開始挑戰」才會顯示題目並開始計時，重新整理則會整局重來。</li>
             </ul>
 
             <div style="text-align: center; margin-top: 20px;">
                 <button class="btn" style="width: 120px; display: inline-block;" onclick="toggleModal(false)">開始遊戲</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 提示確認彈窗 -->
+    <div id="hint-modal" class="modal" onclick="toggleHintModal(false)">
+        <div class="modal-content" style="max-width: 360px; text-align: center;" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="toggleHintModal(false)">&times;</span>
+            <div style="font-size: 38px; margin-bottom: 6px;">💡</div>
+            <h3 style="margin: 0 0 10px 0; border: none; padding: 0; color: var(--primary);">需要解謎提示嗎？</h3>
+            <p style="margin: 0 0 16px 0; font-size: 14px; color: #5d4037; line-height: 1.6;" id="hint-modal-text">
+                使用一次提示將在通關時間上<b>增加 30 秒</b>。<br>確定要獲取提示嗎？
+            </p>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button class="btn" style="flex: 1; background: #fff; color: var(--primary); border: 2px solid var(--primary); width: auto;" onclick="toggleHintModal(false)">我再想想</button>
+                <button class="btn" style="flex: 1; background: #e67e22; border-color: #d35400; width: auto;" onclick="confirmUseHint()">使用提示 (+30s)</button>
             </div>
         </div>
     </div>
@@ -622,6 +725,10 @@
                         <span class="v-stat-val" id="v-time">01:23</span>
                         <span class="v-stat-lbl">⏱️ 通關時間</span>
                     </div>
+                    <div class="v-stat" id="v-hints-stat" style="display: none;">
+                        <span class="v-stat-val" id="v-hints">0 次</span>
+                        <span class="v-stat-lbl">💡 提示次數</span>
+                    </div>
                     <div class="v-stat">
                         <span class="v-stat-val" id="v-steps">18 步</span>
                         <span class="v-stat-lbl">🚶 操作步數</span>
@@ -660,6 +767,9 @@
             <button class="btn btn-start" onclick="startChallenge()">▶ 開始挑戰</button>
         </div>
     </div>
+
+    <!-- 提示訊息橫幅 -->
+    <div id="hint-banner" class="hint-banner" style="display: none;"></div>
 
     <div class="answer-section">
         <div class="slots" id="slots"></div>
@@ -728,6 +838,13 @@
         let lockedCells = new Set(); 
         let mobileSelectedChar = null; 
         let activeKeyIdx = null; 
+
+        // ==========================================
+        // 提示系統狀態
+        // ==========================================
+        const HINT_PENALTY_SECONDS = 30;
+        let hintCount = 0;
+        let currentTargetKeys = []; 
 
         // ==========================================
         // 每日一題系統（一天一題，零劇透輪替）
@@ -825,8 +942,10 @@
             stopTimer();
             timerSeconds = 0;
             stepCount = 0;
+            hintCount = 0;
             timerStarted = false;
             gameFinished = false;
+            closeHintBanner();
             updateTimerDisplay();
             updateStepDisplay();
             const toast = document.getElementById('copy-toast');
@@ -885,10 +1004,12 @@
             
             let sec = timerSeconds;
             let steps = stepCount;
+            let hints = hintCount;
 
             if (customData) {
                 sec = customData.time;
                 steps = customData.steps;
+                hints = customData.hints || 0;
             } else {
                 const saved = localStorage.getItem('idiom_daily_' + info.dateFormatted);
                 if (saved) {
@@ -896,6 +1017,7 @@
                         const parsed = JSON.parse(saved);
                         sec = parsed.time;
                         steps = parsed.steps;
+                        hints = parsed.hints || 0;
                     } catch(e) {}
                 }
             }
@@ -909,6 +1031,18 @@
             document.getElementById('victory-desc').textContent = evalData.desc;
             document.getElementById('v-time').textContent = timeFormatted;
             document.getElementById('v-steps').textContent = `${steps} 步`;
+
+            const hintsStatEl = document.getElementById('v-hints-stat');
+            const hintsValEl = document.getElementById('v-hints');
+            if (hintsStatEl && hintsValEl) {
+                if (hints > 0) {
+                    hintsStatEl.style.display = 'flex';
+                    hintsValEl.textContent = `${hints} 次`;
+                } else {
+                    hintsStatEl.style.display = 'none';
+                }
+            }
+
             document.getElementById('victory-blocks').textContent = "🟩".repeat(p.answer.length);
             document.getElementById('victory-mode-subtitle').textContent = `成語迷宮 每日挑戰 ${info.dateFormatted}`;
 
@@ -922,12 +1056,14 @@
             
             let sec = timerSeconds;
             let steps = stepCount;
+            let hints = hintCount;
             const saved = localStorage.getItem('idiom_daily_' + info.dateFormatted);
             if (saved) {
                 try {
                     const parsed = JSON.parse(saved);
                     sec = parsed.time;
                     steps = parsed.steps;
+                    hints = parsed.hints || 0;
                 } catch(e) {}
             }
 
@@ -936,9 +1072,10 @@
             const timeFormatted = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
             const evalData = getEvaluation(sec, steps);
             const idiomBlocks = "🟩".repeat(p.answer.length);
+            const hintPart = hints > 0 ? ` (💡提示 ${hints} 次)` : '';
 
             return `🧩 成語迷宮 ${info.dateFormatted}
-⏱️ ${timeFormatted} ｜ 🚶 ${steps} 步
+⏱️ ${timeFormatted}${hintPart} ｜ 🚶 ${steps} 步
 🏆 評價：【${evalData.title}】
 ${idiomBlocks}
 
@@ -1033,8 +1170,11 @@ https://shuojen.com/game`;
             selectedIndices.clear();
             manualKeys.clear();
             lockedCells.clear();
+            hintCount = 0;
             mobileSelectedChar = null;
             activeKeyIdx = null;
+            closeHintBanner();
+            currentTargetKeys = computePuzzleTargetKeys(p);
             document.getElementById('win-msg').style.display = 'none';
             resetStats();
             initBoard(p);
@@ -1067,12 +1207,14 @@ https://shuojen.com/game`;
                     if (mobileSelectedChar) {
                         recordStep();
                         slot.textContent = mobileSelectedChar;
+                        slot.classList.remove('hint-filled');
                         mobileSelectedChar = null;
                         activeKeyIdx = null;
                         updateVisuals();
                     } else if (slot.textContent) {
                         recordStep();
                         slot.textContent = ""; 
+                        slot.classList.remove('hint-filled');
                     } else {
                         return; // 點空格且沒有選取關鍵字：不算步數、不啟動計時
                     }
@@ -1137,7 +1279,7 @@ https://shuojen.com/game`;
                 return;
             }
 
-            if (selectedIndices.has(idx)) {
+            if (selectedIndices.has(idx) || lockedCells.has(idx)) {
                 const combined = new Set([...selectedIndices, ...lockedCells]);
                 const validLines = getValidIdiomsAtPoint(idx, combined);
                 
@@ -1163,13 +1305,16 @@ https://shuojen.com/game`;
 
                     manualKeys.set(idx, activeValidLines);
                     rebuildLockedCells();
+                    closeHintBanner();
                     activeValidLines.forEach(line => line.forEach(id => { 
                         if (!keepSelectedIds.has(id) || id === idx) {
                             selectedIndices.delete(id); 
                         }
                     }));
-                } else {
+                } else if (selectedIndices.has(idx)) {
                     selectedIndices.delete(idx);
+                } else {
+                    selectedIndices.add(idx);
                 }
             } else {
                 // 即使是已鎖定黑線上的字（如「一毛不拔」的「不」），點擊時也能加入選取並亮起黃底
@@ -1315,9 +1460,11 @@ https://shuojen.com/game`;
                 if (srcIdx !== "" && slotsEl.children[srcIdx]) {
                     // 若目標格已有字，與來源格交換文字；否則清空來源格
                     slotsEl.children[srcIdx].textContent = this.textContent;
+                    slotsEl.children[srcIdx].classList.remove('hint-filled');
                 }
             }
             this.textContent = char;
+            this.classList.remove('hint-filled');
             checkWin();
         }
 
@@ -1327,6 +1474,7 @@ https://shuojen.com/game`;
                 const srcIdx = e.dataTransfer.getData('sourceIdx');
                 if (srcIdx !== "" && slotsEl.children[srcIdx]) {
                     slotsEl.children[srcIdx].textContent = '';
+                    slotsEl.children[srcIdx].classList.remove('hint-filled');
                     recordStep();
                     checkWin();
                 }
@@ -1350,6 +1498,7 @@ https://shuojen.com/game`;
                         localStorage.setItem('idiom_daily_' + info.dateFormatted, JSON.stringify({
                             time: timerSeconds,
                             steps: stepCount,
+                            hints: hintCount,
                             completedAt: Date.now()
                         }));
                     }
@@ -1362,6 +1511,312 @@ https://shuojen.com/game`;
             } else {
                 winMsgEl.style.display = 'none';
             }
+        }
+
+        // ==========================================
+        // 提示功能核心演算法與介面互動
+        // ==========================================
+        function computePuzzleTargetKeys(puzzle) {
+            if (!puzzle) return [];
+            const grid = puzzle.grid;
+            const answer = puzzle.answer;
+            const dirs = [[0,1],[1,0],[1,1],[1,-1]];
+            const allValidLines = [];
+            const seen = new Set();
+
+            for (let idx = 0; idx < 144; idx++) {
+                dirs.forEach(([dr, dc]) => {
+                    let path = [idx];
+                    for (let k = 1; k < 4; k++) {
+                        const nr = Math.floor(idx / size) + dr * k;
+                        const nc = (idx % size) + dc * k;
+                        if (nr >= 0 && nr < size && nc >= 0 && nc < size) {
+                            path.push(nr * size + nc);
+                        } else {
+                            break;
+                        }
+                    }
+                    if (path.length === 4) {
+                        const word = path.map(i => grid[i]).join('');
+                        if (isValidIdiomWord(word)) {
+                            const k = [...path].sort((a, b) => a - b).join(',');
+                            if (!seen.has(k)) {
+                                allValidLines.push({ path, word });
+                                seen.add(k);
+                            }
+                        }
+                    }
+                });
+            }
+
+            const targetKeys = [];
+            for (let i = 0; i < 144; i++) {
+                const char = grid[i];
+                if (answer.includes(char)) {
+                    const linesPassing = allValidLines.filter(l => l.path.includes(i));
+                    if (linesPassing.length >= 2) {
+                        targetKeys.push({ idx: i, char, lines: linesPassing });
+                    }
+                }
+            }
+            return targetKeys;
+        }
+
+        function getHintStageInfo(puzzle) {
+            if (!puzzle) return null;
+            if (!currentTargetKeys || currentTargetKeys.length === 0) {
+                currentTargetKeys = computePuzzleTargetKeys(puzzle);
+            }
+
+            const uncollectedKeys = currentTargetKeys.filter(k => !manualKeys.has(k.idx));
+
+            if (uncollectedKeys.length > 0) {
+                // 檢查是否還有「尚未畫出滿 2 條交叉線」的未取得關鍵字
+                let candidateLine = null;
+
+                for (const keyInfo of uncollectedKeys) {
+                    const drawnCount = keyInfo.lines.filter(lineObj => {
+                        const isAllLocked = lineObj.path.every(idx => lockedCells.has(idx));
+                        const isAllSelected = lineObj.path.every(idx => selectedIndices.has(idx));
+                        return isAllLocked || isAllSelected;
+                    }).length;
+
+                    // 若該關鍵字在盤面上已畫出至少 2 條交叉成語，則不需再為它提示更多成語
+                    if (drawnCount >= 2) continue;
+
+                    for (const lineObj of keyInfo.lines) {
+                        const isAllLocked = lineObj.path.every(idx => lockedCells.has(idx));
+                        const isAllSelected = lineObj.path.every(idx => selectedIndices.has(idx));
+                        if (!isAllLocked && !isAllSelected) {
+                            candidateLine = lineObj;
+                            break;
+                        }
+                    }
+                    if (candidateLine) break;
+                }
+
+                if (candidateLine) {
+                    return {
+                        stage: 1, // 階段一：提示一條尚未畫出的成語（自動選取紅線）
+                        lineObj: candidateLine
+                    };
+                } else {
+                    return {
+                        stage: 2, // 階段二：所有需要的成語皆已畫出，但關鍵字尚未圈出
+                        keyInfo: uncollectedKeys[0]
+                    };
+                }
+            }
+
+            // 階段三：所有關鍵字皆已圈出，提示下方答案格位置
+            return {
+                stage: 3
+            };
+        }
+
+        function handleHintClick() {
+            if (gameFinished) {
+                showHintBanner("🎉 遊戲已通關，無需使用提示！");
+                return;
+            }
+            if (!timerStarted) {
+                alert("請先點擊「▶ 開始挑戰」後再使用提示！");
+                return;
+            }
+            const p = puzzles[currentLevelIndex];
+            if (!p) return;
+
+            const stageInfo = getHintStageInfo(p);
+            if (!stageInfo) return;
+
+            const modalTextEl = document.getElementById('hint-modal-text');
+            if (modalTextEl) {
+                if (stageInfo.stage === 1) {
+                    modalTextEl.innerHTML = `使用一次提示將在通關時間上<b>增加 ${HINT_PENALTY_SECONDS} 秒</b>，<br>並為您在盤面上<b>自動選取一條成語</b>。<br>確定要獲取提示嗎？`;
+                } else if (stageInfo.stage === 2) {
+                    modalTextEl.innerHTML = `盤面成語已全數畫出！<br>使用一次提示將在通關時間上<b>增加 ${HINT_PENALTY_SECONDS} 秒</b>，<br>並為您<b>圈出一個交叉處的關鍵字</b>。<br>確定要獲取提示嗎？`;
+                } else {
+                    modalTextEl.innerHTML = `關鍵字已全數找齊！<br>使用一次提示將在通關時間上<b>增加 ${HINT_PENALTY_SECONDS} 秒</b>，<br>並為您<b>填入下方一個正確答案字</b>。<br>確定要獲取提示嗎？`;
+                }
+            }
+
+            toggleHintModal(true);
+        }
+
+        function toggleHintModal(show) {
+            const modal = document.getElementById('hint-modal');
+            if (modal) modal.style.display = show ? 'flex' : 'none';
+        }
+
+        function confirmUseHint() {
+            toggleHintModal(false);
+            if (!timerStarted || gameFinished) return;
+
+            const p = puzzles[currentLevelIndex];
+            if (!p) return;
+
+            const stageInfo = getHintStageInfo(p);
+            if (!stageInfo) return;
+
+            // 若處於階段三且所有格子其實已填對，不扣時直接觸發過關檢查
+            if (stageInfo.stage === 3) {
+                const slots = Array.from(slotsEl.children);
+                const answerChars = p.answer.split('');
+                const hasWrongSlot = answerChars.some((ch, i) => !slots[i] || slots[i].textContent !== ch);
+                if (!hasWrongSlot) {
+                    checkWin();
+                    return;
+                }
+            }
+
+            hintCount++;
+            if (timerRunningSince !== null) {
+                timerRunningSince -= HINT_PENALTY_SECONDS * 1000;
+                tickTimer();
+            } else {
+                timerSeconds += HINT_PENALTY_SECONDS;
+                updateTimerDisplay();
+            }
+            showPenaltyFlyAnimation();
+
+            if (stageInfo.stage === 1) {
+                giveIdiomHint(stageInfo.lineObj);
+            } else if (stageInfo.stage === 2) {
+                giveKeyCircleHint(stageInfo.keyInfo);
+            } else {
+                giveSlotPlacementHint(p);
+            }
+        }
+
+        function giveIdiomHint(candidateLine) {
+            if (!candidateLine) return;
+
+            candidateLine.path.forEach(idx => {
+                if (!manualKeys.has(idx)) {
+                    selectedIndices.add(idx);
+                }
+            });
+
+            updateVisuals();
+
+            const word = candidateLine.word;
+            showHintBanner(`💡 提示成語：【${word}】（已在盤面上為您自動選取）`);
+        }
+
+        function giveKeyCircleHint(keyInfo) {
+            if (!keyInfo) return;
+            const idx = keyInfo.idx;
+            const combined = new Set([...selectedIndices, ...lockedCells]);
+            const validLines = getValidIdiomsAtPoint(idx, combined);
+
+            let activeValidLines = validLines.filter(line => {
+                const isAllSelected = line.every(id => selectedIndices.has(id));
+                const isAllLocked = line.every(id => lockedCells.has(id));
+                return isAllSelected || isAllLocked;
+            });
+
+            if (activeValidLines.length < 2) {
+                activeValidLines = keyInfo.lines.slice(0, 2).map(l => l.path);
+            }
+
+            const lockingLineKeys = new Set(
+                activeValidLines.map(line => [...line].sort((a, b) => a - b).join(','))
+            );
+            const otherSelectedLines = findAllValid4CharLines(selectedIndices).filter(line => {
+                const k = [...line].sort((a, b) => a - b).join(',');
+                return !lockingLineKeys.has(k);
+            });
+            const keepSelectedIds = new Set();
+            otherSelectedLines.forEach(line => line.forEach(id => keepSelectedIds.add(id)));
+
+            manualKeys.set(idx, activeValidLines);
+            rebuildLockedCells();
+            activeValidLines.forEach(line => line.forEach(id => {
+                if (!keepSelectedIds.has(id) || id === idx) {
+                    selectedIndices.delete(id);
+                }
+            }));
+
+            mobileSelectedChar = null;
+            activeKeyIdx = null;
+            updateVisuals();
+            showHintBanner(`💡 提示關鍵字：已在盤面上為您圈出關鍵字「${keyInfo.char}」！`);
+        }
+
+        function giveSlotPlacementHint(puzzle) {
+            const slots = Array.from(slotsEl.children);
+            const answerChars = puzzle.answer.split('');
+            let targetSlotIdx = -1;
+
+            for (let i = 0; i < answerChars.length; i++) {
+                if (!slots[i] || slots[i].textContent !== answerChars[i]) {
+                    targetSlotIdx = i;
+                    break;
+                }
+            }
+
+            if (targetSlotIdx === -1) {
+                showHintBanner("🎉 所有關鍵字位置均已正確放置！");
+                checkWin();
+                return;
+            }
+
+            const correctChar = answerChars[targetSlotIdx];
+            const targetSlot = slots[targetSlotIdx];
+            const charCountInAnswer = answerChars.filter(c => c === correctChar).length;
+
+            targetSlot.textContent = correctChar;
+            targetSlot.classList.remove('hint-filled');
+            void targetSlot.offsetWidth; // 觸發重繪以播放光暈動畫
+            targetSlot.classList.add('hint-filled');
+
+            // 若填入後該字在答案格中的總數超過實際答案所需的數量，從其他「填錯位置」的格子中清除多餘的該字
+            let currentCharCount = slots.filter(s => s.textContent === correctChar).length;
+            if (currentCharCount > charCountInAnswer) {
+                for (let i = 0; i < slots.length; i++) {
+                    if (i !== targetSlotIdx && slots[i].textContent === correctChar && slots[i].textContent !== answerChars[i]) {
+                        slots[i].textContent = '';
+                        slots[i].classList.remove('hint-filled');
+                        currentCharCount--;
+                        if (currentCharCount <= charCountInAnswer) break;
+                    }
+                }
+            }
+
+            mobileSelectedChar = null;
+            activeKeyIdx = null;
+            updateVisuals();
+            recordStep();
+            showHintBanner(`💡 答案提示：第 ${targetSlotIdx + 1} 個字為「${correctChar}」（已填入下方第 ${targetSlotIdx + 1} 格）`);
+            checkWin();
+        }
+
+        let penaltyAnimTimeout = null;
+        function showPenaltyFlyAnimation() {
+            const floater = document.getElementById('penalty-floater');
+            if (!floater) return;
+            if (penaltyAnimTimeout) clearTimeout(penaltyAnimTimeout);
+            floater.style.display = 'block';
+            floater.textContent = `+${HINT_PENALTY_SECONDS}s`;
+            floater.classList.remove('time-penalty-fly');
+            void floater.offsetWidth;
+            floater.classList.add('time-penalty-fly');
+            penaltyAnimTimeout = setTimeout(() => {
+                floater.style.display = 'none';
+                penaltyAnimTimeout = null;
+            }, 1200);
+        }
+
+        function showHintBanner(msg) {
+            const banner = document.getElementById('hint-banner');
+            if (!banner) return;
+            banner.innerHTML = `<span class="hint-banner-text">${msg}</span><span class="hint-banner-close" onclick="closeHintBanner()">&times;</span>`;
+            banner.style.display = 'flex';
+        }
+
+        function closeHintBanner() {
+            const banner = document.getElementById('hint-banner');
+            if (banner) banner.style.display = 'none';
         }
 
         window.addEventListener('resize', updateVisuals);
