@@ -81,6 +81,13 @@ article img {
   border-radius: 8px;
 }
 
+/* 統一圖片間距：讓文章中以 <img /> 直接插入的獨立照片，保有與 photoblog（段落）完全一致的下方呼吸間距 */
+.markdown > img,
+.markdown > a:has(> img) {
+  display: block;
+  margin-bottom: var(--ifm-paragraph-margin-bottom);
+}
+
 /* =========================================
    3. 導覽列與 Logo (Navbar & Branding)
    ========================================= */
