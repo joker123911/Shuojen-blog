@@ -203,6 +203,7 @@ export const westernMovies = [
   { title: "揭密日", score: 7.2, note: "概念不錯，但劇本不太好，愛蜜莉布朗演得超好", poster: "./img/movie/揭密日.webp", tags: ["2026", "懸疑", "動作"] },
   { title: "海灘", score: 7.2, note: "皮卡丘的老電影，有意思的反烏托邦驚悚片", poster: "./img/movie/海灘.webp", tags: ["2000", "劇情", "驚悚"] },
   { title: "聖母峰", score: 7.2, note: "還不錯的災難電影，大自然的威力不容小覷", poster: "./img/movie/聖母峰.webp", tags: ["2015", "劇情"] },
+  { title: "牠", score: 7.2, note: "還不錯的史蒂芬金改編恐怖電影，有怪奇物語感", poster: "./img/movie/牠.webp", tags: ["2017", "恐怖"] },
   { title: "我和我的冠軍女兒", score: 7.1, note: "勵志的好片，關於印度女性主義的電影", poster: "./img/movie/我和我的冠軍女兒.webp", tags: ["2016", "運動", "傳記"] },
   { title: "香草天空", score: 7.1, note: "湯姆克魯斯早期的好片，不錯看", poster: "./img/movie/香草天空.webp", tags: ["2001", "劇情", "愛情"] },
   { title: "黑暗騎士：黎明昇起", score: 7.1, note: "沒有什麼特別深刻的印象，跟第一集差不多，我倒是沒認出湯姆哈迪", poster: "./img/movie/黑暗騎士：黎明昇起.webp", tags: ["2012", "英雄", "諾蘭"] },
