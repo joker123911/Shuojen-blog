@@ -145,12 +145,6 @@ export const blogrollLinks = [
     "description": "Recent content on EddieLv.com"
   },
   {
-    "title": "Emma Goto",
-    "url": "https://www.emgoto.com/",
-    "xmlUrl": "https://www.emgoto.com/rss.xml",
-    "description": "Japanese-Australian software engineer in Tokyo. Writing about hiking in Japan, coffee, birding, books and anything else that piques my interest."
-  },
-  {
     "title": "Eo's Blog",
     "url": "https://eoiiio.bearblog.dev/",
     "xmlUrl": "https://eoiiio.bearblog.dev/feed/",
@@ -160,6 +154,12 @@ export const blogrollLinks = [
     "title": "ERNE與他的老窮齋",
     "url": "https://erne.bearblog.dev/",
     "xmlUrl": "https://erne.bearblog.dev/feed/",
+    "description": "既然當不成新也當不成貴，那只好又老又窮嘍。    ..."
+  },
+  {
+    "title": "ERNE與他的老窮齋",
+    "url": "https://erne.bearblog.dev/",
+    "xmlUrl": "https://erne.bearblog.dev/rss/",
     "description": "既然當不成新也當不成貴，那只好又老又窮嘍。    ..."
   },
   {
@@ -179,6 +179,12 @@ export const blogrollLinks = [
     "url": "https://haruowang.vercel.app/",
     "xmlUrl": "https://haruowang.vercel.app/rss.xml",
     "description": "Digital Garden of Haruo Wang"
+  },
+  {
+    "title": "Fengc's Blog",
+    "url": "https://fengcblog.880200.xyz/",
+    "xmlUrl": "https://rssweball.top/feed/afaf2a3c-e11a-4783-a358-9e2d20d76a69.xml",
+    "description": "Fengc's Photography Blog"
   },
   {
     "title": "Gou's Blog Blog",
@@ -261,7 +267,7 @@ export const blogrollLinks = [
   {
     "title": "ikuka的第一個家",
     "url": "https://blog.ikukaroom.com/",
-    "xmlUrl": "https://blog.ikukaroom.com/feed/atom/",
+    "xmlUrl": "https://ikuka.blog/feed/atom/",
     "description": ""
   },
   {
@@ -293,6 +299,12 @@ export const blogrollLinks = [
     "url": "https://www.jaron.tw/blog/",
     "xmlUrl": "https://jaron.tw/blog/rss.xml",
     "description": "Jaron Writes. Blog"
+  },
+  {
+    "title": "Jay Walker 記事",
+    "url": "https://jaywalker.bearblog.dev/",
+    "xmlUrl": "https://jaywalker.bearblog.dev/feed/",
+    "description": "哦，看來你找到我了，這裡預計會放些瑣碎的心得或記事。  {{ posts }}..."
   },
   {
     "title": "JSDurand's life",
@@ -377,6 +389,12 @@ export const blogrollLinks = [
     "url": "https://blog.moongazer.net/",
     "xmlUrl": "https://blog.moongazer.net/index.xml",
     "description": "Recent content on Moongazer.net / Blog"
+  },
+  {
+    "title": "Namitz's Anchor",
+    "url": "https://namitz.com/",
+    "xmlUrl": "https://namitz.com/feed.xml",
+    "description": "一些雜言雜語"
   },
   {
     "title": "Neil Blog",
@@ -673,6 +691,12 @@ export const blogrollLinks = [
     "description": "日本文化が大好きな台湾人"
   },
   {
+    "title": "ㄅlog ⟆‧ ͠⎼ ‧⟅",
+    "url": "https://plog.bearblog.dev/",
+    "xmlUrl": "https://plog.bearblog.dev/feed/",
+    "description": "胡言亂語百變怪 ⟆‧ ͠⎼ ‧⟅"
+  },
+  {
     "title": "一起和 Yoon 聊心事",
     "url": "https://yoon.club/",
     "xmlUrl": "https://yoon.club/feed/",
@@ -871,6 +895,12 @@ export const blogrollLinks = [
     "description": "这一天的历史事件"
   },
   {
+    "title": "蛋餅的競程隨筆",
+    "url": "https://omeletwithoutegg.github.io/",
+    "xmlUrl": "https://omeletwithoutegg.github.io/index.xml",
+    "description": "Recent content on 蛋餅的競程隨筆"
+  },
+  {
     "title": "陳依琳 YI-LIN CHEN",
     "url": "https://im1010ioio.dev/",
     "xmlUrl": "https://im1010ioio.dev/rss.xml",
@@ -897,7 +927,7 @@ export const blogrollLinks = [
   {
     "title": "無糧殿",
     "url": "https://wuliang.netlify.app/",
-    "xmlUrl": "https://wuliang.netlify.app/index.xml",
+    "xmlUrl": "https://wuliangdian.com/index.xml",
     "description": "無糧殿"
   },
   {
@@ -911,6 +941,12 @@ export const blogrollLinks = [
     "url": "https://blog.giveanornot.com/",
     "xmlUrl": "https://blog.giveanornot.com/index.xml",
     "description": "Recent content on 資工小廢物 - JN"
+  },
+  {
+    "title": "達二的基地",
+    "url": "https://da2base.com/",
+    "xmlUrl": "https://da2base.com/feed/",
+    "description": ""
   },
   {
     "title": "雷歐 Revol.C 的部落格",
@@ -927,7 +963,7 @@ export const blogrollLinks = [
   {
     "title": "綠橄欖筆記",
     "url": "https://oliveassignment.xyz/",
-    "xmlUrl": "https://oliveassignment.xyz/feed/",
+    "xmlUrl": "https://oliveassignment.xyz/rss.xml",
     "description": "Hi 我是 YC！正努力在所剩不多的下班時間，探索一些「不實用」的有趣事物，讓生活沒那麼枯燥。  分享我喜愛、受啟發的內容，是探索樂趣時，路上留下的麵包屑。  有任何想法歡迎來信：green.olive.assignment@gmail.com..."
   },
   {
@@ -941,6 +977,12 @@ export const blogrollLinks = [
     "url": "https://trashposts.com/",
     "xmlUrl": "https://trashposts.com/rss.xml",
     "description": "最新文章更新"
+  },
+  {
+    "title": "樂樂人生",
+    "url": "https://doghappylife.bearblog.dev/",
+    "xmlUrl": "https://doghappylife.bearblog.dev/feed/",
+    "description": "<p align=\"center\"> <img src=\"https://bear-images.sfo2.cdn.digitaloceanspaces.com/happydogapple/a4cbba77-a555-4898-be84-011ef9273d1d.webp\" style=\"width: 75%;..."
   },
   {
     "title": "閱讀前哨站",
