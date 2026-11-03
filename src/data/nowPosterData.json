@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-11-03",
-  "latestPostDate": "2026-11-01",
+  "generatedAt": "2026-11-04",
+  "latestPostDate": "2026-11-03",
   "windowDays": 90,
-  "cutoffDate": "2026-08-05",
+  "cutoffDate": "2026-08-06",
   "stats": {
-    "blogCount": 40,
+    "blogCount": 41,
     "photoCount": 1,
-    "totalPosts": 41,
-    "totalWords": 24264,
+    "totalPosts": 42,
+    "totalWords": 24793,
     "rankingAdded": {
       "電影": 35,
       "動畫": 6,
@@ -20,6 +20,8 @@
     "中午只能自立自強一個人健身",
     "拜託上保護止損吧求你了看的背脊發涼",
     "好久沒有看劇看到大笑出來，且看且珍惜",
+    "客家語文暨社會科學學系",
+    "我們在想像中受的苦多於現實中",
     "發生那麼多好笑的事，今天真是相當幸運的一天！",
     "以恐怖驚悚的題材",
     "原來有些事怎麼樣努力都是不可能達成的",
@@ -29,9 +31,7 @@
     "不執著的執著，才是真正好的執著。",
     "一條路的名字。",
     "小時候聽說看了會有陰影，忍到二十歲才看，還是有陰影。",
-    "想用電車撞的名人",
-    "對啦，這就是我想表達的！",
-    "天呀，筷子真的是世界上最偉大的發明之一！"
+    "想用電車撞的名人"
   ],
   "topRankings": [
     {
@@ -357,7 +357,7 @@
       "rank": 28
     },
     {
-      "text": "手機進化史",
+      "text": "我推的部落格",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -365,7 +365,7 @@
       "rank": 29
     },
     {
-      "text": "我推的部落格",
+      "text": "新記錄",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -373,7 +373,7 @@
       "rank": 30
     },
     {
-      "text": "新記錄",
+      "text": "飲料大小",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -381,7 +381,7 @@
       "rank": 31
     },
     {
-      "text": "飲料大小",
+      "text": "文字雜想",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -389,7 +389,7 @@
       "rank": 32
     },
     {
-      "text": "文字雜想",
+      "text": "檔車推發記",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -397,7 +397,7 @@
       "rank": 33
     },
     {
-      "text": "檔車推發記",
+      "text": "全國棋藝競賽",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -405,7 +405,7 @@
       "rank": 34
     },
     {
-      "text": "全國棋藝競賽",
+      "text": "簡易拍照構圖法",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -413,7 +413,7 @@
       "rank": 35
     },
     {
-      "text": "簡易拍照構圖法",
+      "text": "淺色主題",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -421,7 +421,7 @@
       "rank": 36
     },
     {
-      "text": "淺色主題",
+      "text": "海綿寶寶幸運路跑",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -429,7 +429,7 @@
       "rank": 37
     },
     {
-      "text": "海綿寶寶幸運路跑",
+      "text": "中央大學趣事",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -565,12 +565,20 @@
       "rank": 54
     },
     {
+      "text": "手機進化史",
+      "weight": 11.5,
+      "count": 1,
+      "category": "post",
+      "sourceType": "title",
+      "rank": 55
+    },
+    {
       "text": "高雄與小琉球",
       "weight": 11.5,
       "count": 1,
       "category": "photo",
       "sourceType": "title",
-      "rank": 55
+      "rank": 56
     },
     {
       "text": "野獸之心",
@@ -578,7 +586,7 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-電影",
-      "rank": 56
+      "rank": 57
     },
     {
       "text": "惡靈古堡爆發夜",
@@ -586,7 +594,7 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-電影",
-      "rank": 57
+      "rank": 58
     },
     {
       "text": "重擊人生",
@@ -594,18 +602,10 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-電影",
-      "rank": 58
-    },
-    {
-      "text": "微笑2",
-      "weight": 11,
-      "count": 1,
-      "category": "ranking",
-      "sourceType": "ranking-電影",
       "rank": 59
     },
     {
-      "text": "獵金遊戲",
+      "text": "微笑2",
       "weight": 11,
       "count": 1,
       "category": "ranking",
