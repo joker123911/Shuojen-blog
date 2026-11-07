@@ -38,7 +38,7 @@ import BirthdayAnimation from '@site/src/components/BirthdayAnimation/BirthdayAn
 
 根據我毫無根據的刻版印象，我自己熟悉的格友裡使用 Docusaurus 的，似乎都是男性居多，像是[ Wiwi](https://wiwi.blog/)、[皮皮的 TIL](https://til.trashposts.com/blog/)、[Marcus](https://immarcus.com/blog) 等等。也許是因為它的定位本來就比較偏「技術文件網站」的緣故，倒不是技術文件就跟性別有什麼關係，只是體感上好像風格就比較冰冷一點點。
 
-這讓我更期待 ikuka 會慢慢將網站怎麼改成符合她的風格，畢竟看別人暴改網站也是追部落格社群有趣的一環。像是之前看到 Wiwi 的 [`/crepe`](https://wiwi.blog/crepe) 頁面就讓我興奮好一陣子、「前」恐龍格友 Jaron 把網頁整個[重新設計](https://jaron.tw/blog/redesign)、或是[黃宏勝的部落格](https://hshuang.com/)當初無預警大改，也讓我覺得哇好酷呀！另外還有印象深刻的[ JN 的部落格 ](https://blog.giveanornot.com/)，一波大更新把 Hugo 改得風格十足，搭配有特色的像素字，不禁讓我驚歎連連，實在好太有才華了。
+這讓我更期待 ikuka 會慢慢將網站怎麼改成符合她的風格，畢竟看別人暴改網站也是追部落格社群有趣的一環。像是之前看到 Wiwi 的 [`/crepe`](https://wiwi.blog/crepe) 頁面就讓我興奮好一陣子、「前」恐龍格友 Jaron 把網頁整個[重新設計](https://jaron.tw/blog/redesign)、或是[黃宏勝的部落格](https://hshuang.com/)當初無預警大改，也讓我覺得哇好酷呀！另外還有印象深刻的[ JN 的部落格 ](https://blog.giveanornot.com/)，一波大更新把 Hugo 改得風格十足，搭配有特色的像素字，不禁讓我驚歎連連，實在太有才華了。
 
 部落格生態真的好有趣，這種慢慢看著網頁變化的樂趣，在一般社群媒體可以說是絕無僅有的體驗。有時候點開朋友傳的 Threads 連結，看到一則貼文，字稍微多個幾行，內文就直接被擠到留言區，真的發自內心覺得悲哀到不小心笑出來。
 
