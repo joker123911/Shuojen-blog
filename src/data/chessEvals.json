@@ -1364,46 +1364,6 @@
     "mate": null,
     "winner": null
   },
-  "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/2N2N2/PPPP1PPP/R1BQKB1R b KQkq - 3 3": {
-    "cp": 6,
-    "mate": null,
-    "winner": null
-  },
-  "r1bqkb1r/pppp1ppp/2n2n2/4p3/4P3/2N2N2/PPPP1PPP/R1BQKB1R w KQkq - 4 4": {
-    "cp": 7,
-    "mate": null,
-    "winner": null
-  },
-  "r1bqkb1r/pppp1ppp/2n2n2/4p3/3PP3/2N2N2/PPP2PPP/R1BQKB1R b KQkq - 0 4": {
-    "cp": 6,
-    "mate": null,
-    "winner": null
-  },
-  "r1bqkb1r/pppp1ppp/2n2n2/8/3pP3/2N2N2/PPP2PPP/R1BQKB1R w KQkq - 0 5": {
-    "cp": 9,
-    "mate": null,
-    "winner": null
-  },
-  "r1bqk2r/pppp1ppp/2n2n2/4p3/1b1PP3/2N2N2/PPP2PPP/R1BQKB1R w KQkq - 1 5": {
-    "cp": 28,
-    "mate": null,
-    "winner": null
-  },
-  "r1bqkb1r/pppp1ppp/2n2n2/8/3NP3/2N5/PPP2PPP/R1BQKB1R b KQkq - 0 5": {
-    "cp": 6,
-    "mate": null,
-    "winner": null
-  },
-  "r1bqkb1r/pppp1ppp/5n2/8/3nP3/2N5/PPP2PPP/R1BQKB1R w KQkq - 0 6": {
-    "cp": 85,
-    "mate": null,
-    "winner": null
-  },
-  "r1bqkb1r/pppp1ppp/5n2/8/3QP3/2N5/PPP2PPP/R1B1KB1R b KQkq - 0 6": {
-    "cp": 94,
-    "mate": null,
-    "winner": null
-  },
   "r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3": {
     "cp": 7,
     "mate": null,
@@ -1938,5 +1898,45 @@
     "cp": 10000,
     "mate": 0,
     "winner": "w"
+  },
+  "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/2N2N2/PPPP1PPP/R1BQKB1R b KQkq - 3 3": {
+    "cp": 6,
+    "mate": null,
+    "winner": null
+  },
+  "r1bqkb1r/pppp1ppp/2n2n2/4p3/4P3/2N2N2/PPPP1PPP/R1BQKB1R w KQkq - 4 4": {
+    "cp": 7,
+    "mate": null,
+    "winner": null
+  },
+  "r1bqkb1r/pppp1ppp/2n2n2/4p3/3PP3/2N2N2/PPP2PPP/R1BQKB1R b KQkq - 0 4": {
+    "cp": 6,
+    "mate": null,
+    "winner": null
+  },
+  "r1bqkb1r/pppp1ppp/2n2n2/8/3pP3/2N2N2/PPP2PPP/R1BQKB1R w KQkq - 0 5": {
+    "cp": 9,
+    "mate": null,
+    "winner": null
+  },
+  "r1bqk2r/pppp1ppp/2n2n2/4p3/1b1PP3/2N2N2/PPP2PPP/R1BQKB1R w KQkq - 1 5": {
+    "cp": 28,
+    "mate": null,
+    "winner": null
+  },
+  "r1bqkb1r/pppp1ppp/2n2n2/8/3NP3/2N5/PPP2PPP/R1BQKB1R b KQkq - 0 5": {
+    "cp": 6,
+    "mate": null,
+    "winner": null
+  },
+  "r1bqkb1r/pppp1ppp/5n2/8/3nP3/2N5/PPP2PPP/R1BQKB1R w KQkq - 0 6": {
+    "cp": 85,
+    "mate": null,
+    "winner": null
+  },
+  "r1bqkb1r/pppp1ppp/5n2/8/3QP3/2N5/PPP2PPP/R1B1KB1R b KQkq - 0 6": {
+    "cp": 94,
+    "mate": null,
+    "winner": null
   }
 }
