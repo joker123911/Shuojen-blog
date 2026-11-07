@@ -688,7 +688,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
                   </button>
                 </div>
                 <textarea
-                  placeholder="輸入回覆內容（必填）支援 Markdown、> 引用..." required
+                  placeholder="輸入回覆內容（必填）支援 Markdown" required
                   value={replyData.content} onChange={e => setReplyData({...replyData, content: e.target.value})}
                   rows={3}
                   style={{ display: replyTab === 'write' ? 'block' : 'none' }}
@@ -778,7 +778,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
               </button>
             </div>
             <textarea
-              placeholder="輸入內容（必填）支援 Markdown、> 引用..." required
+              placeholder="輸入內容（必填）支援 Markdown" required
               value={formData.content} onChange={e => setFormData({...formData, content: e.target.value})}
               style={{ display: formTab === 'write' ? 'block' : 'none' }}
             />

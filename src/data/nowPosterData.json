@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-11-04",
-  "latestPostDate": "2026-11-03",
+  "generatedAt": "2026-11-07",
+  "latestPostDate": "2026-11-07",
   "windowDays": 90,
-  "cutoffDate": "2026-08-06",
+  "cutoffDate": "2026-08-09",
   "stats": {
-    "blogCount": 41,
+    "blogCount": 40,
     "photoCount": 1,
-    "totalPosts": 42,
-    "totalWords": 24793,
+    "totalPosts": 41,
+    "totalWords": 24480,
     "rankingAdded": {
       "電影": 35,
       "動畫": 6,
@@ -190,8 +190,8 @@
     },
     {
       "text": "桌球拉下旋",
-      "weight": 46.9,
-      "count": 3,
+      "weight": 44,
+      "count": 2,
       "category": "now",
       "sourceType": "now-link",
       "rank": 8
@@ -349,28 +349,12 @@
       "rank": 27
     },
     {
-      "text": "藍色監獄",
-      "weight": 18.2,
-      "count": 2,
-      "category": "media",
-      "sourceType": "work",
-      "rank": 28
-    },
-    {
-      "text": "我推的部落格",
-      "weight": 16,
-      "count": 1,
-      "category": "post",
-      "sourceType": "title",
-      "rank": 29
-    },
-    {
       "text": "新記錄",
       "weight": 16,
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 30
+      "rank": 28
     },
     {
       "text": "飲料大小",
@@ -378,7 +362,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 31
+      "rank": 29
     },
     {
       "text": "文字雜想",
@@ -386,7 +370,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 32
+      "rank": 30
     },
     {
       "text": "檔車推發記",
@@ -394,7 +378,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 33
+      "rank": 31
     },
     {
       "text": "全國棋藝競賽",
@@ -402,7 +386,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 34
+      "rank": 32
     },
     {
       "text": "簡易拍照構圖法",
@@ -410,7 +394,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 35
+      "rank": 33
     },
     {
       "text": "淺色主題",
@@ -418,7 +402,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 36
+      "rank": 34
     },
     {
       "text": "海綿寶寶幸運路跑",
@@ -426,7 +410,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 37
+      "rank": 35
     },
     {
       "text": "中央大學趣事",
@@ -434,6 +418,22 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
+      "rank": 36
+    },
+    {
+      "text": "無限徊環",
+      "weight": 16,
+      "count": 1,
+      "category": "post",
+      "sourceType": "title",
+      "rank": 37
+    },
+    {
+      "text": "藍色監獄",
+      "weight": 15.8,
+      "count": 2,
+      "category": "media",
+      "sourceType": "work",
       "rank": 38
     },
     {
@@ -509,7 +509,7 @@
       "rank": 47
     },
     {
-      "text": "用筷子吃東西",
+      "text": "人生也是一個遊戲",
       "weight": 11.5,
       "count": 1,
       "category": "post",
@@ -517,7 +517,7 @@
       "rank": 48
     },
     {
-      "text": "人生也是一個遊戲",
+      "text": "自己做生日蛋糕",
       "weight": 11.5,
       "count": 1,
       "category": "post",
@@ -525,7 +525,7 @@
       "rank": 49
     },
     {
-      "text": "自己做生日蛋糕",
+      "text": "大魚吃小魚",
       "weight": 11.5,
       "count": 1,
       "category": "post",
@@ -533,7 +533,7 @@
       "rank": 50
     },
     {
-      "text": "大魚吃小魚",
+      "text": "彌敦道",
       "weight": 11.5,
       "count": 1,
       "category": "post",
@@ -541,7 +541,7 @@
       "rank": 51
     },
     {
-      "text": "彌敦道",
+      "text": "專輯牆",
       "weight": 11.5,
       "count": 1,
       "category": "post",
@@ -549,7 +549,7 @@
       "rank": 52
     },
     {
-      "text": "專輯牆",
+      "text": "執著光譜",
       "weight": 11.5,
       "count": 1,
       "category": "post",
@@ -557,7 +557,7 @@
       "rank": 53
     },
     {
-      "text": "執著光譜",
+      "text": "手機進化史",
       "weight": 11.5,
       "count": 1,
       "category": "post",
@@ -565,7 +565,7 @@
       "rank": 54
     },
     {
-      "text": "手機進化史",
+      "text": "我推的部落格",
       "weight": 11.5,
       "count": 1,
       "category": "post",

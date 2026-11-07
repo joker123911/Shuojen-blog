@@ -184,10 +184,10 @@ import ContributionCalendar from '@site/src/components/ContributionCalendar/Cont
 
 <Marquee gradient={false} speed={60}>
   <div style={{padding: '10px 0', fontSize: '1.1rem'}}>
-    我直接放一個我最愛的西洋棋開局：四♞蘇格蘭，沒有為什麼，因為個人網頁很***自由***！
+    我直接放一個經典的西洋棋開局：后翼棄兵，沒有為什麼，因為個人網頁很***自由***！
   </div>
 </Marquee>
-<White pgn="1. e4 e5 2. Nf3 Nc6 3. Nc3 Nf6 3. d4" />
+<White pgn="1. d4 d5 2. c4 dxc4 3. e4" />
 
 # 主要內容
 
@@ -232,7 +232,7 @@ https://shuojen.com/photoblog/rss.xml
 ```
 
 # 即時數據
-貼文區目前共有 **289** 篇文章，共累積了 **126,088** 個字；<br />
+貼文區目前共有 **290** 篇文章，共累積了 **126,361** 個字；<br />
 攝影區目前共有 **66** 篇文章，共累積了 **844** 張照片。
 
 <ContributionCalendar />
