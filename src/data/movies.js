@@ -141,6 +141,7 @@ export const westernMovies = [
   { title: "扭轉奇蹟", score: 7.6, note: "經典的凱吉溫馨電影", poster: "./img/movie/扭轉奇蹟.webp", tags: ["2000", "劇情", "溫馨"] },
   { title: "曼哈頓戀習曲", score: 7.6, note: "音樂超棒的一部，喜歡到收藏了原聲帶", poster: "./img/movie/曼哈頓戀習曲.webp", tags: ["2014", "愛情"] },
   { title: "我們", score: 7.6, note: "喬登·皮爾的驚悚片氣氛都很好，但這部是我覺得最普的", poster: "./img/movie/我們.webp", tags: ["2019", "驚悚"] },
+  { title: "泥面人", score: 7.6, note: "類似小丑的超英反派起源電影，雖然沒有那麼驚豔，但表現得也很優秀。就是喜歡 DC 的這種黑暗風格。", poster: "./img/movie/泥面人.webp", tags: ["2026", "驚悚"] },
   { title: "水底情深", score: 7.5, note: "滿酷的奇幻愛情電影，算中規中矩的一部", poster: "./img/movie/水底情深.webp", tags: ["2017", "愛情"] },
   { title: "罪人", score: 7.5, note: "音樂非常讚，前半的氣氛也非常好，不過後半風格大變我沒那麼喜歡，整體非常值得一看", poster: "./img/movie/罪人.webp", tags: ["2025", "驚悚", "劇情"] },
   { title: "魔戒", score: 7.5, note: "超經典的史詩冒險，我最愛雙城奇謀，還記得大學的時候我看了十小時的魔戒馬拉松，超過癮", poster: "./img/movie/魔戒.webp", tags: ["2001", "經典", "奇幻"] },

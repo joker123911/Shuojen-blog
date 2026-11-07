@@ -22,6 +22,7 @@ export const ramenList = [
   { title: "麵堂拉麵", note: "在新竹的時候很常吃，離宿舍很近，感謝把我餵飽的一間店，牛肉很軟嫩又香，推推。", tier: "S", tags: ["新竹"], link: "https://www.google.com/maps/search/?api=1&query=麵堂拉麵 拉麵" },
   { title: "麵屋浩", note: "新竹有名的一間，料很多很濃，老闆人好，很讚，但是要排隊，可惜。", tier: "S", tags: ["新竹"], link: "https://www.google.com/maps/search/?api=1&query=麵屋浩 拉麵" },
   { title: "道楽製麵所", note: "豚骨很濃郁，加蒜泥和七味粉之後很香，不錯，之後經過的話會想嘗試別的", tier: "S", tags: ["台北"], link: "https://maps.app.goo.gl/eMR8uskruLrEnc5c8" },
+  { title: "実正拉麵", note: "喜歡白湯的湯頭，可惜叉燒肉的口感沒那麼嫩，還不錯在附近的話可以來試試", tier: "S", tags: ["台北"], link: "https://maps.app.goo.gl/8nzh89ACRSexcMKTA" },
   { title: "麺処田冶", note: "相當樸實的一間店，鹽味跟醬油都還不錯，中規中矩的好滋味。", tier: "A", tags: ["台北"], link: "https://www.google.com/maps/search/?api=1&query=麺処田冶 拉麵" },
   { title: "鳥人拉麵", note: "很久以前跟媽媽吃過，但是只對炸雞有印象，麵完全忘記了。", tier: "A", tags: ["台北"], link: "https://maps.app.goo.gl/9tqR1eZzqSgS2G187" },
   { title: "麵屋武藏", note: "好吃，不過個人感覺有一點油，整體膩感稍重了一點，", tier: "A", tags: ["台北"], link: "https://maps.app.goo.gl/YerP9otj5AEDLU5y8" },

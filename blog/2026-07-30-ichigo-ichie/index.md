@@ -39,6 +39,8 @@ import BirthdayAnimation from '@site/src/components/BirthdayAnimation/BirthdayAn
 
 >沒有比這個更令人開心的投稿日了！
 
-<BirthdayAnimation name="ikuka" />
+<BirthdayAnimation name="ikuka" 
+showInput={false} 
+/>
 
 

@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-11-07",
-  "latestPostDate": "2026-11-07",
+  "generatedAt": "2026-11-08",
+  "latestPostDate": "2026-11-08",
   "windowDays": 90,
-  "cutoffDate": "2026-08-09",
+  "cutoffDate": "2026-08-10",
   "stats": {
     "blogCount": 40,
     "photoCount": 1,
     "totalPosts": 41,
-    "totalWords": 24480,
+    "totalWords": 24836,
     "rankingAdded": {
-      "電影": 35,
+      "電影": 34,
       "動畫": 6,
       "影集": 6,
-      "拉麵": 1,
+      "拉麵": 2,
       "金庸": 0
     }
   },
@@ -89,10 +89,10 @@
       "note": "很喜歡這個導演的劇情切角，又有他獨特的幽默風格。作品非常完整漂亮，不落俗套"
     },
     {
-      "title": "愛你致死不渝",
-      "type": "電影",
-      "score": 8.7,
-      "note": "超棒的低成本驚悚電影，保證從頭到尾如坐針氈"
+      "title": "実正拉麵",
+      "type": "拉麵",
+      "score": 8.5,
+      "note": "喜歡白湯的湯頭，可惜叉燒肉的口感沒那麼嫩，還不錯在附近的話可以來試試"
     },
     {
       "title": "飛躍奇蹟",
@@ -237,15 +237,15 @@
       "rank": 13
     },
     {
-      "text": "FX戰士韭留美",
-      "weight": 36,
-      "count": 1,
-      "category": "now",
-      "sourceType": "now-bullet",
+      "text": "格友見面會",
+      "weight": 38,
+      "count": 4,
+      "category": "tag",
+      "sourceType": "tag",
       "rank": 14
     },
     {
-      "text": "五十嵐阿華田",
+      "text": "FX戰士韭留美",
       "weight": 36,
       "count": 1,
       "category": "now",
@@ -253,19 +253,19 @@
       "rank": 15
     },
     {
+      "text": "五十嵐阿華田",
+      "weight": 36,
+      "count": 1,
+      "category": "now",
+      "sourceType": "now-bullet",
+      "rank": 16
+    },
+    {
       "text": "桑葚紅烏冷泡茶",
       "weight": 35,
       "count": 1,
       "category": "now",
       "sourceType": "now-detail",
-      "rank": 16
-    },
-    {
-      "text": "愛你致死不渝",
-      "weight": 34.3,
-      "count": 3,
-      "category": "post",
-      "sourceType": "title",
       "rank": 17
     },
     {
@@ -293,28 +293,12 @@
       "rank": 20
     },
     {
-      "text": "格友見面會",
-      "weight": 29,
-      "count": 3,
-      "category": "tag",
-      "sourceType": "tag",
-      "rank": 21
-    },
-    {
-      "text": "鬼手鬼手請開口",
-      "weight": 22,
-      "count": 3,
-      "category": "media",
-      "sourceType": "work",
-      "rank": 22
-    },
-    {
       "text": "殭屍100",
       "weight": 19.5,
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-動畫",
-      "rank": 23
+      "rank": 21
     },
     {
       "text": "FX戰士久留美",
@@ -322,7 +306,7 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-動畫",
-      "rank": 24
+      "rank": 22
     },
     {
       "text": "黑暗智宅",
@@ -330,7 +314,7 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-影集",
-      "rank": 25
+      "rank": 23
     },
     {
       "text": "麗茲波頓的故事",
@@ -338,7 +322,7 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-影集",
-      "rank": 26
+      "rank": 24
     },
     {
       "text": "野生狂廚",
@@ -346,6 +330,22 @@
       "count": 2,
       "category": "post",
       "sourceType": "title",
+      "rank": 25
+    },
+    {
+      "text": "天魔惡之初",
+      "weight": 18.2,
+      "count": 2,
+      "category": "media",
+      "sourceType": "work",
+      "rank": 26
+    },
+    {
+      "text": "鬼手鬼手請開口",
+      "weight": 17.2,
+      "count": 2,
+      "category": "media",
+      "sourceType": "work",
       "rank": 27
     },
     {
@@ -429,27 +429,27 @@
       "rank": 37
     },
     {
-      "text": "藍色監獄",
-      "weight": 15.8,
-      "count": 2,
-      "category": "media",
-      "sourceType": "work",
+      "text": "格友的部落格",
+      "weight": 16,
+      "count": 1,
+      "category": "post",
+      "sourceType": "title",
       "rank": 38
     },
     {
-      "text": "後室",
-      "weight": 14.8,
+      "text": "藍色監獄",
+      "weight": 15.8,
       "count": 2,
       "category": "media",
       "sourceType": "work",
       "rank": 39
     },
     {
-      "text": "吉伊卡哇",
-      "weight": 13.9,
-      "count": 2,
-      "category": "entity",
-      "sourceType": "entity",
+      "text": "実正拉麵",
+      "weight": 14.5,
+      "count": 1,
+      "category": "ranking",
+      "sourceType": "ranking-拉麵",
       "rank": 40
     },
     {
@@ -493,7 +493,7 @@
       "rank": 45
     },
     {
-      "text": "仲夏魘",
+      "text": "社群網站",
       "weight": 12,
       "count": 2,
       "category": "media",
@@ -501,20 +501,12 @@
       "rank": 46
     },
     {
-      "text": "社群網站",
-      "weight": 12,
-      "count": 2,
-      "category": "media",
-      "sourceType": "work",
-      "rank": 47
-    },
-    {
       "text": "人生也是一個遊戲",
       "weight": 11.5,
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 48
+      "rank": 47
     },
     {
       "text": "自己做生日蛋糕",
@@ -522,7 +514,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 49
+      "rank": 48
     },
     {
       "text": "大魚吃小魚",
@@ -530,7 +522,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 50
+      "rank": 49
     },
     {
       "text": "彌敦道",
@@ -538,7 +530,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 51
+      "rank": 50
     },
     {
       "text": "專輯牆",
@@ -546,7 +538,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 52
+      "rank": 51
     },
     {
       "text": "執著光譜",
@@ -554,7 +546,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 53
+      "rank": 52
     },
     {
       "text": "手機進化史",
@@ -562,7 +554,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 54
+      "rank": 53
     },
     {
       "text": "我推的部落格",
@@ -570,7 +562,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 55
+      "rank": 54
     },
     {
       "text": "高雄與小琉球",
@@ -578,10 +570,18 @@
       "count": 1,
       "category": "photo",
       "sourceType": "title",
-      "rank": 56
+      "rank": 55
     },
     {
       "text": "野獸之心",
+      "weight": 11,
+      "count": 1,
+      "category": "ranking",
+      "sourceType": "ranking-電影",
+      "rank": 56
+    },
+    {
+      "text": "泥面人",
       "weight": 11,
       "count": 1,
       "category": "ranking",

@@ -11,7 +11,7 @@ import RamenTier from '@site/src/components/RamenTier';
   <h1 className="site-hero-title">Ramen</h1>
 </div>
 
-*最後更新：2026-10-02*
+*最後更新：2026-11-08*
 
 這是我個人的拉麵店 Tier 清單！評價為 100% 個人主觀意見。
 

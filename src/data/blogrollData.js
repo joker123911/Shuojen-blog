@@ -265,10 +265,10 @@ export const blogrollLinks = [
     "description": "I'm Marcus Blog"
   },
   {
-    "title": "ikuka的第一個家",
-    "url": "https://blog.ikukaroom.com/",
-    "xmlUrl": "https://ikuka.blog/feed/atom/",
-    "description": ""
+    "title": "Ikuka的範例網站 Blog",
+    "url": "https://ikuka.blog/blog/",
+    "xmlUrl": "https://ikuka.blog/blog/rss.xml",
+    "description": "Ikuka的範例網站 Blog"
   },
   {
     "title": "ImPatrick",
@@ -925,6 +925,12 @@ export const blogrollLinks = [
     "description": "大家好，我是 Squid 魷魚，身為一位軟體工程師，平常最喜歡埋首於程式碼的世界，鑽研各種新奇有趣的技術，在這裡，我會分享我的技術筆記、開發心得，還有各式各樣實用工具的評測與介紹，一起探索數位世界的無限可能吧！"
   },
   {
+    "title": "朝八晚八 Blog",
+    "url": "https://from8to8.com/happy",
+    "xmlUrl": "https://from8to8.com/happy/rss.xml",
+    "description": "朝八晚八 Blog"
+  },
+  {
     "title": "無糧殿",
     "url": "https://wuliang.netlify.app/",
     "xmlUrl": "https://wuliangdian.com/index.xml",
@@ -980,9 +986,9 @@ export const blogrollLinks = [
   },
   {
     "title": "樂樂人生",
-    "url": "https://doghappylife.bearblog.dev/",
-    "xmlUrl": "https://doghappylife.bearblog.dev/feed/",
-    "description": "<p align=\"center\"> <img src=\"https://bear-images.sfo2.cdn.digitaloceanspaces.com/happydogapple/a4cbba77-a555-4898-be84-011ef9273d1d.webp\" style=\"width: 75%;..."
+    "url": "https://lelelife.bearblog.dev/",
+    "xmlUrl": "https://lelelife.bearblog.dev/feed/",
+    "description": "我在大學教書。這裡寫狗、教書，還有生活中的觀察。 最新文章 關於樂樂人生 對我來說，寫 Blog 像是在世界的某個地方挖一個小小的洞穴，門口有一面小小的旗子。 總有一天，會有人路過。"
   },
   {
     "title": "閱讀前哨站",
