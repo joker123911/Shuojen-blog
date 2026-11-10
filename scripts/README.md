@@ -175,10 +175,17 @@ node scripts/check-broken-links.js --fix
 npm run new
 ```
 
-### 全自動推送發布 (`push.js`)
-依序執行檢查、資料索引重建，並自動提交 git commit 與 push 到遠端。
+### 推送發布 (`push.js`)
+依序執行檢查、完整建置（`npm run build`），通過後才提交並 push 到遠端。
+
+* 只會 stage 白名單內的路徑（`blog/`、`photoblog/`、`docs/`、`src/`、`static/`、`scripts/`、`.github/` 與根目錄設定檔）；其他變更會列出提醒，但不會被提交。
+* 提交前會列出完整的檔案清單，再詢問 commit 訊息（留空即取消）。
+* 建置太久時可用 `npm run push:fast` 跳過建置；GitHub Actions 仍會在推送後跑一次完整建置。
+
 ```bash
 npm run push
+npm run push:fast
+node scripts/push.js -m "訊息"   # 不跑檢查，直接提交推送
 ```
 
 ---

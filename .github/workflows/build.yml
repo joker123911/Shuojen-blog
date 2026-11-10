@@ -1,0 +1,34 @@
+# 每次推送到 main 或開 PR 時跑一次完整建置，確認網站建得起來。
+# onBrokenLinks: 'throw' 會讓死連結直接讓這個檢查失敗。
+# 這裡只做檢查，不負責部署。
+name: Build check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        # 淺層 clone 即可；gen-now-poster 找不到舊 commit 時會安靜略過
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build
+        run: npm run build

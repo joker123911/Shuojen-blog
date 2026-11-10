@@ -55,7 +55,8 @@ const config = {
   organizationName: 'joker123911',
   projectName: 'Shuojen-blog',
 
-  onBrokenLinks: 'warn',
+  // 有死連結時直接讓 build 失敗，避免壞連結被部署上線
+  onBrokenLinks: 'throw',
   markdown: {
     hooks: {
       onBrokenMarkdownLinks: 'warn',
@@ -128,6 +129,7 @@ const config = {
         showReadingTime: true,
         blogTitle: '貼文',
         blogDescription: '這裡是我的貼文與想法，歡迎訂閱 RSS！',
+        // 側欄顯示全部貼文
         blogSidebarTitle: '全部貼文',
         blogSidebarCount: 'ALL',
         archiveBasePath: 'archive',
@@ -175,8 +177,9 @@ const config = {
         routeBasePath: 'photoblog',
         path: './photoblog',
         showReadingTime: false,
-        blogSidebarTitle: '全部作品',
-        blogSidebarCount: 'ALL',
+        // 側欄只列最近 30 篇，完整列表見 /photoblog/photo-archive
+        blogSidebarTitle: '最近作品',
+        blogSidebarCount: 30,
         archiveBasePath: 'photo-archive',
         blogTitle: '攝影集',
         blogDescription: '日常紀錄。',
