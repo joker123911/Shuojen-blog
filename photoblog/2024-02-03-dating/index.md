@@ -1,6 +1,6 @@
 ---
 title: '兒童新樂園約會'
-tags: ['Fujifilm-XT20','xf1855mmf2.8','台灣','台北']
+tags: ['fujifilm-xt20','xf18-55mm-f2.8','台灣','台北']
 ---
 
 跟蝦波第一次玩遊樂園。

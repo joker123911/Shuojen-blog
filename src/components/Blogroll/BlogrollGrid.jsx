@@ -224,6 +224,10 @@ export default function BlogrollGrid() {
           color: #e67300;
           border: 1px solid rgba(255, 128, 0, 0.2);
         }
+        [data-theme='light'] .blogroll-btn-rss {
+          color: #b35900;
+          border-color: rgba(179, 89, 0, 0.3);
+        }
         .blogroll-btn-rss:hover {
           background: #e67300;
           color: #fff;

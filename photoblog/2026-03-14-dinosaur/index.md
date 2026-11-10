@@ -1,6 +1,6 @@
 ---
 title: '恐龍約會'
-tags: ['Panasonic-GM1','20mmf1.7II','台灣','關渡']
+tags: ['panasonic-gm1','lumix-20mm-f1.7ii','台灣','關渡']
 ---
 
 情人節跟蝦波看恐龍。

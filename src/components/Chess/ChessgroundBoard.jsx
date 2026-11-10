@@ -3,6 +3,16 @@ import 'chessground/assets/chessground.base.css';
 import 'chessground/assets/chessground.brown.css';
 import 'chessground/assets/chessground.cburnett.css';
 
+const START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+
+function toConfig({ fen, orientation, lastMove }) {
+  return {
+    fen: fen || START_FEN,
+    orientation: orientation === 'b' || orientation === 'black' ? 'black' : 'white',
+    lastMove: lastMove && lastMove.length === 2 ? lastMove : undefined,
+  };
+}
+
 export default function ChessgroundBoard({
   fen,
   orientation = 'white',
@@ -11,6 +21,10 @@ export default function ChessgroundBoard({
 }) {
   const containerRef = useRef(null);
   const apiRef = useRef(null);
+
+  // 非同步載入 chessground 期間 props 可能已更新，初始化時讀取最新值
+  const latestProps = useRef({ fen, orientation, lastMove, shapes });
+  latestProps.current = { fen, orientation, lastMove, shapes };
 
   // Initialize Chessground
   useEffect(() => {
@@ -27,8 +41,7 @@ export default function ChessgroundBoard({
         containerRef.current.innerHTML = '';
 
         const api = Chessground(containerRef.current, {
-          fen: fen || 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
-          orientation: orientation === 'b' || orientation === 'black' ? 'black' : 'white',
+          ...toConfig(latestProps.current),
           viewOnly: true, // Read-only for study navigation
           coordinates: true,
           animation: {
@@ -38,9 +51,8 @@ export default function ChessgroundBoard({
           drawable: {
             enabled: true,
             visible: true,
-            autoShapes: shapes || [],
+            autoShapes: latestProps.current.shapes || [],
           },
-          lastMove: lastMove && lastMove.length === 2 ? lastMove : undefined,
         });
 
         if (isMounted) {
@@ -74,9 +86,7 @@ export default function ChessgroundBoard({
 
     try {
       apiRef.current.set({
-        fen: fen || 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
-        orientation: orientation === 'b' || orientation === 'black' ? 'black' : 'white',
-        lastMove: lastMove && lastMove.length === 2 ? lastMove : undefined,
+        ...toConfig({ fen, orientation, lastMove }),
         drawable: {
           autoShapes: shapes || [],
         },

@@ -36,7 +36,6 @@ description: 記錄我愛用的工具
 * Ugreen DXP4800 NAS - 搭配開源系統 TrueNAS 使用。
 
 ### 音樂相關
-
 烏克麗麗
 * Uma ukulele - 高中社團購入，入坑吉他的起點。
 
@@ -48,7 +47,7 @@ description: 記錄我愛用的工具
 * Kawai CA49 - 二手購入，手感很滿意。
 
 ### [影音相關](/blog/2025/09/19/movie)
-
+* [閱星曈 X4](/blog/2026/08/18/x4) - 極簡好用小電子書
 * JMGO N1S Ultra - 投影機，在房間看電影很讚。
 * 100 吋 16:9 白玻纖布幕 - 便宜投影幕。
 * Google chromecast 4k - Google TV 電影棒。
@@ -59,7 +58,6 @@ description: 記錄我愛用的工具
 * QCY MeloBuds Pro - 無線藍芽耳機。
 
 ### [攝影相關](/photography)
-
 富士
 * FujiFilm XT-20 - 主力相機，二手購入，用五年了還是覺得不需要升級。
 * XF18-55mm F2.8-4 R LM OIS - 好用的標準焦段套頭。
@@ -143,14 +141,13 @@ description: 記錄我愛用的工具
 
 ## 軟體
 
-作業系統
+### 作業系統
 * Windows - 主力用，工作軟體需要，還有蝦波打 LOL 用。
 * macOS - 筆電主力用。
 * Asahi linux - 筆電偶爾玩玩用。
 
-電腦
+### 電腦
 * Brave - 最好用的瀏覽器，同步功能方便。
-* Syncthing - 同步照片丶音樂很方便。
 * VSCodium - 編寫部落格文章與程式碼。
 * MusicBee - 本地無損音樂播放器。
 * foobar2000 - 另一個本地無損音樂播放器。
@@ -164,12 +161,16 @@ description: 記錄我愛用的工具
 * LocalSent - 好用的共享檔案工具。
 * Lightroom Classic - 現在都不修圖了，懶人直出。
 * Oracle Cloud - 免費自架主機。
+
+### NAS 自架軟體
+* Tailscale - 所有的裝置互相連線的私人 VPN。
 * Navidrome - 免費自架音樂串流。
 * Jellyfin - 免費自架電影串流。
-* Tailscale - 所有的裝置互相連線的私人 VPN。
-
-
-Apps
+* immich - 免費自架雲端相薄。
+* komga - 免費自架漫畫庫。
+* Syncthing - 同步 NAS 與手機檔案很方便。
+* 
+### Apps
 * 天天記帳 - 直覺的記帳軟體。
 * Aniyomi - 閱讀漫畫。
 * Pitt - 習慣用的 Ptt 閱讀器。

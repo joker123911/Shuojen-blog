@@ -1,6 +1,6 @@
 ---
 title: '高雄與小琉球'
-tags: ["Panasonic-GM1","14mmf2.5",'35-100 F4.0-5.6',"高雄","小琉球"]
+tags: ["panasonic-gm1","lumix-14mm-f2.5",'lumix-35-100mm-f4-5.6',"高雄","小琉球"]
 ---
 
 一些旅遊小碎片。

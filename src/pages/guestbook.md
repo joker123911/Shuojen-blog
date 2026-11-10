@@ -14,7 +14,7 @@ import Guestbook from '@site/src/components/Guestbook';
     white-space: nowrap;
   }
   .guestbook-hero-sub {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: var(--ifm-font-family-base);
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 3px;
@@ -29,20 +29,11 @@ import Guestbook from '@site/src/components/Guestbook';
   }
 `}</style>
 
-<div style={{ textAlign: 'center', marginBottom: '3.5rem', marginTop: '2rem' }}>
+<div style={{ textAlign: 'center', marginBottom: '2.5rem', marginTop: '2rem' }}>
   <h1 className="guestbook-hero-title">Guestbook</h1>
   <p className="guestbook-hero-sub">Say Hello • Leave a Message</p>
 </div>
 
-:::info[**支援簡單的 Markdown 語法！**]
-- 超連結：`[顯示的文字](網址)`
-- 內嵌程式碼：`` `code` ``
-- 粗體：`**bold**`
-- 斜體：`*italic*`
-- 刪除線：`~~strike~~`
-- 引言：`> 引用的文字`
-
-:::
 
 留言板功能已開放，不需登入、不限字數，歡迎路過留言！ 
 

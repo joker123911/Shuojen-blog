@@ -11,12 +11,21 @@ export default function ContributionCalendar() {
   const hideTimeout = useRef(null);
   const scrollRef = useRef(null);
 
-  // 初始化時自動捲動到最右邊（最新日期）
+  // 「今天」只在瀏覽器端決定：建置（SSR）時的日期會被寫死在 HTML 裡，
+  // 若直接在 render 中呼叫 new Date()，與讀者打開時的日期不同就會 hydration mismatch。
+  const [today, setToday] = useState(null);
   useEffect(() => {
-    if (scrollRef.current) {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    setToday(d);
+  }, []);
+
+  // 格子畫出來後自動捲動到最右邊（最新日期）
+  useEffect(() => {
+    if (today && scrollRef.current) {
       scrollRef.current.scrollLeft = scrollRef.current.scrollWidth;
     }
-  }, []);
+  }, [today]);
 
   const handleMouseEnter = (e, day) => {
     if (!day.posts || day.posts.length === 0) return;
@@ -51,16 +60,15 @@ export default function ContributionCalendar() {
     const dates = Object.keys(data).sort();
 
     const totalPosts = dates.reduce((sum, date) => sum + (data[date]?.length || 0), 0);
+    if (!today) return { totalPosts, yearPosts: null, dailyStreak: null };
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const todayEnd = new Date();
+    const todayEnd = new Date(today);
     todayEnd.setHours(23, 59, 59, 999);
     const oneYearAgo = new Date(today);
     oneYearAgo.setDate(today.getDate() - 364);
 
     const yearPosts = dates.reduce((sum, date) => {
-      const d = new Date(date);
+      const d = new Date(`${date}T00:00:00`); // 當地時間午夜，避免被當成 UTC 而差一天
       if (d >= oneYearAgo && d <= todayEnd) return sum + (data[date]?.length || 0);
       return sum;
     }, 0);
@@ -82,14 +90,16 @@ export default function ContributionCalendar() {
     }
 
     return { totalPosts, yearPosts, dailyStreak };
-  }, []);
+  }, [today]);
 
   // --- 日曆網格計算（修正：從今天往前推一年，最新在右邊）---
   const { weeksArray, emptyColor, colorLevels, monthLabels } = useMemo(() => {
     const data = contributionData || {};
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const empty = isDark ? '#1e1e1e' : '#ebedf0';
+    const levels = isDark
+      ? ['#0e4429', '#006d32', '#26a641', '#39d353']
+      : ['#9be9a8', '#40c463', '#30a14e', '#216e39'];
+    if (!today) return { weeksArray: [], emptyColor: empty, colorLevels: levels, monthLabels: [] };
 
     // 結尾：本週的週六（確保最新格子可見）
     const endDow = today.getDay(); // 0=日, 6=六
@@ -104,11 +114,6 @@ export default function ContributionCalendar() {
     if (startDow !== 0) {
       startOfRange.setDate(startOfRange.getDate() - startDow);
     }
-
-    const empty = isDark ? '#1e1e1e' : '#ebedf0';
-    const levels = isDark
-      ? ['#0e4429', '#006d32', '#26a641', '#39d353']
-      : ['#9be9a8', '#40c463', '#30a14e', '#216e39'];
 
     const weeksList = [];
     const mLabels = [];
@@ -156,7 +161,7 @@ export default function ContributionCalendar() {
     }
 
     return { weeksArray: weeksList, emptyColor: empty, colorLevels: levels, monthLabels: mLabels };
-  }, [isDark]);
+  }, [isDark, today]);
 
   return (
     <div style={{
@@ -182,27 +187,17 @@ export default function ContributionCalendar() {
             textAlign: 'center', border: '1px solid var(--ifm-color-emphasis-200)',
             display: 'flex', flexDirection: 'column', justifyContent: 'center'
           }}>
-            <div style={{ fontSize: '28px', fontWeight: '800', color: 'var(--ifm-color-primary)', lineHeight: '1.2' }}>{stat.value}</div>
+            <div style={{ fontSize: '28px', fontWeight: '800', color: 'var(--ifm-color-primary)', lineHeight: '1.2' }}>{stat.value ?? '–'}</div>
             <div style={{ fontSize: '13px', color: 'var(--ifm-color-emphasis-600)', marginTop: '4px', fontWeight: '500' }}>{stat.label}</div>
           </div>
         ))}
       </div>
 
-      {/* 日曆網格區域（加上 ref 讓 useEffect 能 scroll 到最右）*/}
-      <div
-        ref={scrollRef}
-        style={{
-          display: 'flex',
-          overflowX: 'auto',
-          paddingBottom: '10px',
-          msOverflowStyle: 'none',
-          scrollbarWidth: 'none'
-        }}
-      >
-        {/* 左側星期座標 */}
+      <div style={{ display: 'flex' }}>
+        {/* 左側星期座標（放在捲動區外，捲到最右時仍看得到） */}
         <div style={{
           display: 'flex', flexDirection: 'column', gap: '3px',
-          marginTop: '20px', marginRight: '8px', paddingTop: '2px',
+          marginTop: '20px', marginRight: '8px',
           flexShrink: 0
         }}>
           {['', '一', '', '三', '', '五', ''].map((dayStr, i) => (
@@ -215,8 +210,20 @@ export default function ContributionCalendar() {
           ))}
         </div>
 
+      {/* 日曆網格區域（ref 讓 useEffect 能 scroll 到最右；保留細捲軸提示左邊還有更早的日期）*/}
+      <div
+        ref={scrollRef}
+        style={{
+          display: 'flex',
+          overflowX: 'auto',
+          paddingBottom: '10px',
+          scrollbarWidth: 'thin',
+          minWidth: 0,
+          flex: 1
+        }}
+      >
         {/* 右側日曆格子與月份標籤 */}
-        <div style={{ display: 'flex', flexDirection: 'column', flexShrink: 0, paddingRight: '20px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', flexShrink: 0, minHeight: '125px' }}>
 
           {/* 月份標籤 */}
           <div style={{ height: '20px', position: 'relative', width: `${weeksArray.length * 15}px` }}>
@@ -256,6 +263,7 @@ export default function ContributionCalendar() {
             ))}
           </div>
         </div>
+      </div>
       </div>
 
       {/* 底部圖例 */}

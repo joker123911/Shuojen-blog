@@ -1,6 +1,6 @@
 ---
 title: '離校'
-tags: ['Fujifilm-XT20','xf1855mmf2.8','台灣','新竹']
+tags: ['fujifilm-xt20','xf18-55mm-f2.8','台灣','新竹']
 ---
 離校的我笑的像個孩子。
 

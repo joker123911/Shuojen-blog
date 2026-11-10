@@ -1,6 +1,6 @@
 ---
 title: '雲林郊遊'
-tags: ['canonAE-1','kodak-Ektar100','台灣','虎尾','台西']
+tags: ['canon-ae1','kodak-ektar100','台灣','虎尾','台西']
 ---
 
 我最喜歡的一卷底片，超漂亮，不過價格不斐。

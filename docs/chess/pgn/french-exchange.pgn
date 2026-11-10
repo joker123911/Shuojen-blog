@@ -1,0 +1,6 @@
+[Event "法蘭西防禦: 交換變化"]
+[Site "https://lichess.org/study/"]
+[Result "*"]
+[ECO "C01"]
+
+1. e4 e6 2. d4 d5 3. exd5 exd5 4. Nf3 Nf6 { 此處一定要注意出動王翼子力，控制 e4 關鍵格 [%csl Ge4][%cal Gf6e4,Gf6d5] } (4... Bd6 5. Bd3 Ne7 { 黑方出象準備後續快速短易位 [%cal Ge7g8,Gd6f4] }) 5. Bd3 *

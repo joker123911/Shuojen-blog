@@ -46,8 +46,11 @@
   --ifm-color-primary-lighter: #9c9c9c;
   --ifm-color-primary-lightest: #b1b1b1;
 
+  /* 等寬字型：英數維持等寬（程式碼、圖案對齊），其中的中文改用粉圓，不掉回系統字型 */
+  --ifm-font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", "jfOpenHuninn", "Huninn", monospace;
+
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.08); /* 程式碼區塊固定深底，所以用淺色疊加 */
 }
 
 /* 淺色模式背景與文字調優（方案 C：一體化平光灰） */
@@ -56,6 +59,20 @@
   --ifm-background-color: #f6f6f7;
   --ifm-background-surface-color: #f6f6f7;
   --ifm-font-color-base: #212124;
+
+  /* 淺色模式主色加深：#888 在淺底上對比僅約 3.3:1，改用 #5f5f5f（約 6:1） */
+  --ifm-color-primary: #5f5f5f;
+  --ifm-color-primary-dark: #565656;
+  --ifm-color-primary-darker: #515151;
+  --ifm-color-primary-darkest: #434343;
+  --ifm-color-primary-light: #6a6a6a;
+  --ifm-color-primary-lighter: #6f6f6f;
+  --ifm-color-primary-lightest: #7e7e7e;
+
+  /* 最淺的兩階灰：Infima 預設是配純白底設計的，emphasis-100（#f5f6f7）在 #f6f6f7 底上
+     幾乎看不見，導致卡片 hover、標籤底色、區塊底色都不明顯。調深這兩階，300 以上維持預設。 */
+  --ifm-color-emphasis-100: #ececee;
+  --ifm-color-emphasis-200: #e3e4e7;
 }
 
 /* 深色模式變數覆寫 */
@@ -70,10 +87,23 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
+/* 表單元件預設不繼承頁面字型（瀏覽器會用系統字型），統一改為繼承粉圓 */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
 /* 強制確保標題套用粉圓體 */
 h1, h2, h3, h4, h5, h6 {
   font-family: "jfOpenHuninn", "Huninn", var(--ifm-font-family-base);
   font-weight: 500;
+}
+
+/* 文章內文行距：粉圓體字面大，1.6 偏擠，內文單獨放寬（不影響導覽列、側欄等 UI） */
+.markdown {
+  line-height: 1.75;
 }
 
 /* 優化：文章內的圖片預設加上圓角 */

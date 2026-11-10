@@ -1,6 +1,6 @@
 ---
 title: '大學台南旅行'
-tags: ['Fujifilm-xt20','xf35mmf2','台灣','台南']
+tags: ['fujifilm-xt20','xf35mm-f2','台灣','台南']
 ---
 
 崙中家族一起台南旅遊。

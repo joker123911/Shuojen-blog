@@ -1,6 +1,6 @@
 ---
 title: '大稻埕約會'
-tags: ['Fujifilm-XT20','xf1855mmf2.8','台灣','台北']
+tags: ['fujifilm-xt20','xf18-55mm-f2.8','台灣','台北']
 ---
 
 跟蝦波逛大稻埕。

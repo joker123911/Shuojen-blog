@@ -161,7 +161,6 @@ export default function RandomPost() {
           alignItems: 'center',
           height: '60vh',
           fontSize: '1.2rem',
-          fontFamily: 'monospace',
           padding: '20px',
           textAlign: 'center',
         }}

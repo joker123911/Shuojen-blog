@@ -1,6 +1,6 @@
 ---
 title: '去程台南'
-tags: ['Panasonic-GM1','20mmf1.7II','台灣','台南']
+tags: ['panasonic-gm1','lumix-20mm-f1.7ii','台灣','台南']
 ---
 年假第一天先跟老爸經過台南來吃個鹹粥還有喝碗阿村牛肉湯。
 

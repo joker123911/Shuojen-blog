@@ -1,6 +1,6 @@
 ---
 title: '淡水半日遊'
-tags: ['Fujifilm-XT20', 'takumar 55mmf1.8', '台灣', '淡水']
+tags: ['fujifilm-xt20', 'takumar-55mm-f1.8', '台灣', '淡水']
 date: 2026-05-16
 rss_date: '2026-05-16T19:37:53+08:00'
 ---

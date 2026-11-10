@@ -1,6 +1,6 @@
 ---
 title: '青草湖'
-tags: ['Fujifilm-XT20','xf1855mmf2.8','台灣','新竹']
+tags: ['fujifilm-xt20','xf18-55mm-f2.8','台灣','新竹']
 ---
 
 與冠宏趴趴走。

@@ -28,7 +28,7 @@ const albumsTheme = {
     whiteSpace: 'nowrap',
   },
   headerSub: {
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+    fontFamily: 'var(--ifm-font-family-base)',
     fontSize: '0.9rem',
     textTransform: 'uppercase',
     letterSpacing: '3px',
@@ -362,7 +362,7 @@ export default function AlbumsPage() {
         /* Load More 按鈕（比照 /photography） */
         .load-more-btn {
           padding: 12px 42px;
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          font-family: inherit;
           text-transform: uppercase;
           letter-spacing: 2px;
           font-size: 0.85rem;

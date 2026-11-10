@@ -1,6 +1,6 @@
 ---
 title: '台中旅行'
-tags: ['canonAE-1','fujicolor-c200','fujicolor-superia- tra400','fujicolor-業務用100','台灣','台中']
+tags: ['canon-ae1','fujicolor-c200','fujicolor-superia-xtra400','fujicolor-業務用100','台灣','台中']
 ---
 
 嘗試三卷富士的膠片，清新淡雅。

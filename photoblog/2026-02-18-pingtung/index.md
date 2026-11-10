@@ -1,6 +1,6 @@
 ---
 title: '屏東約會'
-tags: ['Panasonic-GM1','20mmf1.7II','台灣','屏東']
+tags: ['panasonic-gm1','lumix-20mm-f1.7ii','台灣','屏東']
 ---
 跟蝦波去海生館還有東港吃黑鮪魚。
 

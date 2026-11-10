@@ -1,6 +1,6 @@
 ---
 title: '新月沙灣'
-tags: ['Fujifilm-XT20','xf1855mmf2.8','台灣','新竹']
+tags: ['fujifilm-xt20','xf18-55mm-f2.8','台灣','新竹']
 ---
 
 蘇博士&禹安。

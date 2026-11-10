@@ -75,7 +75,7 @@ python kobo-book-downloader get /儲存路徑/書名.epub 書籍ID
 
 學會這個方法後，我又加了好多本想看的書在購物車了，感謝開發者的努力，你們又再次拯救了我的世界！諷刺的是，在學會如何移除 DRM 之前，即使我想看，但我根本不想買有 DRM 的版本，DRM 到底擋掉的是真的會看盜版的人，還是真的願意消費支持的人？
 
-![img](./017.jpg)
+<img src={require('./017.jpg').default} width="300" alt="img" />
 
 最後關於使用移除 DRM 到底算不算盜版？我是覺得不算，付費後如何使用應該是我的基本權利才對，雖然嚴格說起來，這樣就是盜版沒錯，但在看了 Ivon 的這篇[〈隱私與盜版只有些微之差，看盜版總是受道德良心譴責〉](https://ivonblog.com/posts/privacy-and-piracy/)後，我決定
 

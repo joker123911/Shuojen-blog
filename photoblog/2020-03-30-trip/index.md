@@ -1,6 +1,6 @@
 ---
 title: '台東海景'
-tags: ['Fujifilm-xt20','xf35mmf2','台灣','台東']
+tags: ['fujifilm-xt20','xf35mm-f2','台灣','台東']
 ---
 
 全家東部旅遊。

@@ -1,0 +1,421 @@
+/* 排名清單共用樣式（CSS Module，不會外洩到其他頁面） */
+
+.container {
+  margin-top: 1.5rem;
+}
+
+/* --- 搜尋列：與下方內容一致靠左對齊 --- */
+.searchRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.searchBox {
+  position: relative;
+  flex: 1 1 280px;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 15px;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 10px 40px 10px 44px;
+  border-radius: 999px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  font-family: inherit;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.searchInput:focus {
+  border-color: var(--ifm-color-emphasis-600);
+  box-shadow: 0 0 0 2px var(--ifm-color-emphasis-200);
+}
+
+.searchClear {
+  position: absolute;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--ifm-color-emphasis-600);
+  cursor: pointer;
+}
+
+.searchClear:hover {
+  color: var(--ifm-font-color-base);
+}
+
+.countBadge {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-color-emphasis-100);
+  color: var(--ifm-color-emphasis-800);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- 篩選按鈕 --- */
+.filterBar {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 6px;
+  margin-bottom: 18px;
+  scrollbar-width: none;
+}
+
+.filterBar::-webkit-scrollbar {
+  display: none;
+}
+
+.filterBtn {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: transparent;
+  color: var(--ifm-font-color-base);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.filterBtn:hover {
+  border-color: var(--ifm-color-emphasis-600);
+}
+
+/* 選中：反白（文字色當底），深淺色模式對比都足夠 */
+.filterBtn.active {
+  background: var(--ifm-font-color-base);
+  border-color: var(--ifm-font-color-base);
+  color: var(--ifm-background-color);
+}
+
+/* --- 列表 --- */
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  margin: 0;
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--ifm-card-background-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+/* 可點的卡片：只改框線與底色，不縮放，避免長列表文字模糊與跳動 */
+.item.interactive {
+  cursor: pointer;
+}
+
+.item.interactive:hover {
+  border-color: var(--ifm-color-emphasis-500);
+  background: var(--ifm-color-emphasis-100);
+}
+
+.item:focus-within {
+  border-color: var(--ifm-color-emphasis-600);
+}
+
+.poster {
+  width: 70px;
+  flex-shrink: 0;
+  margin-right: 16px;
+}
+
+.poster img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 70 / 102;
+  object-fit: cover;
+  border-radius: 4px;
+  background: var(--ifm-color-emphasis-200);
+}
+
+.info {
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.badgeRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+/* 名次／等級徽章：固定深底白字，日夜模式皆清晰 */
+.rankBadge {
+  background-color: #313131;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 2px 14px 2px 8px;
+  border-radius: 2px 0 0 2px;
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+  font-variant-numeric: tabular-nums;
+}
+
+.tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* 標籤要疊在撐滿卡片的連結之上，才點得到 */
+.tag {
+  position: relative;
+  z-index: 1;
+  background-color: var(--ifm-color-emphasis-200);
+  color: var(--ifm-font-color-base);
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.tag:hover {
+  background-color: var(--ifm-font-color-base);
+  border-color: var(--ifm-font-color-base);
+  color: var(--ifm-background-color);
+}
+
+.title {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--ifm-heading-color);
+  margin: 0 0 6px;
+}
+
+/* 主要動作撐滿整張卡片 */
+.stretched {
+  color: inherit;
+  text-decoration: none;
+}
+
+.stretched:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+.stretched::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+}
+
+.stretched:focus-visible {
+  outline: none;
+}
+
+.stretched:focus-visible::after {
+  outline: 2px solid var(--ifm-color-emphasis-700);
+  outline-offset: 2px;
+}
+
+.titleBtn {
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.note {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ifm-font-color-base);
+  opacity: 0.8;
+  margin: 0 0 8px;
+}
+
+.note:last-child {
+  margin-bottom: 0;
+}
+
+.score {
+  font-weight: 700;
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.star {
+  color: #f5c518;
+}
+
+[data-theme='light'] .star {
+  color: #c79100;
+}
+
+.noResults {
+  text-align: center;
+  padding: 40px;
+  color: var(--ifm-color-emphasis-600);
+  font-size: 1.1rem;
+}
+
+/* --- 載入更多 --- */
+.loadMore {
+  display: block;
+  margin: 2rem auto;
+  padding: 12px 40px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  background: transparent;
+  border: 1px solid var(--ifm-color-emphasis-400);
+  color: var(--ifm-font-color-base);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.loadMore:hover {
+  background: var(--ifm-color-emphasis-200);
+  border-color: var(--ifm-color-emphasis-600);
+}
+
+/* --- 海報燈箱 --- */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  padding: 20px;
+}
+
+.modalContent {
+  background: var(--ifm-card-background-color, var(--ifm-background-color));
+  border-radius: 12px;
+  width: 100%;
+  max-width: 450px;
+  max-height: 90vh;
+  padding: 1.25rem;
+  animation: zoomIn 0.2s ease-out;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.modalTitle {
+  font-weight: 700;
+  color: var(--ifm-font-color-base);
+  font-size: 1.1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 85%;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--ifm-font-color-base);
+}
+
+.posterFrame {
+  position: relative;
+  width: 100%;
+  min-height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--ifm-color-emphasis-100);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.posterImg {
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+  border-radius: 8px;
+  display: block;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.posterFrame.loaded {
+  background: transparent;
+}
+
+.posterFrame.loaded .posterImg {
+  opacity: 1;
+}
+
+/* --- 手機版 --- */
+@media (max-width: 768px) {
+  .item { padding: 12px; }
+  .poster { width: 55px; margin-right: 12px; }
+  .title { font-size: 1.05rem; }
+  .modalOverlay { padding: 10px; }
+  .modalContent { padding: 1rem; max-width: 95%; }
+  .modalTitle { font-size: 1rem; }
+  .posterImg { max-height: 65vh; }
+}
+
+@media (max-width: 600px) {
+  .searchBox { max-width: none; }
+}

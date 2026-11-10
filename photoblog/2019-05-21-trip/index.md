@@ -1,6 +1,6 @@
 ---
 title: '第一卷底片'
-tags: ['canonAE-1','kodakcolorplus200','台灣','高雄']
+tags: ['canon-ae1','kodak-colorplus200','台灣','高雄']
 ---
 
 第一卷拍經典的 colorplus200，膠片的風味好復古好棒。

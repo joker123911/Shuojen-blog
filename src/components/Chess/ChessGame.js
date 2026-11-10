@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { Chess } from "chess.js";
-import "cm-chessboard/assets/chessboard.css";
+import ChessgroundBoard from "./ChessgroundBoard";
 import precomputedEvals from "@site/src/data/chessEvals.json";
 
 const START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -338,15 +338,13 @@ function EvalBar({ evaluation, orientation = "w" }) {
 }
 
 function ChessGameLogic({ pgn, orientation = "w", showEval = true }) {
-  const boardRef = useRef(null);
-  const chessboardInstance = useRef(null);
   const scrollRef = useRef(null);
 
   const [moveIndex, setMoveIndex] = useState(0);
   const [history, setHistory] = useState([]);
+  const [lastMoves, setLastMoves] = useState([]);
   const [evals, setEvals] = useState([]);
   const [moves, setMoves] = useState([]);
-  const [isBoardReady, setIsBoardReady] = useState(false);
 
   // 1. 解析 PGN 與預先算好的 [%eval] 分數
   useEffect(() => {
@@ -357,6 +355,8 @@ function ChessGameLogic({ pgn, orientation = "w", showEval = true }) {
       const game = new Chess(startFen);
 
       const fenList = [startFen];
+      // 每個局面對應的上一步 [from, to]，供棋盤高亮
+      const lastMoveList = [undefined];
       // 起始局面同樣讀取預先計算值（自訂 FEN 的殘局 / 題目才不會固定顯示 +0.2）
       const evalList = [evaluateGameLocal(game)];
       const simpleMoveList = [];
@@ -394,6 +394,7 @@ function ChessGameLogic({ pgn, orientation = "w", showEval = true }) {
           const moveResult = game.move(san);
           if (moveResult) {
             fenList.push(game.fen());
+            lastMoveList.push([moveResult.from, moveResult.to]);
             simpleMoveList.push(moveResult.san);
             evalList.push(evaluateGameLocal(game));
           }
@@ -412,6 +413,7 @@ function ChessGameLogic({ pgn, orientation = "w", showEval = true }) {
       }
 
       setHistory(fenList);
+      setLastMoves(lastMoveList);
       setEvals(evalList);
       setMoves(simpleMoveList);
       setMoveIndex(0);
@@ -420,87 +422,15 @@ function ChessGameLogic({ pgn, orientation = "w", showEval = true }) {
     }
   }, [pgn]);
 
-  // 2. 初始化棋盤 (修正熱更新導致的 invokeExtensionPoints 錯誤)
+  // 2. 著法列捲動到目前這一步
   useEffect(() => {
-    let isMounted = true;
-
-    const initBoard = async () => {
-      try {
-        const { Chessboard, FEN } = await import("cm-chessboard");
-
-        if (!isMounted || !boardRef.current) return;
-
-        // 初始化前先清空容器，防止 Docusaurus HMR 或 React StrictMode 導致重複掛載
-        boardRef.current.innerHTML = '';
-
-        const board = new Chessboard(boardRef.current, {
-          position: history[moveIndex] || FEN.start,
-          orientation: orientation,
-          assetsUrl: "https://cdn.jsdelivr.net/npm/cm-chessboard@8/assets/",
-          style: { animationDuration: 300 },
-          responsive: true,
-        });
-
-        // 避免 HMR (熱更新) 或組件卸載時，ResizeObserver 的 setTimeout 延遲執行 handleResize 導致 invokeExtensionPoints 報錯
-        const originalHandleResize = board.view.handleResize;
-        board.view.handleResize = function (...args) {
-          if (board.state) {
-            originalHandleResize.apply(board.view, args);
-          }
-        };
-
-        if (isMounted) {
-          chessboardInstance.current = board;
-          setIsBoardReady(true);
-        } else {
-          // 如果異步載入完成時元件已經卸載，立即銷毀以清理殘留的 resize 監聽器
-          board.destroy();
-        }
-      } catch (err) {
-        console.error("Chessboard 初始化失敗:", err);
-      }
-    };
-
-    initBoard();
-
-    // 清理函式
-    return () => {
-      isMounted = false;
-      setIsBoardReady(false);
-      
-      if (chessboardInstance.current) {
-        // 【關鍵修正】必須同步執行 destroy()，絕對不能包在 setTimeout 裡面。
-        // 這樣才能確保在 DOM 被卸載前，立刻解除 resize 事件綁定，避免觸發 invokeExtensionPoints 錯誤。
-        try {
-          chessboardInstance.current.destroy();
-        } catch (e) {
-          console.warn("清理棋盤實例時發生的警告:", e);
-        }
-        chessboardInstance.current = null;
-      }
-    };
-  }, [orientation]);
-
-  // 3. 同步棋盤位置 (加入安全防護)
-  useEffect(() => {
-    const activeFen = history[moveIndex];
-    if (isBoardReady && chessboardInstance.current && activeFen) {
-      try {
-        if (chessboardInstance.current.view) {
-          chessboardInstance.current.setPosition(activeFen, true);
-        }
-      } catch (e) {
-        console.warn("setPosition 失敗，可能正處於組件切換中");
-      }
-    }
-
     if (scrollRef.current) {
       const activeElement = scrollRef.current.querySelector('.active-move');
       if (activeElement) {
         activeElement.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       }
     }
-  }, [moveIndex, history, isBoardReady]);
+  }, [moveIndex, history]);
 
   const handlePrev = () => setMoveIndex((p) => Math.max(p - 1, 0));
   const handleNext = () => setMoveIndex((p) => Math.min(p + 1, history.length - 1));
@@ -521,7 +451,7 @@ function ChessGameLogic({ pgn, orientation = "w", showEval = true }) {
   const currentEval = evals[moveIndex] || { cp: 20, mate: null, winner: null };
 
   return (
-    <div style={{ maxWidth: showEval ? 454 : 420, margin: "2rem auto", fontFamily: "sans-serif" }}>
+    <div style={{ maxWidth: showEval ? 454 : 420, margin: "2rem auto", fontFamily: "var(--ifm-font-family-base)" }}>
       <div
         style={{
           display: "flex",
@@ -533,16 +463,13 @@ function ChessGameLogic({ pgn, orientation = "w", showEval = true }) {
         {showEval && (
           <EvalBar evaluation={currentEval} orientation={orientation} />
         )}
-        <div
-          ref={boardRef}
-          style={{
-            flex: 1,
-            minWidth: 0,
-            width: "100%",
-            aspectRatio: "1/1",
-            overflow: "hidden"
-          }}
-        />
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <ChessgroundBoard
+            fen={history[moveIndex]}
+            orientation={orientation}
+            lastMove={lastMoves[moveIndex]}
+          />
+        </div>
       </div>
 
       <div style={{ margin: "10px 0", display: "flex", justifyContent: "center", gap: "15px", alignItems: "center" }}>

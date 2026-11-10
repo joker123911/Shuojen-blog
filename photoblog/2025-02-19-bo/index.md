@@ -1,6 +1,6 @@
 ---
 title: '蝦波'
-tags: ['Fujifilm-XT20','xf1855mmf2.8','韓國','首爾']
+tags: ['fujifilm-xt20','xf18-55mm-f2.8','韓國','首爾']
 ---
 
 首爾的變裝蝦波。

@@ -326,7 +326,7 @@ function runDataPreparation() {
   let totalPhotos = 0;
   const allPhotos = [];
 
-  // Also read photoblog items for gen-photos structure
+  // Also read photoblog items for photosData.json
   if (fs.existsSync(PHOTOBLOG_DIR)) {
     const items = fs.readdirSync(PHOTOBLOG_DIR);
     items.forEach((item) => {
@@ -379,6 +379,15 @@ function runDataPreparation() {
 
           totalPhotos += currentPostImages.size;
 
+          // 給攝影集燈箱顯示的日期與標籤（相機、底片、地點）
+          const slugDate = (rawSlug.match(/^(\d{4}-\d{2}-\d{2})/) || [])[1] || '';
+          const photoDate = data.date instanceof Date
+            ? data.date.toISOString().slice(0, 10)
+            : (data.date ? String(data.date).slice(0, 10) : slugDate);
+          const photoTags = Array.isArray(data.tags)
+            ? data.tags.map((t) => (typeof t === 'string' ? t : t?.label)).filter(Boolean)
+            : [];
+
           currentPostImages.forEach((imgSrc) => {
             const cleanName = path.basename(imgSrc);
             const webSrc = `${rawSlug}/${cleanName}`;
@@ -386,6 +395,8 @@ function runDataPreparation() {
               src: webSrc,
               link: link,
               title: data.title || rawSlug,
+              date: photoDate,
+              tags: photoTags,
             });
           });
 
@@ -510,6 +521,11 @@ function runDataPreparation() {
       }
     });
     console.log('\n' + '='.repeat(75) + '\n');
+    // --strict（push 時使用）：有格式異常就以失敗結束，擋下推送；資料檔仍照常寫出
+    if (process.argv.includes('--strict')) {
+      console.error('❌ [prepare-data --strict] 文章格式有異常，已中止。請修正上列檔案後再推送。');
+      process.exitCode = 1;
+    }
   } else {
     console.log(`⚡ [prepare-data] 資料準備完成，全站格式檢查無誤，耗時 ${elapsed}ms！`);
   }

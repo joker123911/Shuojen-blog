@@ -120,6 +120,43 @@ const config = {
   ],
 
   plugins: [
+    // 標籤頁要一次列出該標籤的「全部」文章標題（不受 postsPerPage 分頁限制），
+    // 這裡把 blog 的文章整理成精簡索引放進 global data，供 src/theme/BlogTagsPostsPage 使用。
+    function tagPostIndexPlugin() {
+      return {
+        name: 'tag-post-index',
+        async allContentLoaded({allContent, actions}) {
+          // 收集所有 blog 實例（default 與 photoblog）的文章；兩者的標籤 permalink 不會重複
+          const blogPosts = Object.values(
+            allContent['docusaurus-plugin-content-blog'] ?? {},
+          ).flatMap((/** @type {any} */ c) => c?.blogPosts ?? []);
+          /** @type {[string, string, string][]} [title, permalink, date] */
+          const posts = [];
+          /** @type {Record<string, number[]>} tag permalink → posts 的索引 */
+          const tags = {};
+          for (const {metadata} of blogPosts) {
+            if (metadata.unlisted) continue;
+            const idx = posts.length;
+            posts.push([metadata.title, metadata.permalink, new Date(metadata.date).toISOString()]);
+            for (const tag of metadata.tags) {
+              (tags[tag.permalink] ??= []).push(idx);
+            }
+          }
+          actions.setGlobalData({posts, tags});
+        },
+      };
+    },
+    // 讓 MDX 可以直接 import Lichess 匯出的 .pgn 檔（以純文字字串載入）
+    function pgnLoaderPlugin() {
+      return {
+        name: 'pgn-loader',
+        configureWebpack() {
+          return {
+            module: { rules: [{ test: /\.pgn$/i, type: 'asset/source' }] },
+          };
+        },
+      };
+    },
     [
       '@docusaurus/plugin-content-blog',
       {
@@ -301,7 +338,7 @@ const config = {
         ],
       },
       footer: {
-        style: 'dark',
+        style: 'light',
         links: [
           {
             title: '站內連結',
@@ -349,7 +386,7 @@ const config = {
         `,
       },
       prism: {
-        theme: prismThemes.github,
+        theme: prismThemes.dracula,
         darkTheme: prismThemes.dracula,
       },
     }),

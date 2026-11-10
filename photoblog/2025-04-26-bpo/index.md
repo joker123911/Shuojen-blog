@@ -1,6 +1,6 @@
 ---
 title: '嗶寶小貓'
-tags: ['Panasonic-GM1','20mmf1.7II','台灣','台北']
+tags: ['panasonic-gm1','lumix-20mm-f1.7ii','台灣','台北']
 ---
 
 幫忙餵小逼寶跟剷大便。

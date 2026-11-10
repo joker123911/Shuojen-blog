@@ -1,0 +1,36 @@
+.postList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+}
+
+.postItem {
+  display: flex;
+  align-items: baseline;
+  gap: 1.2rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.postDate {
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-600);
+  font-variant-numeric: tabular-nums;
+}
+
+.postTitle {
+  color: var(--ifm-font-color-base);
+  font-size: 1.05rem;
+}
+
+.postTitle:hover {
+  color: var(--ifm-color-primary);
+}
+
+@media (max-width: 600px) {
+  .postItem {
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+}

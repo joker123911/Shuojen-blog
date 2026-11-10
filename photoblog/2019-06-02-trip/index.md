@@ -1,6 +1,6 @@
 ---
 title: '斗六華山'
-tags: ['canonAE-1','fujicolor-c200','台灣','斗六']
+tags: ['canon-ae1','fujicolor-c200','台灣','斗六']
 ---
 
 跟咩咩、明達、雅夫騎車出去晃。

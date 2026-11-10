@@ -1,6 +1,6 @@
 ---
 title: '在 2026 用手動老鏡頭'
-tags: ['Panasonic-GM1','takumar 55mmf1.8','台灣','台北']
+tags: ['panasonic-gm1','takumar-55mm-f1.8','台灣','台北']
 ---
 
 今天入手了一顆經典手動老鏡，Pentax super-takumar 55mm f1.8。

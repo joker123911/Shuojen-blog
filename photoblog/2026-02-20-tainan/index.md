@@ -1,6 +1,6 @@
 ---
 title: '回程台南'
-tags: ['Panasonic-GM1','20mmf1.7II','台灣','台南']
+tags: ['panasonic-gm1','lumix-20mm-f1.7ii','台灣','台南']
 ---
 年假快結束了，跟老爸和蝦波開車回台北，經過台南來喝碗牛肉湯吧！
 

@@ -15,7 +15,7 @@ import RamenTier from '@site/src/components/RamenTier';
 
 這是我個人的拉麵店 Tier 清單！評價為 100% 個人主觀意見。
 
-:::info[評分標準]
+:::note[評分標準]
 好吃、價錢合理、最好不用排隊！
 :::
 

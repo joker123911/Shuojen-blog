@@ -1,6 +1,6 @@
 ---
 title: 'Xpark'
-tags: ['Fujifilm-XT20','xf1855mmf2.8','台灣','桃園']
+tags: ['fujifilm-xt20','xf18-55mm-f2.8','台灣','桃園']
 ---
 
  

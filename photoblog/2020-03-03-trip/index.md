@@ -1,6 +1,6 @@
 ---
 title: '古坑探險'
-tags: ['caono-AE1','fujicolor-pro400h','台灣','雲林','古坑']
+tags: ['canon-ae1','fujicolor-pro400h','台灣','雲林','古坑']
 ---
 
 野狼降檔到一檔還爬不上坡，有點尷尬。

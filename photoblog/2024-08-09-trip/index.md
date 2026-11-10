@@ -1,6 +1,6 @@
 ---
 title: '水族館約會'
-tags: ['canonAE-1','fujicolor-c200','桃園','Xpark']
+tags: ['fujifilm-xt20','xf18-55mm-f2.8','桃園','Xpark']
 ---
 
 跟蝦波去水族館玩。

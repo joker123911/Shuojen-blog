@@ -1,6 +1,6 @@
 ---
 title: '蔡依林 PLEASURE 演唱會'
-tags: ['Panasonic-GM1','35-100 F4.0-5.6','台灣','台北']
+tags: ['panasonic-gm1','lumix-35-100mm-f4-5.6','台灣','台北']
 ---
  
 新年第一天跟蝦波看演唱會，精采好看。

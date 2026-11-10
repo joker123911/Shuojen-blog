@@ -38,7 +38,34 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   const [replyingTo, setReplyingTo] = useState(null); 
   const [editingId, setEditingId] = useState(null);
   const [editContent, setEditContent] = useState('');     
-  const [expandedComments, setExpandedComments] = useState({}); 
+  const [expandedComments, setExpandedComments] = useState({});
+  const [pendingDeleteId, setPendingDeleteId] = useState(null);
+
+  // --- 站內提示訊息（取代 alert）：scope 決定顯示位置 'form' | 'reply' | 'list' ---
+  const [notice, setNotice] = useState(null);
+  const noticeTimer = useRef(null);
+  const showNotice = (scope, type, text) => {
+    clearTimeout(noticeTimer.current);
+    setNotice({ scope, type, text });
+    noticeTimer.current = setTimeout(() => setNotice(null), type === 'error' ? 6000 : 4000);
+  };
+  useEffect(() => () => clearTimeout(noticeTimer.current), []);
+  const renderNotice = (scope) =>
+    notice && notice.scope === scope ? (
+      <p
+        className={`${styles.notice} ${notice.type === 'error' ? styles.noticeError : styles.noticeSuccess}`}
+        role={notice.type === 'error' ? 'alert' : 'status'}
+      >
+        {notice.text}
+      </p>
+    ) : null;
+
+  // 刪除確認：第一次點擊進入確認狀態，數秒內沒確認就自動取消
+  useEffect(() => {
+    if (pendingDeleteId === null) return undefined;
+    const t = setTimeout(() => setPendingDeleteId(null), 5000);
+    return () => clearTimeout(t);
+  }, [pendingDeleteId]);
 
   useEffect(() => {
     const savedKey = localStorage.getItem('guestbook_admin_key');
@@ -62,12 +89,12 @@ export default function Guestbook({ readOnly = false, postSlug }) {
               if (result.success) {
                 localStorage.setItem('guestbook_admin_key', key);
                 setAdminKey(key);
-                alert('身分驗證成功！歡迎回來，shuojen 🛡️');
+                showNotice('form', 'success', '身分驗證成功！歡迎回來，shuojen 🛡️');
               } else {
-                alert('你是不是想刪我留言 (⁰⊖⁰)');
+                showNotice('form', 'error', '你是不是想刪我留言 (⁰⊖⁰)');
               }
             } catch (err) {
-              alert('連線失敗，請檢查網路或 Worker 狀態。');
+              showNotice('form', 'error', '連線失敗，請檢查網路或 Worker 狀態。');
             }
           }
         }, 50);
@@ -125,7 +152,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
         const safeUrl = getSafeHttpUrl(match[2]);
         if (safeUrl) {
           return (
-            <a key={index} href={safeUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--ifm-color-primary)', textDecoration: 'underline' }}>
+            <a key={index} href={safeUrl} target="_blank" rel="noopener noreferrer" className={styles.contentLink}>
               {match[1]}
             </a>
           );
@@ -141,7 +168,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
             if (!subPart) return null;
             
             if (subPart.startsWith('`') && subPart.endsWith('`')) {
-              return <code key={subIndex} style={{ backgroundColor: 'var(--ifm-color-emphasis-200)', padding: '2px 4px', borderRadius: '4px' }}>{subPart.slice(1, -1)}</code>;
+              return <code key={subIndex} className={styles.inlineCode}>{subPart.slice(1, -1)}</code>;
             }
             if (subPart.startsWith('**') && subPart.endsWith('**')) {
               return <b key={subIndex}>{subPart.slice(2, -2)}</b>;
@@ -208,18 +235,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     if (!text) return text;
 
     if (depth === 0 && isAsciiArt(text)) {
-      return (
-        <div style={{ 
-          fontFamily: '"Cascadia Code", Consolas, "Courier New", monospace', 
-          whiteSpace: 'pre', 
-          overflowX: 'auto', 
-          lineHeight: '1.25',
-          fontSize: '0.9em',
-          padding: '4px 0'
-        }}>
-          {text}
-        </div>
-      );
+      return <div className={styles.asciiArt}>{text}</div>;
     }
 
     if (depth > 5) {
@@ -248,9 +264,6 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     });
   };
   
-  const getCommentClass = () => {
-    return styles.commentBody;
-  };
 
   const formatDate = (dateStr) => {
     if (!dateStr) return '';
@@ -409,7 +422,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     e.preventDefault();
     if (!formData.name.trim() || !formData.content.trim()) return;
     if (!adminKey && !turnstileToken) {
-      alert('請先完成人機安全驗證！');
+      showNotice('form', 'error', '請先完成人機安全驗證！');
       return;
     }
     setLoading(true);
@@ -440,7 +453,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       if (!res.ok || resData.error) {
         throw new Error(resData.error || '送出失敗');
       }
-      alert('留言已送出！');
+      showNotice('form', 'success', '留言已送出，謝謝你的留言！');
       setFormData({ name: '', content: '', website: '' });
       setTurnstileToken('');
       if (turnstileRef.current) turnstileRef.current.reset();
@@ -448,7 +461,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       setTimeout(fetchComments, 500); 
     } catch (error) {
       console.error("送出錯誤:", error);
-      alert(error.message || '送出失敗');
+      showNotice('form', 'error', error.message || '送出失敗，請稍後再試。');
       setTurnstileToken('');
       if (turnstileRef.current) turnstileRef.current.reset();
     } finally {
@@ -462,7 +475,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     if (!adminKey && !replyData.name.trim()) return;
     if (!replyData.content.trim()) return;
     if (!adminKey && !replyTurnstileToken) {
-      alert('請先完成人機安全驗證！');
+      showNotice('reply', 'error', '請先完成人機安全驗證！');
       return;
     }
     setLoading(true);
@@ -493,7 +506,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       if (!res.ok || resData.error) {
         throw new Error(resData.error || '回覆失敗');
       }
-      alert('回覆已送出！');
+      showNotice('list', 'success', '回覆已送出！');
       
       setExpandedComments(prev => ({ ...prev, [parentComment.id]: true }));
       
@@ -505,7 +518,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       setTimeout(fetchComments, 500);
     } catch (error) {
       console.error("回覆錯誤:", error);
-      alert(error.message || '回覆失敗');
+      showNotice('reply', 'error', error.message || '回覆失敗，請稍後再試。');
       setReplyTurnstileToken('');
       if (replyTurnstileRef.current) replyTurnstileRef.current.reset();
     } finally {
@@ -552,102 +565,108 @@ export default function Guestbook({ readOnly = false, postSlug }) {
         setEditingId(null); 
         setEditContent('');
       } else {
-        alert('修改失敗：金鑰錯誤或權限不足');
+        showNotice('list', 'error', '修改失敗：金鑰錯誤或權限不足');
       }
     } catch (error) {
-      alert('連線失敗');
+      showNotice('list', 'error', '連線失敗，請稍後再試。');
     }
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('🗑️ 確定要徹底刪除這則留言嗎？無法復原喔！')) return;
+    // 兩段式確認：第一次點擊只進入確認狀態
+    if (pendingDeleteId !== id) {
+      setPendingDeleteId(id);
+      return;
+    }
+    setPendingDeleteId(null);
     try {
       const res = await fetch(`${WORKER_URL}?id=${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': adminKey }
       });
-      if (res.ok) fetchComments();
-      else alert('刪除失敗：金鑰錯誤或權限不足');
+      if (res.ok) {
+        fetchComments();
+        showNotice('list', 'success', '留言已刪除。');
+      } else {
+        showNotice('list', 'error', '刪除失敗：金鑰錯誤或權限不足');
+      }
     } catch (error) {
-      alert('連線失敗');
+      showNotice('list', 'error', '連線失敗，請稍後再試。');
     }
   };
 
   // --- 遞迴渲染留言組件（最多至兩層） ---
   const renderCommentNode = (c, isChild = false) => {
     const isExpanded = expandedComments[c.id];
+    const safeUrl = getSafeHttpUrl(c.website);
+    const isPendingDelete = pendingDeleteId === c.id;
 
     return (
-      <div key={c.id} className={styles.commentNodeWrapper}>
+      <div key={c.id} className={isChild ? styles.childNode : styles.threadNode}>
         <div className={styles.commentItemInner}>
           <div className={styles.commentHeader}>
             <span className={styles.commentName}>
-              {(() => {
-                const safeUrl = getSafeHttpUrl(c.website);
-                return safeUrl ? (
-                  <a href={safeUrl} target="_blank" rel="noopener noreferrer">{c.name}</a>
-                ) : (
-                  c.name
-                );
-              })()}
+              {safeUrl ? (
+                <a href={safeUrl} target="_blank" rel="noopener noreferrer">{c.name}</a>
+              ) : (
+                c.name
+              )}
               {c.isAdmin === 1 && <span className={styles.masterBadge}>站長</span>}
-              {activeTab === 'all_posts' && isGuestbookPage && (
-                 <Link 
-                   to={c.slug} 
-                   className={styles.slugTag} 
-                   style={{ textDecoration: 'none' }}
-                 >
-                   @{c.title || c.slug.replace('/blog/', '')}
-                 </Link>
+              {/* 回覆與主留言同一篇文章，只在主留言顯示文章標籤 */}
+              {activeTab === 'all_posts' && isGuestbookPage && !isChild && (
+                <Link to={c.slug} className={styles.slugTag}>
+                  @{c.title || c.slug.replace('/blog/', '')}
+                </Link>
               )}
             </span>
-            <span className={styles.commentTime}>
-              {formatDate(c.time)}
-              
-              <span style={{ marginLeft: '12px' }}>
-                {!readOnly && (
-                  <button onClick={() => startReply(c.id)} style={{ cursor: 'pointer', background: 'none', border: 'none', color: '#0070f3', padding: '0 4px', fontSize: '0.9em' }}>
-                    💬回覆
+            <span className={styles.commentTime}>{formatDate(c.time)}</span>
+
+            {/* 操作按鈕：平常較淡，滑鼠移到留言上才加深 */}
+            <span className={styles.actions}>
+              {!readOnly && (
+                <button className={styles.actionBtn} onClick={() => startReply(c.id)}>
+                  回覆
+                </button>
+              )}
+              {adminKey && (
+                <>
+                  <button className={styles.actionBtn} onClick={() => startEdit(c.id, c.content)}>
+                    編輯
                   </button>
-                )}
-                {adminKey && (
-                  <>
-                    <button onClick={() => startEdit(c.id, c.content)} style={{ cursor: 'pointer', background: 'none', border: 'none', color: '#0070f3', padding: '0 4px', fontSize: '0.9em' }}>
-                      ✏️編輯
+                  <button
+                    className={`${styles.actionBtn} ${styles.actionDanger}`}
+                    onClick={() => handleDelete(c.id)}
+                  >
+                    {isPendingDelete ? '確定刪除？' : '刪除'}
+                  </button>
+                  {isPendingDelete && (
+                    <button className={styles.actionBtn} onClick={() => setPendingDeleteId(null)}>
+                      取消
                     </button>
-                    <button onClick={() => handleDelete(c.id)} style={{ cursor: 'pointer', background: 'none', border: 'none', color: '#ff4081', padding: '0 4px', fontSize: '0.9em' }}>
-                      🗑️刪除
-                    </button>
-                  </>
-                )}
-              </span>
+                  )}
+                </>
+              )}
             </span>
           </div>
 
           {editingId === c.id ? (
-            <div style={{ marginTop: '10px' }}>
+            <div className={styles.editBox}>
               <textarea
                 value={editContent}
                 onChange={(e) => setEditContent(e.target.value)}
                 rows={4}
-                style={{ 
-                  width: '100%', padding: '8px', borderRadius: '4px',
-                  background: 'var(--ifm-background-color)', color: 'var(--ifm-font-color-base)',
-                  border: '1px solid var(--ifm-color-emphasis-400)', fontFamily: 'inherit', resize: 'vertical'
-                }}
+                className={styles.editTextarea}
               />
-              <div style={{ textAlign: 'right', marginTop: '8px' }}>
-                <button onClick={cancelEdit} style={{ marginRight: '8px', padding: '4px 12px', cursor: 'pointer', borderRadius: '4px', border: '1px solid var(--ifm-color-emphasis-500)', background: 'transparent', color: 'var(--ifm-font-color-base)' }}>取消</button>
-                <button onClick={() => submitEdit(c.id)} style={{ padding: '4px 12px', cursor: 'pointer', borderRadius: '4px', border: 'none', background: 'var(--ifm-color-primary)', color: '#fff' }}>儲存修改</button>
+              <div className={styles.buttonRow}>
+                <button type="button" onClick={cancelEdit} className={styles.ghostBtn}>取消</button>
+                <button type="button" onClick={() => submitEdit(c.id)} className={styles.primaryBtnSmall}>
+                  儲存修改
+                </button>
               </div>
             </div>
           ) : (
-            <div className={getCommentClass()}>
-              {c.replyToName && (
-                <span style={{ color: 'var(--ifm-color-primary)', fontWeight: '700', marginRight: '8px', userSelect: 'none' }}>
-                  @{c.replyToName}
-                </span>
-              )}
+            <div className={styles.commentBody}>
+              {c.replyToName && <span className={styles.replyToName}>@{c.replyToName}</span>}
               {renderMarkdown(c.content)}
             </div>
           )}
@@ -655,8 +674,8 @@ export default function Guestbook({ readOnly = false, postSlug }) {
           {/* 內嵌回覆表單 */}
           {replyingTo === c.id && (
             <div className={styles.replyFormContainer}>
-              <div style={{ marginBottom: '8px', fontSize: '0.9em', fontWeight: 'bold', color: 'var(--ifm-color-primary)' }}>
-                回覆 @{c.name} {adminKey && '🛡️ (將以站長身分發言)'}
+              <div className={styles.replyFormTitle}>
+                回覆 @{c.name} {adminKey && '🛡️（將以站長身分發言）'}
               </div>
               <form onSubmit={(e) => handleReplySubmit(e, c)} className={styles.commentForm}>
                 {!adminKey && (
@@ -671,47 +690,25 @@ export default function Guestbook({ readOnly = false, postSlug }) {
                     />
                   </div>
                 )}
-                <div className={styles.formTabHeader}>
-                  <button
-                    type="button"
-                    className={`${styles.formTabBtn} ${replyTab === 'write' ? styles.formTabBtnActive : ''}`}
-                    onClick={() => setReplyTab('write')}
-                  >
-                    ✏️ 編輯
-                  </button>
-                  <button
-                    type="button"
-                    className={`${styles.formTabBtn} ${replyTab === 'preview' ? styles.formTabBtnActive : ''}`}
-                    onClick={() => setReplyTab('preview')}
-                  >
-                    👁️ 預覽
-                  </button>
-                </div>
-                <textarea
-                  placeholder="輸入回覆內容（必填）支援 Markdown" required
-                  value={replyData.content} onChange={e => setReplyData({...replyData, content: e.target.value})}
-                  rows={3}
-                  style={{ display: replyTab === 'write' ? 'block' : 'none' }}
-                />
-                {replyTab === 'preview' && (
-                  <div className={styles.previewContainer}>
-                    {replyData.content.trim() ? (
-                      renderMarkdown(replyData.content)
-                    ) : (
-                      <span className={styles.previewPlaceholder}>（尚無輸入內容，請在編輯區輸入 Markdown 文字）</span>
-                    )}
-                  </div>
-                )}
+                {renderEditor({
+                  tab: replyTab,
+                  setTab: setReplyTab,
+                  value: replyData.content,
+                  onChange: (v) => setReplyData({ ...replyData, content: v }),
+                  placeholder: '輸入回覆內容（必填）',
+                  rows: 3,
+                })}
                 {!adminKey && (
-                  <TurnstileWidget 
+                  <TurnstileWidget
                     ref={replyTurnstileRef}
                     onVerify={(token) => setReplyTurnstileToken(token)}
                     onExpire={() => setReplyTurnstileToken('')}
                   />
                 )}
-                <div style={{ textAlign: 'right' }}>
-                  <button type="button" onClick={cancelReply} style={{ marginRight: '8px', padding: '6px 16px', cursor: 'pointer', borderRadius: '4px', border: '1px solid var(--ifm-color-emphasis-500)', background: 'transparent', color: 'var(--ifm-font-color-base)' }}>取消</button>
-                  <button type="submit" className={styles.submitBtn} style={{ display: 'inline-flex', padding: '6px 20px' }} disabled={loading}>
+                {renderNotice('reply')}
+                <div className={styles.buttonRow}>
+                  <button type="button" onClick={cancelReply} className={styles.ghostBtn}>取消</button>
+                  <button type="submit" className={styles.primaryBtnSmall} disabled={loading}>
                     {loading ? '傳送中...' : '送出回覆'}
                   </button>
                 </div>
@@ -724,14 +721,19 @@ export default function Guestbook({ readOnly = false, postSlug }) {
         {!isChild && c.children && c.children.length > 0 && (
           <>
             {c.children.length > 1 && (
-              <div className={styles.toggleRepliesContainer} onClick={() => toggleReplies(c.id)}>
+              <button
+                type="button"
+                className={styles.toggleRepliesContainer}
+                onClick={() => toggleReplies(c.id)}
+                aria-expanded={Boolean(isExpanded)}
+              >
                 <span className={styles.toggleRepliesLine}></span>
                 <span className={styles.toggleRepliesText}>
                   {isExpanded ? '隱藏回覆' : `查看回覆 (${c.children.length} 則)`}
                 </span>
-              </div>
+              </button>
             )}
-            
+
             {(c.children.length === 1 || isExpanded) && (
               <div className={styles.commentChildren}>
                 {c.children.map(child => renderCommentNode(child, true))}
@@ -743,11 +745,61 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     );
   };
 
+  // --- 編輯／預覽切換 + 輸入框 + Markdown 語法提示（主表單與回覆表單共用） ---
+  const renderEditor = ({ tab, setTab, value, onChange, placeholder, rows }) => (
+    <div className={styles.editor}>
+      <div className={styles.formTabHeader}>
+        <button
+          type="button"
+          className={`${styles.formTabBtn} ${tab === 'write' ? styles.formTabBtnActive : ''}`}
+          onClick={() => setTab('write')}
+        >
+          編輯
+        </button>
+        <button
+          type="button"
+          className={`${styles.formTabBtn} ${tab === 'preview' ? styles.formTabBtnActive : ''}`}
+          onClick={() => setTab('preview')}
+        >
+          預覽
+        </button>
+      </div>
+      <textarea
+        placeholder={placeholder}
+        required
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        rows={rows}
+        hidden={tab !== 'write'}
+      />
+      {tab === 'preview' && (
+        <div className={styles.previewContainer}>
+          {value.trim() ? (
+            renderMarkdown(value)
+          ) : (
+            <span className={styles.previewPlaceholder}>（尚無輸入內容，請在編輯區輸入文字）</span>
+          )}
+        </div>
+      )}
+      <details className={styles.markdownHelp}>
+        <summary>支援 Markdown 語法</summary>
+        <ul>
+          <li>超連結：<code>[顯示的文字](網址)</code></li>
+          <li>內嵌程式碼：<code>{'`code`'}</code></li>
+          <li>粗體：<code>**bold**</code></li>
+          <li>斜體：<code>*italic*</code></li>
+          <li>刪除線：<code>~~strike~~</code></li>
+          <li>引言：<code>&gt; 引用的文字</code></li>
+        </ul>
+      </details>
+    </div>
+  );
+
   return (
     <div className={styles.guestbookContainer}>
       {!readOnly ? (
         <div className={styles.formSection}>
-          <h3 className={styles.sectionTitle} onClick={handleSecretClick} style={{ cursor: 'default', userSelect: 'none' }}>
+          <h3 className={styles.sectionTitle} onClick={handleSecretClick}>
             發表留言 {adminKey && '🛡️'}
           </h3>
           <form onSubmit={handleSubmit} className={styles.commentForm}>
@@ -761,43 +813,22 @@ export default function Guestbook({ readOnly = false, postSlug }) {
                 value={formData.website} onChange={e => setFormData({...formData, website: e.target.value})}
               />
             </div>
-            <div className={styles.formTabHeader}>
-              <button
-                type="button"
-                className={`${styles.formTabBtn} ${formTab === 'write' ? styles.formTabBtnActive : ''}`}
-                onClick={() => setFormTab('write')}
-              >
-                ✏️ 編輯
-              </button>
-              <button
-                type="button"
-                className={`${styles.formTabBtn} ${formTab === 'preview' ? styles.formTabBtnActive : ''}`}
-                onClick={() => setFormTab('preview')}
-              >
-                👁️ 預覽
-              </button>
-            </div>
-            <textarea
-              placeholder="輸入內容（必填）支援 Markdown" required
-              value={formData.content} onChange={e => setFormData({...formData, content: e.target.value})}
-              style={{ display: formTab === 'write' ? 'block' : 'none' }}
-            />
-            {formTab === 'preview' && (
-              <div className={styles.previewContainer}>
-                {formData.content.trim() ? (
-                  renderMarkdown(formData.content)
-                ) : (
-                  <span className={styles.previewPlaceholder}>（尚無輸入內容，請在編輯區輸入 Markdown 文字）</span>
-                )}
-              </div>
-            )}
+            {renderEditor({
+              tab: formTab,
+              setTab: setFormTab,
+              value: formData.content,
+              onChange: (v) => setFormData({ ...formData, content: v }),
+              placeholder: '輸入內容（必填）',
+              rows: 5,
+            })}
             {!adminKey && (
-              <TurnstileWidget 
+              <TurnstileWidget
                 ref={turnstileRef}
                 onVerify={(token) => setTurnstileToken(token)}
                 onExpire={() => setTurnstileToken('')}
               />
             )}
+            {renderNotice('form')}
             <button type="submit" className={styles.submitBtn} disabled={loading}>
               {loading ? '傳送中...' : '送出留言'}
             </button>
@@ -807,7 +838,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
         <div className={styles.readOnlyNote}>
           <p>
             💡 點擊進入
-            <Link to={currentSlug} style={{ fontWeight: 'bold', margin: '0 4px' }}>
+            <Link to={currentSlug} className={styles.readOnlyLink}>
               本文章
             </Link>
             即可發表留言。
@@ -816,35 +847,41 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       )}
 
       <div className={styles.listSection}>
-        {isGuestbookPage && (
-          <div className={styles.tabContainer}>
-            <button 
-              className={`${styles.tabBtn} ${activeTab === 'current' ? styles.tabActive : ''}`}
-              onClick={() => { setActiveTab('current'); setVisibleCount(10); }}
-            >
-              一般留言
-            </button>
-            <button 
-              className={`${styles.tabBtn} ${activeTab === 'all_posts' ? styles.tabActive : ''}`}
-              onClick={() => { setActiveTab('all_posts'); setVisibleCount(10); }}
-            >
-              全站文章討論
-            </button>
-          </div>
-        )}
+        {/* 留言板頁：分頁按鈕與則數同一列；文章頁：「本篇留言」標題與則數同一列 */}
+        <div className={styles.listHeader}>
+          {isGuestbookPage ? (
+            <div className={styles.tabGroup} role="tablist">
+              <button
+                role="tab"
+                aria-selected={activeTab === 'current'}
+                className={`${styles.tabBtn} ${activeTab === 'current' ? styles.tabActive : ''}`}
+                onClick={() => { setActiveTab('current'); setVisibleCount(10); }}
+              >
+                一般留言
+              </button>
+              <button
+                role="tab"
+                aria-selected={activeTab === 'all_posts'}
+                className={`${styles.tabBtn} ${activeTab === 'all_posts' ? styles.tabActive : ''}`}
+                onClick={() => { setActiveTab('all_posts'); setVisibleCount(10); }}
+              >
+                全站文章討論
+              </button>
+            </div>
+          ) : (
+            <h3 className={styles.listTitle}>本篇留言</h3>
+          )}
+          {!fetchLoading && !fetchError && (
+            <span className={styles.count}>{totalCommentCount} 則</span>
+          )}
+        </div>
 
-        <h3 className={styles.sectionTitle}>
-          {isGuestbookPage 
-            ? (activeTab === 'current' ? '一般留言' : '全站文章討論') 
-            : '本篇留言'
-          }
-          <span className={styles.count}>/ {totalCommentCount} 則</span>
-        </h3>
+        {renderNotice('list')}
 
         {fetchLoading ? (
           <p className={styles.statusText}>載入中...</p>
         ) : fetchError ? (
-          <p className={styles.statusText} style={{ color: 'var(--ifm-color-warning)' }}>
+          <p className={`${styles.statusText} ${styles.statusError}`}>
             ⚠️ 留言伺服器連線異常，請稍後再試。
           </p>
         ) : commentTree.length === 0 ? (
@@ -857,15 +894,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
 
             {/* 無限滾動觸發目標 */}
             {visibleCount < commentTree.length && (
-              <div 
-                ref={observerTarget} 
-                style={{ 
-                  height: '40px', 
-                  margin: '1.5rem 0',
-                  pointerEvents: 'none',
-                  visibility: 'hidden'
-                }} 
-              />
+              <div ref={observerTarget} className={styles.scrollSentinel} />
             )}
           </>
         )}

@@ -57,3 +57,7 @@ src/data/photosData.json
 src/data/contribution-data.json
 src/data/nowPosterData.json
 static/search-index.json
+# /photography 照片牆縮圖（scripts/gen-photo-thumbs.js 產生）
+static/photo-thumbs/
+# 排名清單海報縮圖（scripts/gen-poster-thumbs.js 產生）
+static/poster-thumbs/

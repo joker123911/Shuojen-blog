@@ -1,6 +1,6 @@
 ---
 title: '黃昏松菸'
-tags: ['konica-Auto s1.6','kodakprotra160','台灣','台北']
+tags: ['konica-autos1.6','kodak-portra160','台灣','台北']
 ---
 
 小叔阿公的底片機，歷久不衰。

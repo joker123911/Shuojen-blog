@@ -1,8 +1,11 @@
 ---
-title: 開局研究功能測試
+title: 測試用
 ---
 
+
+
 import { ChessStudyBlack } from '@site/src/components/Chess/ChessStudy';
+import frenchExchange from './pgn/french-exchange.pgn';
 
 這篇文章記錄我對抗 1.e4 的核心武器：**法蘭西防禦 (French Defense)**。我依據對手的不同回應，拆解成以下幾個主要變化分支。
 
@@ -18,7 +21,7 @@ import { ChessStudyBlack } from '@site/src/components/Chess/ChessStudy';
 
 <ChessStudyBlack
   title="法蘭西防禦：交換變化"
-  pgn="1. e4 e6 2. d4 d5 3. exd5 exd5 4. Nf3 Nf6 {此處一定要注意出動王翼子力，控制 e4 關鍵格 [%cal Gf6e4,Gf6d5] [%csl Ge4]} (4... Bd6 5. Bd3 Ne7 {黑方出象準備後續快速短易位 [%cal Ge7g8,Gd6f4]}) 5. Bd3"
+  pgn={frenchExchange}
 />
 
 ---

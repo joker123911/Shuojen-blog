@@ -176,11 +176,11 @@ npm run new
 ```
 
 ### 推送發布 (`push.js`)
-依序執行檢查、完整建置（`npm run build`），通過後才提交並 push 到遠端。
+依序執行連結與排版檢查、文章格式嚴格檢查（`prepare-data.js --strict`，有格式異常就中止）、完整建置（`npm run build`），全部通過後才提交並 push 到遠端。
 
 * 只會 stage 白名單內的路徑（`blog/`、`photoblog/`、`docs/`、`src/`、`static/`、`scripts/`、`.github/` 與根目錄設定檔）；其他變更會列出提醒，但不會被提交。
 * 提交前會列出完整的檔案清單，再詢問 commit 訊息（留空即取消）。
-* 建置太久時可用 `npm run push:fast` 跳過建置；GitHub Actions 仍會在推送後跑一次完整建置。
+* 建置太久時可用 `npm run push:fast` 跳過建置（仍會做檢查、更新資料檔與棋局評估）；GitHub Actions 仍會在推送後跑一次完整建置。
 
 ```bash
 npm run push
@@ -192,7 +192,7 @@ node scripts/push.js -m "訊息"   # 不跑檢查，直接提交推送
 
 ## 3. 資料生成與靜態索引腳本
 
-這些腳本通常在 `npm run build` 或 `npm run push` 時由管線自動調用，亦可手動單獨執行：
+這些腳本通常在 `npm start`、`npm run build` 或 `npm run push` 時由管線自動調用（`npm start` 會跑 prepare-data 與搜尋索引，但不跑棋局評估），亦可手動單獨執行：
 
 | 指令 / 腳本 | 說明 |
 | :--- | :--- |

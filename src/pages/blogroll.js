@@ -14,7 +14,7 @@ const blogrollTheme = {
     whiteSpace: 'nowrap',
   },
   headerSub: {
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+    fontFamily: 'var(--ifm-font-family-base)',
     fontSize: '0.9rem',
     textTransform: 'uppercase',
     letterSpacing: '3px',

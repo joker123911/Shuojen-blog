@@ -1,0 +1,116 @@
+.wrapper {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.pageTitle {
+  font-size: 2.2rem;
+  margin-bottom: 1.2rem;
+}
+
+.totalCount {
+  color: var(--ifm-color-emphasis-600);
+  font-weight: 400;
+}
+
+/* 年份跳轉列 */
+.yearNav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1rem;
+  margin-bottom: 1.2rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.yearLink {
+  color: var(--ifm-color-primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.yearLink:hover {
+  color: var(--ifm-font-color-base);
+  text-decoration: none;
+}
+
+/* 標籤列 */
+.tagCloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.tagChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.7rem;
+  border: 1px solid var(--ifm-color-emphasis-400);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--ifm-font-color-base);
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.tagChip:hover {
+  border-color: var(--ifm-color-emphasis-700);
+  background-color: var(--ifm-color-emphasis-100);
+  color: var(--ifm-font-color-base);
+  text-decoration: none;
+}
+
+.tagCount {
+  font-size: 0.75rem;
+  color: var(--ifm-color-emphasis-600);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 年份區段 */
+.yearSection {
+  margin-bottom: 2.5rem;
+}
+
+.yearHeading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-size: 1.5rem;
+  margin-bottom: 0.4rem;
+  scroll-margin-top: calc(var(--ifm-navbar-height) + 1rem);
+}
+
+.yearCount {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.postList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.postItem {
+  display: flex;
+  align-items: baseline;
+  gap: 1.2rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.postDate {
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-600);
+  font-variant-numeric: tabular-nums;
+}
+
+.postTitle {
+  color: var(--ifm-font-color-base);
+}
+
+.postTitle:hover {
+  color: var(--ifm-color-primary);
+}

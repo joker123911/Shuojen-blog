@@ -1,6 +1,6 @@
 ---
 title: '夜間木柵動物園'
-tags: ['Fujifilm-XT20','xf1855mmf2.8','台灣','台北']
+tags: ['fujifilm-xt20','xf18-55mm-f2.8','台灣','台北']
 ---
 
 這天傍晚的光影很棒。

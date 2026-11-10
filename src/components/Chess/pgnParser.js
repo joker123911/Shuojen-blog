@@ -92,23 +92,32 @@ export function parsePgnToStudyTree(pgn) {
     return { root, nodesMap };
   }
 
-  // Strip PGN header tags [Key "Value"] except [%cal...] tags which appear inside comments
-  const cleanPgn = pgn.replace(/\[(?!%)[^\]]*\]/g, '').replace(/\s+/g, ' ').trim();
+  // 統一空白（結尾 trim() 也會去掉 BOM）
+  const cleanPgn = pgn
+    .replace(/\s+/g, ' ')
+    .trim();
 
-  // Tokenize: {comment}, (open paren), )close paren, or move tokens
-  const tokenRegex = /(\{[^}]*\})|(\()|(\))|([^\s()]+)/g;
+  // Tokenize: [Header "Value"], {comment}, (open paren), )close paren, or move tokens
+  // 標頭放在同一個 tokenizer 裡，評論內的方括號（如 [%cal ...]）才不會被誤刪
+  const tokenRegex = /(\[\s*\w+\s+"[^"]*"\s*\])|(\{[^}]*\}?)|(\()|(\))|([^\s(){}]+)/g;
   let match;
   const tokens = [];
 
   while ((match = tokenRegex.exec(cleanPgn)) !== null) {
     if (match[1]) {
-      tokens.push({ type: 'comment', value: match[1].slice(1, -1).trim() });
-    } else if (match[2]) {
-      tokens.push({ type: 'open' });
+      // 自訂起始局面：Lichess 從局面開始的章節會帶 [FEN "..."] 標頭
+      const fenHeader = match[1].match(/^\[\s*FEN\s+"([^"]+)"/i);
+      if (fenHeader) root.fen = fenHeader[1];
+      continue;
+    }
+    if (match[2]) {
+      tokens.push({ type: 'comment', value: match[2].replace(/^\{|\}$/g, '').trim() });
     } else if (match[3]) {
-      tokens.push({ type: 'close' });
+      tokens.push({ type: 'open' });
     } else if (match[4]) {
-      let val = match[4].trim();
+      tokens.push({ type: 'close' });
+    } else if (match[5]) {
+      let val = match[5].trim();
 
       // Skip game termination markers
       if (['1-0', '0-1', '1/2-1/2', '*'].includes(val)) continue;
@@ -184,7 +193,10 @@ export function parsePgnToStudyTree(pgn) {
     } else if (token.type === 'comment') {
       if (currentNode) {
         const { comment, shapes } = parseCommentTags(token.value);
-        currentNode.comment = comment;
+        // 同一步可能有多段評論（例如一段只放箭頭、一段放文字），串接而非覆蓋
+        if (comment) {
+          currentNode.comment = currentNode.comment ? `${currentNode.comment}\n${comment}` : comment;
+        }
         if (shapes.length > 0) {
           currentNode.shapes = [...(currentNode.shapes || []), ...shapes];
         }

@@ -1,6 +1,6 @@
 ---
 title: '山思雲想約會'
-tags: ['Panasonic-GM1','20mmf1.7II','Fujifilm-XT20','xf1855mmf2.8','台灣','台中','南投']
+tags: ['panasonic-gm1','lumix-20mm-f1.7ii','fujifilm-xt20','xf18-55mm-f2.8','台灣','台中','南投']
 ---
 
 跟蝦波一起南投懶人露營兩天一夜，遊記可見[連結](/blog/2025/12/06/date)。

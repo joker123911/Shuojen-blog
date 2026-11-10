@@ -51,13 +51,13 @@
 }
 
 .searchInput::placeholder {
-  color: var(--ifm-color-emphasis-500);
+  color: var(--ifm-color-emphasis-600);
 }
 
 .clearButton {
   background: transparent;
   border: none;
-  color: var(--ifm-color-emphasis-500);
+  color: var(--ifm-color-emphasis-600);
   cursor: pointer;
   padding: 0;
   font-size: 13px;
@@ -92,7 +92,7 @@
   border: 1px solid var(--ifm-color-emphasis-400);
   color: var(--ifm-color-emphasis-600);
   background: var(--ifm-color-emphasis-100);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: inherit;
 }
 
 [data-theme='dark'] .keyBadge {
