@@ -2,16 +2,12 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>成語迷宮</title>
-    <script src="puzzle.js"></script>
-    <script src="dictionary.js"></script>
+    <link rel="stylesheet" href="https://font.emtech.cc/css/MantouSans">
+    <script src="puzzle.js" defer></script>
+    <script src="dictionary.js" defer></script>
     <style>
-        /* =========================================
-           1. 載入線上饅頭字體 (Subsetting)
-           ========================================= */
-        @import url("https://font.emtech.cc/css/MantouSans");
-
         :root { 
             --bg: #fdf5e6; 
             --primary: #8b4513; 
@@ -20,7 +16,8 @@
             --key: #e74c3c; 
             --locked-bg: #f3ece2; 
             --locked-text: #2c221e; 
-            --board-size: min(520px, 92vw, calc(100dvh - 255px));
+            --board-size: min(520px, calc(100vw - 80px), calc(100vh - 255px));
+            --board-size: min(520px, calc(100vw - 80px), calc(100dvh - 255px));
         }
         body { 
             font-family: sans-serif; 
@@ -42,12 +39,12 @@
             border: 2px solid #d4b287;
             box-shadow: 0 16px 40px rgba(139, 69, 19, 0.14), 0 3px 10px rgba(139, 69, 19, 0.06), inset 0 0 0 4px #fffdf9;
             border-radius: 20px;
-            padding: 20px 36px 16px;
+            padding: 20px clamp(16px, 4vw, 36px) 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
             box-sizing: border-box;
-            max-width: 98vw;
+            max-width: 100%;
         }
         
         /* 標題樣式 */
@@ -125,8 +122,8 @@
             font-weight: normal;
         }
 
-        /* 統一按鈕與選單的大小與外觀 */
-        .btn, select { 
+        /* 統一按鈕的大小與外觀 */
+        .btn { 
             font-family: inherit;  /* 繼承 body 的字體 */
             font-size: 14.5px; 
             font-weight: bold;
@@ -143,7 +140,7 @@
             padding: 0 12px;
         }
 
-        .top-bar .btn, select {
+        .top-bar .btn {
             width: 100px;
             padding: 0;
         }
@@ -298,23 +295,6 @@
         .slot:empty { cursor: default; background: rgba(255,255,255,0.5); border-style: dashed; }
         .slot.drag-over { background: #eee; border-color: var(--key); }
         #win-msg { display: none; margin-top: 8px; color: #27ae60; font-size: 18px; font-weight: bold; }
-        .win-donate-prompt { 
-            margin-top: 8px; 
-            font-size: 13px; 
-            color: #8b4513; 
-            background: #fff8e7; 
-            border: 1px dashed #f39c12; 
-            padding: 6px 14px; 
-            border-radius: 20px; 
-            display: inline-block; 
-            cursor: pointer; 
-            transition: all 0.2s; 
-            font-weight: normal; 
-        }
-        .win-donate-prompt:hover { 
-            background: #ffecb3; 
-            transform: scale(1.03); 
-        }
         
         .footer { margin-top: 10px; padding-bottom: 2px; font-size: 12px; color: var(--primary); opacity: 0.8; }
         .footer-donate-link {
@@ -507,9 +487,12 @@
         /* ===== 響應式設定：放在最後，才能正確覆蓋上方的基本樣式 ===== */
         /* 針對矮螢幕（如 13 吋小筆電或開啟多行書籤列）自適應縮緊 */
         @media (max-height: 750px) {
-            :root { --board-size: min(460px, 92vw, calc(100dvh - 205px)); }
+            :root { 
+                --board-size: min(460px, calc(100vw - 60px), calc(100vh - 205px));
+                --board-size: min(460px, calc(100vw - 60px), calc(100dvh - 205px));
+            }
             body { padding: 6px 10px; }
-            .board-card { padding: 12px 24px 10px; border-radius: 16px; }
+            .board-card { padding: 12px 20px 10px; border-radius: 16px; }
             .game-header { margin-bottom: 4px; }
             .game-title { font-size: clamp(28px, 4.4vh, 38px); }
             .top-bar { margin-bottom: 6px; gap: 6px; }
@@ -521,9 +504,12 @@
             .footer { margin-top: 6px; padding-bottom: 2px; font-size: 11px; }
         }
 
-        /* 手機端滿版流暢模式 */
-        @media (max-width: 560px) { 
-            :root { --board-size: min(440px, calc(100vw - 16px), calc(100dvh - 230px)); }
+        /* 手機與窄螢幕滿版流暢模式 */
+        @media (max-width: 580px) { 
+            :root { 
+                --board-size: min(440px, calc(100vw - 16px), calc(100vh - 230px));
+                --board-size: min(440px, calc(100vw - 16px), calc(100dvh - 230px));
+            }
             body { background: var(--bg); padding: 8px 8px 6px; }
             .board-card { background: transparent; border: none; box-shadow: none; padding: 0; border-radius: 0; }
             .cell { font-size: clamp(12px, 3.8vw, 16px); } 
@@ -572,7 +558,7 @@
             <span class="close-btn" onclick="toggleModal(false)">&times;</span>
             <h3>📜 遊戲規則說明</h3>
             <ul>
-                <li>表格中藏有數個<b>四字成語</b>，排列順序可能是由上而下，由左而右、由右而左，或是呈對角線，請先找出表格裡的成語。</li>
+                <li>表格中藏有數個<b>四字成語</b>，排列順序可能是由上而下、由下而上、由左而右、由右而左，或是呈對角線（正反向皆可），請先找出表格裡的成語。</li>
                 <li>每兩個成語的交叉處可得到一個<b>關鍵字</b>，關鍵字有可能會重複。</li>
                 <li>找到的關鍵字可組成一個<b>俚語</b>，即為最後答案。</li>
             </ul>
@@ -792,17 +778,8 @@
     <script>
         // ==========================================
         // 綠界金流贊助設定 (ECPay Donation)
-        // 包含單筆 50 / 150 / 自由填寫 與 定期定額
-        // 審核開關：綠界審核通過後，只需將 IS_DONATE_ACTIVE 改為 true 即可直接連至付款頁！
         // ==========================================
         const IS_DONATE_ACTIVE = true;
-
-        const DONATE_LINKS = {
-            coffee50: "https://p.ecpay.com.tw/41BB174",
-            meal150: "https://p.ecpay.com.tw/52210C3",
-            custom: "https://p.ecpay.com.tw/4C157A4",
-            recurring: "https://p.ecpay.com.tw/90BC5B7"
-        };
 
         function toggleDonateModal(show) {
             document.getElementById('donate-modal').style.display = show ? 'flex' : 'none';
@@ -815,9 +792,19 @@
             }
         }
 
-        function updateDonateLink() {
-            // 保留空函式以相容初始化調用
+        function closeAllModals() {
+            toggleModal(false);
+            toggleAboutModal(false);
+            toggleDonateModal(false);
+            toggleVictoryModal(false);
+            toggleHintModal(false);
         }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeAllModals();
+            }
+        });
 
         const gridEl = document.getElementById('grid');
         const svgEl = document.getElementById('svg-overlay');
@@ -849,6 +836,20 @@
         // ==========================================
         // 每日一題系統（一天一題，零劇透輪替）
         // ==========================================
+        function safeGetStorage(key) {
+            try {
+                return localStorage.getItem(key);
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function safeSetStorage(key, val) {
+            try {
+                localStorage.setItem(key, val);
+            } catch (e) {}
+        }
+
         function getDailyInfo() {
             const now = new Date();
             const y = now.getFullYear();
@@ -856,10 +857,10 @@
             const d = now.getDate();
             const dateFormatted = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
             
-            // 基準日 2026-01-01
-            const baseDate = new Date(2026, 0, 1);
-            const todayMidnight = new Date(y, m, d);
-            const dayDiff = Math.floor((todayMidnight - baseDate) / (1000 * 60 * 60 * 24));
+            // 基準日 2026-01-01（使用 UTC 計算日數差，避免夏令時間切換少 1 小時導致連兩天同題）
+            const baseDateUTC = Date.UTC(2026, 0, 1);
+            const todayMidnightUTC = Date.UTC(y, m, d);
+            const dayDiff = Math.floor((todayMidnightUTC - baseDateUTC) / (1000 * 60 * 60 * 24));
             
             const totalPuzzles = (typeof puzzles !== 'undefined' && puzzles.length) ? puzzles.length : 120;
             // 線性互質排列 (37 與 120 互質)，保證每一關皆均勻輪替、不劇透題號
@@ -874,7 +875,7 @@
         function checkDailyCompletion() {
             const info = currentDaily || getDailyInfo();
             const statusIndicator = document.getElementById('mode-status-indicator');
-            const saved = localStorage.getItem('idiom_daily_' + info.dateFormatted);
+            const saved = safeGetStorage('idiom_daily_' + info.dateFormatted);
             if (saved) {
                 try {
                     const data = JSON.parse(saved);
@@ -887,11 +888,14 @@
                     statusIndicator.onclick = () => showVictoryModal(data);
                 } catch(e) {
                     statusIndicator.textContent = '🔥 每日一題';
+                    statusIndicator.style.cursor = 'default';
+                    statusIndicator.title = '';
                     statusIndicator.onclick = null;
                 }
             } else {
                 statusIndicator.textContent = '🔥 每日一題';
                 statusIndicator.style.cursor = 'default';
+                statusIndicator.title = '';
                 statusIndicator.onclick = null;
             }
         }
@@ -1011,7 +1015,7 @@
                 steps = customData.steps;
                 hints = customData.hints || 0;
             } else {
-                const saved = localStorage.getItem('idiom_daily_' + info.dateFormatted);
+                const saved = safeGetStorage('idiom_daily_' + info.dateFormatted);
                 if (saved) {
                     try {
                         const parsed = JSON.parse(saved);
@@ -1057,7 +1061,7 @@
             let sec = timerSeconds;
             let steps = stepCount;
             let hints = hintCount;
-            const saved = localStorage.getItem('idiom_daily_' + info.dateFormatted);
+            const saved = safeGetStorage('idiom_daily_' + info.dateFormatted);
             if (saved) {
                 try {
                     const parsed = JSON.parse(saved);
@@ -1080,7 +1084,7 @@
 ${idiomBlocks}
 
 👇 來挑戰今日成語迷宮：
-https://shuojen.com/game`;
+https://shuojen.com/game.html`;
         }
 
         function copyTextToClipboard(text) {
@@ -1154,7 +1158,7 @@ https://shuojen.com/game`;
             checkDailyCompletion();
             loadLevel(info.dailyIndex);
 
-            const completed = !!localStorage.getItem('idiom_daily_' + info.dateFormatted);
+            const completed = !!safeGetStorage('idiom_daily_' + info.dateFormatted);
             if (completed) {
                 // 今日已通關：可以再玩一次，但不會覆蓋原本的成績
                 document.querySelector('.start-overlay-title').textContent = '今日已通關 🎉';
@@ -1191,7 +1195,7 @@ https://shuojen.com/game`;
                 cell.dataset.idx = i;
                 cell.onclick = () => handleCellClick(i, cell);
                 cell.ondragstart = (e) => {
-                    if (!cell.classList.contains('is-key')) return e.preventDefault();
+                    if (gameFinished || !cell.classList.contains('is-key')) return e.preventDefault();
                     e.dataTransfer.setData('text', cell.textContent);
                     e.dataTransfer.setData('sourceType', 'grid');
                 };
@@ -1204,6 +1208,7 @@ https://shuojen.com/game`;
                 slot.dataset.slotIdx = i;
                 slot.draggable = true;
                 slot.onclick = () => { 
+                    if (gameFinished) return;
                     if (mobileSelectedChar) {
                         recordStep();
                         slot.textContent = mobileSelectedChar;
@@ -1221,7 +1226,7 @@ https://shuojen.com/game`;
                     checkWin(); 
                 };
                 slot.ondragstart = (e) => {
-                    if (!slot.textContent) return e.preventDefault();
+                    if (gameFinished || !slot.textContent) return e.preventDefault();
                     e.dataTransfer.setData('text', slot.textContent);
                     e.dataTransfer.setData('sourceType', 'slot');
                     e.dataTransfer.setData('sourceIdx', String(i));
@@ -1243,32 +1248,10 @@ https://shuojen.com/game`;
         }
 
         function handleCellClick(idx, el) {
+            if (gameFinished) return;
             recordStep();
             if (manualKeys.has(idx)) {
                 if (activeKeyIdx === idx) {
-                    const unlockedLines = manualKeys.get(idx);
-                    manualKeys.delete(idx);
-                    rebuildLockedCells();
-
-                    // 找出目前仍被其他關鍵字鎖定的成語線
-                    const remainingLockedLineKeys = new Set();
-                    manualKeys.forEach(lines => {
-                        lines.forEach(line => {
-                            remainingLockedLineKeys.add([...line].sort((a, b) => a - b).join(','));
-                        });
-                    });
-
-                    // 將不再被任何關鍵字鎖定的成語整條（4個字）退回選取狀態（黃底），維持完整 4 字紅線
-                    unlockedLines.forEach(line => {
-                        const lineKey = [...line].sort((a, b) => a - b).join(',');
-                        if (!remainingLockedLineKeys.has(lineKey)) {
-                            line.forEach(id => {
-                                if (!manualKeys.has(id)) {
-                                    selectedIndices.add(id);
-                                }
-                            });
-                        }
-                    });
                     mobileSelectedChar = null;
                     activeKeyIdx = null;
                 } else {
@@ -1277,6 +1260,12 @@ https://shuojen.com/game`;
                 }
                 updateVisuals();
                 return;
+            }
+
+            // 點選其他盤面格子時，自動取消先前選取的關鍵字狀態
+            if (activeKeyIdx !== null) {
+                mobileSelectedChar = null;
+                activeKeyIdx = null;
             }
 
             if (selectedIndices.has(idx) || lockedCells.has(idx)) {
@@ -1446,33 +1435,45 @@ https://shuojen.com/game`;
         function handleSlotDrop(e) {
             e.preventDefault();
             e.stopPropagation(); // 防止冒泡至 body 觸發 handleBodyDrop 誤刪文字
-            recordStep();
             this.classList.remove('drag-over');
-            const char = e.dataTransfer.getData('text');
-            if (!char) return;
+            if (gameFinished) return;
 
             const type = e.dataTransfer.getData('sourceType');
+            // 只接受本遊戲內部的 slot 或 grid 關鍵字來源，防止外部文字拖入破壞遊戲規則
+            if (type !== 'slot' && type !== 'grid') return;
+
+            const char = e.dataTransfer.getData('text');
+            if (!char || [...char].length !== 1) return;
+
             const targetIdx = this.dataset.slotIdx;
 
             if (type === 'slot') {
                 const srcIdx = e.dataTransfer.getData('sourceIdx');
-                if (srcIdx === targetIdx) return; // 拖放回同一格時不做變動
+                if (srcIdx === targetIdx) return; // 拖放回同一格時不做變動且不計步
                 if (srcIdx !== "" && slotsEl.children[srcIdx]) {
                     // 若目標格已有字，與來源格交換文字；否則清空來源格
                     slotsEl.children[srcIdx].textContent = this.textContent;
                     slotsEl.children[srcIdx].classList.remove('hint-filled');
                 }
             }
+
+            recordStep();
             this.textContent = char;
             this.classList.remove('hint-filled');
+            if (activeKeyIdx !== null || mobileSelectedChar !== null) {
+                mobileSelectedChar = null;
+                activeKeyIdx = null;
+                updateVisuals();
+            }
             checkWin();
         }
 
         function handleBodyDrop(e) {
+            if (gameFinished) return;
             const type = e.dataTransfer.getData('sourceType');
             if (type === 'slot') {
                 const srcIdx = e.dataTransfer.getData('sourceIdx');
-                if (srcIdx !== "" && slotsEl.children[srcIdx]) {
+                if (srcIdx !== "" && slotsEl.children[srcIdx] && slotsEl.children[srcIdx].textContent) {
                     slotsEl.children[srcIdx].textContent = '';
                     slotsEl.children[srcIdx].classList.remove('hint-filled');
                     recordStep();
@@ -1493,9 +1494,9 @@ https://shuojen.com/game`;
                     stopTimer();
                     const info = currentDaily || getDailyInfo();
                     
-                    const saved = localStorage.getItem('idiom_daily_' + info.dateFormatted);
+                    const saved = safeGetStorage('idiom_daily_' + info.dateFormatted);
                     if (!saved) {
-                        localStorage.setItem('idiom_daily_' + info.dateFormatted, JSON.stringify({
+                        safeSetStorage('idiom_daily_' + info.dateFormatted, JSON.stringify({
                             time: timerSeconds,
                             steps: stepCount,
                             hints: hintCount,
@@ -1786,7 +1787,6 @@ https://shuojen.com/game`;
             mobileSelectedChar = null;
             activeKeyIdx = null;
             updateVisuals();
-            recordStep();
             showHintBanner(`💡 答案提示：第 ${targetSlotIdx + 1} 個字為「${correctChar}」（已填入下方第 ${targetSlotIdx + 1} 格）`);
             checkWin();
         }
@@ -1826,8 +1826,19 @@ https://shuojen.com/game`;
         if (document.fonts && document.fonts.ready) {
             document.fonts.ready.then(() => updateVisuals());
         }
-        initGame();
-        updateDonateLink();
+        // 先更新頂部今日日期文字，避免等待 defer 腳本（字典檔）載入期間閃現預設日期
+        (function initDateBadge() {
+            const now = new Date();
+            const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+            const dateEl = document.getElementById('daily-date-text');
+            if (dateEl) dateEl.textContent = dateStr;
+        })();
+
+        if (typeof puzzles !== 'undefined' && typeof ALL_IDIOMS !== 'undefined') {
+            initGame();
+        } else {
+            window.addEventListener('DOMContentLoaded', initGame);
+        }
     </script>
 </body>
 </html>

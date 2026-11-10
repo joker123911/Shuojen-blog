@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-08",
+  "generatedAt": "2026-11-10",
   "latestPostDate": "2026-11-08",
   "windowDays": 90,
-  "cutoffDate": "2026-08-10",
+  "cutoffDate": "2026-08-12",
   "stats": {
     "blogCount": 40,
     "photoCount": 1,
@@ -174,7 +174,7 @@
     },
     {
       "text": "西洋棋",
-      "weight": 62.8,
+      "weight": 60,
       "count": 4,
       "category": "now",
       "sourceType": "now-link",
@@ -237,20 +237,12 @@
       "rank": 13
     },
     {
-      "text": "格友見面會",
-      "weight": 38,
-      "count": 4,
-      "category": "tag",
-      "sourceType": "tag",
-      "rank": 14
-    },
-    {
       "text": "FX戰士韭留美",
       "weight": 36,
       "count": 1,
       "category": "now",
       "sourceType": "now-bullet",
-      "rank": 15
+      "rank": 14
     },
     {
       "text": "五十嵐阿華田",
@@ -258,7 +250,7 @@
       "count": 1,
       "category": "now",
       "sourceType": "now-bullet",
-      "rank": 16
+      "rank": 15
     },
     {
       "text": "桑葚紅烏冷泡茶",
@@ -266,7 +258,7 @@
       "count": 1,
       "category": "now",
       "sourceType": "now-detail",
-      "rank": 17
+      "rank": 16
     },
     {
       "text": "峻寶寶雙料冠軍",
@@ -274,10 +266,18 @@
       "count": 1,
       "category": "now",
       "sourceType": "now-detail",
+      "rank": 17
+    },
+    {
+      "text": "格友見面會",
+      "weight": 31.3,
+      "count": 4,
+      "category": "tag",
+      "sourceType": "tag",
       "rank": 18
     },
     {
-      "text": "畫完這個再去死",
+      "text": "相反的你和我",
       "weight": 29.6,
       "count": 2,
       "category": "media",
@@ -285,8 +285,8 @@
       "rank": 19
     },
     {
-      "text": "相反的你和我",
-      "weight": 29.6,
+      "text": "畫完這個再去死",
+      "weight": 26.7,
       "count": 2,
       "category": "media",
       "sourceType": "work",
@@ -349,7 +349,7 @@
       "rank": 27
     },
     {
-      "text": "新記錄",
+      "text": "飲料大小",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -357,7 +357,7 @@
       "rank": 28
     },
     {
-      "text": "飲料大小",
+      "text": "文字雜想",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -365,7 +365,7 @@
       "rank": 29
     },
     {
-      "text": "文字雜想",
+      "text": "檔車推發記",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -373,7 +373,7 @@
       "rank": 30
     },
     {
-      "text": "檔車推發記",
+      "text": "全國棋藝競賽",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -381,7 +381,7 @@
       "rank": 31
     },
     {
-      "text": "全國棋藝競賽",
+      "text": "簡易拍照構圖法",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -389,7 +389,7 @@
       "rank": 32
     },
     {
-      "text": "簡易拍照構圖法",
+      "text": "淺色主題",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -397,7 +397,7 @@
       "rank": 33
     },
     {
-      "text": "淺色主題",
+      "text": "海綿寶寶幸運路跑",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -405,7 +405,7 @@
       "rank": 34
     },
     {
-      "text": "海綿寶寶幸運路跑",
+      "text": "中央大學趣事",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -413,7 +413,7 @@
       "rank": 35
     },
     {
-      "text": "中央大學趣事",
+      "text": "無限循環",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -421,7 +421,7 @@
       "rank": 36
     },
     {
-      "text": "無限循環",
+      "text": "格友的部落格",
       "weight": 16,
       "count": 1,
       "category": "post",
@@ -429,20 +429,12 @@
       "rank": 37
     },
     {
-      "text": "格友的部落格",
-      "weight": 16,
-      "count": 1,
-      "category": "post",
-      "sourceType": "title",
-      "rank": 38
-    },
-    {
       "text": "藍色監獄",
       "weight": 15.8,
       "count": 2,
       "category": "media",
       "sourceType": "work",
-      "rank": 39
+      "rank": 38
     },
     {
       "text": "実正拉麵",
@@ -450,7 +442,7 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-拉麵",
-      "rank": 40
+      "rank": 39
     },
     {
       "text": "魔法少女小圓",
@@ -458,7 +450,7 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-動畫",
-      "rank": 41
+      "rank": 40
     },
     {
       "text": "艾德蓋恩的故事",
@@ -466,7 +458,7 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-影集",
-      "rank": 42
+      "rank": 41
     },
     {
       "text": "羽畠食堂拉麵",
@@ -474,7 +466,7 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-拉麵",
-      "rank": 43
+      "rank": 42
     },
     {
       "text": "尼古喵喵",
@@ -482,7 +474,7 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-動畫",
-      "rank": 44
+      "rank": 43
     },
     {
       "text": "毛骨悚然的戀愛",
@@ -490,7 +482,7 @@
       "count": 1,
       "category": "ranking",
       "sourceType": "ranking-影集",
-      "rank": 45
+      "rank": 44
     },
     {
       "text": "社群網站",
@@ -498,7 +490,7 @@
       "count": 2,
       "category": "media",
       "sourceType": "work",
-      "rank": 46
+      "rank": 45
     },
     {
       "text": "人生也是一個遊戲",
@@ -506,7 +498,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 47
+      "rank": 46
     },
     {
       "text": "自己做生日蛋糕",
@@ -514,7 +506,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 48
+      "rank": 47
     },
     {
       "text": "大魚吃小魚",
@@ -522,7 +514,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 49
+      "rank": 48
     },
     {
       "text": "彌敦道",
@@ -530,7 +522,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 50
+      "rank": 49
     },
     {
       "text": "專輯牆",
@@ -538,7 +530,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 51
+      "rank": 50
     },
     {
       "text": "執著光譜",
@@ -546,7 +538,7 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 52
+      "rank": 51
     },
     {
       "text": "手機進化史",
@@ -554,10 +546,18 @@
       "count": 1,
       "category": "post",
       "sourceType": "title",
-      "rank": 53
+      "rank": 52
     },
     {
       "text": "我推的部落格",
+      "weight": 11.5,
+      "count": 1,
+      "category": "post",
+      "sourceType": "title",
+      "rank": 53
+    },
+    {
+      "text": "新記錄",
       "weight": 11.5,
       "count": 1,
       "category": "post",
