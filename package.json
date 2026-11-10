@@ -15,7 +15,6 @@
     "start": "npm run prepare-data && docusaurus start",
     "start:fast": "docusaurus start",
     "build": "npm run prepare-data:full && docusaurus build",
-    "deploy": "npm run prepare-data:full && docusaurus deploy",
     "push": "npm run check && npm run build && node scripts/push.js",
     "push:fast": "npm run check && npm run prepare-data:full && node scripts/push.js",
     "new": "node scripts/new-post.js",
