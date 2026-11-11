@@ -176,14 +176,14 @@ export default function ContributionCalendar() {
     }}>
 
       {/* 上方數據統計卡片 */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '12px', marginBottom: '25px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '8px', marginBottom: '25px' }}>
         {[
           { label: '過去一年文章', value: stats.yearPosts },
           { label: '累積所有文章', value: stats.totalPosts },
           { label: '天 連續發文', value: stats.dailyStreak }
         ].map((stat, idx) => (
           <div key={idx} style={{
-            background: 'var(--ifm-background-color)', padding: '16px 12px', borderRadius: '8px',
+            background: 'var(--ifm-background-color)', padding: '14px 6px', borderRadius: '8px',
             textAlign: 'center', border: '1px solid var(--ifm-color-emphasis-200)',
             display: 'flex', flexDirection: 'column', justifyContent: 'center'
           }}>

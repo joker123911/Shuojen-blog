@@ -27,7 +27,7 @@
                     </div>
                     <div>
                         <h1 class="text-xl md:text-2xl font-bold text-slate-800 tracking-tight">營養攝取終結者</h1>
-                        <p class="text-[10px] md:text-xs text-slate-400">Shuojen.com</p>
+                        <p class="text-xs md:text-xs text-slate-400">Shuojen.com</p>
                     </div>
                 </div>
                 <div class="flex flex-wrap sm:flex-nowrap gap-2 w-full md:w-auto">
@@ -67,7 +67,7 @@
                 <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm md:text-base">
                     <i class="fa-solid fa-database text-indigo-500"></i> 食物批次匯入/匯出
                 </h3>
-                <p class="text-[10px] sm:text-xs text-slate-500">格式：名稱 | 份量 | 熱量(kcal) | 蛋白質(g) (每行一項)</p>
+                <p class="text-xs sm:text-xs text-slate-500">格式：名稱 | 份量 | 熱量(kcal) | 蛋白質(g) (每行一項)</p>
                 <textarea id="batchInput" rows="5" class="w-full p-3 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500 outline-none custom-scrollbar font-mono bg-white" placeholder="無糖豆漿 | 400ml | 130 | 14"></textarea>
                 <div class="flex gap-2">
                     <button onclick="importBatch()" class="flex-1 bg-indigo-600 text-white py-3 sm:py-2.5 rounded-xl text-sm font-bold">匯入取代</button>
@@ -144,7 +144,7 @@
             <p>© Shuojen.com Nutrition Tracker</p>
             <span class="text-slate-300">|</span>
             <button onclick="factoryReset()" class="hover:text-red-500 transition underline flex items-center gap-1">
-                <i class="fa-solid fa-rotate-left text-[10px]"></i> 恢復預設
+                <i class="fa-solid fa-rotate-left text-xs"></i> 恢復預設
             </button>
         </div>
     </div>
@@ -326,11 +326,11 @@ subway厚切嫩牛 | 6吋 | 366 | 26
                     <div class="flex-1 min-w-0 pr-2">
                         <div class="flex items-center gap-2 mb-1.5">
                             <h3 class="font-bold text-slate-800 text-sm sm:text-base truncate">${f.name}</h3>
-                            <span class="text-[10px] sm:text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">${f.portion}</span>
+                            <span class="text-xs sm:text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">${f.portion}</span>
                         </div>
                         <div class="flex flex-wrap gap-2">
-                            <span class="text-xs sm:text-sm font-bold text-orange-500 bg-orange-50 px-2 py-0.5 rounded-md flex items-center"><i class="fa-solid fa-fire mr-1 text-[10px]"></i>${f.cal} <span class="text-[10px] ml-0.5 font-normal">kcal</span></span>
-                            <span class="text-xs sm:text-sm font-bold text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded-md flex items-center"><i class="fa-solid fa-drumstick-bite mr-1 text-[10px]"></i>${f.pro} <span class="text-[10px] ml-0.5 font-normal">g</span></span>
+                            <span class="text-xs sm:text-sm font-bold text-orange-500 bg-orange-50 px-2 py-0.5 rounded-md flex items-center"><i class="fa-solid fa-fire mr-1 text-xs"></i>${f.cal} <span class="text-xs ml-0.5 font-normal">kcal</span></span>
+                            <span class="text-xs sm:text-sm font-bold text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded-md flex items-center"><i class="fa-solid fa-drumstick-bite mr-1 text-xs"></i>${f.pro} <span class="text-xs ml-0.5 font-normal">g</span></span>
                         </div>
                     </div>
                     <div class="flex items-center gap-2">
@@ -365,8 +365,8 @@ subway厚切嫩牛 | 6吋 | 366 | 26
                     </div>
                     <div class="flex items-center gap-3 sm:gap-4 flex-shrink-0 ml-2">
                         <div class="flex flex-col sm:flex-row sm:gap-3 text-right">
-                            <span class="text-orange-500 font-bold text-xs sm:text-sm w-16">${rowCal} <span class="text-[10px] font-normal text-orange-400">kcal</span></span>
-                            <span class="text-indigo-500 font-bold text-xs sm:text-sm w-14">${rowPro} <span class="text-[10px] font-normal text-indigo-400">g</span></span>
+                            <span class="text-orange-500 font-bold text-xs sm:text-sm w-16">${rowCal} <span class="text-xs font-normal text-orange-400">kcal</span></span>
+                            <span class="text-indigo-500 font-bold text-xs sm:text-sm w-14">${rowPro} <span class="text-xs font-normal text-indigo-400">g</span></span>
                         </div>
                         <button onclick="removeFromToday(${f.id})" class="text-slate-400 hover:text-red-500 w-8 h-8 sm:w-10 sm:h-10 flex justify-center items-center rounded-full bg-slate-100 hover:bg-red-50 transition-colors shadow-sm"><i class="fa-solid fa-minus"></i></button>
                     </div>

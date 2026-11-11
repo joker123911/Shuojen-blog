@@ -357,3 +357,24 @@ input[type="search"]::-webkit-search-results-decoration {
 .markdown blockquote p {
   margin-bottom: 0.6rem;
 }
+
+/* =========================================
+   10. 響應式嵌入媒體 (Responsive Embeds)
+   ========================================= */
+/* 文章內 <video width="360"> 等寫死寬度的影片，在窄螢幕不得超出內容寬 */
+.markdown video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* YouTube 等 iframe 嵌入：寬度隨容器縮放，維持 16:9 */
+.video-container {
+  margin-bottom: var(--ifm-paragraph-margin-bottom);
+}
+.video-container iframe {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}

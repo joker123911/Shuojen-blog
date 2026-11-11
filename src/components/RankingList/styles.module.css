@@ -87,6 +87,15 @@
   display: none;
 }
 
+/* 手機版：右緣淡出，暗示篩選列還可以往右滑 */
+@media (max-width: 768px) {
+  .filterBar {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
+    padding-right: 24px;
+  }
+}
+
 .filterBtn {
   padding: 6px 14px;
   border-radius: 999px;

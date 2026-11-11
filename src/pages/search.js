@@ -453,12 +453,14 @@ export default function SearchPage() {
                   color: 'var(--ifm-color-emphasis-600)',
                   marginBottom: '0.5rem',
                   display: 'flex',
+                  flexWrap: 'wrap',
                   alignItems: 'center',
-                  gap: '8px',
+                  gap: '4px 8px',
                 }}
               >
                 <span
                   style={{
+                    whiteSpace: 'nowrap',
                     backgroundColor:
                       item.type === '留言' ? 'rgba(0, 112, 243, 0.12)' : 'var(--ifm-color-emphasis-200)',
                     color: item.type === '留言' ? 'var(--ifm-color-primary)' : 'inherit',
@@ -470,9 +472,9 @@ export default function SearchPage() {
                 >
                   {item.type}
                 </span>
-                {item.date && <span>{item.date}</span>}
+                {item.date && <span style={{ whiteSpace: 'nowrap' }}>{item.date}</span>}
                 <span>·</span>
-                <span style={{ opacity: 0.7 }}>{item.url}</span>
+                <span style={{ opacity: 0.7, wordBreak: 'break-all', minWidth: 0 }}>{item.url}</span>
               </div>
               <p
                 style={{

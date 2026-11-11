@@ -637,8 +637,10 @@
     width: 18px;
   }
 
-  /* 手機沒有滑鼠移入，操作按鈕直接用較深的顏色 */
+  /* 手機沒有滑鼠移入，操作按鈕直接用較深的顏色；並加大觸控範圍（至少約 32px 高） */
   .actionBtn {
     color: var(--ifm-color-emphasis-700);
+    padding: 6px 10px;
+    min-height: 32px;
   }
 }

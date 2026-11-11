@@ -27,7 +27,7 @@
                     </div>
                     <div>
                         <h1 class="text-xl md:text-2xl font-bold text-slate-800 tracking-tight">吃什麼都可以終結者</h1>
-                        <p class="text-[10px] md:text-xs text-slate-400">Shuojen.com</p>
+                        <p class="text-xs md:text-xs text-slate-400">Shuojen.com</p>
                     </div>
                 </div>
                 <div class="flex gap-2 w-full sm:w-auto">
@@ -44,7 +44,7 @@
                 <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm md:text-base">
                     <i class="fa-solid fa-database text-indigo-500"></i> 批次匯入/匯出
                 </h3>
-                <p class="text-[10px] text-slate-500">格式：名稱 | 距離 | 類型 | 標籤 (每行一家)</p>
+                <p class="text-xs text-slate-500">格式：名稱 | 距離 | 類型 | 標籤 (每行一家)</p>
                 <textarea id="batchInput" rows="5" class="w-full p-3 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-indigo-500 outline-none custom-scrollbar font-mono" placeholder="麥當勞 | 近 | 速食 | 便宜,快速"></textarea>
                 <div class="flex gap-2">
                     <button onclick="importBatch()" class="flex-1 bg-indigo-600 text-white py-2 rounded-xl text-xs font-bold">匯入取代</button>
@@ -58,7 +58,7 @@
                         <i class="fa-solid fa-dice text-7xl md:text-9xl text-indigo-900"></i>
                     </div>
 
-                    <h2 class="text-[10px] md:text-sm font-bold text-indigo-400 uppercase tracking-widest mb-3 md:mb-4">今天推薦</h2>
+                    <h2 class="text-xs md:text-sm font-bold text-indigo-400 uppercase tracking-widest mb-3 md:mb-4">今天推薦</h2>
                     <div id="suggestionCard" class="bg-white p-6 md:p-8 rounded-2xl shadow-xl mb-6 md:mb-8 inline-block w-full max-w-xs border border-white">
                         <h3 id="targetName" class="text-2xl md:text-4xl font-black text-slate-800 mb-2 break-words">載入中...</h3>
 
@@ -75,11 +75,11 @@
                     </div>
 
                     <div class="mt-8 pt-6 border-t border-indigo-200/50">
-                        <p class="text-[10px] md:text-xs font-bold text-slate-400 mb-3 md:mb-4 tracking-widest uppercase">排除不想吃的條件</p>
+                        <p class="text-xs md:text-xs font-bold text-slate-400 mb-3 md:mb-4 tracking-widest uppercase">排除不想吃的條件</p>
                         <div id="rejectTags" class="flex flex-wrap gap-2 justify-center"></div>
                     </div>
                 </div>
-                <button onclick="stopGame()" class="w-full text-slate-400 hover:text-indigo-500 transition text-[10px] md:text-sm font-medium">
+                <button onclick="stopGame()" class="w-full text-slate-400 hover:text-indigo-500 transition text-xs md:text-sm font-medium">
                     <i class="fa-solid fa-arrow-left mr-1"></i> 返回名單管理
                 </button>
             </div>
@@ -106,7 +106,7 @@
                     </button>
                 </div>
 
-                <div class="flex justify-between items-center text-[10px] text-slate-300 px-1 mt-2">
+                <div class="flex justify-between items-center text-xs text-slate-300 px-1 mt-2">
                     <span id="statsCount">目前有 0 家店</span>
                     <button onclick="clearAll()" class="hover:text-red-400 transition underline font-medium">清空所有資料</button>
                 </div>
@@ -567,7 +567,7 @@ Hala Chicken | 近 | 美式 | 快速,平價
 
             if (validPool.length === 0) {
                 nameEl.innerHTML = '<span class="text-lg">沒選項了 😭</span>';
-                tagsEl.innerHTML = ""; rejectEl.innerHTML = '<p class="text-[10px] text-slate-300 italic">排除太多囉</p>';
+                tagsEl.innerHTML = ""; rejectEl.innerHTML = '<p class="text-xs text-slate-300 italic">排除太多囉</p>';
                 mapLink.classList.add('hidden');
                 return;
             }
@@ -582,8 +582,8 @@ Hala Chicken | 近 | 美式 | 快速,平價
             tagsEl.innerHTML = ''; rejectEl.innerHTML = '';
             const tags = `${picked.distance},${picked.foodType},${picked.tags}`.split(',').map(t => t.trim()).filter(t => t);
             tags.forEach(t => {
-                tagsEl.innerHTML += `<span class="bg-indigo-50 text-indigo-500 font-bold px-2 py-1 rounded-full text-[10px]">#${t}</span>`;
-                rejectEl.innerHTML += `<button onclick="excludeTag('${t}')" class="bg-white text-slate-400 border border-slate-100 px-3 py-1.5 rounded-xl text-[10px] hover:text-red-400 transition shadow-sm">不吃 ${t}</button>`;
+                tagsEl.innerHTML += `<span class="bg-indigo-50 text-indigo-500 font-bold px-2 py-1 rounded-full text-xs">#${t}</span>`;
+                rejectEl.innerHTML += `<button onclick="excludeTag('${t}')" class="bg-white text-slate-400 border border-slate-100 px-3 py-1.5 rounded-xl text-xs hover:text-red-400 transition shadow-sm">不吃 ${t}</button>`;
             });
         }
 
