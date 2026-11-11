@@ -340,18 +340,16 @@
   flex-wrap: wrap;
 }
 
-/* 有網站的名字：與一般名字同色，用淡底線表示可點 */
+/* 名字與文章標籤連結：平常無底線，滑鼠移上去才出現 */
 .commentName a {
   color: inherit;
-  text-decoration: underline;
-  text-decoration-color: var(--ifm-color-emphasis-400);
+  text-decoration: none;
   text-underline-offset: 3px;
-  transition: text-decoration-color 0.15s;
 }
 
 .commentName a:hover {
   color: inherit;
-  text-decoration-color: currentColor;
+  text-decoration: underline;
 }
 
 .slugTag {
@@ -368,9 +366,8 @@
   text-decoration: none;
 }
 
-.slugTag:hover {
+.commentName .slugTag:hover {
   color: var(--ifm-font-color-base);
-  text-decoration: none;
 }
 
 .commentTime {
@@ -380,10 +377,16 @@
 }
 
 /* 操作按鈕：平常較淡，滑鼠移到留言上才加深（觸控裝置維持可見） */
+.commentMeta {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+}
+
 .actions {
   display: inline-flex;
   gap: 2px;
-  margin-left: auto;
 }
 
 .actionBtn {
@@ -403,14 +406,27 @@
   color: var(--ifm-color-emphasis-700);
 }
 
-.actionBtn:hover {
+/* 指到的按鈕：選擇器需比上方「整則留言 hover」更具體，才不會被蓋掉 */
+.commentItemInner .actionBtn:hover {
   color: var(--ifm-font-color-base);
   background: var(--ifm-color-emphasis-100);
 }
 
-.commentItemInner:hover .actionDanger,
-.actionDanger:hover {
-  color: var(--ifm-color-danger);
+/* 只有滑鼠指到的那顆按鈕才亮色 */
+.commentItemInner .actionReply:hover {
+  color: #0070f3;
+}
+
+[data-theme='dark'] .commentItemInner .actionReply:hover {
+  color: #3b9eff;
+}
+
+.commentItemInner .actionDanger:hover {
+  color: #e5484d;
+}
+
+[data-theme='dark'] .commentItemInner .actionDanger:hover {
+  color: #ff6369;
 }
 
 .commentBody {
@@ -622,6 +638,13 @@
 /* --- 手機版 --- */
 @media (max-width: 600px) {
   .inputRow { grid-template-columns: 1fr; }
+
+  /* 手機：名字一行，時間＋操作按鈕一行 */
+  .commentHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
 
   .commentChildren {
     margin-left: 8px;

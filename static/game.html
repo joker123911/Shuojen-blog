@@ -191,19 +191,22 @@
             100% { transform: translateY(-24px) scale(0.9); opacity: 0; }
         }
 
+        /* 提示訊息：浮在盤面上（不推動下方版面），數秒後自動消失 */
         .hint-banner {
-            margin-top: 8px;
-            background: #fff8e1;
+            position: absolute;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            z-index: 20;
+            background: rgba(255, 248, 225, 0.97);
             border: 1.5px solid #ffc107;
             color: #7d5a00;
             padding: 8px 12px;
             border-radius: 8px;
             font-size: 13.5px;
             font-weight: bold;
-            width: var(--board-size);
-            max-width: var(--board-size);
             box-sizing: border-box;
-            box-shadow: 0 2px 6px rgba(243, 156, 18, 0.15);
+            box-shadow: 0 4px 14px rgba(139, 69, 19, 0.22);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -219,6 +222,8 @@
             text-align: center;
             line-height: 1.45;
         }
+        .hint-banner.at-top { bottom: auto; top: 8px; }
+        .hint-banner.is-error { background: rgba(253, 237, 236, 0.97); border-color: #e74c3c; color: #a93226; }
         .hint-banner-close {
             cursor: pointer;
             font-size: 18px;
@@ -226,6 +231,45 @@
             color: #b78103;
             padding: 0 4px;
             line-height: 1;
+            background: none;
+            border: none;
+            font-family: inherit;
+        }
+
+        .cell.selected.hint-cell { box-shadow: inset 0 0 0 3px #27ae60; }
+        .cell.hint-flash { animation: slotPulse 0.6s ease-out; }
+
+        /* 答案填滿但不正確：答案格左右晃動 */
+        .slots.shake { animation: shake 0.45s ease-in-out; }
+        .slots.shake .slot { border-color: #e74c3c; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-7px); }
+            40% { transform: translateX(7px); }
+            60% { transform: translateX(-5px); }
+            80% { transform: translateX(4px); }
+        }
+
+        /* 拿起關鍵字後，空的答案格發光提示可以點這裡 */
+        .slots.awaiting .slot:empty {
+            border-color: var(--key);
+            border-style: solid;
+            cursor: pointer;
+            animation: slotGlow 1s ease-in-out infinite;
+        }
+        @keyframes slotGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); background: #fff; }
+            50% { box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.25); background: #fff0ee; }
+        }
+
+        /* 關鍵字已填入答案格：紅圈停止閃爍並淡化 */
+        .cell.is-key.used::after { animation: none; opacity: 0.45; transform: scale(1); }
+
+        /* 鍵盤操作的焦點框 */
+        .cell:focus, .modal-content:focus { outline: none; }
+        .cell:focus-visible { outline: 3px solid #2e86c1; outline-offset: -3px; z-index: 7; }
+        .slot:focus-visible, .btn:focus-visible, .close-btn:focus-visible, .hint-banner-close:focus-visible {
+            outline: 3px solid #2e86c1; outline-offset: 2px;
         }
 
         .slot.hint-filled {
@@ -242,7 +286,7 @@
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 100; justify-content: center; align-items: center; }
         .modal-content { background: var(--bg); padding: 24px; border-radius: 12px; max-width: 450px; width: 90%; border: 4px solid var(--primary); position: relative; line-height: 1.8; overflow-y: auto; max-height: 90vh; max-height: 90dvh; box-sizing: border-box; -webkit-overflow-scrolling: touch; }
         .modal-content h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 8px; font-size: 18px; }
-        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: var(--primary); font-weight: bold; }
+        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: var(--primary); font-weight: bold; background: none; border: none; padding: 0 4px; line-height: 1.2; font-family: inherit; }
 
         .game-wrapper { 
             position: relative; 
@@ -519,7 +563,7 @@
             .date-badge { height: 34px; font-size: 13px; padding: 0 10px; }
             .stats-bar { font-size: 12.5px; padding: 4px 10px; }
             .daily-status { font-size: 11px; padding: 2px 6px; }
-            .hint-banner { font-size: 12.5px; padding: 6px 10px; }
+            .hint-banner { font-size: 12.5px; padding: 6px 10px; left: 4px; right: 4px; }
             .slots { gap: 5px; }
             .slot { flex-basis: 38px; font-size: 20px; }
             .footer { font-size: 11px; margin-top: 8px; }
@@ -540,22 +584,22 @@
         </div>
         <button class="btn" onclick="toggleModal(true)">遊戲說明</button>
         <button class="btn" onclick="toggleAboutModal(true)">關於遊戲</button>
-        <button id="btn-hint" class="btn btn-hint" onclick="handleHintClick()" title="使用提示（通關時間加30秒）">💡 提示 (+30s)</button>
+        <button id="btn-hint" class="btn btn-hint" onclick="handleHintClick()" title="使用提示（通關時間加 10 秒）">💡 提示 (+10s)</button>
     </div>
 
     <!-- 即時數據列（計時與步數） -->
     <div class="stats-bar">
         <div class="stat-item" style="position: relative;">
             <span class="stat-icon">⏱️</span><span id="timer-display">00:00</span>
-            <span id="penalty-floater" class="time-penalty-fly" style="display: none;">+30s</span>
+            <span id="penalty-floater" class="time-penalty-fly" style="display: none;"></span>
         </div>
         <div class="stat-item"><span id="mode-status-indicator" class="daily-status">🔥 每日一題</span></div>
         <div class="stat-item"><span class="stat-icon">🚶</span><span id="step-display">0 步</span></div>
     </div>
 
     <div id="info-modal" class="modal" onclick="toggleModal(false)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="toggleModal(false)">&times;</span>
+        <div class="modal-content" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
+            <button type="button" class="close-btn" aria-label="關閉" onclick="toggleModal(false)">&times;</button>
             <h3>📜 遊戲規則說明</h3>
             <ul>
                 <li>表格中藏有數個<b>四字成語</b>，排列順序可能是由上而下、由下而上、由左而右、由右而左，或是呈對角線（正反向皆可），請先找出表格裡的成語。</li>
@@ -574,8 +618,8 @@
                     </ul>
                 </li>
                 <li><b>修改答案：</b>點擊已填入文字的空格可清除該字。</li>
-                <li><b>提示功能：</b>卡關時可點擊「💡 提示」，每次使用將在通關時間上<b>增加 30 秒</b>；依進度依序提示「自動選取一條成語」、「圈出交叉處關鍵字」或「填入下方答案格位置」。</li>
-                <li><b>計時方式：</b>按下「開始挑戰」才會顯示題目並開始計時，重新整理則會整局重來。</li>
+                <li><b>提示功能：</b>卡關時可點擊「💡 提示」，每次使用將在通關時間上<b>增加 10 秒</b>；依進度依序提示「標示某條成語中的一個字」、「圈出交叉處關鍵字」或「填入下方一個答案字」。</li>
+                <li><b>計時方式：</b>按下「開始挑戰」才會顯示題目並開始計時，之後計時不會中斷；重新整理或關掉頁面再回來，會接續原本的進度與時間。</li>
             </ul>
 
             <div style="text-align: center; margin-top: 20px;">
@@ -586,23 +630,23 @@
 
     <!-- 提示確認彈窗 -->
     <div id="hint-modal" class="modal" onclick="toggleHintModal(false)">
-        <div class="modal-content" style="max-width: 360px; text-align: center;" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="toggleHintModal(false)">&times;</span>
+        <div class="modal-content" role="dialog" aria-modal="true" style="max-width: 360px; text-align: center;" onclick="event.stopPropagation()">
+            <button type="button" class="close-btn" aria-label="關閉" onclick="toggleHintModal(false)">&times;</button>
             <div style="font-size: 38px; margin-bottom: 6px;">💡</div>
             <h3 style="margin: 0 0 10px 0; border: none; padding: 0; color: var(--primary);">需要解謎提示嗎？</h3>
             <p style="margin: 0 0 16px 0; font-size: 14px; color: #5d4037; line-height: 1.6;" id="hint-modal-text">
-                使用一次提示將在通關時間上<b>增加 30 秒</b>。<br>確定要獲取提示嗎？
+                使用提示將在通關時間上增加秒數。<br>確定要獲取提示嗎？
             </p>
             <div style="display: flex; gap: 10px; justify-content: center;">
                 <button class="btn" style="flex: 1; background: #fff; color: var(--primary); border: 2px solid var(--primary); width: auto;" onclick="toggleHintModal(false)">我再想想</button>
-                <button class="btn" style="flex: 1; background: #e67e22; border-color: #d35400; width: auto;" onclick="confirmUseHint()">使用提示 (+30s)</button>
+                <button class="btn" style="flex: 1; background: #e67e22; border-color: #d35400; width: auto;" id="hint-confirm-btn" onclick="confirmUseHint()">使用提示</button>
             </div>
         </div>
     </div>
 
     <div id="about-modal" class="modal" onclick="toggleAboutModal(false)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="toggleAboutModal(false)">&times;</span>
+        <div class="modal-content" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
+            <button type="button" class="close-btn" aria-label="關閉" onclick="toggleAboutModal(false)">&times;</button>
             <div style="text-align: center; margin-bottom: 16px;">
                 <span style="font-size: 38px;">📖</span>
                 <h3 style="margin: 8px 0 6px 0; border: none; padding: 0;">關於「成語迷宮」</h3>
@@ -630,61 +674,54 @@
     </div>
 
     <div id="donate-modal" class="modal" onclick="toggleDonateModal(false)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="toggleDonateModal(false)">&times;</span>
+        <div class="modal-content" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
+            <button type="button" class="close-btn" aria-label="關閉" onclick="toggleDonateModal(false)">&times;</button>
             <div style="text-align: center; margin-bottom: 14px;">
                 <span style="font-size: 38px;">☕</span>
                 <h3 style="margin: 6px 0 4px 0; border: none; padding: 0;">支持成語迷宮</h3>
-                <div style="color: #795548; font-size: 13.5px;">無廣告、純粹思考的角落，感謝有您的相伴</div>
-            </div>
-            
-            <div style="background: rgba(243, 156, 18, 0.12); border-left: 4px solid var(--border); padding: 10px 12px; border-radius: 6px; font-size: 13px; color: #5d4037; line-height: 1.55; margin-bottom: 14px;">
-                本遊戲完全免費且<b>絕無廣告</b>干擾思考。若您在解謎過程中獲得了樂趣，歡迎透過<b>綠界科技（ECPay）</b>贊助支持作者與主機營運！
+                <div style="color: #795548; font-size: 13.5px;">免費、無廣告，喜歡的話歡迎贊助支持</div>
             </div>
 
             <!-- 方案 1: 50 元 -->
             <a href="https://p.ecpay.com.tw/41BB174" target="_blank" rel="noopener noreferrer" class="tier-card" onclick="handleDonateClick(event)">
                 <div class="tier-icon">☕</div>
                 <div class="tier-info">
-                    <strong>NT$ 50 · 請杯美式咖啡</strong>
-                    <span>補充電力，為作者注入解謎題庫開發動能</span>
+                    <strong>NT$ 50 · 請杯咖啡</strong>
                 </div>
-                <div class="tier-action-btn">贊助 $50 ➔</div>
+                <div class="tier-action-btn">贊助 ➔</div>
             </a>
 
             <!-- 方案 2: 150 元 -->
             <a href="https://p.ecpay.com.tw/52210C3" target="_blank" rel="noopener noreferrer" class="tier-card" onclick="handleDonateClick(event)">
                 <div class="tier-icon">🍜</div>
                 <div class="tier-info">
-                    <strong>NT$ 150 · 贊助元氣晚餐</strong>
-                    <span>加滿油箱，加速新關卡、功能與詞庫優化</span>
+                    <strong>NT$ 150 · 請吃頓飯</strong>
                 </div>
-                <div class="tier-action-btn">贊助 $150 ➔</div>
+                <div class="tier-action-btn">贊助 ➔</div>
             </a>
 
             <!-- 方案 3: 隨意填寫（單筆） -->
             <a href="https://p.ecpay.com.tw/4C157A4" target="_blank" rel="noopener noreferrer" class="tier-card" onclick="handleDonateClick(event)">
                 <div class="tier-icon">💖</div>
                 <div class="tier-info">
-                    <strong>自由心意 · 隨心自訂金額</strong>
-                    <span>金額由您填寫，隨喜打賞或給予大額守護</span>
+                    <strong>NT$ XXX · 自訂金額</strong>
                 </div>
-                <div class="tier-action-btn">自訂贊助 ➔</div>
+                <div class="tier-action-btn">贊助 ➔</div>
             </a>
 
             <!-- 方案 4: 定期定額（每月） -->
             <a href="https://p.ecpay.com.tw/90BC5B7" target="_blank" rel="noopener noreferrer" class="tier-card tier-recurring" onclick="handleDonateClick(event)">
                 <div class="tier-icon">🌱</div>
                 <div class="tier-info">
-                    <strong>每月相伴 · 定期定額 <span class="tier-badge">信用卡</span></strong>
-                    <span>金額由您自訂，每個月自動扣款支持（可隨時取消）</span>
+                    <strong>每月支持 <span class="tier-badge">信用卡</span></strong>
+                    <span>金額自訂，可隨時取消</span>
                 </div>
-                <div class="tier-action-btn">每月支持 ➔</div>
+                <div class="tier-action-btn">贊助 ➔</div>
             </a>
 
             <div style="text-align: center; margin-top: 14px;">
                 <div style="font-size: 12px; color: #888;">
-                    💳 支援 信用卡 / Apple Pay / ATM 櫃員機 / 網路 ATM / 超商代碼 / 超商條碼（定期定額限信用卡）
+                    💳 綠界 ECPay：信用卡、Apple Pay、ATM、超商
                 </div>
                 <div style="font-size: 12.5px; color: #8d6e63; margin-top: 8px;">
                     聯絡作者：<a href="mailto:me@shuojen.com" style="color: #8b4513; text-decoration: underline;">me@shuojen.com</a>
@@ -695,8 +732,8 @@
 
     <!-- 戰績結算與分享彈窗 -->
     <div id="victory-modal" class="modal" onclick="toggleVictoryModal(false)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="toggleVictoryModal(false)">&times;</span>
+        <div class="modal-content" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
+            <button type="button" class="close-btn" aria-label="關閉" onclick="toggleVictoryModal(false)">&times;</button>
             <div style="text-align: center; margin-bottom: 10px;">
                 <div style="font-size: 42px; margin-bottom: 4px;">🎉</div>
                 <h2 style="margin: 0; color: var(--primary); font-family: 'MantouSans', sans-serif; font-size: 32px; font-weight: normal;">解謎大成功！</h2>
@@ -738,24 +775,23 @@
                     </button>
                 </div>
                 <div style="font-size: 12.5px; color: #888; text-align: center; margin-top: 4px;">
-                    ⏳ 明天 00:00 準時解鎖新題目
+                    ⏳ <span class="next-countdown">明天 00:00 準時解鎖新題目</span>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="game-wrapper not-started">
-        <div class="grid" id="grid"></div>
+        <div class="grid" id="grid" role="grid" aria-label="成語迷宮盤面（方向鍵移動，Enter 選取）"></div>
         <svg id="svg-overlay"></svg>
         <div class="start-overlay">
             <div class="start-overlay-title">今日迷宮已就緒</div>
             <div class="start-overlay-desc">按下開始後顯示題目並開始計時</div>
             <button class="btn btn-start" onclick="startChallenge()">▶ 開始挑戰</button>
         </div>
+        <!-- 提示訊息（浮在盤面上） -->
+        <div id="hint-banner" class="hint-banner" role="status" aria-live="polite" style="display: none;"></div>
     </div>
-
-    <!-- 提示訊息橫幅 -->
-    <div id="hint-banner" class="hint-banner" style="display: none;"></div>
 
     <div class="answer-section">
         <div class="slots" id="slots"></div>
@@ -766,7 +802,7 @@
                 <button class="btn btn-donate" style="width: auto; padding: 0 16px; height: 36px; font-size: 13.5px; background: #b85c1e; border-color: #8b4513;" onclick="toggleDonateModal(true)">☕ 隨喜贊助</button>
             </div>
             <div style="font-size: 12.5px; color: #7f8c8d; margin-top: 6px; font-weight: normal;">
-                ⏳ 今日挑戰已完成！明天 00:00 準時解鎖新迷宮
+                ⏳ 今日挑戰已完成！<span class="next-countdown">明天 00:00 準時解鎖新迷宮</span>
             </div>
         </div>
         <div class="footer">
@@ -782,7 +818,7 @@
         const IS_DONATE_ACTIVE = true;
 
         function toggleDonateModal(show) {
-            document.getElementById('donate-modal').style.display = show ? 'flex' : 'none';
+            setModal('donate-modal', show);
         }
 
         function handleDonateClick(e) {
@@ -800,9 +836,60 @@
             toggleHintModal(false);
         }
 
+        // ==========================================
+        // 彈窗開關：開啟時把焦點移進彈窗、關閉時還原焦點，Tab 鍵只在彈窗內循環
+        // ==========================================
+        const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+        let modalReturnFocus = null;
+
+        function getOpenModal() {
+            return Array.from(document.querySelectorAll('.modal')).find(m => m.style.display === 'flex') || null;
+        }
+
+        function setModal(id, show) {
+            const modal = document.getElementById(id);
+            if (!modal) return;
+            const wasOpen = modal.style.display === 'flex';
+            if (show === wasOpen) return;
+            if (show) {
+                if (!getOpenModal()) modalReturnFocus = document.activeElement;
+                modal.style.display = 'flex';
+                // 焦點放在彈窗本身（不直接停在關閉鈕上，避免滑鼠使用者看到焦點框），按 Tab 再進到按鈕
+                const content = modal.querySelector('.modal-content');
+                if (content) {
+                    content.setAttribute('tabindex', '-1');
+                    content.focus({ preventScroll: true });
+                }
+            } else {
+                modal.style.display = 'none';
+                if (!getOpenModal() && modalReturnFocus && document.contains(modalReturnFocus)) {
+                    try { modalReturnFocus.focus({ preventScroll: true }); } catch (e) {}
+                    modalReturnFocus = null;
+                }
+            }
+        }
+
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeAllModals();
+                return;
+            }
+            if (e.key === 'Tab') {
+                const modal = getOpenModal();
+                if (!modal) return;
+                const items = Array.from(modal.querySelectorAll(FOCUSABLE)).filter(el => el.offsetParent !== null);
+                if (items.length === 0) return;
+                const first = items[0], last = items[items.length - 1];
+                if (!modal.contains(document.activeElement)) {
+                    e.preventDefault();
+                    first.focus();
+                } else if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
             }
         });
 
@@ -829,9 +916,21 @@
         // ==========================================
         // 提示系統狀態
         // ==========================================
-        const HINT_PENALTY_SECONDS = 30;
+        const HINT_PENALTY_SECONDS = 10; // 每次使用提示加的秒數
         let hintCount = 0;
-        let currentTargetKeys = []; 
+        let currentTargetKeys = [];
+        let hintedCells = new Set(); // 被提示標示出的單字格
+
+        // 一條成語是否已「畫出」：4 字皆已鎖定，或每個字都已選取／為已圈出的關鍵字
+        // （關鍵字格無法再被選取，若不把它算進來，穿過關鍵字的成語將永遠無法畫出而卡關）
+        function isLineDrawn(line) {
+            return line.every(id => lockedCells.has(id)) ||
+                   line.every(id => selectedIndices.has(id) || manualKeys.has(id));
+        }
+
+        function selectionWithKeys() {
+            return new Set([...selectedIndices, ...manualKeys.keys()]);
+        }
 
         // ==========================================
         // 每日一題系統（一天一題，零劇透輪替）
@@ -900,8 +999,78 @@
             }
         }
 
+        // ==========================================
+        // 進度保存（防止「先看題目 → 重新整理 → 計時歸零」的作弊）
+        // 按下「開始挑戰」的時間點與盤面進度存進 localStorage，
+        // 重新整理後自動接續，計時從第一次開始時持續累計
+        // ==========================================
+        const PROGRESS_PREFIX = 'idiom_progress_';
+        let isReplay = false; // 今日已通關後的「再玩一次」，不保存進度
+
+        function progressKey() {
+            return PROGRESS_PREFIX + (currentDaily || getDailyInfo()).dateFormatted;
+        }
+
+        function saveProgress() {
+            if (isReplay || !timerStarted || gameFinished || timerRunningSince === null) return;
+            safeSetStorage(progressKey(), JSON.stringify({
+                puzzle: currentLevelIndex,
+                startAt: timerRunningSince, // 已包含提示加秒
+                steps: stepCount,
+                hints: hintCount,
+                selected: [...selectedIndices],
+                hinted: [...hintedCells],
+                keys: [...manualKeys.entries()],
+                slots: Array.from(slotsEl.children).map(s => s.textContent)
+            }));
+        }
+
+        function clearProgress() {
+            try { localStorage.removeItem(progressKey()); } catch (e) {}
+        }
+
+        // 清掉前幾天殘留的進度
+        function cleanupOldProgress() {
+            try {
+                const keep = progressKey();
+                for (let i = localStorage.length - 1; i >= 0; i--) {
+                    const k = localStorage.key(i);
+                    if (k && k.startsWith(PROGRESS_PREFIX) && k !== keep) localStorage.removeItem(k);
+                }
+            } catch (e) {}
+        }
+
+        function loadProgress() {
+            const raw = safeGetStorage(progressKey());
+            if (!raw) return null;
+            try {
+                const data = JSON.parse(raw);
+                if (data.puzzle !== currentLevelIndex || typeof data.startAt !== 'number') return null;
+                return data;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function restoreProgress(data) {
+            selectedIndices = new Set(data.selected || []);
+            hintedCells = new Set(data.hinted || []);
+            manualKeys = new Map(data.keys || []);
+            rebuildLockedCells();
+            (data.slots || []).forEach((ch, i) => {
+                if (slotsEl.children[i]) slotsEl.children[i].textContent = ch || '';
+            });
+            stepCount = data.steps || 0;
+            hintCount = data.hints || 0;
+            updateStepDisplay();
+            startTimer(Math.min(data.startAt, Date.now()));
+            revealBoard();
+            updateVisuals();
+            showHintBanner('⏱️ 已接續上次的進度，計時從第一次開始挑戰時持續累計', { duration: 4000 });
+        }
+
         // 計時器：按下「開始挑戰」才開始；以時間戳計算（不受手機背景節流影響），
-        // 切到背景時照常計時；重新整理則整局重來（只保存當天的通關紀錄）
+        // 切到背景、重新整理或關閉頁面期間都照常計時（見上方進度保存）
         function tickTimer() {
             if (timerRunningSince === null) return;
             timerSeconds = Math.max(0, Math.floor((Date.now() - timerRunningSince) / 1000));
@@ -940,6 +1109,7 @@
             if (timerStarted) return;
             startTimer();
             revealBoard();
+            saveProgress(); // 一看到題目就記下開始時間
         }
 
         function resetStats() {
@@ -998,7 +1168,7 @@
         }
 
         function toggleVictoryModal(show) {
-            document.getElementById('victory-modal').style.display = show ? 'flex' : 'none';
+            setModal('victory-modal', show);
         }
 
         function showVictoryModal(customData) {
@@ -1135,11 +1305,11 @@ https://shuojen.com/game.html`;
         }
 
         function toggleModal(show) {
-            document.getElementById('info-modal').style.display = show ? 'flex' : 'none';
+            setModal('info-modal', show);
         }
 
         function toggleAboutModal(show) {
-            document.getElementById('about-modal').style.display = show ? 'flex' : 'none';
+            setModal('about-modal', show);
         }
 
         function initGame() {
@@ -1159,11 +1329,17 @@ https://shuojen.com/game.html`;
             loadLevel(info.dailyIndex);
 
             const completed = !!safeGetStorage('idiom_daily_' + info.dateFormatted);
+            cleanupOldProgress();
             if (completed) {
                 // 今日已通關：可以再玩一次，但不會覆蓋原本的成績
+                isReplay = true;
+                clearProgress();
                 document.querySelector('.start-overlay-title').textContent = '今日已通關 🎉';
                 document.querySelector('.start-overlay-desc').textContent = '可以再玩一次，不會影響已記錄的成績';
                 document.querySelector('.btn-start').textContent = '↻ 再玩一次';
+            } else {
+                const saved = loadProgress();
+                if (saved) restoreProgress(saved);
             }
         }
 
@@ -1174,6 +1350,7 @@ https://shuojen.com/game.html`;
             selectedIndices.clear();
             manualKeys.clear();
             lockedCells.clear();
+            hintedCells.clear();
             hintCount = 0;
             mobileSelectedChar = null;
             activeKeyIdx = null;
@@ -1193,7 +1370,10 @@ https://shuojen.com/game.html`;
                 cell.className = 'cell';
                 cell.textContent = char;
                 cell.dataset.idx = i;
+                cell.setAttribute('role', 'gridcell');
+                cell.tabIndex = i === 0 ? 0 : -1; // 盤面只佔一個 Tab 停駐點，用方向鍵移動
                 cell.onclick = () => handleCellClick(i, cell);
+                cell.onkeydown = (e) => handleCellKeydown(e, i);
                 cell.ondragstart = (e) => {
                     if (gameFinished || !cell.classList.contains('is-key')) return e.preventDefault();
                     e.dataTransfer.setData('text', cell.textContent);
@@ -1207,6 +1387,17 @@ https://shuojen.com/game.html`;
                 slot.className = 'slot';
                 slot.dataset.slotIdx = i;
                 slot.draggable = true;
+                slot.tabIndex = 0;
+                slot.setAttribute('role', 'button');
+                slot.onkeydown = (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        slot.onclick();
+                    } else if ((e.key === 'Backspace' || e.key === 'Delete') && slot.textContent && !mobileSelectedChar) {
+                        e.preventDefault();
+                        slot.onclick();
+                    }
+                };
                 slot.onclick = () => { 
                     if (gameFinished) return;
                     if (mobileSelectedChar) {
@@ -1238,6 +1429,25 @@ https://shuojen.com/game.html`;
             });
         }
 
+        // 盤面鍵盤操作：方向鍵移動、Enter／空白鍵等同點擊
+        function handleCellKeydown(e, idx) {
+            const moves = { ArrowUp: -size, ArrowDown: size, ArrowLeft: -1, ArrowRight: 1 };
+            if (e.key in moves) {
+                e.preventDefault();
+                const r = Math.floor(idx / size), c = idx % size;
+                if ((e.key === 'ArrowLeft' && c === 0) || (e.key === 'ArrowRight' && c === size - 1)) return;
+                const next = idx + moves[e.key];
+                if (next < 0 || next >= size * size || r < 0) return;
+                const cur = gridEl.children[idx], target = gridEl.children[next];
+                cur.tabIndex = -1;
+                target.tabIndex = 0;
+                target.focus();
+            } else if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleCellClick(idx, gridEl.children[idx]);
+            }
+        }
+
         function rebuildLockedCells() {
             lockedCells.clear();
             manualKeys.forEach(lines => {
@@ -1248,7 +1458,7 @@ https://shuojen.com/game.html`;
         }
 
         function handleCellClick(idx, el) {
-            if (gameFinished) return;
+            if (gameFinished || !timerStarted) return;
             recordStep();
             if (manualKeys.has(idx)) {
                 if (activeKeyIdx === idx) {
@@ -1272,12 +1482,8 @@ https://shuojen.com/game.html`;
                 const combined = new Set([...selectedIndices, ...lockedCells]);
                 const validLines = getValidIdiomsAtPoint(idx, combined);
                 
-                // 必須至少有 2 條有效成語交叉，且每條成語都必須是「4 字全選（黃底）」或「已鎖定黑線」
-                const activeValidLines = validLines.filter(line => {
-                    const isAllSelected = line.every(id => selectedIndices.has(id));
-                    const isAllLocked = line.every(id => lockedCells.has(id));
-                    return isAllSelected || isAllLocked;
-                });
+                // 必須至少有 2 條有效成語交叉，且每條成語都必須是「4 字全選（黃底，可含已圈出的關鍵字）」或「已鎖定黑線」
+                const activeValidLines = validLines.filter(isLineDrawn);
 
                 if (activeValidLines.length >= 2 && puzzles[currentLevelIndex].answer.includes(el.textContent)) {
                     // 鎖定前，檢查場上是否還有其他「已選滿 4 字」但不在本次鎖定範圍內的紅線成語
@@ -1285,7 +1491,7 @@ https://shuojen.com/game.html`;
                     const lockingLineKeys = new Set(
                         activeValidLines.map(line => [...line].sort((a, b) => a - b).join(','))
                     );
-                    const otherSelectedLines = findAllValid4CharLines(selectedIndices).filter(line => {
+                    const otherSelectedLines = findAllValid4CharLines(selectionWithKeys()).filter(line => {
                         const k = [...line].sort((a, b) => a - b).join(',');
                         return !lockingLineKeys.has(k);
                     });
@@ -1295,6 +1501,7 @@ https://shuojen.com/game.html`;
                     manualKeys.set(idx, activeValidLines);
                     rebuildLockedCells();
                     closeHintBanner();
+                    activeValidLines.forEach(line => line.forEach(id => hintedCells.delete(id)));
                     activeValidLines.forEach(line => line.forEach(id => { 
                         if (!keepSelectedIds.has(id) || id === idx) {
                             selectedIndices.delete(id); 
@@ -1302,6 +1509,7 @@ https://shuojen.com/game.html`;
                     }));
                 } else if (selectedIndices.has(idx)) {
                     selectedIndices.delete(idx);
+                    hintedCells.delete(idx);
                 } else {
                     selectedIndices.add(idx);
                 }
@@ -1348,17 +1556,32 @@ https://shuojen.com/game.html`;
 
         function updateVisuals() {
             svgEl.innerHTML = '';
+            const filledChars = new Set(Array.from(slotsEl.children).map(s => s.textContent).filter(Boolean));
             Array.from(gridEl.children).forEach((c, i) => {
+                const isKey = manualKeys.has(i);
                 c.classList.toggle('selected', selectedIndices.has(i));
                 c.classList.toggle('locked', lockedCells.has(i));
-                c.classList.remove('is-key', 'active-key');
-                c.draggable = manualKeys.has(i);
-                if (manualKeys.has(i)) {
+                c.classList.toggle('hint-cell', hintedCells.has(i) && selectedIndices.has(i));
+                c.classList.remove('is-key', 'active-key', 'used');
+                c.draggable = isKey;
+                if (isKey) {
                     c.classList.add('is-key');
                     if (activeKeyIdx === i) c.classList.add('active-key');
+                    if (filledChars.has(c.textContent)) c.classList.add('used');
                 }
+                // 給螢幕閱讀器的狀態說明
+                const states = [];
+                if (isKey) states.push(activeKeyIdx === i ? '已拿起的關鍵字' : '關鍵字');
+                else if (selectedIndices.has(i)) states.push('已選取');
+                else if (lockedCells.has(i)) states.push('已找到');
+                c.setAttribute('aria-label', `${c.textContent}，第 ${Math.floor(i / size) + 1} 列第 ${i % size + 1} 行${states.length ? '，' + states.join('，') : ''}`);
             });
 
+            // 拿起關鍵字時，讓空的答案格發光提示可以點
+            slotsEl.classList.toggle('awaiting', activeKeyIdx !== null && !gameFinished);
+            Array.from(slotsEl.children).forEach((s, i) => {
+                s.setAttribute('aria-label', `答案第 ${i + 1} 格${s.textContent ? '：' + s.textContent : '（空）'}`);
+            });
             // 1. 繪製所有已鎖定成語的黑線（去重複繪製，避免同成語被多個關鍵字重複疊線變深）
             const lockedLineKeys = new Set();
             manualKeys.forEach(lines => {
@@ -1372,14 +1595,16 @@ https://shuojen.com/game.html`;
                 });
             });
 
-            // 2. 只有當 4 個字都處於選取狀態（4 格皆亮黃底）時，才繪製新成語紅線
-            findAllValid4CharLines(selectedIndices).forEach(line => {
+            // 2. 只有當 4 個字都處於選取狀態（4 格皆亮黃底，或為已圈出的關鍵字）時，才繪製新成語紅線
+            findAllValid4CharLines(selectionWithKeys()).forEach(line => {
                 const lineKey = [...line].sort((a, b) => a - b).join(',');
-                if (!lockedLineKeys.has(lineKey)) {
+                if (!lockedLineKeys.has(lineKey) && line.some(id => selectedIndices.has(id))) {
                     const ends = getEnds(line);
                     drawSvgLine(ends.start, ends.end, 'red-line');
                 }
             });
+
+            saveProgress();
         }
 
         function findAllValid4CharLines(set) {
@@ -1504,14 +1729,25 @@ https://shuojen.com/game.html`;
                         }));
                     }
                     checkDailyCompletion();
-                    
+                    clearProgress();
+                    closeHintBanner();
+
                     setTimeout(() => {
                         showVictoryModal();
                     }, 400);
                 }
             } else {
                 winMsgEl.style.display = 'none';
+                // 答案格全部填滿卻不正確：晃動並提示
+                const slots = Array.from(slotsEl.children);
+                if (!gameFinished && slots.length > 0 && slots.every(s => s.textContent)) {
+                    slotsEl.classList.remove('shake');
+                    void slotsEl.offsetWidth; // 觸發重繪以重播動畫
+                    slotsEl.classList.add('shake');
+                    showHintBanner('🤔 答案還不太對喔，再調整看看！', { error: true, duration: 2500 });
+                }
             }
+            updateVisuals(); // 更新關鍵字淡化、答案格狀態，並保存進度
         }
 
         // ==========================================
@@ -1576,29 +1812,25 @@ https://shuojen.com/game.html`;
                 let candidateLine = null;
 
                 for (const keyInfo of uncollectedKeys) {
-                    const drawnCount = keyInfo.lines.filter(lineObj => {
-                        const isAllLocked = lineObj.path.every(idx => lockedCells.has(idx));
-                        const isAllSelected = lineObj.path.every(idx => selectedIndices.has(idx));
-                        return isAllLocked || isAllSelected;
-                    }).length;
+                    const drawnCount = keyInfo.lines.filter(lineObj => isLineDrawn(lineObj.path)).length;
 
                     // 若該關鍵字在盤面上已畫出至少 2 條交叉成語，則不需再為它提示更多成語
                     if (drawnCount >= 2) continue;
 
-                    for (const lineObj of keyInfo.lines) {
-                        const isAllLocked = lineObj.path.every(idx => lockedCells.has(idx));
-                        const isAllSelected = lineObj.path.every(idx => selectedIndices.has(idx));
-                        if (!isAllLocked && !isAllSelected) {
-                            candidateLine = lineObj;
-                            break;
-                        }
+                    // 優先提示玩家已經選了一部分的成語，讓連續提示能接續補完同一條
+                    const pending = keyInfo.lines.filter(lineObj => !isLineDrawn(lineObj.path));
+                    pending.sort((a, b) =>
+                        b.path.filter(id => selectedIndices.has(id)).length -
+                        a.path.filter(id => selectedIndices.has(id)).length);
+                    if (pending.length > 0) {
+                        candidateLine = pending[0];
+                        break;
                     }
-                    if (candidateLine) break;
                 }
 
                 if (candidateLine) {
                     return {
-                        stage: 1, // 階段一：提示一條尚未畫出的成語（自動選取紅線）
+                        stage: 1, // 階段一：標示一條尚未畫出成語中的隨機一個字
                         lineObj: candidateLine
                     };
                 } else {
@@ -1621,7 +1853,7 @@ https://shuojen.com/game.html`;
                 return;
             }
             if (!timerStarted) {
-                alert("請先點擊「▶ 開始挑戰」後再使用提示！");
+                showHintBanner("請先按下「▶ 開始挑戰」再使用提示！", { duration: 3000 });
                 return;
             }
             const p = puzzles[currentLevelIndex];
@@ -1630,23 +1862,25 @@ https://shuojen.com/game.html`;
             const stageInfo = getHintStageInfo(p);
             if (!stageInfo) return;
 
+            const penalty = HINT_PENALTY_SECONDS;
             const modalTextEl = document.getElementById('hint-modal-text');
             if (modalTextEl) {
                 if (stageInfo.stage === 1) {
-                    modalTextEl.innerHTML = `使用一次提示將在通關時間上<b>增加 ${HINT_PENALTY_SECONDS} 秒</b>，<br>並為您在盤面上<b>自動選取一條成語</b>。<br>確定要獲取提示嗎？`;
+                    modalTextEl.innerHTML = `使用一次提示將在通關時間上<b>增加 ${penalty} 秒</b>，<br>並在盤面上<b>標示某條成語中的一個字</b>。<br>確定要獲取提示嗎？`;
                 } else if (stageInfo.stage === 2) {
-                    modalTextEl.innerHTML = `盤面成語已全數畫出！<br>使用一次提示將在通關時間上<b>增加 ${HINT_PENALTY_SECONDS} 秒</b>，<br>並為您<b>圈出一個交叉處的關鍵字</b>。<br>確定要獲取提示嗎？`;
+                    modalTextEl.innerHTML = `盤面成語已全數畫出！<br>使用一次提示將在通關時間上<b>增加 ${penalty} 秒</b>，<br>並為您<b>圈出一個交叉處的關鍵字</b>。<br>確定要獲取提示嗎？`;
                 } else {
-                    modalTextEl.innerHTML = `關鍵字已全數找齊！<br>使用一次提示將在通關時間上<b>增加 ${HINT_PENALTY_SECONDS} 秒</b>，<br>並為您<b>填入下方一個正確答案字</b>。<br>確定要獲取提示嗎？`;
+                    modalTextEl.innerHTML = `關鍵字已全數找齊！<br>使用一次提示將在通關時間上<b>增加 ${penalty} 秒</b>，<br>並為您<b>填入下方一個正確答案字</b>。<br>確定要獲取提示嗎？`;
                 }
             }
+            const confirmBtn = document.getElementById('hint-confirm-btn');
+            if (confirmBtn) confirmBtn.textContent = `使用提示 (+${penalty}s)`;
 
             toggleHintModal(true);
         }
 
         function toggleHintModal(show) {
-            const modal = document.getElementById('hint-modal');
-            if (modal) modal.style.display = show ? 'flex' : 'none';
+            setModal('hint-modal', show);
         }
 
         function confirmUseHint() {
@@ -1670,15 +1904,17 @@ https://shuojen.com/game.html`;
                 }
             }
 
+            const penalty = HINT_PENALTY_SECONDS;
             hintCount++;
             if (timerRunningSince !== null) {
-                timerRunningSince -= HINT_PENALTY_SECONDS * 1000;
+                timerRunningSince -= penalty * 1000;
                 tickTimer();
             } else {
-                timerSeconds += HINT_PENALTY_SECONDS;
+                timerSeconds += penalty;
                 updateTimerDisplay();
             }
-            showPenaltyFlyAnimation();
+            showPenaltyFlyAnimation(penalty);
+            saveProgress();
 
             if (stageInfo.stage === 1) {
                 giveIdiomHint(stageInfo.lineObj);
@@ -1692,16 +1928,27 @@ https://shuojen.com/game.html`;
         function giveIdiomHint(candidateLine) {
             if (!candidateLine) return;
 
-            candidateLine.path.forEach(idx => {
-                if (!manualKeys.has(idx)) {
-                    selectedIndices.add(idx);
-                }
-            });
+            // 只從這條成語中「尚未選取、也不是關鍵字」的格子裡隨機挑一個字標示
+            const candidates = candidateLine.path.filter(idx => !selectedIndices.has(idx) && !manualKeys.has(idx));
+            if (candidates.length === 0) return;
+            const idx = candidates[Math.floor(Math.random() * candidates.length)];
 
+            selectedIndices.add(idx);
+            hintedCells.add(idx);
+            mobileSelectedChar = null;
+            activeKeyIdx = null;
             updateVisuals();
 
-            const word = candidateLine.word;
-            showHintBanner(`💡 提示成語：【${word}】（已在盤面上為您自動選取）`);
+            const cell = gridEl.children[idx];
+            if (cell) {
+                cell.classList.remove('hint-flash');
+                void cell.offsetWidth; // 觸發重繪以重播動畫
+                cell.classList.add('hint-flash');
+            }
+
+            const r = Math.floor(idx / size) + 1, c = idx % size + 1;
+            const ch = cell ? cell.textContent : '';
+            showHintBanner(`💡 提示：第 ${r} 列第 ${c} 行的「${ch}」是某條成語的其中一字（已用綠框標示）`, { top: r > size / 2 });
         }
 
         function giveKeyCircleHint(keyInfo) {
@@ -1710,11 +1957,7 @@ https://shuojen.com/game.html`;
             const combined = new Set([...selectedIndices, ...lockedCells]);
             const validLines = getValidIdiomsAtPoint(idx, combined);
 
-            let activeValidLines = validLines.filter(line => {
-                const isAllSelected = line.every(id => selectedIndices.has(id));
-                const isAllLocked = line.every(id => lockedCells.has(id));
-                return isAllSelected || isAllLocked;
-            });
+            let activeValidLines = validLines.filter(isLineDrawn);
 
             if (activeValidLines.length < 2) {
                 activeValidLines = keyInfo.lines.slice(0, 2).map(l => l.path);
@@ -1723,7 +1966,7 @@ https://shuojen.com/game.html`;
             const lockingLineKeys = new Set(
                 activeValidLines.map(line => [...line].sort((a, b) => a - b).join(','))
             );
-            const otherSelectedLines = findAllValid4CharLines(selectedIndices).filter(line => {
+            const otherSelectedLines = findAllValid4CharLines(selectionWithKeys()).filter(line => {
                 const k = [...line].sort((a, b) => a - b).join(',');
                 return !lockingLineKeys.has(k);
             });
@@ -1732,6 +1975,7 @@ https://shuojen.com/game.html`;
 
             manualKeys.set(idx, activeValidLines);
             rebuildLockedCells();
+            activeValidLines.forEach(line => line.forEach(id => hintedCells.delete(id)));
             activeValidLines.forEach(line => line.forEach(id => {
                 if (!keepSelectedIds.has(id) || id === idx) {
                     selectedIndices.delete(id);
@@ -1741,7 +1985,7 @@ https://shuojen.com/game.html`;
             mobileSelectedChar = null;
             activeKeyIdx = null;
             updateVisuals();
-            showHintBanner(`💡 提示關鍵字：已在盤面上為您圈出關鍵字「${keyInfo.char}」！`);
+            showHintBanner(`💡 提示關鍵字：已在盤面上為您圈出關鍵字「${keyInfo.char}」！`, { top: Math.floor(idx / size) >= size / 2 });
         }
 
         function giveSlotPlacementHint(puzzle) {
@@ -1792,12 +2036,12 @@ https://shuojen.com/game.html`;
         }
 
         let penaltyAnimTimeout = null;
-        function showPenaltyFlyAnimation() {
+        function showPenaltyFlyAnimation(seconds) {
             const floater = document.getElementById('penalty-floater');
             if (!floater) return;
             if (penaltyAnimTimeout) clearTimeout(penaltyAnimTimeout);
             floater.style.display = 'block';
-            floater.textContent = `+${HINT_PENALTY_SECONDS}s`;
+            floater.textContent = `+${seconds}s`;
             floater.classList.remove('time-penalty-fly');
             void floater.offsetWidth;
             floater.classList.add('time-penalty-fly');
@@ -1807,17 +2051,52 @@ https://shuojen.com/game.html`;
             }, 1200);
         }
 
-        function showHintBanner(msg) {
+        // 浮在盤面上的訊息。options: { top: 顯示在盤面上緣, error: 紅色樣式, duration: 自動消失毫秒數 }
+        let bannerTimeout = null;
+        function showHintBanner(msg, options = {}) {
             const banner = document.getElementById('hint-banner');
             if (!banner) return;
-            banner.innerHTML = `<span class="hint-banner-text">${msg}</span><span class="hint-banner-close" onclick="closeHintBanner()">&times;</span>`;
+            if (bannerTimeout) clearTimeout(bannerTimeout);
+            banner.innerHTML = `<span class="hint-banner-text">${msg}</span><button type="button" class="hint-banner-close" aria-label="關閉訊息" onclick="closeHintBanner()">&times;</button>`;
+            banner.classList.toggle('at-top', !!options.top);
+            banner.classList.toggle('is-error', !!options.error);
+            banner.style.display = 'none';
+            void banner.offsetWidth; // 重播淡入動畫
             banner.style.display = 'flex';
+            bannerTimeout = setTimeout(closeHintBanner, options.duration || 6000);
         }
 
         function closeHintBanner() {
+            if (bannerTimeout) {
+                clearTimeout(bannerTimeout);
+                bannerTimeout = null;
+            }
             const banner = document.getElementById('hint-banner');
             if (banner) banner.style.display = 'none';
         }
+
+        // ==========================================
+        // 下一題倒數（通關訊息與戰績卡）
+        // ==========================================
+        function updateNextCountdown() {
+            const els = document.querySelectorAll('.next-countdown');
+            if (els.length === 0) return;
+            const now = new Date();
+            const today = (currentDaily || getDailyInfo()).dateFormatted;
+            const nowStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+            let text;
+            if (nowStr !== today) {
+                text = '新題目已解鎖，重新整理即可挑戰！';
+            } else {
+                const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+                const diff = Math.max(0, Math.floor((midnight - now) / 1000));
+                const h = Math.floor(diff / 3600), m = Math.floor(diff % 3600 / 60), s = diff % 60;
+                text = `新題目倒數 ${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+            }
+            els.forEach(el => { el.textContent = text; });
+        }
+        updateNextCountdown();
+        setInterval(updateNextCountdown, 1000);
 
         window.addEventListener('resize', updateVisuals);
         if (window.ResizeObserver) {

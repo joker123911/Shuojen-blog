@@ -34,11 +34,82 @@
 }
 
 /* 標籤列 */
+.tagSection {
+  margin-bottom: 2.5rem;
+}
+
+.tagToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 4px;
+  margin-left: -4px;
+  border: none;
+  background: none;
+  color: var(--ifm-color-emphasis-700);
+  font-family: inherit;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.tagToggle:hover {
+  color: var(--ifm-font-color-base);
+}
+
+/* 滑鼠點擊不顯示焦點框，鍵盤操作才顯示 */
+.tagToggle:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.tagToggle:focus-visible {
+  outline: 2px solid var(--ifm-color-emphasis-600);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.tagToggleCount {
+  font-size: 0.75rem;
+  color: var(--ifm-color-emphasis-600);
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.tagToggleArrow {
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+
+.tagToggleOpen .tagToggleArrow {
+  transform: rotate(180deg);
+}
+
+/* 展開動畫：grid 0fr → 1fr */
+.tagPanel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.tagPanelOpen {
+  grid-template-rows: 1fr;
+}
+
 .tagCloud {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 2.5rem;
+  min-height: 0;
+  overflow: hidden;
+  /* 收合後完全隱藏；收合時等動畫跑完才隱藏，展開時立即顯示 */
+  visibility: hidden;
+  transition: visibility 0s linear 0.3s;
+}
+
+.tagPanelOpen .tagCloud {
+  padding-top: 10px;
+  visibility: visible;
+  transition-delay: 0s;
 }
 
 .tagChip {

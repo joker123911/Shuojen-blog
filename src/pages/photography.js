@@ -471,17 +471,17 @@ export default function PhotoGallery() {
           --row-h: 280px;          /* 目標列高，實際列高會略為拉伸以填滿整列 */
           display: flex;
           flex-wrap: wrap;
-          gap: 10px;               /* 窄間距、直角，讓照片本身當主角 */
+          gap: var(--ifm-paragraph-margin-bottom); /* 與文章內照片的上下間距一致（1rem = 16px） */
           max-width: 1600px;
           margin: 24px auto 40px;
-          padding: 0 15px;
+          padding: 0 24px;
         }
 
         /* --- 篩選列 --- */
         .gallery-filters {
           max-width: 1600px;
           margin: 0 auto;
-          padding: 0 15px;
+          padding: 0 24px;
         }
         .gallery-filter-bar {
           display: flex;
@@ -642,7 +642,7 @@ export default function PhotoGallery() {
           border: none;
           background: var(--ifm-color-emphasis-200);
           padding: 0;
-          border-radius: 2px;
+          border-radius: 4px;
           overflow: hidden;
           cursor: pointer;
         }
@@ -676,7 +676,7 @@ export default function PhotoGallery() {
         .photo-skeleton {
           position: absolute;
           inset: 0;
-          border-radius: 2px;
+          border-radius: 4px;
           background: var(--ifm-color-emphasis-200);
           animation: skeletonPulse 1.4s ease-in-out infinite;
         }
@@ -814,7 +814,6 @@ export default function PhotoGallery() {
         @media (max-width: 1024px) {
           .gallery-grid {
             --row-h: 220px;
-            gap: 8px;
           }
           .lightbox-nav-btn {
             font-size: 3rem;
@@ -827,7 +826,6 @@ export default function PhotoGallery() {
         @media (max-width: 640px) {
           .gallery-grid {
             --row-h: 150px;
-            gap: 6px;
             padding: 0 16px;
           }
           .gallery-filters { padding: 0 16px; }

@@ -619,12 +619,12 @@ export default function Guestbook({ readOnly = false, postSlug }) {
                 </Link>
               )}
             </span>
+            {/* 時間與操作按鈕同一行（沿用舊版排版），按鈕平常較淡，滑鼠移到留言上才加深 */}
+            <span className={styles.commentMeta}>
             <span className={styles.commentTime}>{formatDate(c.time)}</span>
-
-            {/* 操作按鈕：平常較淡，滑鼠移到留言上才加深 */}
             <span className={styles.actions}>
               {!readOnly && (
-                <button className={styles.actionBtn} onClick={() => startReply(c.id)}>
+                <button className={`${styles.actionBtn} ${styles.actionReply}`} onClick={() => startReply(c.id)}>
                   回覆
                 </button>
               )}
@@ -646,6 +646,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
                   )}
                 </>
               )}
+            </span>
             </span>
           </div>
 

@@ -2,21 +2,22 @@
 
 .container {
   margin-top: 1.5rem;
+  container-type: inline-size;
 }
 
-/* --- 搜尋列：與下方內容一致靠左對齊 --- */
+/* --- 搜尋列：撐滿整列，左右與下方卡片切齊 --- */
 .searchRow {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
+  align-items: stretch;
+  gap: 10px;
+  margin-bottom: 10px;
   flex-wrap: wrap;
 }
 
 .searchBox {
   position: relative;
   flex: 1 1 280px;
-  max-width: 500px;
+  min-width: 0;
   display: flex;
   align-items: center;
 }
@@ -29,7 +30,8 @@
 
 .searchInput {
   width: 100%;
-  padding: 10px 40px 10px 44px;
+  height: 42px;
+  padding: 0 40px 0 44px;
   border-radius: 999px;
   border: 1px solid var(--ifm-color-emphasis-300);
   background: var(--ifm-background-color);
@@ -61,7 +63,11 @@
 }
 
 .countBadge {
-  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  padding: 0 16px;
   border-radius: 999px;
   border: 1px solid var(--ifm-color-emphasis-300);
   background: var(--ifm-color-emphasis-100);
@@ -72,19 +78,20 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* --- 篩選按鈕 --- */
+/* --- 篩選按鈕：等寬格線平均分配，依容器寬度 6 → 3 → 2 欄，不留缺角 --- */
 .filterBar {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  white-space: nowrap;
-  padding-bottom: 6px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
   margin-bottom: 18px;
-  scrollbar-width: none;
 }
 
-.filterBar::-webkit-scrollbar {
-  display: none;
+@container (min-width: 760px) {
+  .filterBar { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+@container (max-width: 380px) {
+  .filterBar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 /* 手機版：右緣淡出，暗示篩選列還可以往右滑 */
@@ -97,7 +104,12 @@
 }
 
 .filterBtn {
-  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: 38px;
+  padding: 0 10px;
   border-radius: 999px;
   border: 1px solid var(--ifm-color-emphasis-300);
   background: transparent;
@@ -105,6 +117,10 @@
   font-family: inherit;
   font-size: 0.92rem;
   font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   cursor: pointer;
   transition: background-color 0.15s, border-color 0.15s, color 0.15s;
 }
@@ -426,5 +442,5 @@
 }
 
 @media (max-width: 600px) {
-  .searchBox { max-width: none; }
+  .countBadge { flex: 1 1 100%; }
 }

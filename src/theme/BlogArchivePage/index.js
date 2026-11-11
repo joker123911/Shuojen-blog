@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Link from '@docusaurus/Link';
 import {translate} from '@docusaurus/Translate';
 import {PageMetadata} from '@docusaurus/theme-common';
@@ -47,14 +47,35 @@ function YearNav({years}) {
 }
 
 function TagCloud({tags}) {
+  // 標籤預設收合，點「標籤」展開（與攝影集的篩選列相同）
+  const [open, setOpen] = useState(false);
   return (
-    <div className={styles.tagCloud}>
-      {tags.map((tag) => (
-        <Link key={tag.permalink} to={tag.permalink} className={styles.tagChip}>
-          {tag.label}
-          <span className={styles.tagCount}>{tag.count}</span>
-        </Link>
-      ))}
+    <div className={styles.tagSection}>
+      <button
+        type="button"
+        className={`${styles.tagToggle} ${open ? styles.tagToggleOpen : ''}`}
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-controls="archive-tag-panel"
+      >
+        標籤
+        <span className={styles.tagToggleCount}>{tags.length}</span>
+        <span className={styles.tagToggleArrow} aria-hidden="true">▾</span>
+      </button>
+      <div
+        id="archive-tag-panel"
+        className={`${styles.tagPanel} ${open ? styles.tagPanelOpen : ''}`}
+        inert={!open}
+      >
+        <div className={styles.tagCloud}>
+          {tags.map((tag) => (
+            <Link key={tag.permalink} to={tag.permalink} className={styles.tagChip}>
+              {tag.label}
+              <span className={styles.tagCount}>{tag.count}</span>
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
