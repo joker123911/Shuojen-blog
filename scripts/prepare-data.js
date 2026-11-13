@@ -128,6 +128,7 @@ function processOpml() {
 
 function getWordCount(content) {
   let cleanContent = content || '';
+  cleanContent = cleanContent.replace(/^(import|export)\s.*$/gm, ''); // MDX import / export 不算字數
   cleanContent = cleanContent.replace(/!\[.*?\]\(.*?\)/g, '');
   cleanContent = cleanContent.replace(/<[^>]+>/g, '');
   cleanContent = cleanContent.replace(/\[(.*?)\]\(.*?\)/g, '$1');

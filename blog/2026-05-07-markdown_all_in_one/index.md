@@ -5,6 +5,12 @@ date: 2026-05-07
 rss_date: '2026-05-07T16:59:04+08:00'
 ---
 
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" />
+</Head>
+
 這份筆記整理了在 VSCodium 中一個好用插件 [Markdown All in One](https://github.com/yzhang-gh/vscode-markdown) 的小技巧，能快速撰寫 Markdown 格式，真的是太晚發現了，我最愛的就是快速超連結功能，省事超多。
 
 ## 1. 超連結與網址快速貼上

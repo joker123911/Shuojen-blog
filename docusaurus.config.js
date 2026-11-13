@@ -71,6 +71,7 @@ const config = {
       let cleanContent = result.content || '';
       // 移除圖片、標籤、程式碼區塊
       cleanContent = cleanContent
+        .replace(/^(import|export)\s.*$/gm, '') // MDX import / export 不算字數
         .replace(/!\[.*?\]\(.*?\)/g, '')
         .replace(/<[^>]+>/g, '')
         .replace(/\[(.*?)\]\(.*?\)/g, '$1')

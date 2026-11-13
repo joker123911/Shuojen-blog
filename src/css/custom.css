@@ -11,8 +11,11 @@
 /* 注意：@import 必須位於檔案最上方，否則瀏覽器會忽略 */
 @import url("https://font.emtech.cc/css/jfOpenHuninn?display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&display=swap');
-@import url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css');
+/* Noto Serif TC 由 NowEvaPoster 元件自行載入。
+   KaTeX CSS 不再全站載入：有數學公式的文章請在內文加上
+   import Head from '@docusaurus/Head';
+   <Head><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" /></Head>
+   （版本請與 node_modules/katex 一致） */
 
 /* 修正：jfOpenHuninn 的反引號 ` (U+0060) 字寬為 0，會與相鄰文字重疊。
    僅針對這個字元改用系統字型顯示，其餘文字仍使用粉圓體。 */

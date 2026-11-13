@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from '@docusaurus/Head';
 import posterData from '@site/src/data/generated/nowPosterData.json';
 import styles from './styles.module.css';
 
@@ -197,6 +198,13 @@ export default function NowEvaPoster() {
   );
 
   return (
+    <>
+    {/* 海報專用字體，只在有海報的頁面載入 */}
+    <Head>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&display=swap" />
+    </Head>
     <div className={styles.posterContainer} aria-label="近90天部落格與興趣清單文字雲海報">
       <svg
         viewBox="0 0 1200 840"
@@ -372,5 +380,6 @@ export default function NowEvaPoster() {
         />
       </svg>
     </div>
+    </>
   );
 }
