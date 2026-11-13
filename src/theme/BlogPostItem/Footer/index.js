@@ -10,12 +10,11 @@ export default function FooterWrapper(props) {
     <>
       <Footer {...props} />
 
-      {/* 只在單篇文章頁顯示留言板；列表頁每篇都掛會讓同一頁重複抓取全站留言 */}
-      {isBlogPostPage && (
-        <div style={{ marginTop: '3rem' }}>
-          <Guestbook postSlug={metadata.permalink} />
-        </div>
-      )}
+      {/* 單篇文章頁可留言；列表頁只顯示該篇留言（唯讀）。
+          同一頁多個留言板會共用 Guestbook 內的全站留言快取，只發一次請求 */}
+      <div style={{ marginTop: '3rem' }}>
+        <Guestbook readOnly={!isBlogPostPage} postSlug={metadata.permalink} />
+      </div>
     </>
   );
 }
