@@ -75,7 +75,7 @@ function processOpml() {
   while ((tokenMatch = tokenRegex.exec(content)) !== null) {
     const fullTag = tokenMatch[0];
 
-    if (fullTag.startsWith('</') || fullTag.startsWith('</outline')) {
+    if (fullTag.startsWith('</')) {
       if (stack.length > 0) stack.pop();
     } else {
       const attrs = {};
@@ -200,7 +200,7 @@ function runDataPreparation() {
       const data = parsed.data || {};
 
       // 檢查必填項目
-      if (!data.title && !file.replace(/\.mdx?$/, '')) {
+      if (!data.title) {
         formatWarnings.push({
           file: relPath,
           message: '未設定文章標題 (title)',

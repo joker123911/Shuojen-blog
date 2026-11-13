@@ -7,6 +7,24 @@ import commentsConfig from '@site/src/config/comments.json';
 
 // 留言 API 網址與 Turnstile site key 集中在 src/config/comments.json
 const WORKER_URL = commentsConfig.apiUrl;
+const ADMIN_KEY_STORAGE = 'guestbook_admin_key';
+
+// localStorage 在隱私模式或封鎖網站資料時可能丟例外，讀寫都要包起來
+function readStoredAdminKey() {
+  try {
+    return window.localStorage.getItem(ADMIN_KEY_STORAGE);
+  } catch {
+    return null;
+  }
+}
+
+function storeAdminKey(key) {
+  try {
+    window.localStorage.setItem(ADMIN_KEY_STORAGE, key);
+  } catch {
+    // 存不了就只在這次瀏覽有效
+  }
+}
 
 // --- 全站留言快取（模組層級）：同一次瀏覽內切換文章不必重抓，同時進行的請求也會共用 ---
 const COMMENTS_CACHE_TTL = 60 * 1000;
@@ -57,7 +75,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
 
   // --- 管理員狀態 ---
   const [adminKey, setAdminKey] = useState('');
-  const [clickCount, setClickCount] = useState(0);
+  const secretClicksRef = useRef(0);
 
   // --- 互動狀態（回覆、編輯與摺疊控制） ---
   const [replyingTo, setReplyingTo] = useState(null); 
@@ -93,40 +111,37 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   }, [pendingDeleteId]);
 
   useEffect(() => {
-    const savedKey = localStorage.getItem('guestbook_admin_key');
+    const savedKey = readStoredAdminKey();
     if (savedKey) setAdminKey(savedKey);
   }, []);
 
-  const handleSecretClick = () => {
-    setClickCount((prev) => {
-      const nextCount = prev + 1;
-      if (nextCount >= 5) {
-        setTimeout(async () => {
-          const key = prompt('🎉 恭喜你發現了隱藏大門！\n如果你是站長，請輸入通關密語：');
-          
-          if (key) {
-            try {
-              const res = await fetch(`${WORKER_URL}/verify`, {
-                headers: { 'Authorization': key }
-              });
-              const result = await res.json();
+  const promptAdminKey = async () => {
+    const key = prompt('🎉 恭喜你發現了隱藏大門！\n如果你是站長，請輸入通關密語：');
+    if (!key) return;
+    try {
+      const res = await fetch(`${WORKER_URL}/verify`, {
+        headers: { 'Authorization': key }
+      });
+      const result = await res.json();
 
-              if (result.success) {
-                localStorage.setItem('guestbook_admin_key', key);
-                setAdminKey(key);
-                showNotice('form', 'success', '身分驗證成功！歡迎回來，shuojen 🛡️');
-              } else {
-                showNotice('form', 'error', '你是不是想刪我留言 (⁰⊖⁰)');
-              }
-            } catch (err) {
-              showNotice('form', 'error', '連線失敗，請檢查網路或 Worker 狀態。');
-            }
-          }
-        }, 50);
-        return 0;
+      if (result.success) {
+        storeAdminKey(key);
+        setAdminKey(key);
+        showNotice('form', 'success', '身分驗證成功！歡迎回來，shuojen 🛡️');
+      } else {
+        showNotice('form', 'error', '你是不是想刪我留言 (⁰⊖⁰)');
       }
-      return nextCount;
-    });
+    } catch (err) {
+      showNotice('form', 'error', '連線失敗，請檢查網路或 Worker 狀態。');
+    }
+  };
+
+  // 連點標題 5 次開啟站長登入（計數用 ref，不觸發重新渲染；副作用不放在 state updater 裡）
+  const handleSecretClick = () => {
+    secretClicksRef.current += 1;
+    if (secretClicksRef.current < 5) return;
+    secretClicksRef.current = 0;
+    setTimeout(promptAdminKey, 50);
   };
 
   // --- ASCII Art 判斷邏輯 ---

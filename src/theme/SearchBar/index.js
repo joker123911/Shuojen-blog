@@ -139,9 +139,10 @@ export default function SearchBar() {
     const escaped = keywords.map(escapeRegExp).filter(Boolean);
     if (escaped.length === 0) return snippet;
 
+    // split 搭配捕獲群組時，奇數索引一定是命中的關鍵字；不用 regex.test()，避免 g flag 的 lastIndex 狀態問題
     const regex = new RegExp(`(${escaped.join('|')})`, 'gi');
     return snippet.split(regex).map((part, i) =>
-      regex.test(part) ? (
+      i % 2 === 1 ? (
         <mark key={i} className={styles.highlight}>
           {part}
         </mark>
