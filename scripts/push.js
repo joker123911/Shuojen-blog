@@ -18,6 +18,7 @@ const STAGE_PATHS = [
   'src',
   'static',
   'scripts',
+  'plugins',
   '.github',
   'docusaurus.config.js',
   'sidebars.js',

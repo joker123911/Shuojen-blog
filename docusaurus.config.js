@@ -2,12 +2,13 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import autoMeta from './plugins/auto-meta.js';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Shuo-Jen's Blog",
   staticDirectories: ['static', 'photoblog'],
-  tagline: 'Hello',
+  tagline: '電影、攝影與生活隨筆',
   favicon: 'img/favicon.ico',
   future: {
     v4: true,
@@ -66,9 +67,10 @@ const config = {
       
       // 僅在 blog 文章計算字數以加速編譯
       const normalizedPath = filePath.replace(/\\/g, '/');
-      if (!normalizedPath.includes('/blog/')) {
+      if (!/\/(blog|photoblog)\//.test(normalizedPath)) {
         return result;
       }
+      autoMeta.fillSeoFrontMatter(result);
 
       let cleanContent = result.content || '';
       // 移除圖片、標籤、程式碼區塊
@@ -112,7 +114,7 @@ const config = {
         sitemap: {
           changefreq: 'weekly',
           priority: 0.5,
-          ignorePatterns: ['/tags/**'],
+          ignorePatterns: ['/tags/**', '/search'],
           filename: 'sitemap.xml',
         },
       }),
@@ -171,6 +173,7 @@ const config = {
         blogSidebarCount: 'ALL',
         archiveBasePath: 'archive',
         remarkPlugins: [remarkMath],
+        beforeDefaultRemarkPlugins: [autoMeta.remarkAutoAlt],
         rehypePlugins: [rehypeKatex],
         feedOptions: {
           type: 'all',
@@ -221,6 +224,7 @@ const config = {
         blogTitle: '攝影集',
         blogDescription: '日常紀錄。',
         remarkPlugins: [remarkMath],
+        beforeDefaultRemarkPlugins: [autoMeta.remarkAutoAlt],
         rehypePlugins: [rehypeKatex],
         feedOptions: {
           type: 'all',

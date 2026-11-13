@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Layout from '@theme/Layout';
+import Head from '@docusaurus/Head';
 import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import { useLocation, useHistory } from '@docusaurus/router';
@@ -280,6 +281,9 @@ export default function SearchPage() {
       title={activeQuery ? `搜尋「${activeQuery}」` : '站內搜尋'}
       description="站內全文搜尋文章、攝影集與筆記"
     >
+      <Head>
+        <meta name="robots" content="noindex, follow" />
+      </Head>
       <div className="container margin-vert--lg" style={{ maxWidth: '820px' }}>
         <h1 style={{ marginBottom: '1.2rem' }}>站內搜尋</h1>
 
