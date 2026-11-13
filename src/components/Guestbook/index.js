@@ -7,6 +7,30 @@ import TurnstileWidget from './TurnstileWidget';
 // --- 1. 換成你專屬的 Cloudflare Worker 網址 ---
 const WORKER_URL = "https://blog-comments-api.joker123911.workers.dev";
 
+// --- 全站留言快取（模組層級）：同一次瀏覽內切換文章不必重抓，同時進行的請求也會共用 ---
+const COMMENTS_CACHE_TTL = 60 * 1000;
+let commentsCache = null; // { promise, time }
+
+function loadAllComments({ force = false } = {}) {
+  const now = Date.now();
+  if (!force && commentsCache && now - commentsCache.time < COMMENTS_CACHE_TTL) {
+    return commentsCache.promise;
+  }
+  const promise = fetch(WORKER_URL)
+    .then((res) => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    })
+    .then((data) => (Array.isArray(data) ? data : []));
+  const entry = { promise, time: now };
+  commentsCache = entry;
+  // 失敗的請求不留在快取裡，下次會重試
+  promise.catch(() => {
+    if (commentsCache === entry) commentsCache = null;
+  });
+  return promise;
+}
+
 export default function Guestbook({ readOnly = false, postSlug }) {
   const location = useLocation();
   
@@ -277,22 +301,30 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     return `${y}-${m}-${d} ${hh}:${mm}`;
   };
 
-  const fetchComments = async () => {
+  // 只採用最新一次請求的結果，避免快速切換文章時舊請求晚回來蓋掉新資料；卸載後也不再更新狀態
+  const latestRequestRef = useRef(0);
+  const isMountedRef = useRef(true);
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => { isMountedRef.current = false; };
+  }, []);
+
+  const fetchComments = async ({ force = false } = {}) => {
+    const requestId = ++latestRequestRef.current;
+    const isCurrent = () => isMountedRef.current && requestId === latestRequestRef.current;
     setFetchError(false);
     try {
-      const res = await fetch(WORKER_URL);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      if (Array.isArray(data)) {
-        setAllComments(data);
-      }
+      const data = await loadAllComments({ force });
+      if (isCurrent()) setAllComments(data);
     } catch (err) {
       console.error("載入留言錯誤:", err);
-      setFetchError(true);
+      if (isCurrent()) setFetchError(true);
     } finally {
-      setFetchLoading(false);
+      if (isCurrent()) setFetchLoading(false);
     }
   };
+  // 送出、編輯、刪除後強制重抓最新留言
+  const refreshComments = () => fetchComments({ force: true });
 
   useEffect(() => {
     fetchComments();
@@ -458,7 +490,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       setTurnstileToken('');
       if (turnstileRef.current) turnstileRef.current.reset();
       setFormTab('write');
-      setTimeout(fetchComments, 500); 
+      setTimeout(refreshComments, 500); 
     } catch (error) {
       console.error("送出錯誤:", error);
       showNotice('form', 'error', error.message || '送出失敗，請稍後再試。');
@@ -515,7 +547,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       if (replyTurnstileRef.current) replyTurnstileRef.current.reset();
       setReplyTab('write');
       setReplyingTo(null);
-      setTimeout(fetchComments, 500);
+      setTimeout(refreshComments, 500);
     } catch (error) {
       console.error("回覆錯誤:", error);
       showNotice('reply', 'error', error.message || '回覆失敗，請稍後再試。');
@@ -561,7 +593,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       });
 
       if (res.ok) {
-        fetchComments();
+        refreshComments();
         setEditingId(null); 
         setEditContent('');
       } else {
@@ -585,7 +617,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
         headers: { 'Authorization': adminKey }
       });
       if (res.ok) {
-        fetchComments();
+        refreshComments();
         showNotice('list', 'success', '留言已刪除。');
       } else {
         showNotice('list', 'error', '刪除失敗：金鑰錯誤或權限不足');
