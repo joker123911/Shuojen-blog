@@ -3,6 +3,21 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import autoMeta from './plugins/auto-meta.js';
+import wordCount from './plugins/word-count.js';
+
+/**
+ * RSS：frontmatter 有 rss_date 時，以它作為該篇的發布時間（兩個 blog 實例共用）
+ * @param {any} params
+ */
+async function createFeedItemsWithRssDate(params) {
+  const {blogPosts, defaultCreateFeedItems, ...rest} = params;
+  const localizedPosts = blogPosts.map((/** @type {any} */ post) => {
+    const customRssDate = post.metadata?.frontMatter?.rss_date;
+    if (!customRssDate) return post;
+    return {...post, metadata: {...post.metadata, date: new Date(customRssDate)}};
+  });
+  return defaultCreateFeedItems({blogPosts: localizedPosts, ...rest});
+}
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -68,23 +83,7 @@ const config = {
       }
       autoMeta.fillSeoFrontMatter(result);
 
-      let cleanContent = result.content || '';
-      // 移除圖片、標籤、程式碼區塊
-      cleanContent = cleanContent
-        .replace(/^(import|export)\s.*$/gm, '') // MDX import / export 不算字數
-        .replace(/!\[.*?\]\(.*?\)/g, '')
-        .replace(/<[^>]+>/g, '')
-        .replace(/\[(.*?)\]\(.*?\)/g, '$1')
-        .replace(/```[\s\S]*?```/g, '')
-        .replace(/`([^`]+)`/g, '$1')
-        .replace(/^[ \t]*[-*_]{3,}[ \t]*$/gm, '');
-      
-      // 中文字數與英文字數快速統計
-      const chineseChars = cleanContent.match(/[\u4e00-\u9fa5]/g) || [];
-      const noChinese = cleanContent.replace(/[\u4e00-\u9fa5]/g, ' ');
-      const englishWords = noChinese.match(/[a-zA-Z0-9_-]+/g) || [];
-      
-      result.frontMatter.wordCount = chineseChars.length + englishWords.length;
+      result.frontMatter.wordCount = wordCount.countWords(result.content);
       return result;
     },
   },
@@ -178,29 +177,7 @@ const config = {
           description: '我專屬的人生博物館',
           copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen Huang`,
           language: 'zh-TW',
-          /** @param {any} params */
-          createFeedItems: async (params) => {
-            const {blogPosts, defaultCreateFeedItems, ...rest} = params;
-            const localizedPosts = blogPosts.map(
-              /** @param {any} post */
-              (post) => {
-              const customRssDate = post.metadata?.frontMatter?.rss_date;
-              if (customRssDate) {
-                return {
-                  ...post,
-                  metadata: {
-                    ...post.metadata,
-                    date: new Date(customRssDate),
-                  },
-                };
-              }
-              return post;
-            });
-            return defaultCreateFeedItems({
-              blogPosts: localizedPosts,
-              ...rest,
-            });
-          },
+          createFeedItems: createFeedItemsWithRssDate,
         },
         onInlineTags: 'warn',
         onInlineAuthors: 'warn',
@@ -229,29 +206,7 @@ const config = {
           description: '我專屬的人生影像紀錄',
           copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen Huang`,
           language: 'zh-TW',
-          /** @param {any} params */
-          createFeedItems: async (params) => {
-            const {blogPosts, defaultCreateFeedItems, ...rest} = params;
-            const localizedPosts = blogPosts.map(
-              /** @param {any} post */
-              (post) => {
-              const customRssDate = post.metadata?.frontMatter?.rss_date;
-              if (customRssDate) {
-                return {
-                  ...post,
-                  metadata: {
-                    ...post.metadata,
-                    date: new Date(customRssDate),
-                  },
-                };
-              }
-              return post;
-            });
-            return defaultCreateFeedItems({
-              blogPosts: localizedPosts,
-              ...rest,
-            });
-          },
+          createFeedItems: createFeedItemsWithRssDate,
         },
         onUntruncatedBlogPosts: 'ignore',
       },

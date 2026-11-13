@@ -3,9 +3,10 @@ import { useLocation } from '@docusaurus/router';
 import Link from '@docusaurus/Link'; 
 import styles from './styles.module.css';
 import TurnstileWidget from './TurnstileWidget';
+import commentsConfig from '@site/src/config/comments.json';
 
-// --- 1. 換成你專屬的 Cloudflare Worker 網址 ---
-const WORKER_URL = "https://blog-comments-api.joker123911.workers.dev";
+// 留言 API 網址與 Turnstile site key 集中在 src/config/comments.json
+const WORKER_URL = commentsConfig.apiUrl;
 
 // --- 全站留言快取（模組層級）：同一次瀏覽內切換文章不必重抓，同時進行的請求也會共用 ---
 const COMMENTS_CACHE_TTL = 60 * 1000;

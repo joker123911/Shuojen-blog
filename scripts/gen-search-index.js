@@ -7,7 +7,7 @@ const BLOG_DIR = path.join(ROOT_DIR, 'blog');
 const PHOTOBLOG_DIR = path.join(ROOT_DIR, 'photoblog');
 const DOCS_DIR = path.join(ROOT_DIR, 'docs');
 const OUTPUT_FILE = path.join(ROOT_DIR, 'static', 'search-index.json');
-const WORKER_URL = 'https://blog-comments-api.joker123911.workers.dev';
+const WORKER_URL = require('../src/config/comments.json').apiUrl;
 
 function getMarkdownFiles(dir) {
   let files = [];

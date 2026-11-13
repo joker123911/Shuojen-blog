@@ -4,6 +4,7 @@ import Head from '@docusaurus/Head';
 import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import { useLocation, useHistory } from '@docusaurus/router';
+import commentsConfig from '@site/src/config/comments.json';
 
 const PAGE_SIZE = 15;
 const CATEGORIES = [
@@ -95,7 +96,7 @@ export default function SearchPage() {
         setLoadingIndex(false);
 
         // 背景向 Worker 抓取最新留言進行即時增量更新
-        fetch('https://blog-comments-api.joker123911.workers.dev', { signal })
+        fetch(commentsConfig.apiUrl, { signal })
           .then((r) => (r.ok ? r.json() : null))
           .then((comments) => {
             if (signal.aborted || !Array.isArray(comments)) return;

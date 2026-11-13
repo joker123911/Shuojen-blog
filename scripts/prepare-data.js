@@ -4,6 +4,7 @@ const matter = require('gray-matter');
 const yaml = require('js-yaml');
 const { generateAlbumsData } = require('./gen-albums');
 const { generateNowPosterData } = require('./gen-now-poster');
+const { countWords } = require('../plugins/word-count');
 
 const ROOT_DIR = path.join(__dirname, '..');
 const BLOG_DIR = path.join(ROOT_DIR, 'blog');
@@ -126,22 +127,6 @@ function processOpml() {
   }
 }
 
-function getWordCount(content) {
-  let cleanContent = content || '';
-  cleanContent = cleanContent.replace(/^(import|export)\s.*$/gm, ''); // MDX import / export 不算字數
-  cleanContent = cleanContent.replace(/!\[.*?\]\(.*?\)/g, '');
-  cleanContent = cleanContent.replace(/<[^>]+>/g, '');
-  cleanContent = cleanContent.replace(/\[(.*?)\]\(.*?\)/g, '$1');
-  cleanContent = cleanContent.replace(/```[\s\S]*?```/g, '');
-  cleanContent = cleanContent.replace(/`([^`]+)`/g, '$1');
-  cleanContent = cleanContent.replace(/^[ \t]*[-*_]{3,}[ \t]*$/gm, '');
-
-  const chineseChars = cleanContent.match(/[\u4e00-\u9fa5]/g) || [];
-  const noChinese = cleanContent.replace(/[\u4e00-\u9fa5]/g, ' ');
-  const englishWords = noChinese.match(/[a-zA-Z0-9_-]+/g) || [];
-
-  return chineseChars.length + englishWords.length;
-}
 
 function getAllMarkdownFiles(dirPath, arrayOfFiles = []) {
   if (!fs.existsSync(dirPath)) return [];
@@ -272,7 +257,7 @@ function runDataPreparation() {
 
       // 2. Count words
       let contentWithoutFrontmatter = rawContent.replace(/\r\n/g, '\n').replace(/^---[\s\S]*?---/, '');
-      totalWords += getWordCount(contentWithoutFrontmatter);
+      totalWords += countWords(contentWithoutFrontmatter);
 
       // 3. Calendar Data
       let calDate = '';

@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 
-const SITE_KEY = '0x4AAAAAAFgQmCGmOt6VpB4z';
+import commentsConfig from '@site/src/config/comments.json';
+
+const SITE_KEY = commentsConfig.turnstileSiteKey;
 
 const TurnstileWidget = forwardRef(({ onVerify, onExpire }, ref) => {
   const containerRef = useRef(null);
