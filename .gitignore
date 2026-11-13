@@ -56,6 +56,7 @@ src/data/generated/blogrollData.js
 src/data/generated/photosData.json
 src/data/generated/contribution-data.json
 src/data/generated/nowPosterData.json
+src/data/generated/siteStats.json
 static/search-index.json
 # /photography 照片牆縮圖（scripts/gen-photo-thumbs.js 產生）
 static/photo-thumbs/

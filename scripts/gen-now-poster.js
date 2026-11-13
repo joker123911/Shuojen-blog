@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { execSync, spawnSync } = require('child_process');
+const { execSync } = require('child_process');
 const matter = require('gray-matter');
 
 const ROOT_DIR = path.join(__dirname, '..');
@@ -539,25 +539,7 @@ function generateNowPosterData() {
     fs.writeFileSync(OUTPUT_FILE, jsonContent, 'utf8');
   }
 
-  // now.md 內容真的被改過（和 git 最後一次提交相比，忽略日期那一行）才把「最後更新」改成今天；
-  // 沒改內容就不動，避免每次 build 都弄髒檔案。
-  if (fs.existsSync(NOW_MD_FILE)) {
-    const DATE_LINE = /\*最後更新：\d{4}-\d{2}-\d{2}\*/;
-    const nowContent = fs.readFileSync(NOW_MD_FILE, 'utf8');
-    const committed = spawnSync('git', ['show', 'HEAD:src/pages/now.md'], {
-      cwd: ROOT_DIR,
-      encoding: 'utf8',
-    });
-    // 取不到已提交版本（不是 git 環境、檔案尚未提交）就不處理
-    if (committed.status === 0) {
-      const strip = (t) => t.replace(/\r\n/g, '\n').replace(DATE_LINE, '');
-      const edited = strip(committed.stdout) !== strip(nowContent);
-      const updatedNow = nowContent.replace(DATE_LINE, `*最後更新：${todayStr}*`);
-      if (edited && updatedNow !== nowContent) {
-        fs.writeFileSync(NOW_MD_FILE, updatedNow, 'utf8');
-      }
-    }
-  }
+  // now.md 的「最後更新」日期改由 npm run push 時的 scripts/lib/publish-stamp.js 處理，build 不改寫 md
 
   return payload;
 }

@@ -2,6 +2,7 @@
 //
 // 只 stage 下列白名單路徑，避免 scratch/、暫存截圖、.env 之類的檔案被誤提交。
 // 白名單外的變更會列出來提醒，但不會被提交；需要時請手動 git add。
+// 確認 commit 訊息後，由 scripts/lib/publish-stamp.js 替新文章補上 rss_date（上線時間）。
 //
 // 用法：
 //   npm run push         檢查 → 完整建置 → 提交 → 推送
@@ -10,6 +11,7 @@
 const fs = require('fs');
 const { spawnSync } = require('child_process');
 const readline = require('readline');
+const { stampBeforeCommit } = require('./lib/publish-stamp');
 
 const STAGE_PATHS = [
   'blog',
@@ -96,6 +98,18 @@ async function main() {
   if (!message) {
     console.log('已取消。變更仍在暫存區，可用 git restore --staged . 撤銷。');
     process.exit(1);
+  }
+
+  // 確定要提交後才蓋發佈時間（取消時檔案不會被改動）
+  const nameList = (filter) =>
+    git(['diff', '--cached', '--name-only', '-z', `--diff-filter=${filter}`], { capture: true })
+      .split('\0')
+      .filter(Boolean);
+  const stamped = stampBeforeCommit({ addedFiles: nameList('A'), changedFiles: nameList('AM') });
+  if (stamped.length > 0) {
+    console.log('\n🕒 已蓋上發佈時間：');
+    for (const s of stamped) console.log(`   ${s.file}（${s.note}）`);
+    git(['add', '--', ...stamped.map((s) => s.file)]);
   }
 
   git(['commit', '-m', message]);

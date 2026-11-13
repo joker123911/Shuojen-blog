@@ -5,6 +5,7 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "check": "node scripts/check-broken-links.js && node scripts/check-typography.js --changed",
+    "test": "node --test scripts/lib/publish-stamp.test.js",
     "fix": "node scripts/check-typography.js --fix --changed && node scripts/check-broken-links.js --fix",
     "check:text": "node scripts/check-typography.js",
     "check:text:list": "node scripts/check-typography.js --files-only",
@@ -45,7 +46,6 @@
     "@docusaurus/module-type-aliases": "^3.10.1",
     "@docusaurus/types": "^3.10.1",
     "gray-matter": "^4.0.3",
-    "js-yaml": "^4.3.2",
     "sharp": "^0.34.5"
   },
   "browserslist": {

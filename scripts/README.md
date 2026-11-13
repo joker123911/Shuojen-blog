@@ -178,6 +178,7 @@ npm run new
 ### 推送發布 (`push.js`)
 依序執行連結與排版檢查、文章格式嚴格檢查（`prepare-data.js --strict`，有格式異常就中止）、完整建置（`npm run build`），全部通過後才提交並 push 到遠端。
 
+* **發佈時間**：輸入 commit 訊息確認後，會替這次**新增**的 `blog/`、`photoblog/` 文章補上 `rss_date`（push 當下的台灣時間；文章日期在未來則為該日 00:00:01），`now.md` 內容有改動時也會更新「最後更新」日期。已提交過的舊文不會被補，取消提交時不會改動任何檔案。`npm start` / `npm run build` 不會改寫任何 md。
 * 只會 stage 白名單內的路徑（`blog/`、`photoblog/`、`docs/`、`src/`、`static/`、`scripts/`、`.github/` 與根目錄設定檔）；其他變更會列出提醒，但不會被提交。
 * 提交前會列出完整的檔案清單，再詢問 commit 訊息（留空即取消）。
 * 建置太久時可用 `npm run push:fast` 跳過建置（仍會做檢查、更新資料檔與棋局評估）；GitHub Actions 仍會在推送後跑一次完整建置。
@@ -219,4 +220,4 @@ node scripts/push.js -m "訊息"   # 不跑檢查，直接提交推送
 
 依賴安裝：`pip install -r scripts/requirements.txt`（`score_adjuster.py` 另需系統內建的 tkinter）。
 
-> `sync-build-time.js` 為手動工具：替沒有 `rss_date` 的文章補上 RSS 發布時間（`node scripts/sync-build-time.js`），未接進 `npm run build` / `push` / CI。
+> RSS 發佈時間（`rss_date`）由 `npm run push` 自動補上（見上方「推送發布」），原本的手動工具 `sync-build-time.js` 已移除。

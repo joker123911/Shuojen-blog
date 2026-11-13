@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const matter = require('gray-matter');
-const yaml = require('js-yaml');
 const { generateAlbumsData } = require('./gen-albums');
 const { generateNowPosterData } = require('./gen-now-poster');
 const { countWords } = require('../plugins/word-count');
@@ -13,17 +12,8 @@ const OPML_FILE = path.join(ROOT_DIR, 'src/data/subscriptions.opml');
 const BLOGROLL_OUTPUT_FILE = path.join(ROOT_DIR, 'src/data/generated/blogrollData.js');
 const PHOTOS_OUTPUT_FILE = path.join(ROOT_DIR, 'src/data/generated/photosData.json');
 const CALENDAR_OUTPUT_FILE = path.join(ROOT_DIR, 'src/data/generated/contribution-data.json');
-const ABOUT_FILE = path.join(ROOT_DIR, 'src/pages/about.md');
-
-const now = new Date();
-const offset = 8;
-const twNow = new Date(now.getTime() + offset * 3600 * 1000);
-const todayStr = twNow.toISOString().split('T')[0];
-const currentFullTime = twNow.toISOString().split('.')[0] + '+08:00';
-
-function formatNumber(num) {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
+// about 頁的「即時數據」由 src/components/SiteStats 讀取這份 JSON 顯示
+const STATS_OUTPUT_FILE = path.join(ROOT_DIR, 'src/data/generated/siteStats.json');
 
 function decodeEntities(encodedString) {
   if (!encodedString) return '';
@@ -144,25 +134,6 @@ function getAllMarkdownFiles(dirPath, arrayOfFiles = []) {
   return arrayOfFiles;
 }
 
-function saveFileWithYaml(filePath, content, data) {
-  const newContent = matter.stringify(content, data, {
-    engines: {
-      yaml: {
-        stringify: (obj) => {
-          let yamlStr = yaml.dump(obj, {
-            quotingType: "'",
-            forceQuotes: true,
-            flowLevel: 1,
-          });
-          return yamlStr.replace(/^date:\s*'(.+)'$/m, 'date: $1');
-        },
-      },
-    },
-  });
-
-  fs.writeFileSync(filePath, newContent);
-}
-
 function runDataPreparation() {
   const startTime = Date.now();
   processOpml();
@@ -206,53 +177,6 @@ function runDataPreparation() {
           message: '未設定文章標題 (title)',
           suggestion: '建議在 Frontmatter 中加入 title: "文章標題"'
         });
-      }
-
-      // 1. Sync build time / rss_date
-      let targetDate = data.date;
-      if (!targetDate) {
-        const dateMatch = file.match(/^(\d{4}-\d{2}-\d{2})/);
-        if (dateMatch) targetDate = dateMatch[1];
-      }
-
-      if (targetDate) {
-        let datePart = '';
-        let hasSpecificTime = false;
-
-        if (targetDate instanceof Date) {
-          const twDate = new Date(targetDate.getTime() + offset * 3600 * 1000);
-          datePart = twDate.toISOString().slice(0, 10);
-          hasSpecificTime = targetDate.getUTCHours() !== 0 || targetDate.getUTCMinutes() !== 0;
-        } else {
-          const dateStr = String(targetDate);
-          datePart = dateStr.slice(0, 10);
-          hasSpecificTime = dateStr.includes('T') || dateStr.includes(' ') || dateStr.length > 10;
-        }
-
-        if (data.rss_date) {
-          hasSpecificTime = true;
-        }
-
-        if (hasSpecificTime && !data.rss_date) {
-          let originalDateStr = '';
-          if (data.date instanceof Date) {
-            const twDate = new Date(data.date.getTime() + offset * 3600 * 1000);
-            originalDateStr = twDate.toISOString().split('.')[0] + '+08:00';
-          } else {
-            originalDateStr = String(data.date).replace(' ', 'T');
-          }
-          data.rss_date = originalDateStr;
-          data.date = datePart;
-          saveFileWithYaml(filePath, parsed.content, data);
-        } else if (datePart === todayStr && !hasSpecificTime) {
-          data.date = datePart;
-          data.rss_date = currentFullTime;
-          saveFileWithYaml(filePath, parsed.content, data);
-        } else if (datePart > todayStr && !hasSpecificTime) {
-          data.date = datePart;
-          data.rss_date = `${datePart}T00:00:01+08:00`;
-          saveFileWithYaml(filePath, parsed.content, data);
-        }
       }
 
       // 2. Count words
@@ -386,44 +310,6 @@ function runDataPreparation() {
             });
           });
 
-          // Sync build time for photoblog if needed
-          let targetDate = data.date;
-          if (!targetDate) {
-            const dateMatch = path.basename(mdPath).match(/^(\d{4}-\d{2}-\d{2})/);
-            if (dateMatch) targetDate = dateMatch[1];
-          }
-          if (targetDate) {
-            let datePart = '';
-            let hasSpecificTime = false;
-            if (targetDate instanceof Date) {
-              const twDate = new Date(targetDate.getTime() + offset * 3600 * 1000);
-              datePart = twDate.toISOString().slice(0, 10);
-              hasSpecificTime = targetDate.getUTCHours() !== 0 || targetDate.getUTCMinutes() !== 0;
-            } else {
-              const dateStr = String(targetDate);
-              datePart = dateStr.slice(0, 10);
-              hasSpecificTime = dateStr.includes('T') || dateStr.includes(' ') || dateStr.length > 10;
-            }
-            if (data.rss_date) hasSpecificTime = true;
-
-            if (hasSpecificTime && !data.rss_date) {
-              let originalDateStr = data.date instanceof Date 
-                ? new Date(data.date.getTime() + offset * 3600 * 1000).toISOString().split('.')[0] + '+08:00'
-                : String(data.date).replace(' ', 'T');
-              data.rss_date = originalDateStr;
-              data.date = datePart;
-              saveFileWithYaml(mdPath, content, data);
-            } else if (datePart === todayStr && !hasSpecificTime) {
-              data.date = datePart;
-              data.rss_date = currentFullTime;
-              saveFileWithYaml(mdPath, content, data);
-            } else if (datePart > todayStr && !hasSpecificTime) {
-              data.date = datePart;
-              data.rss_date = `${datePart}T00:00:01+08:00`;
-              saveFileWithYaml(mdPath, content, data);
-            }
-          }
-
           // Calendar for photoblog
           let calDate = '';
           const dateMatch = fileContent.match(/^date:\s*['"]?(\d{4}-\d{2}-\d{2})/m);
@@ -472,25 +358,19 @@ function runDataPreparation() {
     fs.writeFileSync(CALENDAR_OUTPUT_FILE, newCalContent);
   }
 
-  // Update Stats in about.md
-  if (fs.existsSync(ABOUT_FILE)) {
-    const postCount = blogFiles.length;
-    const photoPostCount = photoFiles.length;
-    const formattedPostCount = formatNumber(postCount);
-    const formattedWordCount = formatNumber(totalWords);
-    const formattedPhotoPostCount = formatNumber(photoPostCount);
-    const formattedPhotoCount = formatNumber(totalPhotos);
-
-    let aboutContent = fs.readFileSync(ABOUT_FILE, 'utf8');
-    const regex = /貼文區目前共有 \*\*(.*?)\*\* 篇文章，共累積了 \*\*(.*?)\*\* 個字(?:；[\s\S]*?攝影區目前共有 \*\*(.*?)\*\* 篇文章，共累積了 \*\*(.*?)\*\* 張照片)?。/g;
-    const newString = `貼文區目前共有 **${formattedPostCount}** 篇文章，共累積了 **${formattedWordCount}** 個字；<br />\n攝影區目前共有 **${formattedPhotoPostCount}** 篇文章，共累積了 **${formattedPhotoCount}** 張照片。`;
-
-    if (regex.test(aboutContent)) {
-      const finalAboutContent = aboutContent.replace(regex, newString);
-      if (finalAboutContent !== aboutContent) {
-        fs.writeFileSync(ABOUT_FILE, finalAboutContent, 'utf8');
-      }
-    }
+  // 站內統計（about 頁顯示）
+  const newStatsContent = JSON.stringify(
+    {
+      postCount: blogFiles.length,
+      wordCount: totalWords,
+      photoPostCount: photoFiles.length,
+      photoCount: totalPhotos,
+    },
+    null,
+    2
+  );
+  if (!fs.existsSync(STATS_OUTPUT_FILE) || fs.readFileSync(STATS_OUTPUT_FILE, 'utf8') !== newStatsContent) {
+    fs.writeFileSync(STATS_OUTPUT_FILE, newStatsContent);
   }
 
   const elapsed = Date.now() - startTime;

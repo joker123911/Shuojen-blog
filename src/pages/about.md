@@ -4,6 +4,7 @@ title: 關於
 import { White, Black } from '/src/components/Chess/ChessGame';
 import Marquee from "react-fast-marquee";
 import ContributionCalendar from '@site/src/components/ContributionCalendar/ContributionCalendar';
+import SiteStats from '@site/src/components/SiteStats';
 
 <style>{`
   /* Hero 佈局優化 */
@@ -232,8 +233,7 @@ https://shuojen.com/photoblog/rss.xml
 ```
 
 # 即時數據
-貼文區目前共有 **292** 篇文章，共累積了 **128,419** 個字；<br />
-攝影區目前共有 **66** 篇文章，共累積了 **844** 張照片。
+<SiteStats />
 
 <ContributionCalendar />
 
