@@ -51,11 +51,13 @@ HAS_GUI = False
 # ==========================================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DOCS_DIR = os.path.normpath(os.path.join(BASE_DIR, "..", "..", "docs"))
+# 清單資料（movies.js 等）在前端原始碼目錄，由這支工具讀寫
+DATA_DIR = os.path.normpath(os.path.join(BASE_DIR, "..", "..", "src", "data"))
 
-MOVIE_JS_PATH = os.path.join(BASE_DIR, "movies.js")
-ANIME_JS_PATH = os.path.join(BASE_DIR, "anime.js")
-SERIES_JS_PATH = os.path.join(BASE_DIR, "series.js")
-RAMEN_JS_PATH = os.path.join(BASE_DIR, "ramen.js")
+MOVIE_JS_PATH = os.path.join(DATA_DIR, "movies.js")
+ANIME_JS_PATH = os.path.join(DATA_DIR, "anime.js")
+SERIES_JS_PATH = os.path.join(DATA_DIR, "series.js")
+RAMEN_JS_PATH = os.path.join(DATA_DIR, "ramen.js")
 
 REQUEST_TIMEOUT = 12
 

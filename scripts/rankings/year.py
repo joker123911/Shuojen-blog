@@ -35,7 +35,7 @@ def load_env_file():
 
 load_env_file()
 TMDB_API_KEY = os.environ.get("TMDB_API_KEY", "")
-JS_FILE_PATH = "movies.js"
+JS_FILE_PATH = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "src", "data", "movies.js"))
 
 def clean_title(title):
     """清理電影標題，過濾系列作後綴以利精準搜尋"""

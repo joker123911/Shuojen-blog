@@ -13,7 +13,8 @@ from tkinter import messagebox
 # 設定檔（以腳本所在資料夾為基準，從任何位置執行都找得到檔案）
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROGRESS_FILE = os.path.join(BASE_DIR, 'progress.json')
-INPUT_JS = os.path.join(BASE_DIR, 'movies.js')
+DATA_DIR = os.path.normpath(os.path.join(BASE_DIR, '..', '..', 'src', 'data'))
+INPUT_JS = os.path.join(DATA_DIR, 'movies.js')
 OUTPUT_JS = INPUT_JS
 
 # 絕對固定的分數與 Elo 轉換權重（顯示分數 = Elo / 200，每 0.1 分 = 20 點 Elo）

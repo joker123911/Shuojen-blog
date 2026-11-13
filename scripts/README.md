@@ -201,3 +201,17 @@ node scripts/push.js -m "訊息"   # 不跑檢查，直接提交推送
 | `npm run gen-albums` | 攝影相簿靜態資料產生 (`scripts/gen-albums.js`) |
 | `node scripts/gen-search-index.js` | 產生搜尋引擎靜態索引檔案 |
 | `node scripts/optimize-images.js` | 圖片批次無損壓縮最佳化 |
+
+### 排名清單維護工具（Python，`scripts/rankings/`）
+
+手動維護電影 / 動漫 / 劇集 / 拉麵清單用，**不屬於 build 管線**，不會被 `npm run build` 呼叫。它們會讀寫 `src/data/` 下的 `movies.js`、`anime.js`、`series.js`、`ramen.js`，並把海報存到 `docs/img/`。
+
+| 腳本 | 說明 |
+| :--- | :--- |
+| `rankings/main.py` | 從 TMDB 補齊清單資料與海報（需在根目錄 `.env` 設定 `TMDB_API_KEY`） |
+| `rankings/score_adjuster.py` | 以 Elo 兩兩比對調整電影分數（視窗介面，進度存在 `rankings/progress.json`） |
+| `rankings/year.py` | 補齊 `movies.js` 的年份 |
+
+依賴安裝：`pip install -r scripts/requirements.txt`（`score_adjuster.py` 另需系統內建的 tkinter）。
+
+> `sync-build-time.js` 為手動工具：替沒有 `rss_date` 的文章補上 RSS 發布時間（`node scripts/sync-build-time.js`），未接進 `npm run build` / `push` / CI。
