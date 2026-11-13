@@ -52,10 +52,10 @@ scratch/
 # --- 建置時由 npm run prepare-data(:full) 產生的檔案 ---
 # 正式站與 CI 都跑 npm run build，會重新產生；本機 start:fast 前需先跑一次 npm run prepare-data:full
 # 注意：chessEvals.json（評估快取）與 albumsData.json / albums.json（合併狀態）會被讀回當輸入，必須留在版控
-src/data/blogrollData.js
-src/data/photosData.json
-src/data/contribution-data.json
-src/data/nowPosterData.json
+src/data/generated/blogrollData.js
+src/data/generated/photosData.json
+src/data/generated/contribution-data.json
+src/data/generated/nowPosterData.json
 static/search-index.json
 # /photography 照片牆縮圖（scripts/gen-photo-thumbs.js 產生）
 static/photo-thumbs/

@@ -9,9 +9,9 @@ const ROOT_DIR = path.join(__dirname, '..');
 const BLOG_DIR = path.join(ROOT_DIR, 'blog');
 const PHOTOBLOG_DIR = path.join(ROOT_DIR, 'photoblog');
 const OPML_FILE = path.join(ROOT_DIR, 'src/data/subscriptions.opml');
-const BLOGROLL_OUTPUT_FILE = path.join(ROOT_DIR, 'src/data/blogrollData.js');
-const PHOTOS_OUTPUT_FILE = path.join(ROOT_DIR, 'src/data/photosData.json');
-const CALENDAR_OUTPUT_FILE = path.join(ROOT_DIR, 'src/data/contribution-data.json');
+const BLOGROLL_OUTPUT_FILE = path.join(ROOT_DIR, 'src/data/generated/blogrollData.js');
+const PHOTOS_OUTPUT_FILE = path.join(ROOT_DIR, 'src/data/generated/photosData.json');
+const CALENDAR_OUTPUT_FILE = path.join(ROOT_DIR, 'src/data/generated/contribution-data.json');
 const ABOUT_FILE = path.join(ROOT_DIR, 'src/pages/about.md');
 
 const now = new Date();

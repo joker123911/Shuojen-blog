@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { blogrollLinks } from '@site/src/data/blogrollData.js';
+import { blogrollLinks } from '@site/src/data/generated/blogrollData.js';
 
 function getDomain(urlStr) {
   try {

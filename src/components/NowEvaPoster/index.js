@@ -1,5 +1,5 @@
 import React from 'react';
-import posterData from '@site/src/data/nowPosterData.json';
+import posterData from '@site/src/data/generated/nowPosterData.json';
 import styles from './styles.module.css';
 
 // 單欄直書文字均勻分佈於 [yStart, yEnd] 區間，頂底完全貼齊

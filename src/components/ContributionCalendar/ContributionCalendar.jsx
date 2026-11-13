@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useRef, useEffect } from 'react';
 import { useColorMode } from '@docusaurus/theme-common';
-import contributionData from '@site/src/data/contribution-data.json';
+import contributionData from '@site/src/data/generated/contribution-data.json';
 
 export default function ContributionCalendar() {
   const { colorMode } = useColorMode();

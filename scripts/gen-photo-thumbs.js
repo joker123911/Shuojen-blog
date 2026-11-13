@@ -1,6 +1,6 @@
 // 為 /photography 照片牆產生縮圖，並把每張照片的寬高寫回 photosData.json。
 //
-// - 必須在 prepare-data.js 之後執行（它負責產生 src/data/photosData.json）。
+// - 必須在 prepare-data.js 之後執行（它負責產生 src/data/generated/photosData.json）。
 // - 縮圖輸出到 static/photo-thumbs/<同原路徑>.webp（已列入 .gitignore，build 時重新產生）。
 // - 增量處理：縮圖已存在且比原圖新就跳過，只讀取尺寸。
 // - 寬高供照片牆做「等高排版」，避免直幅照片被裁切。
@@ -11,7 +11,7 @@ const sharp = require('sharp');
 const ROOT_DIR = path.join(__dirname, '..');
 const PHOTOBLOG_DIR = path.join(ROOT_DIR, 'photoblog');
 const THUMB_DIR = path.join(ROOT_DIR, 'static', 'photo-thumbs');
-const PHOTOS_FILE = path.join(ROOT_DIR, 'src/data/photosData.json');
+const PHOTOS_FILE = path.join(ROOT_DIR, 'src/data/generated/photosData.json');
 
 const THUMB_HEIGHT = 480; // 照片牆列高約 240～320px，2 倍密度螢幕也夠用
 const QUALITY = 78;

@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '@theme/Layout';
 import BlogrollGrid from '@site/src/components/Blogroll/BlogrollGrid';
-import { blogrollLinks } from '@site/src/data/blogrollData.js';
+import { blogrollLinks } from '@site/src/data/generated/blogrollData.js';
 
 const blogrollTheme = {
   headerTitle: {

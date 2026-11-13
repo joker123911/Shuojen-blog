@@ -4,7 +4,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 // 直接匯入產出的 JSON 檔案（prepare-data.js 產生，gen-photo-thumbs.js 補上寬高與縮圖路徑）
-import photosData from '@site/src/data/photosData.json';
+import photosData from '@site/src/data/generated/photosData.json';
 
 const BATCH_SIZE = 24;
 const SKELETON_COUNT = 12;

@@ -7,7 +7,7 @@ const ROOT_DIR = path.join(__dirname, '..');
 const BLOG_DIR = path.join(ROOT_DIR, 'blog');
 const PHOTOBLOG_DIR = path.join(ROOT_DIR, 'photoblog');
 const NOW_MD_FILE = path.join(ROOT_DIR, 'src/pages/now.md');
-const OUTPUT_FILE = path.join(ROOT_DIR, 'src/data/nowPosterData.json');
+const OUTPUT_FILE = path.join(ROOT_DIR, 'src/data/generated/nowPosterData.json');
 
 const WINDOW_DAYS = 90;
 
