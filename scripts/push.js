@@ -27,6 +27,7 @@ const STAGE_PATHS = [
   'frontmatter.json',
   '.frontmatter',
   '.gitignore',
+  '.env.example',
   '.gitattributes',
   '.node-version',
 ];

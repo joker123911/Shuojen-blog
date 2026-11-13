@@ -30,5 +30,9 @@ jobs:
 
       - run: npm ci
 
+      # 本機 npm run push 也會跑；放在 CI 是為了攔下沒經過 push 腳本的變更（例如直接在 GitHub 網頁編輯）
+      - name: Check links
+        run: node scripts/check-broken-links.js
+
       - name: Build
         run: npm run build
