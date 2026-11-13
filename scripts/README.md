@@ -192,13 +192,18 @@ node scripts/push.js -m "訊息"   # 不跑檢查，直接提交推送
 
 ## 3. 資料生成與靜態索引腳本
 
-這些腳本通常在 `npm start`、`npm run build` 或 `npm run push` 時由管線自動調用（`npm start` 會跑 prepare-data 與搜尋索引，但不跑棋局評估），亦可手動單獨執行：
+資料生成由 npm 的 pre 鉤子自動串起來，平常不需手動呼叫：
+
+* `npm start`：先跑 `npm run data`（`prepare-data` → 照片縮圖 → 海報縮圖 → 搜尋索引），再啟動開發伺服器；不跑棋局評估。
+* `npm run build`（Cloudflare 與 CI 也是跑這個）：先跑 `npm run data`，再跑棋局評估，最後才 `docusaurus build`。
+* `npm run push` 會包含 build；`push:fast` 跳過 build。
+
+也可單獨執行：
 
 | 指令 / 腳本 | 說明 |
 | :--- | :--- |
-| `npm run prepare-data` | 整合並產出最新文章清單與前台所需統計資料 (`scripts/prepare-data.js`) |
+| `npm run data` | 產生前台所需資料、縮圖與搜尋索引（輸出到 `src/data/generated/`、`static/`） |
 | `npm run gen-chess` | 西洋棋局 evaluation 靜態分析計算 (`scripts/gen-chess-eval.js`) |
-| `npm run gen-albums` | 攝影相簿靜態資料產生 (`scripts/gen-albums.js`) |
 | `node scripts/gen-search-index.js` | 產生搜尋引擎靜態索引檔案 |
 | `node scripts/optimize-images.js` | 圖片批次無損壓縮最佳化 |
 

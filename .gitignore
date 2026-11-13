@@ -49,8 +49,8 @@ lerna-debug.log*
 # --- 個人暫存區（截圖、試算腳本），不進版控 ---
 scratch/
 
-# --- 建置時由 npm run prepare-data(:full) 產生的檔案 ---
-# 正式站與 CI 都跑 npm run build，會重新產生；本機 start:fast 前需先跑一次 npm run prepare-data:full
+# --- 建置時由 npm run data 產生的檔案 ---
+# 正式站與 CI 都跑 npm run build（會先跑 data），npm start 也會先跑 data；若要直接用 npm run docusaurus -- start，需先跑一次 npm run data
 # 注意：chessEvals.json（評估快取）與 albumsData.json / albums.json（合併狀態）會被讀回當輸入，必須留在版控
 src/data/generated/blogrollData.js
 src/data/generated/photosData.json
