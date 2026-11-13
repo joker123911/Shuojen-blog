@@ -31,11 +31,7 @@ const config = {
       'data-website-id': '45021ff8-89a4-45a9-a0ba-e6352cb94d3c',
       defer: true,
     },
-    {
-      src: 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit',
-      async: true,
-      defer: true,
-    },
+    // Turnstile 只在留言表單出現時由 src/components/Guestbook/TurnstileWidget.js 按需載入
   ],
 
   headTags: [
