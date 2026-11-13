@@ -48,7 +48,19 @@ function git(args, { capture = false } = {}) {
 
 function ask(question) {
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-  return new Promise((resolve) => rl.question(question, (ans) => { rl.close(); resolve(ans.trim()); }));
+  return new Promise((resolve) => {
+    let answered = false;
+    rl.question(question, (ans) => { answered = true; rl.close(); resolve(ans.trim()); });
+    // stdin 已關閉（非互動環境）時視為沒有輸入，避免程式卡住或無聲結束
+    rl.on('close', () => { if (!answered) resolve(''); });
+  });
+}
+
+// 回傳尚未推送到上游分支的 commit（oneline）；沒有設定上游分支時回傳 null
+function listUnpushedCommits() {
+  const res = spawnSync('git', ['log', '--oneline', '@{u}..HEAD'], { encoding: 'utf8' });
+  if (res.status !== 0) return null;
+  return res.stdout.split('\n').map((l) => l.trim()).filter(Boolean);
 }
 
 function isWhitelisted(file) {
@@ -87,7 +99,25 @@ async function main() {
 
   const staged = git(['diff', '--cached', '--name-status'], { capture: true }).trim();
   if (!staged) {
-    console.log('\nℹ️  白名單內沒有可提交的變更，結束。');
+    // 沒有新變更，但可能有先前已 commit、還沒推送的 commit
+    const unpushed = listUnpushedCommits();
+    if (unpushed === null) {
+      console.log('\nℹ️  白名單內沒有可提交的變更；目前分支沒有設定遠端追蹤分支，無法判斷是否需要推送，結束。');
+      return;
+    }
+    if (unpushed.length === 0) {
+      console.log('\nℹ️  白名單內沒有可提交的變更，也沒有尚未推送的 commit，結束。');
+      return;
+    }
+    console.log(`\nℹ️  沒有新變更要提交，但有 ${unpushed.length} 個尚未推送的 commit：`);
+    for (const line of unpushed) console.log(`   ${line}`);
+    const ans = await ask('\n要推送這些 commit 嗎？(y/N)：');
+    if (!/^y(es)?$/i.test(ans)) {
+      console.log('已取消，沒有推送。');
+      return;
+    }
+    git(['push']);
+    console.log('\n✅ 推送完成！');
     return;
   }
 
