@@ -1,272 +1,87 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>投資報酬試算表 - Shuojen.com</title>
-<style>
-    /* 完全對齊 Food App 的紫色系現代風格 */
-    :root {
-        --primary-purple: #6366f1; /* 擷取自圖片的紫色按鈕 */
-        --bg-color: #f8fafc;
-        --card-bg: #ffffff;
-        --text-main: #1e293b;
-        --text-muted: #64748b;
-        --border-color: #f1f5f9;
-        --radius-lg: 24px; /* 更大的圓角 */
-        --radius-md: 12px;
-        --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
-    }
-
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        background-color: var(--bg-color);
-        color: var(--text-main);
-        display: flex;
-        justify-content: center;
-        padding: 40px 20px;
-        margin: 0;
-    }
-
-    .calculator-container {
-        width: 100%;
-        max-width: 650px; /* 稍微加寬以容納新欄位 */
-        background-color: var(--card-bg);
-        padding: 40px;
-        border-radius: var(--radius-lg);
-        box-shadow: var(--shadow);
-    }
-
-    h2 {
-        text-align: center;
-        color: var(--text-main);
-        font-size: 24px;
-        font-weight: 800;
-        margin-bottom: 8px;
-    }
-
-    .subtitle {
-        text-align: center;
-        color: var(--text-muted);
-        font-size: 14px;
-        margin-bottom: 30px;
-    }
-
-    .input-group {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-        margin-bottom: 24px;
-    }
-
-    .input-field {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .input-field label {
-        margin-bottom: 6px;
-        color: var(--text-main);
-        font-size: 14px;
-        font-weight: 600;
-    }
-
-    .input-field input {
-        padding: 12px 16px;
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-md);
-        font-size: 16px;
-        background-color: #fcfcfc;
-        transition: all 0.2s;
-    }
-
-    .input-field input:focus {
-        outline: none;
-        border-color: var(--primary-purple);
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-    }
-
-    .unit-info {
-        font-size: 12px;
-        color: var(--text-muted);
-        text-align: right;
-        margin-bottom: 12px;
-    }
-
-    /* 擲骰子決定風格的按鈕 */
-    .calculate-btn {
-        display: block;
-        width: 100%;
-        padding: 16px;
-        background-color: var(--primary-purple);
-        color: white;
-        border: none;
-        border-radius: var(--radius-md);
-        font-size: 18px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: transform 0.1s, background-color 0.2s;
-        margin-bottom: 20px;
-    }
-
-    .calculate-btn:hover {
-        background-color: #4f46e5;
-    }
-
-    .calculate-btn:active {
-        transform: scale(0.98);
-    }
-
-    /* 表格設計 */
-    .table-wrapper {
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-md);
-        overflow: hidden;
-    }
-
-    .results-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .results-table th {
-        background-color: #f8fafc;
-        color: var(--text-muted);
-        font-size: 13px;
-        font-weight: 600;
-        padding: 12px;
-        text-align: center;
-        border-bottom: 1px solid var(--border-color);
-    }
-
-    .results-table td {
-        padding: 8px;
-        border-bottom: 1px solid var(--border-color);
-        text-align: center;
-    }
-
-    .results-table input {
-        width: 80%;
-        padding: 6px;
-        border: 1px solid transparent;
-        border-radius: 4px;
-        text-align: center;
-        font-size: 14px;
-        background-color: transparent;
-    }
-
-    .results-table input:hover {
-        background-color: #f1f5f9;
-    }
-
-    .results-table input:focus {
-        outline: none;
-        background-color: #fff;
-        border-color: var(--border-color);
-    }
-
-    #error-message {
-        color: #ef4444;
-        text-align: center;
-        font-size: 14px;
-        margin-top: 10px;
-        display: none;
-    }
-
-    .footer-note {
-        text-align: center;
-        font-size: 12px;
-        color: #94a3b8;
-        margin-top: 32px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        font-weight: 400;
-        letter-spacing: 0.05em;
-    }
-
-    /* 手機版響應式設計 */
-    @media (max-width: 600px) {
-        body {
-            padding: 20px 10px; /* 縮小螢幕邊緣留白 */
-        }
-
-        .calculator-container {
-            padding: 24px 16px; /* 縮小內部間距保留空間給內容 */
-            border-radius: var(--radius-md);
-        }
-
-        .input-group {
-            grid-template-columns: 1fr; /* 將輸入框改為上下排列 */
-            gap: 12px;
-        }
-
-        .table-wrapper {
-            overflow-x: auto; /* 讓表格在手機上可以左右滑動，避免跑版 */
-        }
-        
-        .results-table th, 
-        .results-table td {
-            padding: 8px 4px; /* 稍微縮小表格內距 */
-        }
-
-        .results-table input {
-            width: 90%;
-            font-size: 14px;
-        }
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>投資報酬試算表 - Shuojen.com</title>
+    <meta name="description" content="快速計算投資報酬率與複利成長，理財規劃的好幫手">
+    <link rel="icon" href="/img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/tools/tool.css">
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="/tools/tool-theme.js"></script>
 </head>
-<body>
+<body class="tool-page">
 
-<div class="calculator-container">
-    <h2>📈 複利試算表</h2>
+    <main class="tool-card max-w-2xl fade-in">
+        <header class="tool-header">
+            <div class="tool-header-main">
+                <div class="tool-icon"><i class="fa-solid fa-chart-line"></i></div>
+                <div>
+                    <h1 class="tool-title">投資報酬試算表</h1>
+                    <p class="tool-subtitle">試算每年定額投入的複利成長，表格中的數字都可以直接修改</p>
+                </div>
+            </div>
+        </header>
 
-    <div class="input-group">
-        <div class="input-field">
-            <label for="startAge">起始年齡</label>
-            <input type="number" id="startAge" value="27">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <label for="startAge" class="tool-label">起始年齡</label>
+                <input type="number" id="startAge" value="27" class="tool-input">
+            </div>
+            <div>
+                <label for="endAge" class="tool-label">結束年齡</label>
+                <input type="number" id="endAge" value="67" class="tool-input">
+            </div>
+            <div>
+                <label for="annualSavings" class="tool-label">每年存入金額</label>
+                <input type="number" id="annualSavings" value="12" class="tool-input">
+            </div>
+            <div>
+                <label for="rateOfReturn" class="tool-label">年報酬率 (%)</label>
+                <input type="number" id="rateOfReturn" value="5" class="tool-input">
+            </div>
         </div>
-        <div class="input-field">
-            <label for="endAge">結束年齡</label>
-            <input type="number" id="endAge" value="67">
-        </div>
-        <div class="input-field">
-            <label for="annualSavings">每年存入金額</label>
-            <input type="number" id="annualSavings" value="12">
-        </div>
-        <div class="input-field">
-            <label for="rateOfReturn">年報酬率 (%)</label>
-            <input type="number" id="rateOfReturn" value="5">
-        </div>
-    </div>
-    <div class="unit-info">金額單位：萬元</div>
+        <p class="text-xs text-slate-400 text-right mt-2 mb-4">金額單位：萬元</p>
 
-    <button class="calculate-btn" onclick="generateInitialTable()">產生 / 重設表格</button>
-    <p id="error-message"></p>
+        <button type="button" class="btn btn-primary btn-lg w-full calculate-btn" onclick="generateInitialTable()">
+            <i class="fa-solid fa-table"></i> 產生 / 重設表格
+        </button>
+        <p id="error-message" class="text-sm font-medium text-red-500 text-center mt-3" style="display: none;"></p>
 
-    <div class="table-wrapper">
-        <table class="results-table">
-            <thead>
-                <tr>
-                    <th>年齡</th>
-                    <th>年存</th>
-                    <th>報酬</th>
-                    <th>總金額</th>
-                    <th>總損益</th>
-                </tr>
-            </thead>
-            <tbody id="results-body">
-            </tbody>
-        </table>
-    </div>
+        <div class="mt-6 border border-slate-100 rounded-2xl overflow-x-auto custom-scrollbar">
+            <table class="w-full text-sm text-center border-collapse">
+                <thead class="bg-slate-50 text-slate-500 text-xs font-bold">
+                    <tr>
+                        <th class="py-3 px-2">年齡</th>
+                        <th class="py-3 px-2">年存</th>
+                        <th class="py-3 px-2">報酬</th>
+                        <th class="py-3 px-2">總金額</th>
+                        <th class="py-3 px-2">總損益</th>
+                    </tr>
+                </thead>
+                <tbody id="results-body" class="divide-y divide-slate-100"></tbody>
+            </table>
+        </div>
+    </main>
 
-    <div class="footer-note">© Shuojen.com Financial Tool</div>
-</div>
+    <footer class="tool-footer">
+        <span>© Shuojen.com</span>
+        <span class="tool-footer-sep">·</span>
+        <a href="/tool"><i class="fa-solid fa-arrow-left text-[10px]"></i> 回小工具</a>
+    </footer>
 
 <script>
     // 表格實際涵蓋的年齡範圍：以「產生表格」當下為準。
     // 之後只改了上方的年齡欄位但還沒重新產生時，編輯表格仍以這個範圍計算，避免找不到對應列而出錯。
     let tableStartAge = null;
     let tableEndAge = null;
+
+    // 表格內可編輯數字的樣式
+    const CELL_INPUT_CLASS = 'w-full max-w-[6.5rem] text-center bg-transparent border border-transparent rounded-lg px-1 py-1.5 hover:bg-slate-100 focus:bg-white focus:border-indigo-400 focus:outline-none transition-colors';
 
     document.addEventListener('DOMContentLoaded', () => {
         generateInitialTable();
@@ -308,11 +123,11 @@
         for (let age = startAge; age <= endAge; age++) {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${age}</td>
-                <td><input type="number" id="savings-${age}" value="${annualSavings.toFixed(1)}" step="0.1" onchange="handleSavingsChange(${age})"></td>
-                <td id="return-${age}" style="color: #10b981; font-weight: 600;">0.0</td>
-                <td><input type="number" id="total-${age}" value="0.0" data-full-value="0.0" step="0.1" onchange="handleTotalChange(${age})" style="font-weight: 600;"></td>
-                <td id="profit-percent-${age}" style="color: #3b82f6; font-weight: 600;">0.0%</td>
+                <td class="py-1.5 px-2 text-slate-500 font-medium">${age}</td>
+                <td class="py-1.5 px-1"><input type="number" id="savings-${age}" value="${annualSavings.toFixed(1)}" step="0.1" onchange="handleSavingsChange(${age})" class="${CELL_INPUT_CLASS}"></td>
+                <td id="return-${age}" class="py-1.5 px-2 font-bold text-emerald-500">0.0</td>
+                <td class="py-1.5 px-1"><input type="number" id="total-${age}" value="0.0" data-full-value="0.0" step="0.1" onchange="handleTotalChange(${age})" class="${CELL_INPUT_CLASS} font-bold text-slate-800"></td>
+                <td id="profit-percent-${age}" class="py-1.5 px-2 font-bold">0.0%</td>
             `;
             resultsBody.appendChild(row);
         }
@@ -389,13 +204,13 @@
         const profitPercentElement = document.getElementById(`profit-percent-${age}`);
         if (profitPercentElement) {
             profitPercentElement.textContent = profitPercent.toFixed(1) + '%';
-            // 依據正負值調整顏色 (正數藍色/綠色，負數紅色)
+            // 依據正負值調整顏色：正數紫色、負數紅色、零為灰色
             if (profitPercent > 0) {
-                profitPercentElement.style.color = '#3b82f6';
+                profitPercentElement.style.color = '#4f46e5';
             } else if (profitPercent < 0) {
                 profitPercentElement.style.color = '#ef4444';
             } else {
-                profitPercentElement.style.color = 'var(--text-main)';
+                profitPercentElement.style.color = '#64748b';
             }
         }
     }

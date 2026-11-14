@@ -4,124 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>圖片批次處理工具 - Shuojen.com</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="在瀏覽器內快速完成圖片的壓縮與格式轉換">
+    <link rel="icon" href="/img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/tools/tool.css">
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="/tools/tool-theme.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['"Noto Sans TC"', 'sans-serif'] }
-                }
-            }
-        }
-    </script>
-
     <style>
-        /* 自定義捲軸 */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f5f9;
-            border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-
-        /* 拖曳區動畫與狀態 */
+        /* 拖曳到上傳區時的狀態 */
         #drop-zone.dragover {
-            border-color: #4f46e5; /* indigo-600 */
-            background-color: #eef2ff; /* indigo-50 */
-        }
-
-        /* 簡單的載入動畫 */
-        .fade-in {
-            animation: fadeIn 0.4s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            border-color: #4f46e5;
+            background-color: #eef2ff;
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col items-center py-6 px-4 md:py-12">
+<body class="tool-page">
 
-    <main class="w-full max-w-5xl bg-white rounded-[2rem] shadow-2xl border border-slate-100 p-4 md:p-10 fade-in flex flex-col">
-        
-        <header class="flex items-center gap-4 mb-8">
-            <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 shadow-lg shadow-indigo-200 flex items-center justify-center text-xl">
-                <i class="fa-solid fa-images"></i>
-            </div>
-            <div>
-                <h1 class="text-2xl md:text-3xl font-black text-slate-800 tracking-tight">圖片批次處理工具</h1>
-                <p class="text-sm text-slate-500 mt-1">快速壓縮、調整尺寸並批次重新命名您的圖片</p>
+    <main class="tool-card max-w-5xl fade-in">
+        <header class="tool-header">
+            <div class="tool-header-main">
+                <div class="tool-icon"><i class="fa-solid fa-images"></i></div>
+                <div>
+                    <h1 class="tool-title">圖片批次處理工具</h1>
+                    <p class="tool-subtitle">快速壓縮、調整尺寸並批次重新命名圖片，全部在瀏覽器內完成</p>
+                </div>
             </div>
         </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+
             <section class="flex flex-col gap-6">
                 <div id="drop-zone" class="border-2 border-dashed border-slate-300 rounded-2xl p-8 text-center cursor-pointer transition-all hover:border-indigo-400 hover:bg-slate-50 flex flex-col items-center justify-center gap-3">
                     <div class="w-14 h-14 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 text-2xl mb-2">
                         <i class="fa-solid fa-cloud-arrow-up"></i>
                     </div>
                     <h3 class="font-bold text-slate-700 text-lg" id="drop-text">拖曳圖片到這裡</h3>
-                    <p class="text-sm text-slate-400">或點擊選擇檔案 (支援 JPG, PNG, WebP)</p>
+                    <p class="text-sm text-slate-400">或點擊選擇檔案（支援 JPG、PNG、WebP）</p>
                     <input type="file" id="upload" accept="image/*" multiple class="hidden">
                 </div>
 
-                <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100 flex flex-col gap-4">
-                    <h3 class="font-bold text-slate-700 border-b border-slate-200 pb-2 mb-2"><i class="fa-solid fa-sliders text-indigo-500 mr-2"></i>處理設定</h3>
-                    
+                <div class="tool-panel flex flex-col gap-4">
+                    <h3 class="tool-section-title"><i class="fa-solid fa-sliders text-indigo-500"></i> 處理設定</h3>
+
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-bold text-slate-500 mb-1">命名前綴</label>
-                            <input type="text" id="prefix" value="photo_" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
+                            <label for="prefix" class="tool-label">命名前綴</label>
+                            <input type="text" id="prefix" value="photo_" class="tool-input">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-500 mb-1">起始編號 (決定位數)</label>
-                            <input type="text" id="startNum" value="001" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
+                            <label for="startNum" class="tool-label">起始編號（決定位數）</label>
+                            <input type="text" id="startNum" value="001" inputmode="numeric" class="tool-input">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-bold text-slate-500 mb-1">最大寬度 (px)</label>
-                            <input type="number" id="maxWidth" value="1200" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
+                            <label for="maxWidth" class="tool-label">最大寬度 (px)</label>
+                            <input type="number" id="maxWidth" value="1200" min="1" class="tool-input">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-500 mb-1">大小限制 (KB)</label>
-                            <input type="number" id="maxSize" value="1000" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all text-orange-500 font-bold">
+                            <label for="maxSize" class="tool-label">大小限制 (KB)</label>
+                            <input type="number" id="maxSize" value="1000" min="1" class="tool-input text-orange-500 font-bold">
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-slate-500 mb-1">輸出格式</label>
-                        <select id="format" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
-                            <option value="image/jpeg">JPG (預設壓縮)</option>
-                            <option value="image/webp">WebP (更佳壓縮率)</option>
-                            <option value="image/png">PNG (保留畫質，無檔案大小限制)</option>
+                        <label for="format" class="tool-label">輸出格式</label>
+                        <select id="format" class="tool-input">
+                            <option value="image/jpeg">JPG（預設壓縮）</option>
+                            <option value="image/webp">WebP（更佳壓縮率）</option>
+                            <option value="image/png">PNG（保留畫質，無檔案大小限制）</option>
                         </select>
                     </div>
                 </div>
 
-                <button id="processBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl shadow-md shadow-indigo-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2">
+                <button id="processBtn" type="button" class="btn btn-primary btn-lg w-full py-4">
                     <i class="fa-solid fa-play"></i> 開始批次處理
                 </button>
             </section>
 
-            <section class="flex flex-col bg-slate-50 rounded-2xl border border-slate-100 p-6 h-[600px]">
-                
+            <section class="tool-panel flex flex-col h-[420px] md:h-[600px]">
+
                 <div class="flex justify-between items-end mb-4 border-b border-slate-200 pb-3">
-                    <h3 class="font-bold text-slate-700"><i class="fa-solid fa-list-check text-emerald-500 mr-2"></i>處理結果</h3>
+                    <h3 class="tool-section-title mb-0"><i class="fa-solid fa-list-check text-emerald-500"></i> 處理結果</h3>
                     <div id="status-text" class="text-xs font-bold text-slate-400">尚未開始</div>
                 </div>
 
@@ -132,13 +101,13 @@
                 </div>
 
                 <div id="result-list" class="flex-1 overflow-y-auto custom-scrollbar pr-2 flex flex-col gap-3">
-                    <div id="empty-state" class="flex flex-col items-center justify-center h-full text-slate-400 opacity-50">
+                    <div id="empty-state" class="flex flex-col items-center justify-center h-full text-slate-400 opacity-60">
                         <i class="fa-regular fa-folder-open text-4xl mb-3"></i>
                         <p class="text-sm">處理後的檔案會顯示在這裡</p>
                     </div>
                 </div>
 
-                <button id="downloadAllBtn" class="hidden w-full mt-4 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl shadow-md transition-all flex justify-center items-center gap-2">
+                <button id="downloadAllBtn" type="button" class="hidden btn w-full mt-4 py-3 bg-slate-800 hover:bg-slate-900 text-white shadow-md">
                     <i class="fa-solid fa-file-zipper"></i> 打包下載所有圖片 (.zip)
                 </button>
 
@@ -146,11 +115,12 @@
         </div>
     </main>
 
-	<footer class="mt-8 text-center text-slate-400 text-xs font-normal tracking-wide flex flex-col items-center gap-2">
-        <p>© Shuojen.com Resize Tool</p>
-        <button onclick="location.reload()" class="text-slate-500 hover:text-indigo-600 transition-colors text-xs underline">
-            <i class="fa-solid fa-rotate-right mr-1"></i>恢復預設值
-        </button>
+    <footer class="tool-footer">
+        <span>© Shuojen.com</span>
+        <span class="tool-footer-sep">·</span>
+        <a href="/tool"><i class="fa-solid fa-arrow-left text-[10px]"></i> 回小工具</a>
+        <span class="tool-footer-sep">·</span>
+        <button type="button" onclick="location.reload()"><i class="fa-solid fa-rotate-left text-[10px]"></i> 恢復預設值</button>
     </footer>
 
     <script>

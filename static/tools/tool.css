@@ -1,0 +1,23 @@
+/* 小工具頁共用樣式：Tailwind 不方便表達的部分（捲軸、動畫、焦點框）。
+   元件外觀（卡片、標題列、按鈕…）在 /tools/tool-theme.js。 */
+
+/* 細窄灰色圓角捲軸 */
+.custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 8px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* 漸入動畫 */
+.fade-in { animation: tool-fade-in 0.4s ease-out both; }
+@keyframes tool-fade-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 鍵盤操作時的焦點框 */
+:focus-visible { outline: 3px solid #a5b4fc; outline-offset: 2px; }
+.tool-input:focus-visible { outline: none; }
+
+@media (prefers-reduced-motion: reduce) {
+    .fade-in { animation: none; }
+}

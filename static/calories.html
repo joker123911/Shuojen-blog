@@ -4,150 +4,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>營養攝取終結者 - Shuojen.com</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="計算每日營養素攝取量，輕鬆管理飲食目標">
+    <link rel="icon" href="/img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
-        body { font-family: 'Noto Sans TC', sans-serif; }
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
-        .fade-enter { opacity: 0; transform: translateY(10px); }
-        .fade-enter-active { opacity: 1; transform: translateY(0); transition: opacity 300ms, transform 300ms; }
-    </style>
+    <link rel="stylesheet" href="/tools/tool.css">
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="/tools/tool-theme.js"></script>
 </head>
-<body class="bg-slate-50 min-h-screen p-2 sm:p-4 md:p-8 text-slate-700 flex flex-col items-center">
+<body class="tool-page">
 
-    <div class="w-full max-w-5xl mx-auto">
-        <div class="bg-white rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl p-4 sm:p-6 md:p-10 border border-slate-100">
-
-            <div class="flex flex-col md:flex-row items-center justify-between mb-6 md:mb-8 gap-4 text-center md:text-left">
-                <div class="flex items-center gap-3 md:gap-4">
-                    <div class="bg-indigo-600 w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200 flex-shrink-0">
-                        <i class="fa-solid fa-dumbbell text-white text-xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-xl md:text-2xl font-bold text-slate-800 tracking-tight">營養攝取終結者</h1>
-                        <p class="text-xs md:text-xs text-slate-400">Shuojen.com</p>
-                    </div>
-                </div>
-                <div class="flex flex-wrap sm:flex-nowrap gap-2 w-full md:w-auto">
-                    <button onclick="toggleSettings()" class="flex-1 sm:flex-none bg-slate-100 hover:bg-slate-200 text-slate-600 px-4 py-2.5 sm:py-2 rounded-xl transition text-xs sm:text-sm flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-bullseye"></i> 目標
-                    </button>
-                    <button onclick="toggleBatchArea()" class="flex-1 sm:flex-none bg-slate-100 hover:bg-slate-200 text-slate-600 px-4 py-2.5 sm:py-2 rounded-xl transition text-xs sm:text-sm flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-file-import"></i> 批次
-                    </button>
-                    <button onclick="toggleAddForm()" class="w-full sm:w-auto flex-1 sm:flex-none bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 sm:py-2 rounded-xl transition text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md">
-                        <i class="fa-solid fa-plus"></i> 新增食物
-                    </button>
+    <main class="tool-card max-w-5xl fade-in">
+        <header class="tool-header">
+            <div class="tool-header-main">
+                <div class="tool-icon"><i class="fa-solid fa-dumbbell"></i></div>
+                <div>
+                    <h1 class="tool-title">營養攝取終結者</h1>
+                    <p class="tool-subtitle">記錄每天吃了什麼，熱量和蛋白質一目了然</p>
                 </div>
             </div>
+            <div class="tool-header-actions w-full sm:w-auto">
+                <button type="button" onclick="toggleSettings()" class="btn btn-secondary flex-1 sm:flex-none">
+                    <i class="fa-solid fa-bullseye"></i> 目標
+                </button>
+                <button type="button" onclick="toggleBatchArea()" class="btn btn-secondary flex-1 sm:flex-none">
+                    <i class="fa-solid fa-file-import"></i> 批次
+                </button>
+                <button type="button" onclick="toggleAddForm()" class="btn btn-primary flex-1 sm:flex-none">
+                    <i class="fa-solid fa-plus"></i> 新增食物
+                </button>
+            </div>
+        </header>
 
-            <div id="settingsArea" class="hidden mb-6 bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200 space-y-4">
-                <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm md:text-base">
-                    <i class="fa-solid fa-bullseye text-indigo-500"></i> 設定每日目標
-                </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                    <div>
-                        <label class="text-xs text-slate-500 mb-1 block">目標熱量 (kcal)</label>
-                        <input type="number" id="targetCalInput" class="w-full p-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-400 bg-white">
-                    </div>
-                    <div>
-                        <label class="text-xs text-slate-500 mb-1 block">目標蛋白質 (g)</label>
-                        <input type="number" id="targetProInput" class="w-full p-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-400 bg-white">
-                    </div>
+        <div id="settingsArea" class="hidden tool-panel mb-6 space-y-4">
+            <h3 class="tool-section-title"><i class="fa-solid fa-bullseye text-indigo-500"></i> 設定每日目標</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <div>
+                    <label for="targetCalInput" class="tool-label">目標熱量 (kcal)</label>
+                    <input type="number" id="targetCalInput" class="tool-input">
                 </div>
-                <div class="flex gap-2 pt-2">
-                    <button onclick="saveTargets()" class="flex-1 bg-indigo-600 text-white py-3 sm:py-2.5 rounded-xl font-bold text-sm">儲存目標</button>
-                    <button onclick="toggleSettings()" class="px-5 py-3 sm:py-2.5 bg-slate-200 text-slate-600 rounded-xl text-sm">取消</button>
+                <div>
+                    <label for="targetProInput" class="tool-label">目標蛋白質 (g)</label>
+                    <input type="number" id="targetProInput" class="tool-input">
                 </div>
             </div>
-
-            <div id="batchArea" class="hidden mb-6 bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200 space-y-4">
-                <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm md:text-base">
-                    <i class="fa-solid fa-database text-indigo-500"></i> 食物批次匯入/匯出
-                </h3>
-                <p class="text-xs sm:text-xs text-slate-500">格式：名稱 | 份量 | 熱量(kcal) | 蛋白質(g) (每行一項)</p>
-                <textarea id="batchInput" rows="5" class="w-full p-3 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500 outline-none custom-scrollbar font-mono bg-white" placeholder="無糖豆漿 | 400ml | 130 | 14"></textarea>
-                <div class="flex gap-2">
-                    <button onclick="importBatch()" class="flex-1 bg-indigo-600 text-white py-3 sm:py-2.5 rounded-xl text-sm font-bold">匯入取代</button>
-                    <button onclick="exportBatch()" class="flex-1 bg-white border border-slate-200 text-slate-600 py-3 sm:py-2.5 rounded-xl text-sm font-bold">產生文字</button>
-                </div>
-            </div>
-
-            <div id="addForm" class="hidden mb-6 bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200 space-y-4">
-                <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm md:text-base mb-2">
-                    <i class="fa-solid fa-plus-circle text-indigo-500"></i> 新增單筆食物
-                </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                    <input type="text" id="newName" placeholder="食物名稱 (例: 茶葉蛋)" class="w-full p-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-400 bg-white">
-                    <input type="text" id="newPortion" placeholder="份量 (例: 1顆, 100g)" class="w-full p-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-400 bg-white">
-                    <input type="number" id="newCal" placeholder="熱量 (kcal)" class="w-full p-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-400 bg-white">
-                    <input type="number" id="newPro" placeholder="蛋白質 (g)" class="w-full p-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-400 bg-white">
-                </div>
-                <div class="flex gap-2 pt-2">
-                    <button onclick="saveFood()" class="flex-1 bg-indigo-600 text-white py-3 sm:py-2.5 rounded-xl font-bold text-sm">加入資料庫</button>
-                    <button onclick="toggleAddForm()" class="px-5 py-3 sm:py-2.5 bg-slate-200 text-slate-600 rounded-xl text-sm">取消</button>
-                </div>
-            </div>
-
-            <div class="bg-indigo-50 p-4 sm:p-5 rounded-2xl border border-indigo-100 mb-6 md:mb-8 flex flex-col sm:flex-row gap-4">
-                <div class="flex-1 bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-slate-100 relative overflow-hidden">
-                    <div class="text-xs sm:text-sm font-bold text-slate-400 mb-1 sm:mb-2">今日熱量</div>
-                    <div class="flex justify-between items-baseline mb-2 sm:mb-3 relative z-10">
-                        <span class="text-3xl sm:text-4xl font-black text-orange-500" id="currentCal">0</span>
-                        <span class="text-xs sm:text-sm text-slate-400 font-medium">/ <span id="targetCalDisp">2000</span> kcal</span>
-                    </div>
-                    <div class="w-full bg-slate-100 rounded-full h-2.5 sm:h-3 relative z-10">
-                        <div class="bg-orange-400 h-2.5 sm:h-3 rounded-full transition-all duration-500" id="barCal" style="width: 0%"></div>
-                    </div>
-                </div>
-                <div class="flex-1 bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-slate-100 relative overflow-hidden">
-                    <div class="text-xs sm:text-sm font-bold text-slate-400 mb-1 sm:mb-2">今日蛋白質</div>
-                    <div class="flex justify-between items-baseline mb-2 sm:mb-3 relative z-10">
-                        <span class="text-3xl sm:text-4xl font-black text-indigo-500" id="currentPro">0</span>
-                        <span class="text-xs sm:text-sm text-slate-400 font-medium">/ <span id="targetProDisp">100</span> g</span>
-                    </div>
-                    <div class="w-full bg-slate-100 rounded-full h-2.5 sm:h-3 relative z-10">
-                        <div class="bg-indigo-500 h-2.5 sm:h-3 rounded-full transition-all duration-500" id="barPro" style="width: 0%"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-                
-                <div class="flex flex-col h-full">
-                    <div class="flex justify-between items-end mb-3 px-1">
-                        <h2 class="text-sm sm:text-base font-bold text-slate-800"><i class="fa-solid fa-utensils text-indigo-400 mr-1"></i> 今天吃了什麼？</h2>
-                        <button onclick="clearToday()" class="text-xs text-slate-400 hover:text-red-400 transition underline p-1">清空今日</button>
-                    </div>
-                    <div id="todayList" class="flex-1 flex flex-col gap-2 max-h-[350px] lg:max-h-[400px] overflow-y-auto pr-2 custom-scrollbar min-h-[100px] p-2 sm:p-3 bg-slate-50 border border-slate-100 rounded-xl">
-                    </div>
-                </div>
-
-                <div class="flex flex-col h-full mt-2 lg:mt-0">
-                    <div class="flex justify-between items-end mb-3 px-1">
-                        <h2 class="text-sm sm:text-base font-bold text-slate-800"><i class="fa-solid fa-layer-group text-indigo-400 mr-1"></i> 常吃食物庫 <span class="text-xs font-normal text-slate-400 ml-1">(點擊加入)</span></h2>
-                    </div>
-                    <div id="foodList" class="flex-1 grid gap-2 max-h-[350px] lg:max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-                    </div>
-                    <div class="text-xs text-slate-400 px-1 mt-3 flex justify-between items-center bg-white pt-2">
-                        <span id="statsCount">資料庫共有 0 項食物</span>
-                        <button onclick="clearDB()" class="hover:text-red-400 transition underline font-medium p-1">清空資料庫</button>
-                    </div>
-                </div>
-
+            <div class="flex gap-2">
+                <button type="button" onclick="saveTargets()" class="btn btn-primary flex-1">儲存目標</button>
+                <button type="button" onclick="toggleSettings()" class="btn btn-outline">取消</button>
             </div>
         </div>
-        
-        <div class="flex justify-center items-center gap-3 mt-8 text-slate-400 text-xs font-normal tracking-wide">
-            <p>© Shuojen.com Nutrition Tracker</p>
-            <span class="text-slate-300">|</span>
-            <button onclick="factoryReset()" class="hover:text-red-500 transition underline flex items-center gap-1">
-                <i class="fa-solid fa-rotate-left text-xs"></i> 恢復預設
-            </button>
+
+        <div id="batchArea" class="hidden tool-panel mb-6 space-y-4">
+            <h3 class="tool-section-title"><i class="fa-solid fa-database text-indigo-500"></i> 食物批次匯入／匯出</h3>
+            <p class="text-xs text-slate-500">格式：名稱 | 份量 | 熱量(kcal) | 蛋白質(g)（每行一項）</p>
+            <textarea id="batchInput" rows="5" class="tool-input font-mono custom-scrollbar" placeholder="無糖豆漿 | 400ml | 130 | 14"></textarea>
+            <div class="flex gap-2">
+                <button type="button" onclick="importBatch()" class="btn btn-primary flex-1">匯入取代</button>
+                <button type="button" onclick="exportBatch()" class="btn btn-outline flex-1">產生文字</button>
+            </div>
         </div>
-    </div>
+
+        <div id="addForm" class="hidden tool-panel mb-6 space-y-4">
+            <h3 class="tool-section-title"><i class="fa-solid fa-circle-plus text-indigo-500"></i> 新增單筆食物</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <input type="text" id="newName" placeholder="食物名稱 (例: 茶葉蛋)" class="tool-input">
+                <input type="text" id="newPortion" placeholder="份量 (例: 1顆, 100g)" class="tool-input">
+                <input type="number" id="newCal" placeholder="熱量 (kcal)" class="tool-input">
+                <input type="number" id="newPro" placeholder="蛋白質 (g)" class="tool-input">
+            </div>
+            <div class="flex gap-2">
+                <button type="button" onclick="saveFood()" class="btn btn-primary flex-1">加入資料庫</button>
+                <button type="button" onclick="toggleAddForm()" class="btn btn-outline">取消</button>
+            </div>
+        </div>
+
+        <div class="bg-indigo-50 p-4 sm:p-5 rounded-2xl border border-indigo-100 mb-6 md:mb-8 flex flex-col sm:flex-row gap-4">
+            <div class="flex-1 bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-slate-100">
+                <div class="text-xs sm:text-sm font-bold text-slate-400 mb-1 sm:mb-2">今日熱量</div>
+                <div class="flex justify-between items-baseline mb-2 sm:mb-3">
+                    <span class="text-3xl sm:text-4xl font-black text-orange-500" id="currentCal">0</span>
+                    <span class="text-xs sm:text-sm text-slate-400 font-medium">/ <span id="targetCalDisp">2000</span> kcal</span>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-2.5 sm:h-3">
+                    <div class="bg-orange-400 h-2.5 sm:h-3 rounded-full transition-all duration-500" id="barCal" style="width: 0%"></div>
+                </div>
+            </div>
+            <div class="flex-1 bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-slate-100">
+                <div class="text-xs sm:text-sm font-bold text-slate-400 mb-1 sm:mb-2">今日蛋白質</div>
+                <div class="flex justify-between items-baseline mb-2 sm:mb-3">
+                    <span class="text-3xl sm:text-4xl font-black text-indigo-500" id="currentPro">0</span>
+                    <span class="text-xs sm:text-sm text-slate-400 font-medium">/ <span id="targetProDisp">100</span> g</span>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-2.5 sm:h-3">
+                    <div class="bg-indigo-500 h-2.5 sm:h-3 rounded-full transition-all duration-500" id="barPro" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+
+            <div class="flex flex-col h-full">
+                <div class="flex justify-between items-end mb-3 px-1">
+                    <h2 class="tool-section-title mb-0"><i class="fa-solid fa-utensils text-indigo-400"></i> 今天吃了什麼？</h2>
+                    <button type="button" onclick="clearToday()" class="text-xs text-slate-400 hover:text-red-500 transition underline underline-offset-2 p-1">清空今日</button>
+                </div>
+                <div id="todayList" class="flex-1 flex flex-col gap-2 max-h-[350px] lg:max-h-[400px] overflow-y-auto pr-2 custom-scrollbar min-h-[100px] p-2 sm:p-3 bg-slate-50 border border-slate-100 rounded-xl">
+                </div>
+            </div>
+
+            <div class="flex flex-col h-full mt-2 lg:mt-0">
+                <div class="flex justify-between items-end mb-3 px-1">
+                    <h2 class="tool-section-title mb-0"><i class="fa-solid fa-layer-group text-indigo-400"></i> 常吃食物庫 <span class="text-xs font-normal text-slate-400">（點擊加入）</span></h2>
+                </div>
+                <div id="foodList" class="flex-1 grid gap-2 max-h-[350px] lg:max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                </div>
+                <div class="text-xs text-slate-400 px-1 mt-3 flex justify-between items-center">
+                    <span id="statsCount">資料庫共有 0 項食物</span>
+                    <button type="button" onclick="clearDB()" class="hover:text-red-500 transition underline underline-offset-2 font-medium p-1">清空資料庫</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="tool-footer">
+        <span>© Shuojen.com</span>
+        <span class="tool-footer-sep">·</span>
+        <a href="/tool"><i class="fa-solid fa-arrow-left text-[10px]"></i> 回小工具</a>
+        <span class="tool-footer-sep">·</span>
+        <button type="button" onclick="factoryReset()"><i class="fa-solid fa-rotate-left text-[10px]"></i> 恢復預設</button>
+    </footer>
 
     <script>
         const DEFAULT_RAW = `無糖豆漿 | 400ml | 130 | 13
@@ -393,7 +381,7 @@ subway厚切嫩牛 | 6吋 | 366 | 26
                 const rowPro = Math.round(f.pro * f.count * 10) / 10;
                 
                 const card = document.createElement('div');
-                card.className = "bg-white border border-slate-200 p-3 sm:p-4 rounded-xl flex justify-between items-center animate-in fade-in duration-300 shadow-sm";
+                card.className = "bg-white border border-slate-200 p-3 sm:p-4 rounded-xl flex justify-between items-center shadow-sm";
                 card.innerHTML = `
                     <div class="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0"></span>

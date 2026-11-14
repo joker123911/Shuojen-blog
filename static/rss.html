@@ -4,143 +4,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RSS 文章連結檢測工具 - Shuojen.com</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome 6.4.0 -->
+    <meta name="description" content="輸入 RSS 摘要網址，自動掃描文章與內文連結是否失效">
+    <link rel="icon" href="/img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts Noto Sans TC -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-        }
-        /* 細窄灰色圓角滾動條 */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 3px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-        /* 漸入動畫 */
-        .fade-in {
-            animation: fadeIn 0.4s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    <link rel="stylesheet" href="/tools/tool.css">
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="/tools/tool-theme.js"></script>
 </head>
-<body class="bg-slate-50 min-h-screen flex flex-col justify-between antialiased">
+<body class="tool-page">
 
-    <!-- 主要內容區塊 -->
-    <main class="flex-grow p-4 md:p-10 flex items-center justify-center">
-        <div class="max-w-5xl w-full bg-white rounded-[2rem] shadow-2xl border border-slate-100 p-6 md:p-10 transition-all duration-300">
-            
-            <!-- 頂部標頭 -->
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-6 mb-8 text-center sm:text-left">
-                <div class="flex flex-col sm:flex-row items-center gap-4">
-                    <div class="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center shadow-lg shadow-indigo-200/50 text-indigo-600 text-xl">
-                        <i class="fa-solid fa-rss"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-slate-800 text-2xl font-bold tracking-tight">RSS 文章連結檢測工具</h1>
-                        <p class="text-slate-500 text-sm mt-0.5">輸入 RSS 摘要網址，自動深度掃描並分析內文死鏈</p>
-                    </div>
-                </div>
+    <main class="tool-card max-w-5xl fade-in">
+        <header class="tool-header">
+            <div class="tool-header-main">
+                <div class="tool-icon"><i class="fa-solid fa-rss"></i></div>
                 <div>
-                    <button id="btn-show-settings" class="text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center gap-1.5 mx-auto sm:mx-0 transition-colors">
-                        <i class="fa-solid fa-gear"></i> 進階設定
-                    </button>
+                    <h1 class="tool-title">RSS 文章連結檢測工具</h1>
+                    <p class="tool-subtitle">輸入 RSS 摘要網址，自動掃描文章與內文連結是否失效</p>
                 </div>
             </div>
-
-            <!-- 進階設定區域 (預設隱藏) -->
-            <div id="settings-area" class="hidden fade-in bg-slate-50 border border-slate-100 rounded-2xl p-4 mb-6">
-                <h3 class="text-slate-800 font-semibold text-sm mb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-sliders text-indigo-600"></i> 掃描配置參數
-                </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                    <div>
-                        <label class="block text-slate-500 mb-1">並發請求限制 (降低可防封鎖)</label>
-                        <select id="setting-concurrency" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-700 focus:outline-none focus:border-indigo-300">
-                            <option value="2">2 個並發 (最安全)</option>
-                            <option value="4" selected>4 個並發 (推薦)</option>
-                            <option value="8">8 個並發 (速度快)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-slate-500 mb-1">檢測目標範圍</label>
-                        <select id="setting-scope" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-700 focus:outline-none focus:border-indigo-300">
-                            <option value="all" selected>檢測文章連結 + 內文所有外鏈</option>
-                            <option value="only-articles">僅檢測文章原始連結</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 輸入表單區塊 -->
-            <div class="bg-white border border-slate-100 rounded-2xl p-1.5 shadow-sm flex flex-col sm:flex-row items-stretch gap-2 mb-8 focus-within:border-indigo-300 transition-all duration-200">
-                <div class="flex-grow flex items-center gap-3 px-3 py-2 sm:py-0">
-                    <i class="fa-solid fa-link text-slate-400 text-lg"></i>
-                    <input id="rss-input" type="url" placeholder="請輸入 RSS Feed 網址 (例如 https://shuojen.com/blog/rss.xml)" 
-                           class="w-full text-slate-700 placeholder-slate-400 focus:outline-none bg-transparent text-sm md:text-base">
-                </div>
-                <button id="btn-start-scan" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-3 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md shadow-indigo-100 text-sm md:text-base whitespace-nowrap">
-                    <i class="fa-solid fa-magnifying-glass"></i> 開始檢測
+            <div class="tool-header-actions">
+                <button id="btn-show-settings" type="button" class="btn btn-secondary">
+                    <i class="fa-solid fa-gear"></i> 進階設定
                 </button>
             </div>
+        </header>
 
-            <!-- 儀表板數據看板 (初始隱藏) -->
-            <div id="dashboard-stats" class="hidden fade-in grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-                <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 text-center">
-                    <div class="text-slate-400 text-xs font-medium mb-1">已掃描文章</div>
-                    <div id="stat-articles" class="text-slate-800 text-2xl font-bold">0</div>
+        <!-- 進階設定區域 (預設隱藏) -->
+        <div id="settings-area" class="hidden fade-in tool-panel mb-6">
+            <h3 class="tool-section-title"><i class="fa-solid fa-sliders text-indigo-600"></i> 掃描配置參數</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="setting-concurrency" class="tool-label">並發請求限制（降低可防封鎖）</label>
+                    <select id="setting-concurrency" class="tool-input">
+                        <option value="2">2 個並發 (最安全)</option>
+                        <option value="4" selected>4 個並發 (推薦)</option>
+                        <option value="8">8 個並發 (速度快)</option>
+                    </select>
                 </div>
-                <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 text-center">
-                    <div class="text-slate-400 text-xs font-medium mb-1">總計檢測連結</div>
-                    <div id="stat-links" class="text-slate-800 text-2xl font-bold">0</div>
-                </div>
-                <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-4 text-center">
-                    <div class="text-emerald-500 text-xs font-medium mb-1">正常連結</div>
-                    <div id="stat-valid" class="text-emerald-600 text-2xl font-bold">0</div>
-                </div>
-                <div class="bg-orange-50 border border-orange-100 rounded-2xl p-4 text-center">
-                    <div class="text-orange-500 text-xs font-medium mb-1">異常連結 (壞鏈)</div>
-                    <div id="stat-broken" class="text-orange-600 text-2xl font-bold">0</div>
+                <div>
+                    <label for="setting-scope" class="tool-label">檢測目標範圍</label>
+                    <select id="setting-scope" class="tool-input">
+                        <option value="all" selected>檢測文章連結 + 內文所有外鏈</option>
+                        <option value="only-articles">僅檢測文章原始連結</option>
+                    </select>
                 </div>
             </div>
+        </div>
 
-            <!-- 進度條 -->
-            <div id="progress-container" class="hidden mb-6 bg-slate-100 rounded-full h-2 overflow-hidden">
-                <div id="progress-bar" class="bg-indigo-600 h-full w-0 transition-all duration-300 rounded-full"></div>
+        <!-- 輸入表單區塊 -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-1.5 flex flex-col sm:flex-row items-stretch gap-2 mb-8 focus-within:border-indigo-400 focus-within:ring-4 focus-within:ring-indigo-50 transition-all duration-200">
+            <div class="flex-grow flex items-center gap-3 px-3 py-2 sm:py-0">
+                <i class="fa-solid fa-link text-slate-400 text-lg"></i>
+                <input id="rss-input" type="url" placeholder="請輸入 RSS Feed 網址（例如 https://shuojen.com/blog/rss.xml）"
+                       class="w-full text-slate-700 placeholder-slate-400 focus:outline-none bg-transparent text-sm md:text-base">
             </div>
+            <button id="btn-start-scan" type="button" class="btn btn-primary whitespace-nowrap px-6 py-3 disabled:opacity-80">
+                <i class="fa-solid fa-magnifying-glass"></i> 開始檢測
+            </button>
+        </div>
 
-            <!-- 狀態提示與錯誤訊息 -->
-            <div id="status-message" class="hidden text-center py-6 text-slate-500 text-sm"></div>
-
-            <!-- 檢測結果清單容器 -->
-            <div id="results-container" class="space-y-4 max-h-[500px] overflow-y-auto custom-scrollbar pr-1 hidden">
-                <!-- 動態插入檢測結果卡片 -->
+        <!-- 儀表板數據看板 (初始隱藏) -->
+        <div id="dashboard-stats" class="hidden fade-in grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+            <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 text-center">
+                <div class="text-slate-400 text-xs font-medium mb-1">已掃描文章</div>
+                <div id="stat-articles" class="text-slate-800 text-2xl font-bold">0</div>
             </div>
+            <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 text-center">
+                <div class="text-slate-400 text-xs font-medium mb-1">總計檢測連結</div>
+                <div id="stat-links" class="text-slate-800 text-2xl font-bold">0</div>
+            </div>
+            <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-4 text-center">
+                <div class="text-emerald-500 text-xs font-medium mb-1">正常連結</div>
+                <div id="stat-valid" class="text-emerald-600 text-2xl font-bold">0</div>
+            </div>
+            <div class="bg-orange-50 border border-orange-100 rounded-2xl p-4 text-center">
+                <div class="text-orange-500 text-xs font-medium mb-1">異常連結 (壞鏈)</div>
+                <div id="stat-broken" class="text-orange-600 text-2xl font-bold">0</div>
+            </div>
+        </div>
 
+        <!-- 進度條 -->
+        <div id="progress-container" class="hidden mb-6 bg-slate-100 rounded-full h-2 overflow-hidden">
+            <div id="progress-bar" class="bg-indigo-600 h-full w-0 transition-all duration-300 rounded-full"></div>
+        </div>
+
+        <!-- 狀態提示與錯誤訊息 -->
+        <div id="status-message" class="hidden text-center py-6 text-slate-500 text-sm"></div>
+
+        <!-- 檢測結果清單容器 -->
+        <div id="results-container" class="space-y-4 max-h-[500px] overflow-y-auto custom-scrollbar pr-1 hidden">
+            <!-- 動態插入檢測結果卡片 -->
         </div>
     </main>
 
-    <!-- 頁尾宣告與功能按鈕 -->
-    <footer class="w-full text-center py-6 border-t border-slate-100 bg-white px-4 flex flex-col sm:flex-row justify-between items-center gap-4 max-w-5xl mx-auto rounded-t-[2rem] shadow-inner">
-        <span class="text-slate-400 text-xs tracking-wide">© Shuojen.com RSS Link Checker</span>
-        <button id="btn-reset" class="text-xs md:text-sm text-slate-400 hover:text-slate-600 transition-colors flex items-center gap-1">
-            <i class="fa-solid fa-arrow-rotate-left"></i> 恢復預設值
-        </button>
+    <footer class="tool-footer">
+        <span>© Shuojen.com</span>
+        <span class="tool-footer-sep">·</span>
+        <a href="/tool"><i class="fa-solid fa-arrow-left text-[10px]"></i> 回小工具</a>
+        <span class="tool-footer-sep">·</span>
+        <button id="btn-reset" type="button"><i class="fa-solid fa-rotate-left text-[10px]"></i> 恢復預設值</button>
     </footer>
 
     <!-- 核心功能腳本 -->

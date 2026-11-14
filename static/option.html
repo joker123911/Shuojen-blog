@@ -4,216 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>隨機轉盤 - Shuojen.com</title>
+    <meta name="description" content="活動抽獎或日常決策都適用的自訂轉盤工具">
+    <link rel="icon" href="/img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/tools/tool.css">
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="/tools/tool-theme.js"></script>
     <style>
-        :root {
-            --primary-color: #6366f1;
-            --primary-hover: #4f46e5;
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --text-color: #1c1e21;
-            --border-color: #dadde1;
-            --wheel-pointer: #6366f1;
-        }
-
-        body {
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 16px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .container {
-            max-width: 500px;
-            width: 100%;
-            background: var(--card-bg);
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            border: 1px solid var(--border-color);
-            box-sizing: border-box;
-        }
-
-        h2 {
-            margin-top: 0;
-            text-align: center;
-            font-size: 1.5rem;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-
-        textarea {
-            width: 100%;
-            height: 120px;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            resize: vertical;
-            box-sizing: border-box;
-            font-family: inherit;
-            font-size: 1rem;
-            line-height: 1.5;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
-        }
-
-        button {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: background 0.2s ease, transform 0.1s ease;
-        }
-
-        button:hover {
-            background: var(--primary-hover);
-        }
-
-        button:active {
-            transform: scale(0.98);
-        }
-
-        .wheel-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 320px;
-            margin: 0 auto 24px auto;
-            aspect-ratio: 1 / 1;
-        }
-
         /* 轉盤頂部指標 */
         .wheel-wrapper::before {
             content: '';
             position: absolute;
-            top: -15px;
+            top: -14px;
             left: 50%;
             transform: translateX(-50%);
-            width: 0;
-            height: 0;
             border-left: 15px solid transparent;
             border-right: 15px solid transparent;
-            border-top: 25px solid var(--wheel-pointer);
+            border-top: 25px solid #4f46e5;
             z-index: 10;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
-        }
-
-        canvas {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            display: block;
-        }
-
-        .spin-btn {
-            background: var(--primary-color);
-            font-size: 1.2rem;
-            padding: 14px 20px;
-        }
-
-        .spin-btn:hover {
-            background: var(--primary-hover);
-        }
-
-        .spin-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .result {
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-top: 24px;
-            min-height: 36px;
-            color: var(--primary-color);
-        }
-
-        .footer-note {
-            text-align: center;
-            margin-top: 32px;
-            font-size: 12px;
-            color: #94a3b8;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            font-weight: 400;
-            letter-spacing: 0.05em;
-        }
-
-        /* 手機版適配調整 */
-        @media (max-width: 480px) {
-            .container {
-                padding: 16px;
-                border: none;
-                box-shadow: none;
-            }
-            .wheel-wrapper {
-                max-width: 280px;
-            }
+            filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
         }
     </style>
 </head>
-<body>
+<body class="tool-page">
 
-<div class="container">
-    <h2>隨機轉盤</h2>
-    
-    <div class="input-group">
-        <label for="optionsInput" style="color: #606770; font-size: 0.9rem;">請輸入選項 (每一行代表一個選項)：</label>
-        <textarea id="optionsInput">1
+    <main class="tool-card max-w-lg fade-in">
+        <header class="tool-header">
+            <div class="tool-header-main">
+                <div class="tool-icon"><i class="fa-solid fa-arrows-spin"></i></div>
+                <div>
+                    <h1 class="tool-title">隨機轉盤</h1>
+                    <p class="tool-subtitle">輸入選項後轉一下，讓轉盤幫你決定</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="tool-panel mb-8">
+            <label for="optionsInput" class="tool-label">選項（每一行一個）</label>
+            <textarea id="optionsInput" rows="5" class="tool-input resize-y leading-relaxed custom-scrollbar">1
 2
 3
 4
 5
 6</textarea>
-        <button id="updateBtn">更新轉盤</button>
-    </div>
-    
-    <div class="wheel-wrapper">
-        <canvas id="wheelCanvas" width="600" height="600"></canvas>
-    </div>
-    
-    <button id="spinBtn" class="spin-btn">開始轉！</button>
-    
-    <div class="result" id="resultText"></div>
+            <button id="updateBtn" type="button" class="btn btn-outline w-full mt-3">
+                <i class="fa-solid fa-rotate"></i> 更新轉盤
+            </button>
+        </div>
 
-    <div class="footer-note">
-        © Shuojen.com Random Tool
-    </div>
-</div>
+        <div class="wheel-wrapper relative w-full max-w-[300px] sm:max-w-[320px] aspect-square mx-auto mb-6">
+            <canvas id="wheelCanvas" width="600" height="600" class="block w-full h-full rounded-full shadow-lg"></canvas>
+        </div>
+
+        <button id="spinBtn" type="button" class="btn btn-primary btn-lg w-full">
+            <i class="fa-solid fa-play"></i> 開始轉！
+        </button>
+
+        <div id="resultText" class="text-center text-2xl font-bold mt-6 min-h-[2.25rem] text-indigo-600" aria-live="polite"></div>
+    </main>
+
+    <footer class="tool-footer">
+        <span>© Shuojen.com</span>
+        <span class="tool-footer-sep">·</span>
+        <a href="/tool"><i class="fa-solid fa-arrow-left text-[10px]"></i> 回小工具</a>
+    </footer>
 
 <script>
     const canvas = document.getElementById('wheelCanvas');
     const ctx = canvas.getContext('2d');
-    
+
     // 預設調色盤
     const colors = [
-        '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', 
-        '#98D8C8', '#F7DC6F', '#BB8FCE', '#F1948A', 
+        '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A',
+        '#98D8C8', '#F7DC6F', '#BB8FCE', '#F1948A',
         '#82E0AA', '#85C1E9', '#F8C471', '#D2B4DE'
     ];
-    
+
     let options = [];
     let hasRealOptions = false; // false 時轉盤上顯示的是「請輸入選項」佔位字
     let currentAngle = 0;
     let isSpinning = false;
-    
+
     let animationFrameId;
     let startAngle = 0;
     let targetAngle = 0;
@@ -245,30 +119,30 @@
 
         for (let i = 0; i < numOptions; i++) {
             const angle = currentAngle + i * arcSize;
-            
+
             // 畫扇形
             ctx.beginPath();
             ctx.arc(centerX, centerY, radius, angle, angle + arcSize, false);
             ctx.lineTo(centerX, centerY);
             ctx.fillStyle = colors[i % colors.length];
             ctx.fill();
-            
+
             // 扇形邊界線
             ctx.lineWidth = 2;
             ctx.strokeStyle = '#ffffff';
             ctx.stroke();
-            
+
             // 畫文字
             ctx.save();
             ctx.translate(centerX, centerY);
             ctx.rotate(angle + arcSize / 2);
             ctx.textAlign = "right";
             ctx.fillStyle = "#ffffff";
-            
+
             // 根據選項數量動態調整字體大小，避免擁擠
             const fontSize = Math.max(16, 36 - (numOptions * 0.8));
-            ctx.font = `bold ${fontSize}px sans-serif`;
-            
+            ctx.font = `bold ${fontSize}px "Noto Sans TC", sans-serif`;
+
             // 文字陰影增加辨識度
             ctx.shadowColor = "rgba(0,0,0,0.2)";
             ctx.shadowBlur = 4;
@@ -280,7 +154,7 @@
             if (displayText.length > 8) {
                 displayText = displayText.substring(0, 7) + '...';
             }
-            
+
             ctx.fillText(displayText, radius - 30, fontSize / 3);
             ctx.restore();
         }
@@ -289,8 +163,8 @@
     // 點擊開始旋轉
     function spin() {
         if (isSpinning) return;
+        const resultElement = document.getElementById('resultText');
         if (!hasRealOptions || options.length < 2) {
-            const resultElement = document.getElementById('resultText');
             resultElement.innerText = '至少要輸入 2 個選項才能轉喔';
             resultElement.style.color = '#ef4444';
             return;
@@ -300,19 +174,19 @@
         document.getElementById('spinBtn').disabled = true;
         // 轉動中不能改選項，否則停下來時對應的結果會錯亂
         document.getElementById('updateBtn').disabled = true;
-        document.getElementById('resultText').innerText = "旋轉中...";
-        document.getElementById('resultText').style.color = "var(--text-color)";
-        
+        resultElement.innerText = "旋轉中...";
+        resultElement.style.color = '#64748b';
+
         startAngle = currentAngle;
         // 隨機旋轉 6 到 10 圈，並加上一個隨機的額外角度
         const randomCircles = Math.random() * 4 + 6;
         const randomExtraAngle = Math.random() * 2 * Math.PI;
         targetAngle = startAngle + (randomCircles * 2 * Math.PI) + randomExtraAngle;
-        
+
         // 旋轉時間 4 到 6 秒
-        spinDuration = 4000 + Math.random() * 2000; 
+        spinDuration = 4000 + Math.random() * 2000;
         startTime = null;
-        
+
         animationFrameId = requestAnimationFrame(animateWheel);
     }
 
@@ -320,7 +194,7 @@
     function animateWheel(timestamp) {
         if (!startTime) startTime = timestamp;
         const elapsed = timestamp - startTime;
-        
+
         if (elapsed < spinDuration) {
             // 使用 easeOutQuart 緩動函數
             const t = elapsed / spinDuration;
@@ -330,7 +204,7 @@
             animationFrameId = requestAnimationFrame(animateWheel);
         } else {
             // 旋轉結束
-            currentAngle = targetAngle % (2 * Math.PI); 
+            currentAngle = targetAngle % (2 * Math.PI);
             drawWheel();
             showResult();
         }
@@ -341,26 +215,27 @@
         isSpinning = false;
         document.getElementById('spinBtn').disabled = false;
         document.getElementById('updateBtn').disabled = false;
-        
+
         const arcSize = (2 * Math.PI) / options.length;
         // 計算 270 度 (轉盤正上方) 所對應的區塊
         let relativeAngle = (1.5 * Math.PI - currentAngle) % (2 * Math.PI);
         if (relativeAngle < 0) {
             relativeAngle += 2 * Math.PI;
         }
-        
+
         const winningIndex = Math.floor(relativeAngle / arcSize);
         const resultElement = document.getElementById('resultText');
         resultElement.innerText = `結果：${options[winningIndex]}！`;
-        resultElement.style.color = "var(--primary-color)";
+        resultElement.style.color = '#4f46e5';
     }
 
     // 綁定事件
     document.getElementById('updateBtn').addEventListener('click', updateOptions);
     document.getElementById('spinBtn').addEventListener('click', spin);
 
-    // 初始化執行
+    // 初始化執行；字型載入完成後重畫，轉盤上的字才會用 Noto Sans TC
     updateOptions();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawWheel);
 </script>
 
 </body>

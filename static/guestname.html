@@ -3,224 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>猜人名遊戲 - Guess Who - Shuojen.com</title>
-    <style>
-        :root {
-            --primary-color: #6366f1;
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #2c3e50;
-            --text-sub: #7f8c8d;
-            --btn-gray: #e2e8f0;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 450px;
-            text-align: center;
-        }
-
-        .header {
-            margin-bottom: 20px;
-        }
-
-        .header h1 {
-            font-size: 24px;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .top-nav {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .btn-small {
-            padding: 6px 12px;
-            font-size: 12px;
-            border-radius: 20px;
-            background: var(--btn-gray);
-            color: var(--text-main);
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .card {
-            background: var(--card-bg);
-            padding: 40px 30px;
-            border-radius: 30px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            min-height: 350px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .divider {
-            height: 4px;
-            background-color: #e2e8f0;
-            width: 100%;
-            margin-bottom: 30px;
-            border-radius: 2px;
-        }
-
-        #rules-box {
-            background: #f8fafc;
-            border: 1px solid var(--btn-gray);
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 20px;
-            text-align: left;
-            font-size: 14px;
-            line-height: 1.6;
-            color: var(--text-sub);
-        }
-
-        .input-group {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid var(--btn-gray);
-            border-radius: 12px;
-            font-size: 16px;
-            box-sizing: border-box;
-            outline: none;
-            text-align: center;
-        }
-
-        input:focus {
-            border-color: var(--primary-color);
-        }
-
-        button {
-            padding: 15px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.2s ease;
-        }
-
-        button:active {
-            transform: scale(0.98);
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-            margin-top: 10px;
-        }
-
-        .btn-primary:hover {
-            background-color: #4f46e5;
-        }
-
-        .btn-secondary {
-            background-color: var(--btn-gray);
-            color: var(--text-main);
-            margin-top: 10px;
-        }
-
-        .btn-secondary:hover {
-            background-color: #cbd5e1;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .game-status {
-            font-size: 14px;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-
-        .others-list {
-            text-align: left;
-            margin: 20px 0;
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 15px;
-        }
-
-        .player-item {
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-            font-size: 16px;
-        }
-        .player-item:last-child { border-bottom: none; }
-
-        .player-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .pass-icon {
-            font-size: 50px;
-            margin-bottom: 20px;
-        }
-
-        .footer-note {
-            text-align: center;
-            font-size: 12px;
-            color: #94a3b8;
-            margin-top: 32px;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            font-weight: 400;
-            letter-spacing: 0.05em;
-        }
-    </style>
+    <title>猜人名遊戲 - Shuojen.com</title>
+    <meta name="description" content="看完《惡棍特工》就會想玩的派對小遊戲，兩人以上進行">
+    <link rel="icon" href="/img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/tools/tool.css">
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="/tools/tool-theme.js"></script>
 </head>
-<body>
+<body class="tool-page justify-center">
 
-<div class="container">
-    <div class="header">
-        <h1 id="title-text">⌨️ 猜人名遊戲</h1>
-        <div class="top-nav">
-            <button class="btn-small" onclick="toggleRules()" id="rules-btn">遊戲規則</button>
-            <button class="btn-small" onclick="switchLang()" id="lang-btn">English</button>
-        </div>
-    </div>
+    <main class="tool-card max-w-md fade-in">
+        <header class="tool-header">
+            <div class="tool-header-main">
+                <div class="tool-icon"><i class="fa-solid fa-user-secret"></i></div>
+                <div>
+                    <h1 class="tool-title" id="title-text">猜人名遊戲</h1>
+                    <p class="tool-subtitle">兩人以上的派對遊戲，一支手機輪流傳</p>
+                </div>
+            </div>
+            <div class="tool-header-actions">
+                <button type="button" class="btn btn-secondary py-1.5 px-3 text-xs" onclick="toggleRules()" id="rules-btn">遊戲規則</button>
+                <button type="button" class="btn btn-secondary py-1.5 px-3 text-xs" onclick="switchLang()" id="lang-btn">English</button>
+            </div>
+        </header>
 
-    <div class="divider"></div>
-
-    <div class="card">
-        <div id="rules-box" class="hidden">
-            <strong id="rule-title">遊戲玩法：</strong><br>
+        <div id="rules-box" class="hidden tool-panel mb-6 text-sm leading-relaxed text-slate-600">
+            <strong id="rule-title" class="text-slate-800">遊戲玩法：</strong><br>
             <span id="rule-content">
                 1. 出一個題目：大家都知道的名人。<br>
                 2. 看完別人的題目後手機傳給下一位。<br>
@@ -229,53 +41,56 @@
             </span>
         </div>
 
-        <div id="step-1">
-            <div class="game-status" id="status-1">遊戲設定</div>
-            <p id="label-player-count">請輸入總共幾個人要玩：</p>
-            <input type="number" id="player-count" value="3" min="2">
-            <button class="btn-primary" onclick="setupPlayers()" id="btn-start">開始設定</button>
-        </div>
-
-        <div id="step-2" class="hidden">
-            <div class="game-status" id="input-status"></div>
-            <div class="input-group">
-                <label id="label-name">你的名字：</label>
-                <input type="text" id="p-name" placeholder="輸入你的暱稱">
+        <div class="min-h-[300px] flex flex-col justify-center text-center">
+            <div id="step-1">
+                <div class="text-sm font-bold text-indigo-600 mb-4" id="status-1">遊戲設定</div>
+                <label for="player-count" class="block text-slate-600 mb-3" id="label-player-count">請輸入總共幾個人要玩：</label>
+                <input type="number" id="player-count" value="3" min="2" class="tool-input text-lg text-center">
+                <button type="button" class="btn btn-primary btn-lg w-full mt-4" onclick="setupPlayers()" id="btn-start">開始設定</button>
             </div>
-            <div class="input-group">
-                <label id="label-target">你要出的題目：</label>
-                <input type="text" id="p-target" placeholder="想一個人物名字">
+
+            <div id="step-2" class="hidden text-left">
+                <div class="text-sm font-bold text-indigo-600 mb-4 text-center" id="input-status"></div>
+                <div class="mb-4">
+                    <label for="p-name" class="tool-label" id="label-name">你的名字：</label>
+                    <input type="text" id="p-name" placeholder="輸入你的暱稱" class="tool-input text-base text-center">
+                </div>
+                <div class="mb-2">
+                    <label for="p-target" class="tool-label" id="label-target">你要出的題目：</label>
+                    <input type="text" id="p-target" placeholder="想一個人物名字" class="tool-input text-base text-center">
+                </div>
+                <button type="button" class="btn btn-primary btn-lg w-full mt-4" id="next-btn" onclick="savePlayerInfo()">下一位玩家</button>
             </div>
-            <button class="btn-primary" id="next-btn" onclick="savePlayerInfo()">下一位玩家</button>
-        </div>
 
-        <div id="step-3" class="hidden">
-            <div class="pass-icon">📱</div>
-            <div class="game-status" id="status-3">隱私確認</div>
-            <p id="pass-message"></p>
-            <button class="btn-primary" id="check-btn" onclick="showPlayerView()">查看資訊</button>
-        </div>
+            <div id="step-3" class="hidden">
+                <div class="text-5xl text-indigo-500 mb-5"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                <div class="text-sm font-bold text-indigo-600 mb-3" id="status-3">隱私確認</div>
+                <p id="pass-message" class="text-slate-600 mb-6"></p>
+                <button type="button" class="btn btn-primary btn-lg w-full" id="check-btn" onclick="showPlayerView()">查看資訊</button>
+            </div>
 
-        <div id="step-4" class="hidden">
-            <div class="game-status" id="view-player-name"></div>
-            <p id="label-other-targets">除了你以外，其他人的題目：</p>
-            <div class="others-list" id="others-list"></div>
-            <button class="btn-primary" onclick="handleDoneViewing()" id="btn-done">我看完了</button>
-        </div>
+            <div id="step-4" class="hidden">
+                <div class="text-sm font-bold text-indigo-600 mb-3" id="view-player-name"></div>
+                <p id="label-other-targets" class="text-slate-600">除了你以外，其他人的題目：</p>
+                <div class="tool-panel my-5 text-left" id="others-list"></div>
+                <button type="button" class="btn btn-primary btn-lg w-full" onclick="handleDoneViewing()" id="btn-done">我看完了</button>
+            </div>
 
-        <div id="step-5" class="hidden">
-            <div class="pass-icon">🎉</div>
-            <div class="game-status" id="status-5">遊戲進行中</div>
-            <p id="label-recheck">有人忘記了嗎？點名字重新查看：</p>
-            <div id="recheck-grid" class="player-grid"></div>
-            <button class="btn-secondary" style="margin-top:30px" onclick="location.reload()" id="btn-restart">結束並重新開局</button>
+            <div id="step-5" class="hidden">
+                <div class="text-5xl text-indigo-500 mb-5"><i class="fa-solid fa-champagne-glasses"></i></div>
+                <div class="text-sm font-bold text-indigo-600 mb-3" id="status-5">遊戲進行中</div>
+                <p id="label-recheck" class="text-slate-600">有人忘記了嗎？點名字重新查看：</p>
+                <div id="recheck-grid" class="grid grid-cols-2 gap-2.5 mt-4"></div>
+                <button type="button" class="btn btn-outline w-full mt-8" onclick="location.reload()" id="btn-restart">結束並重新開局</button>
+            </div>
         </div>
-    </div>
+    </main>
 
-    <div class="footer-note">
-        © Shuojen.com Guest Game
-    </div>
-</div>
+    <footer class="tool-footer">
+        <span>© Shuojen.com</span>
+        <span class="tool-footer-sep">·</span>
+        <a href="/tool"><i class="fa-solid fa-arrow-left text-[10px]"></i> 回小工具</a>
+    </footer>
 
 <script>
     let totalPlayers = 0;
@@ -287,7 +102,7 @@
 
     const langData = {
         zh: {
-            title: "⌨️ 猜人名遊戲",
+            title: "猜人名遊戲",
             rulesBtn: "遊戲規則",
             langBtn: "English",
             ruleTitle: "遊戲玩法：",
@@ -308,14 +123,14 @@
             status5: "遊戲進行中",
             labelRecheck: "有人忘記了嗎？點名字重新查看：",
             btnRestart: "結束並重新開局",
-            passTo: "請將手機傳給<br><b style='font-size:24px; color:var(--primary-color)'>{name}</b>",
+            passTo: "請將手機傳給<b class='block mt-2 text-2xl text-indigo-600'>{name}</b>",
             alertFill: "請填寫完整資訊！",
             alertMin: "至少要2個人喔！",
             viewOf: "{name} 的視角",
             isLabel: " 是："
         },
         en: {
-            title: "⌨️ Guess Who",
+            title: "Guess Who",
             rulesBtn: "Rules",
             langBtn: "中文",
             ruleTitle: "How to Play:",
@@ -336,7 +151,7 @@
             status5: "Game in Progress",
             labelRecheck: "Forgot? Click to re-check:",
             btnRestart: "End & Restart",
-            passTo: "Pass the phone to<br><b style='font-size:24px; color:var(--primary-color)'>{name}</b>",
+            passTo: "Pass the phone to<b class='block mt-2 text-2xl text-indigo-600'>{name}</b>",
             alertFill: "Please fill in all info!",
             alertMin: "At least 2 players required!",
             viewOf: "{name}'s View",
@@ -346,6 +161,7 @@
 
     function switchLang() {
         currentLang = currentLang === 'zh' ? 'en' : 'zh';
+        document.documentElement.lang = currentLang === 'zh' ? 'zh-TW' : 'en';
         updateTexts();
     }
 
@@ -453,8 +269,8 @@
         playersData.forEach((player, idx) => {
             if (idx !== currentViewIdx) {
                 const item = document.createElement('div');
-                item.className = 'player-item';
-                item.innerHTML = `<b>${escapeHtml(player.name)}</b>${d.isLabel}<span style="color:var(--primary-color)">${escapeHtml(player.viewTarget)}</span>`;
+                item.className = 'py-3 border-b border-slate-200 last:border-0 text-slate-700';
+                item.innerHTML = `<b>${escapeHtml(player.name)}</b>${d.isLabel}<span class="font-bold text-indigo-600">${escapeHtml(player.viewTarget)}</span>`;
                 list.appendChild(item);
             }
         });
@@ -481,8 +297,8 @@
         grid.innerHTML = '';
         playersData.forEach((p, index) => {
             const btn = document.createElement('button');
-            btn.className = 'btn-secondary';
-            btn.style.fontSize = '14px';
+            btn.type = 'button';
+            btn.className = 'btn btn-secondary truncate';
             btn.innerText = p.name;
             btn.onclick = () => {
                 currentViewIdx = index;

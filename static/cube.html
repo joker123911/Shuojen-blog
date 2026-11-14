@@ -3,146 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>魔方底十字速解小幫手 - Clean Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>魔術方塊底十字練習器 - Shuojen.com</title>
+    <meta name="description" content="底十字最佳解產生器，訓練魔術方塊很有用">
+    <link rel="icon" href="/img/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
-    
-    <style>
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-        }
-        .mono-font {
-            font-family: 'Roboto Mono', monospace;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 3px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Roboto+Mono:wght@500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/tools/tool.css">
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="/tools/tool-theme.js"></script>
 </head>
-<body class="bg-slate-50 min-h-screen flex flex-col justify-between antialiased">
+<body class="tool-page">
 
-    <main class="w-full max-w-5xl mx-auto my-4 sm:my-12 p-3 sm:p-10 fade-in">
-        <div class="bg-white rounded-[2rem] shadow-2xl border border-slate-100 p-5 sm:p-10">
-            
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 pb-6 border-b border-slate-100 text-center sm:text-left">
-                <div class="flex flex-col sm:flex-row items-center gap-4">
-                    <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-xl shadow-lg shadow-indigo-200">
-                        <i class="fa-solid fa-cube"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-2xl font-bold text-slate-800 tracking-tight">魔術方塊底十字練習器</h1>
+    <main class="tool-card max-w-5xl fade-in">
+        <header class="tool-header">
+            <div class="tool-header-main">
+                <div class="tool-icon"><i class="fa-solid fa-cube"></i></div>
+                <div>
+                    <h1 class="tool-title">魔術方塊底十字練習器</h1>
+                    <p class="tool-subtitle">產生打亂公式，列出六個面的底十字最佳解</p>
+                </div>
+            </div>
+            <span class="bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full text-sm font-bold tracking-wide">
+                黃上綠前解白底
+            </span>
+        </header>
+
+        <div class="mb-8">
+
+            <div id="scramble-display-panel" class="tool-panel p-5 sm:p-8 mb-4 min-h-[90px] flex items-center justify-center">
+                <p id="scramble-text-display" class="font-mono text-lg sm:text-xl font-bold text-slate-700 tracking-wide text-center break-words w-full leading-relaxed"></p>
+            </div>
+
+            <div id="scramble-input-panel" class="tool-panel border-indigo-200 mb-4 hidden">
+                <label for="scramble-textarea" class="tool-section-title"><i class="fa-solid fa-keyboard text-indigo-500"></i> 請輸入自訂打亂公式</label>
+                <div class="flex flex-col gap-3">
+                    <textarea id="scramble-textarea" rows="2" class="tool-input font-mono text-base resize-none" placeholder="例如：R U R' U' F2 D L2"></textarea>
+                    <div class="flex justify-end gap-2">
+                        <button type="button" onclick="toggleInputMode(false)" class="btn btn-outline">取消</button>
+                        <button type="button" onclick="handleCustomSolve()" class="btn btn-primary">確認並計算</button>
                     </div>
                 </div>
-                <span class="bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full text-sm font-bold tracking-wide shadow-sm">
-                    黃上綠前解白底
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-3">
+                <span class="text-xs text-slate-400 flex items-center gap-1">
+                    <i class="fa-solid fa-circle-info text-slate-300"></i> 點擊下方解法右側圖標可直接複製
                 </span>
+                <div class="flex gap-2 w-full sm:w-auto">
+                    <button type="button" onclick="handleRandomScramble()" id="btn-random" class="btn btn-outline flex-1 sm:flex-none px-6 py-3">
+                        <i class="fa-solid fa-shuffle"></i> 隨機打亂
+                    </button>
+                    <button type="button" onclick="toggleInputMode(true)" id="btn-input-trigger" class="btn btn-primary flex-1 sm:flex-none px-6 py-3">
+                        <i class="fa-solid fa-pen-to-square"></i> 輸入打亂
+                    </button>
+                </div>
             </div>
+        </div>
 
-            <div class="mb-8">
-                
-                <div id="scramble-display-panel" class="bg-slate-50 border border-slate-100 rounded-2xl p-5 sm:p-8 mb-4 min-h-[90px] flex items-center justify-center">
-                    <p id="scramble-text-display" class="mono-font text-lg sm:text-xl font-bold text-slate-700 tracking-wide text-center break-words w-full leading-relaxed">
-                        </p>
-                </div>
-
-                <div id="scramble-input-panel" class="bg-slate-50 border border-indigo-200 rounded-2xl p-4 sm:p-6 mb-4 hidden">
-                    <label for="scramble-textarea" class="block text-slate-700 font-medium text-sm mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-keyboard text-indigo-500"></i> 請輸入自訂打亂公式
-                    </label>
-                    <div class="flex flex-col gap-3">
-                        <textarea id="scramble-textarea" rows="2" 
-                                  class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all mono-font text-base resize-none"
-                                  placeholder="貼上打亂公式..."></textarea>
-                        <div class="flex justify-end gap-2">
-                            <button onclick="toggleInputMode(false)" class="bg-white hover:bg-slate-100 text-slate-500 border border-slate-200 font-medium px-4 py-2 rounded-xl transition-all text-sm cursor-pointer">
-                                取消
-                            </button>
-                            <button onclick="handleCustomSolve()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-5 py-2 rounded-xl transition-all text-sm shadow-md shadow-indigo-100 cursor-pointer">
-                                確認並計算
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="flex flex-col sm:flex-row justify-between items-center gap-3">
-                    <span class="text-xs text-slate-400 flex items-center gap-1">
-                        <i class="fa-solid fa-circle-info text-slate-300"></i> 點擊下方解法右側圖標可直接複製
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="results-container">
+            <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-300 transition-all shadow-sm">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-slate-800 font-bold font-mono text-base flex items-center gap-2">
+                        <span>D</span>
+                        <span class="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-sans font-normal">下底面</span>
                     </span>
-                    <div class="flex gap-2 w-full sm:w-auto">
-                        <button onclick="handleRandomScramble()" id="btn-random" class="flex-1 sm:flex-none bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 font-medium px-6 py-3 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm">
-                            <i class="fa-solid fa-shuffle"></i> 隨機打亂
-                        </button>
-                        <button onclick="toggleInputMode(true)" id="btn-input-trigger" class="flex-1 sm:flex-none bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-3 rounded-xl transition-all shadow-md shadow-indigo-100 flex items-center justify-center gap-2 cursor-pointer">
-                            <i class="fa-solid fa-pen-to-square"></i> 輸入打亂
-                        </button>
-                    </div>
+                    <button type="button" onclick="copySolution('sol-D')" class="text-slate-400 hover:text-indigo-600 transition-colors p-1" title="複製完整解法步驟"><i class="fa-regular fa-copy"></i></button>
                 </div>
+                <div id="sol-D" class="font-mono text-lg font-bold text-slate-700 bg-slate-50 p-3 rounded-lg border border-dashed border-slate-200 min-h-[52px] flex items-center custom-scrollbar overflow-x-auto whitespace-nowrap">-</div>
             </div>
-
-            <div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="results-container">
-                    <script>
-                        const facesInfo = [
-                            { key: 'D', label: '下底面' },
-                            { key: 'U', label: '上頂面' },
-                            { key: 'L', label: '左側面' },
-                            { key: 'R', label: '右側面' },
-                            { key: 'F', label: '前側面' },
-                            { key: 'B', label: '後側面' }
-                        ];
-                        facesInfo.forEach(f => {
-                            document.write(`
-                                <div class="bg-white border border-slate-100 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-300 transition-all shadow-sm group">
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="text-slate-800 font-bold mono-font text-base flex items-center gap-2">
-                                            <span>${f.key}<span class="text-xs text-indigo-500 font-normal tracking-wide">(ec)</span></span>
-                                            <span class="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-normal">${f.label}</span>
-                                        </span>
-                                        <button onclick="copySolution('sol-${f.key}')" class="text-slate-400 hover:text-indigo-600 transition-colors p-1 cursor-pointer" title="複製完整解法步驟">
-                                            <i class="fa-regular fa-copy"></i>
-                                        </button>
-                                    </div>
-                                    <div id="sol-${f.key}" class="mono-font text-lg font-bold text-slate-700 bg-slate-50/50 p-3 rounded-lg border border-dashed border-slate-100 min-h-[52px] flex items-center custom-scrollbar overflow-x-auto whitespace-nowrap">
-                                        -
-                                    </div>
-                                </div>
-                            `);
-                        });
-                    </script>
+            <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-300 transition-all shadow-sm">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-slate-800 font-bold font-mono text-base flex items-center gap-2">
+                        <span>U</span>
+                        <span class="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-sans font-normal">上頂面</span>
+                    </span>
+                    <button type="button" onclick="copySolution('sol-U')" class="text-slate-400 hover:text-indigo-600 transition-colors p-1" title="複製完整解法步驟"><i class="fa-regular fa-copy"></i></button>
                 </div>
+                <div id="sol-U" class="font-mono text-lg font-bold text-slate-700 bg-slate-50 p-3 rounded-lg border border-dashed border-slate-200 min-h-[52px] flex items-center custom-scrollbar overflow-x-auto whitespace-nowrap">-</div>
             </div>
-
+            <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-300 transition-all shadow-sm">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-slate-800 font-bold font-mono text-base flex items-center gap-2">
+                        <span>L</span>
+                        <span class="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-sans font-normal">左側面</span>
+                    </span>
+                    <button type="button" onclick="copySolution('sol-L')" class="text-slate-400 hover:text-indigo-600 transition-colors p-1" title="複製完整解法步驟"><i class="fa-regular fa-copy"></i></button>
+                </div>
+                <div id="sol-L" class="font-mono text-lg font-bold text-slate-700 bg-slate-50 p-3 rounded-lg border border-dashed border-slate-200 min-h-[52px] flex items-center custom-scrollbar overflow-x-auto whitespace-nowrap">-</div>
+            </div>
+            <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-300 transition-all shadow-sm">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-slate-800 font-bold font-mono text-base flex items-center gap-2">
+                        <span>R</span>
+                        <span class="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-sans font-normal">右側面</span>
+                    </span>
+                    <button type="button" onclick="copySolution('sol-R')" class="text-slate-400 hover:text-indigo-600 transition-colors p-1" title="複製完整解法步驟"><i class="fa-regular fa-copy"></i></button>
+                </div>
+                <div id="sol-R" class="font-mono text-lg font-bold text-slate-700 bg-slate-50 p-3 rounded-lg border border-dashed border-slate-200 min-h-[52px] flex items-center custom-scrollbar overflow-x-auto whitespace-nowrap">-</div>
+            </div>
+            <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-300 transition-all shadow-sm">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-slate-800 font-bold font-mono text-base flex items-center gap-2">
+                        <span>F</span>
+                        <span class="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-sans font-normal">前側面</span>
+                    </span>
+                    <button type="button" onclick="copySolution('sol-F')" class="text-slate-400 hover:text-indigo-600 transition-colors p-1" title="複製完整解法步驟"><i class="fa-regular fa-copy"></i></button>
+                </div>
+                <div id="sol-F" class="font-mono text-lg font-bold text-slate-700 bg-slate-50 p-3 rounded-lg border border-dashed border-slate-200 min-h-[52px] flex items-center custom-scrollbar overflow-x-auto whitespace-nowrap">-</div>
+            </div>
+            <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-300 transition-all shadow-sm">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-slate-800 font-bold font-mono text-base flex items-center gap-2">
+                        <span>B</span>
+                        <span class="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-sans font-normal">後側面</span>
+                    </span>
+                    <button type="button" onclick="copySolution('sol-B')" class="text-slate-400 hover:text-indigo-600 transition-colors p-1" title="複製完整解法步驟"><i class="fa-regular fa-copy"></i></button>
+                </div>
+                <div id="sol-B" class="font-mono text-lg font-bold text-slate-700 bg-slate-50 p-3 rounded-lg border border-dashed border-slate-200 min-h-[52px] flex items-center custom-scrollbar overflow-x-auto whitespace-nowrap">-</div>
+            </div>
         </div>
     </main>
 
-    <footer class="w-full max-w-5xl mx-auto px-6 mb-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-400">
-        <div>
-            © Shuojen.com 魔方底十字速解小幫手
-        </div>
-        <button onclick="resetToDefault()" class="hover:text-indigo-600 transition-colors flex items-center gap-1 cursor-pointer">
-            <i class="fa-solid fa-arrow-rotate-left"></i> 恢復預設值
-        </button>
+    <footer class="tool-footer">
+        <span>© Shuojen.com</span>
+        <span class="tool-footer-sep">·</span>
+        <a href="/tool"><i class="fa-solid fa-arrow-left text-[10px]"></i> 回小工具</a>
+        <span class="tool-footer-sep">·</span>
+        <button type="button" onclick="resetToDefault()"><i class="fa-solid fa-rotate-left text-[10px]"></i> 恢復預設值</button>
     </footer>
 
     <div id="toast" class="fixed bottom-5 right-5 bg-slate-800 text-white text-sm px-4 py-2.5 rounded-xl shadow-xl transition-all opacity-0 pointer-events-none transform translate-y-2 flex items-center gap-2">

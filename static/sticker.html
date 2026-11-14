@@ -3,52 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>貼紙模擬器 - Sticker Simulator - Shuojen.com</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
+    <title>貼紙模擬器 - Shuojen.com</title>
+    <meta name="description" content="使用 Shuyu 創作的可愛 icon，在畫布上自由拼貼的療癒小玩具">
+    <link rel="icon" href="/img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Noto Sans TC"', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
+    <link rel="stylesheet" href="/tools/tool.css">
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="/tools/tool-theme.js"></script>
     <style>
-        /* 自訂滾動條 */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f8fafc; 
-            border-radius: 8px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
-            border-radius: 8px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; 
-        }
-        
-        /* 漸入動畫 */
-        .fade-in {
-            animation: fadeIn 0.4s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         /* 畫布背景設計 - 筆電 */
         .bg-laptop {
             background: linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%);
@@ -68,11 +33,6 @@
             pointer-events: none;
         }
 
-        /* 觸控裝置沒有滑鼠移入的效果，貼紙上的刪除／旋轉鈕要一直顯示 */
-        @media (hover: none) {
-            .sticker-wrapper .action-btn { opacity: 1; }
-        }
-
         /* 畫布背景設計 - 行李箱 (垂直紋路) */
         .bg-suitcase {
             background: repeating-linear-gradient(
@@ -84,63 +44,58 @@
             );
             box-shadow: inset 0 0 60px rgba(0,0,0,0.3);
         }
+
+        /* 觸控裝置沒有滑鼠移入的效果，貼紙上的刪除／旋轉鈕要一直顯示 */
+        @media (hover: none) {
+            .sticker-wrapper .action-btn { opacity: 1; }
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen p-4 sm:p-8 font-sans flex items-center justify-center">
+<body class="tool-page">
 
-    <!-- 主容器 -->
-    <div class="max-w-5xl w-full bg-white rounded-[2rem] shadow-2xl border border-slate-100 fade-in overflow-hidden flex flex-col">
-        
-        <!-- 頭部區域 -->
-        <div class="p-6 sm:p-10 border-b border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-5">
-                <div class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-indigo-200">
-                    <i class="fa-solid fa-note-sticky text-xl"></i>
-                </div>
+    <main class="tool-card max-w-5xl fade-in">
+        <header class="tool-header">
+            <div class="tool-header-main">
+                <div class="tool-icon"><i class="fa-solid fa-note-sticky"></i></div>
                 <div>
-                    <h1 class="text-2xl font-bold text-slate-800">貼紙模擬器</h1>
-                    <p class="text-sm text-slate-500 mt-1">在筆電或行李箱上試排你的貼紙佈局</p>
+                    <h1 class="tool-title">貼紙模擬器</h1>
+                    <p class="tool-subtitle">在筆電或行李箱上試排你的貼紙佈局</p>
                 </div>
             </div>
-            <div class="flex gap-3">
-                <button onclick="clearCanvas()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl font-medium transition-colors text-sm flex items-center gap-2">
+            <div class="tool-header-actions">
+                <button type="button" onclick="clearCanvas()" class="btn btn-secondary">
                     <i class="fa-solid fa-trash-can"></i> 清空貼紙
                 </button>
             </div>
-        </div>
+        </header>
 
-        <!-- 內容區域 -->
-        <div class="flex flex-col md:flex-row flex-1 p-6 sm:p-10 gap-8 bg-slate-50/50">
-            
+        <div class="flex flex-col md:flex-row gap-6 md:gap-8">
+
             <!-- 左側：工具列與圖庫 -->
             <div class="w-full md:w-1/3 flex flex-col gap-6">
-                
+
                 <!-- 選擇載體背景 -->
-                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
-                    <h3 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-laptop text-indigo-500"></i> 選擇表面材質
-                    </h3>
+                <div class="tool-panel">
+                    <h3 class="tool-section-title"><i class="fa-solid fa-laptop text-indigo-500"></i> 選擇表面材質</h3>
                     <div class="grid grid-cols-2 gap-2">
-                        <button onclick="setCanvasBg('laptop')" class="bg-slate-100 hover:bg-indigo-50 hover:border-indigo-300 border border-transparent transition-all rounded-lg p-2 text-xs font-medium text-slate-600 flex flex-col items-center gap-1">
+                        <button type="button" onclick="setCanvasBg('laptop')" class="bg-white hover:bg-indigo-50 hover:border-indigo-300 border border-slate-200 transition-all rounded-xl p-2.5 text-xs font-medium text-slate-600 flex flex-col items-center gap-1">
                             <i class="fa-solid fa-computer text-lg mb-1"></i> 筆電(正面)
                         </button>
-                        <button onclick="setCanvasBg('suitcase')" class="bg-slate-100 hover:bg-indigo-50 hover:border-indigo-300 border border-transparent transition-all rounded-lg p-2 text-xs font-medium text-slate-600 flex flex-col items-center gap-1">
+                        <button type="button" onclick="setCanvasBg('suitcase')" class="bg-white hover:bg-indigo-50 hover:border-indigo-300 border border-slate-200 transition-all rounded-xl p-2.5 text-xs font-medium text-slate-600 flex flex-col items-center gap-1">
                             <i class="fa-solid fa-suitcase-rolling text-lg mb-1"></i> 行李箱
                         </button>
                     </div>
                 </div>
 
                 <!-- 貼紙庫 -->
-                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm flex-1 flex flex-col">
-                    <h3 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-shapes text-orange-500"></i> 素材庫
-                    </h3>
-                    <div class="grid grid-cols-4 gap-3 custom-scrollbar overflow-y-auto max-h-[250px] pr-2 pb-2" id="sticker-library">
+                <div class="tool-panel flex-1 flex flex-col">
+                    <h3 class="tool-section-title"><i class="fa-solid fa-shapes text-orange-500"></i> 素材庫</h3>
+                    <div class="grid grid-cols-4 gap-2.5 custom-scrollbar overflow-y-auto max-h-[250px] pr-2 pb-2" id="sticker-library">
                         <!-- 貼紙由 JS 動態生成 -->
                     </div>
-                    
-                    <div class="mt-4 pt-4 border-t border-slate-100">
-                        <label class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors rounded-xl cursor-pointer font-medium text-sm">
+
+                    <div class="mt-4 pt-4 border-t border-slate-200">
+                        <label class="btn w-full bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white">
                             <i class="fa-solid fa-cloud-arrow-up"></i> 上傳自訂貼紙
                             <input type="file" id="custom-sticker-upload" accept="image/*" class="hidden" onchange="handleFileUpload(event)">
                         </label>
@@ -162,14 +117,15 @@
             </div>
 
         </div>
+    </main>
 
-        <!-- 頁尾 -->
-        <div class="p-4 bg-white border-t border-slate-100 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 text-xs font-normal tracking-wide text-slate-400">
-            <span>© Shuojen.com Sticker Simulator</span>
-            <span class="hidden sm:inline text-slate-300">|</span>
-            <span>Icons from <a href="https://icons.shuyuart.com/" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-500 transition-colors">icons.shuyuart.com</a></span>
-        </div>
-    </div>
+    <footer class="tool-footer">
+        <span>© Shuojen.com</span>
+        <span class="tool-footer-sep">·</span>
+        <a href="/tool"><i class="fa-solid fa-arrow-left text-[10px]"></i> 回小工具</a>
+        <span class="tool-footer-sep">·</span>
+        <span>Icons from <a href="https://icons.shuyuart.com/" target="_blank" rel="noopener noreferrer">icons.shuyuart.com</a></span>
+    </footer>
 
     <script>
         // 確認圖片相對路徑
@@ -207,7 +163,7 @@
         function initLibrary() {
             defaultStickers.forEach(src => {
                 const btn = document.createElement('button');
-                btn.className = 'bg-slate-50 hover:bg-indigo-50 transition-all rounded-lg p-2 border border-slate-100 flex items-center justify-center shadow-sm h-14';
+                btn.className = 'bg-white hover:bg-indigo-50 transition-all rounded-lg p-2 border border-slate-200 flex items-center justify-center shadow-sm h-14';
                 // 加上 onerror 確保即使路徑錯了也有提示
                 btn.innerHTML = `<img src="${src}" alt="sticker" class="max-w-full max-h-full object-contain pointer-events-none" onerror="this.style.display='none'">`;
                 btn.onclick = () => addSticker(src, 'image');

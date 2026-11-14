@@ -3,162 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>螢幕像素取色工具 - Shuojen.com</title>
+    <title>網頁取色器 - Shuojen.com</title>
+    <meta name="description" content="快速吸取並複製螢幕上的十六進位色碼">
+    <link rel="icon" href="/img/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #6366f1;
-            --primary-hover: #4f46e5;
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-        }
-
-        body {
-            /* 使用 Noto Sans TC 作為主要字體 */
-            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-        }
-        .container {
-            background: var(--card-bg);
-            padding: 3rem;
-            /* 增加圓角半徑 */
-            border-radius: 24px;
-            /* 使用更柔和、擴散的陰影 */
-            box-shadow: 0 12px 36px rgba(0,0,0,0.08);
-            text-align: center;
-            width: 100%;
-            max-width: 420px;
-            transition: all 0.3s ease;
-        }
-        h2 {
-            margin-bottom: 2rem;
-            color: var(--text-main);
-            font-weight: 700;
-            font-size: 1.75rem;
-        }
-        #colorPreview {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 2rem;
-            border-radius: 50%;
-            /* 加粗白色邊框，增加層次感 */
-            border: 6px solid #fff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            background-color: #ddd;
-            transition: background-color 0.3s ease, transform 0.2s;
-        }
-        .info-container {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-        .info {
-            /* 將資訊框樣式改為類似標籤的風格 */
-            background-color: rgba(99, 102, 241, 0.1); /* 淺印地哥背景 */
-            color: var(--primary-color);
-            padding: 0.75rem 1.25rem;
-            border-radius: 12px;
-            font-family: 'Noto Sans TC', monospace; /* 優先使用 Noto Sans TC */
-            font-weight: 600;
-            font-size: 1rem;
-            display: inline-flex;
-            align-items: center;
-        }
-        button {
-            /* 採用標誌性的紫色作為主色調 */
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            /* 全圓角按鈕 */
-            border-radius: 9999px;
-            font-size: 1.125rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            /* 增加紫色陰影 */
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        button:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
-        }
-        button:active {
-            transform: translateY(0);
-        }
-        button:disabled {
-            background-color: #d1d5db;
-            color: #9ca3af;
-            cursor: not-allowed;
-            box-shadow: none;
-            transform: none;
-        }
-        .error {
-            /* 錯誤訊息樣式調整 */
-            background-color: #fef2f2;
-            color: #b91c1c;
-            margin-top: 1.5rem;
-            padding: 1rem;
-            border-radius: 12px;
-            font-size: 0.9rem;
-            display: none;
-            font-weight: 500;
-        }
-        .copy-status {
-            min-height: 1.4em;
-            margin: 1rem 0 0;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-        /* 加入一個簡單的圖示 */
-        .btn-icon {
-            margin-right: 0.5rem;
-            font-size: 1.25rem;
-        }
-        .footer-note {
-            text-align: center;
-            font-size: 12px;
-            color: #94a3b8;
-            margin-top: 32px;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            font-weight: 400;
-            letter-spacing: 0.05em;
-        }
-    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Roboto+Mono:wght@500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/tools/tool.css">
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="/tools/tool-theme.js"></script>
 </head>
-<body>
+<body class="tool-page justify-center">
 
-<div class="container">
-    <h2>像素取色器</h2>
-    <div id="colorPreview"></div>
-    <div class="info-container">
-        <div class="info" id="hexValue">#DDDDDD</div>
-        <div class="info" id="rgbValue">rgb(221, 221, 221)</div>
-    </div>
-    <button id="pickBtn">
-        <span class="btn-icon">🎨</span> 開始取色
-    </button>
-    <p id="copyStatus" class="copy-status" aria-live="polite"></p>
-    <p id="errorMsg" class="error">抱歉，您的瀏覽器不支援 EyeDropper API</p>
-    <div class="footer-note">© Shuojen.com Color Picker Tool</div>
-</div>
+    <main class="tool-card max-w-md fade-in">
+        <header class="tool-header">
+            <div class="tool-header-main">
+                <div class="tool-icon"><i class="fa-solid fa-eye-dropper"></i></div>
+                <div>
+                    <h1 class="tool-title">網頁取色器</h1>
+                    <p class="tool-subtitle">吸取螢幕上任一點的顏色，色碼會自動複製</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="text-center">
+            <div id="colorPreview" class="w-32 h-32 mx-auto mb-6 rounded-full border-[6px] border-white shadow-lg ring-1 ring-slate-100 transition-colors duration-300" style="background-color: #dddddd;"></div>
+
+            <div class="flex flex-wrap justify-center gap-3 mb-6">
+                <div id="hexValue" class="px-4 py-2.5 rounded-xl bg-indigo-50 text-indigo-600 font-mono font-bold text-base hover:bg-indigo-100 transition-colors">#DDDDDD</div>
+                <div id="rgbValue" class="px-4 py-2.5 rounded-xl bg-indigo-50 text-indigo-600 font-mono font-bold text-base hover:bg-indigo-100 transition-colors">rgb(221, 221, 221)</div>
+            </div>
+
+            <button id="pickBtn" type="button" class="btn btn-primary btn-lg w-full">
+                <i class="fa-solid fa-eye-dropper"></i> 開始取色
+            </button>
+
+            <p id="copyStatus" class="min-h-[1.5em] mt-4 text-sm font-bold" aria-live="polite"></p>
+            <p id="errorMsg" class="hidden mt-2 p-4 rounded-xl bg-red-50 text-red-700 text-sm font-medium">
+                抱歉，這個瀏覽器不支援取色功能（EyeDropper API），請改用電腦版 Chrome 或 Edge。
+            </p>
+        </div>
+    </main>
+
+    <footer class="tool-footer">
+        <span>© Shuojen.com</span>
+        <span class="tool-footer-sep">·</span>
+        <a href="/tool"><i class="fa-solid fa-arrow-left text-[10px]"></i> 回小工具</a>
+    </footer>
 
 <script>
     const pickBtn = document.getElementById('pickBtn');
@@ -169,7 +61,7 @@
 
     // 檢查瀏覽器是否支援 EyeDropper API
     if (!window.EyeDropper) {
-        errorMsg.style.display = 'block';
+        errorMsg.classList.remove('hidden');
         pickBtn.disabled = true;
     } else {
         const eyeDropper = new EyeDropper();
