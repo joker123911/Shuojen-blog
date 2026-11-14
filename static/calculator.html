@@ -263,7 +263,22 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', generateInitialTable);
+    // 表格實際涵蓋的年齡範圍：以「產生表格」當下為準。
+    // 之後只改了上方的年齡欄位但還沒重新產生時，編輯表格仍以這個範圍計算，避免找不到對應列而出錯。
+    let tableStartAge = null;
+    let tableEndAge = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        generateInitialTable();
+        // 年報酬率改了就直接重算（保留表格中手動修改過的年存金額）
+        document.getElementById('rateOfReturn').addEventListener('input', () => {
+            if (tableStartAge !== null && !isNaN(getRate())) updateFromRow(tableStartAge);
+        });
+    });
+
+    function getRate() {
+        return parseFloat(document.getElementById('rateOfReturn').value) / 100;
+    }
 
     function generateInitialTable() {
         const startAge = parseInt(document.getElementById('startAge').value);
@@ -273,12 +288,22 @@
         const errorMessage = document.getElementById('error-message');
         resultsBody.innerHTML = '';
         errorMessage.style.display = 'none';
+        tableStartAge = null;
+        tableEndAge = null;
 
-        if (isNaN(startAge) || isNaN(endAge) || isNaN(annualSavings) || startAge >= endAge) {
+        if (isNaN(startAge) || isNaN(endAge) || isNaN(annualSavings) || isNaN(getRate()) || startAge >= endAge) {
             errorMessage.textContent = '請輸入有效數字，起始年齡須小於結束年齡。';
             errorMessage.style.display = 'block';
             return;
         }
+        if (endAge - startAge > 150) {
+            errorMessage.textContent = '年齡區間太大，請在 150 年以內。';
+            errorMessage.style.display = 'block';
+            return;
+        }
+
+        tableStartAge = startAge;
+        tableEndAge = endAge;
 
         for (let age = startAge; age <= endAge; age++) {
             const row = document.createElement('tr');
@@ -299,11 +324,18 @@
     }
 
     function handleTotalChange(age) {
-        const endAge = parseInt(document.getElementById('endAge').value);
+        if (tableEndAge === null) return;
         const changedTotalInput = document.getElementById(`total-${age}`);
-        changedTotalInput.dataset.fullValue = parseFloat(changedTotalInput.value);
+        const manualTotal = parseFloat(changedTotalInput.value);
 
-        if (age < endAge) {
+        // 清空或輸入非數字時，改回依公式計算的值
+        if (isNaN(manualTotal)) {
+            updateFromRow(age);
+            return;
+        }
+        changedTotalInput.dataset.fullValue = manualTotal;
+
+        if (age < tableEndAge) {
             updateFromRow(age + 1);
         } else {
             // 如果是最後一年被手動修改，也重新計算當年度的損益%
@@ -312,15 +344,15 @@
     }
 
     function updateFromRow(startUpdateAge) {
-        const startAge = parseInt(document.getElementById('startAge').value);
-        const endAge = parseInt(document.getElementById('endAge').value);
-        const rateOfReturn = parseFloat(document.getElementById('rateOfReturn').value) / 100;
+        if (tableStartAge === null) return;
+        const rate = getRate();
+        const rateOfReturn = isNaN(rate) ? 0 : rate;
 
-        for (let age = startUpdateAge; age <= endAge; age++) {
+        for (let age = startUpdateAge; age <= tableEndAge; age++) {
             const prevTotalElement = document.getElementById(`total-${age - 1}`);
-            const previousTotal = (age === startAge) ? 0 : parseFloat(prevTotalElement.dataset.fullValue || prevTotalElement.value);
+            const previousTotal = (age === tableStartAge) ? 0 : parseFloat(prevTotalElement.dataset.fullValue || prevTotalElement.value);
 
-            const currentSavings = parseFloat(document.getElementById(`savings-${age}`).value);
+            const currentSavings = parseFloat(document.getElementById(`savings-${age}`).value) || 0;
             const currentReturn = previousTotal * rateOfReturn;
             const newTotal = previousTotal + currentReturn + currentSavings;
 
@@ -336,11 +368,10 @@
     }
 
     function updateProfitPercentRow(age) {
-        const startAge = parseInt(document.getElementById('startAge').value);
         let totalPrincipal = 0;
 
         // 累計從起始年齡到當前年齡的總投入本金
-        for (let i = startAge; i <= age; i++) {
+        for (let i = tableStartAge; i <= age; i++) {
             const savingsInput = document.getElementById(`savings-${i}`);
             if (savingsInput) {
                 totalPrincipal += parseFloat(savingsInput.value || 0);

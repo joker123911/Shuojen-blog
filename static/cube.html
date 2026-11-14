@@ -179,7 +179,7 @@ var mathlib = (function() {
 		var prt = 0; if (even < 0) { idx <<= 1; }
 		if (n >= 16) {
 			arr[n - 1] = 0;
-			for (var i = n - 2; i >= 0; i--) { arr[i] = idx % (n - i); prt ^= arr[i]; idx = ~~(idx / (n - i)); for (var j = i + 1; j < n; j--) { arr[j] >= arr[i] && arr[j]++; } }
+			for (var i = n - 2; i >= 0; i--) { arr[i] = idx % (n - i); prt ^= arr[i]; idx = ~~(idx / (n - i)); for (var j = i + 1; j < n; j++) { arr[j] >= arr[i] && arr[j]++; } }
 			if (even < 0 && (prt & 1) != 0) { var tmp = arr[n - 1]; arr[n - 1] = arr[n - 2]; arr[n - 2] = tmp; }
 			return arr;
 		}
@@ -342,21 +342,26 @@ var cross = (function(createMove, edgeMove, createPrun, setNPerm, getNPerm, Cnk,
         }
 
         // 解析打亂公式數據結構
+        // 只接受 U D R L F B 六個面的轉動（可加 2 或 '）；Rw、M、x 這類無法計算的記號回傳在 invalid
         function parseScrambleToCstimer(scrambleStr) {
             const faceMapping = "FRUBLD";
-            const tokens = scrambleStr.replace(/’/g, "'").replace(/`/g, "'").toUpperCase().split(/\s+/).filter(x => x.length > 0);
+            const tokens = scrambleStr.replace(/[’‘´`]/g, "'").split(/\s+/).filter(x => x.length > 0);
             const parsedMoves = [];
-            
+            const invalid = [];
+
             for (let token of tokens) {
-                let faceChar = token[0];
-                let faceIdx = faceMapping.indexOf(faceChar);
-                if (faceIdx === -1) continue;
-                
+                const m = token.match(/^([FRUBLD])(2'?|'2?)?$/i);
+                if (!m) {
+                    invalid.push(token);
+                    continue;
+                }
+                const faceIdx = faceMapping.indexOf(m[1].toUpperCase());
+                const suffix = m[2] || '';
                 let power = 1;
-                if (token.includes("2")) { power = 2; } else if (token.includes("'")) { power = 3; }
+                if (suffix.includes("2")) { power = 2; } else if (suffix.includes("'")) { power = 3; }
                 parsedMoves.push([faceIdx, null, power]);
             }
-            return parsedMoves;
+            return { moves: parsedMoves, invalid };
         }
 
         // 核心解法渲染程序
@@ -364,8 +369,8 @@ var cross = (function(createMove, edgeMove, createPrun, setNPerm, getNPerm, Cnk,
             currentActiveScramble = scrambleText;
             document.getElementById('scramble-text-display').innerText = scrambleText;
 
-            const parsedMoves = parseScrambleToCstimer(scrambleText);
-            const solutions = cross.solve(parsedMoves); 
+            const parsedMoves = parseScrambleToCstimer(scrambleText).moves;
+            const solutions = cross.solve(parsedMoves);
 
             const faces = ['D', 'U', 'L', 'R', 'F', 'B'];
             const rotPrefixes = ['', 'z2 ', "z' ", 'z ', "x' ", 'x '];
@@ -390,6 +395,15 @@ var cross = (function(createMove, edgeMove, createPrun, setNPerm, getNPerm, Cnk,
         function handleCustomSolve() {
             const inputVal = document.getElementById('scramble-textarea').value.trim();
             if (!inputVal) {
+                showToast("請輸入打亂公式", true);
+                return;
+            }
+            const { moves, invalid } = parseScrambleToCstimer(inputVal);
+            if (invalid.length > 0) {
+                showToast(`無法辨識：${invalid.slice(0, 3).join(' ')}（只支援 U D R L F B 加 2 或 '）`, true);
+                return;
+            }
+            if (moves.length === 0) {
                 showToast("請輸入打亂公式", true);
                 return;
             }
@@ -433,16 +447,20 @@ var cross = (function(createMove, edgeMove, createPrun, setNPerm, getNPerm, Cnk,
             });
         }
 
+        let toastTimer = null;
         function showToast(message, isError = false) {
             let toast = document.getElementById('toast');
-            toast.innerHTML = isError 
-                ? `<i class="fa-solid fa-circle-exclamation text-orange-500"></i> <span>${message}</span>`
-                : `<i class="fa-solid fa-circle-check text-emerald-400"></i> <span>${message}</span>`;
+            toast.innerHTML = isError
+                ? `<i class="fa-solid fa-circle-exclamation text-orange-500"></i> <span></span>`
+                : `<i class="fa-solid fa-circle-check text-emerald-400"></i> <span></span>`;
+            toast.querySelector('span').textContent = message; // 訊息可能含使用者輸入的公式
 
             toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
             toast.classList.add('opacity-100', 'translate-y-0');
 
-            setTimeout(() => {
+            // 連續觸發時，前一次的計時器不能提早把新訊息收掉
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
                 toast.classList.remove('opacity-100', 'translate-y-0');
                 toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
             }, 2500);

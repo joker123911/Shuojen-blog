@@ -173,18 +173,34 @@
         let activeRequests = 0;
         let totalTasks = 0;
         let completedTasks = 0;
+        // 每次開始檢測（或按恢復預設）都換一個編號；舊的請求回來時編號不符就丟掉，避免混進新的統計
+        let scanId = 0;
 
         // 切換進階設定區塊
         btnShowSettings.addEventListener('click', () => {
             settingsArea.classList.toggle('hidden');
         });
 
+        function setStartButton(state) {
+            if (state === 'scanning') {
+                btnStartScan.disabled = true;
+                btnStartScan.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> 檢測中...`;
+            } else {
+                btnStartScan.disabled = false;
+                btnStartScan.innerHTML = state === 'done'
+                    ? `<i class="fa-solid fa-check"></i> 檢測完成`
+                    : `<i class="fa-solid fa-magnifying-glass"></i> 開始檢測`;
+            }
+        }
+
         // 重設應用狀態
         btnReset.addEventListener('click', () => {
+            scanId++; // 讓進行中的檢測結果失效
+            scanQueue = [];
             rssInput.value = '';
+            resultsContainer.innerHTML = '';
             hideElements([dashboardStats, progressContainer, statusMessage, resultsContainer, settingsArea]);
-            btnStartScan.disabled = false;
-            btnStartScan.innerHTML = `<i class="fa-solid fa-magnifying-glass"></i> 開始檢測`;
+            setStartButton('idle');
         });
 
         // 主要點擊觸發事件
@@ -196,6 +212,7 @@
             }
 
             // 初始化狀態與 UI 清空
+            const myScanId = ++scanId;
             initScanUI();
 
             showStatus('<i class="fa-solid fa-spinner fa-spin mr-2"></i>正在獲取並解析 RSS 摘要資訊...', 'text-indigo-600');
@@ -204,22 +221,23 @@
                 // 1. 抓取 RSS XML 資料
                 const response = await fetch(`${PROXY_URL}${encodeURIComponent(feedUrl)}`);
                 if (!response.ok) throw new Error('網絡連線異常，無法擷取 RSS 資料');
-                
+
                 const jsonResult = await response.json();
+                if (myScanId !== scanId) return; // 等待期間按了恢復預設
                 if (!jsonResult.contents) throw new Error('無法讀取目標 RSS 內容');
 
                 // 2. 解析 XML 內容
                 const parser = new DOMParser();
                 const xmlDoc = parser.parseFromString(jsonResult.contents, 'text/xml');
-                
+
                 // 檢查是否為有效的 XML 格式
                 const parseError = xmlDoc.querySelector('parsererror');
                 if (parseError) throw new Error('RSS XML 格式解析錯誤');
 
                 const items = xmlDoc.querySelectorAll('item');
                 if (items.length === 0) {
-                    showStatus('找不到任何文章節點 (item)。請確認該網址為正確的 RSS 規範。', 'text-orange-500');
-                    btnStartScan.disabled = false;
+                    showStatus('找不到任何文章節點 (item)。請確認該網址為 RSS 格式（不支援 Atom）。', 'text-orange-500');
+                    setStartButton('idle');
                     return;
                 }
 
@@ -231,6 +249,7 @@
 
                 if (scanQueue.length === 0) {
                     showStatus('未在文章內文或標題中偵測到任何可驗證的連結。', 'text-slate-500');
+                    setStartButton('idle');
                     return;
                 }
 
@@ -238,13 +257,14 @@
                 statusMessage.classList.add('hidden');
                 progressContainer.classList.remove('hidden');
                 resultsContainer.classList.remove('hidden');
-                
+
                 totalTasks = scanQueue.length;
-                processQueue();
+                processQueue(myScanId);
 
             } catch (error) {
-                showStatus(`檢測終止：${error.message}。請確認網址或稍後再試。`, 'text-orange-500');
-                btnStartScan.disabled = false;
+                if (myScanId !== scanId) return;
+                showStatus(`檢測終止：${escapeHtml(error.message)}。請確認網址或稍後再試。`, 'text-orange-500');
+                setStartButton('idle');
                 progressContainer.classList.add('hidden');
             }
         });
@@ -263,9 +283,8 @@
             statBroken.innerText = '0';
             progressBar.style.width = '0%';
 
-            btnStartScan.disabled = true;
-            btnStartScan.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> 檢測中...`;
-            
+            setStartButton('scanning');
+
             dashboardStats.classList.remove('hidden');
             statusMessage.classList.remove('hidden');
             resultsContainer.classList.add('hidden');
@@ -277,7 +296,7 @@
 
             items.forEach((item, index) => {
                 const title = item.querySelector('title')?.textContent || '未命名文章';
-                const articleUrl = item.querySelector('link')?.textContent || '';
+                const articleUrl = (item.querySelector('link')?.textContent || '').trim();
                 
                 // 建立文章的外層容器
                 const articleCardId = `article-card-${index}`;
@@ -286,7 +305,7 @@
                 // 收集該文章名下所有需要受檢的網址
                 let urlsToCheck = [];
                 
-                if (articleUrl) {
+                if (articleUrl && isHttpUrl(articleUrl)) {
                     urlsToCheck.push({ url: articleUrl, type: '文章原始連結' });
                 }
 
@@ -301,7 +320,7 @@
                         const anchors = doc.querySelectorAll('a');
                         anchors.forEach(a => {
                             const href = a.getAttribute('href');
-                            if (href && href.startsWith('http')) {
+                            if (href && isHttpUrl(href)) {
                                 // 避免重複推入相同網址
                                 if (!urlsToCheck.some(task => task.url === href)) {
                                     urlsToCheck.push({ url: href, type: '內文嵌入連結' });
@@ -336,9 +355,9 @@
                         <h4 class="text-slate-800 font-bold text-base flex items-center gap-2">
                             <i class="fa-regular fa-file-lines text-indigo-500"></i> ${escapeHtml(title)}
                         </h4>
-                        <a href="${url}" target="_blank" class="text-xs text-slate-400 hover:text-indigo-600 transition-colors inline-block mt-1 break-all">
-                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> ${url}
-                        </a>
+                        ${isHttpUrl(url) ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="text-xs text-slate-400 hover:text-indigo-600 transition-colors inline-block mt-1 break-all">
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> ${escapeHtml(url)}
+                        </a>` : ''}
                     </div>
                     <div class="link-rows-container space-y-2">
                         <!-- 連結細項檢測結果將置於此 -->
@@ -355,7 +374,7 @@
                 <div id="${rowId}" class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-2 rounded-lg bg-slate-50 border border-transparent text-xs text-slate-600">
                     <div class="flex items-center gap-2 min-w-0 flex-1">
                         <span class="px-2 py-0.5 rounded bg-slate-200 text-slate-500 text-[10px] scale-90 origin-left whitespace-nowrap">${type}</span>
-                        <span class="truncate font-mono text-slate-500 break-all">${url}</span>
+                        <span class="truncate font-mono text-slate-500 break-all">${escapeHtml(url)}</span>
                     </div>
                     <div class="link-status-badge flex items-center gap-1.5 font-medium text-slate-400 whitespace-nowrap sm:text-right">
                         <i class="fa-solid fa-circle-notch fa-spin text-indigo-500"></i> 檢測中
@@ -366,27 +385,28 @@
         }
 
         // 佇列調度與流量控制
-        function processQueue() {
+        function processQueue(myScanId) {
+            if (myScanId !== scanId) return;
             const maxConcurrency = parseInt(settingConcurrency.value, 10);
 
             while (scanQueue.length > 0 && activeRequests < maxConcurrency) {
                 const currentTask = scanQueue.shift();
                 activeRequests++;
-                validateLinkStatus(currentTask);
+                validateLinkStatus(currentTask, myScanId);
             }
 
             // 全部任務皆執行完畢後的處理
             if (activeRequests === 0 && scanQueue.length === 0) {
-                btnStartScan.disabled = false;
-                btnStartScan.innerHTML = `<i class="fa-solid fa-check"></i> 檢測完成`;
+                setStartButton('done');
                 progressContainer.classList.add('hidden');
             }
         }
 
         // 透過 Proxy 來異步發包 GET 請求取得目標 Http Status
-        async function validateLinkStatus(task) {
+        async function validateLinkStatus(task, myScanId) {
             const rowElement = document.getElementById(task.rowId);
             const badgeContainer = rowElement.querySelector('.link-status-badge');
+            let outcome;
 
             try {
                 // 利用 allorigins JSON 回傳格式來直接解析 http_code
@@ -400,24 +420,33 @@
 
                 // 2xx 或者是 3xx 的轉址皆視為正常可用連結
                 if (httpStatus && httpStatus >= 200 && httpStatus < 400) {
-                    updateRowSuccess(rowElement, badgeContainer, httpStatus);
+                    outcome = { ok: true, status: httpStatus };
                 } else {
-                    updateRowFailure(rowElement, badgeContainer, httpStatus || 'Error');
+                    outcome = { ok: false, status: httpStatus || 'Error' };
                 }
             } catch (err) {
                 // 連線失敗、超時或封鎖均列入壞鏈異常
-                updateRowFailure(rowElement, badgeContainer, 'Block/Failed');
-            } finally {
-                activeRequests--;
-                completedTasks++;
-                
-                // 更新進度條
-                const percent = Math.round((completedTasks / totalTasks) * 100);
-                progressBar.style.width = `${percent}%`;
-
-                // 遞迴調用下一批次
-                processQueue();
+                outcome = { ok: false, status: 'Block/Failed' };
             }
+
+            // 已經按了恢復預設或開始了新的檢測：這筆結果作廢
+            if (myScanId !== scanId) return;
+
+            if (outcome.ok) {
+                updateRowSuccess(rowElement, badgeContainer, outcome.status);
+            } else {
+                updateRowFailure(rowElement, badgeContainer, outcome.status);
+            }
+
+            activeRequests--;
+            completedTasks++;
+
+            // 更新進度條
+            const percent = Math.round((completedTasks / totalTasks) * 100);
+            progressBar.style.width = `${percent}%`;
+
+            // 遞迴調用下一批次
+            processQueue(myScanId);
         }
 
         // 網頁連線正常 UI 更新
@@ -451,7 +480,17 @@
 
         function escapeHtml(text) {
             const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-            return text.replace(/[&<>"']/g, m => map[m]);
+            return String(text).replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // RSS 內容來自外部網站，只接受 http(s) 網址（擋掉 javascript: 之類的連結）
+        function isHttpUrl(text) {
+            try {
+                const u = new URL(text);
+                return u.protocol === 'http:' || u.protocol === 'https:';
+            } catch (e) {
+                return false;
+            }
         }
     </script>
 </body>

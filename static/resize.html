@@ -166,12 +166,14 @@
 
         let selectedFiles = [];
         let processedItems = [];
+        let objectUrls = []; // 預覽與下載用的暫存網址，重新處理時釋放
+        let isProcessing = false;
 
         // --- 拖曳與選擇檔案邏輯 ---
-        dropZone.addEventListener('click', () => fileInput.click());
-        dropZone.addEventListener('dragover', (e) => { 
-            e.preventDefault(); 
-            dropZone.classList.add('dragover'); 
+        dropZone.addEventListener('click', () => { if (!isProcessing) fileInput.click(); });
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
         });
         dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
         dropZone.addEventListener('drop', (e) => {
@@ -179,16 +181,27 @@
             dropZone.classList.remove('dragover');
             handleFiles(e.dataTransfer.files);
         });
-        fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+            e.target.value = ''; // 讓同一批檔案可以再選一次
+        });
+
+        function revokeObjectUrls() {
+            objectUrls.forEach(url => URL.revokeObjectURL(url));
+            objectUrls = [];
+        }
 
         function handleFiles(files) {
+            if (isProcessing) return alert('處理中，請等目前這批完成後再選擇新圖片。');
             const validFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
             if (validFiles.length === 0) return alert('請選擇有效的圖片檔案！');
-            
+
             selectedFiles = validFiles;
             document.getElementById('drop-text').innerHTML = `<span class="text-indigo-600">已載入 ${selectedFiles.length} 張圖片</span>`;
-            
+
             // 重置狀態
+            revokeObjectUrls();
+            processedItems = [];
             downloadAllBtn.classList.add('hidden');
             resultList.innerHTML = '';
             resultList.appendChild(emptyState);
@@ -202,47 +215,66 @@
         processBtn.addEventListener('click', async () => {
             if (selectedFiles.length === 0) return alert('請先拖曳或選擇圖片！');
 
-            // UI 狀態切換
-            processBtn.disabled = true;
-            processBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 處理中...';
-            progressContainer.classList.remove('hidden');
-            emptyState.style.display = 'none';
-            resultList.innerHTML = '';
-            processedItems = [];
-            downloadAllBtn.classList.add('hidden');
-
             const prefix = document.getElementById('prefix').value;
-            const startNumStr = document.getElementById('startNum').value;
+            const startNumStr = document.getElementById('startNum').value.trim();
             const format = document.getElementById('format').value;
-            const maxSize = parseInt(document.getElementById('maxSize').value) * 1024;
+            const maxWidth = parseInt(document.getElementById('maxWidth').value, 10);
+            const maxSizeKB = parseInt(document.getElementById('maxSize').value, 10);
+
+            if (!/^\d+$/.test(startNumStr)) return alert('起始編號請輸入數字（例如 001）。');
+            if (!(maxWidth > 0)) return alert('最大寬度請輸入大於 0 的數字。');
+            if (format !== 'image/png' && !(maxSizeKB > 0)) return alert('大小限制請輸入大於 0 的數字。');
+
+            const files = selectedFiles.slice(); // 處理期間固定這批檔案
+            const maxSize = maxSizeKB * 1024;
             const numLength = startNumStr.length; // 動態抓取使用者輸入的位數
 
             let ext = 'jpg';
             if (format === 'image/webp') ext = 'webp';
             if (format === 'image/png') ext = 'png';
 
-            for (let i = 0; i < selectedFiles.length; i++) {
-                // 修正補零邏輯
-                const num = (parseInt(startNumStr) + i).toString().padStart(numLength, '0');
-                const fileName = `${prefix}${num}.${ext}`;
+            // UI 狀態切換
+            isProcessing = true;
+            processBtn.disabled = true;
+            processBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 處理中...';
+            progressContainer.classList.remove('hidden');
+            emptyState.style.display = 'none';
+            resultList.innerHTML = '';
+            revokeObjectUrls();
+            processedItems = [];
+            downloadAllBtn.classList.add('hidden');
 
-                statusText.innerText = `處理中: ${i + 1} / ${selectedFiles.length}`;
-                
-                // 執行壓縮與尺寸調整
-                const blob = await processImage(selectedFiles[i], format, maxSize);
+            let failedCount = 0;
+            try {
+                for (let i = 0; i < files.length; i++) {
+                    // 修正補零邏輯
+                    const num = (parseInt(startNumStr, 10) + i).toString().padStart(numLength, '0');
+                    const fileName = `${prefix}${num}.${ext}`;
 
-                processedItems.push({ blob, fileName });
-                addResultItem(blob, fileName);
+                    statusText.innerText = `處理中: ${i + 1} / ${files.length}`;
 
-                // 更新進度條
-                const percent = Math.round(((i + 1) / selectedFiles.length) * 100);
-                progressBar.style.width = percent + '%';
+                    try {
+                        // 執行壓縮與尺寸調整
+                        const blob = await processImage(files[i], format, maxSize, maxWidth);
+                        processedItems.push({ blob, fileName });
+                        addResultItem(blob, fileName);
+                    } catch (err) {
+                        failedCount++;
+                        addFailedItem(files[i].name, err.message);
+                    }
+
+                    // 更新進度條
+                    const percent = Math.round(((i + 1) / files.length) * 100);
+                    progressBar.style.width = percent + '%';
+                }
+            } finally {
+                // 處理完成狀態（即使中途出錯也要解鎖按鈕）
+                isProcessing = false;
+                processBtn.disabled = false;
+                processBtn.innerHTML = '<i class="fa-solid fa-play"></i> 重新處理';
             }
 
-            // 處理完成狀態
-            processBtn.disabled = false;
-            processBtn.innerHTML = '<i class="fa-solid fa-play"></i> 重新處理';
-            statusText.innerText = '處理完成！';
+            statusText.innerText = failedCount > 0 ? `處理完成（${failedCount} 張失敗）` : '處理完成！';
             if (processedItems.length > 0) {
                 downloadAllBtn.classList.remove('hidden');
                 downloadAllBtn.classList.add('flex'); // 確保 flex 置中生效
@@ -250,13 +282,12 @@
         });
 
         // --- 圖片壓縮修正邏輯 (避免卡死) ---
-        async function processImage(file, format, maxSize) {
+        async function processImage(file, format, maxSize, maxWidth) {
             const originalImg = await loadImage(file);
-            let targetWidth = parseInt(document.getElementById('maxWidth').value);
-            let currentWidth = Math.min(targetWidth, originalImg.width); // 避免放大圖片
+            let currentWidth = Math.min(maxWidth, originalImg.width); // 避免放大圖片
             let quality = 0.9;
             let blob;
-            
+
             let attempts = 0;
             const maxAttempts = 6; // 最大重試次數，防止無限迴圈卡死
 
@@ -264,8 +295,8 @@
                 attempts++;
                 const canvas = document.createElement('canvas');
                 const scale = currentWidth / originalImg.width;
-                canvas.width = currentWidth;
-                canvas.height = originalImg.height * scale;
+                canvas.width = Math.max(1, Math.round(currentWidth));
+                canvas.height = Math.max(1, Math.round(originalImg.height * scale));
 
                 const ctx = canvas.getContext('2d');
                 // 填充白色背景（防止 PNG 轉 JPG 時透明背景變黑）
@@ -276,6 +307,7 @@
                 ctx.drawImage(originalImg, 0, 0, canvas.width, canvas.height);
 
                 blob = await new Promise(r => canvas.toBlob(r, format, quality));
+                if (!blob) throw new Error('瀏覽器無法輸出這個格式');
 
                 // 跳出條件：PNG(不壓縮)、達標、或已經重試達上限
                 if (format === 'image/png' || blob.size <= maxSize || attempts >= maxAttempts) {
@@ -292,21 +324,40 @@
             return blob;
         }
 
+        // 讀不出來的圖片（例如部分瀏覽器不支援的 HEIC）要回報錯誤，否則會永遠卡在「處理中」
         function loadImage(file) {
-            return new Promise(r => {
-                const reader = new FileReader();
-                reader.onload = e => {
-                    const img = new Image();
-                    img.onload = () => r(img);
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
+            return new Promise((resolve, reject) => {
+                const url = URL.createObjectURL(file);
+                const img = new Image();
+                img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+                img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('無法讀取這張圖片')); };
+                img.src = url;
             });
         }
 
+        function escapeHtml(text) {
+            return String(text).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+        }
+
         // --- UI 生成邏輯 ---
+        function addFailedItem(originalName, reason) {
+            const item = document.createElement('div');
+            item.className = 'bg-white border border-orange-200 rounded-xl p-3 flex items-center gap-3 shadow-sm fade-in';
+            item.innerHTML = `
+                <div class="w-10 h-10 rounded-lg bg-orange-50 text-orange-500 flex-shrink-0 flex items-center justify-center">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div class="truncate">
+                    <div class="font-bold text-slate-700 text-sm truncate">${escapeHtml(originalName)}</div>
+                    <div class="text-xs text-orange-500 font-medium">${escapeHtml(reason)}</div>
+                </div>
+            `;
+            resultList.appendChild(item);
+        }
+
         function addResultItem(blob, fileName) {
             const url = URL.createObjectURL(blob);
+            objectUrls.push(url);
             const sizeKB = (blob.size / 1024).toFixed(1);
             
             const item = document.createElement('div');
@@ -317,11 +368,11 @@
                         <img src="${url}" class="w-full h-full object-cover opacity-80" alt="preview">
                     </div>
                     <div class="truncate">
-                        <div class="font-bold text-slate-700 text-sm truncate">${fileName}</div>
+                        <div class="font-bold text-slate-700 text-sm truncate">${escapeHtml(fileName)}</div>
                         <div class="text-xs text-orange-500 font-medium">${sizeKB} KB</div>
                     </div>
                 </div>
-                <a href="${url}" download="${fileName}" class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors flex items-center justify-center" title="單獨下載">
+                <a href="${url}" download="${escapeHtml(fileName)}" class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors flex items-center justify-center" title="單獨下載">
                     <i class="fa-solid fa-download text-xs"></i>
                 </a>
             `;
@@ -337,10 +388,12 @@
             const content = await zip.generateAsync({ type: "blob" });
             
             const a = document.createElement('a');
-            a.href = URL.createObjectURL(content);
+            const zipUrl = URL.createObjectURL(content);
+            a.href = zipUrl;
             a.download = "processed_images.zip";
             a.click();
-            
+            setTimeout(() => URL.revokeObjectURL(zipUrl), 10000);
+
             downloadAllBtn.innerHTML = '<i class="fa-solid fa-file-zipper"></i> 打包下載所有圖片 (.zip)';
         });
     </script>

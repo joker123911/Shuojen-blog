@@ -167,30 +167,63 @@ subway厚切嫩牛 | 6吋 | 366 | 26
         let foods = [];
         let todayIntake = [];
         let targets = { cal: 2000, pro: 100 };
-        const todayStr = new Date().toISOString().split('T')[0];
+
+        // 以使用者當地時間判斷「今天」（toISOString 是 UTC，台灣早上 8 點前會被算成前一天）
+        function getToday() {
+            const d = new Date();
+            return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        }
+        let intakeDate = getToday();
+
+        // 頁面開著跨過午夜時，自動換成新的一天
+        function rolloverIfNewDay() {
+            const today = getToday();
+            if (today === intakeDate) return false;
+            intakeDate = today;
+            todayIntake = [];
+            saveIntake();
+            return true;
+        }
+
+        function readJSON(key) {
+            try {
+                const raw = localStorage.getItem(key);
+                return raw === null ? null : JSON.parse(raw);
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function writeJSON(key, value) {
+            try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
+        }
+
+        function escapeHtml(text) {
+            return String(text).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+        }
 
         window.onload = () => {
-            const savedFoods = localStorage.getItem('nutrition_db_v1');
-            const savedTargets = localStorage.getItem('nutrition_targets_v1');
-            const savedIntake = localStorage.getItem('nutrition_intake_v2');
+            const savedFoods = readJSON('nutrition_db_v1');
+            const savedTargets = readJSON('nutrition_targets_v1');
+            const savedIntake = readJSON('nutrition_intake_v2');
 
-            if (savedFoods) foods = JSON.parse(savedFoods);
+            if (Array.isArray(savedFoods)) foods = savedFoods;
             else parseAndSetData(DEFAULT_RAW);
 
-            if (savedTargets) targets = JSON.parse(savedTargets);
+            if (savedTargets && savedTargets.cal > 0 && savedTargets.pro > 0) targets = savedTargets;
 
-            if (savedIntake) {
-                const parsed = JSON.parse(savedIntake);
-                if (parsed.date === todayStr) {
-                    todayIntake = parsed.items;
-                } else {
-                    todayIntake = []; 
-                    saveIntake();
-                }
+            if (savedIntake && savedIntake.date === intakeDate && Array.isArray(savedIntake.items)) {
+                todayIntake = savedIntake.items;
+            } else if (savedIntake) {
+                saveIntake(); // 前幾天的紀錄：清空並改記成今天
             }
 
             renderAll();
         };
+
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && rolloverIfNewDay()) renderAll();
+        });
 
         function toggleBatchArea() { document.getElementById('batchArea').classList.toggle('hidden'); }
         function toggleAddForm() { document.getElementById('addForm').classList.toggle('hidden'); }
@@ -204,10 +237,12 @@ subway厚切嫩牛 | 6吋 | 366 | 26
         }
 
         function saveTargets() {
-            const cal = parseFloat(document.getElementById('targetCalInput').value) || 2000;
-            const pro = parseFloat(document.getElementById('targetProInput').value) || 100;
+            const calInput = parseFloat(document.getElementById('targetCalInput').value);
+            const proInput = parseFloat(document.getElementById('targetProInput').value);
+            const cal = calInput > 0 ? calInput : 2000;
+            const pro = proInput > 0 ? proInput : 100;
             targets = { cal, pro };
-            localStorage.setItem('nutrition_targets_v1', JSON.stringify(targets));
+            writeJSON('nutrition_targets_v1', targets);
             toggleSettings();
             updateDashboard();
         }
@@ -270,10 +305,11 @@ subway厚切嫩牛 | 6吋 | 366 | 26
             }
         }
         
-        function updateStorage() { localStorage.setItem('nutrition_db_v1', JSON.stringify(foods)); }
-        function saveIntake() { localStorage.setItem('nutrition_intake_v2', JSON.stringify({ date: todayStr, items: todayIntake })); }
+        function updateStorage() { writeJSON('nutrition_db_v1', foods); }
+        function saveIntake() { writeJSON('nutrition_intake_v2', { date: intakeDate, items: todayIntake }); }
 
         function addToToday(dbId) {
+            rolloverIfNewDay();
             const food = foods.find(f => f.id === dbId);
             if (food) {
                 const existingIndex = todayIntake.findIndex(i => i.id === dbId);
@@ -289,6 +325,7 @@ subway厚切嫩牛 | 6吋 | 366 | 26
         }
 
         function removeFromToday(dbId) {
+            if (rolloverIfNewDay()) { renderToday(); updateDashboard(); return; }
             const existingIndex = todayIntake.findIndex(i => i.id === dbId);
             if (existingIndex > -1) {
                 if (todayIntake[existingIndex].count > 1) {
@@ -325,8 +362,8 @@ subway厚切嫩牛 | 6吋 | 366 | 26
                 card.innerHTML = `
                     <div class="flex-1 min-w-0 pr-2">
                         <div class="flex items-center gap-2 mb-1.5">
-                            <h3 class="font-bold text-slate-800 text-sm sm:text-base truncate">${f.name}</h3>
-                            <span class="text-xs sm:text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">${f.portion}</span>
+                            <h3 class="font-bold text-slate-800 text-sm sm:text-base truncate">${escapeHtml(f.name)}</h3>
+                            <span class="text-xs sm:text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">${escapeHtml(f.portion)}</span>
                         </div>
                         <div class="flex flex-wrap gap-2">
                             <span class="text-xs sm:text-sm font-bold text-orange-500 bg-orange-50 px-2 py-0.5 rounded-md flex items-center"><i class="fa-solid fa-fire mr-1 text-xs"></i>${f.cal} <span class="text-xs ml-0.5 font-normal">kcal</span></span>
@@ -360,7 +397,7 @@ subway厚切嫩牛 | 6吋 | 366 | 26
                 card.innerHTML = `
                     <div class="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0"></span>
-                        <h3 class="font-bold text-slate-800 text-sm sm:text-base truncate">${f.name}</h3>
+                        <h3 class="font-bold text-slate-800 text-sm sm:text-base truncate">${escapeHtml(f.name)}</h3>
                         <span class="text-xs sm:text-sm font-black text-indigo-600 bg-indigo-100 px-2 py-0.5 rounded-md flex-shrink-0">x ${f.count}</span>
                     </div>
                     <div class="flex items-center gap-3 sm:gap-4 flex-shrink-0 ml-2">

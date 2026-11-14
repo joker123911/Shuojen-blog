@@ -210,6 +210,7 @@
     ];
     
     let options = [];
+    let hasRealOptions = false; // false 時轉盤上顯示的是「請輸入選項」佔位字
     let currentAngle = 0;
     let isSpinning = false;
     
@@ -223,8 +224,9 @@
     function updateOptions() {
         const text = document.getElementById('optionsInput').value;
         options = text.split('\n').map(opt => opt.trim()).filter(opt => opt !== '');
-        
-        if (options.length === 0) {
+        hasRealOptions = options.length > 0;
+
+        if (!hasRealOptions) {
             options = ['請輸入選項'];
         }
         drawWheel();
@@ -286,12 +288,20 @@
 
     // 點擊開始旋轉
     function spin() {
-        if (isSpinning || options.length <= 1) return;
+        if (isSpinning) return;
+        if (!hasRealOptions || options.length < 2) {
+            const resultElement = document.getElementById('resultText');
+            resultElement.innerText = '至少要輸入 2 個選項才能轉喔';
+            resultElement.style.color = '#ef4444';
+            return;
+        }
         isSpinning = true;
-        
+
         document.getElementById('spinBtn').disabled = true;
+        // 轉動中不能改選項，否則停下來時對應的結果會錯亂
+        document.getElementById('updateBtn').disabled = true;
         document.getElementById('resultText').innerText = "旋轉中...";
-        document.getElementById('resultText').style.color = "#1c1e21";
+        document.getElementById('resultText').style.color = "var(--text-color)";
         
         startAngle = currentAngle;
         // 隨機旋轉 6 到 10 圈，並加上一個隨機的額外角度
@@ -330,6 +340,7 @@
     function showResult() {
         isSpinning = false;
         document.getElementById('spinBtn').disabled = false;
+        document.getElementById('updateBtn').disabled = false;
         
         const arcSize = (2 * Math.PI) / options.length;
         // 計算 270 度 (轉盤正上方) 所對應的區塊

@@ -370,9 +370,14 @@
         document.getElementById('label-recheck').innerText = d.labelRecheck;
         document.getElementById('btn-restart').innerText = d.btnRestart;
 
-        if (playersData.length > 0) {
-            updateInputUI();
-        }
+        // 畫面上動態產生的文字（輸入題目、傳手機、查看題目）也要換成新語言
+        if (!document.getElementById('step-2').classList.contains('hidden')) updateInputUI();
+        if (!document.getElementById('step-3').classList.contains('hidden')) showPassScreen();
+        if (!document.getElementById('step-4').classList.contains('hidden')) showPlayerView();
+    }
+
+    function escapeHtml(text) {
+        return String(text).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
     }
 
     function toggleRules() {
@@ -380,8 +385,9 @@
     }
 
     function setupPlayers() {
-        totalPlayers = parseInt(document.getElementById('player-count').value);
-        if (totalPlayers < 2) return alert(langData[currentLang].alertMin);
+        totalPlayers = parseInt(document.getElementById('player-count').value, 10);
+        // 留空或不是數字時 parseInt 會得到 NaN，NaN < 2 為 false，必須另外擋
+        if (!Number.isInteger(totalPlayers) || totalPlayers < 2) return alert(langData[currentLang].alertMin);
         document.getElementById('step-1').classList.add('hidden');
         document.getElementById('step-2').classList.remove('hidden');
         document.getElementById('rules-box').classList.add('hidden');
@@ -431,7 +437,7 @@
         document.getElementById('step-4').classList.add('hidden');
         document.getElementById('step-5').classList.add('hidden');
         document.getElementById('step-3').classList.remove('hidden');
-        document.getElementById('pass-message').innerHTML = d.passTo.replace('{name}', p.name);
+        document.getElementById('pass-message').innerHTML = d.passTo.replace('{name}', escapeHtml(p.name));
         document.getElementById('check-btn').innerText = d.checkBtn.replace('{name}', p.name);
     }
 
@@ -448,7 +454,7 @@
             if (idx !== currentViewIdx) {
                 const item = document.createElement('div');
                 item.className = 'player-item';
-                item.innerHTML = `<b>${player.name}</b>${d.isLabel}<span style="color:var(--primary-color)">${player.viewTarget}</span>`;
+                item.innerHTML = `<b>${escapeHtml(player.name)}</b>${d.isLabel}<span style="color:var(--primary-color)">${escapeHtml(player.viewTarget)}</span>`;
                 list.appendChild(item);
             }
         });

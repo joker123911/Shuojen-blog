@@ -199,9 +199,19 @@
         let originalWidth = 0;
         let originalHeight = 0;
 
+        function setActiveRatioBtn(activeBtn) {
+            ratioBtns.forEach(b => {
+                b.classList.remove('bg-indigo-50', 'text-indigo-600', 'border-indigo-100');
+                b.classList.add('bg-slate-50', 'text-slate-600', 'border-slate-200');
+            });
+            activeBtn.classList.remove('bg-slate-50', 'text-slate-600', 'border-slate-200');
+            activeBtn.classList.add('bg-indigo-50', 'text-indigo-600', 'border-indigo-100');
+        }
+
         // 監聽圖片上傳
         imageInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
+            e.target.value = ''; // 讓同一個檔案可以再選一次
             if (!file) return;
 
             const reader = new FileReader();
@@ -210,6 +220,8 @@
                     cropper.destroy();
                 }
 
+                // 新圖片一律從自由裁切開始，按鈕狀態也要跟著重設
+                setActiveRatioBtn(ratioBtns[0]);
                 previewImg.src = event.target.result;
 
                 controlCard.classList.remove('hidden');
@@ -246,12 +258,7 @@
             btn.addEventListener('click', (e) => {
                 if (!cropper) return;
 
-                ratioBtns.forEach(b => {
-                    b.classList.remove('bg-indigo-50', 'text-indigo-600', 'border-indigo-100');
-                    b.classList.add('bg-slate-50', 'text-slate-600', 'border-slate-200');
-                });
-                btn.classList.remove('bg-slate-50', 'text-slate-600', 'border-slate-200');
-                btn.classList.add('bg-indigo-50', 'text-indigo-600', 'border-indigo-100');
+                setActiveRatioBtn(btn);
 
                 const targetRatio = parseFloat(btn.getAttribute('data-ratio'));
                 cropper.setAspectRatio(targetRatio);
@@ -268,15 +275,25 @@
             if (selectedFormat === 'image/webp') ext = 'webp';
 
             const croppedCanvas = cropper.getCroppedCanvas({
+                // JPG 沒有透明通道，透明處預設會變成黑色，改用白色填滿
+                fillColor: selectedFormat === 'image/jpeg' ? '#ffffff' : 'transparent',
                 imageSmoothingEnabled: true,
                 imageSmoothingQuality: 'high'
             });
 
-            const link = document.createElement('a');
-            link.download = `cropped_free_${Date.now()}.${ext}`;
-            // 如果是 jpg 格式，給予 0.92 的優質壓縮率
-            link.href = croppedCanvas.toDataURL(selectedFormat, selectedFormat === 'image/jpeg' ? 0.92 : undefined);
-            link.click();
+            // 用 toBlob 而不是 toDataURL：大圖轉成 data URL 可能超過瀏覽器上限而下載失敗
+            croppedCanvas.toBlob(blob => {
+                if (!blob) {
+                    alert('輸出失敗，請改用其他格式或縮小裁切範圍再試一次。');
+                    return;
+                }
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.download = `cropped_${Date.now()}.${ext}`;
+                link.href = url;
+                link.click();
+                setTimeout(() => URL.revokeObjectURL(url), 10000);
+            }, selectedFormat, selectedFormat === 'image/png' ? undefined : 0.92); // jpg / webp 給予 0.92 的優質壓縮率
         });
 
         // 重設按鈕

@@ -68,6 +68,11 @@
             pointer-events: none;
         }
 
+        /* 觸控裝置沒有滑鼠移入的效果，貼紙上的刪除／旋轉鈕要一直顯示 */
+        @media (hover: none) {
+            .sticker-wrapper .action-btn { opacity: 1; }
+        }
+
         /* 畫布背景設計 - 行李箱 (垂直紋路) */
         .bg-suitcase {
             background: repeating-linear-gradient(

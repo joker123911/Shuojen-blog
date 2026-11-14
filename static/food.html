@@ -112,7 +112,13 @@
                 </div>
             </div>
         </div>
-        <p class="text-center mt-8 text-slate-400 text-xs font-normal tracking-wide">© Shuojen.com Decision Tool</p>
+        <div class="flex justify-center items-center gap-3 mt-8 text-slate-400 text-xs font-normal tracking-wide">
+            <p>© Shuojen.com Decision Tool</p>
+            <span class="text-slate-300">|</span>
+            <button onclick="resetToDefault()" class="hover:text-indigo-500 transition underline flex items-center gap-1">
+                <i class="fa-solid fa-rotate-left text-xs"></i> 恢復預設名單
+            </button>
+        </div>
     </div>
 
     <script>
@@ -464,11 +470,18 @@ Hala Chicken | 近 | 美式 | 快速,平價
         let restaurants = [];
         let excludedTags = [];
         let currentPool = [];
+        let lastPickedId = null;
+
+        function escapeHtml(text) {
+            return String(text).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+        }
 
         window.onload = () => {
-            const saved = localStorage.getItem('food_decider_v2');
-            if (saved && JSON.parse(saved).length > 0) {
-                restaurants = JSON.parse(saved);
+            let saved = null;
+            try { saved = JSON.parse(localStorage.getItem('food_decider_v2')); } catch (e) {}
+            // 有存過（包含清空後的空名單）就用存的；從沒存過才載入預設名單
+            if (Array.isArray(saved)) {
+                restaurants = saved;
             } else {
                 parseAndSetData(DEFAULT_RAW);
             }
@@ -495,12 +508,12 @@ Hala Chicken | 近 | 美式 | 快速,平價
                 card.innerHTML = `
                     <div class="flex-1 min-w-0 pr-2">
                         <div class="flex items-center gap-2 mb-1">
-                            <h3 class="font-bold text-slate-800 text-sm truncate">${r.name}</h3>
-                            <span class="text-[8px] font-bold text-indigo-400 bg-indigo-50 px-1.5 py-0.5 rounded uppercase">${r.foodType || '一般'}</span>
+                            <h3 class="font-bold text-slate-800 text-sm truncate">${escapeHtml(r.name)}</h3>
+                            <span class="text-[8px] font-bold text-indigo-400 bg-indigo-50 px-1.5 py-0.5 rounded uppercase">${escapeHtml(r.foodType || '一般')}</span>
                         </div>
                         <div class="flex flex-wrap gap-1 mt-1">
-                            ${r.distance ? `<span class="text-[9px] text-slate-400 border border-slate-100 px-1.5 py-0.5 rounded flex items-center gap-1"><i class="fa-solid fa-location-dot text-[8px]"></i>${r.distance}</span>` : ''}
-                            ${r.tags ? r.tags.split(',').slice(0, 3).map(t => `<span class="text-[9px] text-slate-300 border border-slate-100 px-1.5 py-0.5 rounded">#${t.trim()}</span>`).join('') : ''}
+                            ${r.distance ? `<span class="text-[9px] text-slate-400 border border-slate-100 px-1.5 py-0.5 rounded flex items-center gap-1"><i class="fa-solid fa-location-dot text-[8px]"></i>${escapeHtml(r.distance)}</span>` : ''}
+                            ${r.tags ? r.tags.split(',').map(t => t.trim()).filter(Boolean).slice(0, 3).map(t => `<span class="text-[9px] text-slate-300 border border-slate-100 px-1.5 py-0.5 rounded">#${escapeHtml(t)}</span>`).join('') : ''}
                         </div>
                     </div>
                     <button onclick="deleteRest(${r.id})" class="text-slate-200 hover:text-red-400 p-2 transition-colors"><i class="fa-solid fa-trash-can text-xs"></i></button>
@@ -540,13 +553,23 @@ Hala Chicken | 近 | 美式 | 快速,平價
         }
 
         function deleteRest(id) { restaurants = restaurants.filter(r => r.id !== id); updateStorage(); renderList(); }
-        function clearAll() { if(confirm('清空？')) { restaurants = []; updateStorage(); renderList(); } }
-        function updateStorage() { localStorage.setItem('food_decider_v2', JSON.stringify(restaurants)); }
+        function clearAll() { if(confirm('確定要清空所有店家嗎？')) { restaurants = []; updateStorage(); renderList(); } }
+        function updateStorage() {
+            try { localStorage.setItem('food_decider_v2', JSON.stringify(restaurants)); } catch (e) {}
+        }
+
+        // 程式裡的預設名單更新後，已經存過名單的瀏覽器不會自動換新，用這個按鈕重新載入
+        function resetToDefault() {
+            if (confirm('要換回預設名單嗎？你自己新增或修改的店家會被取代。')) {
+                parseAndSetData(DEFAULT_RAW);
+                renderList();
+            }
+        }
 
         function startGame() {
             document.getElementById('listMode').classList.add('hidden');
             document.getElementById('gameMode').classList.remove('hidden');
-            excludedTags = []; currentPool = [...restaurants];
+            excludedTags = []; currentPool = [...restaurants]; lastPickedId = null;
             pickOne();
         }
 
@@ -572,7 +595,10 @@ Hala Chicken | 近 | 美式 | 快速,平價
                 return;
             }
 
-            const picked = validPool[Math.floor(Math.random() * validPool.length)];
+            // 「換一個」時避開剛剛抽到的那家（只剩一家時例外）
+            const pickPool = validPool.length > 1 ? validPool.filter(r => r.id !== lastPickedId) : validPool;
+            const picked = pickPool[Math.floor(Math.random() * pickPool.length)];
+            lastPickedId = picked.id;
             nameEl.innerText = picked.name;
 
             // 更新 Google Maps 搜尋連結
@@ -580,10 +606,19 @@ Hala Chicken | 近 | 美式 | 快速,平價
             mapLink.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(picked.name)}`;
 
             tagsEl.innerHTML = ''; rejectEl.innerHTML = '';
-            const tags = `${picked.distance},${picked.foodType},${picked.tags}`.split(',').map(t => t.trim()).filter(t => t);
+            const tags = [...new Set(`${picked.distance},${picked.foodType},${picked.tags}`.split(',').map(t => t.trim()).filter(t => t))];
             tags.forEach(t => {
-                tagsEl.innerHTML += `<span class="bg-indigo-50 text-indigo-500 font-bold px-2 py-1 rounded-full text-xs">#${t}</span>`;
-                rejectEl.innerHTML += `<button onclick="excludeTag('${t}')" class="bg-white text-slate-400 border border-slate-100 px-3 py-1.5 rounded-xl text-xs hover:text-red-400 transition shadow-sm">不吃 ${t}</button>`;
+                const tagEl = document.createElement('span');
+                tagEl.className = 'bg-indigo-50 text-indigo-500 font-bold px-2 py-1 rounded-full text-xs';
+                tagEl.textContent = `#${t}`;
+                tagsEl.appendChild(tagEl);
+
+                // 用事件綁定而不是 onclick 字串，標籤含引號時按鈕才不會壞掉
+                const btn = document.createElement('button');
+                btn.className = 'bg-white text-slate-400 border border-slate-100 px-3 py-1.5 rounded-xl text-xs hover:text-red-400 transition shadow-sm';
+                btn.textContent = `不吃 ${t}`;
+                btn.addEventListener('click', () => excludeTag(t));
+                rejectEl.appendChild(btn);
             });
         }
 

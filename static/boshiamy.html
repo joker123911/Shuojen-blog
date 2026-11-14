@@ -1069,13 +1069,26 @@
     { char: '乙', code: 'ZZ' }
     ];
 
-    // 建立快速字符查詢表
-    const codeLookup = {};
+    // 建立字 → 碼的查詢表。同一個字可能是兩組碼的簡碼（例如「力」DX / DY），任何一組都算對
+    const codesByChar = {};
     correctedBank.forEach(item => {
-        if (!codeLookup[item.char]) {
-            codeLookup[item.char] = item.code;
-        }
+        const codes = codesByChar[item.char] || (codesByChar[item.char] = []);
+        if (!codes.includes(item.code)) codes.push(item.code);
     });
+
+    function getValidCodes(item) {
+        return codesByChar[item.char] || [item.code];
+    }
+
+    // Fisher–Yates 洗牌（sort + Math.random 的洗法分布不均）
+    function shuffle(list) {
+        const arr = [...list];
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
 
     let currentMode = 'twocode'; // 'twocode' | 'weak' | 'article'
     let currentList = [];
@@ -1170,7 +1183,7 @@
 
         if (mode === 'twocode') {
             modeDesc.textContent = '兩碼專項抽考 (全庫隨機)';
-            currentList = [...correctedBank].sort(() => Math.random() - 0.5);
+            currentList = shuffle(correctedBank);
             startPractice();
         } else if (mode === 'weak') {
             modeDesc.textContent = '停頓卡手專項本 (阻斷式連打)';
@@ -1180,7 +1193,7 @@
                 switchMode('twocode');
                 return;
             }
-            currentList = [...weakBank].sort(() => Math.random() - 0.5);
+            currentList = shuffle(weakBank);
             startPractice();
         } else if (mode === 'article') {
             modeDesc.textContent = '文章語料實戰 (非聊天常見字解析)';
@@ -1199,9 +1212,9 @@
         const seen = new Set();
 
         chars.forEach(ch => {
-            if (codeLookup[ch] && !seen.has(ch)) {
+            if (codesByChar[ch] && !seen.has(ch)) {
                 seen.add(ch);
-                filtered.push({ char: ch, code: codeLookup[ch] });
+                filtered.push({ char: ch, code: codesByChar[ch][0] });
             }
         });
 
@@ -1216,7 +1229,18 @@
         startPractice();
     }
 
+    // 答對後 0.5 秒自動換題；這段期間按 Enter 只會前進一題，不會連跳兩題
+    let advanceTimer = null;
+
+    function cancelAutoAdvance() {
+        if (advanceTimer) {
+            clearTimeout(advanceTimer);
+            advanceTimer = null;
+        }
+    }
+
     function startPractice() {
+        cancelAutoAdvance();
         currentIndex = 0;
         showCard(true);
         updateProgress();
@@ -1226,8 +1250,10 @@
         const updateContent = () => {
             if (currentList.length === 0) return;
             const item = currentList[currentIndex];
+            const codes = getValidCodes(item);
             charTarget.textContent = item.char;
-            codeAnswer.textContent = item.code;
+            codeAnswer.textContent = codes.join(' / ');
+            codeAnswer.style.fontSize = codes.length > 1 ? '48px' : '';
             userInput.value = '';
             userInput.classList.remove('success', 'error');
             userInput.focus();
@@ -1263,6 +1289,7 @@
     }
 
     function nextCard() {
+        cancelAutoAdvance();
         if (currentList.length === 0) return;
         currentIndex++;
         if (currentIndex >= currentList.length) {
@@ -1270,7 +1297,7 @@
             if (currentMode === 'weak') {
                 const weakBank = getWeakBank();
                 if (weakBank.length > 0) {
-                    currentList = [...weakBank].sort(() => Math.random() - 0.5);
+                    currentList = shuffle(weakBank);
                     startPractice();
                 } else {
                     switchMode('twocode');
@@ -1294,13 +1321,15 @@
     }
 
     userInput.addEventListener('input', (e) => {
+        if (advanceTimer) return; // 已答對，等待換題中
         const value = e.target.value.toUpperCase().trim();
         if (!currentList[currentIndex]) return;
         const currentItem = currentList[currentIndex];
-        const correctCode = currentItem.code;
+        const validCodes = getValidCodes(currentItem);
+        const codeLength = Math.max(...validCodes.map(c => c.length));
 
-        if (value.length >= correctCode.length) {
-            if (value === correctCode) {
+        if (validCodes.includes(value) || value.length >= codeLength) {
+            if (validCodes.includes(value)) {
                 const elapsedSec = (performance.now() - cardStartTime) / 1000;
                 userInput.classList.add('success');
 
@@ -1319,7 +1348,8 @@
                     card.classList.add('flipped');
                 }
 
-                setTimeout(() => {
+                advanceTimer = setTimeout(() => {
+                    advanceTimer = null;
                     nextCard();
                 }, 500);
             } else {
