@@ -18,7 +18,7 @@
     },
     {
       "title": "火線追緝令",
-      "score": 9.5,
+      "score": 9.4,
       "note": "心中最佳的大衛芬奇，百看不厭凱文史貝西的神演技",
       "poster": "./img/movie/火線追緝令.webp",
       "tags": [
@@ -27,13 +27,13 @@
         "犯罪"
       ],
       "category": "westernMovies",
-      "elo": 1932.0567613090707,
-      "games": 16,
-      "exported_score": 9.5
+      "elo": 1888.791591551452,
+      "games": 2,
+      "exported_score": 9.4
     },
     {
       "title": "阿甘正傳",
-      "score": 9.5,
+      "score": 9.3,
       "note": "不管從頭從中間從哪裡都可以超順的看完",
       "poster": "./img/movie/阿甘正傳.webp",
       "tags": [
@@ -42,24 +42,9 @@
         "溫馨"
       ],
       "category": "westernMovies",
-      "elo": 1904.6340025203092,
-      "games": 13,
-      "exported_score": 9.5
-    },
-    {
-      "title": "小丑",
-      "score": 9.4,
-      "note": "醉後大丈夫導演是真的有兩把刷子，第一次看真的很震驚",
-      "poster": "./img/movie/小丑.webp",
-      "tags": [
-        "2019",
-        "劇情",
-        "犯罪"
-      ],
-      "category": "westernMovies",
-      "elo": 1870.3205995479416,
-      "games": 14,
-      "exported_score": 9.4
+      "elo": 1858.7435136998906,
+      "games": 2,
+      "exported_score": 9.3
     },
     {
       "title": "刺激1995",
@@ -72,8 +57,8 @@
         "監獄"
       ],
       "category": "westernMovies",
-      "elo": 1875.0837503064993,
-      "games": 13,
+      "elo": 1875.0799819554477,
+      "games": 1,
       "exported_score": 9.4
     },
     {
@@ -93,8 +78,23 @@
       "exported_score": 9.4
     },
     {
+      "title": "小丑",
+      "score": 9.4,
+      "note": "醉後大丈夫導演是真的有兩把刷子，第一次看真的很震驚",
+      "poster": "./img/movie/小丑.webp",
+      "tags": [
+        "2019",
+        "劇情",
+        "犯罪"
+      ],
+      "category": "westernMovies",
+      "elo": 1870.1688897576535,
+      "games": 16,
+      "exported_score": 9.4
+    },
+    {
       "title": "幸福綠皮書",
-      "score": 9.2,
+      "score": 9.4,
       "note": "最愛的公路片，輕鬆又溫暖",
       "poster": "./img/movie/幸福綠皮書.webp",
       "tags": [
@@ -103,13 +103,13 @@
         "溫馨"
       ],
       "category": "westernMovies",
-      "elo": 1841.7765389562528,
-      "games": 13,
-      "exported_score": 9.2
+      "elo": 1887.8817912261372,
+      "games": 2,
+      "exported_score": 9.4
     },
     {
       "title": "彗星來的那一夜",
-      "score": 9.2,
+      "score": 9.1,
       "note": "小成本但懸疑感滿滿，絕對不輸大片",
       "poster": "./img/movie/彗星來的那一夜.webp",
       "tags": [
@@ -118,7 +118,22 @@
         "科幻"
       ],
       "category": "westernMovies",
-      "elo": 1835.3825518414167,
+      "elo": 1829.4352646498126,
+      "games": 16,
+      "exported_score": 9.1
+    },
+    {
+      "title": "明日邊界",
+      "score": 9.2,
+      "note": "流暢有趣，題材有意思的科幻爽片",
+      "poster": "./img/movie/明日邊界.webp",
+      "tags": [
+        "2014",
+        "科幻",
+        "動作"
+      ],
+      "category": "westernMovies",
+      "elo": 1833.6530012964397,
       "games": 15,
       "exported_score": 9.2
     },
@@ -133,22 +148,7 @@
         "溫馨"
       ],
       "category": "westernMovies",
-      "elo": 1833.6288496555499,
-      "games": 13,
-      "exported_score": 9.2
-    },
-    {
-      "title": "明日邊界",
-      "score": 9.2,
-      "note": "流暢有趣，題材有意思的科幻爽片",
-      "poster": "./img/movie/明日邊界.webp",
-      "tags": [
-        "2014",
-        "科幻",
-        "動作"
-      ],
-      "category": "westernMovies",
-      "elo": 1833.6530012964397,
+      "elo": 1833.7278762057254,
       "games": 15,
       "exported_score": 9.2
     },
@@ -168,18 +168,18 @@
       "exported_score": 9.1
     },
     {
-      "title": "康斯坦丁",
+      "title": "三個傻瓜",
       "score": 9.1,
-      "note": "基努李維最佳，超酷炫的驅魔爽片，沒有之一",
-      "poster": "./img/movie/康斯坦丁.webp",
+      "note": "我心中的第一名印度電影，經典，有笑有淚",
+      "poster": "./img/movie/三個傻瓜.webp",
       "tags": [
-        "2005",
-        "恐怖",
-        "驅魔"
+        "2009",
+        "喜劇",
+        "溫馨"
       ],
       "category": "westernMovies",
-      "elo": 1819.5309245386586,
-      "games": 13,
+      "elo": 1824.9200180445523,
+      "games": 1,
       "exported_score": 9.1
     },
     {
@@ -193,55 +193,24 @@
         "諜戰"
       ],
       "category": "westernMovies",
-      "elo": 1822.266846009606,
-      "games": 12,
-      "exported_score": 9.1
-    },
-    {
-      "title": "三個傻瓜",
-      "score": 9.1,
-      "note": "我心中的第一名印度電影，經典，有笑有淚",
-      "poster": "./img/movie/三個傻瓜.webp",
-      "tags": [
-        "2009",
-        "喜劇",
-        "溫馨"
-      ],
-      "category": "westernMovies",
-      "elo": 1827.0422105658088,
-      "games": 16,
-      "exported_score": 9.1
-    },
-    {
-      "title": "落日殺神",
-      "score": 9.0,
-      "note": "超級好看的公路動作電影，阿湯哥和傑米福克斯之間的交談和對手戲都很有韻味",
-      "poster": "./img/movie/落日殺神.webp",
-      "tags": [
-        "2004",
-        "公路",
-        "劇情",
-        "犯罪"
-      ],
-      "category": "westernMovies",
-      "elo": 1809.4972960132231,
+      "elo": 1829.492122993549,
       "games": 13,
-      "exported_score": 9.0
+      "exported_score": 9.1
     },
     {
-      "title": "控制",
-      "score": 9.0,
-      "note": "抽絲剝繭的懸疑片，喜歡到借了原著來讀，還原度很高",
-      "poster": "./img/movie/控制.webp",
+      "title": "康斯坦丁",
+      "score": 9.1,
+      "note": "基努李維最佳，超酷炫的驅魔爽片，沒有之一",
+      "poster": "./img/movie/康斯坦丁.webp",
       "tags": [
-        "2014",
-        "懸疑",
-        "犯罪"
+        "2005",
+        "恐怖",
+        "驅魔"
       ],
       "category": "westernMovies",
-      "elo": 1809.6333515087858,
-      "games": 15,
-      "exported_score": 9.0
+      "elo": 1826.4968383256892,
+      "games": 14,
+      "exported_score": 9.1
     },
     {
       "title": "我的完美日常",
@@ -259,19 +228,34 @@
       "exported_score": 9.1
     },
     {
-      "title": "黑暗騎士",
+      "title": "控制",
       "score": 9.0,
-      "note": "希斯萊傑篡位主角的最神英雄片",
-      "poster": "./img/movie/黑暗騎士.webp",
+      "note": "抽絲剝繭的懸疑片，喜歡到借了原著來讀，還原度很高",
+      "poster": "./img/movie/控制.webp",
       "tags": [
-        "2008",
-        "劇情",
-        "英雄",
-        "諾蘭"
+        "2014",
+        "懸疑",
+        "犯罪"
       ],
       "category": "westernMovies",
-      "elo": 1805.0839750474427,
-      "games": 14,
+      "elo": 1809.6333515087858,
+      "games": 15,
+      "exported_score": 9.0
+    },
+    {
+      "title": "落日殺神",
+      "score": 9.0,
+      "note": "超級好看的公路動作電影，阿湯哥和傑米福克斯之間的交談和對手戲都很有韻味",
+      "poster": "./img/movie/落日殺神.webp",
+      "tags": [
+        "2004",
+        "公路",
+        "劇情",
+        "犯罪"
+      ],
+      "category": "westernMovies",
+      "elo": 1803.9783982898296,
+      "games": 1,
       "exported_score": 9.0
     },
     {
@@ -287,6 +271,22 @@
       "category": "westernMovies",
       "elo": 1806.300217195042,
       "games": 14,
+      "exported_score": 9.0
+    },
+    {
+      "title": "黑暗騎士",
+      "score": 9.0,
+      "note": "希斯萊傑篡位主角的最神英雄片",
+      "poster": "./img/movie/黑暗騎士.webp",
+      "tags": [
+        "2008",
+        "劇情",
+        "英雄",
+        "諾蘭"
+      ],
+      "category": "westernMovies",
+      "elo": 1804.1043906353257,
+      "games": 1,
       "exported_score": 9.0
     },
     {
@@ -393,8 +393,37 @@
       "exported_score": 8.8
     },
     {
+      "title": "愛你致死不渝",
+      "score": 8.4,
+      "note": "超棒的低成本驚悚電影，保證從頭到尾如坐針氈",
+      "poster": "./img/movie/愛你致死不渝.webp",
+      "tags": [
+        "2026",
+        "恐怖"
+      ],
+      "category": "westernMovies",
+      "elo": 1684.9467029579519,
+      "games": 1,
+      "exported_score": 8.4
+    },
+    {
+      "title": "八惡人",
+      "score": 8.8,
+      "note": "心中最佳的昆丁，角色慢慢登場最後大混戰很過癮",
+      "poster": "./img/movie/八惡人.webp",
+      "tags": [
+        "2015",
+        "劇情",
+        "昆丁"
+      ],
+      "category": "westernMovies",
+      "elo": 1751.032523614554,
+      "games": 16,
+      "exported_score": 8.8
+    },
+    {
       "title": "宿劫",
-      "score": 8.7,
+      "score": 8.9,
       "note": "很喜歡這個導演的劇情切角，又有他獨特的幽默風格。作品非常完整漂亮，不落俗套",
       "poster": "./img/movie/宿劫.webp",
       "tags": [
@@ -404,8 +433,23 @@
         "喜劇"
       ],
       "category": "westernMovies",
-      "elo": 1748.8196603202498,
-      "games": 10,
+      "elo": 1775.2319841267383,
+      "games": 1,
+      "exported_score": 8.9
+    },
+    {
+      "title": "攻其不備",
+      "score": 8.7,
+      "note": "真實故事改編，跨越種族的善良，感人的一部",
+      "poster": "./img/movie/攻其不備.webp",
+      "tags": [
+        "2009",
+        "傳記",
+        "溫馨"
+      ],
+      "category": "westernMovies",
+      "elo": 1736.6873190209703,
+      "games": 14,
       "exported_score": 8.7
     },
     {
@@ -424,50 +468,6 @@
       "exported_score": 8.7
     },
     {
-      "title": "八惡人",
-      "score": 8.8,
-      "note": "心中最佳的昆丁，角色慢慢登場最後大混戰很過癮",
-      "poster": "./img/movie/八惡人.webp",
-      "tags": [
-        "2015",
-        "劇情",
-        "昆丁"
-      ],
-      "category": "westernMovies",
-      "elo": 1751.032523614554,
-      "games": 16,
-      "exported_score": 8.8
-    },
-    {
-      "title": "攻其不備",
-      "score": 8.7,
-      "note": "真實故事改編，跨越種族的善良，感人的一部",
-      "poster": "./img/movie/攻其不備.webp",
-      "tags": [
-        "2009",
-        "傳記",
-        "溫馨"
-      ],
-      "category": "westernMovies",
-      "elo": 1743.3099208152044,
-      "games": 13,
-      "exported_score": 8.7
-    },
-    {
-      "title": "愛你致死不渝",
-      "score": 8.8,
-      "note": "超棒的低成本驚悚電影，保證從頭到尾如坐針氈",
-      "poster": "./img/movie/愛你致死不渝.webp",
-      "tags": [
-        "2026",
-        "恐怖"
-      ],
-      "category": "westernMovies",
-      "elo": 1752.040970221694,
-      "games": 17,
-      "exported_score": 8.8
-    },
-    {
       "title": "捍衛戰士獨行俠",
       "score": 8.7,
       "note": "簡單流暢直球對決的爽片卻不出戲，完美續作",
@@ -481,6 +481,36 @@
       "elo": 1737.5095189182996,
       "games": 12,
       "exported_score": 8.7
+    },
+    {
+      "title": "逆轉人生",
+      "score": 8.7,
+      "note": "真實故事改編的溫馨感動故事",
+      "poster": "./img/movie/逆轉人生.webp",
+      "tags": [
+        "2011",
+        "溫馨",
+        "劇情",
+        "傳記"
+      ],
+      "category": "westernMovies",
+      "elo": 1730.592497804679,
+      "games": 17,
+      "exported_score": 8.7
+    },
+    {
+      "title": "靈異第六感",
+      "score": 8.6,
+      "note": "絕對不能被暴雷系列，趕快把它看掉以防萬一吧",
+      "poster": "./img/movie/靈異第六感.webp",
+      "tags": [
+        "1999",
+        "懸疑"
+      ],
+      "category": "westernMovies",
+      "elo": 1726.6026948438982,
+      "games": 15,
+      "exported_score": 8.6
     },
     {
       "title": "龍捲風暴",
@@ -507,39 +537,9 @@
         "犯罪"
       ],
       "category": "westernMovies",
-      "elo": 1720.5814342753997,
-      "games": 14,
-      "exported_score": 8.6
-    },
-    {
-      "title": "靈異第六感",
-      "score": 8.6,
-      "note": "絕對不能被暴雷系列，趕快把它看掉以防萬一吧",
-      "poster": "./img/movie/靈異第六感.webp",
-      "tags": [
-        "1999",
-        "懸疑"
-      ],
-      "category": "westernMovies",
-      "elo": 1726.6026948438982,
+      "elo": 1726.853641376253,
       "games": 15,
       "exported_score": 8.6
-    },
-    {
-      "title": "逆轉人生",
-      "score": 8.7,
-      "note": "真實故事改編的溫馨感動故事",
-      "poster": "./img/movie/逆轉人生.webp",
-      "tags": [
-        "2011",
-        "溫馨",
-        "劇情",
-        "傳記"
-      ],
-      "category": "westernMovies",
-      "elo": 1730.592497804679,
-      "games": 17,
-      "exported_score": 8.7
     },
     {
       "title": "戰慄遊戲",
@@ -572,7 +572,7 @@
     },
     {
       "title": "不",
-      "score": 8.5,
+      "score": 8.3,
       "note": "喬登皮爾作品之中最喜歡的，題材就是很對到我的電波",
       "poster": "./img/movie/不.webp",
       "tags": [
@@ -581,9 +581,9 @@
         "驚悚"
       ],
       "category": "westernMovies",
-      "elo": 1697.4467558828037,
-      "games": 12,
-      "exported_score": 8.5
+      "elo": 1656.4972999615413,
+      "games": 1,
+      "exported_score": 8.3
     },
     {
       "title": "社群網站",
@@ -630,7 +630,7 @@
     },
     {
       "title": "奧德賽",
-      "score": 8.4,
+      "score": 8.0,
       "note": "史詩大作，三個小時到最後把情緒堆疊的很滿，滿喜歡",
       "poster": "./img/movie/奧德賽.webp",
       "tags": [
@@ -640,13 +640,13 @@
         "諾蘭"
       ],
       "category": "westernMovies",
-      "elo": 1685.5147668238226,
-      "games": 14,
-      "exported_score": 8.4
+      "elo": 1604.0121083264348,
+      "games": 1,
+      "exported_score": 8.0
     },
     {
       "title": "臥底",
-      "score": 8.4,
+      "score": 8.3,
       "note": "非常精采的搶銀行警匪片，我心中的第一名。完全呈現出我之前看紙房子腦海中的期待，結果紙房子給了我無語",
       "poster": "./img/movie/臥底.webp",
       "tags": [
@@ -654,9 +654,9 @@
         "警匪"
       ],
       "category": "westernMovies",
-      "elo": 1680.0,
-      "games": 12,
-      "exported_score": 8.4
+      "elo": 1660.8228144957088,
+      "games": 2,
+      "exported_score": 8.3
     },
     {
       "title": "雨人",
@@ -697,38 +697,9 @@
         "劇情"
       ],
       "category": "westernMovies",
-      "elo": 1673.3622428213148,
-      "games": 15,
-      "exported_score": 8.4
-    },
-    {
-      "title": "帝國浩劫：美國內戰",
-      "score": 8.3,
-      "note": "由記者視角演繹的戰爭片，很特別",
-      "poster": "./img/movie/帝國浩劫：美國內戰.webp",
-      "tags": [
-        "2024",
-        "戰爭"
-      ],
-      "category": "westernMovies",
-      "elo": 1652.015327064964,
+      "elo": 1679.5162225000547,
       "games": 16,
-      "exported_score": 8.3
-    },
-    {
-      "title": "科洛弗10號地窖",
-      "score": 8.3,
-      "note": "小成本的懸疑作品，女主角好漂亮",
-      "poster": "./img/movie/科洛弗10號地窖.webp",
-      "tags": [
-        "2016",
-        "懸疑",
-        "科幻"
-      ],
-      "category": "westernMovies",
-      "elo": 1664.001024902691,
-      "games": 13,
-      "exported_score": 8.3
+      "exported_score": 8.4
     },
     {
       "title": "屍樂園",
@@ -741,9 +712,24 @@
         "喜劇"
       ],
       "category": "westernMovies",
-      "elo": 1664.5574369948592,
-      "games": 15,
+      "elo": 1658.4417123415192,
+      "games": 16,
       "exported_score": 8.3
+    },
+    {
+      "title": "科洛弗10號地窖",
+      "score": 8.4,
+      "note": "小成本的懸疑作品，女主角好漂亮",
+      "poster": "./img/movie/科洛弗10號地窖.webp",
+      "tags": [
+        "2016",
+        "懸疑",
+        "科幻"
+      ],
+      "category": "westernMovies",
+      "elo": 1671.194995614146,
+      "games": 14,
+      "exported_score": 8.4
     },
     {
       "title": "金剛 ",
@@ -820,6 +806,35 @@
       "exported_score": 8.3
     },
     {
+      "title": "帝國浩劫：美國內戰",
+      "score": 8.3,
+      "note": "由記者視角演繹的戰爭片，很特別",
+      "poster": "./img/movie/帝國浩劫：美國內戰.webp",
+      "tags": [
+        "2024",
+        "戰爭"
+      ],
+      "category": "westernMovies",
+      "elo": 1652.015327064964,
+      "games": 16,
+      "exported_score": 8.3
+    },
+    {
+      "title": "少年PI的奇幻漂流",
+      "score": 8.3,
+      "note": "奇幻色彩的經典作品，非常好看，結局會讓人回味無窮，很高明",
+      "poster": "./img/movie/少年PI的奇幻漂流.webp",
+      "tags": [
+        "2012",
+        "劇情",
+        "奇幻"
+      ],
+      "category": "westernMovies",
+      "elo": 1651.0347476270208,
+      "games": 13,
+      "exported_score": 8.3
+    },
+    {
       "title": "穿著PRADA的惡魔",
       "score": 8.2,
       "note": "應該是我最愛的職場電影，經典到不行，續集還算不錯，1>2",
@@ -849,37 +864,6 @@
       "exported_score": 8.2
     },
     {
-      "title": "少年PI的奇幻漂流",
-      "score": 8.3,
-      "note": "奇幻色彩的經典作品，非常好看，結局會讓人回味無窮，很高明",
-      "poster": "./img/movie/少年PI的奇幻漂流.webp",
-      "tags": [
-        "2012",
-        "劇情",
-        "奇幻"
-      ],
-      "category": "westernMovies",
-      "elo": 1651.0347476270208,
-      "games": 13,
-      "exported_score": 8.3
-    },
-    {
-      "title": "奧本海默",
-      "score": 8.2,
-      "note": "天才傳記大片，拍得很精彩，我滿喜歡的",
-      "poster": "./img/movie/奧本海默.webp",
-      "tags": [
-        "2023",
-        "傳記",
-        "劇情",
-        "諾蘭"
-      ],
-      "category": "westernMovies",
-      "elo": 1635.6337700736092,
-      "games": 14,
-      "exported_score": 8.2
-    },
-    {
       "title": "噤界：入侵日",
       "score": 8.2,
       "note": "三部裡面我最喜歡的一部，喜歡這種單純的主線就把故事完整講好的電影，3>1>2",
@@ -893,6 +877,21 @@
       "category": "westernMovies",
       "elo": 1648.194892241538,
       "games": 14,
+      "exported_score": 8.2
+    },
+    {
+      "title": "模仿遊戲",
+      "score": 8.2,
+      "note": "天才傳記類型的戰爭片，看完也是淡淡的惆悵",
+      "poster": "./img/movie/模仿遊戲.webp",
+      "tags": [
+        "2014",
+        "戰爭",
+        "傳記"
+      ],
+      "category": "westernMovies",
+      "elo": 1642.244585295094,
+      "games": 13,
       "exported_score": 8.2
     },
     {
@@ -910,21 +909,6 @@
       "elo": 1640.2632509702091,
       "games": 12,
       "exported_score": 8.2
-    },
-    {
-      "title": "奪魂鋸",
-      "score": 8.1,
-      "note": "第一集真的是驚悚片的大經典，一定要看看",
-      "poster": "./img/movie/奪魂鋸.webp",
-      "tags": [
-        "2004",
-        "驚悚",
-        "經典"
-      ],
-      "category": "westernMovies",
-      "elo": 1625.9035333399934,
-      "games": 14,
-      "exported_score": 8.1
     },
     {
       "title": "滯留生",
@@ -952,21 +936,6 @@
       "category": "westernMovies",
       "elo": 1638.3912625511996,
       "games": 14,
-      "exported_score": 8.2
-    },
-    {
-      "title": "黑色追緝令",
-      "score": 8.2,
-      "note": "環型敘事的始祖，超經典",
-      "poster": "./img/movie/黑色追緝令.webp",
-      "tags": [
-        "1994",
-        "經典",
-        "昆丁"
-      ],
-      "category": "westernMovies",
-      "elo": 1632.1132092157918,
-      "games": 16,
       "exported_score": 8.2
     },
     {
@@ -998,18 +967,34 @@
       "exported_score": 8.2
     },
     {
-      "title": "模仿遊戲",
+      "title": "奧本海默",
       "score": 8.2,
-      "note": "天才傳記類型的戰爭片，看完也是淡淡的惆悵",
-      "poster": "./img/movie/模仿遊戲.webp",
+      "note": "天才傳記大片，拍得很精彩，我滿喜歡的",
+      "poster": "./img/movie/奧本海默.webp",
       "tags": [
-        "2014",
-        "戰爭",
-        "傳記"
+        "2023",
+        "傳記",
+        "劇情",
+        "諾蘭"
       ],
       "category": "westernMovies",
-      "elo": 1642.244585295094,
-      "games": 13,
+      "elo": 1635.6337700736092,
+      "games": 14,
+      "exported_score": 8.2
+    },
+    {
+      "title": "黑色追緝令",
+      "score": 8.2,
+      "note": "環型敘事的始祖，超經典",
+      "poster": "./img/movie/黑色追緝令.webp",
+      "tags": [
+        "1994",
+        "經典",
+        "昆丁"
+      ],
+      "category": "westernMovies",
+      "elo": 1632.1132092157918,
+      "games": 16,
       "exported_score": 8.2
     },
     {
@@ -1044,6 +1029,21 @@
       "exported_score": 8.1
     },
     {
+      "title": "奪魂鋸",
+      "score": 8.1,
+      "note": "第一集真的是驚悚片的大經典，一定要看看",
+      "poster": "./img/movie/奪魂鋸.webp",
+      "tags": [
+        "2004",
+        "驚悚",
+        "經典"
+      ],
+      "category": "westernMovies",
+      "elo": 1625.9035333399934,
+      "games": 14,
+      "exported_score": 8.1
+    },
+    {
       "title": "何處是我朋友的家",
       "score": 8.1,
       "note": "很童趣的一部可愛電影，描繪孩子內心的天真",
@@ -1073,20 +1073,6 @@
       "exported_score": 8.1
     },
     {
-      "title": "F1",
-      "score": 8.1,
-      "note": "小布的賽車爽片，畫面美，流暢過癮",
-      "poster": "./img/movie/F1.webp",
-      "tags": [
-        "2025",
-        "動作"
-      ],
-      "category": "westernMovies",
-      "elo": 1616.3134782057832,
-      "games": 13,
-      "exported_score": 8.1
-    },
-    {
       "title": "飛躍奇蹟",
       "score": 8.1,
       "note": "英國跳台滑雪選手 Eddie 的奮鬥電影，刺激好看",
@@ -1100,20 +1086,6 @@
       "elo": 1619.9421767502436,
       "games": 16,
       "exported_score": 8.1
-    },
-    {
-      "title": "樂來越愛你",
-      "score": 8.0,
-      "note": "音樂太出色，我很喜歡的一部愛情電影",
-      "poster": "./img/movie/樂來越愛你.webp",
-      "tags": [
-        "2016",
-        "愛情"
-      ],
-      "category": "westernMovies",
-      "elo": 1609.8048765145172,
-      "games": 13,
-      "exported_score": 8.0
     },
     {
       "title": "變人",
@@ -1132,6 +1104,34 @@
       "exported_score": 8.1
     },
     {
+      "title": "F1",
+      "score": 8.1,
+      "note": "小布的賽車爽片，畫面美，流暢過癮",
+      "poster": "./img/movie/F1.webp",
+      "tags": [
+        "2025",
+        "動作"
+      ],
+      "category": "westernMovies",
+      "elo": 1616.3134782057832,
+      "games": 13,
+      "exported_score": 8.1
+    },
+    {
+      "title": "樂來越愛你",
+      "score": 8.0,
+      "note": "音樂太出色，我很喜歡的一部愛情電影",
+      "poster": "./img/movie/樂來越愛你.webp",
+      "tags": [
+        "2016",
+        "愛情"
+      ],
+      "category": "westernMovies",
+      "elo": 1609.8048765145172,
+      "games": 13,
+      "exported_score": 8.0
+    },
+    {
       "title": "卡特教頭",
       "score": 8.0,
       "note": "經典的勵志片，會對人生充滿力量",
@@ -1148,6 +1148,20 @@
       "exported_score": 8.0
     },
     {
+      "title": "野生狂廚",
+      "score": 8.0,
+      "note": "很棒的一部廚師傳記片，一點荒唐加上一點感動的成長故事",
+      "poster": "./img/movie/野生狂廚.webp",
+      "tags": [
+        "2026",
+        "傳記"
+      ],
+      "category": "westernMovies",
+      "elo": 1607.237304484997,
+      "games": 13,
+      "exported_score": 8.0
+    },
+    {
       "title": "鋼鐵英雄",
       "score": 8.0,
       "note": "滿讚的一部戰爭片，畫面呈現得很慘烈寫實，而且現實故事比電影還扯",
@@ -1159,20 +1173,6 @@
       ],
       "category": "westernMovies",
       "elo": 1607.2262147055976,
-      "games": 13,
-      "exported_score": 8.0
-    },
-    {
-      "title": "沙丘",
-      "score": 8.0,
-      "note": "史詩大作，好看！但我個入對這種題材興趣不高",
-      "poster": "./img/movie/沙丘.webp",
-      "tags": [
-        "2021",
-        "科幻"
-      ],
-      "category": "westernMovies",
-      "elo": 1598.8296481433667,
       "games": 13,
       "exported_score": 8.0
     },
@@ -1206,16 +1206,30 @@
       "exported_score": 8.0
     },
     {
-      "title": "野生狂廚",
+      "title": "高年級實習生",
       "score": 8.0,
-      "note": "很棒的一部廚師傳記片，一點荒唐加上一點感動的成長故事",
-      "poster": "./img/movie/野生狂廚.webp",
+      "note": "溫暖有趣的職場電影",
+      "poster": "./img/movie/高年級實習生.webp",
       "tags": [
-        "2026",
-        "傳記"
+        "2015",
+        "溫馨"
       ],
       "category": "westernMovies",
-      "elo": 1607.237304484997,
+      "elo": 1602.3478574266387,
+      "games": 14,
+      "exported_score": 8.0
+    },
+    {
+      "title": "沙丘",
+      "score": 8.0,
+      "note": "史詩大作，好看！但我個入對這種題材興趣不高",
+      "poster": "./img/movie/沙丘.webp",
+      "tags": [
+        "2021",
+        "科幻"
+      ],
+      "category": "westernMovies",
+      "elo": 1598.8296481433667,
       "games": 13,
       "exported_score": 8.0
     },
@@ -1249,20 +1263,6 @@
       "exported_score": 8.0
     },
     {
-      "title": "高年級實習生",
-      "score": 8.0,
-      "note": "溫暖有趣的職場電影",
-      "poster": "./img/movie/高年級實習生.webp",
-      "tags": [
-        "2015",
-        "溫馨"
-      ],
-      "category": "westernMovies",
-      "elo": 1602.3478574266387,
-      "games": 14,
-      "exported_score": 8.0
-    },
-    {
       "title": "美麗境界",
       "score": 8.0,
       "note": "經典的天才傳記片，描寫天才人性的部分",
@@ -1277,18 +1277,19 @@
       "exported_score": 8.0
     },
     {
-      "title": "麥克傑克森",
-      "score": 7.9,
-      "note": "很喜歡，光看表演就非常值回票價了",
-      "poster": "./img/movie/麥克傑克森.webp",
+      "title": "決殺令",
+      "score": 8.0,
+      "note": "就是很昆丁，血腥黑色幽默",
+      "poster": "./img/movie/絕殺令.webp",
       "tags": [
-        "2026",
-        "傳記"
+        "2012",
+        "驚悚",
+        "昆丁"
       ],
       "category": "westernMovies",
-      "elo": 1584.2147520400638,
+      "elo": 1590.8427198730822,
       "games": 15,
-      "exported_score": 7.9
+      "exported_score": 8.0
     },
     {
       "title": "無名弒",
@@ -1392,19 +1393,33 @@
       "exported_score": 7.9
     },
     {
-      "title": "決殺令",
-      "score": 8.0,
-      "note": "就是很昆丁，血腥黑色幽默",
-      "poster": "./img/movie/絕殺令.webp",
+      "title": "麥克傑克森",
+      "score": 7.9,
+      "note": "很喜歡，光看表演就非常值回票價了",
+      "poster": "./img/movie/麥克傑克森.webp",
       "tags": [
-        "2012",
-        "驚悚",
-        "昆丁"
+        "2026",
+        "傳記"
       ],
       "category": "westernMovies",
-      "elo": 1590.8427198730822,
+      "elo": 1584.2147520400638,
       "games": 15,
-      "exported_score": 8.0
+      "exported_score": 7.9
+    },
+    {
+      "title": "亞果出任務",
+      "score": 7.9,
+      "note": "氣氛很好的政治劇情片，緊張感很強烈",
+      "poster": "./img/movie/亞果出任務.webp",
+      "tags": [
+        "2012",
+        "政治",
+        "劇情"
+      ],
+      "category": "westernMovies",
+      "elo": 1583.3517480897956,
+      "games": 14,
+      "exported_score": 7.9
     },
     {
       "title": "K星異客",
@@ -1450,21 +1465,6 @@
       "exported_score": 7.9
     },
     {
-      "title": "亞果出任務",
-      "score": 7.9,
-      "note": "氣氛很好的政治劇情片，緊張感很強烈",
-      "poster": "./img/movie/亞果出任務.webp",
-      "tags": [
-        "2012",
-        "政治",
-        "劇情"
-      ],
-      "category": "westernMovies",
-      "elo": 1583.3517480897956,
-      "games": 14,
-      "exported_score": 7.9
-    },
-    {
       "title": "這個男人來自地球",
       "score": 7.9,
       "note": "小成本哲學電影，只有聊天畫面但是會覺得很有趣",
@@ -1492,6 +1492,35 @@
       "elo": 1574.2604603722991,
       "games": 13,
       "exported_score": 7.9
+    },
+    {
+      "title": "泥面人",
+      "score": 7.9,
+      "note": "類似小丑的超英反派起源電影，雖然沒有那麼驚豔，但表現得也很優秀。就是喜歡 DC 的這種黑暗風格。",
+      "poster": "./img/movie/泥面人.webp",
+      "tags": [
+        "2026",
+        "驚悚"
+      ],
+      "category": "westernMovies",
+      "elo": 1572.5952801077212,
+      "games": 8,
+      "exported_score": 7.9
+    },
+    {
+      "title": "隔離島",
+      "score": 7.8,
+      "note": "氣氛很棒，不俗的驚悚片",
+      "poster": "./img/movie/隔離島.webp",
+      "tags": [
+        "2010",
+        "懸疑",
+        "驚悚"
+      ],
+      "category": "westernMovies",
+      "elo": 1566.036217302685,
+      "games": 13,
+      "exported_score": 7.8
     },
     {
       "title": "完美伴侶",
@@ -1538,18 +1567,17 @@
       "exported_score": 7.8
     },
     {
-      "title": "隔離島",
+      "title": "逃出絕命鎮",
       "score": 7.8,
-      "note": "氣氛很棒，不俗的驚悚片",
-      "poster": "./img/movie/隔離島.webp",
+      "note": "氣氛很讚的驚悚片，喬登·皮爾打出名號的作品",
+      "poster": "./img/movie/逃出絕命鎮.webp",
       "tags": [
-        "2010",
-        "懸疑",
-        "驚悚"
+        "2017",
+        "恐怖"
       ],
       "category": "westernMovies",
-      "elo": 1566.036217302685,
-      "games": 13,
+      "elo": 1561.9975145702726,
+      "games": 16,
       "exported_score": 7.8
     },
     {
@@ -1582,34 +1610,6 @@
       "exported_score": 7.8
     },
     {
-      "title": "時尚惡女：庫伊拉",
-      "score": 7.7,
-      "note": "應該是我最喜歡的迪士尼改編真人版電影，艾碼史東很適合這個角色",
-      "poster": "./img/movie/時尚惡女：庫伊拉.webp",
-      "tags": [
-        "2021",
-        "劇情"
-      ],
-      "category": "westernMovies",
-      "elo": 1548.803385644435,
-      "games": 13,
-      "exported_score": 7.7
-    },
-    {
-      "title": "逃出絕命鎮",
-      "score": 7.8,
-      "note": "氣氛很讚的驚悚片，喬登·皮爾打出名號的作品",
-      "poster": "./img/movie/逃出絕命鎮.webp",
-      "tags": [
-        "2017",
-        "恐怖"
-      ],
-      "category": "westernMovies",
-      "elo": 1561.9975145702726,
-      "games": 16,
-      "exported_score": 7.8
-    },
-    {
       "title": "發條橘子",
       "score": 7.8,
       "note": "最喜歡的庫柏力克電影，腦洞大開",
@@ -1638,21 +1638,6 @@
       "elo": 1552.8256482720226,
       "games": 13,
       "exported_score": 7.8
-    },
-    {
-      "title": "班傑明的奇幻旅程",
-      "score": 7.7,
-      "note": "好看的奇幻愛情電影，小布越活越帥，顏值真的頂天了",
-      "poster": "./img/movie/班傑明的奇幻旅程.webp",
-      "tags": [
-        "2008",
-        "奇幻",
-        "愛情"
-      ],
-      "category": "westernMovies",
-      "elo": 1546.1748189088291,
-      "games": 16,
-      "exported_score": 7.7
     },
     {
       "title": "末代武士",
@@ -1699,6 +1684,35 @@
       "exported_score": 7.7
     },
     {
+      "title": "時尚惡女：庫伊拉",
+      "score": 7.7,
+      "note": "應該是我最喜歡的迪士尼改編真人版電影，艾碼史東很適合這個角色",
+      "poster": "./img/movie/時尚惡女：庫伊拉.webp",
+      "tags": [
+        "2021",
+        "劇情"
+      ],
+      "category": "westernMovies",
+      "elo": 1548.803385644435,
+      "games": 13,
+      "exported_score": 7.7
+    },
+    {
+      "title": "班傑明的奇幻旅程",
+      "score": 7.7,
+      "note": "好看的奇幻愛情電影，小布越活越帥，顏值真的頂天了",
+      "poster": "./img/movie/班傑明的奇幻旅程.webp",
+      "tags": [
+        "2008",
+        "奇幻",
+        "愛情"
+      ],
+      "category": "westernMovies",
+      "elo": 1546.1748189088291,
+      "games": 16,
+      "exported_score": 7.7
+    },
+    {
       "title": "登峰造擊",
       "score": 7.7,
       "note": "Morgan Freeman 的旁白，像拳擊版刺激 1995",
@@ -1710,20 +1724,6 @@
       "category": "westernMovies",
       "elo": 1545.2392444215889,
       "games": 13,
-      "exported_score": 7.7
-    },
-    {
-      "title": "金牌特務",
-      "score": 7.7,
-      "note": "教堂打鬥戲一鏡到底很讚，劇情很順暢，喜歡",
-      "poster": "./img/movie/金牌特務.webp",
-      "tags": [
-        "2015",
-        "動作"
-      ],
-      "category": "westernMovies",
-      "elo": 1536.7801302555692,
-      "games": 16,
       "exported_score": 7.7
     },
     {
@@ -1801,6 +1801,20 @@
       "exported_score": 7.7
     },
     {
+      "title": "金牌特務",
+      "score": 7.7,
+      "note": "教堂打鬥戲一鏡到底很讚，劇情很順暢，喜歡",
+      "poster": "./img/movie/金牌特務.webp",
+      "tags": [
+        "2015",
+        "動作"
+      ],
+      "category": "westernMovies",
+      "elo": 1536.7801302555692,
+      "games": 16,
+      "exported_score": 7.7
+    },
+    {
       "title": "美國狙擊手",
       "score": 7.7,
       "note": "還滿喜歡的一部戰爭片，描寫軍人的心理創傷",
@@ -1846,17 +1860,18 @@
       "exported_score": 7.7
     },
     {
-      "title": "遊戲夜殺必死",
+      "title": "豪情四兄弟",
       "score": 7.6,
-      "note": "很有意思的推理喜劇，還有反轉也有點意思",
-      "poster": "./img/movie/遊戲夜殺必死.webp",
+      "note": "美國少年監獄片，沉重但非常精采",
+      "poster": "./img/movie/豪情四兄弟.webp",
       "tags": [
-        "2018",
-        "喜劇"
+        "1996",
+        "劇情",
+        "監獄"
       ],
       "category": "westernMovies",
-      "elo": 1524.8054489001822,
-      "games": 13,
+      "elo": 1527.5262096002152,
+      "games": 16,
       "exported_score": 7.6
     },
     {
@@ -1905,6 +1920,20 @@
       "exported_score": 7.6
     },
     {
+      "title": "遊戲夜殺必死",
+      "score": 7.6,
+      "note": "很有意思的推理喜劇，還有反轉也有點意思",
+      "poster": "./img/movie/遊戲夜殺必死.webp",
+      "tags": [
+        "2018",
+        "喜劇"
+      ],
+      "category": "westernMovies",
+      "elo": 1524.8054489001822,
+      "games": 13,
+      "exported_score": 7.6
+    },
+    {
       "title": "刺激驚爆點",
       "score": 7.6,
       "note": "不能被劇透，反轉很有趣，值得一看",
@@ -1934,21 +1963,6 @@
       "exported_score": 7.6
     },
     {
-      "title": "豪情四兄弟",
-      "score": 7.6,
-      "note": "美國少年監獄片，沉重但非常精采",
-      "poster": "./img/movie/豪情四兄弟.webp",
-      "tags": [
-        "1996",
-        "劇情",
-        "監獄"
-      ],
-      "category": "westernMovies",
-      "elo": 1527.5262096002152,
-      "games": 16,
-      "exported_score": 7.6
-    },
-    {
       "title": "超人：鋼鐵英雄",
       "score": 7.6,
       "note": "滿不錯的超人起源電影 ",
@@ -1963,20 +1977,6 @@
       "exported_score": 7.6
     },
     {
-      "title": "鐘點戰",
-      "score": 7.6,
-      "note": "設定真的很喜歡，很有創意的人性科幻片",
-      "poster": "./img/movie/鐘點戰.webp",
-      "tags": [
-        "2011",
-        "科幻"
-      ],
-      "category": "westernMovies",
-      "elo": 1519.7737997873562,
-      "games": 14,
-      "exported_score": 7.6
-    },
-    {
       "title": "浴血狂花",
       "score": 7.6,
       "note": "復仇爽片，很直球對決的一部片",
@@ -1988,6 +1988,20 @@
       "category": "westernMovies",
       "elo": 1519.938502205233,
       "games": 13,
+      "exported_score": 7.6
+    },
+    {
+      "title": "鐘點戰",
+      "score": 7.6,
+      "note": "設定真的很喜歡，很有創意的人性科幻片",
+      "poster": "./img/movie/鐘點戰.webp",
+      "tags": [
+        "2011",
+        "科幻"
+      ],
+      "category": "westernMovies",
+      "elo": 1519.7737997873562,
+      "games": 14,
       "exported_score": 7.6
     },
     {
@@ -2006,33 +2020,19 @@
       "exported_score": 7.6
     },
     {
-      "title": "星際大戰系列",
-      "score": 7.5,
-      "note": "我只看過最老的4~6，就算是芝麻街布偶還是真的滿好看的",
-      "poster": "./img/movie/星際大戰.webp",
+      "title": "罪人",
+      "score": 7.6,
+      "note": "音樂非常讚，前半的氣氛也非常好，不過後半風格大變我沒那麼喜歡，整體非常值得一看",
+      "poster": "./img/movie/罪人.webp",
       "tags": [
-        "1977",
-        "科幻",
-        "經典"
-      ],
-      "category": "westernMovies",
-      "elo": 1502.8852347768711,
-      "games": 15,
-      "exported_score": 7.5
-    },
-    {
-      "title": "父親",
-      "score": 7.5,
-      "note": "完全能共感患者的敘事手法，很厲害，Hopkins 演技神級",
-      "poster": "./img/movie/父親.webp",
-      "tags": [
-        "2020",
+        "2025",
+        "驚悚",
         "劇情"
       ],
       "category": "westernMovies",
-      "elo": 1507.0337838304479,
-      "games": 13,
-      "exported_score": 7.5
+      "elo": 1513.2567981382858,
+      "games": 16,
+      "exported_score": 7.6
     },
     {
       "title": "我是傳奇",
@@ -2064,20 +2064,6 @@
       "exported_score": 7.6
     },
     {
-      "title": "曼哈頓戀習曲",
-      "score": 7.5,
-      "note": "音樂超棒的一部，喜歡到收藏了原聲帶",
-      "poster": "./img/movie/曼哈頓戀習曲.webp",
-      "tags": [
-        "2014",
-        "愛情"
-      ],
-      "category": "westernMovies",
-      "elo": 1503.8650431382514,
-      "games": 15,
-      "exported_score": 7.5
-    },
-    {
       "title": "我們",
       "score": 7.6,
       "note": "喬登·皮爾的驚悚片氣氛都很好，但這部是我覺得最普的",
@@ -2090,20 +2076,6 @@
       "elo": 1510.309951467496,
       "games": 13,
       "exported_score": 7.6
-    },
-    {
-      "title": "泥面人",
-      "score": 7.9,
-      "note": "類似小丑的超英反派起源電影，雖然沒有那麼驚豔，但表現得也很優秀。就是喜歡 DC 的這種黑暗風格。",
-      "poster": "./img/movie/泥面人.webp",
-      "tags": [
-        "2026",
-        "驚悚"
-      ],
-      "category": "westernMovies",
-      "elo": 1572.5952801077212,
-      "games": 8,
-      "exported_score": 7.9
     },
     {
       "title": "水底情深",
@@ -2120,19 +2092,18 @@
       "exported_score": 7.5
     },
     {
-      "title": "罪人",
-      "score": 7.6,
-      "note": "音樂非常讚，前半的氣氛也非常好，不過後半風格大變我沒那麼喜歡，整體非常值得一看",
-      "poster": "./img/movie/罪人.webp",
+      "title": "父親",
+      "score": 7.5,
+      "note": "完全能共感患者的敘事手法，很厲害，Hopkins 演技神級",
+      "poster": "./img/movie/父親.webp",
       "tags": [
-        "2025",
-        "驚悚",
+        "2020",
         "劇情"
       ],
       "category": "westernMovies",
-      "elo": 1513.2567981382858,
-      "games": 16,
-      "exported_score": 7.6
+      "elo": 1507.0337838304479,
+      "games": 13,
+      "exported_score": 7.5
     },
     {
       "title": "魔戒",
@@ -2147,6 +2118,20 @@
       "category": "westernMovies",
       "elo": 1504.7550416980494,
       "games": 14,
+      "exported_score": 7.5
+    },
+    {
+      "title": "曼哈頓戀習曲",
+      "score": 7.5,
+      "note": "音樂超棒的一部，喜歡到收藏了原聲帶",
+      "poster": "./img/movie/曼哈頓戀習曲.webp",
+      "tags": [
+        "2014",
+        "愛情"
+      ],
+      "category": "westernMovies",
+      "elo": 1503.8650431382514,
+      "games": 15,
       "exported_score": 7.5
     },
     {
@@ -2178,6 +2163,21 @@
       "exported_score": 7.5
     },
     {
+      "title": "星際大戰系列",
+      "score": 7.5,
+      "note": "我只看過最老的4~6，就算是芝麻街布偶還是真的滿好看的",
+      "poster": "./img/movie/星際大戰.webp",
+      "tags": [
+        "1977",
+        "科幻",
+        "經典"
+      ],
+      "category": "westernMovies",
+      "elo": 1502.8852347768711,
+      "games": 15,
+      "exported_score": 7.5
+    },
+    {
       "title": "全民超人",
       "score": 7.5,
       "note": "前半我真的很喜歡，威爾史密斯演太好，可惜劇本不是很好，最後有點搞砸",
@@ -2188,22 +2188,6 @@
       ],
       "category": "westernMovies",
       "elo": 1502.2862213938636,
-      "games": 13,
-      "exported_score": 7.5
-    },
-    {
-      "title": "K歌情人",
-      "score": 7.5,
-      "note": "還不錯的浪漫喜劇，音樂好聽，童年回憶",
-      "poster": "./img/movie/K歌情人.webp",
-      "tags": [
-        "2007",
-        "喜劇",
-        "愛情",
-        "經典"
-      ],
-      "category": "westernMovies",
-      "elo": 1492.5726635074298,
       "games": 13,
       "exported_score": 7.5
     },
@@ -2237,6 +2221,20 @@
       "exported_score": 7.5
     },
     {
+      "title": "芬奇的旅程",
+      "score": 7.5,
+      "note": "Tom Hank 獨挑大樑的末日公路電影",
+      "poster": "./img/movie/芬奇的旅程.webp",
+      "tags": [
+        "2021",
+        "科幻"
+      ],
+      "category": "westernMovies",
+      "elo": 1497.1285837081866,
+      "games": 14,
+      "exported_score": 7.5
+    },
+    {
       "title": "羊男的迷宮",
       "score": 7.5,
       "note": "我小學時看的經典驚悚片，以奇幻的方式描寫戰爭的恐怖",
@@ -2249,6 +2247,37 @@
       "category": "westernMovies",
       "elo": 1496.1238664224752,
       "games": 12,
+      "exported_score": 7.5
+    },
+    {
+      "title": "機械公敵",
+      "score": 7.5,
+      "note": "很常看的一部科幻動作片，滿不錯",
+      "poster": "./img/movie/機械公敵.webp",
+      "tags": [
+        "2004",
+        "科幻",
+        "動作"
+      ],
+      "category": "westernMovies",
+      "elo": 1494.8152380286397,
+      "games": 13,
+      "exported_score": 7.5
+    },
+    {
+      "title": "K歌情人",
+      "score": 7.5,
+      "note": "還不錯的浪漫喜劇，音樂好聽，童年回憶",
+      "poster": "./img/movie/K歌情人.webp",
+      "tags": [
+        "2007",
+        "喜劇",
+        "愛情",
+        "經典"
+      ],
+      "category": "westernMovies",
+      "elo": 1492.5726635074298,
+      "games": 13,
       "exported_score": 7.5
     },
     {
@@ -2282,20 +2311,6 @@
       "exported_score": 7.5
     },
     {
-      "title": "芬奇的旅程",
-      "score": 7.5,
-      "note": "Tom Hank 獨挑大樑的末日公路電影",
-      "poster": "./img/movie/芬奇的旅程.webp",
-      "tags": [
-        "2021",
-        "科幻"
-      ],
-      "category": "westernMovies",
-      "elo": 1497.1285837081866,
-      "games": 14,
-      "exported_score": 7.5
-    },
-    {
       "title": "終極追殺令",
       "score": 7.4,
       "note": "非常經典的電影，充滿衝突矛盾的複雜情感",
@@ -2307,6 +2322,20 @@
       "category": "westernMovies",
       "elo": 1489.7313276922218,
       "games": 13,
+      "exported_score": 7.4
+    },
+    {
+      "title": "戀夏 500 日",
+      "score": 7.4,
+      "note": "PTT 戰男女神片，拍的很美，很真實",
+      "poster": "./img/movie/戀夏 500 日.webp",
+      "tags": [
+        "2009",
+        "愛情"
+      ],
+      "category": "westernMovies",
+      "elo": 1489.631338243633,
+      "games": 15,
       "exported_score": 7.4
     },
     {
@@ -2338,36 +2367,6 @@
       "exported_score": 7.4
     },
     {
-      "title": "機械公敵",
-      "score": 7.5,
-      "note": "很常看的一部科幻動作片，滿不錯",
-      "poster": "./img/movie/機械公敵.webp",
-      "tags": [
-        "2004",
-        "科幻",
-        "動作"
-      ],
-      "category": "westernMovies",
-      "elo": 1494.8152380286397,
-      "games": 13,
-      "exported_score": 7.5
-    },
-    {
-      "title": "歌喉讚",
-      "score": 7.4,
-      "note": "第一集真的不錯看，輕鬆歡樂，Anna Kendrick 粉狂喜，但後面有點為出而出，1>2>3",
-      "poster": "./img/movie/歌喉讚.webp",
-      "tags": [
-        "2012",
-        "音樂",
-        "喜劇"
-      ],
-      "category": "westernMovies",
-      "elo": 1480.3178654123742,
-      "games": 14,
-      "exported_score": 7.4
-    },
-    {
       "title": "沉默的羔羊",
       "score": 7.4,
       "note": "經典老片，老拔叔演技太強",
@@ -2380,92 +2379,6 @@
       "category": "westernMovies",
       "elo": 1485.5953824836163,
       "games": 13,
-      "exported_score": 7.4
-    },
-    {
-      "title": "老娘叫譚雅",
-      "score": 7.4,
-      "note": "花式滑冰選手譚雅·哈丁的人生故事，黑色幽默風格的傳記電影",
-      "poster": "./img/movie/老娘叫譚雅.webp",
-      "tags": [
-        "2017",
-        "運動",
-        "傳記"
-      ],
-      "category": "westernMovies",
-      "elo": 1476.7751401512728,
-      "games": 13,
-      "exported_score": 7.4
-    },
-    {
-      "title": "戀夏 500 日",
-      "score": 7.4,
-      "note": "PTT 戰男女神片，拍的很美，很真實",
-      "poster": "./img/movie/戀夏 500 日.webp",
-      "tags": [
-        "2009",
-        "愛情"
-      ],
-      "category": "westernMovies",
-      "elo": 1489.631338243633,
-      "games": 15,
-      "exported_score": 7.4
-    },
-    {
-      "title": "哈利波特系列",
-      "score": 7.4,
-      "note": "經典童年，選角很棒，雖然小說更完整，但是電影拍的很不錯了，3>2=4>6=1>5=7",
-      "poster": "./img/movie/哈利波特系列.webp",
-      "tags": [
-        "2001",
-        "奇幻"
-      ],
-      "category": "westernMovies",
-      "elo": 1482.3038752585612,
-      "games": 15,
-      "exported_score": 7.4
-    },
-    {
-      "title": "獵殺星期一",
-      "score": 7.4,
-      "note": "細想的話不合理的地方滿多，劇本滿有創意的，我覺得其實不錯",
-      "poster": "./img/movie/獵殺星期一.webp",
-      "tags": [
-        "2017",
-        "劇情",
-        "科幻"
-      ],
-      "category": "westernMovies",
-      "elo": 1472.9613486219046,
-      "games": 13,
-      "exported_score": 7.4
-    },
-    {
-      "title": "情感的價值",
-      "score": 7.4,
-      "note": "來自挪威的家庭劇情電影，探討的是家庭創傷與和解，節奏稍慢，但是將情感拍攝的很細膩、真摯，推薦",
-      "poster": "./img/movie/情感的價值.webp",
-      "tags": [
-        "2025",
-        "劇情"
-      ],
-      "category": "westernMovies",
-      "elo": 1480.0,
-      "games": 12,
-      "exported_score": 7.4
-    },
-    {
-      "title": "教父",
-      "score": 7.4,
-      "note": "經典黑幫電影，中間很刺激精彩",
-      "poster": "./img/movie/教父.webp",
-      "tags": [
-        "1972",
-        "犯罪"
-      ],
-      "category": "westernMovies",
-      "elo": 1472.2555758959318,
-      "games": 14,
       "exported_score": 7.4
     },
     {
@@ -2483,20 +2396,6 @@
       "exported_score": 7.4
     },
     {
-      "title": "空中監獄",
-      "score": 7.4,
-      "note": "小時候電影台常播的經典動作片，凱吉必看經典",
-      "poster": "./img/movie/空中監獄.webp",
-      "tags": [
-        "1997",
-        "動作"
-      ],
-      "category": "westernMovies",
-      "elo": 1477.3920589556055,
-      "games": 13,
-      "exported_score": 7.4
-    },
-    {
       "title": "空中危機",
       "score": 7.4,
       "note": "茱蒂佛斯特的有趣的懸疑片，反轉也不錯",
@@ -2511,18 +2410,90 @@
       "exported_score": 7.4
     },
     {
-      "title": "天生一對",
-      "score": 7.3,
-      "note": "很可愛的老片，琳塞蘿涵經典",
-      "poster": "./img/movie/天生一對.webp",
+      "title": "哈利波特系列",
+      "score": 7.4,
+      "note": "經典童年，選角很棒，雖然小說更完整，但是電影拍的很不錯了，3>2=4>6=1>5=7",
+      "poster": "./img/movie/哈利波特系列.webp",
       "tags": [
-        "2006",
+        "2001",
+        "奇幻"
+      ],
+      "category": "westernMovies",
+      "elo": 1482.3038752585612,
+      "games": 15,
+      "exported_score": 7.4
+    },
+    {
+      "title": "致命遊戲",
+      "score": 7.4,
+      "note": "有趣的懸疑老電影，反轉還不錯",
+      "poster": "./img/movie/致命遊戲.webp",
+      "tags": [
+        "1997",
+        "懸疑"
+      ],
+      "category": "westernMovies",
+      "elo": 1481.6847460590213,
+      "games": 12,
+      "exported_score": 7.4
+    },
+    {
+      "title": "歌喉讚",
+      "score": 7.4,
+      "note": "第一集真的不錯看，輕鬆歡樂，Anna Kendrick 粉狂喜，但後面有點為出而出，1>2>3",
+      "poster": "./img/movie/歌喉讚.webp",
+      "tags": [
+        "2012",
+        "音樂",
         "喜劇"
       ],
       "category": "westernMovies",
-      "elo": 1455.7796907453346,
-      "games": 15,
-      "exported_score": 7.3
+      "elo": 1480.3178654123742,
+      "games": 14,
+      "exported_score": 7.4
+    },
+    {
+      "title": "情感的價值",
+      "score": 7.4,
+      "note": "來自挪威的家庭劇情電影，探討的是家庭創傷與和解，節奏稍慢，但是將情感拍攝的很細膩、真摯，推薦",
+      "poster": "./img/movie/情感的價值.webp",
+      "tags": [
+        "2025",
+        "劇情"
+      ],
+      "category": "westernMovies",
+      "elo": 1480.0,
+      "games": 12,
+      "exported_score": 7.4
+    },
+    {
+      "title": "空中監獄",
+      "score": 7.4,
+      "note": "小時候電影台常播的經典動作片，凱吉必看經典",
+      "poster": "./img/movie/空中監獄.webp",
+      "tags": [
+        "1997",
+        "動作"
+      ],
+      "category": "westernMovies",
+      "elo": 1477.3920589556055,
+      "games": 13,
+      "exported_score": 7.4
+    },
+    {
+      "title": "老娘叫譚雅",
+      "score": 7.4,
+      "note": "花式滑冰選手譚雅·哈丁的人生故事，黑色幽默風格的傳記電影",
+      "poster": "./img/movie/老娘叫譚雅.webp",
+      "tags": [
+        "2017",
+        "運動",
+        "傳記"
+      ],
+      "category": "westernMovies",
+      "elo": 1476.7751401512728,
+      "games": 13,
+      "exported_score": 7.4
     },
     {
       "title": "記憶拼圖",
@@ -2554,6 +2525,50 @@
       "exported_score": 7.4
     },
     {
+      "title": "賽道狂人",
+      "score": 7.4,
+      "note": "還不錯，但我比較喜歡 F1",
+      "poster": "./img/movie/賽道狂人.webp",
+      "tags": [
+        "2019",
+        "動作",
+        "傳記"
+      ],
+      "category": "westernMovies",
+      "elo": 1474.2478273817726,
+      "games": 15,
+      "exported_score": 7.4
+    },
+    {
+      "title": "惡靈古堡爆發夜",
+      "score": 7.4,
+      "note": "還不錯的喪屍電影，惡靈古堡起源故事，劇情直線簡單",
+      "poster": "./img/movie/惡靈古堡爆發夜.webp",
+      "tags": [
+        "2026",
+        "恐怖"
+      ],
+      "category": "westernMovies",
+      "elo": 1474.1747670463524,
+      "games": 14,
+      "exported_score": 7.4
+    },
+    {
+      "title": "獵殺星期一",
+      "score": 7.4,
+      "note": "細想的話不合理的地方滿多，劇本滿有創意的，我覺得其實不錯",
+      "poster": "./img/movie/獵殺星期一.webp",
+      "tags": [
+        "2017",
+        "劇情",
+        "科幻"
+      ],
+      "category": "westernMovies",
+      "elo": 1472.9613486219046,
+      "games": 13,
+      "exported_score": 7.4
+    },
+    {
       "title": "美國殺人魔",
       "score": 7.4,
       "note": "經典的瘋子驚悚片，克里斯丁貝爾演的很讚",
@@ -2569,19 +2584,18 @@
       "exported_score": 7.4
     },
     {
-      "title": "今天暫時停止",
-      "score": 7.3,
-      "note": "滿有趣的，老片版本的明日邊界",
-      "poster": "./img/movie/今天暫時停止.webp",
+      "title": "教父",
+      "score": 7.4,
+      "note": "經典黑幫電影，中間很刺激精彩",
+      "poster": "./img/movie/教父.webp",
       "tags": [
-        "1993",
-        "喜劇",
-        "奇幻"
+        "1972",
+        "犯罪"
       ],
       "category": "westernMovies",
-      "elo": 1462.925946577086,
-      "games": 15,
-      "exported_score": 7.3
+      "elo": 1472.2555758959318,
+      "games": 14,
+      "exported_score": 7.4
     },
     {
       "title": "超人",
@@ -2612,35 +2626,6 @@
       "exported_score": 7.3
     },
     {
-      "title": "賽道狂人",
-      "score": 7.4,
-      "note": "還不錯，但我比較喜歡 F1",
-      "poster": "./img/movie/賽道狂人.webp",
-      "tags": [
-        "2019",
-        "動作",
-        "傳記"
-      ],
-      "category": "westernMovies",
-      "elo": 1474.2478273817726,
-      "games": 15,
-      "exported_score": 7.4
-    },
-    {
-      "title": "惡靈古堡爆發夜",
-      "score": 7.4,
-      "note": "還不錯的喪屍電影，惡靈古堡起源故事，劇情直線簡單",
-      "poster": "./img/movie/惡靈古堡爆發夜.webp",
-      "tags": [
-        "2026",
-        "恐怖"
-      ],
-      "category": "westernMovies",
-      "elo": 1474.1747670463524,
-      "games": 14,
-      "exported_score": 7.4
-    },
-    {
       "title": "愛的萬物論",
       "score": 7.3,
       "note": "史蒂芬·霍金的人生故事，電影著墨較多在他的感情生活",
@@ -2653,20 +2638,6 @@
       "elo": 1467.2727272727273,
       "games": 13,
       "exported_score": 7.3
-    },
-    {
-      "title": "致命遊戲",
-      "score": 7.4,
-      "note": "有趣的懸疑老電影，反轉還不錯",
-      "poster": "./img/movie/致命遊戲.webp",
-      "tags": [
-        "1997",
-        "懸疑"
-      ],
-      "category": "westernMovies",
-      "elo": 1481.6847460590213,
-      "games": 12,
-      "exported_score": 7.4
     },
     {
       "title": "抓馬戀人",
@@ -2684,17 +2655,18 @@
       "exported_score": 7.3
     },
     {
-      "title": "浩劫重生",
+      "title": "今天暫時停止",
       "score": 7.3,
-      "note": "荒島災難電影，威爾森太經典",
-      "poster": "./img/movie/浩劫重生.webp",
+      "note": "滿有趣的，老片版本的明日邊界",
+      "poster": "./img/movie/今天暫時停止.webp",
       "tags": [
-        "2000",
-        "災難"
+        "1993",
+        "喜劇",
+        "奇幻"
       ],
       "category": "westernMovies",
-      "elo": 1457.6495919107888,
-      "games": 14,
+      "elo": 1462.925946577086,
+      "games": 15,
       "exported_score": 7.3
     },
     {
@@ -2729,20 +2701,6 @@
       "exported_score": 7.3
     },
     {
-      "title": "變臉",
-      "score": 7.3,
-      "note": "很有創意的動作片，凱吉必看經典",
-      "poster": "./img/movie/變臉.webp",
-      "tags": [
-        "1997",
-        "動作"
-      ],
-      "category": "westernMovies",
-      "elo": 1458.9274506229538,
-      "games": 15,
-      "exported_score": 7.3
-    },
-    {
       "title": "美麗人生",
       "score": 7.3,
       "note": "我小學的時候看的，用喜劇包裝的集中營悲劇",
@@ -2758,17 +2716,44 @@
       "exported_score": 7.3
     },
     {
-      "title": "敦克爾克大行動",
+      "title": "變臉",
       "score": 7.3,
-      "note": "還滿身歷其境的，戰爭下的每個人就跟主角一樣，是個無名的 nobody ",
-      "poster": "./img/movie/敦克爾克大行動.webp",
+      "note": "很有創意的動作片，凱吉必看經典",
+      "poster": "./img/movie/變臉.webp",
       "tags": [
-        "2017",
-        "戰爭",
-        "諾蘭"
+        "1997",
+        "動作"
       ],
       "category": "westernMovies",
-      "elo": 1452.484947147254,
+      "elo": 1458.9274506229538,
+      "games": 15,
+      "exported_score": 7.3
+    },
+    {
+      "title": "浩劫重生",
+      "score": 7.3,
+      "note": "荒島災難電影，威爾森太經典",
+      "poster": "./img/movie/浩劫重生.webp",
+      "tags": [
+        "2000",
+        "災難"
+      ],
+      "category": "westernMovies",
+      "elo": 1457.6495919107888,
+      "games": 14,
+      "exported_score": 7.3
+    },
+    {
+      "title": "天生一對",
+      "score": 7.3,
+      "note": "很可愛的老片，琳塞蘿涵經典",
+      "poster": "./img/movie/天生一對.webp",
+      "tags": [
+        "2006",
+        "喜劇"
+      ],
+      "category": "westernMovies",
+      "elo": 1455.7796907453346,
       "games": 15,
       "exported_score": 7.3
     },
@@ -2787,6 +2772,21 @@
       "exported_score": 7.3
     },
     {
+      "title": "敦克爾克大行動",
+      "score": 7.3,
+      "note": "還滿身歷其境的，戰爭下的每個人就跟主角一樣，是個無名的 nobody ",
+      "poster": "./img/movie/敦克爾克大行動.webp",
+      "tags": [
+        "2017",
+        "戰爭",
+        "諾蘭"
+      ],
+      "category": "westernMovies",
+      "elo": 1452.484947147254,
+      "games": 15,
+      "exported_score": 7.3
+    },
+    {
       "title": "侏羅紀公園",
       "score": 7.3,
       "note": "雖然是老片，但一樣很經典很讚",
@@ -2799,6 +2799,35 @@
       "elo": 1450.7294585325046,
       "games": 12,
       "exported_score": 7.3
+    },
+    {
+      "title": "鬼手鬼手請開口",
+      "score": 7.3,
+      "note": "A24 恐怖小品，有照公式但是滿有意思，值得一看",
+      "poster": "./img/movie/鬼手鬼手請開口.webp",
+      "tags": [
+        "2023",
+        "恐怖"
+      ],
+      "category": "westernMovies",
+      "elo": 1450.4718216212304,
+      "games": 13,
+      "exported_score": 7.3
+    },
+    {
+      "title": "魔法電波",
+      "score": 7.2,
+      "note": "滿有趣的小品，很喜歡前段的末日小生存",
+      "poster": "./img/movie/魔法電波.webp",
+      "tags": [
+        "1999",
+        "愛情",
+        "科幻"
+      ],
+      "category": "westernMovies",
+      "elo": 1449.9684625724014,
+      "games": 14,
+      "exported_score": 7.2
     },
     {
       "title": "美國隊長",
@@ -2844,32 +2873,32 @@
       "exported_score": 7.2
     },
     {
-      "title": "鬼手鬼手請開口",
-      "score": 7.3,
-      "note": "A24 恐怖小品，有照公式但是滿有意思，值得一看",
-      "poster": "./img/movie/鬼手鬼手請開口.webp",
+      "title": "我和我的冠軍女兒",
+      "score": 7.2,
+      "note": "勵志的好片，關於印度女性主義的電影",
+      "poster": "./img/movie/我和我的冠軍女兒.webp",
       "tags": [
-        "2023",
-        "恐怖"
+        "2016",
+        "運動",
+        "傳記"
       ],
       "category": "westernMovies",
-      "elo": 1450.4718216212304,
-      "games": 13,
-      "exported_score": 7.3
+      "elo": 1443.1718768735398,
+      "games": 14,
+      "exported_score": 7.2
     },
     {
-      "title": "魔法電波",
+      "title": "第六感生死緣",
       "score": 7.2,
-      "note": "滿有趣的小品，很喜歡前段的末日小生存",
-      "poster": "./img/movie/魔法電波.webp",
+      "note": "來看小布的神級顏值，怎麼安東尼·霍普金斯都長一樣",
+      "poster": "./img/movie/第六感生死緣.webp",
       "tags": [
-        "1999",
-        "愛情",
-        "科幻"
+        "1998",
+        "愛情"
       ],
       "category": "westernMovies",
-      "elo": 1449.9684625724014,
-      "games": 14,
+      "elo": 1443.00990804794,
+      "games": 13,
       "exported_score": 7.2
     },
     {
@@ -2884,21 +2913,6 @@
       "category": "westernMovies",
       "elo": 1442.8222475323867,
       "games": 14,
-      "exported_score": 7.2
-    },
-    {
-      "title": "重擊人生",
-      "score": 7.2,
-      "note": "綜合格鬥冠軍馬克·柯爾的傳記電影，偏平淡真實，片中一些鏡頭壓迫感滿強的",
-      "poster": "./img/movie/重擊人生.webp",
-      "tags": [
-        "2025",
-        "傳記",
-        "運動"
-      ],
-      "category": "westernMovies",
-      "elo": 1432.7029261715893,
-      "games": 13,
       "exported_score": 7.2
     },
     {
@@ -2932,20 +2946,6 @@
       "exported_score": 7.2
     },
     {
-      "title": "第六感生死緣",
-      "score": 7.2,
-      "note": "來看小布的神級顏值，怎麼安東尼·霍普金斯都長一樣",
-      "poster": "./img/movie/第六感生死緣.webp",
-      "tags": [
-        "1998",
-        "愛情"
-      ],
-      "category": "westernMovies",
-      "elo": 1443.00990804794,
-      "games": 13,
-      "exported_score": 7.2
-    },
-    {
       "title": "蝙蝠俠：開戰時刻",
       "score": 7.2,
       "note": "三部曲我只愛第二部，另外兩部算平平無奇吧",
@@ -2958,6 +2958,21 @@
       "category": "westernMovies",
       "elo": 1435.2175119879723,
       "games": 16,
+      "exported_score": 7.2
+    },
+    {
+      "title": "重擊人生",
+      "score": 7.2,
+      "note": "綜合格鬥冠軍馬克·柯爾的傳記電影，偏平淡真實，片中一些鏡頭壓迫感滿強的",
+      "poster": "./img/movie/重擊人生.webp",
+      "tags": [
+        "2025",
+        "傳記",
+        "運動"
+      ],
+      "category": "westernMovies",
+      "elo": 1432.7029261715893,
+      "games": 13,
       "exported_score": 7.2
     },
     {
@@ -2988,49 +3003,6 @@
       "category": "westernMovies",
       "elo": 1432.0512397510456,
       "games": 13,
-      "exported_score": 7.2
-    },
-    {
-      "title": "聖母峰",
-      "score": 7.1,
-      "note": "還不錯的災難電影，大自然的威力不容小覷",
-      "poster": "./img/movie/聖母峰.webp",
-      "tags": [
-        "2015",
-        "劇情"
-      ],
-      "category": "westernMovies",
-      "elo": 1422.922853813081,
-      "games": 13,
-      "exported_score": 7.1
-    },
-    {
-      "title": "牠",
-      "score": 7.1,
-      "note": "還不錯的史蒂芬金改編恐怖電影，有怪奇物語感",
-      "poster": "./img/movie/牠.webp",
-      "tags": [
-        "2017",
-        "恐怖"
-      ],
-      "category": "westernMovies",
-      "elo": 1422.2247250667667,
-      "games": 8,
-      "exported_score": 7.1
-    },
-    {
-      "title": "我和我的冠軍女兒",
-      "score": 7.2,
-      "note": "勵志的好片，關於印度女性主義的電影",
-      "poster": "./img/movie/我和我的冠軍女兒.webp",
-      "tags": [
-        "2016",
-        "運動",
-        "傳記"
-      ],
-      "category": "westernMovies",
-      "elo": 1443.1718768735398,
-      "games": 14,
       "exported_score": 7.2
     },
     {
@@ -3093,6 +3065,34 @@
       "exported_score": 7.1
     },
     {
+      "title": "聖母峰",
+      "score": 7.1,
+      "note": "還不錯的災難電影，大自然的威力不容小覷",
+      "poster": "./img/movie/聖母峰.webp",
+      "tags": [
+        "2015",
+        "劇情"
+      ],
+      "category": "westernMovies",
+      "elo": 1422.922853813081,
+      "games": 13,
+      "exported_score": 7.1
+    },
+    {
+      "title": "牠",
+      "score": 7.1,
+      "note": "還不錯的史蒂芬金改編恐怖電影，有怪奇物語感",
+      "poster": "./img/movie/牠.webp",
+      "tags": [
+        "2017",
+        "恐怖"
+      ],
+      "category": "westernMovies",
+      "elo": 1422.2247250667667,
+      "games": 8,
+      "exported_score": 7.1
+    },
+    {
       "title": "微笑2",
       "score": 7.1,
       "note": "中規中矩的恐怖片，鬼的設定上有點太強，可以製造很多幻覺太無恥了，jump scare 稍微有點多",
@@ -3122,18 +3122,18 @@
       "exported_score": 7.1
     },
     {
-      "title": "即刻毀滅",
-      "score": 7.0,
-      "note": "卡司超強的搞笑片，還不錯，很鬧",
-      "poster": "./img/movie/即刻毀滅.webp",
+      "title": "博物館驚魂夜系列",
+      "score": 7.1,
+      "note": "經典的童年喜劇片，暖收類型，1>2>3",
+      "poster": "./img/movie/博物館驚魂夜.webp",
       "tags": [
-        "2008",
+        "2006",
         "喜劇"
       ],
       "category": "westernMovies",
-      "elo": 1402.9892663634628,
+      "elo": 1415.923726028387,
       "games": 15,
-      "exported_score": 7.0
+      "exported_score": 7.1
     },
     {
       "title": "驚魂記",
@@ -3151,49 +3151,6 @@
       "exported_score": 7.1
     },
     {
-      "title": "美國心玫瑰情",
-      "score": 7.0,
-      "note": "完全猜不到劇情的發展，很邪門的好看",
-      "poster": "./img/movie/美國心玫瑰情.webp",
-      "tags": [
-        "1999",
-        "劇情"
-      ],
-      "category": "westernMovies",
-      "elo": 1406.6563379735062,
-      "games": 13,
-      "exported_score": 7.0
-    },
-    {
-      "title": "博物館驚魂夜系列",
-      "score": 7.1,
-      "note": "經典的童年喜劇片，暖收類型，1>2>3",
-      "poster": "./img/movie/博物館驚魂夜.webp",
-      "tags": [
-        "2006",
-        "喜劇"
-      ],
-      "category": "westernMovies",
-      "elo": 1415.923726028387,
-      "games": 15,
-      "exported_score": 7.1
-    },
-    {
-      "title": "海邊的曼徹斯特",
-      "score": 7.0,
-      "note": "很悲傷的電影，交錯的時間線娓娓道出男主的故事與被掏空的心",
-      "poster": "./img/movie/海邊的曼徹斯特.webp",
-      "tags": [
-        "2016",
-        "劇情",
-        "家庭"
-      ],
-      "category": "westernMovies",
-      "elo": 1392.7177096171754,
-      "games": 16,
-      "exported_score": 7.0
-    },
-    {
       "title": "雲端情人",
       "score": 7.1,
       "note": "講述科技與孤獨的一部電影，設定滿有意思",
@@ -3209,6 +3166,20 @@
       "exported_score": 7.1
     },
     {
+      "title": "美國心玫瑰情",
+      "score": 7.0,
+      "note": "完全猜不到劇情的發展，很邪門的好看",
+      "poster": "./img/movie/美國心玫瑰情.webp",
+      "tags": [
+        "1999",
+        "劇情"
+      ],
+      "category": "westernMovies",
+      "elo": 1406.6563379735062,
+      "games": 13,
+      "exported_score": 7.0
+    },
+    {
       "title": "關鍵公敵",
       "score": 7.0,
       "note": "節奏超快超緊湊，雖然邏輯跟設定有些不通，但其實暇不掩瑜，滿有意思的",
@@ -3220,6 +3191,20 @@
       "category": "westernMovies",
       "elo": 1403.013200385138,
       "games": 13,
+      "exported_score": 7.0
+    },
+    {
+      "title": "即刻毀滅",
+      "score": 7.0,
+      "note": "卡司超強的搞笑片，還不錯，很鬧",
+      "poster": "./img/movie/即刻毀滅.webp",
+      "tags": [
+        "2008",
+        "喜劇"
+      ],
+      "category": "westernMovies",
+      "elo": 1402.9892663634628,
+      "games": 15,
       "exported_score": 7.0
     },
     {
@@ -3237,17 +3222,17 @@
       "exported_score": 7.0
     },
     {
-      "title": "第九禁區",
+      "title": "真愛繞圈圈",
       "score": 7.0,
-      "note": "有關種族議題的一部外星人電影，很酷",
-      "poster": "./img/movie/第九禁區.webp",
+      "note": "跟《真愛挑日子》很像的一部，很喜歡這部的 Lily Collins",
+      "poster": "./img/movie/真愛繞圈圈.webp",
       "tags": [
-        "2009",
-        "科幻"
+        "2014",
+        "愛情"
       ],
       "category": "westernMovies",
-      "elo": 1394.0651922445193,
-      "games": 15,
+      "elo": 1399.4999170519422,
+      "games": 14,
       "exported_score": 7.0
     },
     {
@@ -3266,19 +3251,18 @@
       "exported_score": 7.0
     },
     {
-      "title": "飛越杜鵑窩",
-      "score": 6.9,
-      "note": "經典老片，劇情還不錯，滿值得一看的作品",
-      "poster": "./img/movie/飛越杜鵑窩.webp",
+      "title": "第九禁區",
+      "score": 7.0,
+      "note": "有關種族議題的一部外星人電影，很酷",
+      "poster": "./img/movie/第九禁區.webp",
       "tags": [
-        "1975",
-        "喜劇",
-        "劇情"
+        "2009",
+        "科幻"
       ],
       "category": "westernMovies",
-      "elo": 1388.400301243793,
+      "elo": 1394.0651922445193,
       "games": 15,
-      "exported_score": 6.9
+      "exported_score": 7.0
     },
     {
       "title": "逍遙上路",
@@ -3296,32 +3280,19 @@
       "exported_score": 7.0
     },
     {
-      "title": "真愛繞圈圈",
+      "title": "海邊的曼徹斯特",
       "score": 7.0,
-      "note": "跟《真愛挑日子》很像的一部，很喜歡這部的 Lily Collins",
-      "poster": "./img/movie/真愛繞圈圈.webp",
+      "note": "很悲傷的電影，交錯的時間線娓娓道出男主的故事與被掏空的心",
+      "poster": "./img/movie/海邊的曼徹斯特.webp",
       "tags": [
-        "2014",
-        "愛情"
+        "2016",
+        "劇情",
+        "家庭"
       ],
       "category": "westernMovies",
-      "elo": 1399.4999170519422,
-      "games": 14,
+      "elo": 1392.7177096171754,
+      "games": 16,
       "exported_score": 7.0
-    },
-    {
-      "title": "芭比",
-      "score": 6.9,
-      "note": "滿特別有童趣的一部電影，不過對我來說沒有太大的共鳴和記憶點",
-      "poster": "./img/movie/芭比.webp",
-      "tags": [
-        "2023",
-        "劇情"
-      ],
-      "category": "westernMovies",
-      "elo": 1384.1039267122185,
-      "games": 13,
-      "exported_score": 6.9
     },
     {
       "title": "地心冒險",
@@ -3338,6 +3309,35 @@
       "exported_score": 6.9
     },
     {
+      "title": "飛越杜鵑窩",
+      "score": 6.9,
+      "note": "經典老片，劇情還不錯，滿值得一看的作品",
+      "poster": "./img/movie/飛越杜鵑窩.webp",
+      "tags": [
+        "1975",
+        "喜劇",
+        "劇情"
+      ],
+      "category": "westernMovies",
+      "elo": 1388.400301243793,
+      "games": 15,
+      "exported_score": 6.9
+    },
+    {
+      "title": "芭比",
+      "score": 6.9,
+      "note": "滿特別有童趣的一部電影，不過對我來說沒有太大的共鳴和記憶點",
+      "poster": "./img/movie/芭比.webp",
+      "tags": [
+        "2023",
+        "劇情"
+      ],
+      "category": "westernMovies",
+      "elo": 1384.1039267122185,
+      "games": 13,
+      "exported_score": 6.9
+    },
+    {
       "title": "真愛挑日子",
       "score": 6.9,
       "note": "沒什麼感覺的一部愛情片，看在安海瑟薇給高一點點",
@@ -3350,20 +3350,6 @@
       "elo": 1380.8904616724917,
       "games": 14,
       "exported_score": 6.9
-    },
-    {
-      "title": "怒火邊界",
-      "score": 6.8,
-      "note": "復仇電影，特別的是用艾蜜莉布朗的視角，有種無力感，提醒一下這部不是爽片",
-      "poster": "./img/movie/怒火邊界.webp",
-      "tags": [
-        "2015",
-        "動作"
-      ],
-      "category": "westernMovies",
-      "elo": 1366.4557467200023,
-      "games": 16,
-      "exported_score": 6.8
     },
     {
       "title": "新娘百分百",
@@ -3425,6 +3411,20 @@
       "exported_score": 6.8
     },
     {
+      "title": "怒火邊界",
+      "score": 6.8,
+      "note": "復仇電影，特別的是用艾蜜莉布朗的視角，有種無力感，提醒一下這部不是爽片",
+      "poster": "./img/movie/怒火邊界.webp",
+      "tags": [
+        "2015",
+        "動作"
+      ],
+      "category": "westernMovies",
+      "elo": 1366.4557467200023,
+      "games": 16,
+      "exported_score": 6.8
+    },
+    {
       "title": "蜘蛛人（加菲版） 1~2",
       "score": 6.8,
       "note": "這個系列看點在 Emma stone, 1>2 ",
@@ -3453,34 +3453,6 @@
       "exported_score": 6.8
     },
     {
-      "title": "手札情緣",
-      "score": 6.8,
-      "note": "浪漫愛情片，不會不好看但吐槽點實在超多",
-      "poster": "./img/movie/手札情緣.webp",
-      "tags": [
-        "2004",
-        "愛情"
-      ],
-      "category": "westernMovies",
-      "elo": 1358.8328035527256,
-      "games": 15,
-      "exported_score": 6.8
-    },
-    {
-      "title": "蟻人",
-      "score": 6.8,
-      "note": "中規中矩吧，沒什麼特別的，1>2",
-      "poster": "./img/movie/蟻人.webp",
-      "tags": [
-        "2015",
-        "英雄"
-      ],
-      "category": "westernMovies",
-      "elo": 1356.8351965288236,
-      "games": 12,
-      "exported_score": 6.8
-    },
-    {
       "title": "刺客聯盟",
       "score": 6.8,
       "note": "有點扯，但是小時候看覺得滿酷的",
@@ -3491,6 +3463,20 @@
       ],
       "category": "westernMovies",
       "elo": 1359.8137017800204,
+      "games": 15,
+      "exported_score": 6.8
+    },
+    {
+      "title": "手札情緣",
+      "score": 6.8,
+      "note": "浪漫愛情片，不會不好看但吐槽點實在超多",
+      "poster": "./img/movie/手札情緣.webp",
+      "tags": [
+        "2004",
+        "愛情"
+      ],
+      "category": "westernMovies",
+      "elo": 1358.8328035527256,
       "games": 15,
       "exported_score": 6.8
     },
@@ -3509,6 +3495,20 @@
       "exported_score": 6.8
     },
     {
+      "title": "蟻人",
+      "score": 6.8,
+      "note": "中規中矩吧，沒什麼特別的，1>2",
+      "poster": "./img/movie/蟻人.webp",
+      "tags": [
+        "2015",
+        "英雄"
+      ],
+      "category": "westernMovies",
+      "elo": 1356.8351965288236,
+      "games": 12,
+      "exported_score": 6.8
+    },
+    {
       "title": "華爾街之狼",
       "score": 6.7,
       "note": "瘋狂黑色傳記片，不過我個人對馬丁．史柯西斯一直電波都沒有很合",
@@ -3520,6 +3520,20 @@
       "category": "westernMovies",
       "elo": 1348.4674904385065,
       "games": 13,
+      "exported_score": 6.7
+    },
+    {
+      "title": "1408",
+      "score": 6.7,
+      "note": "小時候覺得可怕的經典恐怖片，但現在看應該覺得還好",
+      "poster": "./img/movie/1408.webp",
+      "tags": [
+        "2007",
+        "恐怖"
+      ],
+      "category": "westernMovies",
+      "elo": 1344.7794180677217,
+      "games": 11,
       "exported_score": 6.7
     },
     {
@@ -3551,20 +3565,6 @@
       "exported_score": 6.7
     },
     {
-      "title": "軍火之王",
-      "score": 6.6,
-      "note": "滿有意思的犯罪劇情片，中規中矩",
-      "poster": "./img/movie/軍火之王.webp",
-      "tags": [
-        "2005",
-        "劇情"
-      ],
-      "category": "westernMovies",
-      "elo": 1325.3483516286701,
-      "games": 15,
-      "exported_score": 6.6
-    },
-    {
       "title": "仲夏魘",
       "score": 6.7,
       "note": "氣氛詭異的恐怖片，看完我覺得到底看什麼鬼，很吃電波的一部",
@@ -3576,20 +3576,6 @@
       "category": "westernMovies",
       "elo": 1338.4953497196104,
       "games": 12,
-      "exported_score": 6.7
-    },
-    {
-      "title": "1408",
-      "score": 6.7,
-      "note": "小時候覺得可怕的經典恐怖片，但現在看應該覺得還好",
-      "poster": "./img/movie/1408.webp",
-      "tags": [
-        "2007",
-        "恐怖"
-      ],
-      "category": "westernMovies",
-      "elo": 1344.7794180677217,
-      "games": 11,
       "exported_score": 6.7
     },
     {
@@ -3607,17 +3593,17 @@
       "exported_score": 6.6
     },
     {
-      "title": "環太平洋",
+      "title": "軍火之王",
       "score": 6.6,
-      "note": "音樂跟機器人畫面很讚，但劇情真的很不行",
-      "poster": "./img/movie/環太平洋.webp",
+      "note": "滿有意思的犯罪劇情片，中規中矩",
+      "poster": "./img/movie/軍火之王.webp",
       "tags": [
-        "2013",
-        "動作"
+        "2005",
+        "劇情"
       ],
       "category": "westernMovies",
-      "elo": 1321.3715361436948,
-      "games": 16,
+      "elo": 1325.3483516286701,
+      "games": 15,
       "exported_score": 6.6
     },
     {
@@ -3632,6 +3618,20 @@
       "category": "westernMovies",
       "elo": 1322.533462588064,
       "games": 13,
+      "exported_score": 6.6
+    },
+    {
+      "title": "環太平洋",
+      "score": 6.6,
+      "note": "音樂跟機器人畫面很讚，但劇情真的很不行",
+      "poster": "./img/movie/環太平洋.webp",
+      "tags": [
+        "2013",
+        "動作"
+      ],
+      "category": "westernMovies",
+      "elo": 1321.3715361436948,
+      "games": 16,
       "exported_score": 6.6
     },
     {
@@ -3736,6 +3736,21 @@
       "exported_score": 6.5
     },
     {
+      "title": "大法師",
+      "score": 6.4,
+      "note": "經典鬼片，很多套路的始祖，不過我對鬼片沒什麼太大興趣",
+      "poster": "./img/movie/大法師.webp",
+      "tags": [
+        "1973",
+        "恐怖",
+        "經典"
+      ],
+      "category": "westernMovies",
+      "elo": 1287.6712603955568,
+      "games": 15,
+      "exported_score": 6.4
+    },
+    {
       "title": "出神入化",
       "score": 6.4,
       "note": "都用超能力，跟魔術沒什麼關係的魔術電影",
@@ -3747,20 +3762,6 @@
       "category": "westernMovies",
       "elo": 1284.5622220003468,
       "games": 13,
-      "exported_score": 6.4
-    },
-    {
-      "title": "實習大叔",
-      "score": 6.4,
-      "note": "沒什麼特別的職場喜劇電影，還可以吧",
-      "poster": "./img/movie/實習大叔.webp",
-      "tags": [
-        "2013",
-        "喜劇"
-      ],
-      "category": "westernMovies",
-      "elo": 1277.223283244636,
-      "games": 14,
       "exported_score": 6.4
     },
     {
@@ -3778,18 +3779,31 @@
       "exported_score": 6.4
     },
     {
-      "title": "大法師",
+      "title": "神力女超人",
       "score": 6.4,
-      "note": "經典鬼片，很多套路的始祖，不過我對鬼片沒什麼太大興趣",
-      "poster": "./img/movie/大法師.webp",
+      "note": "沒什麼新意，我覺得挺無聊的",
+      "poster": "./img/movie/神力女超人.webp",
       "tags": [
-        "1973",
-        "恐怖",
-        "經典"
+        "2017",
+        "英雄"
       ],
       "category": "westernMovies",
-      "elo": 1287.6712603955568,
-      "games": 15,
+      "elo": 1279.1179579929303,
+      "games": 16,
+      "exported_score": 6.4
+    },
+    {
+      "title": "實習大叔",
+      "score": 6.4,
+      "note": "沒什麼特別的職場喜劇電影，還可以吧",
+      "poster": "./img/movie/實習大叔.webp",
+      "tags": [
+        "2013",
+        "喜劇"
+      ],
+      "category": "westernMovies",
+      "elo": 1277.223283244636,
+      "games": 14,
       "exported_score": 6.4
     },
     {
@@ -3818,20 +3832,6 @@
       "category": "westernMovies",
       "elo": 1273.1425084279076,
       "games": 12,
-      "exported_score": 6.4
-    },
-    {
-      "title": "神力女超人",
-      "score": 6.4,
-      "note": "沒什麼新意，我覺得挺無聊的",
-      "poster": "./img/movie/神力女超人.webp",
-      "tags": [
-        "2017",
-        "英雄"
-      ],
-      "category": "westernMovies",
-      "elo": 1279.1179579929303,
-      "games": 16,
       "exported_score": 6.4
     },
     {
@@ -3864,18 +3864,18 @@
       "exported_score": 6.3
     },
     {
-      "title": "正義聯盟",
-      "score": 6.2,
-      "note": "劣化版的復仇者聯盟，人家已經很不行了，你更難看",
-      "poster": "./img/movie/正義聯盟.webp",
+      "title": "惡靈戰警",
+      "score": 6.3,
+      "note": "滿帥的凱吉爽片",
+      "poster": "./img/movie/惡靈戰警.webp",
       "tags": [
-        "2017",
-        "英雄"
+        "2007",
+        "動作"
       ],
       "category": "westernMovies",
-      "elo": 1244.0261247910753,
-      "games": 14,
-      "exported_score": 6.2
+      "elo": 1253.8273186075521,
+      "games": 13,
+      "exported_score": 6.3
     },
     {
       "title": "殺手",
@@ -3892,18 +3892,18 @@
       "exported_score": 6.2
     },
     {
-      "title": "惡靈戰警",
-      "score": 6.3,
-      "note": "滿帥的凱吉爽片",
-      "poster": "./img/movie/惡靈戰警.webp",
+      "title": "正義聯盟",
+      "score": 6.2,
+      "note": "劣化版的復仇者聯盟，人家已經很不行了，你更難看",
+      "poster": "./img/movie/正義聯盟.webp",
       "tags": [
-        "2007",
-        "動作"
+        "2017",
+        "英雄"
       ],
       "category": "westernMovies",
-      "elo": 1253.8273186075521,
-      "games": 13,
-      "exported_score": 6.3
+      "elo": 1244.0261247910753,
+      "games": 14,
+      "exported_score": 6.2
     },
     {
       "title": "恐怖角",
@@ -4048,7 +4048,7 @@
     },
     {
       "title": "寄生上流",
-      "score": 9.3,
+      "score": 9.5,
       "note": "奉導集大成神作，商業與藝術完美結合",
       "poster": "./img/movie/寄生上流.webp",
       "tags": [
@@ -4056,9 +4056,9 @@
         "劇情"
       ],
       "category": "asiaMovies",
-      "elo": 1859.695908768621,
-      "games": 15,
-      "exported_score": 9.3
+      "elo": 1895.5543624248076,
+      "games": 1,
+      "exported_score": 9.5
     },
     {
       "title": "大佛普拉斯",
@@ -4070,13 +4070,13 @@
         "劇情"
       ],
       "category": "asiaMovies",
-      "elo": 1835.6205019793756,
-      "games": 13,
+      "elo": 1830.1175889869705,
+      "games": 2,
       "exported_score": 9.2
     },
     {
       "title": "盲探",
-      "score": 9.2,
+      "score": 9.0,
       "note": "心中最佳的劉德華電影，人物塑造劇情都滿分",
       "poster": "./img/movie/盲探.webp",
       "tags": [
@@ -4084,9 +4084,9 @@
         "劇情"
       ],
       "category": "asiaMovies",
-      "elo": 1831.8019538514832,
-      "games": 12,
-      "exported_score": 9.2
+      "elo": 1804.331494049987,
+      "games": 1,
+      "exported_score": 9.0
     },
     {
       "title": "破地獄",
@@ -4098,8 +4098,8 @@
         "劇情"
       ],
       "category": "asiaMovies",
-      "elo": 1813.210053724963,
-      "games": 13,
+      "elo": 1825.596709168277,
+      "games": 1,
       "exported_score": 9.1
     },
     {
@@ -4173,34 +4173,6 @@
       "exported_score": 8.7
     },
     {
-      "title": "葉問",
-      "score": 8.6,
-      "note": "流暢好看的香港武打片",
-      "poster": "./img/movie/葉問.webp",
-      "tags": [
-        "2008",
-        "劇情"
-      ],
-      "category": "asiaMovies",
-      "elo": 1726.8104473988012,
-      "games": 13,
-      "exported_score": 8.6
-    },
-    {
-      "title": "小雁與吳愛麗",
-      "score": 8.6,
-      "note": "講述家庭創傷與和解的電影，臺灣電影難得有這種高度的劇本和張力",
-      "poster": "./img/movie/小雁與吳愛麗.webp",
-      "tags": [
-        "2024",
-        "劇情"
-      ],
-      "category": "asiaMovies",
-      "elo": 1715.543370722405,
-      "games": 13,
-      "exported_score": 8.6
-    },
-    {
       "title": "陽光普照",
       "score": 8.6,
       "note": "鍾孟宏的集大成作品，臺灣電影中不俗的存在",
@@ -4213,6 +4185,20 @@
       "elo": 1728.3024168274103,
       "games": 14,
       "exported_score": 8.6
+    },
+    {
+      "title": "葉問",
+      "score": 8.5,
+      "note": "流暢好看的香港武打片",
+      "poster": "./img/movie/葉問.webp",
+      "tags": [
+        "2008",
+        "劇情"
+      ],
+      "category": "asiaMovies",
+      "elo": 1695.2893116333505,
+      "games": 1,
+      "exported_score": 8.5
     },
     {
       "title": "一屍到底",
@@ -4229,18 +4215,18 @@
       "exported_score": 8.6
     },
     {
-      "title": "讓子彈飛",
-      "score": 8.5,
-      "note": "很緊湊的經典電影，我認為是所有華語片中文本最厲害的一部",
-      "poster": "./img/movie/讓子彈飛.webp",
+      "title": "小雁與吳愛麗",
+      "score": 8.2,
+      "note": "講述家庭創傷與和解的電影，臺灣電影難得有這種高度的劇本和張力",
+      "poster": "./img/movie/小雁與吳愛麗.webp",
       "tags": [
-        "2010",
-        "經典"
+        "2024",
+        "劇情"
       ],
       "category": "asiaMovies",
-      "elo": 1695.9305241519207,
-      "games": 16,
-      "exported_score": 8.5
+      "elo": 1644.6150508031503,
+      "games": 1,
+      "exported_score": 8.2
     },
     {
       "title": "我只是個計程車司機",
@@ -4254,6 +4240,20 @@
       "category": "asiaMovies",
       "elo": 1703.2280879977527,
       "games": 14,
+      "exported_score": 8.5
+    },
+    {
+      "title": "讓子彈飛",
+      "score": 8.5,
+      "note": "很緊湊的經典電影，我認為是所有華語片中文本最厲害的一部",
+      "poster": "./img/movie/讓子彈飛.webp",
+      "tags": [
+        "2010",
+        "經典"
+      ],
+      "category": "asiaMovies",
+      "elo": 1695.9305241519207,
+      "games": 16,
       "exported_score": 8.5
     },
     {
@@ -4295,8 +4295,8 @@
         "懸疑"
       ],
       "category": "asiaMovies",
-      "elo": 1657.0630843190684,
-      "games": 13,
+      "elo": 1650.1653655121015,
+      "games": 14,
       "exported_score": 8.3
     },
     {
@@ -4323,8 +4323,8 @@
         "愛情"
       ],
       "category": "asiaMovies",
-      "elo": 1620.2629290179796,
-      "games": 14,
+      "elo": 1626.9245505486317,
+      "games": 15,
       "exported_score": 8.1
     },
     {
@@ -4470,20 +4470,6 @@
       "exported_score": 7.8
     },
     {
-      "title": "無間道",
-      "score": 7.8,
-      "note": "香港警匪片巔峰，經典必看",
-      "poster": "./img/movie/無間道.webp",
-      "tags": [
-        "2002",
-        "經典"
-      ],
-      "category": "asiaMovies",
-      "elo": 1561.4754146534735,
-      "games": 12,
-      "exported_score": 7.8
-    },
-    {
       "title": "門徒",
       "score": 7.8,
       "note": "經典的香港犯罪片",
@@ -4495,6 +4481,20 @@
       "category": "asiaMovies",
       "elo": 1566.2331254436072,
       "games": 15,
+      "exported_score": 7.8
+    },
+    {
+      "title": "無間道",
+      "score": 7.8,
+      "note": "香港警匪片巔峰，經典必看",
+      "poster": "./img/movie/無間道.webp",
+      "tags": [
+        "2002",
+        "經典"
+      ],
+      "category": "asiaMovies",
+      "elo": 1561.4754146534735,
+      "games": 12,
       "exported_score": 7.8
     },
     {
@@ -4510,20 +4510,6 @@
       "elo": 1554.5999134858266,
       "games": 12,
       "exported_score": 7.8
-    },
-    {
-      "title": "青春18×2 通往有你的旅程",
-      "score": 7.7,
-      "note": "療癒自我的公路旅行愛情電影，我覺得比一般愛情國片好看，喜歡",
-      "poster": "./img/movie/青春18×2 通往有你的旅程.webp",
-      "tags": [
-        "2024",
-        "愛情"
-      ],
-      "category": "asiaMovies",
-      "elo": 1545.3973272127703,
-      "games": 15,
-      "exported_score": 7.7
     },
     {
       "title": "熔爐 ",
@@ -4552,6 +4538,20 @@
       "elo": 1550.577182883242,
       "games": 15,
       "exported_score": 7.8
+    },
+    {
+      "title": "青春18×2 通往有你的旅程",
+      "score": 7.7,
+      "note": "療癒自我的公路旅行愛情電影，我覺得比一般愛情國片好看，喜歡",
+      "poster": "./img/movie/青春18×2 通往有你的旅程.webp",
+      "tags": [
+        "2024",
+        "愛情"
+      ],
+      "category": "asiaMovies",
+      "elo": 1545.3973272127703,
+      "games": 15,
+      "exported_score": 7.7
     },
     {
       "title": "大隻佬",
@@ -4596,21 +4596,6 @@
       "exported_score": 7.6
     },
     {
-      "title": "愛上變身情人",
-      "score": 7.6,
-      "note": "有新意的一部戀愛電影，滿喜歡的，好喜歡韓孝周",
-      "poster": "./img/movie/愛上變身情人.webp",
-      "tags": [
-        "2015",
-        "戀愛",
-        "奇幻"
-      ],
-      "category": "asiaMovies",
-      "elo": 1516.7918352121185,
-      "games": 13,
-      "exported_score": 7.6
-    },
-    {
       "title": "嬰兒轉運站 ",
       "score": 7.6,
       "note": "看的時候覺得很像小偷家族，結果查了果然是是枝裕和拍的",
@@ -4636,6 +4621,21 @@
       "category": "asiaMovies",
       "elo": 1520.6759894463287,
       "games": 14,
+      "exported_score": 7.6
+    },
+    {
+      "title": "愛上變身情人",
+      "score": 7.6,
+      "note": "有新意的一部戀愛電影，滿喜歡的，好喜歡韓孝周",
+      "poster": "./img/movie/愛上變身情人.webp",
+      "tags": [
+        "2015",
+        "戀愛",
+        "奇幻"
+      ],
+      "category": "asiaMovies",
+      "elo": 1516.7918352121185,
+      "games": 13,
       "exported_score": 7.6
     },
     {
@@ -4667,6 +4667,20 @@
       "exported_score": 7.5
     },
     {
+      "title": "運轉手之戀",
+      "score": 7.5,
+      "note": "計程車司機的戀愛故事，有趣的老電影",
+      "poster": "./img/movie/運轉手之戀.webp",
+      "tags": [
+        "2000",
+        "愛情"
+      ],
+      "category": "asiaMovies",
+      "elo": 1503.2030840719726,
+      "games": 13,
+      "exported_score": 7.5
+    },
+    {
       "title": "臥虎藏龍",
       "score": 7.5,
       "note": "拍的非常美，武打動作配下獲奧斯卡最佳原創電影配樂的鼓聲，真的很棒",
@@ -4677,6 +4691,20 @@
       ],
       "category": "asiaMovies",
       "elo": 1501.8366649315997,
+      "games": 13,
+      "exported_score": 7.5
+    },
+    {
+      "title": "雞不可失",
+      "score": 7.5,
+      "note": "真的滿好笑的警匪搞笑片",
+      "poster": "./img/movie/雞不可失.webp",
+      "tags": [
+        "2019",
+        "喜劇"
+      ],
+      "category": "asiaMovies",
+      "elo": 1500.4520542983562,
       "games": 13,
       "exported_score": 7.5
     },
@@ -4695,32 +4723,18 @@
       "exported_score": 7.5
     },
     {
-      "title": "運轉手之戀",
-      "score": 7.5,
-      "note": "計程車司機的戀愛故事，有趣的老電影",
-      "poster": "./img/movie/運轉手之戀.webp",
+      "title": "人孔",
+      "score": 7.4,
+      "note": "很特別的一部懸疑電影，雖然有點小說不通，但是瑕不掩瑜，也是一部低成本的好片，值得一看",
+      "poster": "./img/movie/人孔.webp",
       "tags": [
-        "2000",
-        "愛情"
+        "1958",
+        "懸疑"
       ],
       "category": "asiaMovies",
-      "elo": 1503.2030840719726,
+      "elo": 1487.2777318457636,
       "games": 13,
-      "exported_score": 7.5
-    },
-    {
-      "title": "雞不可失",
-      "score": 7.5,
-      "note": "真的滿好笑的警匪搞笑片",
-      "poster": "./img/movie/雞不可失.webp",
-      "tags": [
-        "2019",
-        "喜劇"
-      ],
-      "category": "asiaMovies",
-      "elo": 1500.4520542983562,
-      "games": 13,
-      "exported_score": 7.5
+      "exported_score": 7.4
     },
     {
       "title": "雙瞳",
@@ -4762,20 +4776,6 @@
       "category": "asiaMovies",
       "elo": 1481.844951356599,
       "games": 14,
-      "exported_score": 7.4
-    },
-    {
-      "title": "人孔",
-      "score": 7.4,
-      "note": "很特別的一部懸疑電影，雖然有點小說不通，但是瑕不掩瑜，也是一部低成本的好片，值得一看",
-      "poster": "./img/movie/人孔.webp",
-      "tags": [
-        "1958",
-        "懸疑"
-      ],
-      "category": "asiaMovies",
-      "elo": 1487.2777318457636,
-      "games": 13,
       "exported_score": 7.4
     },
     {
@@ -4863,20 +4863,6 @@
       "exported_score": 7.3
     },
     {
-      "title": "花樣年華",
-      "score": 7.2,
-      "note": "畫面非常美，遺憾又有韻味的一部電影",
-      "poster": "./img/movie/花樣年華.webp",
-      "tags": [
-        "2000",
-        "愛情"
-      ],
-      "category": "asiaMovies",
-      "elo": 1439.20804399082,
-      "games": 9,
-      "exported_score": 7.2
-    },
-    {
       "title": "我未許願先吹蠟燭",
       "score": 7.2,
       "note": "可愛溫暖的一部片，小女孩演技很不錯",
@@ -4906,18 +4892,18 @@
       "exported_score": 7.2
     },
     {
-      "title": "模犯生",
-      "score": 7.1,
-      "note": "泰國電影很傑出的一部，滿有緊張感的",
-      "poster": "./img/movie/模犯生.webp",
+      "title": "花樣年華",
+      "score": 7.2,
+      "note": "畫面非常美，遺憾又有韻味的一部電影",
+      "poster": "./img/movie/花樣年華.webp",
       "tags": [
-        "2017",
-        "劇情"
+        "2000",
+        "愛情"
       ],
       "category": "asiaMovies",
-      "elo": 1414.114861790146,
-      "games": 16,
-      "exported_score": 7.1
+      "elo": 1439.20804399082,
+      "games": 9,
+      "exported_score": 7.2
     },
     {
       "title": "瘋狂的賽車",
@@ -4932,37 +4918,6 @@
       "elo": 1422.175327244305,
       "games": 15,
       "exported_score": 7.1
-    },
-    {
-      "title": "我和我的殭屍女兒 ",
-      "score": 7.1,
-      "note": "搞笑殭屍電影，還滿特別的，適合溫馨輕鬆看",
-      "poster": "./img/movie/我和我的殭屍女兒.webp",
-      "tags": [
-        "2025",
-        "恐怖",
-        "喜劇",
-        "溫馨"
-      ],
-      "category": "asiaMovies",
-      "elo": 1415.3291750927024,
-      "games": 13,
-      "exported_score": 7.1
-    },
-    {
-      "title": "藍色監獄",
-      "score": 7.0,
-      "note": "還不錯的真人版，潔世一跟繪心演得很不錯",
-      "poster": "./img/movie/藍色監獄.webp",
-      "tags": [
-        "2026",
-        "動漫",
-        "運動"
-      ],
-      "category": "asiaMovies",
-      "elo": 1405.7660839444748,
-      "games": 14,
-      "exported_score": 7.0
     },
     {
       "title": "超時空武士",
@@ -4993,6 +4948,36 @@
       "exported_score": 7.1
     },
     {
+      "title": "我和我的殭屍女兒 ",
+      "score": 7.1,
+      "note": "搞笑殭屍電影，還滿特別的，適合溫馨輕鬆看",
+      "poster": "./img/movie/我和我的殭屍女兒.webp",
+      "tags": [
+        "2025",
+        "恐怖",
+        "喜劇",
+        "溫馨"
+      ],
+      "category": "asiaMovies",
+      "elo": 1415.3291750927024,
+      "games": 13,
+      "exported_score": 7.1
+    },
+    {
+      "title": "模犯生",
+      "score": 7.1,
+      "note": "泰國電影很傑出的一部，滿有緊張感的",
+      "poster": "./img/movie/模犯生.webp",
+      "tags": [
+        "2017",
+        "劇情"
+      ],
+      "category": "asiaMovies",
+      "elo": 1414.114861790146,
+      "games": 16,
+      "exported_score": 7.1
+    },
+    {
       "title": "翻滾吧！阿信",
       "score": 7.0,
       "note": "關於人生走回正途的體操運動電影，好看",
@@ -5007,6 +4992,21 @@
       "exported_score": 7.0
     },
     {
+      "title": "藍色監獄",
+      "score": 7.0,
+      "note": "還不錯的真人版，潔世一跟繪心演得很不錯",
+      "poster": "./img/movie/藍色監獄.webp",
+      "tags": [
+        "2026",
+        "動漫",
+        "運動"
+      ],
+      "category": "asiaMovies",
+      "elo": 1405.7660839444748,
+      "games": 14,
+      "exported_score": 7.0
+    },
+    {
       "title": "變身機長 ",
       "score": 7.0,
       "note": "滿鬧的搞笑片，中規中矩吧，喜歡曹政爽的話一定要看",
@@ -5017,20 +5017,6 @@
       ],
       "category": "asiaMovies",
       "elo": 1405.6578086778957,
-      "games": 13,
-      "exported_score": 7.0
-    },
-    {
-      "title": "雙囍",
-      "score": 7.0,
-      "note": "寫實的各種亞洲長輩真的很恐怖，應該能引起很多人的共鳴",
-      "poster": "./img/movie/雙囍.webp",
-      "tags": [
-        "2026",
-        "劇情"
-      ],
-      "category": "asiaMovies",
-      "elo": 1400.7667762385363,
       "games": 13,
       "exported_score": 7.0
     },
@@ -5049,6 +5035,20 @@
       "exported_score": 7.0
     },
     {
+      "title": "雙囍",
+      "score": 7.0,
+      "note": "寫實的各種亞洲長輩真的很恐怖，應該能引起很多人的共鳴",
+      "poster": "./img/movie/雙囍.webp",
+      "tags": [
+        "2026",
+        "劇情"
+      ],
+      "category": "asiaMovies",
+      "elo": 1400.7667762385363,
+      "games": 13,
+      "exported_score": 7.0
+    },
+    {
       "title": "瀑布",
       "score": 7.0,
       "note": "疫情背景下的一部劇情片，表現不俗",
@@ -5060,6 +5060,20 @@
       "category": "asiaMovies",
       "elo": 1393.7514307639306,
       "games": 12,
+      "exported_score": 7.0
+    },
+    {
+      "title": "聽說",
+      "score": 7.0,
+      "note": "雖然是愛情片，但多一個題材就能將故事說的不俗，推薦",
+      "poster": "./img/movie/聽說.webp",
+      "tags": [
+        "2009",
+        "愛情"
+      ],
+      "category": "asiaMovies",
+      "elo": 1390.6125994122638,
+      "games": 14,
       "exported_score": 7.0
     },
     {
@@ -5075,20 +5089,6 @@
       "elo": 1386.2269748601886,
       "games": 14,
       "exported_score": 6.9
-    },
-    {
-      "title": "聽說",
-      "score": 7.0,
-      "note": "雖然是愛情片，但多一個題材就能將故事說的不俗，推薦",
-      "poster": "./img/movie/聽說.webp",
-      "tags": [
-        "2009",
-        "愛情"
-      ],
-      "category": "asiaMovies",
-      "elo": 1390.6125994122638,
-      "games": 14,
-      "exported_score": 7.0
     },
     {
       "title": "菜鳥警校生",
@@ -5119,6 +5119,21 @@
       "exported_score": 6.8
     },
     {
+      "title": "火遮眼",
+      "score": 6.8,
+      "note": "武打場面佔七成，打架畫面與鏡頭調度滿精采的，但是劇情很爛，配角的演技跟口條更爛",
+      "poster": "./img/movie/火遮眼.webp",
+      "tags": [
+        "2026",
+        "犯罪",
+        "動作"
+      ],
+      "category": "asiaMovies",
+      "elo": 1360.0,
+      "games": 12,
+      "exported_score": 6.8
+    },
+    {
       "title": "夜校女生",
       "score": 6.8,
       "note": "還不錯的青春小品",
@@ -5133,19 +5148,32 @@
       "exported_score": 6.8
     },
     {
-      "title": "火遮眼",
-      "score": 6.8,
-      "note": "武打場面佔七成，打架畫面與鏡頭調度滿精采的，但是劇情很爛，配角的演技跟口條更爛",
-      "poster": "./img/movie/火遮眼.webp",
+      "title": "乒乓男孩",
+      "score": 6.7,
+      "note": "運動小品國片，中規中矩，較無記憶點",
+      "poster": "./img/movie/乒乓男孩.webp",
       "tags": [
-        "2026",
-        "犯罪",
-        "動作"
+        "2024",
+        "劇情"
       ],
       "category": "asiaMovies",
-      "elo": 1360.0,
-      "games": 12,
-      "exported_score": 6.8
+      "elo": 1347.1221534236472,
+      "games": 13,
+      "exported_score": 6.7
+    },
+    {
+      "title": "哈勇家",
+      "score": 6.7,
+      "note": "原住民家庭的故事，平淡樸實的一部電影",
+      "poster": "./img/movie/哈勇家.webp",
+      "tags": [
+        "2022",
+        "劇情"
+      ],
+      "category": "asiaMovies",
+      "elo": 1347.1023427190898,
+      "games": 13,
+      "exported_score": 6.7
     },
     {
       "title": "徵人啟弒",
@@ -5187,34 +5215,6 @@
       ],
       "category": "asiaMovies",
       "elo": 1336.7001176332287,
-      "games": 13,
-      "exported_score": 6.7
-    },
-    {
-      "title": "哈勇家",
-      "score": 6.7,
-      "note": "原住民家庭的故事，平淡樸實的一部電影",
-      "poster": "./img/movie/哈勇家.webp",
-      "tags": [
-        "2022",
-        "劇情"
-      ],
-      "category": "asiaMovies",
-      "elo": 1347.1023427190898,
-      "games": 13,
-      "exported_score": 6.7
-    },
-    {
-      "title": "乒乓男孩",
-      "score": 6.7,
-      "note": "運動小品國片，中規中矩，較無記憶點",
-      "poster": "./img/movie/乒乓男孩.webp",
-      "tags": [
-        "2024",
-        "劇情"
-      ],
-      "category": "asiaMovies",
-      "elo": 1347.1221534236472,
       "games": 13,
       "exported_score": 6.7
     },
@@ -5375,20 +5375,6 @@
       "exported_score": 6.5
     },
     {
-      "title": "毒舌大狀",
-      "score": 6.4,
-      "note": "說教成份太重，角色太扁平，劇情也不夠突出，不要期待太高",
-      "poster": "./img/movie/毒舌大狀.webp",
-      "tags": [
-        "2023",
-        "劇情"
-      ],
-      "category": "asiaMovies",
-      "elo": 1289.3561846102134,
-      "games": 14,
-      "exported_score": 6.4
-    },
-    {
       "title": "海角七號",
       "score": 6.5,
       "note": "臺灣影史上有一席之地的經典，故事說的中規中矩，音樂加分不少",
@@ -5403,17 +5389,17 @@
       "exported_score": 6.5
     },
     {
-      "title": "女朋友‧男朋友",
+      "title": "毒舌大狀",
       "score": 6.4,
-      "note": "算有意思的小情小愛國片，描寫三人一路的心境，有點意思",
-      "poster": "./img/movie/女朋友‧男朋友.webp",
+      "note": "說教成份太重，角色太扁平，劇情也不夠突出，不要期待太高",
+      "poster": "./img/movie/毒舌大狀.webp",
       "tags": [
-        "2012",
+        "2023",
         "劇情"
       ],
       "category": "asiaMovies",
-      "elo": 1285.116379038648,
-      "games": 15,
+      "elo": 1289.3561846102134,
+      "games": 14,
       "exported_score": 6.4
     },
     {
@@ -5431,17 +5417,17 @@
       "exported_score": 6.4
     },
     {
-      "title": "復活男",
+      "title": "女朋友‧男朋友",
       "score": 6.4,
-      "note": "劇本狗屁不通，特效也滿爛的，不過演員表現還不錯，不用特別看",
-      "poster": "./img/movie/復活男.webp",
+      "note": "算有意思的小情小愛國片，描寫三人一路的心境，有點意思",
+      "poster": "./img/movie/女朋友‧男朋友.webp",
       "tags": [
-        "2026",
-        "動作"
+        "2012",
+        "劇情"
       ],
       "category": "asiaMovies",
-      "elo": 1272.5720041588975,
-      "games": 13,
+      "elo": 1285.116379038648,
+      "games": 15,
       "exported_score": 6.4
     },
     {
@@ -5460,18 +5446,18 @@
       "exported_score": 6.4
     },
     {
-      "title": "台北追緝令",
-      "score": 6.3,
-      "note": "滿尷尬的一部，真的滿難看的，露西的再更劣化版",
-      "poster": "./img/movie/台北追緝令.webp",
+      "title": "復活男",
+      "score": 6.4,
+      "note": "劇本狗屁不通，特效也滿爛的，不過演員表現還不錯，不用特別看",
+      "poster": "./img/movie/復活男.webp",
       "tags": [
-        "2024",
+        "2026",
         "動作"
       ],
       "category": "asiaMovies",
-      "elo": 1265.9583596320658,
-      "games": 14,
-      "exported_score": 6.3
+      "elo": 1272.5720041588975,
+      "games": 13,
+      "exported_score": 6.4
     },
     {
       "title": "當男人戀愛時",
@@ -5513,6 +5499,20 @@
       "category": "asiaMovies",
       "elo": 1267.6833158612108,
       "games": 13,
+      "exported_score": 6.3
+    },
+    {
+      "title": "台北追緝令",
+      "score": 6.3,
+      "note": "滿尷尬的一部，真的滿難看的，露西的再更劣化版",
+      "poster": "./img/movie/台北追緝令.webp",
+      "tags": [
+        "2024",
+        "動作"
+      ],
+      "category": "asiaMovies",
+      "elo": 1265.9583596320658,
+      "games": 14,
       "exported_score": 6.3
     },
     {
@@ -5573,20 +5573,6 @@
       "exported_score": 6.2
     },
     {
-      "title": "在車上",
-      "score": 6.1,
-      "note": "一直覺得好像要發生什麼但是沒有，我覺得很悶的一部電影，畫面很美，老車也好漂亮",
-      "poster": "./img/movie/在車上.webp",
-      "tags": [
-        "2021",
-        "劇情"
-      ],
-      "category": "asiaMovies",
-      "elo": 1221.773583373827,
-      "games": 18,
-      "exported_score": 6.1
-    },
-    {
       "title": "功夫灌籃",
       "score": 6.1,
       "note": "荒謬搞笑片，但還算有娛樂性",
@@ -5616,17 +5602,17 @@
       "exported_score": 6.1
     },
     {
-      "title": "軍中樂園",
+      "title": "在車上",
       "score": 6.1,
-      "note": "時代戰爭背景下，有意義的一段歷史，雖然還是有一點情愛成份，算可以的一部",
-      "poster": "./img/movie/軍中樂園.webp",
+      "note": "一直覺得好像要發生什麼但是沒有，我覺得很悶的一部電影，畫面很美，老車也好漂亮",
+      "poster": "./img/movie/在車上.webp",
       "tags": [
-        "2014",
-        "戰爭"
+        "2021",
+        "劇情"
       ],
       "category": "asiaMovies",
-      "elo": 1214.376056963894,
-      "games": 15,
+      "elo": 1221.773583373827,
+      "games": 18,
       "exported_score": 6.1
     },
     {
@@ -5640,6 +5626,20 @@
       ],
       "category": "asiaMovies",
       "elo": 1219.1825686794002,
+      "games": 15,
+      "exported_score": 6.1
+    },
+    {
+      "title": "軍中樂園",
+      "score": 6.1,
+      "note": "時代戰爭背景下，有意義的一段歷史，雖然還是有一點情愛成份，算可以的一部",
+      "poster": "./img/movie/軍中樂園.webp",
+      "tags": [
+        "2014",
+        "戰爭"
+      ],
+      "category": "asiaMovies",
+      "elo": 1214.376056963894,
       "games": 15,
       "exported_score": 6.1
     },
@@ -5672,20 +5672,6 @@
       "exported_score": 6.0
     },
     {
-      "title": "等一個人咖啡",
-      "score": 5.9,
-      "note": "小說好看太多，沒什麼評語",
-      "poster": "./img/movie/等一個人咖啡.webp",
-      "tags": [
-        "2014",
-        "劇情"
-      ],
-      "category": "asiaMovies",
-      "elo": 1185.3495026213,
-      "games": 14,
-      "exported_score": 5.9
-    },
-    {
       "title": "鬼才之道",
       "score": 5.9,
       "note": "算有新意，但說不上來有什麼好看的地方",
@@ -5700,17 +5686,17 @@
       "exported_score": 5.9
     },
     {
-      "title": "關於我和鬼變成家人的那件事",
+      "title": "等一個人咖啡",
       "score": 5.9,
-      "note": "有一點尷尬的鬧劇，庹宗華那一段演技是唯一亮點",
-      "poster": "./img/movie/關於我和鬼變成家人的那件事.webp",
+      "note": "小說好看太多，沒什麼評語",
+      "poster": "./img/movie/等一個人咖啡.webp",
       "tags": [
-        "2023",
-        "恐怖"
+        "2014",
+        "劇情"
       ],
       "category": "asiaMovies",
-      "elo": 1163.2405738728366,
-      "games": 13,
+      "elo": 1185.3495026213,
+      "games": 14,
       "exported_score": 5.9
     },
     {
@@ -5739,6 +5725,20 @@
       "category": "asiaMovies",
       "elo": 1164.1305605786333,
       "games": 12,
+      "exported_score": 5.9
+    },
+    {
+      "title": "關於我和鬼變成家人的那件事",
+      "score": 5.9,
+      "note": "有一點尷尬的鬧劇，庹宗華那一段演技是唯一亮點",
+      "poster": "./img/movie/關於我和鬼變成家人的那件事.webp",
+      "tags": [
+        "2023",
+        "恐怖"
+      ],
+      "category": "asiaMovies",
+      "elo": 1163.2405738728366,
+      "games": 13,
       "exported_score": 5.9
     },
     {
@@ -5872,7 +5872,7 @@
     },
     {
       "title": "破壞之王",
-      "score": 8.3,
+      "score": 8.2,
       "note": "周星馳系列，好喜歡這部的角色",
       "poster": "./img/movie/破壞之王.webp",
       "tags": [
@@ -5882,9 +5882,9 @@
         "周星馳"
       ],
       "category": "hongkongMovies",
-      "elo": 1650.8022108241043,
-      "games": 14,
-      "exported_score": 8.3
+      "elo": 1643.9283358401287,
+      "games": 15,
+      "exported_score": 8.2
     },
     {
       "title": "少林足球",
@@ -5994,20 +5994,6 @@
       "exported_score": 7.6
     },
     {
-      "title": "賭神 1~2",
-      "score": 7.6,
-      "note": "賭神高進真的太經典了",
-      "poster": "./img/movie/賭神.webp",
-      "tags": [
-        "1989",
-        "經典"
-      ],
-      "category": "hongkongMovies",
-      "elo": 1516.6001200183514,
-      "games": 12,
-      "exported_score": 7.6
-    },
-    {
       "title": "與龍共舞",
       "score": 7.6,
       "note": "從小看到大，好想去大嶼山玩",
@@ -6019,6 +6005,20 @@
       "category": "hongkongMovies",
       "elo": 1519.3713798527854,
       "games": 14,
+      "exported_score": 7.6
+    },
+    {
+      "title": "賭神 1~2",
+      "score": 7.6,
+      "note": "賭神高進真的太經典了",
+      "poster": "./img/movie/賭神.webp",
+      "tags": [
+        "1989",
+        "經典"
+      ],
+      "category": "hongkongMovies",
+      "elo": 1516.6001200183514,
+      "games": 12,
       "exported_score": 7.6
     },
     {
@@ -6068,21 +6068,6 @@
       "exported_score": 7.5
     },
     {
-      "title": "威龍闖天關",
-      "score": 7.4,
-      "note": "周星馳系列，原來這部是杜琪峯的作品，超喜歡的一部",
-      "poster": "./img/movie/威龍闖天關.webp",
-      "tags": [
-        "1992",
-        "港片",
-        "喜劇"
-      ],
-      "category": "hongkongMovies",
-      "elo": 1481.394907491207,
-      "games": 13,
-      "exported_score": 7.4
-    },
-    {
       "title": "賭俠",
       "score": 7.4,
       "note": "周星馳系列，很經典好看",
@@ -6095,6 +6080,21 @@
       ],
       "category": "hongkongMovies",
       "elo": 1487.2558974902538,
+      "games": 13,
+      "exported_score": 7.4
+    },
+    {
+      "title": "威龍闖天關",
+      "score": 7.4,
+      "note": "周星馳系列，原來這部是杜琪峯的作品，超喜歡的一部",
+      "poster": "./img/movie/威龍闖天關.webp",
+      "tags": [
+        "1992",
+        "港片",
+        "喜劇"
+      ],
+      "category": "hongkongMovies",
+      "elo": 1481.394907491207,
       "games": 13,
       "exported_score": 7.4
     },
@@ -6158,21 +6158,6 @@
       "exported_score": 7.2
     },
     {
-      "title": "濟公",
-      "score": 7.1,
-      "note": "周星馳系列，滿寫實的一部電影，也是滿悲的",
-      "poster": "./img/movie/濟公.webp",
-      "tags": [
-        "1993",
-        "港片",
-        "喜劇"
-      ],
-      "category": "hongkongMovies",
-      "elo": 1427.3496661013808,
-      "games": 13,
-      "exported_score": 7.1
-    },
-    {
       "title": "殭屍先生",
       "score": 7.2,
       "note": "林正英系列經典殭屍片",
@@ -6201,6 +6186,21 @@
       "elo": 1433.33377980588,
       "games": 14,
       "exported_score": 7.2
+    },
+    {
+      "title": "濟公",
+      "score": 7.1,
+      "note": "周星馳系列，滿寫實的一部電影，也是滿悲的",
+      "poster": "./img/movie/濟公.webp",
+      "tags": [
+        "1993",
+        "港片",
+        "喜劇"
+      ],
+      "category": "hongkongMovies",
+      "elo": 1427.3496661013808,
+      "games": 13,
+      "exported_score": 7.1
     },
     {
       "title": "鹿鼎大帝",
@@ -6248,6 +6248,21 @@
       "exported_score": 7.0
     },
     {
+      "title": "絕世好賓",
+      "score": 6.9,
+      "note": "劉青雲演主角的搞笑愛情片",
+      "poster": "./img/movie/絕世好賓.webp",
+      "tags": [
+        "2004",
+        "喜劇",
+        "愛情"
+      ],
+      "category": "hongkongMovies",
+      "elo": 1375.0612270157612,
+      "games": 14,
+      "exported_score": 6.9
+    },
+    {
       "title": "鹿鼎記",
       "score": 6.9,
       "note": "周星馳系列，跟原著完全沒關係但很好笑，1>2",
@@ -6274,21 +6289,6 @@
       ],
       "category": "hongkongMovies",
       "elo": 1370.4664047772067,
-      "games": 14,
-      "exported_score": 6.9
-    },
-    {
-      "title": "絕世好賓",
-      "score": 6.9,
-      "note": "劉青雲演主角的搞笑愛情片",
-      "poster": "./img/movie/絕世好賓.webp",
-      "tags": [
-        "2004",
-        "喜劇",
-        "愛情"
-      ],
-      "category": "hongkongMovies",
-      "elo": 1375.0612270157612,
       "games": 14,
       "exported_score": 6.9
     },
@@ -6382,20 +6382,6 @@
       "exported_score": 6.5
     },
     {
-      "title": "監獄風雲 1~2",
-      "score": 6.5,
-      "note": "滿可怕的監獄片，小時候看有點怕，1>2",
-      "poster": "./img/movie/監獄風雲.webp",
-      "tags": [
-        "1987",
-        "劇情"
-      ],
-      "category": "hongkongMovies",
-      "elo": 1293.1450867460435,
-      "games": 12,
-      "exported_score": 6.5
-    },
-    {
       "title": "新精武門1991",
       "score": 6.5,
       "note": "周星馳系列，只記得最後拳賽那段",
@@ -6408,6 +6394,20 @@
       "category": "hongkongMovies",
       "elo": 1295.978105513806,
       "games": 15,
+      "exported_score": 6.5
+    },
+    {
+      "title": "監獄風雲 1~2",
+      "score": 6.5,
+      "note": "滿可怕的監獄片，小時候看有點怕，1>2",
+      "poster": "./img/movie/監獄風雲.webp",
+      "tags": [
+        "1987",
+        "劇情"
+      ],
+      "category": "hongkongMovies",
+      "elo": 1293.1450867460435,
+      "games": 12,
       "exported_score": 6.5
     },
     {
@@ -6603,21 +6603,6 @@
       "exported_score": 8.0
     },
     {
-      "title": "龍貓",
-      "score": 8.0,
-      "note": "我直接承認童年濾鐿加成，但這部真的值得在人生中看一遍",
-      "poster": "./img/movie/龍貓.webp",
-      "tags": [
-        "1988",
-        "經典",
-        "奇幻"
-      ],
-      "category": "animeMovies",
-      "elo": 1591.794801274887,
-      "games": 17,
-      "exported_score": 8.0
-    },
-    {
       "title": "你的名字",
       "score": 8.0,
       "note": "新海誠畫面絢麗，純愛劇情",
@@ -6633,6 +6618,21 @@
       "exported_score": 8.0
     },
     {
+      "title": "龍貓",
+      "score": 8.0,
+      "note": "我直接承認童年濾鐿加成，但這部真的值得在人生中看一遍",
+      "poster": "./img/movie/龍貓.webp",
+      "tags": [
+        "1988",
+        "經典",
+        "奇幻"
+      ],
+      "category": "animeMovies",
+      "elo": 1591.794801274887,
+      "games": 17,
+      "exported_score": 8.0
+    },
+    {
       "title": "蠟筆小新：搞怪遊樂園大冒險",
       "score": 7.9,
       "note": "邪惡的同性戀雙魔玩抽鬼牌，印象深刻",
@@ -6645,20 +6645,6 @@
       "elo": 1584.1136603562738,
       "games": 12,
       "exported_score": 7.9
-    },
-    {
-      "title": "蠟筆小新：動感超人VS高衩魔王",
-      "score": 7.8,
-      "note": "我的第一部蠟筆小新劇場版，以前的作品有些政治不正確反而超好笑的",
-      "poster": "./img/movie/蠟筆小新：動感超人VS高衩魔王.webp",
-      "tags": [
-        "1993",
-        "蠟筆小新"
-      ],
-      "category": "animeMovies",
-      "elo": 1565.9378761147852,
-      "games": 14,
-      "exported_score": 7.8
     },
     {
       "title": "超人特攻隊 1~2",
@@ -6704,6 +6690,20 @@
       "exported_score": 7.8
     },
     {
+      "title": "蠟筆小新：動感超人VS高衩魔王",
+      "score": 7.8,
+      "note": "我的第一部蠟筆小新劇場版，以前的作品有些政治不正確反而超好笑的",
+      "poster": "./img/movie/蠟筆小新：動感超人VS高衩魔王.webp",
+      "tags": [
+        "1993",
+        "蠟筆小新"
+      ],
+      "category": "animeMovies",
+      "elo": 1565.9378761147852,
+      "games": 14,
+      "exported_score": 7.8
+    },
+    {
       "title": "蠟筆小新：不理不理王國的秘寶",
       "score": 7.8,
       "note": "跳舞那段很白痴，好笑",
@@ -6732,20 +6732,6 @@
       "exported_score": 7.7
     },
     {
-      "title": "大英雄天團",
-      "score": 7.6,
-      "note": "角色可愛劇情流暢",
-      "poster": "./img/movie/大英雄天團.webp",
-      "tags": [
-        "2014",
-        "溫馨"
-      ],
-      "category": "animeMovies",
-      "elo": 1517.9180470679355,
-      "games": 12,
-      "exported_score": 7.6
-    },
-    {
       "title": "跳躍吧時空少女",
       "score": 7.6,
       "note": "最喜歡的細田守作品",
@@ -6761,6 +6747,20 @@
       "exported_score": 7.6
     },
     {
+      "title": "大英雄天團",
+      "score": 7.6,
+      "note": "角色可愛劇情流暢",
+      "poster": "./img/movie/大英雄天團.webp",
+      "tags": [
+        "2014",
+        "溫馨"
+      ],
+      "category": "animeMovies",
+      "elo": 1517.9180470679355,
+      "games": 12,
+      "exported_score": 7.6
+    },
+    {
       "title": "蠟筆小新：3分鐘百變大進擊",
       "score": 7.5,
       "note": "我很喜歡這部，小時候在電腦上用PPS看的",
@@ -6773,20 +6773,6 @@
       "elo": 1509.7430678944322,
       "games": 14,
       "exported_score": 7.5
-    },
-    {
-      "title": "蠟筆小新：風起雲湧 光榮燒肉之路",
-      "score": 7.4,
-      "note": "超經典的一部，更愛你了",
-      "poster": "./img/movie/蠟筆小新：風起雲湧 光榮燒肉之路.webp",
-      "tags": [
-        "2003",
-        "蠟筆小新"
-      ],
-      "category": "animeMovies",
-      "elo": 1485.7756378906188,
-      "games": 14,
-      "exported_score": 7.4
     },
     {
       "title": "天外奇蹟",
@@ -6814,6 +6800,20 @@
       ],
       "category": "animeMovies",
       "elo": 1486.954304893993,
+      "games": 14,
+      "exported_score": 7.4
+    },
+    {
+      "title": "蠟筆小新：風起雲湧 光榮燒肉之路",
+      "score": 7.4,
+      "note": "超經典的一部，更愛你了",
+      "poster": "./img/movie/蠟筆小新：風起雲湧 光榮燒肉之路.webp",
+      "tags": [
+        "2003",
+        "蠟筆小新"
+      ],
+      "category": "animeMovies",
+      "elo": 1485.7756378906188,
       "games": 14,
       "exported_score": 7.4
     },
@@ -6846,6 +6846,19 @@
       "exported_score": 7.3
     },
     {
+      "title": "冰雪奇緣 1~2",
+      "score": 7.3,
+      "note": "畫面漂亮、音樂好聽，開始靠向女性主義主題的迪士尼，1>2",
+      "poster": "./img/movie/冰雪奇緣.webp",
+      "tags": [
+        "2013"
+      ],
+      "category": "animeMovies",
+      "elo": 1458.199721451087,
+      "games": 13,
+      "exported_score": 7.3
+    },
+    {
       "title": "吉伊卡哇人魚島的秘密",
       "score": 7.3,
       "note": "還可以，微微黑暗一如既往的維持吉伊卡哇的基調，但我覺得不夠好",
@@ -6856,19 +6869,6 @@
       ],
       "category": "animeMovies",
       "elo": 1452.8595579721293,
-      "games": 13,
-      "exported_score": 7.3
-    },
-    {
-      "title": "冰雪奇緣 1~2",
-      "score": 7.3,
-      "note": "畫面漂亮、音樂好聽，開始靠向女性主義主題的迪士尼，1>2",
-      "poster": "./img/movie/冰雪奇緣.webp",
-      "tags": [
-        "2013"
-      ],
-      "category": "animeMovies",
-      "elo": 1458.199721451087,
       "games": 13,
       "exported_score": 7.3
     },
@@ -6887,20 +6887,6 @@
       "exported_score": 7.3
     },
     {
-      "title": "蠟筆小新：大對決！機器人爸爸的反擊",
-      "score": 7.2,
-      "note": "滿可愛的一部，稍稍感動",
-      "poster": "./img/movie/蠟筆小新：大對決！機器人爸爸的反擊.webp",
-      "tags": [
-        "2014",
-        "蠟筆小新"
-      ],
-      "category": "animeMovies",
-      "elo": 1439.1152585897644,
-      "games": 15,
-      "exported_score": 7.2
-    },
-    {
       "title": "100公尺",
       "score": 7.3,
       "note": "雨中的那場比賽，一鏡到底配上手繪線條太強了，教科書等級",
@@ -6913,6 +6899,20 @@
       "elo": 1451.9337193763633,
       "games": 15,
       "exported_score": 7.3
+    },
+    {
+      "title": "天氣之子",
+      "score": 7.2,
+      "note": "新海誠的畫面無可挑剔，但劇本稍弱了一點",
+      "poster": "./img/movie/天氣之子.webp",
+      "tags": [
+        "2019",
+        "劇情"
+      ],
+      "category": "animeMovies",
+      "elo": 1446.1339762570078,
+      "games": 13,
+      "exported_score": 7.2
     },
     {
       "title": "腦筋急轉彎 1~2",
@@ -6929,32 +6929,17 @@
       "exported_score": 7.2
     },
     {
-      "title": "北極百貨的秋乃小姐",
-      "score": 7.1,
-      "note": "還不錯的輕鬆可愛的百貨日常，金叔的聲音好頂",
-      "poster": "./img/movie/北極百貨的秋乃小姐.webp",
-      "tags": [
-        "2023",
-        "日常",
-        "奇幻"
-      ],
-      "category": "animeMovies",
-      "elo": 1425.80893241748,
-      "games": 14,
-      "exported_score": 7.1
-    },
-    {
-      "title": "天氣之子",
+      "title": "蠟筆小新：大對決！機器人爸爸的反擊",
       "score": 7.2,
-      "note": "新海誠的畫面無可挑剔，但劇本稍弱了一點",
-      "poster": "./img/movie/天氣之子.webp",
+      "note": "滿可愛的一部，稍稍感動",
+      "poster": "./img/movie/蠟筆小新：大對決！機器人爸爸的反擊.webp",
       "tags": [
-        "2019",
-        "劇情"
+        "2014",
+        "蠟筆小新"
       ],
       "category": "animeMovies",
-      "elo": 1446.1339762570078,
-      "games": 13,
+      "elo": 1439.1152585897644,
+      "games": 15,
       "exported_score": 7.2
     },
     {
@@ -6984,6 +6969,21 @@
       "elo": 1430.0877985576374,
       "games": 13,
       "exported_score": 7.2
+    },
+    {
+      "title": "北極百貨的秋乃小姐",
+      "score": 7.1,
+      "note": "還不錯的輕鬆可愛的百貨日常，金叔的聲音好頂",
+      "poster": "./img/movie/北極百貨的秋乃小姐.webp",
+      "tags": [
+        "2023",
+        "日常",
+        "奇幻"
+      ],
+      "category": "animeMovies",
+      "elo": 1425.80893241748,
+      "games": 14,
+      "exported_score": 7.1
     },
     {
       "title": "Kpop 獵魔女團",
@@ -7016,20 +7016,6 @@
       "exported_score": 7.1
     },
     {
-      "title": "瓦力",
-      "score": 7.0,
-      "note": "沒有台詞，但是很有意思的末日電影",
-      "poster": "./img/movie/瓦力.webp",
-      "tags": [
-        "2008",
-        "科幻"
-      ],
-      "category": "animeMovies",
-      "elo": 1409.9515524298452,
-      "games": 14,
-      "exported_score": 7.0
-    },
-    {
       "title": "蜘蛛人：新宇宙",
       "score": 7.1,
       "note": "看完沒有什麼記憶點，但是記得整體很不錯",
@@ -7042,6 +7028,20 @@
       "elo": 1416.2457569749506,
       "games": 14,
       "exported_score": 7.1
+    },
+    {
+      "title": "瓦力",
+      "score": 7.0,
+      "note": "沒有台詞，但是很有意思的末日電影",
+      "poster": "./img/movie/瓦力.webp",
+      "tags": [
+        "2008",
+        "科幻"
+      ],
+      "category": "animeMovies",
+      "elo": 1409.9515524298452,
+      "games": 14,
+      "exported_score": 7.0
     },
     {
       "title": "崖上的波妞",
@@ -7185,5 +7185,6 @@
       "exported_score": 6.3
     }
   ],
-  "match_count": 3427
+  "match_count": 3446,
+  "dirty": false
 }
