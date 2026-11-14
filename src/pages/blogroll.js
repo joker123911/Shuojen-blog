@@ -1,5 +1,6 @@
 import React from 'react';
 import Layout from '@theme/Layout';
+import Link from '@docusaurus/Link';
 import BlogrollGrid from '@site/src/components/Blogroll/BlogrollGrid';
 import { blogrollLinks } from '@site/src/data/generated/blogrollData.js';
 
@@ -68,7 +69,7 @@ export default function BlogrollPage() {
           </div>
           <div className="admonition-content">
             <p style={{ margin: 0 }}>
-              本頁面自動同步我的 <a href="/blog/2025/09/16/rss">RSS</a> 訂閱名冊。來源就是到處在各個網站連來連去，只要看到有趣的就加進來；讀著讀著，那些令人驚豔的文章總會讓我不知不覺記住作者，然後忍不住也寫一篇帶原文連結的文章來表達支持，對我來說，這就是部落格最純粹、迷人之處吧。
+              本頁面自動同步我的 <Link to="/blog/2025/09/16/rss">RSS</Link> 訂閱名冊。來源就是到處在各個網站連來連去，只要看到有趣的就加進來；讀著讀著，那些令人驚豔的文章總會讓我不知不覺記住作者，然後忍不住也寫一篇帶原文連結的文章來表達支持，對我來說，這就是部落格最純粹、迷人之處吧。
             </p>
           </div>
         </div>

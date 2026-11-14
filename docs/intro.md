@@ -4,6 +4,8 @@ title: 興趣
 hide_title: true
 ---
 
+import Link from '@docusaurus/Link';
+
 <div className="site-hero-wrapper">
   <h1 className="site-hero-title">Hobby</h1>
 </div>
@@ -76,48 +78,48 @@ hide_title: true
 
 <div class="interest-grid">
 
-  <a href="/docs/aqua" class="interest-card" style={{'--index': 1}}>
+  <Link to="/docs/aqua" className="interest-card" style={{'--index': 1}}>
     <h3>🐠 水族造景</h3>
     <p>記錄我的一些水草造景，未來再補充一些水族筆記。</p>
-  </a>
+  </Link>
 
-  <a href="/docs/chess/introduce" class="interest-card" style={{'--index': 2}}>
+  <Link to="/docs/chess/introduce" className="interest-card" style={{'--index': 2}}>
     <h3>♟️ 西洋棋</h3>
     <p>記錄玩西洋棋的啟蒙還有一些分數成長史，未來想要詳細記錄我使用的開局系統。</p>
-  </a>
+  </Link>
 
-  <a href="/docs/music/guitar" class="interest-card" style={{'--index': 3}}>
+  <Link to="/docs/music/guitar" className="interest-card" style={{'--index': 3}}>
     <h3>🎸 吉他</h3>
     <p>記錄一些吉他演奏，未來再補充一些吉他故事。</p>
-  </a>
+  </Link>
 
-  <a href="/docs/music/piano" class="interest-card" style={{'--index': 4}}>
+  <Link to="/docs/music/piano" className="interest-card" style={{'--index': 4}}>
     <h3>🎹 鋼琴</h3>
     <p>記錄一些學鋼琴故事，有認真練好的曲子再放上來。</p>
-  </a>
+  </Link>
 
-  <a href="/docs/rubiks_cube/start" class="interest-card" style={{'--index': 5}}>
+  <Link to="/docs/rubiks_cube/start" className="interest-card" style={{'--index': 5}}>
     <h3>🧊 魔術方塊</h3>
     <p>記錄玩魔術方塊的故事還有 WCA 比賽，盲解學習停滯中。</p>
-  </a>
+  </Link>
 
-  <a href="/docs/keyboard" class="interest-card" style={{'--index': 6}}>
+  <Link to="/docs/keyboard" className="interest-card" style={{'--index': 6}}>
     <h3>⌨️ 機械鍵盤</h3>
     <p>記錄一些機械鍵盤指南，還有跟大隊長、王胖一起玩鍵盤的過程。</p>
-  </a>
+  </Link>
 
-  <a href="/docs/concert/" class="interest-card" style={{'--index': 7}}>
+  <Link to="/docs/concert/" className="interest-card" style={{'--index': 7}}>
     <h3>🎙️ 演唱會</h3>
     <p>記錄參加過的各種演唱會。</p>
-  </a>
+  </Link>
 
-  <a href="/docs/draw/" class="interest-card" style={{'--index': 8}}>
+  <Link to="/docs/draw/" className="interest-card" style={{'--index': 8}}>
     <h3>🖌️ 塗鴉</h3>
     <p>記錄一些隨筆塗鴉。</p>
-  </a>
+  </Link>
 
-  <a href="/docs/motorcycle/" class="interest-card" style={{'--index': 9}}>
+  <Link to="/docs/motorcycle/" className="interest-card" style={{'--index': 9}}>
     <h3>🏍️ 檔車故事</h3>
     <p>記錄一些檔車小故事。</p>
-  </a>
+  </Link>
 </div>

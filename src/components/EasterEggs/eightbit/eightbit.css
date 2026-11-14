@@ -1,0 +1,500 @@
+/* =========================================================================
+   8-bit 彩蛋（Konami 秘技 ↑↑↓↓←→←→BA）：紅白機橫向卷軸遊戲風格
+   所有樣式都掛在 <html data-easter-egg="eightbit"> 底下，屬性拿掉就完全恢復原樣。
+   藍天白雲、山丘草叢、磚塊地面、標題招牌、站在地上的小狗；深淺色模式共用同一套白天配色。
+   字型：俐方體11號（Cubic 11，SIL OFL 1.1）；素材：sprites/ 內的原創點陣圖
+   ========================================================================= */
+
+/* ---------- 轉場 canvas（不論模式開關都要能顯示） ---------- */
+.eightbit-transition {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2147483000;
+  image-rendering: pixelated;
+}
+
+/* ---------- 色票 → Infima 變數 ---------- */
+html[data-easter-egg='eightbit'][data-theme] {
+  --8b-sky: #5c94fc;
+  --8b-black: #000000;
+  --8b-white: #fcfcfc;
+  --8b-panel: #fffbf0;
+  --8b-cream: #fce0a8;
+  --8b-brick: #c84c0c;
+  --8b-plate-light: #fcbcb0;
+  --8b-coin: #fca044;
+  --8b-blue: #0058f8;
+  --8b-brown: #503000;
+  --8b-shadow: rgba(0, 0, 0, 0.35);
+  --8b-ground-h: 32px;
+  --8b-font: 'Cubic11', 'jfOpenHuninn', 'Huninn', monospace;
+
+  --ifm-color-scheme: light;
+  --ifm-background-color: var(--8b-sky);
+  --ifm-background-surface-color: var(--8b-panel);
+  --ifm-font-color-base: var(--8b-black);
+  --ifm-font-color-secondary: #303030;
+  --ifm-color-content: var(--8b-black);
+  --ifm-color-content-secondary: #303030;
+  --ifm-color-content-inverse: var(--8b-white);
+  --ifm-heading-color: var(--8b-brick);
+
+  --ifm-color-primary: var(--8b-brick);
+  --ifm-color-primary-dark: var(--8b-brick);
+  --ifm-color-primary-darker: var(--8b-brick);
+  --ifm-color-primary-darkest: var(--8b-brick);
+  --ifm-color-primary-light: var(--8b-brick);
+  --ifm-color-primary-lighter: var(--8b-brick);
+  --ifm-color-primary-lightest: var(--8b-brick);
+  --ifm-link-color: var(--8b-blue);
+  --ifm-link-hover-color: var(--8b-brick);
+
+  --ifm-navbar-background-color: var(--8b-sky);
+  --ifm-navbar-shadow: none;
+  --ifm-navbar-link-color: var(--8b-white);
+  --ifm-navbar-link-hover-color: var(--8b-coin);
+  --ifm-navbar-link-active-color: var(--8b-coin);
+  --ifm-footer-background-color: var(--8b-black);
+  --ifm-footer-color: var(--8b-white);
+  --ifm-footer-link-color: var(--8b-white);
+  --ifm-footer-link-hover-color: var(--8b-coin);
+  --ifm-footer-title-color: var(--8b-coin);
+  --ifm-card-background-color: var(--8b-panel);
+  --ifm-dropdown-background-color: var(--8b-panel);
+  --ifm-dropdown-link-color: var(--8b-black);
+  --ifm-menu-color: var(--8b-black);
+  --ifm-menu-color-active: var(--8b-white);
+  --ifm-menu-color-background-active: var(--8b-black);
+  --ifm-menu-color-background-hover: rgba(252, 252, 252, 0.35);
+  --ifm-hover-overlay: rgba(252, 252, 252, 0.35);
+  --ifm-toc-border-color: var(--8b-black);
+  --ifm-toc-link-color: var(--8b-black);
+  --ifm-hr-background-color: var(--8b-black);
+  --ifm-table-border-color: var(--8b-black);
+  --ifm-table-border-width: 2px;
+  --ifm-table-stripe-background: rgba(252, 224, 168, 0.4);
+  --ifm-code-background: var(--8b-cream);
+  --ifm-breadcrumb-item-background-active: var(--8b-cream);
+  --ifm-scrollbar-track-background-color: transparent;
+  --ifm-scrollbar-thumb-background-color: var(--8b-brick);
+  --ifm-scrollbar-thumb-hover-background-color: var(--8b-black);
+
+  --ifm-color-emphasis-0: #ffffff;
+  --ifm-color-emphasis-100: #fff3dc;
+  --ifm-color-emphasis-200: #f0e2c4;
+  --ifm-color-emphasis-300: #bcbcbc;
+  --ifm-color-emphasis-400: #a0a0a0;
+  --ifm-color-emphasis-500: #7c7c7c;
+  --ifm-color-emphasis-600: #5c5c5c;
+  --ifm-color-emphasis-700: #3c3c3c;
+  --ifm-color-emphasis-800: #202020;
+  --ifm-color-emphasis-900: #000000;
+  --ifm-color-emphasis-1000: #000000;
+
+  --ifm-global-radius: 0;
+  --ifm-button-border-radius: 0;
+  --ifm-card-border-radius: 0;
+  --ifm-code-border-radius: 0;
+  --ifm-pagination-nav-border-radius: 0;
+  --ifm-alert-border-radius: 0;
+  --ifm-badge-border-radius: 0;
+  --ifm-breadcrumb-border-radius: 0;
+  --ifm-global-shadow-lw: 4px 4px 0 var(--8b-shadow);
+  --ifm-global-shadow-md: 4px 4px 0 var(--8b-shadow);
+  --ifm-global-shadow-tl: 6px 6px 0 var(--8b-shadow);
+
+  --ifm-font-family-base: var(--8b-font);
+  --ifm-heading-font-family: var(--8b-font);
+  --ifm-heading-font-weight: 400;
+
+  /* 藍天，白雲固定在背景上，內容捲動時像在雲前面走 */
+  background: var(--8b-sky) url('./sprites/clouds.svg') 0 24px / 640px 360px repeat fixed;
+
+  /* 點陣字沒有粗體、斜體；關掉瀏覽器的假粗體，強調改用顏色表現 */
+  font-synthesis: none;
+  -webkit-font-smoothing: none;
+}
+
+/* ---------- 全站換成點陣字（程式碼與數學式維持原字型，避免對不齊） ---------- */
+html[data-easter-egg='eightbit'] body,
+html[data-easter-egg='eightbit'] body *:not(code, code *, pre, pre *, kbd, samp, .katex, .katex *) {
+  font-family: var(--8b-font) !important;
+}
+
+/* ---------- 去掉所有圓角 ---------- */
+html[data-easter-egg='eightbit'] *,
+html[data-easter-egg='eightbit'] *::before,
+html[data-easter-egg='eightbit'] *::after {
+  border-radius: 0 !important;
+}
+
+html[data-easter-egg='eightbit'] ::selection {
+  background: var(--8b-coin);
+  color: var(--8b-black);
+}
+
+/* ---------- 場景：山丘草叢（在內容後面）與磚塊地面（固定在畫面底部） ---------- */
+html[data-easter-egg='eightbit'] body {
+  padding-bottom: var(--8b-ground-h);
+}
+
+html[data-easter-egg='eightbit'] body::before {
+  content: '';
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: var(--8b-ground-h);
+  height: 90px;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    url('./sprites/hill.svg') left 2% bottom / 180px 84px no-repeat,
+    url('./sprites/bush.svg') left 24% bottom / 96px 36px no-repeat,
+    url('./sprites/hill.svg') right 24% bottom / 112px 52px no-repeat,
+    url('./sprites/bush.svg') right 3% bottom / 96px 36px no-repeat;
+}
+
+html[data-easter-egg='eightbit'] body::after {
+  content: '';
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--8b-ground-h);
+  z-index: calc(var(--ifm-z-index-fixed) - 20);
+  pointer-events: none;
+  background: url('./sprites/brick.svg') 0 0 / var(--8b-ground-h) var(--8b-ground-h) repeat-x;
+}
+
+/* 站在地面上的小狗，原地輕輕彈跳 */
+.eightbit-player {
+  position: fixed;
+  left: 20px;
+  bottom: var(--8b-ground-h);
+  z-index: calc(var(--ifm-z-index-fixed) - 15);
+  width: 56px;
+  height: 40px;
+  pointer-events: none;
+  background: url('./sprites/dog.svg') center / contain no-repeat;
+  animation: eightbit-hop 0.9s steps(1, end) infinite;
+}
+
+@keyframes eightbit-hop {
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+/* 金幣圖示（HUD、離開按鈕、連結游標共用） */
+.eightbit-coin {
+  display: inline-block;
+  width: 12px;
+  height: 16px;
+  vertical-align: -2px;
+  background: url('./sprites/coin.svg') center / contain no-repeat;
+  animation: eightbit-coin-spin 0.8s steps(1, end) infinite;
+}
+
+@keyframes eightbit-coin-spin {
+  50% {
+    transform: scaleX(0.4);
+  }
+}
+
+/* ---------- 導覽列與 HUD：天空上的白字 ---------- */
+html[data-easter-egg='eightbit'] .navbar {
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+html[data-easter-egg='eightbit'] :is(.navbar__link, .navbar__toggle, .navbar .clean-btn) {
+  text-shadow: 2px 2px 0 var(--8b-black);
+}
+
+html[data-easter-egg='eightbit'] :is(.navbar__toggle, .navbar .clean-btn) {
+  color: var(--8b-white);
+}
+
+html[data-easter-egg='eightbit'] .navbar-sidebar {
+  --ifm-navbar-link-color: var(--8b-black);
+}
+
+/* 文件頁側欄會往上延伸到導覽列底下，它的分隔線會穿過 HUD；天空背景本來就分得出區塊，拿掉 */
+html[data-easter-egg='eightbit'] .theme-doc-sidebar-container {
+  border-right: 0;
+}
+
+.eightbit-hud {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  justify-content: space-between;
+  /* 外層 #__docusaurus 是 flex 直排，要明確給寬度才不會縮成內容寬 */
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 1rem var(--ifm-navbar-padding-horizontal) 0.25rem;
+  color: var(--8b-white);
+  font-size: 18px;
+  line-height: 1.35;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-shadow: 2px 2px 0 var(--8b-black);
+}
+
+.eightbit-hud > :first-child {
+  text-align: left;
+}
+
+.eightbit-hud .eightbit-coin {
+  margin-right: 4px;
+}
+
+/* ---------- 標題招牌：文章標題做成凸起的磚紅色看板 ---------- */
+html[data-easter-egg='eightbit'] article :is(h1, header h2),
+html[data-easter-egg='eightbit'] .gallery-title {
+  display: table;
+  max-width: 100%;
+  padding: 0.45em 0.8em 0.4em;
+  background: var(--8b-brick);
+  color: var(--8b-plate-light);
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  text-shadow: 3px 3px 0 var(--8b-black);
+  border: 4px solid;
+  border-color: var(--8b-plate-light) var(--8b-black) var(--8b-black) var(--8b-plate-light);
+  box-shadow: 6px 6px 0 var(--8b-shadow);
+}
+
+html[data-easter-egg='eightbit'] .gallery-title {
+  display: inline-block;
+  white-space: normal;
+}
+
+/* 文件頁置中的手寫大標題（custom.css 用 !important 指定了顏色） */
+html[data-easter-egg='eightbit'] .site-hero-title {
+  margin-inline: auto;
+  color: var(--8b-plate-light) !important;
+}
+
+html[data-easter-egg='eightbit'] article :is(h1, header h2) a {
+  color: inherit;
+  text-decoration: none;
+}
+
+html[data-easter-egg='eightbit'] .typewriter-cursor {
+  background-color: var(--8b-plate-light);
+}
+
+/* ---------- 內文看板：文章放在白色方框裡，方便閱讀 ---------- */
+html[data-easter-egg='eightbit'] main article:not(article article) {
+  padding: clamp(1rem, 3vw, 2rem);
+  background: var(--8b-panel);
+  border: 4px solid var(--8b-black);
+  box-shadow: 6px 6px 0 var(--8b-shadow);
+}
+
+html[data-easter-egg='eightbit'] .markdown :is(h2, h3, h4) {
+  color: var(--8b-brick);
+}
+
+html[data-easter-egg='eightbit'] .markdown h2 {
+  border-bottom: 0;
+  background: repeating-linear-gradient(90deg, var(--8b-black) 0 8px, transparent 8px 16px) left bottom / 100% 4px no-repeat;
+}
+
+html[data-easter-egg='eightbit'] hr {
+  height: 4px;
+  border: 0;
+  background: repeating-linear-gradient(90deg, var(--8b-black) 0 8px, transparent 8px 16px);
+}
+
+html[data-easter-egg='eightbit'] :is(strong, b) {
+  font-weight: 400;
+  color: var(--8b-brick);
+}
+
+html[data-easter-egg='eightbit'] em {
+  font-style: normal;
+  color: var(--8b-brown);
+}
+
+html[data-easter-egg='eightbit'] .markdown a {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+html[data-easter-egg='eightbit'] .markdown blockquote {
+  border-left: 8px solid var(--8b-brick);
+  background: var(--8b-cream);
+  color: var(--8b-black);
+}
+
+html[data-easter-egg='eightbit'] .markdown :not(pre) > code {
+  border: 0;
+  color: var(--8b-black);
+}
+
+html[data-easter-egg='eightbit'] .markdown th {
+  background: var(--8b-cream);
+}
+
+html[data-easter-egg='eightbit'] div[class*='codeBlockContainer_'] {
+  border: 4px solid var(--8b-black);
+  box-shadow: 4px 4px 0 var(--8b-shadow);
+}
+
+html[data-easter-egg='eightbit'] .alert {
+  --ifm-alert-background-color: var(--8b-cream);
+  --ifm-alert-background-color-highlight: rgba(0, 0, 0, 0.08);
+  --ifm-alert-foreground-color: var(--8b-black);
+  border-style: solid;
+  border-width: 4px 4px 4px 10px;
+  border-color: var(--8b-black);
+  border-left-color: var(--ifm-alert-border-color);
+  box-shadow: none;
+}
+
+/* ---------- 方框元件：粗黑框 + 硬陰影，按下去會陷進去 ---------- */
+html[data-easter-egg='eightbit'] :is(.card, .pagination-nav__link) {
+  background: var(--8b-panel);
+  border: 4px solid var(--8b-black);
+  box-shadow: 4px 4px 0 var(--8b-shadow);
+}
+
+html[data-easter-egg='eightbit'] .dropdown__menu {
+  border: 4px solid var(--8b-black);
+  box-shadow: 4px 4px 0 var(--8b-shadow);
+}
+
+html[data-easter-egg='eightbit'] .button {
+  --ifm-button-border-width: 4px;
+  box-shadow: 4px 4px 0 var(--8b-shadow);
+  transition: none;
+}
+
+html[data-easter-egg='eightbit'] :is(.button, .pagination-nav__link):active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+
+/* ---------- 頁尾 ---------- */
+html[data-easter-egg='eightbit'] .footer {
+  border-top: 4px solid var(--8b-black);
+}
+
+html[data-easter-egg='eightbit'] .theme-back-to-top-button {
+  bottom: calc(var(--8b-ground-h) + 1.3rem);
+}
+
+/* ---------- 滑過連結時左邊轉出一枚金幣，當作選單游標 ---------- */
+html[data-easter-egg='eightbit'] :is(.navbar__link, .dropdown__link, .menu__link, .footer__link-item, [class*='sidebarItemLink_']) {
+  position: relative;
+}
+
+html[data-easter-egg='eightbit'] .dropdown__link {
+  padding-left: 1.5rem;
+}
+
+html[data-easter-egg='eightbit'] :is(.navbar__link, .dropdown__link, .menu__link, .footer__link-item, [class*='sidebarItemLink_']):hover::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 1px;
+  width: 9px;
+  height: 12px;
+  margin-top: -6px;
+  background: url('./sprites/coin.svg') center / contain no-repeat;
+  animation: eightbit-coin-spin 0.8s steps(1, end) infinite;
+}
+
+html[data-easter-egg='eightbit'] :is(.footer__link-item, [class*='sidebarItemLink_']):hover::before {
+  left: -16px;
+}
+
+/* ---------- 捲軸 ---------- */
+html[data-easter-egg='eightbit'] ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+html[data-easter-egg='eightbit'] ::-webkit-scrollbar-thumb {
+  background-color: var(--8b-brick);
+  border: 2px solid var(--8b-black);
+  border-radius: 0;
+}
+
+html[data-easter-egg='eightbit'] ::-webkit-scrollbar-track {
+  background-color: var(--8b-sky);
+}
+
+/* ---------- 左下角「離開」按鈕，站在地面上 ---------- */
+.eightbit-exit {
+  position: fixed;
+  left: 88px;
+  bottom: calc(var(--8b-ground-h) + 2px);
+  z-index: calc(var(--ifm-z-index-fixed) - 10);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  color: var(--8b-white);
+  background: var(--8b-black);
+  border: 4px solid var(--8b-white);
+  cursor: pointer;
+}
+
+.eightbit-exit:hover,
+.eightbit-exit:focus-visible {
+  color: var(--8b-coin);
+}
+
+.eightbit-exit:focus-visible {
+  outline: 4px solid var(--8b-coin);
+  outline-offset: 2px;
+}
+
+.eightbit-exit:active {
+  transform: translateY(2px);
+}
+
+.eightbit-exit .eightbit-coin {
+  width: 9px;
+  height: 12px;
+}
+
+@media (max-width: 600px) {
+  .eightbit-hud {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+  }
+
+  html[data-easter-egg='eightbit'] body::before {
+    transform: scale(0.75);
+    transform-origin: bottom center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-easter-egg='eightbit'] *,
+  html[data-easter-egg='eightbit'] *::before {
+    animation-name: none !important;
+  }
+
+  .eightbit-player,
+  .eightbit-coin {
+    animation: none;
+  }
+}
+
+@media print {
+  .eightbit-exit,
+  .eightbit-player,
+  .eightbit-hud {
+    display: none;
+  }
+}

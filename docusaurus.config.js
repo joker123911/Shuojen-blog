@@ -4,6 +4,7 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import autoMeta from './plugins/auto-meta.js';
 import wordCount from './plugins/word-count.js';
+import {EASTER_EGG_RESTORE_SCRIPT} from './src/components/EasterEggs/constants.js';
 
 /**
  * RSS：frontmatter 有 rss_date 時，以它作為該篇的發布時間（兩個 blog 實例共用）
@@ -56,6 +57,12 @@ const config = {
         name: 'referrer',
         content: 'strict-origin-when-cross-origin',
       },
+    },
+    // 彩蛋模式（src/components/EasterEggs）：重新整理時在繪製前還原模式，避免閃一下原樣式
+    {
+      tagName: 'script',
+      attributes: {},
+      innerHTML: EASTER_EGG_RESTORE_SCRIPT,
     },
   ],
 
