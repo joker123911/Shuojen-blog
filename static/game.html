@@ -907,7 +907,11 @@
         let stepCount = 0;
         let gameFinished = false;
 
-        let selectedIndices = new Set(); 
+        let selectedIndices = new Set();
+        // 「散選格」上限：已選取但還沒連成任何成語（紅線）的格子數。
+        // 已連成紅線的格子不計入，所以可以同時留著好幾條不交叉的成語；
+        // 但無法把整個盤面全選，靠自動連線直接看出所有成語位置
+        const MAX_LOOSE_SELECTED = 6;
         let manualKeys = new Map(); 
         let lockedCells = new Set(); 
         let mobileSelectedChar = null; 
@@ -1053,10 +1057,13 @@
         }
 
         function restoreProgress(data) {
+            // 舊版存檔可能有超過上限的選取（例如全盤選取），還原時截斷
             selectedIndices = new Set(data.selected || []);
             hintedCells = new Set(data.hinted || []);
             manualKeys = new Map(data.keys || []);
             rebuildLockedCells();
+            // 舊版存檔可能有全盤選取之類超過上限的狀態，還原時直接清掉選取
+            if (countLooseSelected() > MAX_LOOSE_SELECTED) selectedIndices.clear();
             (data.slots || []).forEach((ch, i) => {
                 if (slotsEl.children[i]) slotsEl.children[i].textContent = ch || '';
             });
@@ -1510,14 +1517,34 @@ https://shuojen.com/game.html`;
                 } else if (selectedIndices.has(idx)) {
                     selectedIndices.delete(idx);
                     hintedCells.delete(idx);
-                } else {
-                    selectedIndices.add(idx);
+                } else if (!trySelect(idx)) {
+                    return;
                 }
-            } else {
+            } else if (!trySelect(idx)) {
                 // 即使是已鎖定黑線上的字（如「一毛不拔」的「不」），點擊時也能加入選取並亮起黃底
-                selectedIndices.add(idx);
+                return;
             }
             updateVisuals();
+        }
+
+        // 目前選取中、但不屬於任何已連成成語（紅線）的格子數
+        function countLooseSelected() {
+            const inLine = new Set();
+            findAllValid4CharLines(selectionWithKeys()).forEach(line => line.forEach(id => inLine.add(id)));
+            let n = 0;
+            selectedIndices.forEach(id => { if (!inLine.has(id)) n++; });
+            return n;
+        }
+
+        // 加入選取；散選格已達上限時拒絕並提示
+        // （以點擊「前」的狀態判斷，否則能否選取本身就會洩漏「這格能連成成語」的資訊）
+        function trySelect(idx) {
+            if (countLooseSelected() >= MAX_LOOSE_SELECTED) {
+                showHintBanner(`✋ 還沒連成成語的選字最多 ${MAX_LOOSE_SELECTED} 個，請先取消一些再選`, { error: true, duration: 2500 });
+                return false;
+            }
+            selectedIndices.add(idx);
+            return true;
         }
 
         function getValidIdiomsAtPoint(idx, set) {
