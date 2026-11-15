@@ -2,14 +2,41 @@ import React, { useEffect, useRef } from 'react';
 import 'chessground/assets/chessground.base.css';
 import 'chessground/assets/chessground.brown.css';
 import 'chessground/assets/chessground.cburnett.css';
+import './ChessgroundBoard.css';
+import { Chess } from 'chess.js';
 
 const START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
+/**
+ * 依 FEN 判斷輪到的一方是否被將軍／將死，回傳 chessground 需要的 check 與 highlight 設定。
+ * 將軍：沿用 chessground 內建的紅色光暈；將死：王所在格加上 `mate` class（紅色底）。
+ */
+function checkState(fen) {
+  try {
+    const game = new Chess(fen);
+    if (!game.inCheck()) return { check: false, custom: new Map() };
+    const turn = game.turn();
+    const kingSquare = game
+      .board()
+      .flat()
+      .find((p) => p && p.type === 'k' && p.color === turn)?.square;
+    const custom = new Map();
+    if (game.isCheckmate() && kingSquare) custom.set(kingSquare, 'mate');
+    return { check: turn === 'w' ? 'white' : 'black', custom };
+  } catch {
+    return { check: false, custom: new Map() };
+  }
+}
+
 function toConfig({ fen, orientation, lastMove }) {
+  const currentFen = fen || START_FEN;
+  const { check, custom } = checkState(currentFen);
   return {
-    fen: fen || START_FEN,
+    fen: currentFen,
     orientation: orientation === 'b' || orientation === 'black' ? 'black' : 'white',
     lastMove: lastMove && lastMove.length === 2 ? lastMove : undefined,
+    check,
+    highlight: { lastMove: true, check: true, custom },
   };
 }
 

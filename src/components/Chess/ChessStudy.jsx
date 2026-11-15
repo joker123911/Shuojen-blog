@@ -197,7 +197,7 @@ function ChessStudyLogic({
             </div>
 
             <div className={styles.stepIndicator}>
-              {isAtRoot ? '起始' : `第 ${currentNode.ply} 著`}
+              {isAtRoot ? '起始' : `第 ${currentNode.ply - treeData.root.ply} 著`}
             </div>
           </div>
         </div>

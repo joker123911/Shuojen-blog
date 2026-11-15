@@ -186,10 +186,10 @@ import Link from '@docusaurus/Link';
 
 <Marquee gradient={false} speed={60}>
   <div style={{padding: '10px 0', fontSize: '1.1rem'}}>
-    我直接放一個經典的西洋棋開局：后翼棄兵，沒有為什麼，因為個人網頁很***自由***！
+    我直接放一盤[ Bill Gates vs Magnus Carlsen ](https://www.youtube.com/watch?v=oH-txHzE4jA)九步就被將殺的對局，沒有為什麼，因為個人網頁很***自由***！
   </div>
 </Marquee>
-<White pgn="1. d4 d5 2. c4 dxc4 3. e4" />
+<Black pgn="1. e4 Nc6 2. Nf3 d5 3. Bd3 Nf6 4. exd5 Qxd5 5. Nc3 Qh5 6. O-O Bg4 7. h3 Ne5 8. hxg4 Nfxg4 9. Nxe5 Qh2#" />
 
 # 主要內容
 

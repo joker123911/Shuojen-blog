@@ -107,7 +107,11 @@ export function parsePgnToStudyTree(pgn) {
     if (match[1]) {
       // 自訂起始局面：Lichess 從局面開始的章節會帶 [FEN "..."] 標頭
       const fenHeader = match[1].match(/^\[\s*FEN\s+"([^"]+)"/i);
-      if (fenHeader) root.fen = fenHeader[1];
+      if (fenHeader) {
+        root.fen = fenHeader[1];
+        // 黑方先走的局面：讓第一步落在偶數 ply，著法樹才會標成「1... 」
+        root.ply = root.fen.split(' ')[1] === 'b' ? 1 : 0;
+      }
       continue;
     }
     if (match[2]) {

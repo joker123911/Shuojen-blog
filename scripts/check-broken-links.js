@@ -340,6 +340,33 @@ docsFiles.forEach(file => {
   }
 });
 
+// 註冊分類列表頁（generated-index）路由
+function addDocsSlugRoute(slug) {
+  const s = String(slug).trim();
+  addRoute(s.startsWith('/docs/') || s === '/docs' ? s : `/docs${s.startsWith('/') ? '' : '/'}${s}`);
+}
+
+// sidebars.js：category 的 link: { type: 'generated-index', slug: '/xxx' }
+try {
+  const sidebarsSrc = fs.readFileSync(path.join(WORKSPACE, 'sidebars.js'), 'utf8');
+  const slugRegex = /type:\s*['"]generated-index['"][^}]*?slug:\s*['"]([^'"]+)['"]|slug:\s*['"]([^'"]+)['"][^}]*?type:\s*['"]generated-index['"]/g;
+  for (const m of sidebarsSrc.matchAll(slugRegex)) addDocsSlugRoute(m[1] || m[2]);
+} catch (e) {
+  // 沒有 sidebars.js 就略過
+}
+
+// _category_.json：link.type 為 generated-index 時，路由為 slug 或預設的 /category/<label>
+getFiles(DOCS_DIR, /^_category_\.json$/i).forEach(file => {
+  try {
+    const { label, link } = JSON.parse(fs.readFileSync(file, 'utf8'));
+    if (!link || link.type !== 'generated-index') return;
+    if (link.slug) addDocsSlugRoute(link.slug);
+    else if (label) addRoute(`/docs/category/${label.toLowerCase().replace(/\s+/g, '-')}`);
+  } catch (e) {
+    console.error(`Error building route for category file ${file}:`, e.message);
+  }
+});
+
 // 註冊 Pages 路由
 const pageAllFiles = getFiles(PAGES_DIR, /\.(md|mdx|js|jsx|ts|tsx)$/i);
 pageAllFiles.forEach(file => {

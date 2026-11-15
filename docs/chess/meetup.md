@@ -1,6 +1,7 @@
 ---
 title: '西洋棋棋聚'
 sidebar_position: 5
+description: '參加過的各場西洋棋棋聚紀錄。'
 ---
 
 ## 浩然圖書館社團棋聚

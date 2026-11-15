@@ -83,7 +83,7 @@ import Link from '@docusaurus/Link';
     <p>記錄我的一些水草造景，未來再補充一些水族筆記。</p>
   </Link>
 
-  <Link to="/docs/chess/introduce" className="interest-card" style={{'--index': 2}}>
+  <Link to="/docs/chess" className="interest-card" style={{'--index': 2}}>
     <h3>♟️ 西洋棋</h3>
     <p>記錄玩西洋棋的啟蒙還有一些分數成長史，未來想要詳細記錄我使用的開局系統。</p>
   </Link>
@@ -98,7 +98,7 @@ import Link from '@docusaurus/Link';
     <p>記錄一些學鋼琴故事，有認真練好的曲子再放上來。</p>
   </Link>
 
-  <Link to="/docs/rubiks_cube/start" className="interest-card" style={{'--index': 5}}>
+  <Link to="/docs/rubiks_cube" className="interest-card" style={{'--index': 5}}>
     <h3>🧊 魔術方塊</h3>
     <p>記錄玩魔術方塊的故事還有 WCA 比賽，盲解學習停滯中。</p>
   </Link>
