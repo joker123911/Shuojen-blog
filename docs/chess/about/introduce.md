@@ -1,11 +1,12 @@
 ---
+slug: /chess/introduce
 title: '西洋棋推坑'
 sidebar_position: 1
 description: '推坑一個免費又好玩的智力遊戲：西洋棋。'
 ---
 import { White, Black } from '/src/components/Chess/ChessGame';
 
-![img](./img/020.webp)
+![img](../img/020.webp)
 
 今天我來推坑一個非常好玩的免費遊戲，這個遊戲有以下特色：
 

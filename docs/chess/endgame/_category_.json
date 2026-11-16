@@ -1,0 +1,9 @@
+{
+  "label": "關於殘局",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "slug": "/chess/endgame",
+    "description": "基本殺法與理論殘局，附互動棋盤。"
+  }
+}

@@ -1,11 +1,12 @@
 ---
+slug: /chess/competition
 title: '西洋棋紀錄'
 sidebar_position: 3
 description: '各平台積分與比賽紀錄。'
 ---
 *最後更新：2026-09-26*
 
-<img src={require('./img/019.webp').default} width="400" alt="img" />
+<img src={require('../img/019.webp').default} width="400" alt="img" />
 ## 積分(Rating)
 
 ### 最高積分(Highest Rating)
@@ -71,8 +72,8 @@ description: '各平台積分與比賽紀錄。'
 
 ### 111 年中正盃大專組團體賽亞軍（交大西洋棋社）
 
-<img src={require('./img/014.webp').default} width="400" alt="img" />
-<img src={require('./img/015.webp').default} width="400" alt="img" />
+<img src={require('../img/014.webp').default} width="400" alt="img" />
+<img src={require('../img/015.webp').default} width="400" alt="img" />
 
 這盤棋有幸對到清華大學西洋棋社的翁玉芯（台灣國手，WCM 頭銜），持黑最後雙方都快沒時間，僥倖以時間獲勝。
 
@@ -95,4 +96,4 @@ description: '各平台積分與比賽紀錄。'
 
 完整[貼文記錄](/blog/2026/10/18/chess)（含棋譜）
 
-<img src={require('./img/20261018.jpg').default} width="400" alt="img" />
+<img src={require('../img/20261018.jpg').default} width="400" alt="img" />

@@ -1,4 +1,5 @@
 ---
+slug: /chess/chessboard
 title: 四馬蘇格蘭開局
 sidebar_position: 7
 ---

@@ -1,0 +1,9 @@
+{
+  "label": "關於西洋棋",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "slug": "/chess/about",
+    "description": "我和西洋棋的故事、比賽紀錄與棋聚。"
+  }
+}

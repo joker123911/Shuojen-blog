@@ -1,0 +1,9 @@
+{
+  "label": "關於開局",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "slug": "/chess/opening",
+    "description": "我使用的開局系統。"
+  }
+}

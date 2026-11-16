@@ -1,4 +1,5 @@
 ---
+slug: /chess/test
 title: 測試用
 draft: true
 ---
@@ -6,7 +7,7 @@ draft: true
 
 
 import { ChessStudyBlack } from '@site/src/components/Chess/ChessStudy';
-import frenchExchange from './pgn/french-exchange.pgn';
+import frenchExchange from '../pgn/french-exchange.pgn';
 
 這篇文章記錄我對抗 1.e4 的核心武器：**法蘭西防禦 (French Defense)**。我依據對手的不同回應，拆解成以下幾個主要變化分支。
 

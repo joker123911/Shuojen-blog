@@ -1,4 +1,5 @@
 ---
+slug: /chess/rook-endgame
 title: '車兵殘局：Lucena 還是 Philidor？'
 sidebar_position: 8
 description: '車兵對單車殘局的兩大基本局面：Lucena 與 Philidor。'

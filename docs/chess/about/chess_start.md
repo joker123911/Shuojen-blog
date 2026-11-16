@@ -1,4 +1,5 @@
 ---
+slug: /chess/chess_start
 title: '西洋棋與我'
 sidebar_position: 2
 description: '從小時候的 Chess Titans 到后翼棄兵，我和西洋棋的故事。'
@@ -8,7 +9,7 @@ import { White, Black } from '/src/components/Chess/ChessGame';
 ## Chess Titans
 小時候家裡的電腦是 Windows Vista 系統，內建了一個西洋棋遊戲 [Chess Titans](https://zh.wikipedia.org/zh-tw/Chess_Titans)，但是我不知道棋子的規則和走法，所以從來沒有完整下贏電腦過，這也是我第一次接觸西洋棋遊戲。
 
-![img](./img/018.webp)
+![img](../img/018.webp)
 
 ## 后翼棄兵
 
@@ -21,7 +22,7 @@ import { White, Black } from '/src/components/Chess/ChessGame';
 研究所時期，我常常跟我的研究室同學兼室友一起下棋，兩個人都不會下，就覺得特別有趣，這是我的第一盤真人對局，當時覺得自己棄堡攻殺成功太帥了，下了四十分鐘，有完整的棋譜，現在擺出來應該會覺得這個對局很好笑。
 
 
-![img](./img/001.webp)
+![img](../img/001.webp)
 
 :::note
 現在擺出來真的覺得下超爛 XD
