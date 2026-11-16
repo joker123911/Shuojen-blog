@@ -1,6 +1,7 @@
 ---
 title: '西洋棋紀錄'
 sidebar_position: 3
+description: '各平台積分與比賽紀錄。'
 ---
 *最後更新：2026-09-26*
 

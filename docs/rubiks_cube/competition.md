@@ -1,6 +1,7 @@
 ---
 title: '魔術方塊紀錄'
 sidebar_position: 2
+description: 'WCA 比賽紀錄與成績。'
 ---
 *最後更新 2025-10-19*
 ## 比賽紀錄&成績

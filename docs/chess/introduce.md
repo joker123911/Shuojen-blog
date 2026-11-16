@@ -1,6 +1,7 @@
 ---
 title: '西洋棋推坑'
 sidebar_position: 1
+description: '推坑一個免費又好玩的智力遊戲：西洋棋。'
 ---
 import { White, Black } from '/src/components/Chess/ChessGame';
 

@@ -1,6 +1,7 @@
 ---
 title: '西洋棋與我'
 sidebar_position: 2
+description: '從小時候的 Chess Titans 到后翼棄兵，我和西洋棋的故事。'
 ---
 import { White, Black } from '/src/components/Chess/ChessGame';
 

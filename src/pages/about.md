@@ -5,6 +5,7 @@ import { White, Black } from '/src/components/Chess/ChessGame';
 import Marquee from "react-fast-marquee";
 import ContributionCalendar from '@site/src/components/ContributionCalendar/ContributionCalendar';
 import SiteStats from '@site/src/components/SiteStats';
+import Link from '@docusaurus/Link';
 
 <style>{`
   /* Hero 佈局優化 */
@@ -185,31 +186,31 @@ import SiteStats from '@site/src/components/SiteStats';
 
 <Marquee gradient={false} speed={60}>
   <div style={{padding: '10px 0', fontSize: '1.1rem'}}>
-    我直接放一個經典的西洋棋開局：后翼棄兵，沒有為什麼，因為個人網頁很***自由***！
+    我直接放一盤[ Bill Gates vs Magnus Carlsen ](https://www.youtube.com/watch?v=oH-txHzE4jA)九步就被將殺的對局，沒有為什麼，因為個人網頁很***自由***！
   </div>
 </Marquee>
-<White pgn="1. d4 d5 2. c4 dxc4 3. e4" />
+<Black pgn="1. e4 Nc6 2. Nf3 d5 3. Bd3 Nf6 4. exd5 Qxd5 5. Nc3 Qh5 6. O-O Bg4 7. h3 Ne5 8. hxg4 Nfxg4 9. Nxe5 Qh2#" />
 
 # 主要內容
 
 <div className="content-grid">
-  <a href="/docs/intro" className="custom-card">
+  <Link to="/docs/intro" className="custom-card">
     <div className="card-icon">🧩</div>
     <h3 style={{margin: 0, color: 'var(--ifm-color-primary)'}}>興趣分享</h3>
     <p style={{marginTop: '10px', fontSize: '0.95rem', opacity: 0.8}}>常駐的興趣分享區塊，包含西洋棋、魔術方塊等。</p>
-  </a>
+  </Link>
 
-  <a href="/blog" className="custom-card">
+  <Link to="/blog" className="custom-card">
     <div className="card-icon">✍️</div>
     <h3 style={{margin: 0, color: 'var(--ifm-color-primary)'}}>貼文紀錄</h3>
     <p style={{marginTop: '10px', fontSize: '0.95rem', opacity: 0.8}}>部落格式的不定時紀錄， 2025 以前的內容是從社群媒體搬運過來的。</p>
-  </a>
+  </Link>
 
-  <a href="/photography" className="custom-card">
+  <Link to="/photography" className="custom-card">
     <div className="card-icon">📷</div>
     <h3 style={{margin: 0, color: 'var(--ifm-color-primary)'}}>攝影作品</h3>
     <p style={{marginTop: '10px', fontSize: '0.95rem', opacity: 0.8}}>偶爾出遊時心血來潮拍攝的作品紀錄，2019 年從底片相機開始入攝影坑。</p>
-  </a>
+  </Link>
 </div>
 
 # 其他頁面

@@ -2,7 +2,7 @@
 <opml xmlns:frss="https://freshrss.org/opml" version="2.0">
   <head>
     <title>FreshRSS</title>
-    <dateCreated>Sat, 07 Nov 2026 23:49:34 +0800</dateCreated>
+    <dateCreated>Sun, 15 Nov 2026 15:53:59 +0800</dateCreated>
   </head>
   <body>
     <outline text="Blogger">
@@ -25,7 +25,6 @@
       <outline text="Fang Stuff" type="rss" xmlUrl="https://fangstuff.com/index.xml" htmlUrl="https://fangstuff.com/" description="Recent content on Fang Stuff"/>
       <outline text="Feed Me, Haruo" type="rss" xmlUrl="https://haruowang.vercel.app/rss.xml" htmlUrl="https://haruowang.vercel.app/" description="Digital Garden of Haruo Wang"/>
       <outline text="Fengc's Blog" type="rss" xmlUrl="https://rssweball.top/feed/afaf2a3c-e11a-4783-a358-9e2d20d76a69.xml" htmlUrl="https://fengcblog.880200.xyz/" description="Fengc's Photography Blog"/>
-      <outline text="Gou's Blog Blog" type="rss" xmlUrl="https://gou935.com/blog/rss.xml" htmlUrl="https://gou935.com/blog" description="Gou's Blog Blog"/>
       <outline text="HachiZen Blog" type="rss" xmlUrl="https://hachizen.blog/blog/rss.xml" htmlUrl="https://hachizen-blog.vercel.app/blog" description="HachiZen Blog"/>
       <outline text="Harry Chung" type="rss" xmlUrl="https://harrychung.com/rss.xml" htmlUrl="https://harrychung.com/" description="Stories without an expiration date."/>
       <outline text="Hellen Murmur" type="rss" xmlUrl="https://hellenmurmur.bearblog.dev/feed/" htmlUrl="https://hellenmurmur.bearblog.dev/" description="This is Hellen's space where she can shout out loud...."/>
@@ -41,7 +40,6 @@
       <outline text="MadeYourDay.Life on MadeYourDay.life" type="rss" xmlUrl="https://madeyourday.life/index.xml" htmlUrl="https://madeyourday.life/" description="Recent content in MadeYourDay.Life on MadeYourDay.life"/>
       <outline text="Matsuko Blog" type="rss" xmlUrl="https://matsukozui.github.io/matsuko-blog/blog/rss.xml" htmlUrl="https://matsukozui.github.io/matsuko-blog/blog" description="Matsuko Blog"/>
       <outline text="Meowjay的小窝" type="rss" xmlUrl="https://meowjay.cc/rss.xml" htmlUrl="https://meowjay.cc/" description="一个奇怪的小家伙在这赛博世界的一方自留地。"/>
-      <outline text="Moongazer.net / Blog" type="rss" xmlUrl="https://blog.moongazer.net/index.xml" htmlUrl="https://blog.moongazer.net/" description="Recent content on Moongazer.net / Blog"/>
       <outline text="Namitz's Anchor" type="rss" xmlUrl="https://namitz.com/feed.xml" htmlUrl="https://namitz.com/" description="一些雜言雜語"/>
       <outline text="Neil Blog" type="rss" xmlUrl="https://blog.neil-lin.com/rss.xml" htmlUrl="https://blog.neil-lin.com/" description="A blog written by someone who loves coffee and software"/>
       <outline text="Neo's Blog" type="rss" xmlUrl="https://neoisone.bearblog.dev/feed/" htmlUrl="https://neoisone.bearblog.dev/" description="Hello mate. 我是 Neo. &#13;&#10;&#13;&#10;這裏是我發佈各種碎碎念的地方。不定期更新。&#13;&#10;&#13;&#10;去看看吧。&#13;&#10;&#13;&#10;或使用 RSS 訂閲我。&#13;&#10;&#13;&#10;關於我。&#13;&#10;最新文章：&#13;&#10;&#13;&#10;{{ posts|limit:3 }}&#13;&#10;&#13;&#10;“有緣千里來相會，無緣對面不相識”..."/>
@@ -110,6 +108,7 @@
       <outline text="阿標 ilovemovie" type="rss" xmlUrl="https://ilovemovie.pika.page/posts_feed" htmlUrl="https://ilovemovie.pika.page/"/>
       <outline text="陳依琳 YI-LIN CHEN" type="rss" xmlUrl="https://im1010ioio.dev/rss.xml" htmlUrl="https://im1010ioio.dev/" description="A simple theme for personal blog sites, created for Astro framework"/>
       <outline text="雪榕 From Taiwan" type="rss" xmlUrl="https://srfromtaiwan.bearblog.dev/feed/" htmlUrl="https://srfromtaiwan.bearblog.dev/" description="Shue-Rong | Born in Taiwan. Shaped by Edinburgh, Frankfurt, Tokyo. Living on stage.&#13;&#10;喜歡彈琴跟漂泊的喜劇女子📍🇹🇼🏴󠁧󠁢󠁳󠁣󠁴󠁿🇩🇪🇯🇵..."/>
+      <outline text="點擊此處返回首頁" type="rss" xmlUrl="https://togetoge.cc/feed.xml" htmlUrl="https://togetoge.cc/"/>
       <outline text="１１０號道路" type="rss" xmlUrl="https://route110.blog/index.xml" htmlUrl="https://route110.blog/" description="Recent content on １１０號道路"/>
     </outline>
     <outline text="English Blog">

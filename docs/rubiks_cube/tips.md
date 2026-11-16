@@ -1,6 +1,7 @@
 ---
 title: '魔術方塊小技巧'
 sidebar_position: 3
+description: 'TPS、轉法等一些魔術方塊小技巧。'
 ---
 *最後更新 2026-02-26*
 

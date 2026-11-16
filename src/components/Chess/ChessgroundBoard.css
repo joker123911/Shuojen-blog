@@ -1,0 +1,10 @@
+/* 將死：被將死的王所在格顯示紅色底 */
+cg-board square.mate {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 0, 0, 1) 0%,
+    rgba(231, 0, 0, 0.9) 35%,
+    rgba(169, 0, 0, 0.75) 65%,
+    rgba(158, 0, 0, 0.6) 100%
+  );
+}

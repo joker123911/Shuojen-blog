@@ -1,6 +1,7 @@
 ---
 title: '魔術方塊與我'
 sidebar_position: 1
+description: '從小學五年級開始，我和魔術方塊的故事。'
 ---
 ## 啟蒙
 
