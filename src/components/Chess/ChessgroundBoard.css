@@ -1,3 +1,8 @@
+/* 預走（premove）：排好的起點與終點格標紅色 */
+cg-board square.premove-queued {
+  background-color: rgba(220, 38, 38, 0.5);
+}
+
 /* 將死：被將死的王所在格顯示紅色底 */
 cg-board square.mate {
   background: radial-gradient(
