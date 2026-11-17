@@ -124,6 +124,17 @@ function resultText(game) {
   return game.isCheckmate() ? '殺棋' : '和棋';
 }
 
+const PREMOVE_COST = 10; // 預走一步只算 0.01 秒（毫秒）
+
+/** 毫秒 → 「12.34」或「1:02.34」，捨去到 0.01 秒 */
+function formatClock(ms) {
+  const cs = Math.floor(ms / 10);
+  const min = Math.floor(cs / 6000);
+  const sec = Math.floor((cs % 6000) / 100);
+  const frac = String(cs % 100).padStart(2, '0');
+  return min > 0 ? `${min}:${String(sec).padStart(2, '0')}.${frac}` : `${sec}.${frac}`;
+}
+
 /* ---------- 元件 ---------- */
 
 /**
@@ -136,8 +147,11 @@ function resultText(game) {
  */
 function EndgameBoardLogic({ fen, player = 'w', loadTables }) {
   const containerRef = useRef(null);
+  const clockRef = useRef(null);
   const restartRef = useRef(() => {});
+  const startRef = useRef(() => {});
   const [result, setResult] = useState(null);
+  const [started, setStarted] = useState(false);
   const playerColor = player === 'b' ? 'black' : 'white';
 
   useEffect(() => {
@@ -147,9 +161,39 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables }) {
     let lastMove;
     let queue = [];
     let over = false;
+    let started = false; // 按下「開始」之前不能走、不計時
     let timer = null;
     let alive = true;
     const el = containerRef.current;
+    setStarted(false);
+
+    /* ---- 玩家用時：只算輪到玩家的時間，預走每步固定 0.01 秒 ---- */
+    let spent = 0; // 已用掉的毫秒
+    let turnStart = null; // 這一步開始思考的時間；null 代表時鐘沒在走
+    let clockTimer = 0;
+    const drawClock = () => {
+      if (!clockRef.current) return;
+      const live = turnStart === null ? 0 : performance.now() - turnStart;
+      clockRef.current.textContent = formatClock(spent + live);
+    };
+    const startClock = () => {
+      if (turnStart !== null) return;
+      turnStart = performance.now();
+      clockTimer = setInterval(drawClock, 10);
+    };
+    /** 停錶；premove 為真時這一步只記 0.01 秒 */
+    const stopClock = (premove = false) => {
+      if (turnStart !== null) spent += premove ? PREMOVE_COST : performance.now() - turnStart;
+      else if (premove) spent += PREMOVE_COST;
+      turnStart = null;
+      clearInterval(clockTimer);
+      drawClock();
+    };
+    const resetClock = () => {
+      stopClock();
+      spent = 0;
+      drawClock();
+    };
 
     const opponentThinking = () => !over && game.turn() !== player;
 
@@ -170,7 +214,7 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables }) {
         if (king) custom.set(king.square, 'mate');
       }
       let dests = new Map();
-      if (tables && !over) dests = opponentThinking() ? premoveDests(board, player) : legalDests(game);
+      if (tables && started && !over) dests = opponentThinking() ? premoveDests(board, player) : legalDests(game);
       api.set({
         fen: writeBoard(board),
         // 對手思考時也讓玩家「可以走」，走出來的就是預走
@@ -203,15 +247,17 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables }) {
         const next = queue.shift();
         const legal = game.moves({ verbose: true }).some((x) => x.from === next.from && x.to === next.to);
         if (legal) {
-          playerMove(next.from, next.to);
+          playerMove(next.from, next.to, true);
           return;
         }
         queue = [];
       }
       sync();
+      startClock();
     };
 
-    function playerMove(from, to) {
+    function playerMove(from, to, premove = false) {
+      stopClock(premove);
       game.move({ from, to, promotion: 'q' });
       lastMove = [from, to];
       if (game.isGameOver()) {
@@ -223,7 +269,7 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables }) {
     }
 
     const onBoardMove = (from, to) => {
-      if (over) return;
+      if (over || !started) return;
       if (opponentThinking()) {
         queue.push({ from, to });
         sync();
@@ -243,11 +289,23 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables }) {
 
     /** 開局如果輪到對手（例如玩家執黑、白先），等殘局庫好了就讓對手先走。 */
     const startIfOpponentFirst = () => {
-      if (tables && opponentThinking()) timer = setTimeout(opponentMove, OPPONENT_DELAY);
+      if (!tables || !started || over) return;
+      if (opponentThinking()) timer = setTimeout(opponentMove, OPPONENT_DELAY);
+      else startClock();
+    };
+
+    /** 按「開始」：殘局庫還沒好的話，等它載入完會自動開始 */
+    startRef.current = () => {
+      if (started) return;
+      started = true;
+      setStarted(true);
+      sync();
+      startIfOpponentFirst();
     };
 
     restartRef.current = () => {
       clearTimeout(timer);
+      resetClock();
       game = new Chess(fen);
       lastMove = undefined;
       queue = [];
@@ -277,9 +335,11 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables }) {
 
     const onResize = () => api && api.redrawAll();
     window.addEventListener('resize', onResize);
+    drawClock();
     return () => {
       alive = false;
       clearTimeout(timer);
+      clearInterval(clockTimer);
       el.removeEventListener('contextmenu', onContextMenu);
       window.removeEventListener('resize', onResize);
       if (api) api.destroy();
@@ -289,44 +349,89 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables }) {
   }, [fen, player]);
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: '100%',
-        maxWidth: 400,
-        aspectRatio: '1 / 1',
-        margin: '1.5rem auto',
-        borderRadius: 8,
-        overflow: 'hidden',
-        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.12)',
-        userSelect: 'none',
-        touchAction: 'none',
-      }}
-    >
-      <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
-      {result && (
-        <div
-          role="button"
-          tabIndex={0}
-          onClick={() => restartRef.current()}
-          onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && restartRef.current()}
-          style={{
-            position: 'absolute',
-            inset: 0,
-            zIndex: 10,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: 'rgba(0, 0, 0, 0.55)',
-            color: '#fff',
-            cursor: 'pointer',
-            fontSize: '2.5rem',
-            fontWeight: 700,
-          }}
-        >
-          {result}
-        </div>
-      )}
+    <div style={{ width: '100%', maxWidth: 400, margin: '1.5rem auto' }}>
+      <div
+        style={{
+          position: 'relative',
+          width: '100%',
+          aspectRatio: '1 / 1',
+          borderRadius: 8,
+          overflow: 'hidden',
+          boxShadow: '0 4px 16px rgba(0, 0, 0, 0.12)',
+          userSelect: 'none',
+          touchAction: 'none',
+        }}
+      >
+        <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
+        {result && (
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => restartRef.current()}
+            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && restartRef.current()}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              zIndex: 10,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'rgba(0, 0, 0, 0.55)',
+              color: '#fff',
+              cursor: 'pointer',
+              fontSize: '2.5rem',
+              fontWeight: 700,
+            }}
+          >
+            {result}
+          </div>
+        )}
+        {!started && (
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              zIndex: 10,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'rgba(0, 0, 0, 0.25)',
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => startRef.current()}
+              style={{
+                padding: '0.45rem 1.6rem',
+                border: 'none',
+                borderRadius: 999,
+                background: 'rgba(255, 255, 255, 0.92)',
+                color: '#222',
+                fontSize: '1rem',
+                fontWeight: 600,
+                letterSpacing: '0.1em',
+                cursor: 'pointer',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
+              }}
+            >
+              開始
+            </button>
+          </div>
+        )}
+      </div>
+      <div
+        ref={clockRef}
+        title="玩家用時（預走每步算 0.01 秒）"
+        style={{
+          marginTop: 4,
+          textAlign: 'right',
+          fontSize: '0.8rem',
+          fontVariantNumeric: 'tabular-nums',
+          opacity: 0.7,
+        }}
+      >
+        0.00
+      </div>
     </div>
   );
 }
