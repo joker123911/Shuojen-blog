@@ -1,6 +1,6 @@
 ---
 slug: /chess/queen-mate
-title: '單后殺王'
+title: '殘局練習系列 01 -單后殺王'
 sidebar_position: 9
 description: '王后對單王的基本殺法，附可以直接對弈的互動棋盤。'
 ---

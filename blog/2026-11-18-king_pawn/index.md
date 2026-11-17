@@ -1,5 +1,5 @@
 ---
-title: '王兵殘局'
+title: '殘局練習系列 03 -王兵殘局'
 tags: ["chess"]
 date: 2026-11-18
 rss_date: '2026-11-18T00:00:01+08:00'
@@ -7,6 +7,10 @@ draft: true
 ---
 import { White, Black } from '@site/src/components/Chess/ChessGame';
 import PawnEndgameBoard from '@site/src/components/Chess/PawnEndgameBoard';
+
+:::info
+此文章同步到[興趣區](/docs/intro)。
+:::
 
 王＋兵對單王是所有兵殘局的基礎，同一個局面，**輪到誰走**就可能決定勝負。下面這個局面白先可以贏，黑先卻可以守和。
 

@@ -1,6 +1,6 @@
 ---
 slug: /chess/king-pawn
-title: '王兵殘局'
+title: '殘局練習系列 03 -王兵殘局'
 sidebar_position: 11
 description: '王兵對單王的關鍵格與對王，附進攻、守和兩種互動棋盤。'
 draft: true

@@ -1,5 +1,5 @@
 ---
-title: '單后殺王'
+title: '殘局練習系列 01 -單后殺王'
 tags: ["chess"]
 date: 2026-11-16
 rss_date: '2026-11-16T21:07:10+08:00'
@@ -7,6 +7,10 @@ rss_date: '2026-11-16T21:07:10+08:00'
 import ChessStudy from '@site/src/components/Chess/ChessStudy';
 import QueenMateBoard from '@site/src/components/Chess/QueenMateBoard';
 import { White } from '@site/src/components/Chess/ChessGame';
+
+:::info
+此文章同步到[興趣區](/docs/intro)。
+:::
 
 王＋后對單王是西洋棋最基本的殺法，學會後只要最後比對手多一隻兵升變，就可以單后殺王了。
 

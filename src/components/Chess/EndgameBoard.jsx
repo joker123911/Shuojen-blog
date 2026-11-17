@@ -124,14 +124,14 @@ function resultText(game) {
   return game.isCheckmate() ? '殺棋' : '和棋';
 }
 
-const PREMOVE_COST = 10; // 預走一步只算 0.01 秒（毫秒）
+const PREMOVE_COST = 100; // 預走一步算 0.1 秒（毫秒），同 chess.com
 
-/** 毫秒 → 「12.34」或「1:02.34」，捨去到 0.01 秒 */
+/** 毫秒 → 「12.3」或「1:02.3」，捨去到 0.1 秒（chess.com 時鐘的最小單位） */
 function formatClock(ms) {
-  const cs = Math.floor(ms / 10);
-  const min = Math.floor(cs / 6000);
-  const sec = Math.floor((cs % 6000) / 100);
-  const frac = String(cs % 100).padStart(2, '0');
+  const ds = Math.floor(ms / 100);
+  const min = Math.floor(ds / 600);
+  const sec = Math.floor((ds % 600) / 10);
+  const frac = ds % 10;
   return min > 0 ? `${min}:${String(sec).padStart(2, '0')}.${frac}` : `${sec}.${frac}`;
 }
 
@@ -167,7 +167,7 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables }) {
     const el = containerRef.current;
     setStarted(false);
 
-    /* ---- 玩家用時：只算輪到玩家的時間，預走每步固定 0.01 秒 ---- */
+    /* ---- 玩家用時：只算輪到玩家的時間，預走每步固定 0.1 秒 ---- */
     let spent = 0; // 已用掉的毫秒
     let turnStart = null; // 這一步開始思考的時間；null 代表時鐘沒在走
     let clockTimer = 0;
@@ -179,9 +179,9 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables }) {
     const startClock = () => {
       if (turnStart !== null) return;
       turnStart = performance.now();
-      clockTimer = setInterval(drawClock, 10);
+      clockTimer = setInterval(drawClock, 50);
     };
-    /** 停錶；premove 為真時這一步只記 0.01 秒 */
+    /** 停錶；premove 為真時這一步只記 0.1 秒 */
     const stopClock = (premove = false) => {
       if (turnStart !== null) spent += premove ? PREMOVE_COST : performance.now() - turnStart;
       else if (premove) spent += PREMOVE_COST;
@@ -421,7 +421,7 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables }) {
       </div>
       <div
         ref={clockRef}
-        title="玩家用時（預走每步算 0.01 秒）"
+        title="玩家用時（預走每步算 0.1 秒）"
         style={{
           marginTop: 4,
           textAlign: 'right',

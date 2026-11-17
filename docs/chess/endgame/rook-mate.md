@@ -1,6 +1,6 @@
 ---
 slug: /chess/rook-mate
-title: '單車殺王'
+title: '殘局練習系列 02 -單車殺王'
 sidebar_position: 10
 description: '王車對單王的基本殺法，附可以直接對弈的互動棋盤。'
 ---
