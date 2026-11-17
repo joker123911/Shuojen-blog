@@ -29,7 +29,7 @@ function loadExistingAlbums() {
           }
         }
       } catch (err) {
-        console.warn(`⚠️ 讀取 ${jsonPath} 失敗:`, err.message);
+        console.warn(`[專輯資料] 警告：讀取 ${jsonPath} 失敗：`, err.message);
       }
     }
   }
@@ -39,7 +39,7 @@ function loadExistingAlbums() {
 
 function generateAlbumsData() {
   if (!fs.existsSync(COVERS_DIR)) {
-    console.error(`❌ 找不到音樂封面目錄: ${COVERS_DIR}`);
+    console.error(`[專輯資料] 錯誤：找不到音樂封面目錄 ${COVERS_DIR}`);
     return;
   }
 
@@ -74,7 +74,7 @@ function generateAlbumsData() {
         album,
         filename: file,
       });
-      console.log(`➕ 新增專輯: ${artist} - ${album} (${file})`);
+      console.log(`[專輯資料] 新增：${artist} - ${album}（${file}）`);
       addedCount++;
     }
   });
@@ -83,7 +83,7 @@ function generateAlbumsData() {
   for (const [filename, item] of existingMap.entries()) {
     if (!diskImages.has(filename)) {
       existingMap.delete(filename);
-      console.log(`🗑️ 移除已不存在的封面: ${item.artist} - ${item.album} (${filename})`);
+      console.log(`[專輯資料] 移除：${item.artist} - ${item.album}（${filename} 已不存在）`);
       deletedCount++;
     }
   }
@@ -107,13 +107,7 @@ function generateAlbumsData() {
   // 寫入 static/Music_Covers/albums.json（保持兩者一致）
   fs.writeFileSync(STATIC_JSON_FILE, formattedJson, 'utf8');
 
-  console.log('--------------------------------------------------');
-  console.log(`🎵 專輯資料處理完成！`);
-  console.log(`📝 目前共掃描到 ${albumsList.length} 張專輯封面 (新增: ${addedCount}, 移除: ${deletedCount})`);
-  console.log(`輸出路徑：`);
-  console.log(`  - ${SRC_JSON_FILE}`);
-  console.log(`  - ${STATIC_JSON_FILE}`);
-  console.log('--------------------------------------------------');
+  console.log(`[專輯資料] 完成：${albumsList.length} 張封面（新增 ${addedCount}、移除 ${deletedCount}）`);
 }
 
 if (require.main === module) {

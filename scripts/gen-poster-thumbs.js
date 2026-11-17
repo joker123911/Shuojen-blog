@@ -52,20 +52,20 @@ async function main() {
         stats.generated++;
       } catch (err) {
         stats.failed++;
-        console.warn(`⚠️ [gen-poster-thumbs] ${path.relative(ROOT_DIR, src)}：${err.message}`);
+        console.warn(`[海報縮圖] 警告：${path.relative(ROOT_DIR, src)}：${err.message}`);
       }
     }
   }
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
 
   console.log(
-    `🎞️  [gen-poster-thumbs] 新產生 ${stats.generated}、沿用 ${stats.skipped}` +
-      (stats.failed ? `、失敗 ${stats.failed}` : '') +
-      ` 張，耗時 ${Date.now() - start}ms`,
+    `[海報縮圖] 完成：新產生 ${stats.generated} 張、沿用 ${stats.skipped} 張` +
+      (stats.failed ? `、失敗 ${stats.failed} 張` : '') +
+      `，耗時 ${Date.now() - start} ms`,
   );
 }
 
 main().catch((err) => {
-  console.error('❌ [gen-poster-thumbs]', err);
+  console.error('[海報縮圖] 錯誤：', err);
   process.exitCode = 1;
 });

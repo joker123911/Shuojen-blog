@@ -64,7 +64,7 @@ async function fetchLichessCloudEval(fen) {
 async function ensureStockfish18Files() {
   if (fs.existsSync(SF18_JS_PATH) && fs.existsSync(SF18_WASM_PATH)) return;
   fs.mkdirSync(CACHE_DIR, { recursive: true });
-  console.log('⬇️  首次下載 Stockfish 18 Lite NNUE WASM 引擎 (~7MB)...');
+  console.log('[棋局評估] 首次執行：下載 Stockfish 18 Lite NNUE WASM 引擎（約 7 MB）');
   await Promise.all(
     [
       [SF18_JS_URL, SF18_JS_PATH],
@@ -344,7 +344,7 @@ async function main() {
     try {
       evalDb = JSON.parse(fs.readFileSync(OUTPUT_JSON_PATH, 'utf8'));
     } catch {
-      console.warn('⚠️  chessEvals.json 格式損毀，將重新建立');
+      console.warn('[棋局評估] 警告：chessEvals.json 格式損毀，將重新建立');
     }
   }
 
@@ -366,7 +366,7 @@ async function main() {
   const failed = [];
 
   if (fenArray.length > 0) {
-    console.log(`♟️  需計算 ${fenArray.length} 個局面（Lichess Cloud + Stockfish 18 NNUE）...`);
+    console.log(`[棋局評估] 計算 ${fenArray.length} 個新局面（Lichess Cloud + Stockfish 18 NNUE）`);
     let completed = 0;
     for (let i = 0; i < fenArray.length; i += WORKER_COUNT) {
       const batch = fenArray.slice(i, i + WORKER_COUNT);
@@ -383,8 +383,6 @@ async function main() {
       process.stdout.write(`\r   進度：${completed} / ${fenArray.length}`);
     }
     process.stdout.write('\n');
-  } else {
-    console.log('⚡ 所有棋步局面皆已在預先計算快取中！');
   }
 
   // 只保留目前文章用得到的局面，避免 JSON（會被打包給讀者）無限膨脹
@@ -395,7 +393,7 @@ async function main() {
       if (evalDb[fen]) outputDb[fen] = evalDb[fen];
     }
     const pruned = Object.keys(evalDb).length - Object.keys(outputDb).length;
-    if (pruned > 0) console.log(`🧹 移除 ${pruned} 個已不再使用的局面`);
+    if (pruned > 0) console.log(`[棋局評估] 移除 ${pruned} 個不再使用的局面`);
   }
 
   if (!fs.existsSync(path.dirname(OUTPUT_JSON_PATH))) {
@@ -403,9 +401,12 @@ async function main() {
   }
   fs.writeFileSync(OUTPUT_JSON_PATH, JSON.stringify(outputDb, null, 2) + '\n', 'utf8');
 
-  console.log(`💾 已儲存 ${Object.keys(outputDb).length} 個局面至：${path.relative(ROOT_DIR, OUTPUT_JSON_PATH)}`);
+  console.log(
+    `[棋局評估] 完成：共 ${Object.keys(outputDb).length} 個局面` +
+      (fenArray.length > 0 ? `（新計算 ${fenArray.length - failed.length} 個）` : '（全部使用快取）')
+  );
   if (failed.length > 0) {
-    console.warn(`⚠️  ${failed.length} 個局面計算失敗未寫入（讀者端將以子力估算），下次執行會再嘗試`);
+    console.warn(`[棋局評估] 警告：${failed.length} 個局面計算失敗未寫入（讀者端將以子力估算），下次執行會再嘗試`);
   }
 
   if (writePgn) {
@@ -433,7 +434,7 @@ async function main() {
 
       if (updated) {
         fs.writeFileSync(filePath, content, 'utf8');
-        console.log(`📝 已將 [%eval] 寫入檔案 PGN：${path.relative(ROOT_DIR, filePath)}`);
+        console.log(`[棋局評估] 已將 [%eval] 寫入 PGN：${path.relative(ROOT_DIR, filePath)}`);
       }
     }
   }
@@ -447,6 +448,6 @@ async function main() {
 
 // 評估失敗不應讓 npm run build / push 中斷：保留既有 JSON 並以 0 結束
 main().catch((err) => {
-  console.warn('⚠️  棋局評估計算失敗，沿用既有 chessEvals.json：', err && err.message ? err.message : err);
+  console.warn('[棋局評估] 警告：計算失敗，沿用既有 chessEvals.json：', err && err.message ? err.message : err);
   process.exit(0);
 });

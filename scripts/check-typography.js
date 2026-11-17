@@ -549,7 +549,7 @@ function getGitChangedFiles() {
     }
     return Array.from(new Set(files));
   } catch (e) {
-    console.warn(`${colors.yellow}⚠️ 無法讀取 Git 變更狀態。${colors.reset}`);
+    console.warn(`${colors.yellow}[排版檢查] 警告：無法讀取 Git 變更狀態${colors.reset}`);
     return [];
   }
 }
@@ -601,17 +601,12 @@ function main() {
 
   if (files.length === 0) {
     if (CHANGED_ONLY) {
-      console.log(`\n${colors.green}✔ 未偵測到任何有變動的 Markdown / MDX 檔案，跳過排版檢查。${colors.reset}\n`);
+      console.log('[排版檢查] 略過：沒有變更的 Markdown / MDX 檔案');
     } else {
-      console.log(`${colors.yellow}⚠️ 未找到任何 Markdown / MDX 檔案。${colors.reset}`);
+      console.log(`${colors.yellow}[排版檢查] 找不到任何 Markdown / MDX 檔案${colors.reset}`);
     }
     process.exit(0);
   }
-
-  const modeText = AUTO_FIX ? '自動修復模式' : '檢查模式';
-  const targetScopeText = CHANGED_ONLY ? ' (僅限本次 Git 變動檔案)' : '';
-  console.log(`\n${colors.bold}🔍 開始檢查中文文案排版格式 (${modeText}${targetScopeText})...${colors.reset}`);
-  console.log(`${colors.dim}目標檔案數量: ${files.length}${colors.reset}\n`);
 
   let totalFilesWithIssues = 0;
   let totalIssuesCount = 0;
@@ -682,32 +677,19 @@ function main() {
   }
 
   // 印出統計總結
-  console.log(`${colors.bold}========================================${colors.reset}`);
-  console.log(`${colors.bold}📊 排版檢查統計結果${colors.reset}`);
-  console.log(`- 掃描檔案總數: ${files.length}`);
-  console.log(`- 符合規範檔案: ${colors.green}${files.length - totalFilesWithIssues}${colors.reset}`);
-  console.log(`- 需修正的檔案: ${totalFilesWithIssues > 0 ? colors.yellow + totalFilesWithIssues + colors.reset : '0'}`);
-  console.log(`- 累計排版問題: ${totalIssuesCount > 0 ? colors.red + totalIssuesCount + colors.reset : '0'} 處`);
-
+  const scope = `${files.length} 個檔案${CHANGED_ONLY ? '（僅限本次變更）' : ''}`;
   if (AUTO_FIX) {
-    console.log(`- ${colors.green}✔ 已成功修復 ${fixedFilesCount} 個檔案！${colors.reset}`);
-    console.log(`${colors.bold}========================================\n${colors.reset}`);
+    console.log(`[排版檢查] 已修正 ${fixedFilesCount} 個檔案、共 ${totalIssuesCount} 處（檢查 ${scope}）`);
     process.exit(0);
+  } else if (totalFilesWithIssues > 0) {
+    console.log(
+      `${colors.red}[排版檢查] 失敗：${totalFilesWithIssues} 個檔案、共 ${totalIssuesCount} 處需修正（檢查 ${scope}）${colors.reset}`
+    );
+    console.log(`[排版檢查] 可執行 ${colors.bold}${CHANGED_ONLY ? 'npm run fix' : 'npm run fix:all'}${colors.reset} 自動修正`);
+    process.exit(1);
   } else {
-    if (totalFilesWithIssues > 0) {
-      console.log(`\n${colors.yellow}💡 提示：您可以執行下列指令進行一鍵自動修復：${colors.reset}`);
-      if (CHANGED_ONLY) {
-        console.log(`   ${colors.bold}npm run fix${colors.reset}`);
-      } else {
-        console.log(`   ${colors.bold}npm run fix:all${colors.reset}`);
-      }
-      console.log(`${colors.bold}========================================\n${colors.reset}`);
-      process.exit(1);
-    } else {
-      console.log(`\n${colors.green}🎉 太棒了！所有文章皆完全符合中文文案排版規範！${colors.reset}`);
-      console.log(`${colors.bold}========================================\n${colors.reset}`);
-      process.exit(0);
-    }
+    console.log(`[排版檢查] 通過：${scope}`);
+    process.exit(0);
   }
 }
 

@@ -402,7 +402,7 @@ let errorCount = 0;
 let warningCount = 0;
 let fixedCount = 0;
 
-console.log(`🔍 正在檢查 ${allMarkdownFiles.length} 個 Markdown/MDX 檔案中的連結...${AUTO_FIX ? ' (已啟用 --fix 自動修復模式)' : ''}`);
+if (AUTO_FIX) console.log('[連結檢查] 自動修正模式');
 
 /**
  * 根據字元索引計算精確的 (line, column)
@@ -622,9 +622,9 @@ allMarkdownFiles.forEach(file => {
         if (AUTO_FIX) {
           pendingReplacements.push({ index, length: replaceLength, replacement: expectedPath });
           fixedCount++;
-          console.log(`🔧 \x1b[32m已自動修正\x1b[0m ${locationTag} -> 將 '${rawUrl}' 替換為 '${expectedPath}'`);
+          console.log(`\x1b[32m已自動修正\x1b[0m ${locationTag} -> 將 '${rawUrl}' 替換為 '${expectedPath}'`);
         } else {
-          console.error(`❌ \x1b[31m錯誤\x1b[0m ${locationTag} -> 連結包含本地測試網址 '${rawUrl}' (建議改為 '${expectedPath}')`);
+          console.error(`\x1b[31m錯誤\x1b[0m ${locationTag} -> 連結包含本地測試網址 '${rawUrl}' (建議改為 '${expectedPath}')`);
           errorCount++;
         }
         cleanUrl = expectedPath.split('#')[0].split('?')[0].trim() || '/';
@@ -639,9 +639,9 @@ allMarkdownFiles.forEach(file => {
             if (AUTO_FIX) {
               pendingReplacements.push({ index, length: replaceLength, replacement: expectedPath });
               fixedCount++;
-              console.log(`🔧 \x1b[32m已自動修正\x1b[0m ${locationTag} -> 將自有網域 '${rawUrl}' 替換為 '${expectedPath}'`);
+              console.log(`\x1b[32m已自動修正\x1b[0m ${locationTag} -> 將自有網域 '${rawUrl}' 替換為 '${expectedPath}'`);
             } else {
-              console.warn(`⚠️  \x1b[33m警告\x1b[0m ${locationTag} -> 建議使用相對根路徑 '${expectedPath}' 代替完整網址 '${rawUrl}' (可加 --fix 自動替換)`);
+              console.warn(`\x1b[33m警告\x1b[0m ${locationTag} -> 建議使用相對根路徑 '${expectedPath}' 代替完整網址 '${rawUrl}' (可加 --fix 自動替換)`);
               warningCount++;
             }
             // 繼續向下驗證自有網域指向的站內路徑是否真的存在
@@ -650,7 +650,7 @@ allMarkdownFiles.forEach(file => {
             return; // 外部網站連結到此結束
           }
         } catch (e) {
-          console.error(`❌ \x1b[31m錯誤\x1b[0m ${locationTag} -> 無效的 URL 格式 '${rawUrl}'`);
+          console.error(`\x1b[31m錯誤\x1b[0m ${locationTag} -> 無效的 URL 格式 '${rawUrl}'`);
           errorCount++;
           return;
         }
@@ -662,10 +662,10 @@ allMarkdownFiles.forEach(file => {
         const targetSitePath = path.join(WORKSPACE, siteRelPath);
         const status = checkFileExistsCaseSensitive(targetSitePath);
         if (!status.exists) {
-          console.error(`❌ \x1b[31m錯誤\x1b[0m ${locationTag} -> 找不到 @site 檔案 '${rawUrl}'`);
+          console.error(`\x1b[31m錯誤\x1b[0m ${locationTag} -> 找不到 @site 檔案 '${rawUrl}'`);
           errorCount++;
         } else if (status.caseMismatch) {
-          console.error(`❌ \x1b[31m錯誤\x1b[0m ${locationTag} -> @site 檔案路徑大小寫不符 '${rawUrl}' (Linux 部署將導致 404)`);
+          console.error(`\x1b[31m錯誤\x1b[0m ${locationTag} -> @site 檔案路徑大小寫不符 '${rawUrl}' (Linux 部署將導致 404)`);
           errorCount++;
         }
         return;
@@ -686,7 +686,7 @@ allMarkdownFiles.forEach(file => {
         const caseMatchedRoute = routeLowerMap.get(searchRoute.toLowerCase());
         if (caseMatchedRoute) {
           console.error(
-            `❌ \x1b[31m錯誤\x1b[0m ${locationTag} -> 站內路由大小寫不符 '${rawUrl}' (正確大小寫應為 '${caseMatchedRoute}')`
+            `\x1b[31m錯誤\x1b[0m ${locationTag} -> 站內路由大小寫不符 '${rawUrl}' (正確大小寫應為 '${caseMatchedRoute}')`
           );
           errorCount++;
           return;
@@ -694,13 +694,13 @@ allMarkdownFiles.forEach(file => {
 
         if (assetStatus.caseMismatch) {
           console.error(
-            `❌ \x1b[31m錯誤\x1b[0m ${locationTag} -> 靜態檔案大小寫不符 '${rawUrl}' (Linux 部署將導致 404)`
+            `\x1b[31m錯誤\x1b[0m ${locationTag} -> 靜態檔案大小寫不符 '${rawUrl}' (Linux 部署將導致 404)`
           );
           errorCount++;
           return;
         }
 
-        console.error(`❌ \x1b[31m錯誤\x1b[0m ${locationTag} -> 找不到站內路由或靜態檔案 '${rawUrl}'`);
+        console.error(`\x1b[31m錯誤\x1b[0m ${locationTag} -> 找不到站內路由或靜態檔案 '${rawUrl}'`);
         errorCount++;
         return;
       }
@@ -714,7 +714,7 @@ allMarkdownFiles.forEach(file => {
       if (directStatus.exists) {
         if (directStatus.caseMismatch) {
           console.error(
-            `❌ \x1b[31m錯誤\x1b[0m ${locationTag} -> 相對檔案大小寫與實際檔案不符 '${rawUrl}' (Linux 部署將導致 404)`
+            `\x1b[31m錯誤\x1b[0m ${locationTag} -> 相對檔案大小寫與實際檔案不符 '${rawUrl}' (Linux 部署將導致 404)`
           );
           errorCount++;
         }
@@ -728,7 +728,7 @@ allMarkdownFiles.forEach(file => {
         if (candStatus.exists) {
           if (candStatus.caseMismatch) {
             console.error(
-              `❌ \x1b[31m錯誤\x1b[0m ${locationTag} -> 相對文檔路徑大小寫不符 '${rawUrl}' (Linux 部署將導致 404)`
+              `\x1b[31m錯誤\x1b[0m ${locationTag} -> 相對文檔路徑大小寫不符 '${rawUrl}' (Linux 部署將導致 404)`
             );
             errorCount++;
           }
@@ -737,7 +737,7 @@ allMarkdownFiles.forEach(file => {
       }
 
       console.error(
-        `❌ \x1b[31m錯誤\x1b[0m ${locationTag} -> 找不到相對檔案 '${rawUrl}' (解析路徑: ${path.relative(WORKSPACE, targetFilePath)})`
+        `\x1b[31m錯誤\x1b[0m ${locationTag} -> 找不到相對檔案 '${rawUrl}' (解析路徑: ${path.relative(WORKSPACE, targetFilePath)})`
       );
       errorCount++;
     });
@@ -760,21 +760,18 @@ allMarkdownFiles.forEach(file => {
 // 3. 輸出檢查統計報告
 // ==========================================
 const elapsedMs = Date.now() - startTime;
-console.log('─'.repeat(55));
-console.log(
-  `📊 檢查報告：共掃描 ${allMarkdownFiles.length} 個檔案、${totalLinksChecked} 個連結 (${elapsedMs}ms)`
-);
+const scanned = `${allMarkdownFiles.length} 個檔案、${totalLinksChecked} 個連結，耗時 ${elapsedMs} ms`;
 if (fixedCount > 0) {
-  console.log(`🔧 自動修正：${fixedCount} 處連結`);
+  console.log(`[連結檢查] 已自動修正 ${fixedCount} 處連結`);
 }
 if (warningCount > 0) {
-  console.log(`⚠️  警告數量：${warningCount} 個`);
+  console.log(`[連結檢查] 警告 ${warningCount} 項`);
 }
 
 if (errorCount > 0) {
-  console.error(`❌ 檢查失敗：共發現 ${errorCount} 個失效連結！`);
+  console.error(`[連結檢查] 失敗：發現 ${errorCount} 個失效連結（${scanned}）`);
   process.exit(1);
 } else {
-  console.log('✅ 所有連結檢查無誤！');
+  console.log(`[連結檢查] 通過：${scanned}`);
   process.exit(0);
 }

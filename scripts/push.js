@@ -40,7 +40,7 @@ function git(args, { capture = false } = {}) {
     stdio: capture ? ['ignore', 'pipe', 'inherit'] : 'inherit',
   });
   if (res.status !== 0) {
-    console.error(`❌ git ${args.join(' ')} 失敗（代碼 ${res.status}）`);
+    console.error(`[推送] 錯誤：git ${args.join(' ')} 失敗（結束代碼 ${res.status}）`);
     process.exit(res.status || 1);
   }
   return capture ? res.stdout : '';
@@ -91,7 +91,7 @@ async function main() {
   );
 
   if (outside.length > 0) {
-    console.log('\n⚠️  以下變更不在白名單內，這次不會提交：');
+    console.log('\n[推送] 以下變更不在白名單內，不會提交：');
     for (const c of outside) console.log(`   ${c.status} ${c.path}`);
   }
 
@@ -102,31 +102,31 @@ async function main() {
     // 沒有新變更，但可能有先前已 commit、還沒推送的 commit
     const unpushed = listUnpushedCommits();
     if (unpushed === null) {
-      console.log('\nℹ️  白名單內沒有可提交的變更；目前分支沒有設定遠端追蹤分支，無法判斷是否需要推送，結束。');
+      console.log('\n[推送] 沒有可提交的變更；目前分支未設定遠端追蹤分支，無法判斷是否需要推送。');
       return;
     }
     if (unpushed.length === 0) {
-      console.log('\nℹ️  白名單內沒有可提交的變更，也沒有尚未推送的 commit，結束。');
+      console.log('\n[推送] 沒有可提交的變更，也沒有尚未推送的 commit。');
       return;
     }
-    console.log(`\nℹ️  沒有新變更要提交，但有 ${unpushed.length} 個尚未推送的 commit：`);
+    console.log(`\n[推送] 沒有新的變更，但有 ${unpushed.length} 個尚未推送的 commit：`);
     for (const line of unpushed) console.log(`   ${line}`);
-    const ans = await ask('\n要推送這些 commit 嗎？(y/N)：');
+    const ans = await ask('\n是否推送這些 commit？(y/N)：');
     if (!/^y(es)?$/i.test(ans)) {
-      console.log('已取消，沒有推送。');
+      console.log('[推送] 已取消，未推送。');
       return;
     }
     git(['push']);
-    console.log('\n✅ 推送完成！');
+    console.log('\n[推送] 完成。');
     return;
   }
 
-  console.log('\n📋 即將提交：');
+  console.log('\n[推送] 即將提交：');
   console.log(staged.split('\n').map((l) => '   ' + l).join('\n'));
 
-  if (!message) message = await ask('\n輸入 commit 訊息（留空取消）：');
+  if (!message) message = await ask('\n請輸入 commit 訊息（留空則取消）：');
   if (!message) {
-    console.log('已取消。變更仍在暫存區，可用 git restore --staged . 撤銷。');
+    console.log('[推送] 已取消。變更仍在暫存區，可用 git restore --staged . 撤銷。');
     process.exit(1);
   }
 
@@ -137,14 +137,14 @@ async function main() {
       .filter(Boolean);
   const stamped = stampBeforeCommit({ addedFiles: nameList('A'), changedFiles: nameList('AM') });
   if (stamped.length > 0) {
-    console.log('\n🕒 已蓋上發佈時間：');
+    console.log('\n[推送] 已加上發佈時間：');
     for (const s of stamped) console.log(`   ${s.file}（${s.note}）`);
     git(['add', '--', ...stamped.map((s) => s.file)]);
   }
 
   git(['commit', '-m', message]);
   git(['push']);
-  console.log('\n✅ 推送完成！');
+  console.log('\n[推送] 完成。');
 }
 
 function isTracked(p) {

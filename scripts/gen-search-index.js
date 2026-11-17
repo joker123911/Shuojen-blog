@@ -82,7 +82,7 @@ async function fetchComments() {
       });
     }
   } catch (err) {
-    console.warn('[gen-search-index] 無法擷取遠端留言 (可能處於離線環境):', err.message);
+    console.warn('[搜尋索引] 警告：無法取得遠端留言（可能處於離線狀態）：', err.message);
   }
   return [];
 }
@@ -135,7 +135,7 @@ function parseBlogDirectory(dirPath, routePrefix, typeLabel) {
         content: cleanMarkdown(content),
       });
     } catch (err) {
-      console.error(`[gen-search-index] Error parsing ${routePrefix} file ${file}:`, err);
+      console.error(`[搜尋索引] 錯誤：無法解析 ${routePrefix} 檔案 ${file}：`, err);
     }
   });
 
@@ -188,7 +188,7 @@ async function main() {
         content: cleanMarkdown(content),
       });
     } catch (err) {
-      console.error(`[gen-search-index] Error parsing docs file ${file}:`, err);
+      console.error(`[搜尋索引] 錯誤：無法解析 docs 檔案 ${file}：`, err);
     }
   });
 
@@ -203,7 +203,7 @@ async function main() {
   }
 
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(articles), 'utf8');
-  console.log(`[gen-search-index] 成功建立搜尋索引，共 ${articles.length} 篇內容（含 ${comments.length} 則留言），輸出至 ${OUTPUT_FILE}`);
+  console.log(`[搜尋索引] 完成：${articles.length} 筆內容（含 ${comments.length} 則留言）`);
 }
 
 main();

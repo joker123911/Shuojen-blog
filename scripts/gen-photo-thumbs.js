@@ -54,7 +54,7 @@ async function processPhoto(photo, stats) {
 async function main() {
   const start = Date.now();
   if (!fs.existsSync(PHOTOS_FILE)) {
-    console.warn('⚠️ [gen-photo-thumbs] 找不到 photosData.json，請先執行 prepare-data。');
+    console.warn('[照片縮圖] 警告：找不到 photosData.json，請先執行 prepare-data');
     return;
   }
   const photos = JSON.parse(fs.readFileSync(PHOTOS_FILE, 'utf8'));
@@ -68,7 +68,7 @@ async function main() {
       try {
         result[i] = await processPhoto(photos[i], stats);
       } catch (err) {
-        console.warn(`⚠️ [gen-photo-thumbs] ${photos[i].src}：${err.message}`);
+        console.warn(`[照片縮圖] 警告：${photos[i].src}：${err.message}`);
         result[i] = photos[i];
       }
     }
@@ -80,13 +80,13 @@ async function main() {
     fs.writeFileSync(PHOTOS_FILE, content);
   }
   console.log(
-    `🖼️  [gen-photo-thumbs] 新產生 ${stats.generated}、沿用 ${stats.skipped}` +
-      (stats.missing ? `、找不到原圖 ${stats.missing}` : '') +
-      ` 張，耗時 ${Date.now() - start}ms`,
+    `[照片縮圖] 完成：新產生 ${stats.generated} 張、沿用 ${stats.skipped} 張` +
+      (stats.missing ? `、找不到原圖 ${stats.missing} 張` : '') +
+      `，耗時 ${Date.now() - start} ms`,
   );
 }
 
 main().catch((err) => {
-  console.error('❌ [gen-photo-thumbs]', err);
+  console.error('[照片縮圖] 錯誤：', err);
   process.exitCode = 1;
 });

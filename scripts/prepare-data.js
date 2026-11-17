@@ -377,23 +377,23 @@ function runDataPreparation() {
   
   if (formatWarnings.length > 0) {
     console.log('\n' + '='.repeat(75));
-    console.log(`🚨 \x1b[31m\x1b[1m【Localhost 文章格式異常警報】共發現 ${formatWarnings.length} 篇檔案有異常！\x1b[0m`);
+    console.log(`\x1b[31m\x1b[1m[資料準備] 文章格式異常：共 ${formatWarnings.length} 個檔案\x1b[0m`);
     console.log('='.repeat(75));
     formatWarnings.forEach((w, i) => {
-      console.log(`\n\x1b[33m[${i + 1}] 📄 檔案：\x1b[0m \x1b[1m${w.file}\x1b[0m`);
-      console.log(`    \x1b[31m⚠️ 原因：\x1b[0m ${w.message}`);
+      console.log(`\n\x1b[33m[${i + 1}] 檔案：\x1b[0m \x1b[1m${w.file}\x1b[0m`);
+      console.log(`    \x1b[31m原因：\x1b[0m ${w.message}`);
       if (w.suggestion) {
-        console.log(`    \x1b[36m💡 建議：\x1b[0m ${w.suggestion}`);
+        console.log(`    \x1b[36m建議：\x1b[0m ${w.suggestion}`);
       }
     });
     console.log('\n' + '='.repeat(75) + '\n');
     // --strict（push 時使用）：有格式異常就以失敗結束，擋下推送；資料檔仍照常寫出
     if (process.argv.includes('--strict')) {
-      console.error('❌ [prepare-data --strict] 文章格式有異常，已中止。請修正上列檔案後再推送。');
+      console.error('[資料準備] 已中止推送：請先修正上列檔案的格式。');
       process.exitCode = 1;
     }
   } else {
-    console.log(`⚡ [prepare-data] 資料準備完成，全站格式檢查無誤，耗時 ${elapsed}ms！`);
+    console.log(`[資料準備] 完成：全站文章格式無誤，耗時 ${elapsed} ms`);
   }
 }
 
