@@ -62,3 +62,5 @@ static/search-index.json
 static/photo-thumbs/
 # 排名清單海報縮圖（scripts/gen-poster-thumbs.js 產生）
 static/poster-thumbs/
+# Claude 桌面 App 的本機預覽設定
+.claude/
