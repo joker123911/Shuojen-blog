@@ -6,6 +6,8 @@
 //     - date 帶有時間（例如 Front Matter CMS 產生的 2026-11-14T10:00:00）會改成只留日期，
 //       避免 UTC 換算讓文章頁顯示成前一天
 //     已提交過的舊文不會被補，修改舊文也不會讓它在 RSS 裡變成新文章。
+//     例外：先以 draft: true 提交、這次才拿掉 draft 正式發佈的文章，視同新文章；
+//     若 rss_date 已被刪除就補上發佈時間（保留著的 rss_date 不會被改動）。
 //  2. src/pages/now.md 內容有改動（與 HEAD 相比，忽略日期行）才把「最後更新」改成今天。
 const fs = require('fs');
 const path = require('path');
@@ -60,6 +62,18 @@ function stampPostContent(content, { folderName = '', now = new Date() } = {}) {
   return { content: newHead + content.slice(fmMatch[0].length), rssDate };
 }
 
+/** frontmatter 是否為 draft: true（沒有 frontmatter 或內容為 null 時回傳 false） */
+function isDraft(content) {
+  const fmMatch = content == null ? null : content.match(FRONT_MATTER);
+  if (!fmMatch) return false;
+  return fmMatch[1].split(/\r?\n/).some((l) => /^draft:\s*['"]?true['"]?\s*$/.test(l));
+}
+
+/** HEAD 版本是草稿、目前版本不是草稿 → 這次是正式發佈 */
+function isDraftPublished(current, committed) {
+  return isDraft(committed) && !isDraft(current);
+}
+
 /**
  * now.md 內容有改動才更新「最後更新」日期。
  * @returns {string | null} 更新後內容；不需更新時回傳 null
@@ -78,26 +92,31 @@ function stampNowContent(current, committed, { now = new Date() } = {}) {
  */
 function stampBeforeCommit({ addedFiles, changedFiles, now = new Date(), root = ROOT_DIR }) {
   const touched = [];
+  const headContent = (rel) => {
+    const res = spawnSync('git', ['show', `HEAD:${rel}`], { cwd: root, encoding: 'utf8' });
+    return res.status === 0 ? res.stdout : null;
+  };
 
-  for (const rel of addedFiles.filter((f) => POST_PATH.test(f))) {
+  const added = new Set(addedFiles);
+  for (const rel of changedFiles.concat(addedFiles).filter((f) => POST_PATH.test(f))) {
+    if (touched.some((t) => t.file === rel)) continue;
     const abs = path.join(root, rel);
     if (!fs.existsSync(abs)) continue;
+    const content = fs.readFileSync(abs, 'utf8');
+    // 修改的舊文只有「草稿轉正式發佈」才補
+    const fromDraft = !added.has(rel) && isDraftPublished(content, headContent(rel));
+    if (!added.has(rel) && !fromDraft) continue;
     const folderName = path.basename(path.dirname(abs));
-    const result = stampPostContent(fs.readFileSync(abs, 'utf8'), { folderName, now });
+    const result = stampPostContent(content, { folderName, now });
     if (result) {
       fs.writeFileSync(abs, result.content, 'utf8');
-      touched.push({ file: rel, note: `rss_date ${result.rssDate}` });
+      touched.push({ file: rel, note: `rss_date ${result.rssDate}${fromDraft ? '，草稿轉發佈' : ''}` });
     }
   }
 
   if (changedFiles.includes(NOW_MD)) {
     const abs = path.join(root, NOW_MD);
-    const head = spawnSync('git', ['show', `HEAD:${NOW_MD}`], { cwd: root, encoding: 'utf8' });
-    const updated = stampNowContent(
-      fs.readFileSync(abs, 'utf8'),
-      head.status === 0 ? head.stdout : null,
-      { now }
-    );
+    const updated = stampNowContent(fs.readFileSync(abs, 'utf8'), headContent(NOW_MD), { now });
     if (updated) {
       fs.writeFileSync(abs, updated, 'utf8');
       touched.push({ file: NOW_MD, note: `最後更新 ${taiwanTime(now).day}` });
@@ -107,4 +126,10 @@ function stampBeforeCommit({ addedFiles, changedFiles, now = new Date(), root = 
   return touched;
 }
 
-module.exports = { stampBeforeCommit, stampPostContent, stampNowContent, taiwanTime };
+module.exports = {
+  stampBeforeCommit,
+  stampPostContent,
+  stampNowContent,
+  isDraftPublished,
+  taiwanTime,
+};

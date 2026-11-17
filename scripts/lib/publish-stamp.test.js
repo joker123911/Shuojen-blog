@@ -1,6 +1,6 @@
 const assert = require('assert/strict');
 // 執行：npm test
-const { stampPostContent, stampNowContent } = require('./publish-stamp');
+const { stampPostContent, stampNowContent, isDraftPublished } = require('./publish-stamp');
 
 // 2026-11-14 10:30:00 台灣時間
 const now = new Date('2026-11-14T02:30:00Z');
@@ -46,4 +46,17 @@ assert.equal(stampNowContent(nowMd('一樣', '2026-11-12'), nowMd('一樣'), { n
 assert.equal(stampNowContent(nowMd('新內容'), nowMd('舊內容'), { now }), nowMd('新內容', '2026-11-14'));
 assert.equal(stampNowContent(nowMd('新內容'), null, { now }), null);
 
-console.log('發佈時間戳記測試全部通過（11 組情境）');
+// 10. 草稿轉正式發佈：HEAD 是 draft: true、目前拿掉 draft → 視為發佈；其他情況都不是
+const draftPost = "---\ntitle: A\ndate: 2026-11-17\nrss_date: '2026-11-17T00:00:01+08:00'\ndraft: true\n---\nx";
+const publishedPost = '---\ntitle: A\ndate: 2026-11-17\n---\nx';
+assert.equal(isDraftPublished(publishedPost, draftPost), true);
+assert.equal(isDraftPublished(publishedPost.replace(/\n/g, '\r\n'), draftPost.replace(/\n/g, '\r\n')), true);
+assert.equal(isDraftPublished(draftPost, draftPost), false); // 還是草稿
+assert.equal(isDraftPublished(publishedPost, publishedPost), false); // 本來就不是草稿
+assert.equal(isDraftPublished(publishedPost, null), false); // HEAD 沒有這個檔案
+assert.equal(isDraftPublished(publishedPost, draftPost.replace('draft: true', 'draft: false')), false);
+// 刪掉 rss_date 的草稿轉發佈 → 補 push 時間
+r = stampPostContent(publishedPost, { now: new Date('2026-11-17T06:00:00Z') });
+assert.ok(r.content.includes("date: 2026-11-17\nrss_date: '2026-11-17T14:00:00+08:00'"));
+
+console.log('發佈時間戳記測試全部通過（18 組情境）');

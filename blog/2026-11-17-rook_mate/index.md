@@ -2,13 +2,12 @@
 title: '單車殺王'
 tags: ["chess"]
 date: 2026-11-17
-rss_date: '2026-11-17T00:00:01+08:00'
-draft: true
+rss_date: '2026-11-17T09:51:05+08:00'
 ---
 import RookMateBoard from '@site/src/components/Chess/RookMateBoard';
 import { White } from '@site/src/components/Chess/ChessGame';
 
-王＋車對單王是單后殺王之後的下一個基本殺法，車只能走直線，步數會比較多，但只要照著方法來，16 步內一定能殺。
+王＋車對單王是[單后殺王](/blog/2026/11/16/queen_mate)之後的下一個基本殺法，車只能走直線，步數會比較多。
 
 來試試看吧！
 
