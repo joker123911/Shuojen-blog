@@ -2,8 +2,7 @@
 title: '殘局練習系列 03 -王兵殘局'
 tags: ["chess"]
 date: 2026-11-18
-rss_date: '2026-11-18T00:00:01+08:00'
-draft: true
+rss_date: '2026-11-18T10:22:42+08:00'
 ---
 import { White, Black } from '@site/src/components/Chess/ChessGame';
 import PawnEndgameBoard from '@site/src/components/Chess/PawnEndgameBoard';

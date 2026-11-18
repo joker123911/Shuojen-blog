@@ -3,12 +3,11 @@ slug: /chess/king-pawn
 title: '殘局練習系列 03 -王兵殘局'
 sidebar_position: 11
 description: '王兵對單王的關鍵格與對王，附進攻、守和兩種互動棋盤。'
-draft: true
 ---
 import { White, Black } from '@site/src/components/Chess/ChessGame';
 import PawnEndgameBoard from '@site/src/components/Chess/PawnEndgameBoard';
 
-*最後更新：2026-11-16*
+*最後更新：2026-11-18*
 
 王＋兵對單王是所有兵殘局的基礎，同一個局面，**輪到誰走**就可能決定勝負。下面這個局面白先可以贏，黑先卻可以守和。
 
