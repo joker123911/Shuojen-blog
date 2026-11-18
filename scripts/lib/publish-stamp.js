@@ -8,7 +8,11 @@
 //     已提交過的舊文不會被補，修改舊文也不會讓它在 RSS 裡變成新文章。
 //     例外：先以 draft: true 提交、這次才拿掉 draft 正式發佈的文章，視同新文章；
 //     若 rss_date 已被刪除就補上發佈時間（保留著的 rss_date 不會被改動）。
-//  2. src/pages/now.md 內容有改動（與 HEAD 相比，忽略日期行）才把「最後更新」改成今天。
+//     草稿（draft: true）本身不補 rss_date，等拿掉 draft 正式發佈時才補。
+//  2. 草稿可以放在沒有日期的資料夾（npm run new 預設如此，例如 blog/my-post/）。
+//     拿掉 draft 發佈時，資料夾會自動改名成 YYYY-MM-DD-my-post（網址日期由資料夾決定）：
+//     - 日期用 front matter 的 date；沒寫就用 push 當天（台灣時間），blog 文章並補上 date 行
+//  3. src/pages/now.md 內容有改動（與 HEAD 相比，忽略日期行）才把「最後更新」改成今天。
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
@@ -69,6 +73,44 @@ function isDraft(content) {
   return fmMatch[1].split(/\r?\n/).some((l) => /^draft:\s*['"]?true['"]?\s*$/.test(l));
 }
 
+const DATED_NAME = /^\d{4}-\d{2}-\d{2}-/;
+
+/** blog/xxx/index.md → { section: 'blog', name: 'xxx', rel: 'blog/xxx' }（單檔文章則 name 是檔名） */
+function postUnit(rel) {
+  const [section, name] = rel.split('/');
+  return { section, name, rel: `${section}/${name}` };
+}
+
+function frontMatterLines(content) {
+  const fmMatch = content.match(FRONT_MATTER);
+  return fmMatch ? fmMatch[1].split(/\r?\n/) : [];
+}
+
+function hasDateLine(content) {
+  return frontMatterLines(content).some((l) => /^date:/.test(l));
+}
+
+/** front matter 的 date 換算成台灣日期；沒有 date 回傳 null */
+function frontMatterDay(content, now) {
+  const line = frontMatterLines(content).find((l) => /^date:/.test(l));
+  if (!line) return null;
+  const raw = line.replace(/^date:\s*/, '').trim().replace(/^['"]|['"]$/g, '');
+  if (!raw) return null;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return raw;
+  const parsed = new Date(raw.replace(' ', 'T'));
+  if (Number.isNaN(parsed.getTime())) throw new Error(`無法解析 date：${raw}`);
+  return /([zZ]|[+-]\d{2}:?\d{2})$/.test(raw) ? taiwanTime(parsed).day : raw.slice(0, 10);
+}
+
+/** 在 front matter 最後加上 date 行 */
+function addDateLine(content, day) {
+  const fmMatch = content.match(FRONT_MATTER);
+  if (!fmMatch) return content;
+  const eol = content.includes('\r\n') ? '\r\n' : '\n';
+  const head = `---${eol}${fmMatch[1]}${eol}date: ${day}${eol}---${fmMatch[2]}`;
+  return head + content.slice(fmMatch[0].length);
+}
+
 /** HEAD 版本是草稿、目前版本不是草稿 → 這次是正式發佈 */
 function isDraftPublished(current, committed) {
   return isDraft(committed) && !isDraft(current);
@@ -98,21 +140,55 @@ function stampBeforeCommit({ addedFiles, changedFiles, now = new Date(), root = 
   };
 
   const added = new Set(addedFiles);
-  for (const rel of changedFiles.concat(addedFiles).filter((f) => POST_PATH.test(f))) {
-    if (touched.some((t) => t.file === rel)) continue;
-    const abs = path.join(root, rel);
+  const seen = new Set();
+  const renamedUnits = new Map(); // 舊的 blog/xxx → 新的 blog/YYYY-MM-DD-xxx
+  for (const origRel of changedFiles.concat(addedFiles).filter((f) => POST_PATH.test(f))) {
+    if (seen.has(origRel)) continue;
+    seen.add(origRel);
+    let rel = origRel;
+    let abs = path.join(root, rel);
     if (!fs.existsSync(abs)) continue;
-    const content = fs.readFileSync(abs, 'utf8');
+    let content = fs.readFileSync(abs, 'utf8');
+    if (isDraft(content)) continue; // 草稿不蓋時間、不改名
     // 修改的舊文只有「草稿轉正式發佈」才補
     const fromDraft = !added.has(rel) && isDraftPublished(content, headContent(rel));
     if (!added.has(rel) && !fromDraft) continue;
+
+    const notes = [];
+    const unit = postUnit(rel);
+    if (!DATED_NAME.test(unit.name)) {
+      const day = frontMatterDay(content, now) || taiwanTime(now).day;
+      if (unit.section === 'blog' && !hasDateLine(content)) {
+        content = addDateLine(content, day);
+        fs.writeFileSync(abs, content, 'utf8');
+        notes.push(`date ${day}`);
+      }
+      let newUnitRel = renamedUnits.get(unit.rel);
+      if (!newUnitRel) {
+        newUnitRel = `${unit.section}/${day}-${unit.name}`;
+        if (fs.existsSync(path.join(root, newUnitRel))) {
+          throw new Error(`無法發佈 ${unit.rel}：${newUnitRel} 已經存在`);
+        }
+        fs.renameSync(path.join(root, unit.rel), path.join(root, newUnitRel));
+        renamedUnits.set(unit.rel, newUnitRel);
+      }
+      rel = newUnitRel + rel.slice(unit.rel.length);
+      abs = path.join(root, rel);
+      notes.push(`資料夾改名 ${unit.rel} → ${newUnitRel}`);
+    }
+
     const folderName = path.basename(path.dirname(abs));
     const result = stampPostContent(content, { folderName, now });
     if (result) {
       fs.writeFileSync(abs, result.content, 'utf8');
-      touched.push({ file: rel, note: `rss_date ${result.rssDate}${fromDraft ? '，草稿轉發佈' : ''}` });
+      notes.push(`rss_date ${result.rssDate}`);
+    }
+    if (notes.length > 0) {
+      if (fromDraft) notes.push('草稿轉發佈');
+      touched.push({ file: rel, note: notes.join('，') });
     }
   }
+  for (const [from, to] of renamedUnits) touched.push({ file: from, to, removed: true });
 
   if (changedFiles.includes(NOW_MD)) {
     const abs = path.join(root, NOW_MD);
@@ -131,5 +207,7 @@ module.exports = {
   stampPostContent,
   stampNowContent,
   isDraftPublished,
+  addDateLine,
+  frontMatterDay,
   taiwanTime,
 };

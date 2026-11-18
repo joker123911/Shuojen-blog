@@ -1,6 +1,10 @@
 const assert = require('assert/strict');
 // 執行：npm test
-const { stampPostContent, stampNowContent, isDraftPublished } = require('./publish-stamp');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const { spawnSync } = require('child_process');
+const { stampPostContent, stampNowContent, isDraftPublished, stampBeforeCommit, addDateLine, frontMatterDay } = require('./publish-stamp');
 
 // 2026-11-14 10:30:00 台灣時間
 const now = new Date('2026-11-14T02:30:00Z');
@@ -59,4 +63,41 @@ assert.equal(isDraftPublished(publishedPost, draftPost.replace('draft: true', 'd
 r = stampPostContent(publishedPost, { now: new Date('2026-11-17T06:00:00Z') });
 assert.ok(r.content.includes("date: 2026-11-17\nrss_date: '2026-11-17T14:00:00+08:00'"));
 
-console.log('發佈時間戳記測試全部通過（18 組情境）');
+// 11. addDateLine / frontMatterDay
+assert.equal(addDateLine("---\ntitle: A\ndraft: true\n---\nx", '2026-11-20'), "---\ntitle: A\ndraft: true\ndate: 2026-11-20\n---\nx");
+assert.equal(frontMatterDay('---\ntitle: A\n---\nx', now), null);
+assert.equal(frontMatterDay('---\ndate: 2026-12-25\n---\nx', now), '2026-12-25');
+
+// 12. 沒日期的草稿資料夾：草稿不動；拿掉 draft 發佈 → 資料夾改名、補 date 與 rss_date
+{
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'stamp-'));
+  const g = (...args) => spawnSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@t', ...args], { cwd: root, encoding: 'utf8' });
+  g('init', '-q');
+  const write = (rel, text) => { fs.mkdirSync(path.dirname(path.join(root, rel)), { recursive: true }); fs.writeFileSync(path.join(root, rel), text); };
+  const draft = "---\ntitle: A\ntags: [\"life\"]\ndraft: true\n---\nx\n";
+  write('blog/my-post/index.md', draft);
+  write('blog/my-post/001.webp', 'img');
+  write('photoblog/trip/index.md', "---\ntitle: P\ndraft: true\n---\n![img](./001.webp)\n");
+
+  // 新增的草稿 → 不蓋時間、不改名
+  assert.deepEqual(stampBeforeCommit({ addedFiles: ['blog/my-post/index.md'], changedFiles: ['blog/my-post/index.md'], now, root }), []);
+  g('add', '-A'); g('commit', '-qm', 'draft');
+
+  // blog 草稿轉發佈（沒寫 date）→ 用今天
+  write('blog/my-post/index.md', draft.replace('draft: true\n', ''));
+  let t = stampBeforeCommit({ addedFiles: [], changedFiles: ['blog/my-post/index.md'], now, root });
+  assert.ok(!fs.existsSync(path.join(root, 'blog/my-post')));
+  assert.ok(fs.existsSync(path.join(root, 'blog/2026-11-14-my-post/001.webp')));
+  assert.equal(fs.readFileSync(path.join(root, 'blog/2026-11-14-my-post/index.md'), 'utf8'),
+    "---\ntitle: A\ntags: [\"life\"]\ndate: 2026-11-14\n" + PUSH + "\n---\nx\n");
+  assert.deepEqual(t.find((s) => s.removed), { file: 'blog/my-post', to: 'blog/2026-11-14-my-post', removed: true });
+
+  // photoblog 新增（非草稿）、自己寫了未來日期 → 用那天，不加 date 行以外的東西
+  write('photoblog/trip/index.md', "---\ntitle: P\ndate: 2026-12-25\n---\nx\n");
+  t = stampBeforeCommit({ addedFiles: [], changedFiles: ['photoblog/trip/index.md'], now, root });
+  assert.equal(fs.readFileSync(path.join(root, 'photoblog/2026-12-25-trip/index.md'), 'utf8'),
+    "---\ntitle: P\ndate: 2026-12-25\nrss_date: '2026-12-25T00:00:01+08:00'\n---\nx\n");
+  fs.rmSync(root, { recursive: true, force: true });
+}
+
+console.log('發佈時間戳記測試全部通過（24 組情境）');

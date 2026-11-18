@@ -138,8 +138,10 @@ async function main() {
   const stamped = stampBeforeCommit({ addedFiles: nameList('A'), changedFiles: nameList('AM') });
   if (stamped.length > 0) {
     console.log('\n[推送] 已加上發佈時間：');
-    for (const s of stamped) console.log(`   ${s.file}（${s.note}）`);
-    git(['add', '--', ...stamped.map((s) => s.file)]);
+    for (const s of stamped) if (!s.removed) console.log(`   ${s.file}（${s.note}）`);
+    // 改名的資料夾：舊路徑（刪除）與新資料夾（含圖片）都要重新 stage
+    const paths = stamped.flatMap((s) => (s.removed ? [s.file, s.to] : [s.file]));
+    git(['add', '-A', '--', ...new Set(paths)]);
   }
 
   git(['commit', '-m', message]);

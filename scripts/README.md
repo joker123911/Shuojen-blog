@@ -174,11 +174,13 @@ node scripts/check-broken-links.js --fix
 ```bash
 npm run new
 ```
+預設建立**沒有日期的草稿**（例如 `blog/my-post/`，front matter 有 `draft: true`、沒有 `date`）。要發佈時把 `draft: true` 刪掉再 `npm run push` 即可，見下方「草稿發佈」。
 
 ### 推送發布 (`push.js`)
 依序執行連結與排版檢查、文章格式嚴格檢查（`prepare-data.js --strict`，有格式異常就中止）、完整建置（`npm run build`），全部通過後才提交並 push 到遠端。
 
-* **發佈時間**：輸入 commit 訊息確認後，會替這次**新增**的 `blog/`、`photoblog/` 文章補上 `rss_date`（push 當下的台灣時間；文章日期在未來則為該日 00:00:01），`now.md` 內容有改動時也會更新「最後更新」日期。已提交過的舊文不會被補；例外是先以 `draft: true` 提交、這次拿掉 draft 正式發佈的文章，若 `rss_date` 已刪除會補上 push 當下時間。取消提交時不會改動任何檔案。`npm start` / `npm run build` 不會改寫任何 md。
+* **發佈時間**：輸入 commit 訊息確認後，會替這次**新增**的 `blog/`、`photoblog/` 文章補上 `rss_date`（push 當下的台灣時間；文章日期在未來則為該日 00:00:01），`now.md` 內容有改動時也會更新「最後更新」日期。已提交過的舊文不會被補；例外是先以 `draft: true` 提交、這次拿掉 draft 正式發佈的文章，若 `rss_date` 已刪除會補上 push 當下時間。草稿（`draft: true`）本身不會被補 `rss_date`。取消提交時不會改動任何檔案。
+* **草稿發佈**：文章資料夾沒有日期（如 `blog/my-post/`）且已拿掉 `draft: true` 時，push 會把資料夾改名成 `YYYY-MM-DD-my-post`（網址日期由資料夾決定），blog 文章補上 `date`，再補 `rss_date`。日期優先用 front matter 自己寫的 `date`（可用來指定未來日期），沒寫就用 push 當天（台灣時間）。`npm start` / `npm run build` 不會改寫任何 md。
 * 沒有新變更、但有已 commit 尚未推送的 commit 時，會列出這些 commit 並詢問是否推送（預設不推送）。
 * 只會 stage 白名單內的路徑（`blog/`、`photoblog/`、`docs/`、`src/`、`static/`、`scripts/`、`.github/` 與根目錄設定檔）；其他變更會列出提醒，但不會被提交。
 * 提交前會列出完整的檔案清單，再詢問 commit 訊息（留空即取消）。

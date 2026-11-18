@@ -1,8 +1,6 @@
 ---
 title: '殘局練習系列 04 -后對單兵'
 tags: ["chess"]
-date: 2026-11-19
-rss_date: '2026-11-19T00:00:01+08:00'
 draft: true
 ---
 import { White, Black } from '@site/src/components/Chess/ChessGame';

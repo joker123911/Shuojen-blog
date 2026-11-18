@@ -3,20 +3,6 @@ const path = require('path');
 const readline = require('readline');
 const matter = require(path.join(__dirname, '../node_modules/gray-matter'));
 
-function getLocalDateTimeISO() {
-  const now = new Date();
-  const tzo = -now.getTimezoneOffset();
-  const dif = tzo >= 0 ? '+' : '-';
-  const pad = (num) => String(Math.floor(Math.abs(num))).padStart(2, '0');
-
-  const year = now.getFullYear();
-  const month = pad(now.getMonth() + 1);
-  const day = pad(now.getDate());
-
-  const dateStr = `${year}-${month}-${day}`;
-  return { dateStr };
-}
-
 async function promptInput(question, defaultValue) {
   const rl = readline.createInterface({
     input: process.stdin,
@@ -244,8 +230,8 @@ async function createNewPost() {
 
   const formattedTags = JSON.stringify(tagsArray);
 
-  const { dateStr } = getLocalDateTimeISO();
-  const dirName = `${dateStr}-${slug}`;
+  // 預設建立沒有日期的草稿資料夾；拿掉 draft: true 後 npm run push 會自動改名成 YYYY-MM-DD-slug
+  const dirName = slug;
   const baseDir = path.join(__dirname, '..', targetUnit);
   const targetDir = path.join(baseDir, dirName);
   const targetFile = path.join(targetDir, 'index.md');
@@ -263,6 +249,7 @@ async function createNewPost() {
     content = `---
 title: '${title}'
 tags: ${formattedTags}
+draft: true
 ---
 
 在這裡寫下攝影集的紀錄與簡介...
@@ -273,7 +260,7 @@ tags: ${formattedTags}
     content = `---
 title: '${title}'
 tags: ${formattedTags}
-date: ${dateStr}
+draft: true
 ---
 
 在這裡寫下你的文章內容...
@@ -293,6 +280,8 @@ date: ${dateStr}
   console.log(`📁 目錄位置: ${targetUnit}/${dirName}/`);
   console.log(`🏷️  文章標籤: ${tagsArray.join(', ')}`);
   console.log(`📄 檔案路徑: ${fileUri}`);
+  console.log(`📝 目前是草稿（draft: true）；要發佈時刪掉 draft 再 npm run push，`);
+  console.log(`   會自動把資料夾改成發佈日期、補上 date 與 rss_date。`);
   console.log(`--------------------------------------------------\n`);
 }
 
