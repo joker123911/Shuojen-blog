@@ -12,11 +12,14 @@ import {EASTER_EGG_RESTORE_SCRIPT} from './src/components/EasterEggs/constants.j
  */
 async function createFeedItemsWithRssDate(params) {
   const {blogPosts, defaultCreateFeedItems, ...rest} = params;
-  const localizedPosts = blogPosts.map((/** @type {any} */ post) => {
-    const customRssDate = post.metadata?.frontMatter?.rss_date;
-    if (!customRssDate) return post;
-    return {...post, metadata: {...post.metadata, date: new Date(customRssDate)}};
-  });
+  // 草稿（draftPreview，見 parseFrontMatter）不進 RSS
+  const localizedPosts = blogPosts
+    .filter((/** @type {any} */ post) => !post.metadata?.frontMatter?.draftPreview)
+    .map((/** @type {any} */ post) => {
+      const customRssDate = post.metadata?.frontMatter?.rss_date;
+      if (!customRssDate) return post;
+      return {...post, metadata: {...post.metadata, date: new Date(customRssDate)}};
+    });
   return defaultCreateFeedItems({blogPosts: localizedPosts, ...rest});
 }
 
@@ -90,6 +93,15 @@ const config = {
       }
       autoMeta.fillSeoFrontMatter(result);
 
+      // 正式建置時草稿不排除，當成一般文章建置並標上 draftPreview：
+      // 站長（瀏覽器存有站長金鑰）看到的跟本機一樣；其他人在列表裡看不到、打開也只顯示找不到。
+      // RSS 另外排除，頁面加 noindex（sitemap 會因此略過），站內搜尋索引本來就不收草稿。
+      // 見 draft-index 外掛與 src/theme/BlogPostItem。
+      if (process.env.NODE_ENV === 'production' && result.frontMatter.draft === true) {
+        result.frontMatter.draft = false;
+        result.frontMatter.draftPreview = true;
+      }
+
       result.frontMatter.wordCount = wordCount.countWords(result.content);
       return result;
     },
@@ -117,7 +129,7 @@ const config = {
         sitemap: {
           changefreq: 'weekly',
           priority: 0.5,
-          ignorePatterns: ['/tags/**', '/search'],
+          ignorePatterns: ['/tags/**', '/search', '/drafts'],
           filename: 'sitemap.xml',
         },
       }),
@@ -148,6 +160,52 @@ const config = {
             }
           }
           actions.setGlobalData({posts, tags});
+        },
+      };
+    },
+    // 草稿清單：正式站是 draftPreview，本機開發是 draft: true，供 /drafts 與隨機文章排除使用。
+    // 另外在每頁 <head> 放：
+    //   1. 一段小 script：瀏覽器存有站長金鑰就在 <html> 加 data-site-admin（在畫面出來前執行，不會閃一下）
+    //   2. 一段 CSS：不是站長時，把連到草稿的側欄、列表、標籤頁、上一篇／下一篇項目藏起來
+    function draftIndexPlugin() {
+      /** @type {string[]} 正式站草稿的網址 */
+      let previewPermalinks = [];
+      return {
+        name: 'draft-index',
+        injectHtmlTags() {
+          const hide = 'html:not([data-site-admin])';
+          const selectors = previewPermalinks.flatMap((p) => [
+            `${hide} li:has(> a[href="${p}"])`,
+            `${hide} article:has(> header h2 a[href="${p}"])`,
+          ]);
+          const hidden = previewPermalinks.map((p) => `${hide} .custom-pagination-item > a[href="${p}"]`);
+          const css = [
+            selectors.length ? `${selectors.join(',')}{display:none!important}` : '',
+            hidden.length ? `${hidden.join(',')}{visibility:hidden!important}` : '',
+          ].join('');
+          return {
+            headTags: [
+              {
+                tagName: 'script',
+                innerHTML:
+                  "try{if(localStorage.getItem('guestbook_admin_key'))document.documentElement.setAttribute('data-site-admin','')}catch(e){}",
+              },
+              ...(css ? [{tagName: 'style', innerHTML: css}] : []),
+            ],
+          };
+        },
+        async allContentLoaded({allContent, actions}) {
+          const blogPosts = Object.values(
+            allContent['docusaurus-plugin-content-blog'] ?? {},
+          ).flatMap((/** @type {any} */ c) => c?.blogPosts ?? []);
+          /** @type {[string, string, string][]} [title, permalink, date] */
+          previewPermalinks = blogPosts
+            .filter(({metadata}) => metadata.frontMatter.draftPreview)
+            .map(({metadata}) => metadata.permalink);
+          const drafts = blogPosts
+            .filter(({metadata}) => metadata.frontMatter.draftPreview || metadata.frontMatter.draft === true)
+            .map(({metadata}) => [metadata.title, metadata.permalink, new Date(metadata.date).toISOString()]);
+          actions.setGlobalData({drafts});
         },
       };
     },

@@ -5,6 +5,9 @@ import 'chessground/assets/chessground.cburnett.css';
 import './ChessgroundBoard.css';
 import { Chess } from 'chess.js';
 
+/** 棋盤外座標佔用的空間（px）：右側數字、下方字母 */
+export const COORD_GUTTER = { right: 18, bottom: 22 };
+
 const START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
 /**
@@ -135,25 +138,25 @@ export default function ChessgroundBoard({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // 右側、下方留空間給棋盤外的座標（樣式見 ChessgroundBoard.css）
   return (
-    <div
-      style={{
-        width: '100%',
-        aspectRatio: '1 / 1',
-        position: 'relative',
-        borderRadius: '8px',
-        overflow: 'hidden',
-        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.12)',
-        userSelect: 'none',
-      }}
-    >
+    <div style={{ paddingRight: COORD_GUTTER.right, paddingBottom: COORD_GUTTER.bottom }}>
       <div
-        ref={containerRef}
         style={{
           width: '100%',
-          height: '100%',
+          aspectRatio: '1 / 1',
+          position: 'relative',
+          userSelect: 'none',
         }}
-      />
+      >
+        <div
+          ref={containerRef}
+          style={{
+            width: '100%',
+            height: '100%',
+          }}
+        />
+      </div>
     </div>
   );
 }

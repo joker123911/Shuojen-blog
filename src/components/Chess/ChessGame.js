@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { Chess } from "chess.js";
-import ChessgroundBoard from "./ChessgroundBoard";
+import ChessgroundBoard, { COORD_GUTTER } from "./ChessgroundBoard";
 import precomputedEvals from "@site/src/data/chessEvals.json";
 
 const START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -278,6 +278,8 @@ function EvalBar({ evaluation, orientation = "w" }) {
       style={{
         width: "26px",
         flexShrink: 0,
+        // 跟棋盤本身等高（棋盤下方還有座標）
+        marginBottom: `${COORD_GUTTER.bottom}px`,
         borderRadius: "4px",
         overflow: "hidden",
         border: "1px solid var(--ifm-color-emphasis-400)",
@@ -451,7 +453,7 @@ function ChessGameLogic({ pgn, orientation = "w", showEval = true }) {
   const currentEval = evals[moveIndex] || { cp: 20, mate: null, winner: null };
 
   return (
-    <div style={{ maxWidth: showEval ? 454 : 420, margin: "2rem auto", fontFamily: "var(--ifm-font-family-base)" }}>
+    <div style={{ maxWidth: (showEval ? 454 : 420) + COORD_GUTTER.right, margin: "2rem auto", fontFamily: "var(--ifm-font-family-base)" }}>
       <div
         style={{
           display: "flex",

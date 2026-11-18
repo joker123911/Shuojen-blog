@@ -1,0 +1,20 @@
+/* 草稿：站長看內容、其他人看「找不到」；data-site-admin 由 draft-index 外掛的 <head> script 設定 */
+.locked {
+  display: none;
+  padding: 2rem 0;
+}
+
+:global(html:not([data-site-admin])) .locked {
+  display: block;
+}
+
+:global(html:not([data-site-admin])) .draft {
+  display: none;
+}
+
+/* 不是站長時，草稿頁右側的目錄和下方的上一篇／下一篇也一起藏起來（.locked 只出現在草稿文章頁） */
+:global(html:not([data-site-admin])):has(.locked) :global(.theme-doc-toc-desktop),
+:global(html:not([data-site-admin])):has(.locked) :global(.theme-doc-toc-mobile),
+:global(html:not([data-site-admin])):has(.locked) :global(nav.docusaurus-mt-lg) {
+  display: none;
+}

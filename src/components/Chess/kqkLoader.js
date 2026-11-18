@@ -1,9 +1,14 @@
 import { buildTablebase } from './kqkTablebase';
 import { buildKpkTablebase } from './kpkTablebase';
+import { buildKqkpTablebase } from './kqkpTablebase';
 
 const tablebasePromises = {};
 
 function buildOnMainThread(kind) {
+  if (kind.startsWith('qp')) {
+    const q = buildTablebase('q');
+    return { q, qp: buildKqkpTablebase(q, Number(kind.slice(2))) };
+  }
   if (kind !== 'p') return buildTablebase(kind);
   const q = buildTablebase('q');
   const r = buildTablebase('r');
@@ -15,6 +20,7 @@ function buildOnMainThread(kind) {
  * - 'q'：王后對單王 { w, b }
  * - 'r'：王車對單王 { w, b }
  * - 'p'：王兵對單王，連同升變後要用的后、車殘局庫一起回傳 { q, r, p }
+ * - 'qp0'～'qp7'：王后對某條直線（0 = a 線）的黑兵，連同單后殺王一起回傳 { q, qp }
  */
 export function loadTablebase(kind = 'q') {
   if (tablebasePromises[kind]) return tablebasePromises[kind];

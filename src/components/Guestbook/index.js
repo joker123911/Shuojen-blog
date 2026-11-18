@@ -126,6 +126,8 @@ export default function Guestbook({ readOnly = false, postSlug }) {
 
       if (result.success) {
         storeAdminKey(key);
+        // 站長模式：讓草稿文章在側欄、列表裡出現（見 docusaurus.config.js 的 draft-index 外掛）
+        document.documentElement.setAttribute('data-site-admin', '');
         setAdminKey(key);
         showNotice('form', 'success', '身分驗證成功！歡迎回來，shuojen 🛡️');
       } else {

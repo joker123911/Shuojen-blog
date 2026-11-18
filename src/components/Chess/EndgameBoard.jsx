@@ -6,6 +6,7 @@ import 'chessground/assets/chessground.brown.css';
 import 'chessground/assets/chessground.cburnett.css';
 import './ChessgroundBoard.css';
 import { pickMove } from './endgameEngine';
+import { COORD_GUTTER } from './ChessgroundBoard';
 
 const OPPONENT_DELAY = 700; // 對手「思考」時間，也是讓玩家排預走的時間
 const RESULT_DELAY = 700; // 最後一步走完後停一下，再顯示結果
@@ -143,9 +144,10 @@ function formatClock(ms) {
  * - 兵升變一律升后。
  * - 對局結束後在棋盤上顯示結果，點一下重新開始。
  *
- * loadTables：回傳 Promise<{ q?, r?, p? }>，交給 endgameEngine 挑對手的棋步。
+ * loadTables：回傳 Promise<{ q?, r?, p?, qp? }>，交給 endgameEngine 挑對手的棋步。
+ * adjudicate：（選用）game → 結果文字或 null，用來提早結束殘局庫算不到的局面（例如黑兵升后）。
  */
-function EndgameBoardLogic({ fen, player = 'w', loadTables }) {
+function EndgameBoardLogic({ fen, player = 'w', loadTables, adjudicate }) {
   const containerRef = useRef(null);
   const clockRef = useRef(null);
   const restartRef = useRef(() => {});
@@ -226,20 +228,27 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables }) {
       });
     };
 
-    const finish = () => {
+    /** 對局結束的話回傳結果文字，否則 null */
+    const endText = () => {
+      if (game.isGameOver()) return resultText(game);
+      return adjudicate ? adjudicate(game) : null;
+    };
+
+    const finish = (text) => {
       over = true;
       queue = [];
       sync();
-      const text = resultText(game);
       timer = setTimeout(() => alive && setResult(text), RESULT_DELAY);
     };
 
     const opponentMove = () => {
-      const m = pickMove(tables, game.fen());
+      const seen = game.history({ verbose: true }).map((h) => h.before);
+      const m = pickMove(tables, game.fen(), seen);
       game.move(m);
       lastMove = [m.from, m.to];
-      if (game.isGameOver()) {
-        finish();
+      const text = endText();
+      if (text) {
+        finish(text);
         return;
       }
       // 輪到玩家：執行第一個預走；不合法就取消全部預走
@@ -260,8 +269,9 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables }) {
       stopClock(premove);
       game.move({ from, to, promotion: 'q' });
       lastMove = [from, to];
-      if (game.isGameOver()) {
-        finish();
+      const text = endText();
+      if (text) {
+        finish(text);
         return;
       }
       sync();
@@ -303,6 +313,7 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables }) {
       startIfOpponentFirst();
     };
 
+    /** 對局結束後點一下：回到初始局面，等玩家再按「開始」 */
     restartRef.current = () => {
       clearTimeout(timer);
       resetClock();
@@ -310,9 +321,10 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables }) {
       lastMove = undefined;
       queue = [];
       over = false;
+      started = false;
+      setStarted(false);
       setResult(null);
       sync();
-      startIfOpponentFirst();
     };
 
     (async () => {
@@ -349,81 +361,85 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables }) {
   }, [fen, player]);
 
   return (
-    <div style={{ width: '100%', maxWidth: 400, margin: '1.5rem auto' }}>
-      <div
-        style={{
-          position: 'relative',
-          width: '100%',
-          aspectRatio: '1 / 1',
-          borderRadius: 8,
-          overflow: 'hidden',
-          boxShadow: '0 4px 16px rgba(0, 0, 0, 0.12)',
-          userSelect: 'none',
-          touchAction: 'none',
-        }}
-      >
-        <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
-        {result && (
-          <div
-            role="button"
-            tabIndex={0}
-            onClick={() => restartRef.current()}
-            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && restartRef.current()}
-            style={{
-              position: 'absolute',
-              inset: 0,
-              zIndex: 10,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              background: 'rgba(0, 0, 0, 0.55)',
-              color: '#fff',
-              cursor: 'pointer',
-              fontSize: '2.5rem',
-              fontWeight: 700,
-            }}
-          >
-            {result}
-          </div>
-        )}
-        {!started && (
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              zIndex: 10,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              background: 'rgba(0, 0, 0, 0.25)',
-            }}
-          >
-            <button
-              type="button"
-              onClick={() => startRef.current()}
+    <div style={{ width: '100%', maxWidth: 400 + COORD_GUTTER.right, margin: '1.5rem auto' }}>
+      {/* 右側、下方留空間給棋盤外的座標（樣式見 ChessgroundBoard.css） */}
+      <div style={{ paddingRight: COORD_GUTTER.right, paddingBottom: COORD_GUTTER.bottom }}>
+        <div
+          style={{
+            position: 'relative',
+            width: '100%',
+            aspectRatio: '1 / 1',
+            userSelect: 'none',
+            touchAction: 'none',
+          }}
+        >
+          <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
+          {result && (
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={() => restartRef.current()}
+              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && restartRef.current()}
               style={{
-                padding: '0.45rem 1.6rem',
-                border: 'none',
-                borderRadius: 999,
-                background: 'rgba(255, 255, 255, 0.92)',
-                color: '#222',
-                fontSize: '1rem',
-                fontWeight: 600,
-                letterSpacing: '0.1em',
+                position: 'absolute',
+                inset: 0,
+                borderRadius: 8,
+                zIndex: 10,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: 'rgba(0, 0, 0, 0.55)',
+                color: '#fff',
                 cursor: 'pointer',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
+                fontSize: '2.5rem',
+                fontWeight: 700,
               }}
             >
-              開始
-            </button>
-          </div>
-        )}
+              {result}
+            </div>
+          )}
+          {/* 點棋盤任何地方都能開始，中間的「開始」只是提示 */}
+          {!started && (
+            <div
+              onClick={() => startRef.current()}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                borderRadius: 8,
+                zIndex: 10,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: 'rgba(0, 0, 0, 0.25)',
+                cursor: 'pointer',
+              }}
+            >
+              <button
+                type="button"
+                style={{
+                  padding: '0.45rem 1.6rem',
+                  border: 'none',
+                  borderRadius: 999,
+                  background: 'rgba(255, 255, 255, 0.92)',
+                  color: '#222',
+                  fontSize: '1rem',
+                  fontWeight: 600,
+                  letterSpacing: '0.1em',
+                  cursor: 'pointer',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
+                }}
+              >
+                開始
+              </button>
+            </div>
+          )}
+        </div>
       </div>
       <div
         ref={clockRef}
         title="玩家用時（預走每步算 0.1 秒）"
         style={{
-          marginTop: 4,
+          paddingRight: COORD_GUTTER.right,
           textAlign: 'right',
           fontSize: '0.8rem',
           fontVariantNumeric: 'tabular-nums',

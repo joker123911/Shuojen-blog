@@ -13,3 +13,45 @@ cg-board square.mate {
     rgba(158, 0, 0, 0.6) 100%
   );
 }
+
+/* 座標放在棋盤外：直線字母在下方、橫線數字在右側，灰色小寫。
+   外框要留 COORD_GUTTER（右 18px、下 22px）的空間，見 ChessgroundBoard.jsx、EndgameBoard.jsx */
+.cg-wrap coords {
+  opacity: 1;
+  font-family: var(--ifm-font-family-base, sans-serif);
+  font-size: 12px;
+}
+
+/* 蓋掉棕色主題「深淺交錯」的座標顏色 */
+.cg-wrap coords coord {
+  color: #8b9096 !important;
+}
+
+.cg-wrap coords.files {
+  top: 100%;
+  bottom: auto;
+  left: 0;
+  height: 22px;
+  align-items: center;
+  text-transform: lowercase;
+}
+
+.cg-wrap coords.ranks {
+  top: 0;
+  left: 100%;
+  width: 18px;
+}
+
+.cg-wrap coords.ranks coord {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: none;
+}
+
+/* 圓角與陰影改放在棋盤本身（外框不能裁切，座標才露得出來） */
+.cg-wrap cg-board {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}

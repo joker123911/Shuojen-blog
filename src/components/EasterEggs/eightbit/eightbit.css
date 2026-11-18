@@ -252,7 +252,8 @@ html[data-easter-egg='eightbit'] .theme-doc-sidebar-container {
 
 /* ---------- 標題招牌：文章標題做成凸起的磚紅色看板 ---------- */
 html[data-easter-egg='eightbit'] article :is(h1, header h2),
-html[data-easter-egg='eightbit'] .gallery-title {
+html[data-easter-egg='eightbit'] .gallery-title,
+html[data-easter-egg='eightbit'] :is(.albums-hero-title, .blogroll-hero-title, .guestbook-hero-title) {
   display: table;
   max-width: 100%;
   padding: 0.45em 0.8em 0.4em;
@@ -266,9 +267,15 @@ html[data-easter-egg='eightbit'] .gallery-title {
   box-shadow: 6px 6px 0 var(--8b-shadow);
 }
 
-html[data-easter-egg='eightbit'] .gallery-title {
+html[data-easter-egg='eightbit'] .gallery-title,
+html[data-easter-egg='eightbit'] :is(.albums-hero-title, .blogroll-hero-title, .guestbook-hero-title) {
   display: inline-block;
   white-space: normal;
+}
+
+/* Albums / Blogroll / Guestbook 的大標題用 inline style 指定顏色，需蓋過 */
+html[data-easter-egg='eightbit'] :is(.albums-hero-title, .blogroll-hero-title, .guestbook-hero-title) {
+  color: var(--8b-plate-light) !important;
 }
 
 /* 文件頁置中的手寫大標題（custom.css 用 !important 指定了顏色） */
@@ -380,8 +387,20 @@ html[data-easter-egg='eightbit'] :is(.button, .pagination-nav__link):active {
 }
 
 /* ---------- 頁尾 ---------- */
+/* 頁尾像標題畫面：直接站在藍天裡（看得到後面的雲和山丘），白字加黑影，欄位標題做成磚紅小看板 */
 html[data-easter-egg='eightbit'] .footer {
-  border-top: 4px solid var(--8b-black);
+  background: transparent;
+  text-shadow: 2px 2px 0 var(--8b-black);
+}
+
+html[data-easter-egg='eightbit'] .footer__title {
+  display: inline-block;
+  padding: 0.3em 0.7em 0.25em;
+  background: var(--8b-brick);
+  color: var(--8b-plate-light);
+  border: 3px solid;
+  border-color: var(--8b-plate-light) var(--8b-black) var(--8b-black) var(--8b-plate-light);
+  box-shadow: 4px 4px 0 var(--8b-shadow);
 }
 
 html[data-easter-egg='eightbit'] .theme-back-to-top-button {

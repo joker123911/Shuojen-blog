@@ -3,6 +3,7 @@ import Layout from '@theme/Layout';
 import { useHistory } from '@docusaurus/router';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import generatedRoutes from '@generated/routes';
+import { usePluginData } from '@docusaurus/useGlobalData';
 
 /**
  * 判斷路徑是否為目標的「部落格文章」或「攝影集作品」
@@ -72,12 +73,22 @@ export default function RandomPost() {
   const searchIndexUrl = useBaseUrl('/search-index.json');
   const sitemapUrl = useBaseUrl('/sitemap.xml');
   const [status, setStatus] = useState('> 正在隨機挑選文章...');
+  // 草稿（正式站是未列出的頁面）不參加抽籤
+  const { drafts } = usePluginData('draft-index');
+  const draftPaths = new Set(drafts.map(([, permalink]) => permalink.replace(/\/+$/, '')));
 
   useEffect(() => {
     let isMounted = true;
     let fallbackTimer = null;
 
-    const redirectToRandom = (urls) => {
+    const redirectToRandom = (allUrls) => {
+      const urls = allUrls.filter((url) => {
+        try {
+          return !draftPaths.has(new URL(url, window.location.origin).pathname.replace(/\/+$/, ''));
+        } catch {
+          return true;
+        }
+      });
       if (!isMounted || urls.length === 0) return false;
       const randomIndex = Math.floor(Math.random() * urls.length);
       let targetPath = urls[randomIndex];
