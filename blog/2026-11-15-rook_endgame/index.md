@@ -6,7 +6,7 @@ rss_date: '2026-11-15T15:55:15+08:00'
 ---
 
 :::info
-此文章同步到[興趣區](/docs/intro)。
+此文章同步到[興趣區](/docs/chess/rook-endgame)。
 :::
 
 import ChessStudy, { ChessStudyBlack } from '@site/src/components/Chess/ChessStudy';

@@ -8,7 +8,7 @@ import { White, Black } from '@site/src/components/Chess/ChessGame';
 import PawnEndgameBoard from '@site/src/components/Chess/PawnEndgameBoard';
 
 :::info
-此文章同步到[興趣區](/docs/intro)。
+此文章同步到[興趣區](/docs/chess/king-pawn)。
 :::
 
 王＋兵對單王是所有兵殘局的基礎，同一個局面，**輪到誰走**就可能決定勝負。下面這個局面白先可以贏，黑先卻可以守和。

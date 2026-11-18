@@ -8,7 +8,7 @@ import RookMateBoard from '@site/src/components/Chess/RookMateBoard';
 import { White } from '@site/src/components/Chess/ChessGame';
 
 :::info
-此文章同步到[興趣區](/docs/intro)。
+此文章同步到[興趣區](/docs/chess/rook-mate)。
 :::
 
 王＋車對單王是[單后殺王](/blog/2026/11/16/queen_mate)之後的下一個基本殺法，車只能走直線，步數會比較多。

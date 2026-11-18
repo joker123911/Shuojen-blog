@@ -9,7 +9,7 @@ import QueenMateBoard from '@site/src/components/Chess/QueenMateBoard';
 import { White } from '@site/src/components/Chess/ChessGame';
 
 :::info
-此文章同步到[興趣區](/docs/intro)。
+此文章同步到[興趣區](/docs/chess/queen-mate)。
 :::
 
 王＋后對單王是西洋棋最基本的殺法，學會後只要最後比對手多一隻兵升變，就可以單后殺王了。

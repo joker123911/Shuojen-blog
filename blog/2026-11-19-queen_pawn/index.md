@@ -9,7 +9,7 @@ import { White, Black } from '@site/src/components/Chess/ChessGame';
 import QueenPawnBoard from '@site/src/components/Chess/QueenPawnBoard';
 
 :::info
-此文章同步到[興趣區](/docs/intro)。
+此文章同步到[興趣區](/docs/chess/queen-pawn)。
 :::
 
 王＋后對王＋兵，黑兵已經走到第 2 橫線、下一步就要升變，白王又離得很遠。這時候白后要**一邊將軍、一邊拖時間**，讓白王慢慢走過來。
