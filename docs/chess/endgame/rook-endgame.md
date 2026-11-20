@@ -6,8 +6,6 @@ description: '車兵對單車殘局的兩大基本局面：Lucena 與 Philidor�
 ---
 import ChessStudy, { ChessStudyBlack } from '@site/src/components/Chess/ChessStudy';
 
-*最後更新：2026-11-15*
-
 看到這支 Short：[Lucena or Philidor? Name the Position](https://www.youtube.com/shorts/BrF4-pY52c4) 想到以前社課劉業揚老師教過的「四線搭橋」跟「六線守和」，分別對應 Lucena 和 Philidor 這兩個非常重要的理論殘局，一個是**攻方怎麼贏**，一個是**守方怎麼和**。
 
 車兵對單車是實戰很常出現的殘局，可以看 Carlsen 示範如何簡單棄兵形成 Lucena position 獲勝，[《Magnus Carlsen Explains the Lucena Position (Building the Bridge)》](https://youtu.be/n-Or_qz30hI?t=508)。

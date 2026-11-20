@@ -1,7 +1,8 @@
 ---
 title: '殘局練習系列 04 -后對單兵'
 tags: ["chess"]
-draft: true
+date: 2026-11-20
+rss_date: '2026-11-20T17:54:51+08:00'
 ---
 import { White, Black } from '@site/src/components/Chess/ChessGame';
 import QueenPawnBoard from '@site/src/components/Chess/QueenPawnBoard';

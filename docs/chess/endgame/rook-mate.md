@@ -7,8 +7,6 @@ description: '王車對單王的基本殺法，附可以直接對弈的互動棋
 import RookMateBoard from '@site/src/components/Chess/RookMateBoard';
 import { White } from '@site/src/components/Chess/ChessGame';
 
-*最後更新：2026-11-16*
-
 王＋車對單王是[單后殺王](./queen-mate.md)之後的下一個基本殺法，車只能走直線，步數會比較多。
 
 來試試看吧！

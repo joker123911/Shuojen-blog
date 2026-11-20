@@ -8,8 +8,6 @@ import ChessStudy from '@site/src/components/Chess/ChessStudy';
 import QueenMateBoard from '@site/src/components/Chess/QueenMateBoard';
 import { White } from '@site/src/components/Chess/ChessGame';
 
-*最後更新：2026-11-16*
-
 王＋后對單王是西洋棋最基本的殺法，學會後只要最後比對手多一隻兵升變，就可以單后殺王了。
 
 來試試看吧！

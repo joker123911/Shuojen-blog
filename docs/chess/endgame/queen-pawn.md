@@ -3,12 +3,9 @@ slug: /chess/queen-pawn
 title: '殘局練習系列 04 -后對單兵'
 sidebar_position: 12
 description: '王后對第 2 橫線的兵：怎麼贏、哪些兵守得和，附進攻、守和兩種互動棋盤。'
-unlisted: true
 ---
 import { White, Black } from '@site/src/components/Chess/ChessGame';
 import QueenPawnBoard from '@site/src/components/Chess/QueenPawnBoard';
-
-*最後更新：2026-11-19*
 
 王＋后對王＋兵，黑兵已經走到第 2 橫線、下一步就要升變，白王又離得很遠。這時候白后要**一邊將軍、一邊拖時間**，讓白王慢慢走過來。
 
