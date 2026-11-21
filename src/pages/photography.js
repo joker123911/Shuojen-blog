@@ -80,6 +80,19 @@ function FilterRow({ label, options, value, onChange }) {
 // 寬高比；缺資料時退回相機標準 3:2
 const aspectOf = (photo) => (photo.w && photo.h ? photo.w / photo.h : 1.5);
 
+// 等高排版會把照片拉寬以填滿整列，估算顯示寬度時預留的放大倍率
+const ROW_STRETCH = 1.2;
+
+// 依各斷點的列高（需與 CSS 的 --row-h 一致）估算照片顯示寬度，讓瀏覽器從 srcset 挑合適的檔案
+function photoSizes(aspect) {
+  const px = (rowH) => `${Math.ceil(rowH * aspect * ROW_STRETCH)}px`;
+  return [
+    `(max-width: 640px) min(${px(150)}, calc(100vw - 32px))`,
+    `(max-width: 1024px) min(${px(220)}, 100vw)`,
+    px(280),
+  ].join(', ');
+}
+
 function formatDate(dateStr) {
   if (!dateStr) return '';
   const [y, m, d] = dateStr.split('-');
@@ -357,6 +370,7 @@ export default function PhotoGallery() {
               ))
             : visiblePhotos.map((photo, index) => {
                 const aspect = aspectOf(photo);
+                const hasSrcSet = Boolean(photo.thumb && photo.tw && photo.w > photo.tw);
                 return (
                   <div
                     key={photo.stableId}
@@ -374,6 +388,13 @@ export default function PhotoGallery() {
                       <div className="photo-ratio" style={{ paddingBottom: `${100 / aspect}%` }}>
                         <img
                           src={getThumbPath(photo)}
+                          // 一般螢幕載縮圖；高解析螢幕（縮圖不夠銳利時）改載原圖
+                          srcSet={
+                            hasSrcSet
+                              ? `${getThumbPath(photo)} ${photo.tw}w, ${getFullPath(photo.src)} ${photo.w}w`
+                              : undefined
+                          }
+                          sizes={hasSrcSet ? photoSizes(aspect) : undefined}
                           alt={photo.title || 'Photo'}
                           className="photo-card-img"
                           loading={index < 8 ? 'eager' : 'lazy'}
@@ -383,6 +404,7 @@ export default function PhotoGallery() {
                             // 縮圖不存在時（例如本機尚未產生）改載原圖
                             const original = getFullPath(photo.src);
                             if (!e.currentTarget.src.endsWith(original)) {
+                              e.currentTarget.removeAttribute('srcset');
                               e.currentTarget.src = original;
                             }
                           }}

@@ -4,7 +4,8 @@ import {PROGRESS_STORAGE_KEY} from '../constants';
 import {useEasterEggMode} from '../modeStore';
 
 /**
- * 8-bit 模式導覽列下方的遊戲 HUD：分數、金幣（逛過幾個頁面）、目前區塊、時間。
+ * 8-bit 模式導覽列下方的遊戲 HUD：左邊是換頁時滑下來的地名告示牌（目前區塊），
+ * 右邊是狀態視窗：名字、時間、收集到的寶石（逛過幾個頁面）、分數。
  * 由 src/theme/Navbar 掛在導覽列後面，只有 8-bit 模式開著時才會渲染。
  */
 
@@ -47,7 +48,7 @@ function recordVisit(pathname) {
 
 function clock() {
   const now = new Date();
-  return `${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}`;
+  return `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 }
 
 function HudBar() {
@@ -64,23 +65,17 @@ function HudBar() {
 
   return (
     <div className="eightbit-hud" aria-hidden="true">
-      <div>
-        <div>SHUOJEN</div>
-        <div>{String(coins * POINTS_PER_PAGE).padStart(6, '0')}</div>
+      {/* key 綁路徑：每次換頁重新掛載，重播滑下來的動畫 */}
+      <div key={pathname} className="eightbit-hud__place">
+        {stageOf(pathname)}
       </div>
-      <div className="eightbit-hud__coins">
-        <div>&nbsp;</div>
-        <div>
-          <span className="eightbit-coin" />×{String(coins).padStart(2, '0')}
-        </div>
-      </div>
-      <div>
-        <div>STAGE</div>
-        <div>{stageOf(pathname)}</div>
-      </div>
-      <div>
-        <div>TIME</div>
-        <div>{time}</div>
+      <div className="eightbit-hud__status">
+        <span>SHUOJEN</span>
+        <span>{time}</span>
+        <span>
+          <span className="eightbit-gem" />×{String(coins).padStart(2, '0')}
+        </span>
+        <span>${String(coins * POINTS_PER_PAGE).padStart(6, '0')}</span>
       </div>
     </div>
   );

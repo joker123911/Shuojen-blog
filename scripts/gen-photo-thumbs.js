@@ -4,6 +4,7 @@
 // - 縮圖輸出到 static/photo-thumbs/<同原路徑>.webp（已列入 .gitignore，build 時重新產生）。
 // - 增量處理：縮圖已存在且比原圖新就跳過，只讀取尺寸。
 // - 寬高供照片牆做「等高排版」，避免直幅照片被裁切。
+// - 縮圖寬度（tw）供照片牆組 srcset：一般螢幕載縮圖，高解析螢幕改載原圖。
 const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
@@ -48,7 +49,10 @@ async function processPhoto(photo, stats) {
     stats.skipped++;
   }
 
-  return { ...photo, w, h, thumb: `photo-thumbs/${thumbRel}` };
+  // 縮圖實際寬度（withoutEnlargement：原圖比縮圖矮時維持原尺寸），供照片牆 srcset 使用
+  const tw = h > THUMB_HEIGHT ? Math.round((w * THUMB_HEIGHT) / h) : w;
+
+  return { ...photo, w, h, tw, thumb: `photo-thumbs/${thumbRel}` };
 }
 
 async function main() {

@@ -5,7 +5,7 @@ import './eightbit/eightbit.css';
 
 /**
  * 全站彩蛋（由 src/theme/Root.js 掛載到每一頁）：在頁面上（非輸入框）輸入 Konami 秘技 ↑↑↓↓←→←→BA，
- * 整個網站切換成紅白機橫向卷軸遊戲風格。再輸入一次，或點左下角的按鈕即可恢復。
+ * 整個網站切換成 GBA 掌機 RPG 俯視角風格（進出的轉場動畫維持紅白機風）。再輸入一次，或點左下角的按鈕即可恢復。
  * 導覽列下方的 HUD 由 src/theme/Navbar 掛上。
  */
 
@@ -36,14 +36,14 @@ export default function EasterEggs() {
 
   return (
     <>
-      {/* 站在地面上的小狗（站長的吉祥物 ▼・ᴥ・▼） */}
+      {/* 坐在草叢前的小狗（站長的吉祥物 ▼・ᴥ・▼） */}
       <span className="eightbit-player" aria-hidden="true" />
       <button
         type="button"
         className="eightbit-exit"
         onClick={() => toggleMode('eightbit')}
         title="離開 8-bit 模式（再輸入一次秘技也可以）">
-        <span className="eightbit-coin" aria-hidden="true" />
+        <span className="eightbit-cursor" aria-hidden="true" />
         離開 8-BIT
       </button>
     </>
