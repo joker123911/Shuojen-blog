@@ -2294,6 +2294,131 @@
     "mate": null,
     "winner": null
   },
+  "8/8/8/3k4/6R1/7Q/8/4K3 w - - 0 1": {
+    "cp": 10000,
+    "mate": 4,
+    "winner": null
+  },
+  "8/8/8/3k3Q/6R1/8/8/4K3 b - - 1 1": {
+    "cp": 10000,
+    "mate": 3,
+    "winner": null
+  },
+  "8/8/4k3/7Q/6R1/8/8/4K3 w - - 2 2": {
+    "cp": 10000,
+    "mate": 3,
+    "winner": null
+  },
+  "8/8/4k1R1/7Q/8/8/8/4K3 b - - 3 2": {
+    "cp": 10000,
+    "mate": 2,
+    "winner": null
+  },
+  "8/5k2/6R1/7Q/8/8/8/4K3 w - - 4 3": {
+    "cp": 10000,
+    "mate": 2,
+    "winner": null
+  },
+  "8/5k1Q/6R1/8/8/8/8/4K3 b - - 5 3": {
+    "cp": 10000,
+    "mate": 1,
+    "winner": null
+  },
+  "5k2/7Q/6R1/8/8/8/8/4K3 w - - 6 4": {
+    "cp": 10000,
+    "mate": 1,
+    "winner": null
+  },
+  "5kR1/7Q/8/8/8/8/8/4K3 b - - 7 4": {
+    "cp": 10000,
+    "mate": 0,
+    "winner": "w"
+  },
+  "8/8/8/3k4/7R/6Q1/8/4K3 w - - 0 1": {
+    "cp": 10000,
+    "mate": 4,
+    "winner": null
+  },
+  "8/8/8/3k2Q1/7R/8/8/4K3 b - - 1 1": {
+    "cp": 10000,
+    "mate": 4,
+    "winner": null
+  },
+  "8/8/4k3/6Q1/7R/8/8/4K3 w - - 2 2": {
+    "cp": 10000,
+    "mate": 4,
+    "winner": null
+  },
+  "8/8/4k2R/6Q1/8/8/8/4K3 b - - 3 2": {
+    "cp": 10000,
+    "mate": 3,
+    "winner": null
+  },
+  "8/5k2/7R/6Q1/8/8/8/4K3 w - - 4 3": {
+    "cp": 10000,
+    "mate": 3,
+    "winner": null
+  },
+  "8/5kQ1/7R/8/8/8/8/4K3 b - - 5 3": {
+    "cp": 10000,
+    "mate": 14,
+    "winner": null
+  },
+  "8/6k1/7R/8/8/8/8/4K3 w - - 0 4": {
+    "cp": 10000,
+    "mate": 13,
+    "winner": null
+  },
+  "8/8/8/3k4/6R1/7R/8/4K3 w - - 0 1": {
+    "cp": 10000,
+    "mate": 6,
+    "winner": null
+  },
+  "8/8/8/3k3R/6R1/8/8/4K3 b - - 1 1": {
+    "cp": 10000,
+    "mate": 5,
+    "winner": null
+  },
+  "8/8/4k3/7R/6R1/8/8/4K3 w - - 2 2": {
+    "cp": 10000,
+    "mate": 5,
+    "winner": null
+  },
+  "8/8/4k1R1/7R/8/8/8/4K3 b - - 3 2": {
+    "cp": 10000,
+    "mate": 4,
+    "winner": null
+  },
+  "8/5k2/6R1/7R/8/8/8/4K3 w - - 4 3": {
+    "cp": 10000,
+    "mate": 4,
+    "winner": null
+  },
+  "8/5k2/R7/7R/8/8/8/4K3 b - - 5 3": {
+    "cp": 10000,
+    "mate": 3,
+    "winner": null
+  },
+  "8/4k3/R7/7R/8/8/8/4K3 w - - 6 4": {
+    "cp": 10000,
+    "mate": 2,
+    "winner": null
+  },
+  "8/4k2R/R7/8/8/8/8/4K3 b - - 7 4": {
+    "cp": 10000,
+    "mate": 1,
+    "winner": null
+  },
+  "3k4/7R/R7/8/8/8/8/4K3 w - - 8 5": {
+    "cp": 10000,
+    "mate": 1,
+    "winner": null
+  },
+  "R2k4/7R/8/8/8/8/8/4K3 b - - 9 5": {
+    "cp": 10000,
+    "mate": 0,
+    "winner": "w"
+  },
   "r1bqkbnr/pppp1ppp/8/n3p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4": {
     "cp": 73,
     "mate": null,

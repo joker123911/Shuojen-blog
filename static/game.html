@@ -6,179 +6,176 @@
     <title>成語迷宮 - Shuojen.com</title>
     <meta name="description" content="考驗成語敏感度的文字遊戲，每天一題">
     <link rel="icon" href="/img/favicon.ico">
-    <link rel="stylesheet" href="https://font.emtech.cc/css/MantouSans">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&display=swap">
     <script src="puzzle.js" defer></script>
     <script src="dictionary.js" defer></script>
     <style>
-        :root { 
-            --bg: #fdf5e6; 
-            --primary: #8b4513; 
-            --highlight: #fff3cd; 
-            --border: #f39c12; 
-            --key: #e74c3c; 
-            --locked-bg: #f3ece2; 
-            --locked-text: #2c221e; 
-            --board-size: min(520px, calc(100vw - 80px), calc(100vh - 255px));
-            --board-size: min(520px, calc(100vw - 80px), calc(100dvh - 255px));
+        :root {
+            --paper: #fbf6ec;
+            --paper-deep: #f3e9d7;
+            --ink: #2b211b;
+            --muted: #8a7563;
+            --rule: #e0d0b6;
+            --frame: #7a4524;
+            --serif: 'Noto Serif TC', 'Songti TC', 'PMingLiU', 'MingLiU', serif;
+            --bg: var(--paper);
+            --primary: #8b4a1c;
+            --highlight: #fbe6b0;
+            --border: #d99a2b;
+            --key: #c0392b;
+            --locked-bg: #f1e6d2;
+            --locked-text: #2b211b;
+            --board-extra: 0px; /* 通關後答案格下方多一列，盤面讓出空間 */
+            --board-size: min(520px, calc(100vw - 80px), calc(100vh - 305px - var(--board-extra, 0px)));
+            --board-size: min(520px, calc(100vw - 80px), calc(100dvh - 305px - var(--board-extra, 0px)));
         }
-        body { 
-            font-family: sans-serif; 
-            background: radial-gradient(circle at center, #fff9ee 0%, #f0ddc0 100%); 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
+        body {
+            font-family: var(--serif);
+            color: var(--ink);
+            background: #ede1cd;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            padding: 12px 16px; 
-            margin: 0; 
+            padding: 12px 16px;
+            margin: 0;
             min-height: 100vh;
             min-height: 100dvh;
             box-sizing: border-box;
         }
 
-        /* 典雅桌遊盤卡片外框 */
+        /* 紙張卡片外框 */
         .board-card {
-            background: linear-gradient(180deg, #fffdf9 0%, #fdf5e6 100%);
-            border: 2px solid #d4b287;
-            box-shadow: 0 16px 40px rgba(139, 69, 19, 0.14), 0 3px 10px rgba(139, 69, 19, 0.06), inset 0 0 0 4px #fffdf9;
-            border-radius: 20px;
-            padding: 20px clamp(16px, 4vw, 36px) 16px;
+            background: var(--paper);
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(110, 70, 30, 0.12), 0 1px 3px rgba(110, 70, 30, 0.08);
+            padding: 22px clamp(16px, 4vw, 34px) 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
             box-sizing: border-box;
             max-width: 100%;
         }
-        
-        /* 標題樣式 */
-        .game-header { text-align: center; margin-bottom: 8px; }
-        .game-title { 
-            font-family: 'MantouSans', sans-serif; 
-            font-size: clamp(34px, 5.2vh, 56px); 
-            color: var(--primary); 
-            margin: 0; 
-            line-height: 1.1;
-            letter-spacing: 1px;
-            text-shadow: 2px 2px 0px rgba(243, 156, 18, 0.5);
-            font-weight: normal;
-        }
 
-        /* 置中對齊容器 */
-        .top-bar { 
-            display: flex; 
-            gap: 10px; 
-            margin-bottom: 10px; 
-            align-items: center; 
-            justify-content: center; 
+        /* 標題 */
+        .game-header { text-align: center; margin-bottom: 12px; }
+        .game-title {
+            font-family: var(--serif);
+            font-size: clamp(30px, 4.6vh, 44px);
+            font-weight: 900;
+            color: var(--primary);
+            margin: 0;
+            line-height: 1.15;
+            letter-spacing: 0.12em;
+            padding-left: 0.12em;
+        }
+        .game-meta {
+            margin-top: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 16px;
+            font-size: 14px;
+            color: var(--muted);
+            letter-spacing: 0.04em;
+        }
+        .date-badge { font-variant-numeric: tabular-nums; }
+        .daily-status { white-space: nowrap; }
+        .daily-status[title]:not([title=""]):hover { color: var(--primary); text-decoration: underline; }
+
+        /* 工具列 */
+        .top-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+            align-items: center;
+            justify-content: center;
             width: 100%;
             flex-wrap: wrap;
         }
 
-        .date-badge {
-            background: #fffdf9;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            padding: 0 14px;
-            height: 38px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 14.5px;
-            box-sizing: border-box;
-            letter-spacing: 0.5px;
-        }
-
-        /* 即時數據列（計時與步數） */
+        /* 計時與步數 */
         .stats-bar {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: baseline;
             width: var(--board-size);
             max-width: var(--board-size);
-            background: #fffdf9;
-            border: 2px solid var(--primary);
-            border-bottom: 1px dashed #e0c8a8;
-            border-radius: 8px 8px 0 0;
-            padding: 6px 14px;
+            padding: 0 2px 6px;
             box-sizing: border-box;
             font-size: 14px;
-            font-weight: bold;
-            color: var(--primary);
+            color: var(--muted);
         }
         .stat-item {
             display: flex;
-            align-items: center;
-            gap: 5px;
+            align-items: baseline;
+            gap: 6px;
         }
-        .stat-icon {
-            font-size: 15px;
-        }
-        .daily-status {
-            font-size: 12.5px;
-            background: #fff3cd;
-            color: #856404;
-            padding: 2px 9px;
-            border-radius: 12px;
-            border: 1px solid #ffeeba;
-            font-weight: normal;
+        .stat-label { font-size: 12.5px; letter-spacing: 0.1em; }
+        #timer-display, #step-display {
+            color: var(--primary);
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
         }
 
-        /* 統一按鈕的大小與外觀 */
-        .btn { 
-            font-family: inherit;  /* 繼承 body 的字體 */
-            font-size: 14.5px; 
-            font-weight: bold;
-            border-radius: 8px; 
+        /* 按鈕 */
+        .btn {
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            border-radius: 6px;
             box-sizing: border-box;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            transition: 0.2s;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
             cursor: pointer;
-            border: 2px solid var(--primary);
-            height: 38px;
-            padding: 0 12px;
+            border: 1.5px solid var(--primary);
+            height: 36px;
+            padding: 0 14px;
+            background: var(--primary);
+            color: #fffaf0;
         }
+        .btn:hover { background: #a65a26; border-color: #a65a26; }
 
         .top-bar .btn {
-            width: 100px;
-            padding: 0;
-        }
-
-        .btn { 
-            background: var(--primary); 
-            color: white; 
-        }
-        .btn:hover { opacity: 0.9; }
-
-        .btn-donate {
-            background: #b85c1e;
-            border-color: #8b4513;
-        }
-        .btn-donate:hover {
-            background: #d35400;
-        }
-
-        /* 提示按鈕與動畫樣式 */
-        .top-bar .btn.btn-hint {
-            width: auto;
+            height: 32px;
             padding: 0 14px;
+            font-size: 13.5px;
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid #cdb08a;
+        }
+        .top-bar .btn:hover { background: var(--paper-deep); border-color: var(--primary); }
+
+        .btn.btn-donate {
+            background: transparent;
+            color: var(--key);
+            border-color: var(--key);
+        }
+        .btn.btn-donate:hover {
+            background: #fdf1ea;
+        }
+
+        .top-bar .btn.btn-hint {
+            color: var(--key);
+            border-color: #e2b3a8;
             white-space: nowrap;
-            background: #e67e22;
-            border-color: #d35400;
-            color: #fff;
         }
         .top-bar .btn.btn-hint:hover {
-            background: #d35400;
+            background: #fbece8;
+            border-color: var(--key);
         }
 
         .time-penalty-fly {
             position: absolute;
             left: 20px;
             top: -12px;
-            color: #e74c3c;
+            color: var(--key);
             font-weight: 900;
             font-size: 14px;
             pointer-events: none;
@@ -200,15 +197,16 @@
             right: 8px;
             bottom: 8px;
             z-index: 20;
-            background: rgba(255, 248, 225, 0.97);
-            border: 1.5px solid #ffc107;
-            color: #7d5a00;
+            background: rgba(251, 246, 236, 0.97);
+            border: 1px solid #cdb08a;
+            border-left: 4px solid var(--primary);
+            color: var(--ink);
             padding: 8px 12px;
-            border-radius: 8px;
+            border-radius: 4px;
             font-size: 13.5px;
-            font-weight: bold;
+            font-weight: 600;
             box-sizing: border-box;
-            box-shadow: 0 4px 14px rgba(139, 69, 19, 0.22);
+            box-shadow: 0 6px 18px rgba(110, 70, 30, 0.18);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -225,12 +223,12 @@
             line-height: 1.45;
         }
         .hint-banner.at-top { bottom: auto; top: 8px; }
-        .hint-banner.is-error { background: rgba(253, 237, 236, 0.97); border-color: #e74c3c; color: #a93226; }
+        .hint-banner.is-error { background: rgba(253, 241, 234, 0.97); border-color: #e2b3a8; border-left-color: var(--key); color: #9b2d22; }
         .hint-banner-close {
             cursor: pointer;
             font-size: 18px;
             font-weight: bold;
-            color: #b78103;
+            color: var(--muted);
             padding: 0 4px;
             line-height: 1;
             background: none;
@@ -238,12 +236,12 @@
             font-family: inherit;
         }
 
-        .cell.selected.hint-cell { box-shadow: inset 0 0 0 3px #27ae60; }
+        .cell.selected.hint-cell { box-shadow: inset 0 0 0 3px #4f8a5b; }
         .cell.hint-flash { animation: slotPulse 0.6s ease-out; }
 
         /* 答案填滿但不正確：答案格左右晃動 */
         .slots.shake { animation: shake 0.45s ease-in-out; }
-        .slots.shake .slot { border-color: #e74c3c; }
+        .slots.shake .slot { border-color: var(--key); }
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             20% { transform: translateX(-7px); }
@@ -260,23 +258,22 @@
             animation: slotGlow 1s ease-in-out infinite;
         }
         @keyframes slotGlow {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); background: #fff; }
-            50% { box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.25); background: #fff0ee; }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0); background: var(--paper); }
+            50% { box-shadow: 0 0 0 4px rgba(192, 57, 43, 0.2); background: #fdf1ea; }
         }
-
-        /* 關鍵字已填入答案格：紅圈停止閃爍並淡化 */
-        .cell.is-key.used::after { animation: none; opacity: 0.45; transform: scale(1); }
 
         /* 鍵盤操作的焦點框 */
         .cell:focus, .modal-content:focus { outline: none; }
-        .cell:focus-visible { outline: 3px solid #2e86c1; outline-offset: -3px; z-index: 7; }
+        .cell:focus-visible { outline: 2px solid #b5651d; outline-offset: -2px; z-index: 2; }
+        .cell.is-key:focus-visible { z-index: auto; } /* 不建立堆疊層，圈章才能留在連線上方 */
         .slot:focus-visible, .btn:focus-visible, .close-btn:focus-visible, .hint-banner-close:focus-visible {
-            outline: 3px solid #2e86c1; outline-offset: 2px;
+            outline: 2px solid #b5651d; outline-offset: 2px;
         }
 
         .slot.hint-filled {
-            border-color: #27ae60 !important;
-            background: #eafaf1 !important;
+            border-color: #4f8a5b !important;
+            border-style: solid !important;
+            background: #eef4ea !important;
             animation: slotPulse 0.6s ease-out;
         }
         @keyframes slotPulse {
@@ -285,22 +282,45 @@
             100% { transform: scale(1); }
         }
 
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 100; justify-content: center; align-items: center; }
-        .modal-content { background: var(--bg); padding: 24px; border-radius: 12px; max-width: 450px; width: 90%; border: 4px solid var(--primary); position: relative; line-height: 1.8; overflow-y: auto; max-height: 90vh; max-height: 90dvh; box-sizing: border-box; -webkit-overflow-scrolling: touch; }
-        .modal-content h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 8px; font-size: 18px; }
-        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: var(--primary); font-weight: bold; background: none; border: none; padding: 0 4px; line-height: 1.2; font-family: inherit; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(43, 33, 27, 0.55); z-index: 100; justify-content: center; align-items: center; }
+        .modal-content { background: var(--bg); padding: 24px; border-radius: 10px; max-width: 450px; width: 90%; border: 2px solid var(--frame); box-shadow: 0 16px 40px rgba(0,0,0,0.25); position: relative; line-height: 1.8; overflow-y: auto; max-height: 90vh; max-height: 90dvh; box-sizing: border-box; -webkit-overflow-scrolling: touch; }
+        .modal-content h3 { margin: 0 0 8px; color: var(--primary); border-bottom: 1px solid #cdb08a; padding-bottom: 6px; font-size: 17px; font-weight: 900; letter-spacing: 0.08em; }
+        .modal-content ul { padding-left: 1.3em; margin: 0 0 18px; color: var(--ink); font-size: 14.5px; }
+        .modal-content ul ul { margin: 2px 0 0; }
+        .modal-content b { color: var(--primary); }
+        .close-btn { position: absolute; top: 10px; right: 14px; font-size: 24px; cursor: pointer; color: var(--muted); font-weight: normal; background: none; border: none; padding: 0 4px; line-height: 1.2; font-family: inherit; }
+        .close-btn:hover { color: var(--primary); }
 
-        .game-wrapper { 
-            position: relative; 
-            padding: 3px; 
-            background: #fff; 
-            border: 2px solid var(--primary); 
-            border-radius: 0 0 8px 8px; 
-            width: var(--board-size); 
-            max-width: var(--board-size); 
+        /* 彈窗標題區：朱色方印 + 標題 + 副標 */
+        .modal-head { text-align: center; margin-bottom: 14px; }
+        .seal {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 44px; height: 44px; box-sizing: border-box;
+            border: 2px solid var(--key); border-radius: 6px;
+            color: var(--key); font-family: var(--serif); font-size: 24px; font-weight: 900; line-height: 1;
+            box-shadow: inset 0 0 0 2px #fdf1ea, inset 0 0 0 3px rgba(192, 57, 43, 0.35);
+        }
+        .modal-title { margin: 10px 0 2px; color: var(--primary); font-family: var(--serif); font-size: 22px; font-weight: 900; letter-spacing: 0.1em; line-height: 1.4; }
+        .modal-sub { color: var(--muted); font-size: 13.5px; line-height: 1.6; }
+        .modal-actions { display: flex; gap: 10px; justify-content: center; margin-top: 18px; }
+        .modal-actions .btn { flex: 1; max-width: 160px; height: 40px; }
+
+        /* 次要按鈕：空心褐框 */
+        .btn.btn-outline { background: transparent; color: var(--primary); border-color: var(--primary); }
+        .btn.btn-outline:hover { background: var(--paper-deep); }
+
+        /* 盤面：深褐雙線外框 + 淺色細格線 */
+        .game-wrapper {
+            position: relative;
+            padding: 3px;
+            background: var(--paper);
+            border: 2px solid var(--frame);
+            border-radius: 2px;
+            width: var(--board-size);
+            max-width: var(--board-size);
             box-sizing: border-box;
         }
-        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2.5px; background: #999; }
+        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1px; background: var(--rule); border: 1px solid #b38b62; }
 
         /* 開始前遮住盤面，按下「開始挑戰」才顯示並開始計時 */
         .start-overlay { display: none; }
@@ -309,40 +329,57 @@
         .game-wrapper.not-started .start-overlay {
             position: absolute; inset: 0; z-index: 10;
             display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px;
-            background: rgba(253, 245, 230, 0.75);
-            border-radius: 0 0 6px 6px;
+            background: rgba(251, 246, 236, 0.78);
             text-align: center; padding: 16px; box-sizing: border-box;
         }
-        .start-overlay-title { font-family: 'MantouSans', sans-serif; font-size: clamp(22px, 6vw, 30px); color: var(--primary); }
-        .start-overlay-desc { font-size: 13.5px; color: #795548; }
-        .btn-start { height: 46px; padding: 0 28px; font-size: 17px; margin-top: 4px; box-shadow: 0 4px 12px rgba(139, 69, 19, 0.25); }
-        .cell { aspect-ratio: 1 / 1; background: white; display: flex; justify-content: center; align-items: center; font-size: clamp(13px, 2.5vh, 20px); font-weight: bold; cursor: pointer; user-select: none; -webkit-user-select: none; position: relative; z-index: 1; transition: all 0.2s; color: black; touch-action: manipulation; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
-        
+        .start-overlay-title { font-family: var(--serif); font-weight: 900; letter-spacing: 0.1em; font-size: clamp(22px, 6vw, 30px); color: var(--primary); }
+        .start-overlay-desc { font-size: 13.5px; color: var(--muted); }
+        .btn-start { height: 44px; padding: 0 28px; font-size: 16px; margin-top: 4px; box-shadow: 0 4px 12px rgba(139, 74, 28, 0.22); }
+        .cell { aspect-ratio: 1 / 1; background: var(--paper); display: flex; justify-content: center; align-items: center; font-family: var(--serif); font-size: clamp(13px, 2.5vh, 20px); font-weight: 600; cursor: pointer; user-select: none; -webkit-user-select: none; position: relative; z-index: 1; transition: background 0.2s, color 0.2s, box-shadow 0.2s; color: var(--ink); touch-action: manipulation; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
+        .cell:hover { background: #f6ecd9; }
+
         .cell.locked { background: var(--locked-bg); color: var(--locked-text); }
-        .cell.selected { background: var(--highlight) !important; color: black; box-shadow: inset 0 0 0 2px var(--border); }
-        .cell.is-key { cursor: grab; z-index: 5; background: white !important; color: var(--primary) !important; }
-        .cell.is-key::after { 
-            content: ''; position: absolute; width: 88%; height: 88%; 
-            border: 4px solid var(--key); border-radius: 50%; z-index: 2; 
-            pointer-events: none; animation: pulse 1s infinite; 
+        .cell.selected { background: var(--highlight) !important; color: var(--ink); box-shadow: inset 0 0 0 2px var(--border); }
+        /* 關鍵字格：像一枚圈章蓋在連線上。
+           格子本身留在連線下層（z-index: auto，不建立堆疊層），
+           ::before 是不動的圓形底與字，浮在連線上方擋住線，線畫到圓邊就停、不會穿過字；
+           ::after 是閃爍縮放的紅圈（原本的效果），疊在最上面 */
+        .cell.is-key { cursor: grab; z-index: auto; color: var(--key) !important; }
+        .cell.is-key::before {
+            content: attr(data-char);
+            position: absolute; left: 10%; top: 10%; width: 80%; height: 80%;
+            display: flex; justify-content: center; align-items: center;
+            background: #fdf1ea; border-radius: 50%;
+            color: var(--key);
+            z-index: 4;
+            pointer-events: none;
         }
-        .cell.is-key.active-key { background: #ffdad6 !important; outline: 2px solid var(--key); z-index: 6; }
+        .cell.is-key::after {
+            content: ''; position: absolute; width: 84%; height: 84%;
+            border: 2.5px solid var(--key); border-radius: 50%; box-sizing: border-box;
+            z-index: 5;
+            pointer-events: none; animation: pulse 1s infinite;
+        }
+        .cell.is-key.active-key { outline: 2px solid var(--key); outline-offset: -2px; }
+        .cell.is-key.active-key::before { background: #f6d5c8; }
 
         @keyframes pulse { 0% { transform: scale(0.9); opacity: 0.7; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(0.9); opacity: 0.7; } }
 
         #svg-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; mix-blend-mode: multiply; }
-        .red-line { stroke: rgba(231, 76, 60, 0.55); stroke-width: 6; stroke-linecap: round; }
-        .black-line { stroke: rgba(90, 75, 60, 0.38); stroke-width: 6; stroke-linecap: round; }
+        .red-line { stroke: rgba(192, 57, 43, 0.5); stroke-width: 6; stroke-linecap: round; }
+        .black-line { stroke: rgba(122, 69, 36, 0.3); stroke-width: 6; stroke-linecap: round; }
 
-        .answer-section { margin-top: 12px; text-align: center; width: var(--board-size); max-width: var(--board-size); }
-        /* 答案格：一律單行，答案較長（最多 10 字）時自動縮小格子而不換行 */
-        .slots { display: flex; gap: 8px; margin-top: 6px; justify-content: center; flex-wrap: nowrap; }
-        .slot { flex: 0 1 clamp(38px, 5.6vh, 50px); min-width: 0; aspect-ratio: 1 / 1; box-sizing: border-box; touch-action: manipulation; -webkit-tap-highlight-color: transparent; border: 2px solid var(--primary); background: #fff; display: flex; justify-content: center; align-items: center; font-size: clamp(20px, 3.2vh, 26px); font-weight: bold; border-radius: 8px; cursor: pointer; color: #d35400; transition: background 0.2s; user-select: none; }
-        .slot:empty { cursor: default; background: rgba(255,255,255,0.5); border-style: dashed; }
-        .slot.drag-over { background: #eee; border-color: var(--key); }
-        #win-msg { display: none; margin-top: 8px; color: #27ae60; font-size: 18px; font-weight: bold; }
-        
-        .footer { margin-top: 10px; padding-bottom: 2px; font-size: 12px; color: var(--primary); opacity: 0.8; }
+        .answer-section { margin-top: 14px; text-align: center; width: var(--board-size); max-width: var(--board-size); }
+        /* 答案格：虛線方格，一律單行，答案較長（最多 10 字）時自動縮小格子而不換行 */
+        .slots { display: flex; gap: 6px; margin-top: 4px; justify-content: center; flex-wrap: nowrap; }
+        .slot { flex: 0 1 clamp(36px, 5.2vh, 46px); min-width: 0; aspect-ratio: 1 / 1; box-sizing: border-box; touch-action: manipulation; -webkit-tap-highlight-color: transparent; border: 1.5px solid var(--primary); background: var(--paper); display: flex; justify-content: center; align-items: center; font-family: var(--serif); font-size: clamp(19px, 3vh, 24px); font-weight: 700; border-radius: 2px; cursor: pointer; color: var(--key); transition: background 0.2s; user-select: none; }
+        .slot:empty { cursor: default; background: transparent; border: 1.5px dashed #a5774f; }
+        .slot.drag-over { background: #f6ecd9; border-color: var(--key); }
+        #win-msg { display: none; margin-top: 10px; }
+        :root.finished { --board-extra: 50px; }
+
+        .footer { margin-top: 12px; padding-bottom: 2px; font-size: 11.5px; color: var(--muted); }
+        .footer-short { display: none; }
         .footer-donate-link {
             color: var(--primary);
             text-decoration: underline;
@@ -354,17 +391,17 @@
             color: #d35400;
         }
 
-        /* 贊助彈窗與方案卡片樣式 */
+        /* 贊助彈窗與方案卡片 */
         .tier-card {
             display: flex;
             align-items: center;
             gap: 12px;
-            background: #fff;
-            border: 1.5px solid #ecd8be;
-            border-radius: 12px;
+            background: var(--paper);
+            border: 1px solid #e0cdb0;
+            border-radius: 8px;
             padding: 10px 14px;
             margin-bottom: 10px;
-            transition: all 0.2s ease;
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
             text-align: left;
             text-decoration: none;
             color: inherit;
@@ -373,29 +410,23 @@
         }
         .tier-card:hover {
             border-color: var(--primary);
-            box-shadow: 0 4px 12px rgba(139, 69, 19, 0.15);
-            transform: translateY(-2px);
-            background: #fffdf9;
+            box-shadow: 0 4px 12px rgba(110, 70, 30, 0.12);
+            transform: translateY(-1px);
         }
-        .tier-card.tier-recurring {
-            background: linear-gradient(135deg, #fffdf8 0%, #fdf8ee 100%);
-            border: 1.5px dashed #c89650;
-        }
-        .tier-card.tier-recurring:hover {
-            border-color: #b85c1e;
-            background: #fff7eb;
-        }
+        .tier-card.tier-recurring { border-style: dashed; border-color: #c9a27a; }
         .tier-icon {
-            font-size: 24px;
-            line-height: 1;
             flex-shrink: 0;
-            width: 36px;
-            height: 36px;
+            width: 34px;
+            height: 34px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(184, 92, 30, 0.08);
+            border: 1.5px solid var(--key);
             border-radius: 50%;
+            color: var(--key);
+            font-family: var(--serif);
+            font-size: 16px;
+            font-weight: 900;
         }
         .tier-info {
             display: flex;
@@ -405,7 +436,7 @@
             min-width: 0;
         }
         .tier-info strong {
-            font-size: 14px;
+            font-size: 14.5px;
             color: var(--primary);
             margin-bottom: 2px;
             display: flex;
@@ -414,66 +445,61 @@
         }
         .tier-info span {
             font-size: 12px;
-            color: #6d5b52;
+            color: var(--muted);
             word-break: break-word;
         }
         .tier-badge {
-            font-size: 10px;
-            background: #27ae60;
-            color: #fff;
-            padding: 1px 6px;
-            border-radius: 4px;
-            font-weight: 500;
+            font-size: 10.5px;
+            color: var(--key) !important;
+            border: 1px solid #e2b3a8;
+            padding: 0 6px;
+            border-radius: 3px;
+            font-weight: 600;
         }
         .tier-action-btn {
             flex-shrink: 0;
-            background: #b85c1e;
-            color: #ffffff;
-            font-size: 12px;
-            font-weight: bold;
-            padding: 6px 10px;
-            border-radius: 6px;
-            transition: background 0.2s, transform 0.2s;
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 700;
+            padding: 4px 2px;
             white-space: nowrap;
+            transition: transform 0.2s, color 0.2s;
         }
-        .tier-card:hover .tier-action-btn {
-            background: #d35400;
-            transform: translateX(2px);
-        }
-        .tier-recurring .tier-action-btn {
-            background: #27ae60;
-        }
-        .tier-recurring:hover .tier-action-btn {
-            background: #219653;
-        }
+        .tier-card:hover .tier-action-btn { color: var(--key); transform: translateX(2px); }
+        .donate-note { text-align: center; margin-top: 14px; font-size: 12px; color: var(--muted); line-height: 1.8; }
+        .donate-note a { color: var(--primary); }
 
-        /* 戰績結算視窗 */
+        /* 戰績卡 */
         .victory-card {
-            background: #fff;
-            border: 2px dashed #e0c8a8;
-            border-radius: 10px;
+            background: var(--paper);
+            border: 1px solid #d9c2a0;
+            outline: 1px solid #e8dcc8;
+            outline-offset: 3px;
+            border-radius: 4px;
             padding: 16px;
             text-align: center;
-            margin-top: 10px;
+            margin: 8px 4px 0;
         }
         .victory-rank-badge {
+            font-family: var(--serif);
             font-size: 24px;
-            font-weight: bold;
-            color: #c0392b;
-            margin-bottom: 4px;
+            font-weight: 900;
+            color: var(--key);
+            letter-spacing: 0.08em;
+            margin-bottom: 2px;
         }
         .victory-desc {
             font-size: 14px;
-            color: #666;
+            color: var(--muted);
             margin-bottom: 12px;
         }
         .victory-stats-row {
             display: flex;
             justify-content: space-around;
             padding: 10px 0;
-            border-top: 1px solid #f0e0d0;
-            border-bottom: 1px solid #f0e0d0;
-            margin-bottom: 10px;
+            border-top: 1px solid #eadcc6;
+            border-bottom: 1px solid #eadcc6;
+            margin-bottom: 12px;
         }
         .v-stat {
             display: flex;
@@ -481,94 +507,96 @@
         }
         .v-stat-val {
             font-size: 22px;
-            font-weight: bold;
+            font-weight: 700;
             color: var(--primary);
+            font-variant-numeric: tabular-nums;
         }
         .v-stat-lbl {
             font-size: 12px;
-            color: #888;
+            color: var(--muted);
+            letter-spacing: 0.1em;
         }
+        /* 答案字數的方格（不爆雷） */
         .victory-blocks {
-            font-size: 22px;
-            letter-spacing: 4px;
-            margin-top: 6px;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+        .victory-blocks span {
+            width: 16px;
+            height: 16px;
+            box-sizing: border-box;
+            border: 1.5px solid var(--key);
+            background: #f6d5c8;
+            border-radius: 2px;
         }
         .btn-share-action {
-            width: 100% !important;
-            max-width: 320px !important;
-            min-height: 44px !important;
-            height: auto !important;
-            padding: 10px 14px !important;
-            background: #27ae60;
-            border: none !important;
-            color: white !important;
-            border-radius: 8px;
-            font-size: 14.5px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+            width: 100%;
+            max-width: 320px;
+            min-height: 44px;
+            height: auto;
+            padding: 10px 14px;
             line-height: 1.4;
-            box-shadow: 0 3px 8px rgba(39, 174, 96, 0.3);
             white-space: normal;
-            word-break: break-word;
-            box-sizing: border-box;
         }
-        .btn-share-action:hover {
-            background: #219653;
-            transform: scale(1.02);
-            color: white;
-        }
+        .btn.btn-share-action.copied { background: #4f8a5b; border-color: #4f8a5b; }
         .copy-toast {
             font-size: 13px;
-            color: #27ae60;
-            font-weight: bold;
+            color: #4f8a5b;
+            font-weight: 600;
             min-height: 18px;
             text-align: center;
         }
+        .victory-countdown { font-size: 12.5px; color: var(--muted); text-align: center; }
+
+        /* 通關後答案格下方的精簡一列 */
+        .win-row { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .win-title { color: var(--key); font-size: 16px; font-weight: 900; letter-spacing: 0.08em; margin-right: 4px; }
+        .win-row .btn { height: 32px; padding: 0 14px; font-size: 13.5px; }
 
         /* ===== 響應式設定：放在最後，才能正確覆蓋上方的基本樣式 ===== */
         /* 針對矮螢幕（如 13 吋小筆電或開啟多行書籤列）自適應縮緊 */
         @media (max-height: 750px) {
-            :root { 
-                --board-size: min(460px, calc(100vw - 60px), calc(100vh - 205px));
-                --board-size: min(460px, calc(100vw - 60px), calc(100dvh - 205px));
+            :root {
+                --board-size: min(460px, calc(100vw - 60px), calc(100vh - 232px - var(--board-extra, 0px)));
+                --board-size: min(460px, calc(100vw - 60px), calc(100dvh - 232px - var(--board-extra, 0px)));
             }
             body { padding: 6px 10px; }
-            .board-card { padding: 12px 20px 10px; border-radius: 16px; }
-            .game-header { margin-bottom: 4px; }
-            .game-title { font-size: clamp(28px, 4.4vh, 38px); }
+            .board-card { padding: 12px 20px 10px; border-radius: 12px; }
+            .game-header { margin-bottom: 6px; }
+            .game-title { font-size: clamp(26px, 4.2vh, 34px); }
+            .game-meta { margin-top: 2px; font-size: 12.5px; }
             .top-bar { margin-bottom: 6px; gap: 6px; }
-            .date-badge, .top-bar .btn { height: 32px; font-size: 13px; }
-            .stats-bar { padding: 4px 10px; font-size: 12.5px; }
+            .top-bar .btn { height: 28px; font-size: 12.5px; }
+            .stats-bar { padding-bottom: 4px; font-size: 13px; }
             .answer-section { margin-top: 8px; }
-            .slots { margin-top: 4px; gap: 5px; }
-            .slot { flex-basis: 38px; font-size: 19px; }
-            .footer { margin-top: 6px; padding-bottom: 2px; font-size: 11px; }
+            .slots { gap: 5px; }
+            .slot { flex-basis: 36px; font-size: 19px; }
+            .footer { margin-top: 6px; font-size: 11px; }
         }
 
-        /* 手機與窄螢幕滿版流暢模式 */
-        @media (max-width: 580px) { 
-            :root { 
-                --board-size: min(440px, calc(100vw - 16px), calc(100vh - 230px));
-                --board-size: min(440px, calc(100vw - 16px), calc(100dvh - 230px));
+        /* 手機與窄螢幕：卡片融入背景 */
+        @media (max-width: 580px) {
+            :root {
+                --board-size: min(440px, calc(100vw - 16px), calc(100vh - 225px - var(--board-extra, 0px)));
+                --board-size: min(440px, calc(100vw - 16px), calc(100dvh - 225px - var(--board-extra, 0px)));
             }
-            body { background: var(--bg); padding: 8px 8px 6px; }
-            .board-card { background: transparent; border: none; box-shadow: none; padding: 0; border-radius: 0; }
-            .cell { font-size: clamp(12px, 3.8vw, 16px); } 
-            .game-title { font-size: 32px; }
-            .top-bar .btn { width: 88px; height: 34px; font-size: 13px; }
-            .top-bar .btn.btn-hint { width: auto; min-width: 86px; padding: 0 10px; font-size: 12.5px; }
-            .date-badge { height: 34px; font-size: 13px; padding: 0 10px; }
-            .stats-bar { font-size: 12.5px; padding: 4px 10px; }
-            .daily-status { font-size: 11px; padding: 2px 6px; }
+            /* 內容靠上排，不再垂直置中留下大片空白 */
+            body { background: var(--paper); padding: 22px 8px 10px; justify-content: flex-start; }
+            .board-card { background: transparent; box-shadow: none; padding: 0; border-radius: 0; }
+            .cell { font-size: clamp(12px, 3.8vw, 16px); }
+            .game-title { font-size: 30px; }
+            .top-bar .btn { height: 30px; padding: 0 10px; font-size: 12.5px; }
+            .stats-bar { font-size: 13px; }
             .hint-banner { font-size: 12.5px; padding: 6px 10px; left: 4px; right: 4px; }
-            .slots { gap: 5px; }
-            .slot { flex-basis: 38px; font-size: 20px; }
-            .footer { font-size: 11px; margin-top: 8px; }
+            /* 答案格平均分滿整列寬度（10 字約 33px），短答案最大 44px */
+            .slots { gap: 3px; }
+            .slot { flex: 1 1 0; max-width: 44px; font-size: 19px; }
+            /* 頁尾改用短版文字，保持一行 */
+            .footer { font-size: 11px; margin-top: 10px; white-space: nowrap; }
+            .footer-full { display: none; }
+            .footer-short { display: inline; }
         }
     </style>
 </head>
@@ -577,55 +605,58 @@
     <div class="board-card">
     <div class="game-header">
         <h1 class="game-title">成語迷宮</h1>
+        <div class="game-meta">
+            <span id="daily-badge" class="date-badge"><span id="daily-date-text">2026-10-21</span></span>
+            <span id="mode-status-indicator" class="daily-status">每日一題</span>
+        </div>
     </div>
 
     <!-- 頂部操作列 -->
     <div class="top-bar">
-        <div id="daily-badge" class="date-badge">
-            📅 <span id="daily-date-text">2026-10-21</span>
-        </div>
         <button class="btn" onclick="toggleModal(true)">遊戲說明</button>
         <button class="btn" onclick="toggleAboutModal(true)">關於遊戲</button>
-        <button id="btn-hint" class="btn btn-hint" onclick="handleHintClick()" title="使用提示（通關時間加 10 秒）">💡 提示 (+10s)</button>
+        <button id="btn-hint" class="btn btn-hint" onclick="handleHintClick()" title="使用提示（通關時間加 10 秒）">提示（+10 秒）</button>
     </div>
 
     <!-- 即時數據列（計時與步數） -->
     <div class="stats-bar">
         <div class="stat-item" style="position: relative;">
-            <span class="stat-icon">⏱️</span><span id="timer-display">00:00</span>
+            <span class="stat-label">計時</span><span id="timer-display">00:00</span>
             <span id="penalty-floater" class="time-penalty-fly" style="display: none;"></span>
         </div>
-        <div class="stat-item"><span id="mode-status-indicator" class="daily-status">🔥 每日一題</span></div>
-        <div class="stat-item"><span class="stat-icon">🚶</span><span id="step-display">0 步</span></div>
+        <div class="stat-item"><span class="stat-label">步數</span><span id="step-display">0 步</span></div>
     </div>
 
     <div id="info-modal" class="modal" onclick="toggleModal(false)">
         <div class="modal-content" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
             <button type="button" class="close-btn" aria-label="關閉" onclick="toggleModal(false)">&times;</button>
-            <h3>📜 遊戲規則說明</h3>
+            <div class="modal-head">
+                <div class="modal-title">遊戲說明</div>
+            </div>
+            <h3>遊戲規則</h3>
             <ul>
                 <li>表格中藏有數個<b>四字成語</b>，排列順序可能是由上而下、由下而上、由左而右、由右而左，或是呈對角線（正反向皆可），請先找出表格裡的成語。</li>
                 <li>每兩個成語的交叉處可得到一個<b>關鍵字</b>，關鍵字有可能會重複。</li>
                 <li>找到的關鍵字可組成一個<b>俚語</b>，即為最後答案。</li>
             </ul>
 
-            <h3>🎮 遊戲操作說明</h3>
+            <h3>操作方式</h3>
             <ul>
                 <li><b>選取成語：</b>點擊網格中的文字，選取構成成語的四個字，選擇正確會以紅線標示。</li>
                 <li><b>取得關鍵字：</b>當兩個正確成語交叉時，點擊該交叉點會變為帶紅圈的<b>「關鍵字」</b>。</li>
                 <li><b>填寫答案：</b>
                     <ul>
                         <li><b>電腦：</b>將「關鍵字」直接拖曳到下方的答案空格中。</li>
-                        <li><b>手機：</b>點擊一次「關鍵字」（會變為粉紅色背景），再點擊下方的答案空格即可填入。</li>
+                        <li><b>手機：</b>點擊一次「關鍵字」（底色會變深），再點擊下方的答案空格即可填入。</li>
                     </ul>
                 </li>
                 <li><b>修改答案：</b>點擊已填入文字的空格可清除該字。</li>
-                <li><b>提示功能：</b>卡關時可點擊「💡 提示」，每次使用將在通關時間上<b>增加 10 秒</b>；依進度依序提示「標示某條成語中的一個字」、「圈出交叉處關鍵字」或「填入下方一個答案字」。</li>
+                <li><b>提示功能：</b>卡關時可點擊「提示」，每次使用將在通關時間上<b>增加 10 秒</b>；依進度依序提示「標示某條成語中的一個字」、「圈出交叉處關鍵字」或「填入下方一個答案字」。</li>
                 <li><b>計時方式：</b>按下「開始挑戰」才會顯示題目並開始計時，之後計時不會中斷；重新整理或關掉頁面再回來，會接續原本的進度與時間。</li>
             </ul>
 
-            <div style="text-align: center; margin-top: 20px;">
-                <button class="btn" style="width: 120px; display: inline-block;" onclick="toggleModal(false)">開始遊戲</button>
+            <div class="modal-actions">
+                <button class="btn" onclick="toggleModal(false)">開始遊戲</button>
             </div>
         </div>
     </div>
@@ -634,14 +665,16 @@
     <div id="hint-modal" class="modal" onclick="toggleHintModal(false)">
         <div class="modal-content" role="dialog" aria-modal="true" style="max-width: 360px; text-align: center;" onclick="event.stopPropagation()">
             <button type="button" class="close-btn" aria-label="關閉" onclick="toggleHintModal(false)">&times;</button>
-            <div style="font-size: 38px; margin-bottom: 6px;">💡</div>
-            <h3 style="margin: 0 0 10px 0; border: none; padding: 0; color: var(--primary);">需要解謎提示嗎？</h3>
-            <p style="margin: 0 0 16px 0; font-size: 14px; color: #5d4037; line-height: 1.6;" id="hint-modal-text">
+            <div class="modal-head" style="margin-bottom: 8px;">
+                <span class="seal">提</span>
+                <div class="modal-title">需要解謎提示嗎？</div>
+            </div>
+            <p class="modal-sub" style="margin: 0;" id="hint-modal-text">
                 使用提示將在通關時間上增加秒數。<br>確定要獲取提示嗎？
             </p>
-            <div style="display: flex; gap: 10px; justify-content: center;">
-                <button class="btn" style="flex: 1; background: #fff; color: var(--primary); border: 2px solid var(--primary); width: auto;" onclick="toggleHintModal(false)">我再想想</button>
-                <button class="btn" style="flex: 1; background: #e67e22; border-color: #d35400; width: auto;" id="hint-confirm-btn" onclick="confirmUseHint()">使用提示</button>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="toggleHintModal(false)">我再想想</button>
+                <button class="btn" id="hint-confirm-btn" onclick="confirmUseHint()">使用提示</button>
             </div>
         </div>
     </div>
@@ -649,12 +682,11 @@
     <div id="about-modal" class="modal" onclick="toggleAboutModal(false)">
         <div class="modal-content" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
             <button type="button" class="close-btn" aria-label="關閉" onclick="toggleAboutModal(false)">&times;</button>
-            <div style="text-align: center; margin-bottom: 16px;">
-                <span style="font-size: 38px;">📖</span>
-                <h3 style="margin: 8px 0 6px 0; border: none; padding: 0;">關於「成語迷宮」</h3>
+            <div class="modal-head">
+                <div class="modal-title">關於「成語迷宮」</div>
             </div>
 
-            <div style="font-size: 14.5px; line-height: 1.85; color: #4e342e; text-align: justify;">
+            <div style="font-size: 14.5px; line-height: 1.85; color: var(--ink); text-align: justify;">
                 <p style="margin-bottom: 14px; text-indent: 2em;">
                     大約在 2006 年，我哥在自由時報上的週末專欄連載一個文字遊戲，名叫「成語迷宮」。這是他在國高中時期設計的，大約連載了三年，後來在 2009 年集結成冊，出了一本實體書，在當時那個手機不普及的年代，受到還滿多家裡有訂報紙的讀者喜歡。
                 </p>
@@ -669,8 +701,8 @@
                 </p>
             </div>
 
-            <div style="text-align: center; margin-top: 20px; border-top: 1px dashed #e0c8a8; padding-top: 16px;">
-                <button class="btn" style="width: 120px; display: inline-block;" onclick="toggleAboutModal(false)">關閉</button>
+            <div class="modal-actions" style="border-top: 1px dashed #d9c2a0; padding-top: 16px;">
+                <button class="btn btn-outline" onclick="toggleAboutModal(false)">關閉</button>
             </div>
         </div>
     </div>
@@ -678,56 +710,52 @@
     <div id="donate-modal" class="modal" onclick="toggleDonateModal(false)">
         <div class="modal-content" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
             <button type="button" class="close-btn" aria-label="關閉" onclick="toggleDonateModal(false)">&times;</button>
-            <div style="text-align: center; margin-bottom: 14px;">
-                <span style="font-size: 38px;">☕</span>
-                <h3 style="margin: 6px 0 4px 0; border: none; padding: 0;">支持成語迷宮</h3>
-                <div style="color: #795548; font-size: 13.5px;">免費、無廣告，喜歡的話歡迎贊助支持</div>
+            <div class="modal-head">
+                <span class="seal">謝</span>
+                <div class="modal-title">支持成語迷宮</div>
+                <div class="modal-sub">免費、無廣告，喜歡的話歡迎贊助支持</div>
             </div>
 
             <!-- 方案 1: 50 元 -->
             <a href="https://p.ecpay.com.tw/41BB174" target="_blank" rel="noopener noreferrer" class="tier-card" onclick="handleDonateClick(event)">
-                <div class="tier-icon">☕</div>
+                <div class="tier-icon">茶</div>
                 <div class="tier-info">
                     <strong>NT$ 50 · 請杯咖啡</strong>
                 </div>
-                <div class="tier-action-btn">贊助 ➔</div>
+                <div class="tier-action-btn">贊助 →</div>
             </a>
 
             <!-- 方案 2: 150 元 -->
             <a href="https://p.ecpay.com.tw/52210C3" target="_blank" rel="noopener noreferrer" class="tier-card" onclick="handleDonateClick(event)">
-                <div class="tier-icon">🍜</div>
+                <div class="tier-icon">飯</div>
                 <div class="tier-info">
                     <strong>NT$ 150 · 請吃頓飯</strong>
                 </div>
-                <div class="tier-action-btn">贊助 ➔</div>
+                <div class="tier-action-btn">贊助 →</div>
             </a>
 
             <!-- 方案 3: 隨意填寫（單筆） -->
             <a href="https://p.ecpay.com.tw/4C157A4" target="_blank" rel="noopener noreferrer" class="tier-card" onclick="handleDonateClick(event)">
-                <div class="tier-icon">💖</div>
+                <div class="tier-icon">心</div>
                 <div class="tier-info">
                     <strong>NT$ XXX · 自訂金額</strong>
                 </div>
-                <div class="tier-action-btn">贊助 ➔</div>
+                <div class="tier-action-btn">贊助 →</div>
             </a>
 
             <!-- 方案 4: 定期定額（每月） -->
             <a href="https://p.ecpay.com.tw/90BC5B7" target="_blank" rel="noopener noreferrer" class="tier-card tier-recurring" onclick="handleDonateClick(event)">
-                <div class="tier-icon">🌱</div>
+                <div class="tier-icon">月</div>
                 <div class="tier-info">
                     <strong>每月支持 <span class="tier-badge">信用卡</span></strong>
                     <span>金額自訂，可隨時取消</span>
                 </div>
-                <div class="tier-action-btn">贊助 ➔</div>
+                <div class="tier-action-btn">贊助 →</div>
             </a>
 
-            <div style="text-align: center; margin-top: 14px;">
-                <div style="font-size: 12px; color: #888;">
-                    💳 綠界 ECPay：信用卡、Apple Pay、ATM、超商
-                </div>
-                <div style="font-size: 12.5px; color: #8d6e63; margin-top: 8px;">
-                    聯絡作者：<a href="mailto:me@shuojen.com" style="color: #8b4513; text-decoration: underline;">me@shuojen.com</a>
-                </div>
+            <div class="donate-note">
+                <div>綠界 ECPay：信用卡、Apple Pay、ATM、超商</div>
+                <div>聯絡作者：<a href="mailto:me@shuojen.com">me@shuojen.com</a></div>
             </div>
         </div>
     </div>
@@ -736,10 +764,10 @@
     <div id="victory-modal" class="modal" onclick="toggleVictoryModal(false)">
         <div class="modal-content" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
             <button type="button" class="close-btn" aria-label="關閉" onclick="toggleVictoryModal(false)">&times;</button>
-            <div style="text-align: center; margin-bottom: 10px;">
-                <div style="font-size: 42px; margin-bottom: 4px;">🎉</div>
-                <h2 style="margin: 0; color: var(--primary); font-family: 'MantouSans', sans-serif; font-size: 32px; font-weight: normal;">解謎大成功！</h2>
-                <div id="victory-mode-subtitle" style="font-size: 14px; color: #795548; margin-top: 4px;">成語迷宮 每日挑戰</div>
+            <div class="modal-head" style="margin-bottom: 10px;">
+                <span class="seal">賀</span>
+                <h2 class="modal-title" style="font-size: 26px;">解謎大成功！</h2>
+                <div id="victory-mode-subtitle" class="modal-sub">成語迷宮 每日挑戰</div>
             </div>
 
             <div class="victory-card">
@@ -748,41 +776,32 @@
                 <div class="victory-stats-row">
                     <div class="v-stat">
                         <span class="v-stat-val" id="v-time">01:23</span>
-                        <span class="v-stat-lbl">⏱️ 通關時間</span>
+                        <span class="v-stat-lbl">通關時間</span>
                     </div>
                     <div class="v-stat" id="v-hints-stat" style="display: none;">
                         <span class="v-stat-val" id="v-hints">0 次</span>
-                        <span class="v-stat-lbl">💡 提示次數</span>
+                        <span class="v-stat-lbl">提示次數</span>
                     </div>
                     <div class="v-stat">
                         <span class="v-stat-val" id="v-steps">18 步</span>
-                        <span class="v-stat-lbl">🚶 操作步數</span>
+                        <span class="v-stat-lbl">操作步數</span>
                     </div>
                 </div>
-                <div class="victory-blocks" id="victory-blocks">🟩🟩🟩🟩</div>
+                <div class="victory-blocks" id="victory-blocks" aria-hidden="true"></div>
             </div>
 
             <div style="margin-top: 18px; display: flex; flex-direction: column; gap: 10px; align-items: center; width: 100%;">
-                <button id="copy-share-btn" class="btn btn-share-action" onclick="copyShareCard()">
-                    📋 複製戰績卡（分享到社群網站）
-                </button>
+                <button id="copy-share-btn" class="btn btn-share-action" onclick="copyShareCard()">複製戰績卡（分享到社群網站）</button>
                 <div id="copy-toast" class="copy-toast"></div>
-                
-                <div style="display: flex; gap: 10px; width: 100%; max-width: 320px; box-sizing: border-box;">
-                    <button class="btn" style="flex: 1; width: 100%; height: 40px; font-size: 14px; background: #fff; color: var(--primary); border: 2px solid var(--primary);" onclick="toggleVictoryModal(false)">
-                        關閉
-                    </button>
-                    <button class="btn btn-donate" style="flex: 1; width: 100%; height: 40px; font-size: 14px;" onclick="toggleDonateModal(true); toggleVictoryModal(false);">
-                        ☕ 隨喜贊助
-                    </button>
+                <div class="modal-actions" style="margin-top: 0; width: 100%; max-width: 320px;">
+                    <button class="btn btn-outline" style="max-width: none;" onclick="toggleVictoryModal(false)">關閉</button>
+                    <button class="btn btn-donate" style="max-width: none;" onclick="toggleDonateModal(true); toggleVictoryModal(false);">隨喜贊助</button>
                 </div>
-                <div style="font-size: 12.5px; color: #888; text-align: center; margin-top: 4px;">
-                    ⏳ <span class="next-countdown">明天 00:00 準時解鎖新題目</span>
-                </div>
+                <div class="victory-countdown"><span class="next-countdown">明天 00:00 準時解鎖新題目</span></div>
             </div>
         </div>
     </div>
-    
+
     <div class="game-wrapper not-started">
         <div class="grid" id="grid" role="grid" aria-label="成語迷宮盤面（方向鍵移動，Enter 選取）"></div>
         <svg id="svg-overlay"></svg>
@@ -798,17 +817,14 @@
     <div class="answer-section">
         <div class="slots" id="slots"></div>
         <div id="win-msg">
-            <div>🎉 正確答案，恭喜！</div>
-            <div id="win-action-btns" style="display: flex; gap: 8px; justify-content: center; margin-top: 8px; flex-wrap: wrap;">
-                <button class="btn" style="width: auto; padding: 0 16px; height: 36px; font-size: 13.5px; background: #27ae60; border-color: #219653;" onclick="showVictoryModal()">📊 查看戰績卡</button>
-                <button class="btn btn-donate" style="width: auto; padding: 0 16px; height: 36px; font-size: 13.5px; background: #b85c1e; border-color: #8b4513;" onclick="toggleDonateModal(true)">☕ 隨喜贊助</button>
-            </div>
-            <div style="font-size: 12.5px; color: #7f8c8d; margin-top: 6px; font-weight: normal;">
-                ⏳ 今日挑戰已完成！<span class="next-countdown">明天 00:00 準時解鎖新迷宮</span>
+            <div class="win-row">
+                <span class="win-title">正確答案，恭喜！</span>
+                <button class="btn" onclick="showVictoryModal()">查看戰績卡</button>
+                <button class="btn btn-donate" onclick="toggleDonateModal(true)">隨喜贊助</button>
             </div>
         </div>
         <div class="footer">
-            Original by Ching-huan,Huang（黃慶桓） , Developed by shuojen.com · <a href="javascript:void(0)" onclick="toggleDonateModal(true)" class="footer-donate-link">☕ 隨喜贊助</a>
+            <span class="footer-full">Original by Ching-huan,Huang（黃慶桓） , Developed by shuojen.com</span><span class="footer-short">原作 黃慶桓 · 製作 shuojen.com</span> · <a href="javascript:void(0)" onclick="toggleDonateModal(true)" class="footer-donate-link">隨喜贊助</a>
         </div>
     </div>
     </div>
@@ -898,6 +914,10 @@
         const gridEl = document.getElementById('grid');
         const svgEl = document.getElementById('svg-overlay');
         const slotsEl = document.getElementById('slots');
+        // 晃動動畫播完就移除，否則答案格的紅框會一直留著（連答對後也是紅的）
+        slotsEl.addEventListener('animationend', (e) => {
+            if (e.target === slotsEl) slotsEl.classList.remove('shake');
+        });
         const size = 12;
 
         let currentLevelIndex = 0;
@@ -987,18 +1007,18 @@
                     const m = Math.floor(data.time / 60);
                     const s = data.time % 60;
                     const tStr = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-                    statusIndicator.innerHTML = `✅ 今日已通關 (${tStr})`;
+                    statusIndicator.textContent = `已通關 · ${tStr}`;
                     statusIndicator.style.cursor = 'pointer';
                     statusIndicator.title = '點擊回顧今日戰績卡';
                     statusIndicator.onclick = () => showVictoryModal(data);
                 } catch(e) {
-                    statusIndicator.textContent = '🔥 每日一題';
+                    statusIndicator.textContent = '每日一題';
                     statusIndicator.style.cursor = 'default';
                     statusIndicator.title = '';
                     statusIndicator.onclick = null;
                 }
             } else {
-                statusIndicator.textContent = '🔥 每日一題';
+                statusIndicator.textContent = '每日一題';
                 statusIndicator.style.cursor = 'default';
                 statusIndicator.title = '';
                 statusIndicator.onclick = null;
@@ -1075,7 +1095,7 @@
             startTimer(Math.min(data.startAt, Date.now()));
             revealBoard();
             updateVisuals();
-            showHintBanner('⏱️ 已接續上次的進度，計時從第一次開始挑戰時持續累計', { duration: 4000 });
+            showHintBanner('已接續上次的進度，計時從第一次開始挑戰時持續累計', { duration: 4000 });
         }
 
         // 計時器：按下「開始挑戰」才開始；以時間戳計算（不受手機背景節流影響），
@@ -1135,9 +1155,10 @@
             if (toast) toast.textContent = '';
             const shareBtn = document.getElementById('copy-share-btn');
             if (shareBtn) {
-                shareBtn.innerHTML = '📋 複製戰績卡（分享到社群網站）';
-                shareBtn.style.background = '#27ae60';
+                shareBtn.textContent = '複製戰績卡（分享到社群網站）';
+                shareBtn.classList.remove('copied');
             }
+            document.documentElement.classList.remove('finished');
         }
 
         function updateTimerDisplay() {
@@ -1226,7 +1247,7 @@
                 }
             }
 
-            document.getElementById('victory-blocks').textContent = "🟩".repeat(p.answer.length);
+            document.getElementById('victory-blocks').innerHTML = '<span></span>'.repeat(p.answer.length);
             document.getElementById('victory-mode-subtitle').textContent = `成語迷宮 每日挑戰 ${info.dateFormatted}`;
 
             toggleVictoryModal(true);
@@ -1295,12 +1316,12 @@ https://shuojen.com/game.html`;
             const shareBtn = document.getElementById('copy-share-btn');
             
             copyTextToClipboard(text).then(() => {
-                shareBtn.innerHTML = '✅ 已複製！快去發文分享吧！';
-                shareBtn.style.background = '#1e8449';
-                if (toast) toast.textContent = '戰績已複製至剪貼簿，可直接貼到社群網站！';
+                shareBtn.textContent = '已複製！快去發文分享吧';
+                shareBtn.classList.add('copied');
+                if (toast) toast.textContent = '戰績已複製至剪貼簿，可直接貼到社群網站';
                 setTimeout(() => {
-                    shareBtn.innerHTML = '📋 複製戰績卡（分享到社群網站）';
-                    shareBtn.style.background = '#27ae60';
+                    shareBtn.textContent = '複製戰績卡（分享到社群網站）';
+                    shareBtn.classList.remove('copied');
                 }, 3500);
             }).catch(err => {
                 console.error('Copy failed:', err);
@@ -1343,7 +1364,7 @@ https://shuojen.com/game.html`;
                 // 今日已通關：可以再玩一次，但不會覆蓋原本的成績
                 isReplay = true;
                 clearProgress();
-                document.querySelector('.start-overlay-title').textContent = '今日已通關 🎉';
+                document.querySelector('.start-overlay-title').textContent = '今日已通關';
                 document.querySelector('.start-overlay-desc').textContent = '可以再玩一次，不會影響已記錄的成績';
                 document.querySelector('.btn-start').textContent = '↻ 再玩一次';
             } else {
@@ -1378,6 +1399,7 @@ https://shuojen.com/game.html`;
                 const cell = document.createElement('div');
                 cell.className = 'cell';
                 cell.textContent = char;
+                cell.dataset.char = char; // 關鍵字圈章用 attr(data-char) 顯示
                 cell.dataset.idx = i;
                 cell.setAttribute('role', 'gridcell');
                 cell.tabIndex = i === 0 ? 0 : -1; // 盤面只佔一個 Tab 停駐點，用方向鍵移動
@@ -1468,8 +1490,9 @@ https://shuojen.com/game.html`;
 
         function handleCellClick(idx, el) {
             if (gameFinished || !timerStarted) return;
-            recordStep();
+            // 步數只在真的有動作時才加（被散選上限擋下的點擊不算）
             if (manualKeys.has(idx)) {
+                recordStep();
                 if (activeKeyIdx === idx) {
                     mobileSelectedChar = null;
                     activeKeyIdx = null;
@@ -1520,12 +1543,15 @@ https://shuojen.com/game.html`;
                     selectedIndices.delete(idx);
                     hintedCells.delete(idx);
                 } else if (!trySelect(idx)) {
+                    updateVisuals(); // 可能剛取消了拿起的關鍵字，畫面要同步
                     return;
                 }
             } else if (!trySelect(idx)) {
                 // 即使是已鎖定黑線上的字（如「一毛不拔」的「不」），點擊時也能加入選取並亮起黃底
+                updateVisuals(); // 可能剛取消了拿起的關鍵字，畫面要同步
                 return;
             }
+            recordStep();
             updateVisuals();
         }
 
@@ -1542,7 +1568,7 @@ https://shuojen.com/game.html`;
         // （以點擊「前」的狀態判斷，否則能否選取本身就會洩漏「這格能連成成語」的資訊）
         function trySelect(idx) {
             if (countLooseSelected() >= MAX_LOOSE_SELECTED) {
-                showHintBanner(`✋ 還沒連成成語的選字最多 ${MAX_LOOSE_SELECTED} 個，請先取消一些再選`, { error: true, duration: 2500 });
+                showHintBanner(`還沒連成成語的選字最多 ${MAX_LOOSE_SELECTED} 個，請先取消一些再選`, { error: true, duration: 2500 });
                 return false;
             }
             selectedIndices.add(idx);
@@ -1585,18 +1611,16 @@ https://shuojen.com/game.html`;
 
         function updateVisuals() {
             svgEl.innerHTML = '';
-            const filledChars = new Set(Array.from(slotsEl.children).map(s => s.textContent).filter(Boolean));
             Array.from(gridEl.children).forEach((c, i) => {
                 const isKey = manualKeys.has(i);
                 c.classList.toggle('selected', selectedIndices.has(i));
                 c.classList.toggle('locked', lockedCells.has(i));
                 c.classList.toggle('hint-cell', hintedCells.has(i) && selectedIndices.has(i));
-                c.classList.remove('is-key', 'active-key', 'used');
+                c.classList.remove('is-key', 'active-key');
                 c.draggable = isKey;
                 if (isKey) {
                     c.classList.add('is-key');
                     if (activeKeyIdx === i) c.classList.add('active-key');
-                    if (filledChars.has(c.textContent)) c.classList.add('used');
                 }
                 // 給螢幕閱讀器的狀態說明
                 const states = [];
@@ -1743,6 +1767,7 @@ https://shuojen.com/game.html`;
             
             if (won) {
                 winMsgEl.style.display = 'block';
+                document.documentElement.classList.add('finished');
                 if (!gameFinished) {
                     gameFinished = true;
                     stopTimer();
@@ -1767,13 +1792,14 @@ https://shuojen.com/game.html`;
                 }
             } else {
                 winMsgEl.style.display = 'none';
+                document.documentElement.classList.remove('finished');
                 // 答案格全部填滿卻不正確：晃動並提示
                 const slots = Array.from(slotsEl.children);
                 if (!gameFinished && slots.length > 0 && slots.every(s => s.textContent)) {
                     slotsEl.classList.remove('shake');
                     void slotsEl.offsetWidth; // 觸發重繪以重播動畫
                     slotsEl.classList.add('shake');
-                    showHintBanner('🤔 答案還不太對喔，再調整看看！', { error: true, duration: 2500 });
+                    showHintBanner('答案還不太對喔，再調整看看', { error: true, duration: 2500 });
                 }
             }
             updateVisuals(); // 更新關鍵字淡化、答案格狀態，並保存進度
@@ -1878,11 +1904,11 @@ https://shuojen.com/game.html`;
 
         function handleHintClick() {
             if (gameFinished) {
-                showHintBanner("🎉 遊戲已通關，無需使用提示！");
+                showHintBanner("今日已通關，不需要再用提示了");
                 return;
             }
             if (!timerStarted) {
-                showHintBanner("請先按下「▶ 開始挑戰」再使用提示！", { duration: 3000 });
+                showHintBanner("請先按下「開始挑戰」再使用提示", { duration: 3000 });
                 return;
             }
             const p = puzzles[currentLevelIndex];
@@ -1977,7 +2003,7 @@ https://shuojen.com/game.html`;
 
             const r = Math.floor(idx / size) + 1, c = idx % size + 1;
             const ch = cell ? cell.textContent : '';
-            showHintBanner(`💡 提示：第 ${r} 列第 ${c} 行的「${ch}」是某條成語的其中一字（已用綠框標示）`, { top: r > size / 2 });
+            showHintBanner(`提示：第 ${r} 列第 ${c} 行的「${ch}」是某條成語的其中一字（已用綠框標示）`, { top: r > size / 2 });
         }
 
         function giveKeyCircleHint(keyInfo) {
@@ -2014,7 +2040,7 @@ https://shuojen.com/game.html`;
             mobileSelectedChar = null;
             activeKeyIdx = null;
             updateVisuals();
-            showHintBanner(`💡 提示關鍵字：已在盤面上為您圈出關鍵字「${keyInfo.char}」！`, { top: Math.floor(idx / size) >= size / 2 });
+            showHintBanner(`提示：已在盤面上為您圈出關鍵字「${keyInfo.char}」`, { top: Math.floor(idx / size) >= size / 2 });
         }
 
         function giveSlotPlacementHint(puzzle) {
@@ -2030,7 +2056,7 @@ https://shuojen.com/game.html`;
             }
 
             if (targetSlotIdx === -1) {
-                showHintBanner("🎉 所有關鍵字位置均已正確放置！");
+                showHintBanner("所有關鍵字都已放在正確位置");
                 checkWin();
                 return;
             }
@@ -2060,7 +2086,7 @@ https://shuojen.com/game.html`;
             mobileSelectedChar = null;
             activeKeyIdx = null;
             updateVisuals();
-            showHintBanner(`💡 答案提示：第 ${targetSlotIdx + 1} 個字為「${correctChar}」（已填入下方第 ${targetSlotIdx + 1} 格）`);
+            showHintBanner(`提示：答案第 ${targetSlotIdx + 1} 個字為「${correctChar}」（已填入下方第 ${targetSlotIdx + 1} 格）`);
             checkWin();
         }
 

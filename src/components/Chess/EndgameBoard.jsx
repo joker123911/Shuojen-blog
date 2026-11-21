@@ -146,8 +146,9 @@ function formatClock(ms) {
  *
  * loadTables：回傳 Promise<{ q?, r?, p?, qp? }>，交給 endgameEngine 挑對手的棋步。
  * adjudicate：（選用）game → 結果文字或 null，用來提早結束殘局庫算不到的局面（例如黑兵升后）。
+ * engine：（選用）挑對手棋步的函式 (tables, fen, seen) → move，預設是 endgameEngine 的 pickMove。
  */
-function EndgameBoardLogic({ fen, player = 'w', loadTables, adjudicate }) {
+function EndgameBoardLogic({ fen, player = 'w', loadTables, adjudicate, engine = pickMove }) {
   const containerRef = useRef(null);
   const clockRef = useRef(null);
   const restartRef = useRef(() => {});
@@ -243,7 +244,7 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables, adjudicate }) {
 
     const opponentMove = () => {
       const seen = game.history({ verbose: true }).map((h) => h.before);
-      const m = pickMove(tables, game.fen(), seen);
+      const m = engine(tables, game.fen(), seen);
       game.move(m);
       lastMove = [m.from, m.to];
       const text = endText();
