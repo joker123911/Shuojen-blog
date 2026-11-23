@@ -1182,15 +1182,15 @@
         }
 
         function getEvaluation(seconds, steps) {
-            if (seconds <= 45) {
+            if (seconds <= 60) {
                 return { title: "文曲星轉世", desc: "秒殺迷宮，神乎其技！" };
             } else if (seconds <= 90) {
                 return { title: "狀元及第", desc: "才思敏捷，出口成章！" };
             } else if (seconds <= 150) {
                 return { title: "榜眼及第", desc: "文采斐然，行雲流水！" };
-            } else if (seconds <= 240) {
+            } else if (seconds <= 210) {
                 return { title: "探花及第", desc: "沉著應變，抽絲剝繭！" };
-            } else if (seconds <= 360) {
+            } else if (seconds <= 270) {
                 return { title: "飽學進士", desc: "博聞強記，步步為營！" };
             } else {
                 return { title: "國文大師", desc: "鐵杵磨成針，毅力非凡！" };

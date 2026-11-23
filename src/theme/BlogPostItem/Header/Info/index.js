@@ -57,10 +57,13 @@ export default function BlogPostItemHeaderInfo({className}) {
     timeZone: 'UTC',
   });
   const formatDate = (blogDate) => dateTimeFormat.format(new Date(blogDate));
+  // 草稿（本機 draft: true、正式站 draftPreview）還沒有發佈日期：
+  // Docusaurus 給的是開發模式寫死的 2017-04-01 或 git 建檔日，改顯示「未發佈」
+  const isDraft = frontMatter?.draft === true || frontMatter?.draftPreview === true;
 
   return (
     <div className={clsx(styles.container, 'margin-vert--md', className)}>
-      <DateTime date={date} formattedDate={formatDate(date)} />
+      {isDraft ? <span>未發佈</span> : <DateTime date={date} formattedDate={formatDate(date)} />}
       {typeof readingTime !== 'undefined' && (
         <>
           <Spacer />

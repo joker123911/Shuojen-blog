@@ -5,7 +5,7 @@ import 'chessground/assets/chessground.base.css';
 import 'chessground/assets/chessground.brown.css';
 import 'chessground/assets/chessground.cburnett.css';
 import './ChessgroundBoard.css';
-import { pickMove } from './endgameEngine';
+import { pickAnyMove } from './onlineTablebase';
 import { COORD_GUTTER } from './ChessgroundBoard';
 
 const OPPONENT_DELAY = 700; // 對手「思考」時間，也是讓玩家排預走的時間
@@ -142,13 +142,14 @@ function formatClock(ms) {
  * 只有一個棋盤的殘局對弈：玩家執 player 那一方直接走，對手由殘局庫應著。
  * - 對手思考時可以連續排好幾步預走，預走的格子會標紅色，按右鍵取消全部預走。
  * - 兵升變一律升后。
+ * - 一律照正常規則下完：殺棋就是殺棋；逼和、三次重複、子力不足、50 步規則都是和棋，不會提早判定。
  * - 對局結束後在棋盤上顯示結果，點一下重新開始。
  *
  * loadTables：回傳 Promise<{ q?, r?, p?, qp? }>，交給 endgameEngine 挑對手的棋步。
- * adjudicate：（選用）game → 結果文字或 null，用來提早結束殘局庫算不到的局面（例如黑兵升后）。
- * engine：（選用）挑對手棋步的函式 (tables, fen, seen) → move，預設是 endgameEngine 的 pickMove。
+ * engine：（選用）挑對手棋步的函式 (tables, fen, seen) → move 或 Promise<move>。
+ *   預設是 pickAnyMove：本機殘局庫算得到就用本機，算不到（例如后對后）就查線上殘局庫。
  */
-function EndgameBoardLogic({ fen, player = 'w', loadTables, adjudicate, engine = pickMove }) {
+function EndgameBoardLogic({ fen, player = 'w', loadTables, engine = pickAnyMove }) {
   const containerRef = useRef(null);
   const clockRef = useRef(null);
   const restartRef = useRef(() => {});
@@ -167,6 +168,7 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables, adjudicate, engine =
     let started = false; // 按下「開始」之前不能走、不計時
     let timer = null;
     let alive = true;
+    let generation = 0; // 每次重新開始 +1，用來丟掉舊局面的非同步應著
     const el = containerRef.current;
     setStarted(false);
 
@@ -230,10 +232,7 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables, adjudicate, engine =
     };
 
     /** 對局結束的話回傳結果文字，否則 null */
-    const endText = () => {
-      if (game.isGameOver()) return resultText(game);
-      return adjudicate ? adjudicate(game) : null;
-    };
+    const endText = () => (game.isGameOver() ? resultText(game) : null);
 
     const finish = (text) => {
       over = true;
@@ -242,9 +241,29 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables, adjudicate, engine =
       timer = setTimeout(() => alive && setResult(text), RESULT_DELAY);
     };
 
-    const opponentMove = () => {
+    /**
+     * 輪到對手：一邊等「思考」時間，一邊算應著（engine 可以回傳 Promise，例如查線上殘局庫），兩者都好了才走。
+     * 重新開始或卸載時 generation 會變，舊局面晚回來的應著直接丟掉。
+     */
+    const scheduleOpponent = () => {
+      const gen = generation;
+      const fen = game.fen();
       const seen = game.history({ verbose: true }).map((h) => h.before);
-      const m = engine(tables, game.fen(), seen);
+      const reply = Promise.resolve().then(() => engine(tables, fen, seen));
+      const wait = new Promise((resolve) => {
+        timer = setTimeout(resolve, OPPONENT_DELAY);
+      });
+      Promise.all([reply, wait]).then(
+        ([m]) => alive && gen === generation && !over && opponentMove(m),
+        (err) => {
+          if (!alive || gen !== generation || over) return;
+          console.error('EndgameBoard engine failed:', err);
+          finish('連線失敗');
+        },
+      );
+    };
+
+    const opponentMove = (m) => {
       game.move(m);
       lastMove = [m.from, m.to];
       const text = endText();
@@ -276,7 +295,7 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables, adjudicate, engine =
         return;
       }
       sync();
-      timer = setTimeout(opponentMove, OPPONENT_DELAY);
+      scheduleOpponent();
     }
 
     const onBoardMove = (from, to) => {
@@ -301,7 +320,7 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables, adjudicate, engine =
     /** 開局如果輪到對手（例如玩家執黑、白先），等殘局庫好了就讓對手先走。 */
     const startIfOpponentFirst = () => {
       if (!tables || !started || over) return;
-      if (opponentThinking()) timer = setTimeout(opponentMove, OPPONENT_DELAY);
+      if (opponentThinking()) scheduleOpponent();
       else startClock();
     };
 
@@ -317,6 +336,7 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables, adjudicate, engine =
     /** 對局結束後點一下：回到初始局面，等玩家再按「開始」 */
     restartRef.current = () => {
       clearTimeout(timer);
+      generation++;
       resetClock();
       game = new Chess(fen);
       lastMove = undefined;

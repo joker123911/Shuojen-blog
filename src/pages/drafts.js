@@ -77,10 +77,11 @@ export default function Drafts() {
           <p>目前沒有草稿。</p>
         ) : (
           <ul>
-            {drafts.map(([title, permalink, date]) => (
+            {/* 草稿沒有日期，Docusaurus 給的日期是開發模式的假日期或 git 建檔日，不顯示 */}
+            {drafts.map(([title, permalink]) => (
               <li key={permalink}>
                 <Link to={permalink}>{title}</Link>
-                <span style={{ opacity: 0.6, marginLeft: '0.5rem', fontSize: '0.9em' }}>{date.slice(0, 10)}</span>
+                <span style={{ opacity: 0.6, marginLeft: '0.5rem', fontSize: '0.9em' }}>未發佈</span>
               </li>
             ))}
           </ul>

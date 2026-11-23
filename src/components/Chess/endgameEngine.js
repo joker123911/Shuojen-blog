@@ -39,6 +39,14 @@ function readPieces(fen) {
   return { wk, bk, piece, sq, bp };
 }
 
+/** 這個局面的子力本機殘局庫有沒有（tables 裡有對應的表），沒有的話 evaluate 只會回傳和棋。 */
+export function canEvaluateLocally(tables, fen) {
+  const p = readPieces(fen);
+  if (!p) return false;
+  if (p.bp >= 0) return p.piece === 'q' && !!tables.qp && (p.bp & 7) === tables.qp.file;
+  return !!tables[p.piece];
+}
+
 /** 局面值（白方角度）：將死 0、和棋 DRAW、其他查殘局庫；查不到也當和棋。 */
 export function evaluate(tables, game) {
   if (game.isCheckmate()) return 0;

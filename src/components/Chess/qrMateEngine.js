@@ -1,5 +1,5 @@
 import { Chess } from 'chess.js';
-import { pickMove } from './endgameEngine';
+import { pickAnyMove } from './onlineTablebase';
 
 /**
  * 王＋后＋車（KQRK）、王＋雙車（KRRK）對單王的黑方應著。這兩個殘局太簡單、殘局庫又太大（64⁴），
@@ -9,7 +9,7 @@ import { pickMove } from './endgameEngine';
  *   3. 離邊線越遠越好
  *   4. 下一步能走的格子越多越好
  *   5. 離白方的后、車越近越好（逼玩家處理被攻擊的子，不能無腦預走）
- * 不是 KQRK／KRRK 局面（例如黑王吃掉一子之後）就交回 endgameEngine 的 pickMove。
+ * 不是 KQRK／KRRK 局面（例如黑王吃掉一子之後）就交回 pickAnyMove（本機殘局庫，算不到再查線上殘局庫）。
  */
 
 const isLadder = (game) => {
@@ -58,7 +58,7 @@ const randomOf = (list) => list[Math.floor(Math.random() * list.length)];
 
 export function pickQueenRookMove(tables, fen, seen = []) {
   const game = new Chess(fen);
-  if (game.turn() !== 'b' || !isLadder(game)) return pickMove(tables, fen, seen);
+  if (game.turn() !== 'b' || !isLadder(game)) return pickAnyMove(tables, fen, seen);
 
   const white = game
     .board()

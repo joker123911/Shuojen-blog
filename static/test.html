@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>成語迷宮測試</title>
+    <link rel="icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&display=swap">
+    <script src="puzzle.js"></script>
+    <script src="dictionary.js"></script>
+    <style>
+        :root {
+            --paper: #fbf6ec;
+            --ink: #2b211b;
+            --muted: #8a7563;
+            --rule: #e0d0b6;
+            --frame: #7a4524;
+            --primary: #8b4a1c;
+            --highlight: #fbe6b0;
+            --border: #d99a2b;
+            --key: #c0392b;
+            --decoy: #6b7f99;
+            --serif: 'Noto Serif TC', 'Songti TC', 'PMingLiU', serif;
+            --board: min(560px, calc(100vw - 32px));
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 16px;
+            font-family: var(--serif);
+            color: var(--ink);
+            background: #ede1cd;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 { font-size: 22px; margin: 4px 0 2px; }
+        .sub { color: var(--muted); font-size: 13px; margin-bottom: 12px; }
+        .toolbar {
+            display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center;
+            margin-bottom: 10px; max-width: var(--board);
+        }
+        button, select {
+            font-family: inherit; font-size: 15px;
+            padding: 6px 12px; border-radius: 6px;
+            border: 1px solid var(--rule); background: var(--paper); color: var(--ink);
+            cursor: pointer;
+        }
+        button:hover, select:hover { border-color: var(--border); }
+        button.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+        button.primary.on { background: var(--key); border-color: var(--key); }
+        .answer {
+            font-size: 20px; letter-spacing: 6px; margin: 4px 0 10px; font-weight: 700;
+            min-height: 1.4em;
+        }
+        .answer .hidden { color: var(--muted); letter-spacing: 2px; font-weight: 400; font-size: 15px; }
+        .board-wrap {
+            position: relative; width: var(--board); height: var(--board);
+            background: var(--paper); border: 2px solid var(--frame); padding: 4px;
+        }
+        .grid {
+            display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: repeat(12, 1fr);
+            width: 100%; height: 100%;
+        }
+        .cell {
+            display: flex; align-items: center; justify-content: center;
+            font-size: calc(var(--board) / 12 * 0.5);
+            border: 1px solid var(--rule); cursor: pointer; user-select: none;
+            position: relative; z-index: 1;
+        }
+        .cell.selected { background: var(--highlight); outline: 2px solid var(--border); outline-offset: -2px; }
+        .cell.in-idiom { background: #f1e6d2; }
+        .cell.key::after {
+            content: ''; position: absolute; inset: 8%;
+            border: 2px solid var(--key); border-radius: 50%;
+        }
+        .cell.key { color: var(--key); font-weight: 700; }
+        svg.lines { position: absolute; inset: 4px; width: calc(100% - 8px); height: calc(100% - 8px); pointer-events: none; z-index: 2; }
+        svg line { stroke-linecap: round; }
+        .red-line { stroke: var(--key); stroke-width: 4; opacity: .55; }
+        .sol-line { stroke: var(--key); stroke-width: 5; opacity: .5; }
+        .decoy-line { stroke: var(--decoy); stroke-width: 3; opacity: .45; stroke-dasharray: 6 5; }
+        .panel {
+            width: var(--board); margin-top: 14px; background: var(--paper);
+            border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px; font-size: 15px;
+        }
+        .panel h2 { font-size: 16px; margin: 0 0 8px; }
+        .panel ul { margin: 0; padding-left: 20px; }
+        .panel li { margin: 3px 0; line-height: 1.6; }
+        .tag { display: inline-block; font-size: 12px; padding: 0 6px; border-radius: 4px; margin-left: 4px; }
+        .tag.sol { background: #f6d5cf; color: var(--key); }
+        .tag.decoy { background: #dde4ee; color: var(--decoy); }
+        .warn { color: var(--key); font-weight: 700; }
+        .muted { color: var(--muted); }
+        .legend { font-size: 13px; color: var(--muted); margin-top: 8px; }
+        .status { font-size: 14px; min-height: 1.5em; margin-top: 8px; color: var(--primary); }
+    </style>
+</head>
+<body>
+    <h1>成語迷宮測試</h1>
+    <div class="sub">測試用頁面，不計時、不存進度、不影響每日一題</div>
+
+    <div class="toolbar">
+        <button id="prev" aria-label="上一關">◀</button>
+        <select id="level" aria-label="選擇關卡"></select>
+        <button id="next" aria-label="下一關">▶</button>
+        <button id="clear">清除選取</button>
+        <button id="reveal" class="primary">顯示所有答案</button>
+    </div>
+
+    <div class="answer" id="answer"></div>
+
+    <div class="board-wrap">
+        <div class="grid" id="grid"></div>
+        <svg class="lines" id="svg"></svg>
+    </div>
+    <div class="status" id="status"></div>
+
+    <div class="panel" id="panel" hidden></div>
+
+    <script>
+        const SIZE = 12;
+        const DIRS = [[0, 1], [1, 0], [1, 1], [1, -1]];
+        const gridEl = document.getElementById('grid');
+        const svgEl = document.getElementById('svg');
+        const levelEl = document.getElementById('level');
+        const answerEl = document.getElementById('answer');
+        const panelEl = document.getElementById('panel');
+        const statusEl = document.getElementById('status');
+        const revealBtn = document.getElementById('reveal');
+
+        let level = 0;
+        let grid = [];
+        let selected = new Set();
+        let revealed = false;
+
+        const isValid = w => ALL_IDIOMS.has(w) || ALL_IDIOMS.has([...w].reverse().join(''));
+        const lineKey = p => [...p].sort((a, b) => a - b).join(',');
+        const rc = i => `第 ${Math.floor(i / SIZE) + 1} 列第 ${i % SIZE + 1} 行`;
+
+        // 盤面上所有 4 字直線（橫、直、兩斜）
+        function allLines() {
+            const out = [];
+            for (let i = 0; i < SIZE * SIZE; i++) {
+                DIRS.forEach(([dr, dc]) => {
+                    const path = [];
+                    for (let k = 0; k < 4; k++) {
+                        const r = Math.floor(i / SIZE) + dr * k, c = i % SIZE + dc * k;
+                        if (r < 0 || r >= SIZE || c < 0 || c >= SIZE) break;
+                        path.push(r * SIZE + c);
+                    }
+                    if (path.length === 4) out.push(path);
+                });
+            }
+            return out;
+        }
+        const LINES = allLines();
+
+        // 依遊戲規則判斷答案：答案字所在、且有 ≥2 條成語通過的格子就是關鍵字
+        function solve(p) {
+            const g = [...p.grid];
+            const valid = LINES.filter(l => isValid(l.map(i => g[i]).join('')))
+                .map(path => {
+                    const w = path.map(i => g[i]).join('');
+                    return { path, word: ALL_IDIOMS.has(w) ? w : [...w].reverse().join('') };
+                });
+            const keys = [];
+            g.forEach((ch, i) => {
+                if (!p.answer.includes(ch)) return;
+                const through = valid.filter(v => v.path.includes(i));
+                if (through.length >= 2) keys.push({ idx: i, ch, lines: through });
+            });
+            const solKeys = new Set();
+            keys.forEach(k => k.lines.forEach(l => solKeys.add(lineKey(l.path))));
+            return { valid, keys, solKeys };
+        }
+
+        function center(i) {
+            const cell = gridEl.children[i];
+            return [cell.offsetLeft + cell.offsetWidth / 2, cell.offsetTop + cell.offsetHeight / 2];
+        }
+
+        function drawLine(path, cls) {
+            const [x1, y1] = center(path[0]), [x2, y2] = center(path[3]);
+            const ln = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            ln.setAttribute('x1', x1); ln.setAttribute('y1', y1);
+            ln.setAttribute('x2', x2); ln.setAttribute('y2', y2);
+            ln.setAttribute('class', cls);
+            svgEl.appendChild(ln);
+        }
+
+        function render() {
+            const p = puzzles[level];
+            const sol = solve(p);
+            svgEl.innerHTML = '';
+            const cells = Array.from(gridEl.children);
+            cells.forEach((c, i) => {
+                c.classList.toggle('selected', selected.has(i));
+                c.classList.remove('key', 'in-idiom');
+            });
+
+            // 自由選取：選取格中成立的成語畫紅線
+            const drawn = new Set();
+            LINES.forEach(path => {
+                if (!path.every(i => selected.has(i))) return;
+                if (!isValid(path.map(i => grid[i]).join(''))) return;
+                drawn.add(lineKey(path));
+                drawLine(path, 'red-line');
+            });
+
+            if (revealed) {
+                sol.valid.forEach(v => {
+                    const k = lineKey(v.path);
+                    v.path.forEach(i => cells[i].classList.add('in-idiom'));
+                    if (drawn.has(k)) return;
+                    drawLine(v.path, sol.solKeys.has(k) ? 'sol-line' : 'decoy-line');
+                });
+                sol.keys.forEach(k => cells[k.idx].classList.add('key'));
+                answerEl.textContent = p.answer;
+                renderPanel(p, sol);
+            } else {
+                answerEl.innerHTML = '<span class="hidden">（答案已隱藏）</span>';
+                panelEl.hidden = true;
+            }
+
+            const words = [...drawn].length;
+            statusEl.textContent = selected.size
+                ? `已選 ${selected.size} 格，連成 ${words} 條成語`
+                : '';
+            revealBtn.textContent = revealed ? '隱藏答案' : '顯示所有答案';
+            revealBtn.classList.toggle('on', revealed);
+        }
+
+        function renderPanel(p, sol) {
+            const ans = [...p.answer];
+            const missing = ans.filter(ch => !sol.keys.some(k => k.ch === ch));
+            let html = `<h2>第 ${p.id} 關・答案「${p.answer}」</h2>`;
+            if (missing.length) html += `<p class="warn">⚠ 找不到關鍵字：${missing.join('、')}（這題可能無解）</p>`;
+            html += '<ul>';
+            ans.forEach(ch => {
+                const ks = sol.keys.filter(k => k.ch === ch);
+                if (!ks.length) { html += `<li><b>${ch}</b>：<span class="warn">無</span></li>`; return; }
+                ks.forEach(k => {
+                    html += `<li><b>${ch}</b>（${rc(k.idx)}）：${k.lines.map(l => l.word).join('、')}</li>`;
+                });
+            });
+            html += '</ul>';
+            const decoys = sol.valid.filter(v => !sol.solKeys.has(lineKey(v.path)));
+            html += `<h2 style="margin-top:12px">其他成語（不經過關鍵字）共 ${decoys.length} 條</h2>`;
+            html += decoys.length
+                ? `<p style="margin:0">${decoys.map(d => d.word).join('、')}</p>`
+                : '<p class="muted" style="margin:0">無</p>';
+            html += `<div class="legend">紅色實線：經過關鍵字的成語　藍色虛線：其他成語（干擾）　紅圈：關鍵字</div>`;
+            panelEl.innerHTML = html;
+            panelEl.hidden = false;
+        }
+
+        function loadLevel(i) {
+            level = (i + puzzles.length) % puzzles.length;
+            levelEl.value = String(level);
+            grid = [...puzzles[level].grid];
+            selected.clear();
+            gridEl.innerHTML = '';
+            grid.forEach((ch, idx) => {
+                const c = document.createElement('div');
+                c.className = 'cell';
+                c.textContent = ch;
+                c.title = rc(idx);
+                c.addEventListener('click', () => {
+                    selected.has(idx) ? selected.delete(idx) : selected.add(idx);
+                    render();
+                });
+                gridEl.appendChild(c);
+            });
+            try { history.replaceState(null, '', '#' + puzzles[level].id); } catch (e) {}
+            requestAnimationFrame(render);
+        }
+
+        function init() {
+            if (typeof puzzles === 'undefined' || typeof ALL_IDIOMS === 'undefined') {
+                document.body.insertAdjacentHTML('beforeend', '<p class="warn">載入 puzzle.js 或 dictionary.js 失敗</p>');
+                return;
+            }
+            puzzles.forEach((p, i) => {
+                const o = document.createElement('option');
+                o.value = String(i);
+                o.textContent = `第 ${p.id} 關`;
+                levelEl.appendChild(o);
+            });
+            levelEl.addEventListener('change', () => loadLevel(Number(levelEl.value)));
+            document.getElementById('prev').addEventListener('click', () => loadLevel(level - 1));
+            document.getElementById('next').addEventListener('click', () => loadLevel(level + 1));
+            document.getElementById('clear').addEventListener('click', () => { selected.clear(); render(); });
+            revealBtn.addEventListener('click', () => { revealed = !revealed; render(); });
+            window.addEventListener('resize', render);
+            document.addEventListener('keydown', e => {
+                if (e.target.tagName === 'SELECT') return;
+                if (e.key === 'ArrowLeft') loadLevel(level - 1);
+                if (e.key === 'ArrowRight') loadLevel(level + 1);
+            });
+
+            const fromHash = puzzles.findIndex(p => p.id === location.hash.slice(1));
+            loadLevel(fromHash >= 0 ? fromHash : 0);
+        }
+        init();
+    </script>
+</body>
+</html>
