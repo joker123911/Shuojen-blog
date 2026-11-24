@@ -453,11 +453,9 @@ export default function Guestbook({ readOnly = false, postSlug }) {
     };
   }, [visibleCount, commentTree.length]);
 
-  // --- 精準計算所有留言與回覆的總和（包含舊版站長回覆欄位） ---
-  const totalCommentCount = displayComments.reduce((acc, c) => {
-    const hasLegacyReply = c.replyContent && c.replyContent.trim() !== '';
-    return acc + 1 + (hasLegacyReply ? 1 : 0);
-  }, 0);
+  // --- 分開計算主留言與回覆（回覆含站長回覆與舊版 replyContent 欄位） ---
+  const rootCommentCount = commentTree.length;
+  const replyCount = commentTree.reduce((acc, root) => acc + root.children.length, 0);
 
   // --- 切換展開與摺疊狀態 ---
   const toggleReplies = (commentId) => {
@@ -923,7 +921,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
             <h3 className={styles.listTitle}>本篇留言</h3>
           )}
           {!fetchLoading && !fetchError && (
-            <span className={styles.count}>{totalCommentCount} 則</span>
+            <span className={styles.count}>{rootCommentCount} 則留言 · {replyCount} 則回覆</span>
           )}
         </div>
 
