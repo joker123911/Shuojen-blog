@@ -27,6 +27,12 @@
   background: #000;
 }
 
+.today {
+  padding: 0 6px;
+  text-shadow: 0 1px 0 rgba(1, 1, 1, 0.3);
+  background: #4c8b3f; /* 只有站長看得到的今日人氣 */
+}
+
 .value {
   background: #808080;
   min-width: 3.5em;
