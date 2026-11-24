@@ -3,7 +3,6 @@ slug: /chess/passed-pawn
 title: '殘局練習系列 06 -創造通路兵'
 sidebar_position: 14
 description: '王翼 2 對 1 的兵殘局：候選兵先走、換兵做出通路兵，用它引開黑王，白王去吃另一邊的兵，附互動棋盤。'
-unlisted: true
 ---
 import { White } from '@site/src/components/Chess/ChessGame';
 import ChessDiagram from '@site/src/components/Chess/ChessDiagram';
@@ -23,7 +22,7 @@ import PassedPawnBoard from '@site/src/components/Chess/PassedPawnBoard';
 黑王走到 e4 之後，白方只有**一步**能贏，其他走法都是和棋。白方在王翼是 **2 對 1**，這一側就能**創造出通路兵**（前面和左右兩條直線都沒有敵兵擋的兵）。通路兵本身不一定要升變，只要把黑王引過去，白王就能去另一邊吃兵。
 
 - **候選兵先走**：王翼的 f 兵前面沒有黑兵擋（g 兵前面有 g6 擋），f 兵就是「候選兵」，要由它先往前推。
-- **2.f5!**：f4 兵本來就要被吃，乾脆推上去換掉 g6 兵，3.gxf5 吃回之後，f5 就是一隻**通路兵**。
+- **2.f5**：f4 兵本來就要被吃，乾脆推上去換掉 g6 兵，3.gxf5 吃回之後，f5 就是一隻**通路兵**。
 - **通路兵當誘餌**：黑王只能去吃 f5 兵，但這樣就離后翼很遠了。
 - **白王吃后翼的兵**：趁黑王在王翼，白王 Ka5、Kxa6 吃掉 a6 兵，再護送 a 兵升變。
 
