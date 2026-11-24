@@ -3,6 +3,8 @@ title: '吉他演奏'
 sidebar_position: 1
 ---
 
+import YouTube from '@site/src/components/YouTube';
+
 ## [方大同-愛愛愛 COVER](/blog/2026/04/26/lovelovelove)
 
 *2026-04-26*
@@ -19,18 +21,7 @@ sidebar_position: 1
 
 MV 很讚。
 
-<div className="video-container">
-  <iframe 
-    width="320" 
-    height="180"
-    src="https://www.youtube.com/embed/lpkekYrl1Qo?si=UVXihzydgqfYg3XH" 
-    title="YouTube video player" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen>
-  </iframe>
-</div>
+<YouTube id="lpkekYrl1Qo" title="楊乃文-說不出口 SOLO" />
 
 ## [告白氣球指彈](https://youtu.be/SGEJhruTwWs)
 
@@ -44,18 +35,7 @@ MV 很讚。
 3. 變胖。
 4. 拍影片對焦沒對上。
 
-<div className="video-container">
-  <iframe 
-    width="320" 
-    height="180" 
-    src="https://www.youtube.com/embed/SGEJhruTwWs?si=JsBpix_90sOm5Lq4"  
-    title="YouTube video player" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen>
-  </iframe>
-</div>
+<YouTube id="SGEJhruTwWs" title="告白氣球指彈" />
 
 ## [伍佰-被動 SOLO](https://youtu.be/tCqPiHQq02c)
 
@@ -63,18 +43,7 @@ MV 很讚。
 
 十年前第一次拿吉他，第一首學的曲子是伍佰的痛哭的人，1997 年被動間奏 solo 的一聲李韋，也是從小聽到大的經典，很喜歡被動、鋼鐵男子、挪威的森林，這些很有伍佰風格的浪漫搖滾，陪伴著許多人長大，成為我們記憶不可或缺的一部份。
 
-<div className="video-container">
-  <iframe 
-    width="320" 
-    height="180"
-    src="https://www.youtube.com/embed/tCqPiHQq02c?si=UU_vQ1Ng1_D9me7o" 
-    title="YouTube video player" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen>
-  </iframe>
-</div>
+<YouTube id="tCqPiHQq02c" title="伍佰-被動 SOLO" />
 
 
 ## [陳奕迅-讓我留在你身邊 SOLO](https://youtu.be/cNekHS9r4IY)
@@ -83,18 +52,7 @@ MV 很讚。
 
 2016 年，是大二的時候吧。陳奕迅剛發行這首歌，忘記是系學會還是哪裡要辦活動，原本班上同學要組團表演這首歌，之後不知道什麼原因就無疾而終了。後來想想，整個大學的時候都沒組團，真的太可惜了。畢業後的大家都各奔東西，只會被忙碌的生活不停地追趕，如果想要留下一些什麼，有時候就是不能猶豫阿。步入社會後，希望大家都能活成許多年前，自己想成為的那個樣子。
 
-<div className="video-container">
-  <iframe 
-    width="320" 
-    height="180"
-    src="https://www.youtube.com/embed/cNekHS9r4IY?si=qCMeaws_EmL1b0Pl"  
-    title="YouTube video player" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen>
-  </iframe>
-</div>
+<YouTube id="cNekHS9r4IY" title="陳奕迅-讓我留在你身邊 SOLO" />
 
 ## [小安-憂愁 SOLO](https://www.youtube.com/watch?v=fKK2WNVNJh0)
 
@@ -104,18 +62,7 @@ MV 很讚。
 
 已經畢業了，我也是，耶。
 
-<div className="video-container">
-  <iframe 
-    width="320" 
-    height="180"
-    src="https://www.youtube.com/embed/fKK2WNVNJh0?si=FO35MRVKxbVVI8cG" 
-    title="YouTube video player" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen>
-  </iframe>
-</div>
+<YouTube id="fKK2WNVNJh0" title="小安-憂愁 SOLO" />
 
 ## [黃金之風 Giorno's Theme『il vento d'oro』SOLO](https://www.youtube.com/watch?v=W58l8R4_l78)
 
@@ -123,18 +70,7 @@ MV 很讚。
 
 錄完才發現音高怪怪的好像降半音。
 
-<div className="video-container">
-  <iframe 
-    width="320" 
-    height="180"
-    src="https://www.youtube.com/embed/W58l8R4_l78?si=g7YhDyFJItzLVJVd" 
-    title="YouTube video player" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen>
-  </iframe>
-</div>
+<YouTube id="W58l8R4_l78" title="黃金之風 Giorno's Theme『il vento d'oro』SOLO" />
 
 ## [七里香指彈](https://www.youtube.com/watch?v=n-CGdxN-qMs)
 
@@ -142,18 +78,7 @@ MV 很讚。
 
 當時不知道動圈麥克風錄製完要調整檔案，聲音很小。
 
-<div className="video-container">
-  <iframe 
-    width="320" 
-    height="180" 
-    src="https://www.youtube.com/embed/n-CGdxN-qMs?si=H4LsG5K8DwAIWzvN" 
-    title="YouTube video player" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen>
-  </iframe>
-</div>
+<YouTube id="n-CGdxN-qMs" title="七里香指彈" />
 
 
 
@@ -161,18 +86,7 @@ MV 很讚。
 
 *2019-08-27*
 
-<div className="video-container">
-  <iframe 
-    width="320" 
-    height="180" 
-    src="https://www.youtube.com/embed/6s7bS0f-x5w?si=aiLSSXAp54A2cSKQ"
-    title="YouTube video player" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen>
-  </iframe>
-</div>
+<YouTube id="6s7bS0f-x5w" title="殘酷天使的行動綱領指彈" />
 
 
 ## [慢慢喜歡你指彈]

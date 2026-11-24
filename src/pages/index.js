@@ -140,8 +140,11 @@ export default function Home() {
         <div className="gallery-content">
           <Link to="/about">
             <img 
-              src={baseUrl + 'img/knight_5x.gif'}
+              src={baseUrl + 'img/knight_5x.webp'}
               alt="Knight GIF"
+              width={360}
+              height={360}
+              fetchPriority="high"
               className="gallery-image"
               onDragStart={(e) => e.preventDefault()}
             />

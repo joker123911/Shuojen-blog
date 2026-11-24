@@ -2,6 +2,9 @@
 title: '魔術方塊連解'
 tags: ['fun','toy']
 ---
+
+import YouTube from '@site/src/components/YouTube';
+
 今天在寫部落格的[`/use`](/use)頁面，想說來整理一下我所有的方塊好了，原本以為過了兩年沒有認真玩，我會不記得自己買過什麼方塊，但沒想到一拿到手上，我竟然完全可以靠手感就知道它是什麼方塊，真是太神奇了！整理後才發現我有四顆魔域出品的 RS3M[^1]，只是都不同版本（當時有新版本就想試），這個我就真的分不出來了。
 
 可愛的方塊們合照：
@@ -10,18 +13,7 @@ tags: ['fun','toy']
 
 ## 連解
 
-<div className="video-container">
-  <iframe 
-    width="320" 
-    height="180" 
-    src="https://www.youtube.com/embed/eE4td_TQw_A?si=hKSRFg2RPG45UhxC"
-    title="YouTube video player" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen>
-  </iframe>
-</div>
+<YouTube id="eE4td_TQw_A" title="魔術方塊連解" />
 
 即然都把方塊拿出來點名了，就來玩個連解吧，不過三階以外的就不玩了，會太累。
 

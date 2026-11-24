@@ -1,0 +1,50 @@
+.container {
+  margin-bottom: var(--ifm-paragraph-margin-bottom);
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.frame,
+.facade {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.facade {
+  position: relative;
+  padding: 0;
+  cursor: pointer;
+  background: #000;
+}
+
+/* hqdefault 是 4:3 且上下有黑邊，用 cover 裁成 16:9 */
+.thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.playIcon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.85;
+  transition: opacity 0.15s ease;
+}
+
+.facade:hover .playIcon,
+.facade:focus-visible .playIcon {
+  opacity: 1;
+}
+
+.facade:focus-visible {
+  outline: 3px solid var(--ifm-color-primary);
+  outline-offset: -3px;
+}

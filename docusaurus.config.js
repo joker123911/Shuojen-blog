@@ -48,6 +48,8 @@ const config = {
     {
       src: 'https://cloud.umami.is/script.js',
       'data-website-id': '45021ff8-89a4-45a9-a0ba-e6352cb94d3c',
+      // 只統計正式網域，本機 npm start / serve 的瀏覽不算
+      'data-domains': 'shuojen.com,www.shuojen.com,shuojen.site,www.shuojen.site',
       defer: true,
     },
     // Turnstile 只在留言表單出現時由 src/components/Guestbook/TurnstileWidget.js 按需載入
@@ -61,6 +63,12 @@ const config = {
         content: 'strict-origin-when-cross-origin',
       },
     },
+    // 全站字型（jf 粉圓、Rock Salt）：用 <link> 讓瀏覽器一開始就平行下載，不放在 custom.css 的 @import
+    { tagName: 'link', attributes: { rel: 'preconnect', href: 'https://font.emtech.cc', crossorigin: 'anonymous' } },
+    { tagName: 'link', attributes: { rel: 'preconnect', href: 'https://fonts.googleapis.com' } },
+    { tagName: 'link', attributes: { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' } },
+    { tagName: 'link', attributes: { rel: 'stylesheet', href: 'https://font.emtech.cc/css/jfOpenHuninn?display=swap' } },
+    { tagName: 'link', attributes: { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap' } },
     // 彩蛋模式（src/components/EasterEggs）：重新整理時在繪製前還原模式，避免閃一下原樣式
     {
       tagName: 'script',
@@ -397,14 +405,8 @@ const config = {
             ],
           },
         ],
-        copyright: `
-        <div style="display: flex; justify-content: center; align-items: center;">
-          <span>Copyright © ${new Date().getFullYear()} Shuo-jen Huang</span>
-          <a href="https://shuojen.com" style="margin-left: 10px; display: flex;">
-            <img src="https://visitor-badge.laobi.icu/badge?page_id=shuojen.site&left_text=Visits&left_color=black&right_color=gray" alt="visitor badge"/>
-          </a>
-        </div>
-        `,
+        // 瀏覽數徽章由 src/theme/Footer/Copyright 加在旁邊（自架計數，見 src/components/VisitCounter）
+        copyright: `Copyright © ${new Date().getFullYear()} Shuo-jen Huang`,
       },
       prism: {
         theme: prismThemes.dracula,

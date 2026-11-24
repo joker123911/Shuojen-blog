@@ -8,9 +8,8 @@
    1. 字體引入 (Fonts) - 嚴格遵守官方 Setup 規範
    ========================================= */
 
-/* 注意：@import 必須位於檔案最上方，否則瀏覽器會忽略 */
-@import url("https://font.emtech.cc/css/jfOpenHuninn?display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap');
+/* jf 粉圓與 Rock Salt 改由 docusaurus.config.js 的 headTags 以 <link> 載入（含 preconnect），
+   不在這裡用 @import：@import 要等這支 CSS 下載完才會發現字型 CSS，請求會串行、拖慢首次繪製。 */
 /* Noto Serif TC 由 NowEvaPoster 元件自行載入。
    KaTeX CSS 不再全站載入：有數學公式的文章請在內文加上
    import Head from '@docusaurus/Head';

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useId } from 'react';
 import { useLocation } from '@docusaurus/router';
 import Link from '@docusaurus/Link'; 
 import styles from './styles.module.css';
@@ -23,6 +23,31 @@ function storeAdminKey(key) {
     window.localStorage.setItem(ADMIN_KEY_STORAGE, key);
   } catch {
     // 存不了就只在這次瀏覽有效
+  }
+}
+
+// 訪客的名稱與網站記在瀏覽器，下次留言自動帶入
+const GUEST_PROFILE_STORAGE = 'guestbook_guest_profile';
+
+function readStoredProfile() {
+  try {
+    const raw = window.localStorage.getItem(GUEST_PROFILE_STORAGE);
+    if (!raw) return { name: '', website: '' };
+    const data = JSON.parse(raw);
+    return {
+      name: typeof data.name === 'string' ? data.name : '',
+      website: typeof data.website === 'string' ? data.website : '',
+    };
+  } catch {
+    return { name: '', website: '' };
+  }
+}
+
+function storeProfile(name, website) {
+  try {
+    window.localStorage.setItem(GUEST_PROFILE_STORAGE, JSON.stringify({ name, website }));
+  } catch {
+    // 存不了就算了，下次重填
   }
 }
 
@@ -52,6 +77,7 @@ function loadAllComments({ force = false } = {}) {
 
 export default function Guestbook({ readOnly = false, postSlug }) {
   const location = useLocation();
+  const fieldId = useId();
   
   const currentSlug = postSlug || location.pathname;
   const isGuestbookPage = currentSlug === '/guestbook';
@@ -113,6 +139,10 @@ export default function Guestbook({ readOnly = false, postSlug }) {
   useEffect(() => {
     const savedKey = readStoredAdminKey();
     if (savedKey) setAdminKey(savedKey);
+    const profile = readStoredProfile();
+    if (profile.name || profile.website) {
+      setFormData((prev) => ({ ...prev, name: prev.name || profile.name, website: prev.website || profile.website }));
+    }
   }, []);
 
   const promptAdminKey = async () => {
@@ -502,7 +532,9 @@ export default function Guestbook({ readOnly = false, postSlug }) {
         throw new Error(resData.error || '送出失敗');
       }
       showNotice('form', 'success', '留言已送出，謝謝你的留言！');
-      setFormData({ name: '', content: '', website: '' });
+      // 站長登入時不覆蓋訪客資料
+      if (!adminKey) storeProfile(formData.name.trim(), formData.website.trim());
+      setFormData((prev) => ({ ...prev, content: '' }));
       setTurnstileToken('');
       if (turnstileRef.current) turnstileRef.current.reset();
       setFormTab('write');
@@ -557,7 +589,14 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       showNotice('list', 'success', '回覆已送出！');
       
       setExpandedComments(prev => ({ ...prev, [parentComment.id]: true }));
-      
+      if (!adminKey) {
+        const name = replyData.name.trim();
+        const website = replyData.website.trim();
+        storeProfile(name, website);
+        // 主表單如果還空著，也一起帶入
+        setFormData((prev) => (prev.name ? prev : { ...prev, name, website: prev.website || website }));
+      }
+
       setReplyData({ name: '', content: '', website: '' });
       setReplyTurnstileToken('');
       if (replyTurnstileRef.current) replyTurnstileRef.current.reset();
@@ -576,7 +615,8 @@ export default function Guestbook({ readOnly = false, postSlug }) {
 
   const startReply = (id) => {
     setReplyingTo(id);
-    setReplyData({ name: '', content: '', website: '' });
+    const profile = readStoredProfile();
+    setReplyData({ name: profile.name, content: '', website: profile.website });
     setReplyTurnstileToken('');
     setReplyTab('write');
   };
@@ -729,12 +769,14 @@ export default function Guestbook({ readOnly = false, postSlug }) {
               <form onSubmit={(e) => handleReplySubmit(e, c)} className={styles.commentForm}>
                 {!adminKey && (
                   <div className={styles.inputRow}>
+                    <label htmlFor={`${fieldId}-reply-name`} className={styles.srOnly}>名稱</label>
                     <input
-                      type="text" placeholder="名稱（必填）" required
+                      id={`${fieldId}-reply-name`} type="text" placeholder="名稱（必填）" required autoComplete="nickname"
                       value={replyData.name} onChange={e => setReplyData({...replyData, name: e.target.value})}
                     />
+                    <label htmlFor={`${fieldId}-reply-website`} className={styles.srOnly}>個人網站</label>
                     <input
-                      type="text" placeholder="個人網站（選填）"
+                      id={`${fieldId}-reply-website`} type="text" placeholder="個人網站（選填）" autoComplete="url" inputMode="url"
                       value={replyData.website} onChange={e => setReplyData({...replyData, website: e.target.value})}
                     />
                   </div>
@@ -815,6 +857,7 @@ export default function Guestbook({ readOnly = false, postSlug }) {
       </div>
       <textarea
         placeholder={placeholder}
+        aria-label={placeholder}
         required
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -853,12 +896,14 @@ export default function Guestbook({ readOnly = false, postSlug }) {
           </h3>
           <form onSubmit={handleSubmit} className={styles.commentForm}>
             <div className={styles.inputRow}>
+              <label htmlFor={`${fieldId}-main-name`} className={styles.srOnly}>名稱</label>
               <input
-                type="text" placeholder="名稱（必填）" required
+                id={`${fieldId}-main-name`} type="text" placeholder="名稱（必填）" required autoComplete="nickname"
                 value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})}
               />
+              <label htmlFor={`${fieldId}-main-website`} className={styles.srOnly}>個人網站</label>
               <input
-                type="text" placeholder="個人網站（選填）"
+                id={`${fieldId}-main-website`} type="text" placeholder="個人網站（選填）" autoComplete="url" inputMode="url"
                 value={formData.website} onChange={e => setFormData({...formData, website: e.target.value})}
               />
             </div>

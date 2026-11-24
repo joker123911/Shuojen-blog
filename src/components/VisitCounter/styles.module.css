@@ -1,0 +1,35 @@
+/* 延續原本 visitor-badge 的外觀：左黑右灰的 shields 風格小徽章 */
+.badge {
+  display: inline-flex;
+  height: 20px;
+  border-radius: 3px;
+  overflow: hidden;
+  font-family: Verdana, Geneva, 'DejaVu Sans', sans-serif;
+  font-size: 11px;
+  line-height: 20px;
+  color: #fff;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.badge:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.label,
+.value {
+  padding: 0 6px;
+  text-shadow: 0 1px 0 rgba(1, 1, 1, 0.3);
+}
+
+.label {
+  background: #000;
+}
+
+.value {
+  background: #808080;
+  min-width: 3.5em;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}

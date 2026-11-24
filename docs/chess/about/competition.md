@@ -4,6 +4,9 @@ title: '西洋棋紀錄'
 sidebar_position: 3
 description: '各平台積分與比賽紀錄。'
 ---
+
+import YouTube from '@site/src/components/YouTube';
+
 *最後更新：2026-09-26*
 
 <img src={require('../img/019.webp').default} width="400" alt="img" />
@@ -79,18 +82,7 @@ description: '各平台積分與比賽紀錄。'
 
 有興趣可以看劉業揚老師（台灣國手，CM 頭銜）的解說：
 
-<div className="video-container">
-  <iframe 
-    width="560" 
-    height="315" 
-    src="https://www.youtube.com/embed/pdOKJP4bNJ8?si=zZ609cXguOx5PxFa" 
-    title="YouTube video player" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen>
-  </iframe>
-</div>
+<YouTube id="pdOKJP4bNJ8" title="111 年中正盃大專組團體賽亞軍（交大西洋棋社）" />
 
 ### 115 年全國棋藝智力運動技能競賽進階組亞軍
 

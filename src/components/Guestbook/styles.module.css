@@ -667,3 +667,16 @@
     min-height: 32px;
   }
 }
+
+/* 只給螢幕閱讀器的欄位標籤（視覺上隱藏，絕對定位不佔 grid 格子） */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
