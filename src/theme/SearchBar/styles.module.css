@@ -209,6 +209,30 @@
   text-decoration: underline;
 }
 
+/* 8-bit 彩蛋把卡片背景設成透明，搜尋下拉需要實心底色才看得清楚 */
+:global(html[data-easter-egg='eightbit']) .dropdown {
+  background-color: var(--8b-white, #f8f8f8);
+  border: 3px solid var(--8b-outline, #485868);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--8b-shadow, rgba(24, 56, 32, 0.35));
+  color: var(--8b-ink, #383838);
+}
+
+:global(html[data-easter-egg='eightbit']) .dropdownFooter {
+  background-color: var(--8b-white, #f8f8f8);
+}
+
+:global(html[data-easter-egg='eightbit']) .dropdownItem:hover,
+:global(html[data-easter-egg='eightbit']) .dropdownItemActive,
+:global(html[data-easter-egg='eightbit']) .dropdownFooter:hover {
+  background-color: var(--8b-pale, #e8f8e0);
+}
+
+:global(html[data-easter-egg='eightbit']) .itemTitle,
+:global(html[data-easter-egg='eightbit']) .itemSnippet {
+  color: var(--8b-ink, #383838);
+}
+
 .noResult {
   padding: 24px 16px;
   text-align: center;

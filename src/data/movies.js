@@ -385,6 +385,7 @@ export const asiaMovies = [
   { title: "消失的情人節", score: 6.3, note: "奇幻愛情小品，中規中矩", poster: "./img/movie/消失的情人節.webp", tags: ["2020", "愛情"] },
   { title: "台北追緝令", score: 6.3, note: "滿尷尬的一部，真的滿難看的，露西的再更劣化版", poster: "./img/movie/台北追緝令.webp", tags: ["2024", "動作"] },
   { title: "西遊·降魔篇", score: 6.3, note: "周星馳系列，周星馳不演後唯一看的一部，", poster: "./img/movie/西遊·降魔篇.webp", tags: ["2013", "港片", "喜劇"] },
+  { title: "告別的年代", score: 6.3, note: "風格讓我覺得很像王家衛的花樣年華，劇情真的很無聊，個人不太喜歡", poster: "./img/movie/告別的年代.webp", tags: ["2026", "劇情"] },
   { title: "你是不會當樹嗎", score: 6.2, note: "畫面很美，但是劇情之間沒什麼深刻的關連，很沉悶", poster: "./img/movie/你是不會當樹嗎.webp", tags: ["2026", "劇情"] },
   { title: "同學麥娜絲", score: 6.2, note: "因為大佛普拉斯所以期待很高，有點不知所云的一部", poster: "./img/movie/同學麥娜絲.webp", tags: ["2020", "劇情"] },
   { title: "紅衣小女孩", score: 6.2, note: "還不錯的國產恐怖片，內容屬於看過就忘", poster: "./img/movie/紅衣小女孩.webp", tags: ["2015", "恐怖"] },

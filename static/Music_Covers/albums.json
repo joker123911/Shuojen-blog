@@ -255,6 +255,11 @@
     "filename": "Max Richter - Exiles.jpg"
   },
   {
+    "artist": "Me and My Sandcastle",
+    "album": "Love is Waiting",
+    "filename": "Me and My Sandcastle - Love is Waiting.jpg"
+  },
+  {
     "artist": "Michael Jackson",
     "album": "The Essential Michael Jackson",
     "filename": "Michael Jackson - The Essential Michael Jackson.jpg"
@@ -263,6 +268,11 @@
     "artist": "Michael Nyman",
     "album": "The Piano - Original Motion Picture Score",
     "filename": "Michael Nyman - The Piano - Original Motion Picture Score.jpg"
+  },
+  {
+    "artist": "MyGO!!!!!",
+    "album": "迷跡波",
+    "filename": "MyGO!!!!! - 迷跡波.jpg"
   },
   {
     "artist": "Nat King Cole",
@@ -951,6 +961,16 @@
   },
   {
     "artist": "蛋堡",
+    "album": "Winter Sweet",
+    "filename": "蛋堡 - Winter Sweet.jpg"
+  },
+  {
+    "artist": "蛋堡",
+    "album": "你所不知道的杜振熙之內部整修",
+    "filename": "蛋堡 - 你所不知道的杜振熙之內部整修.jpg"
+  },
+  {
+    "artist": "蛋堡",
     "album": "收斂水",
     "filename": "蛋堡 - 收斂水.jpg"
   },
@@ -958,6 +978,11 @@
     "artist": "蛋堡",
     "album": "月光",
     "filename": "蛋堡 - 月光.jpg"
+  },
+  {
+    "artist": "蛋堡",
+    "album": "踩.腳.踏.車",
+    "filename": "蛋堡 - 踩.腳.踏.車.jpg"
   },
   {
     "artist": "許光漢",
@@ -998,6 +1023,16 @@
     "artist": "陳婧霏",
     "album": "陳婧霏",
     "filename": "陳婧霏 - 陳婧霏.jpg"
+  },
+  {
+    "artist": "陳嫺靜",
+    "album": "如果每天都可以 happy happy 誰想要sad:)) - 一起去度假",
+    "filename": "陳嫺靜 - 如果每天都可以 happy happy 誰想要sad_)) - 一起去度假.jpg"
+  },
+  {
+    "artist": "陳嫺靜",
+    "album": "如果每天都可以 happy happy 誰想要sad:＊- 合作的秘密",
+    "filename": "陳嫺靜 - 如果每天都可以 happy happy 誰想要sad_＊- 合作的秘密.jpg"
   },
   {
     "artist": "陳昇",

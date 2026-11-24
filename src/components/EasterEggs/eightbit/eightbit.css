@@ -368,7 +368,8 @@ html[data-easter-egg='eightbit'] :is(.albums-hero-title, .blogroll-hero-title, .
   white-space: normal;
 }
 
-/* Albums / Blogroll / Guestbook 的大標題用 inline style 指定顏色，需蓋過 */
+/* Photography / Albums / Blogroll / Guestbook 的大標題用 inline style 指定顏色，需蓋過 */
+html[data-easter-egg='eightbit'] .gallery-title,
 html[data-easter-egg='eightbit'] :is(.albums-hero-title, .blogroll-hero-title, .guestbook-hero-title) {
   color: var(--8b-sign-text) !important;
 }
