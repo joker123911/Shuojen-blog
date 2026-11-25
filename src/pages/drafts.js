@@ -38,6 +38,12 @@ export default function Drafts() {
     if (readStoredAdminKey()) setIsAdmin(true);
   }, []);
 
+  // 站長模式下先把每篇草稿的程式碼載好，第一次點進去才不會停在舊頁等下載
+  useEffect(() => {
+    if (!isAdmin) return;
+    for (const [, permalink] of drafts) window.docusaurus?.preload(permalink);
+  }, [isAdmin, drafts]);
+
   const login = async () => {
     const key = window.prompt('請輸入站長通關密語：');
     if (!key) return;
