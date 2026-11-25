@@ -77,7 +77,6 @@ export async function toggleMode(target, {restoreScrollY} = {}) {
   const current = getMode();
   const next = current === target ? null : target;
   const stylesheetLoaded = next ? loadModeFont(next) : null;
-  if (next) window.umami?.track?.(`easter-egg-${next}`);
 
   const swap = async () => {
     if (typeof restoreScrollY === 'number') window.scrollTo({top: restoreScrollY, behavior: 'instant'});

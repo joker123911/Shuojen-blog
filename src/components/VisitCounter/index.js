@@ -94,9 +94,13 @@ export default function VisitCounter() {
         count === null ? '瀏覽數載入中' : `瀏覽數 ${count}${today === null ? '' : `，今日 ${today}`}`
       }
     >
-      <span className={styles.label}>Visits</span>
-      <span className={styles.value}>{count === null ? '…' : count}</span>
-      {today !== null && <span className={styles.today}>Today {today}</span>}
+      {today !== null && (
+        <span className={styles.today}>
+          <span className={styles.dot} aria-hidden="true" />
+          {today.toLocaleString('en-US')} today
+        </span>
+      )}
+      <span>{count === null ? '…' : count.toLocaleString('en-US')} visits</span>
     </Link>
   );
 }

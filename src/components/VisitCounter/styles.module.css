@@ -1,41 +1,41 @@
-/* 延續原本 visitor-badge 的外觀：左黑右灰的 shields 風格小徽章 */
+/* 簡潔小字：一般訪客只看到「12,345 visits」，站長多一個綠點加今日人氣
+   亮暗各自指定顏色：Docusaurus 的 emphasis 變數在暗色會反轉，visits 會亮到跟版權字一樣 */
 .badge {
+  --vc-muted: #606770;
+  --vc-strong: #1c1e21;
+  --vc-dot: #3fa34d;
   display: inline-flex;
-  height: 20px;
-  border-radius: 3px;
-  overflow: hidden;
-  font-family: Verdana, Geneva, 'DejaVu Sans', sans-serif;
-  font-size: 11px;
-  line-height: 20px;
-  color: #fff;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  color: var(--vc-muted);
   text-decoration: none;
   vertical-align: middle;
 }
 
+[data-theme='dark'] .badge {
+  --vc-muted: #8d949e;
+  --vc-strong: #e3e3e3;
+  --vc-dot: #5cc46a;
+}
+
 .badge:hover {
-  color: #fff;
+  color: var(--vc-strong);
   text-decoration: none;
 }
 
-.label,
-.value {
-  padding: 0 6px;
-  text-shadow: 0 1px 0 rgba(1, 1, 1, 0.3);
-}
-
-.label {
-  background: #000;
-}
-
 .today {
-  padding: 0 6px;
-  text-shadow: 0 1px 0 rgba(1, 1, 1, 0.3);
-  background: #4c8b3f; /* 只有站長看得到的今日人氣 */
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--vc-strong);
 }
 
-.value {
-  background: #808080;
-  min-width: 3.5em;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--vc-dot);
 }

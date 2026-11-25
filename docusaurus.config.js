@@ -45,13 +45,6 @@ const config = {
   },
 
   scripts: [
-    {
-      src: 'https://cloud.umami.is/script.js',
-      'data-website-id': '45021ff8-89a4-45a9-a0ba-e6352cb94d3c',
-      // 只統計正式網域，本機 npm start / serve 的瀏覽不算
-      'data-domains': 'shuojen.com,www.shuojen.com,shuojen.site,www.shuojen.site',
-      defer: true,
-    },
     // Turnstile 只在留言表單出現時由 src/components/Guestbook/TurnstileWidget.js 按需載入
   ],
 
