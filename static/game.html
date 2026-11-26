@@ -933,7 +933,7 @@
         // 「散選格」上限：已選取但還沒連成任何成語（紅線）的格子數。
         // 已連成紅線的格子不計入，所以可以同時留著好幾條不交叉的成語；
         // 但無法把整個盤面全選，靠自動連線直接看出所有成語位置
-        const MAX_LOOSE_SELECTED = 6;
+        const MAX_LOOSE_SELECTED = 8;
         let manualKeys = new Map(); 
         let lockedCells = new Set(); 
         let mobileSelectedChar = null; 
