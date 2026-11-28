@@ -34,12 +34,15 @@ const WINNING = new Set(['loss', 'maybe-loss']);
  * - 贏的一方：照殘局庫的順序（DTZ 最短），保證一直往前推進。
  * - 和棋或輸的一方：在殘局庫判定結果最好的那幾步裡，用本機搜尋挑最頑強的一步。
  *   殘局庫的順序只是拖延下一次吃子或動兵，例如會為了不吃子而讓對方很快升后。
+ *   盤面上沒有兵的話不會有這個問題，直接照殘局庫的順序走。
  */
 export async function pickOnlineMove(fen) {
   const { moves } = await probe(fen);
   if (!moves || moves.length === 0) throw new Error(`tablebase: no moves for ${fen}`);
   const best = moves[0].category;
-  const uci = WINNING.has(best)
+  // 沒有兵的局面（例如后對車）殘局庫的順序就是最頑強的走法；本機搜尋會卡住畫面約 0.3 秒，不用跑
+  const noPawns = !/p/i.test(fen.split(' ')[0]);
+  const uci = WINNING.has(best) || noPawns
     ? moves[0].uci
     : pickResistantMove(
         fen,

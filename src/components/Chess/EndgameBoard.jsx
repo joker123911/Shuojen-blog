@@ -136,6 +136,11 @@ function formatClock(ms) {
   return min > 0 ? `${min}:${String(sec).padStart(2, '0')}.${frac}` : `${sec}.${frac}`;
 }
 
+/* ---------- 同一頁一次只下一盤 ---------- */
+
+// 正在下的那一盤的「重設」函式；按下另一盤的「開始」時，先把這一盤重設回初始局面（停錶、丟掉還沒回來的應著）。
+let activeReset = null;
+
 /* ---------- 元件 ---------- */
 
 /**
@@ -327,14 +332,17 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables, engine = pickAnyMove
     /** 按「開始」：殘局庫還沒好的話，等它載入完會自動開始 */
     startRef.current = () => {
       if (started) return;
+      if (activeReset && activeReset !== reset) activeReset();
+      activeReset = reset;
       started = true;
       setStarted(true);
       sync();
       startIfOpponentFirst();
     };
 
-    /** 對局結束後點一下：回到初始局面，等玩家再按「開始」 */
-    restartRef.current = () => {
+    /** 回到初始局面，等玩家再按「開始」：對局結束後點一下，或是同一頁另一盤按了「開始」 */
+    function reset() {
+      if (activeReset === reset) activeReset = null;
       clearTimeout(timer);
       generation++;
       resetClock();
@@ -346,7 +354,8 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables, engine = pickAnyMove
       setStarted(false);
       setResult(null);
       sync();
-    };
+    }
+    restartRef.current = reset;
 
     (async () => {
       const { Chessground } = await import('chessground');
@@ -371,6 +380,7 @@ function EndgameBoardLogic({ fen, player = 'w', loadTables, engine = pickAnyMove
     drawClock();
     return () => {
       alive = false;
+      if (activeReset === reset) activeReset = null;
       clearTimeout(timer);
       clearInterval(clockTimer);
       el.removeEventListener('contextmenu', onContextMenu);
