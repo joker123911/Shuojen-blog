@@ -9,7 +9,7 @@ import NowEvaPoster from '@site/src/components/NowEvaPoster';
   <h1 className="site-hero-title">Now</h1>
 </div>
 
-*最後更新：2026-11-11*
+*最後更新：2026-11-28*
 
 :::note
 靈感來自[Derek Sivers /now](https://sive.rs/now)。
@@ -18,10 +18,8 @@ import NowEvaPoster from '@site/src/components/NowEvaPoster';
 ## 最近在幹嘛
 * 寫部落格：記錄一些想法、有趣的事，很好玩。
 * [西洋棋](/blog/2026/10/18/chess)：最近覺得自己殘局有點爛，想要好好精進王兵殘局跟車兵殘局。
-* 健身：中午只能自立自強一個人健身。（同事哲哲離職了，祝福他！）
 * [桌球](/blog/2025/10/19/tabletennis)：禮拜三下班跟同事峻寶寶去打桌球，拉下旋成功率提高了，但常常抓不好進攻時機。
-* 閱讀：最近在看陳思宏老師《樓下的好人》，自從看完《鬼地方》就變老師的鐵粉了。
-* 改用 Claude，感覺終端機上的 agent 用起來也滿習慣的。用一個月沒問題的話就把 Gemini 退訂，掰掰 Antigravity。
+* 閱讀：劉子新《白腳底黑貓》
 
 ## 最近在練習
 * 鋼琴：[Debussy Arabesque No.1](https://www.youtube.com/watch?v=JCTQTp1PdnA) 荒廢許久，一直沒有好好練完。
@@ -32,7 +30,7 @@ import NowEvaPoster from '@site/src/components/NowEvaPoster';
 * FX 戰士韭留美：超好笑，寫實有趣，像極了曾經的自己（拜託上保護止損吧求你了看的背脊發涼）。
 
 ## 最近正在看/玩的作品
-* [六人行](https://zh.wikipedia.org/zh-tw/%E8%80%81%E5%8F%8B%E8%AE%B0)：Netflix 重上了，來補一下這個經典。越看越喜歡，好久沒有看劇看到大笑出來，現在看到第八季了，且看且珍惜。
+* [六人行](https://zh.wikipedia.org/zh-tw/%E8%80%81%E5%8F%8B%E8%AE%B0)：全部看完了，結尾有點普通，情境喜劇 TBBT > Friends = HIMYM
 * [恐怖片](/docs/movie_list)：最近看了幾部恐怖片都覺得很讚。《宿劫》、《滿血復活》、《凶器》都很推。
 * 青春之箱：Netflix 上了第二季，陪蝦波再從第一季開始看，第一次看的時候自己是個大雛寶（其實現在也還是），但發現千夏學姐是上田麗奈之後就動搖了，學姐好香！
 
